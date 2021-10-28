@@ -217,11 +217,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="domain.html"><a href="domain.html"><i class="fa fa-check"></i><b>7</b> 社会学のデータ分析でよくある処理</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="domain.html"><a href="domain.html#ssm職業小分類を大分類にまとめる"><i class="fa fa-check"></i><b>7.1</b> SSM職業小分類を大分類にまとめる</a></li>
-<li class="chapter" data-level="7.2" data-path="domain.html"><a href="domain.html#egp階級分類を作成する"><i class="fa fa-check"></i><b>7.2</b> EGP階級分類を作成する</a></li>
+<li class="chapter" data-level="7.1" data-path="domain.html"><a href="domain.html#ssm職業小分類を大分類にまとめる工事中"><i class="fa fa-check"></i><b>7.1</b> SSM職業小分類を大分類にまとめる（工事中）</a></li>
+<li class="chapter" data-level="7.2" data-path="domain.html"><a href="domain.html#egp階級分類を作成する工事中"><i class="fa fa-check"></i><b>7.2</b> EGP階級分類を作成する（工事中）</a></li>
 <li class="chapter" data-level="7.3" data-path="domain.html"><a href="domain.html#旧制学歴と新制学歴の対応"><i class="fa fa-check"></i><b>7.3</b> 旧制学歴と新制学歴の対応</a></li>
-<li class="chapter" data-level="7.4" data-path="domain.html"><a href="domain.html#出身階層親学歴の測定"><i class="fa fa-check"></i><b>7.4</b> 出身階層（親学歴）の測定</a></li>
-<li class="chapter" data-level="7.5" data-path="domain.html"><a href="domain.html#年収と労働時間から時間給を作成する"><i class="fa fa-check"></i><b>7.5</b> 年収と労働時間から時間給を作成する</a></li>
+<li class="chapter" data-level="7.4" data-path="domain.html"><a href="domain.html#年収と労働時間から時間給を作成する"><i class="fa fa-check"></i><b>7.4</b> 年収と労働時間から時間給を作成する</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="domain.html"><a href="domain.html#ssm2005の例"><i class="fa fa-check"></i><b>7.4.1</b> SSM2005の例</a></li>
+<li class="chapter" data-level="7.4.2" data-path="domain.html"><a href="domain.html#万円以上というカテゴリの処理"><i class="fa fa-check"></i><b>7.4.2</b> 「〜万円以上」というカテゴリの処理</a></li>
+<li class="chapter" data-level="7.4.3" data-path="domain.html"><a href="domain.html#外れ値の処理"><i class="fa fa-check"></i><b>7.4.3</b> 外れ値の処理</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>8</b> 参考文献・ウェブサイト</a></li>
 <li class="divider"></li>
@@ -277,7 +281,7 @@ y = \beta_0 + \beta_1x
 ##     1124.92        14.86</code></pre>
 <p>(Intercept)の部分が切片<span class="math inline">\(\beta_0\)</span>、ageの部分がageの傾き<span class="math inline">\(\beta_1\)</span>にそれぞれ対応する。したがって、賃金と年齢の関係は以下の式のように表されるということを意味する：</p>
 <p><span class="math display">\[
-y = 1134.39 + 14.71x
+y = 1124.9177963 + 14.8598134x
 \]</span></p>
 <p>では、推定された係数というのが偶然ではなく、母集団においても確かに正であるということができるだろうか。そのことを確認するための結果をみるために、いったん、名前をつけて結果を保存する。</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="regression-basic.html#cb51-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> age)</span></code></pre></div>
@@ -303,7 +307,7 @@ y = 1134.39 + 14.71x
 ## Multiple R-squared:  0.01804,    Adjusted R-squared:  0.0177 
 ## F-statistic:  52.9 on 1 and 2880 DF,  p-value: 4.497e-13</code></pre>
 <p>1列目のEstimateの列には、先ほどみたように係数の値が表示される。2列目のStd. Errorの列が<strong>標準誤差 standard error</strong>を表し、係数のばらつきを示している。4列めのPr(&gt;|t|)の列が<strong>p値 p-value</strong>を表している。p値は「もし母集団において係数が0であるという帰無仮説が正しいとしたときに、今回のような係数の値となる確率」を表しており、この値が十分に低いのなら、帰無仮説を棄却して、たしかに母集団においても係数は0でなさそうだ（正あるいは負だ）、ということを自信をもって主張できるということになる。</p>
-<p>ageの行をのp値を確認すると、6.19e-13となっている。つまり、母集団において年齢の係数が0であるとしたときに、今回のような係数の値（14.706）が得られる確率は0.0000000000000619だ、ということである。</p>
+<p>ageの行をのp値を確認すると、<code>reg_res_tidy$p.value[1]</code>となっている。つまり、母集団において年齢の係数が0であるとしたときに、今回のような係数の値が得られる確率はとても低い、ということである。</p>
 <p>この確率がどれくらい低ければ自信をもって「関係がある」と言えるのかということだが、慣習的には、0.05という基準が使われている。Rでは、0.05よりも小さければ（正確には0.01 ≤ p &lt; 0.05）、p値の横に<code>*</code>という印がつく。同じようにして、0.01よりも小さければ（0.001 ≤ p &lt; 0.01）<code>**</code>、0.001よりも小さければ（p &lt; 0.001）、<code>***</code>という印がつく。</p>
 </div>
 <div id="最小二乗法ols工事中" class="section level2" number="5.2">
@@ -319,24 +323,28 @@ y = 1134.39 + 14.71x
 <span id="cb54-2"><a href="regression-basic.html#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
 <span id="cb54-3"><a href="regression-basic.html#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span> </span>
 <span id="cb54-4"><a href="regression-basic.html#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) </span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
-<p>図からわかる通り、男性と比べると女性の賃金が低いことがわかる。平均値を計算して棒グラフにしてみると、その差は歴然である。</p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p>図からわかる通り、男性と比べると女性の賃金が低いことがわかる。平均値を計算して棒グラフにしてみてみよう。</p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="regression-basic.html#cb55-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb55-2"><a href="regression-basic.html#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span> </span>
-<span id="cb55-3"><a href="regression-basic.html#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_wage =</span> <span class="fu">mean</span>(wage, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb55-4"><a href="regression-basic.html#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> mean_wage)) <span class="sc">+</span> </span>
+<span id="cb55-3"><a href="regression-basic.html#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(wage, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb55-4"><a href="regression-basic.html#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> mean)) <span class="sc">+</span> </span>
 <span id="cb55-5"><a href="regression-basic.html#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> </span>
-<span id="cb55-6"><a href="regression-basic.html#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(mean_wage, <span class="at">digit =</span> <span class="dv">1</span>)), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb55-6"><a href="regression-basic.html#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(mean, <span class="at">digit =</span> <span class="dv">0</span>)), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb55-7"><a href="regression-basic.html#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">2500</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
-<p>ここで得られた男性の平均値と女性の平均値をそれぞれ散布図に書き入れてみたのが次の図である。実線が男性の平均値、点線が女性の平均値を表している。</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="regression-basic.html#cb56-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb56-2"><a href="regression-basic.html#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
-<span id="cb56-3"><a href="regression-basic.html#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span> </span>
-<span id="cb56-4"><a href="regression-basic.html#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb56-5"><a href="regression-basic.html#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">2196.5</span>) <span class="sc">+</span> </span>
-<span id="cb56-6"><a href="regression-basic.html#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">1327.8</span>, <span class="at">lty =</span> <span class="dv">2</span>) </span></code></pre></div>
 <p><img src="seminar_doc_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p>ここで得られた男性の平均値と女性の平均値をそれぞれ散布図に書き入れてみたのが次の図である。実線が男性の平均値、点線が女性の平均値を表している。</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="regression-basic.html#cb56-1" aria-hidden="true" tabindex="-1"></a>meandata <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb56-2"><a href="regression-basic.html#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-3"><a href="regression-basic.html#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_wage =</span> <span class="fu">mean</span>(wage, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) </span>
+<span id="cb56-4"><a href="regression-basic.html#cb56-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-5"><a href="regression-basic.html#cb56-5" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb56-6"><a href="regression-basic.html#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
+<span id="cb56-7"><a href="regression-basic.html#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span> </span>
+<span id="cb56-8"><a href="regression-basic.html#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb56-9"><a href="regression-basic.html#cb56-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> meandata<span class="sc">$</span>mean_wage[<span class="dv">1</span>]) <span class="sc">+</span> </span>
+<span id="cb56-10"><a href="regression-basic.html#cb56-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> meandata<span class="sc">$</span>mean_wage[<span class="dv">2</span>], <span class="at">lty =</span> <span class="dv">2</span>) </span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
 <p>いま、男性であれば1、女性であれば0をとる変数<span class="math inline">\(x\)</span>を考えよう。このように、カテゴリ変数のカテゴリを区別するために便宜的に0/1の値を振った変数のことを、<strong>ダミー変数 dummy variable</strong>という。このとき、性別による賃金の違いを表す回帰式は次のようになる：</p>
 <p><span class="math display">\[
 y = \beta_0 + \beta_1x
@@ -380,12 +388,12 @@ y = \beta_0 + \beta_1x
 ##   (537 observations deleted due to missingness)
 ## Multiple R-squared:  0.1296, Adjusted R-squared:  0.1293 
 ## F-statistic: 428.7 on 1 and 2880 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>male_dというのが、性別が男性のときに1、女性のときに0をとる変数である。この係数が868.7、切片（Intercept）が1327.8ということだから、推定された式はつぎのとおりとなる。</p>
+<p>male_dというのが、性別が男性のときに1、女性のときに0をとる変数である。この係数は傾き<span class="math inline">\(\beta_1\)</span>に対応し、切片（Intercept）は切片<span class="math inline">\(\beta_0\)</span>に対応する。つまり、推定された式は次のようになる：</p>
 <p><span class="math display">\[
-y = 1327.8 + 868.7x
+y = 1327.5908217 + 868.4333019x
 \]</span></p>
-<p>傾きの値は、女性と比べて男性の賃金は868.7円高いということを意味している。</p>
-<p>この868.7という値は、2つのカテゴリ（この場合は男性・女性）、先ほど棒グラフに示した男性の平均値と女性の平均値の差に一致していることを確認しよう。傾きの値は、2つのカテゴリの平均値の差に一致する。</p>
+<p>つまり、女性（x = 0）とくらべて男性（x = 1）の賃金は868.4333019円高いということを意味している。</p>
+<p>この値が、2つのカテゴリ（この場合は男性・女性）、先ほど棒グラフに示した男性の平均値と女性の平均値の差に一致していることを確認しよう。傾きの値は、2つのカテゴリの平均値の差に一致する。</p>
 </div>
 <div id="値以上のカテゴリ" class="section level3" number="5.3.2">
 <h3><span class="header-section-number">5.3.2</span> 3値以上のカテゴリ</h3>
@@ -395,7 +403,7 @@ y = 1327.8 + 868.7x
 <span id="cb61-3"><a href="regression-basic.html#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> educ, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
 <span id="cb61-4"><a href="regression-basic.html#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span> </span>
 <span id="cb61-5"><a href="regression-basic.html#cb61-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) </span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
 <p>中学卒を基準として、高校、短大高専、大学大学院卒だとどれくらい賃金が高いのかを推定することになる。</p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="regression-basic.html#cb62-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb62-2"><a href="regression-basic.html#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ_d2 =</span> <span class="fu">if_else</span>(educ <span class="sc">==</span> <span class="st">&quot;高校&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
@@ -889,7 +897,7 @@ y = 1327.8 + 868.7x
 <span id="cb71-5"><a href="regression-basic.html#cb71-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
 <span id="cb71-6"><a href="regression-basic.html#cb71-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(mean_ojt, <span class="at">digit =</span> <span class="dv">3</span>)), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb71-7"><a href="regression-basic.html#cb71-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fl">0.4</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
 <p>ここで示された値は、上記クロス表の「1」のほうに示されている行%、すなわち「OJTを受けた人の割合」に一致している。</p>
 <p>では、回帰式を推定してみよう。</p>
 <div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="regression-basic.html#cb72-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender)</span>
@@ -949,12 +957,12 @@ y = 1327.8 + 868.7x
 <span id="cb78-2"><a href="regression-basic.html#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> </span>
 <span id="cb78-3"><a href="regression-basic.html#cb78-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="regression-basic.html#cb80-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb80-2"><a href="regression-basic.html#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> logwage)) <span class="sc">+</span> </span>
 <span id="cb80-3"><a href="regression-basic.html#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-52-2.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-54-2.png" width="672" /></p>
 <div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="regression-basic.html#cb82-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> age)</span>
 <span id="cb82-2"><a href="regression-basic.html#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
 <pre><code>## 
@@ -983,7 +991,7 @@ y = 1327.8 + 868.7x
 <span id="cb85-3"><a href="regression-basic.html#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
 <span id="cb85-4"><a href="regression-basic.html#cb85-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
 </div>
 <div id="乗項" class="section level3" number="5.5.2">
 <h3><span class="header-section-number">5.5.2</span> 2乗項</h3>
@@ -993,7 +1001,7 @@ y = 1327.8 + 868.7x
 <span id="cb87-4"><a href="regression-basic.html#cb87-4" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb87-5"><a href="regression-basic.html#cb87-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> age_sq)) <span class="sc">+</span> </span>
 <span id="cb87-6"><a href="regression-basic.html#cb87-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
 <div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="regression-basic.html#cb88-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> age <span class="sc">+</span> age_sq)</span>
 <span id="cb88-2"><a href="regression-basic.html#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
 <pre><code>## 
@@ -1021,7 +1029,7 @@ y = 1327.8 + 868.7x
 <span id="cb90-2"><a href="regression-basic.html#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> logwage)) <span class="sc">+</span> </span>
 <span id="cb90-3"><a href="regression-basic.html#cb90-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
 <span id="cb90-4"><a href="regression-basic.html#cb90-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">2</span>), <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
 <p>2乗した変数を別に作らなくても、回帰分析のコード中で2乗した変数を作成することができる。（結果は省略）</p>
 <div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="regression-basic.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> piaac, <span class="fu">log</span>(wage) <span class="sc">~</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
 </div>

@@ -37,8 +37,13 @@ lm(data = piaac, formula = wage ~ age)
 
 (Intercept)の部分が切片$\beta_0$、ageの部分がageの傾き$\beta_1$にそれぞれ対応する。したがって、賃金と年齢の関係は以下の式のように表されるということを意味する：
 
+```{r, echo = FALSE}
+reg_res <- lm(data = piaac, wage ~ age)
+reg_res_tidy <- tidy(reg_res)
+```
+
 $$
-y = 1134.39 + 14.71x
+y = `r reg_res_tidy$estimate[1]` + `r reg_res_tidy$estimate[2]`x
 $$
 
 では、推定された係数というのが偶然ではなく、母集団においても確かに正であるということができるだろうか。そのことを確認するための結果をみるために、いったん、名前をつけて結果を保存する。
@@ -55,7 +60,7 @@ summary(reg_res)
 
 1列目のEstimateの列には、先ほどみたように係数の値が表示される。2列目のStd. Errorの列が**標準誤差 standard error**を表し、係数のばらつきを示している。4列めのPr(\>\|t\|)の列が**p値 p-value**を表している。p値は「もし母集団において係数が0であるという帰無仮説が正しいとしたときに、今回のような係数の値となる確率」を表しており、この値が十分に低いのなら、帰無仮説を棄却して、たしかに母集団においても係数は0でなさそうだ（正あるいは負だ）、ということを自信をもって主張できるということになる。
 
-ageの行をのp値を確認すると、6.19e-13となっている。つまり、母集団において年齢の係数が0であるとしたときに、今回のような係数の値（14.706）が得られる確率は0.0000000000000619だ、ということである。
+ageの行をのp値を確認すると、`reg_res_tidy$p.value[1]`となっている。つまり、母集団において年齢の係数が0であるとしたときに、今回のような係数の値が得られる確率はとても低い、ということである。
 
 この確率がどれくらい低ければ自信をもって「関係がある」と言えるのかということだが、慣習的には、0.05という基準が使われている。Rでは、0.05よりも小さければ（正確には0.01 ≤ p \< 0.05）、p値の横に`*`という印がつく。同じようにして、0.01よりも小さければ（0.001 ≤ p \< 0.01）`**`、0.001よりも小さければ（p \< 0.001）、`***`という印がつく。
 
@@ -76,27 +81,31 @@ piaac %>%
   geom_point(alpha = 0.2) 
 ```
 
-図からわかる通り、男性と比べると女性の賃金が低いことがわかる。平均値を計算して棒グラフにしてみると、その差は歴然である。
+図からわかる通り、男性と比べると女性の賃金が低いことがわかる。平均値を計算して棒グラフにしてみてみよう。
 
 ```{r}
 piaac %>% 
   group_by(gender) %>% 
-  summarize(mean_wage = mean(wage, na.rm = TRUE)) %>% 
-  ggplot(aes(x = gender, y = mean_wage)) + 
+  summarize(mean = mean(wage, na.rm = TRUE)) %>% 
+  ggplot(aes(x = gender, y = mean)) + 
   geom_col() + 
-  geom_text(aes(label = round(mean_wage, digit = 1)), vjust = -1) + 
+  geom_text(aes(label = round(mean, digit = 0)), vjust = -1) + 
   ylim(0, 2500)
 ```
 
 ここで得られた男性の平均値と女性の平均値をそれぞれ散布図に書き入れてみたのが次の図である。実線が男性の平均値、点線が女性の平均値を表している。
 
 ```{r}
+meandata <- piaac %>% 
+  group_by(gender) %>% 
+  summarize(mean_wage = mean(wage, na.rm = TRUE)) 
+
 piaac %>% 
   ggplot(aes(x = gender, y = wage)) + 
   geom_violin() + 
   geom_point(alpha = 0.2) +
-  geom_hline(yintercept = 2196.5) + 
-  geom_hline(yintercept = 1327.8, lty = 2) 
+  geom_hline(yintercept = meandata$mean_wage[1]) + 
+  geom_hline(yintercept = meandata$mean_wage[2], lty = 2) 
 ```
 
 いま、男性であれば1、女性であれば0をとる変数$x$を考えよう。このように、カテゴリ変数のカテゴリを区別するために便宜的に0/1の値を振った変数のことを、**ダミー変数 dummy variable**という。このとき、性別による賃金の違いを表す回帰式は次のようになる：
@@ -123,15 +132,19 @@ reg_res <- lm(data = piaac, wage ~ male_d)
 summary(reg_res)
 ```
 
-male_dというのが、性別が男性のときに1、女性のときに0をとる変数である。この係数が868.7、切片（Intercept）が1327.8ということだから、推定された式はつぎのとおりとなる。
+```{r, echo = FALSE}
+reg_res_tidy <- tidy(reg_res)
+```
+
+male_dというのが、性別が男性のときに1、女性のときに0をとる変数である。この係数は傾き$\beta_1$に対応し、切片（Intercept）は切片$\beta_0$に対応する。つまり、推定された式は次のようになる：
 
 $$
-y = 1327.8 + 868.7x
+y = `r reg_res_tidy$estimate[1]` + `r reg_res_tidy$estimate[2]`x
 $$
 
-傾きの値は、女性と比べて男性の賃金は868.7円高いということを意味している。
+つまり、女性（x = 0）とくらべて男性（x = 1）の賃金は`r reg_res_tidy$estimate[2]`円高いということを意味している。
 
-この868.7という値は、2つのカテゴリ（この場合は男性・女性）、先ほど棒グラフに示した男性の平均値と女性の平均値の差に一致していることを確認しよう。傾きの値は、2つのカテゴリの平均値の差に一致する。
+この値が、2つのカテゴリ（この場合は男性・女性）、先ほど棒グラフに示した男性の平均値と女性の平均値の差に一致していることを確認しよう。傾きの値は、2つのカテゴリの平均値の差に一致する。
 
 ### 3値以上のカテゴリ
 
