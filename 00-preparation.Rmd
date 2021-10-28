@@ -1,0 +1,61 @@
+```{r, include = FALSE}
+library(tidyverse)
+library(haven)
+library(gtsummary)
+library(dagitty)
+library(ggdag)
+library(estimatr)
+library(modelsummary)
+
+piaac <- read_dta("data/piaacjpn.dta")
+
+set.seed(1)
+
+theme_set(theme_bw(
+  base_size = 11,
+  base_rect_size = 0.2,
+  base_line_size = 0.2,
+  base_family = "HiraginoSans-W3"
+))
+
+piaac <- piaac %>% 
+  mutate(wage = if_else(300 <= earnhrbonus & earnhrbonus <= 10000, earnhrbonus, NA_real_)) %>% 
+  mutate(age = age_r) %>% 
+  mutate(gender = factor(gender_r, level = 2:1, label = c("女性","男性"))) %>% 
+  mutate(educ = case_when(
+    edcat8 == 1 | edcat8 == 2 ~ 1,
+    edcat8 == 3 ~ 2,
+    edcat8 == 4 | edcat8 == 5 ~ 3,
+    edcat8 == 6 | edcat8 == 7 | edcat8 == 8 ~ 4)) %>% 
+  mutate(educ = factor(educ, levels = 1:4,
+                       labels = c("中学", "高校", "短大高専", "大学大学院"))) %>% 
+  mutate(ojt = 2 - b_q12c) %>% 
+  mutate(mothereduc = factor(j_q06b,
+                             levels = 1:3,
+                             labels = c("母親：初等教育", "母親：中等教育", "母親：高等教育"))) %>% 
+  mutate(fathereduc = factor(j_q07b,
+                             levels = 1:3,
+                             labels = c("父親：初等教育", "父親：中等教育", "父親：高等教育"))) %>% 
+  mutate(literacy = pvlit1) %>% 
+  mutate(numeracy = pvnum1) %>% 
+  mutate(parenteduc = case_when(
+    j_q07b >= j_q06b ~ j_q07b,
+    j_q07b < j_q06b ~ j_q06b,
+    is.na(j_q07b) == TRUE & is.na(j_q06b) == FALSE ~ j_q06b,
+    is.na(j_q06b) == TRUE & is.na(j_q07b) == FALSE ~ j_q07b
+  )) %>% 
+  mutate(parenteduc = factor(parenteduc,
+                             levels = 1:3,
+                             labels = c("親：初等教育", "親：中等教育", "親：高等教育"))) %>% 
+  mutate(logwage = log(wage)) %>% 
+  mutate(occupation = factor(isco1c,
+                             levels = 1:9,
+                             labels = c("管理職","専門職","技術職・准専門職","事務補助","サービス・販売","農林漁業","技能工","設備・機械運転・組立","単純作業")
+)) %>% 
+  mutate(health = 6 - i_q08)
+
+piaac <- piaac %>% 
+  filter(25 <= age & age <= 64) %>% 
+  filter(is.na(educ) == FALSE) %>% 
+  filter(is.na(occupation) == FALSE)
+```

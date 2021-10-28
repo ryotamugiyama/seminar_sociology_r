@@ -1,0 +1,344 @@
+# 回帰分析の基礎 {#regression_basic}
+
+## 説明
+
+年齢が高いほど賃金（時給換算）が高いという傾向があるかどうかを知りたいとする。このとき、年齢を横軸、賃金を縦軸とする散布図を書いてみる。
+
+```{r}
+piaac %>% 
+  ggplot(aes(x = age, y = wage)) + 
+  geom_point(alpha = 0.2)
+```
+
+なんとなく、年齢が高いほど賃金が高い傾向があるようにみえる。この関係を1つの直線で要約するとしたらどのようになるだろう？この直線を示したのが次の図になる。
+
+```{r}
+piaac %>% 
+  ggplot(aes(x = age, y = wage)) + 
+  geom_point(alpha = 0.2) + 
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+このように、従属変数と独立変数の関係を$y = f(x)$というような関数で表現する分析方法を指して、**回帰分析 regression analysis/regression model** という。今回の式の場合は、次のようなかたちになる。とくに今回のような場合を**線形回帰分析 Linear regression**ということもある。
+
+$$
+y = \beta_0 + \beta_1x
+$$
+
+今の例の場合は、$y$は賃金、$x$は年齢である。$\beta_k$のことを**係数 coefficient** といい、なかでもとくに$\beta_0$のことを**切片 intercept**、$\beta_1$のことを**傾き slope** という。傾きは、$x$が1単位高いときに$y$がどれだけ高いかを表す。
+
+ここで関心があるのは傾きの値である。これが正であれば、$x$が高いほど$y$は高いという正の関係を表すし、負であれば、$x$が高いほど$y$は低いという負の関係を表す。絶対値が大きいほど、$x$ 1単位の変化に対して $y$がより大きく変わるということを表すので、たんに正か負かというだけでなく、その値も重要。
+
+今回の場合は係数はどうなるだろうか？線形回帰分析を推定するときのコマンドが`lm()`である。`lm(data = xx, formula = )`という書き方になる。`formula =`の部分は省略しても大丈夫。
+
+```{r}
+lm(data = piaac, formula = wage ~ age)
+```
+
+(Intercept)の部分が切片$\beta_0$、ageの部分がageの傾き$\beta_1$にそれぞれ対応する。したがって、賃金と年齢の関係は以下の式のように表されるということを意味する：
+
+$$
+y = 1134.39 + 14.71x
+$$
+
+では、推定された係数というのが偶然ではなく、母集団においても確かに正であるということができるだろうか。そのことを確認するための結果をみるために、いったん、名前をつけて結果を保存する。
+
+```{r}
+reg_res <- lm(data = piaac, wage ~ age)
+```
+
+名前をつけた結果は、`summary()`でよびだすことができる：
+
+```{r}
+summary(reg_res)
+```
+
+1列目のEstimateの列には、先ほどみたように係数の値が表示される。2列目のStd. Errorの列が**標準誤差 standard error**を表し、係数のばらつきを示している。4列めのPr(\>\|t\|)の列が**p値 p-value**を表している。p値は「もし母集団において係数が0であるという帰無仮説が正しいとしたときに、今回のような係数の値となる確率」を表しており、この値が十分に低いのなら、帰無仮説を棄却して、たしかに母集団においても係数は0でなさそうだ（正あるいは負だ）、ということを自信をもって主張できるということになる。
+
+ageの行をのp値を確認すると、6.19e-13となっている。つまり、母集団において年齢の係数が0であるとしたときに、今回のような係数の値（14.706）が得られる確率は0.0000000000000619だ、ということである。
+
+この確率がどれくらい低ければ自信をもって「関係がある」と言えるのかということだが、慣習的には、0.05という基準が使われている。Rでは、0.05よりも小さければ（正確には0.01 ≤ p \< 0.05）、p値の横に`*`という印がつく。同じようにして、0.01よりも小さければ（0.001 ≤ p \< 0.01）`**`、0.001よりも小さければ（p \< 0.001）、`***`という印がつく。
+
+## 最小二乗法（OLS）（工事中）
+
+もちろん、上記の回帰式は散布図をみて直観でえいやっと式の値を決めたのではなく、全体の傾向をもっともよく要約するような係数を推定している。その係数の推定方法を**最小二乗法 ordinary least square, OLS**という。
+
+## 独立変数がカテゴリ変数の場合
+
+### 2値のカテゴリ
+
+線形回帰分析では、連続変数だけではなく、カテゴリ変数も扱うことができる。その例としてまず、性別によって賃金がどの程度異なるのかを知りたいとする。このとき、（無理やり）散布図を書くと、次のようになる。分布がわかりやすいように、バイオリン・プロットを重ねて示している。
+
+```{r}
+piaac %>% 
+  ggplot(aes(x = gender, y = wage)) + 
+  geom_violin() + 
+  geom_point(alpha = 0.2) 
+```
+
+図からわかる通り、男性と比べると女性の賃金が低いことがわかる。平均値を計算して棒グラフにしてみると、その差は歴然である。
+
+```{r}
+piaac %>% 
+  group_by(gender) %>% 
+  summarize(mean_wage = mean(wage, na.rm = TRUE)) %>% 
+  ggplot(aes(x = gender, y = mean_wage)) + 
+  geom_col() + 
+  geom_text(aes(label = round(mean_wage, digit = 1)), vjust = -1) + 
+  ylim(0, 2500)
+```
+
+ここで得られた男性の平均値と女性の平均値をそれぞれ散布図に書き入れてみたのが次の図である。実線が男性の平均値、点線が女性の平均値を表している。
+
+```{r}
+piaac %>% 
+  ggplot(aes(x = gender, y = wage)) + 
+  geom_violin() + 
+  geom_point(alpha = 0.2) +
+  geom_hline(yintercept = 2196.5) + 
+  geom_hline(yintercept = 1327.8, lty = 2) 
+```
+
+いま、男性であれば1、女性であれば0をとる変数$x$を考えよう。このように、カテゴリ変数のカテゴリを区別するために便宜的に0/1の値を振った変数のことを、**ダミー変数 dummy variable**という。このとき、性別による賃金の違いを表す回帰式は次のようになる：
+
+$$
+y = \beta_0 + \beta_1x
+$$
+
+回帰式のかたちは先ほどと同じとなる。傾き$\beta_1$は、女性（0）とくらべて男性（1）がどの程度賃金が高いのかを示している。実際、この係数を推定してみよう。
+
+```{r}
+piaac <- piaac %>% 
+  mutate(male_d = case_when(
+    gender == "男性" ~ 1,
+    gender == "女性" ~ 0
+  ))
+piaac %>% 
+  select(gender, male_d) %>%
+  sample_n(size = 6) # どのような値になっているかをチェック。
+```
+
+```{r}
+reg_res <- lm(data = piaac, wage ~ male_d)
+summary(reg_res)
+```
+
+male_dというのが、性別が男性のときに1、女性のときに0をとる変数である。この係数が868.7、切片（Intercept）が1327.8ということだから、推定された式はつぎのとおりとなる。
+
+$$
+y = 1327.8 + 868.7x
+$$
+
+傾きの値は、女性と比べて男性の賃金は868.7円高いということを意味している。
+
+この868.7という値は、2つのカテゴリ（この場合は男性・女性）、先ほど棒グラフに示した男性の平均値と女性の平均値の差に一致していることを確認しよう。傾きの値は、2つのカテゴリの平均値の差に一致する。
+
+### 3値以上のカテゴリ
+
+カテゴリが3値以上の場合はどうだろう？これも、基本的には同じふうに考えることができる。
+
+```{r}
+piaac %>% 
+  filter(is.na(educ) == FALSE) %>% 
+  ggplot(aes(x = educ, y = wage)) + 
+  geom_violin() + 
+  geom_point(alpha = 0.2) 
+```
+
+中学卒を基準として、高校、短大高専、大学大学院卒だとどれくらい賃金が高いのかを推定することになる。
+
+```{r}
+piaac <- piaac %>% 
+  mutate(educ_d2 = if_else(educ == "高校", 1, 0)) %>% 
+  mutate(educ_d3 = if_else(educ == "短大高専", 1, 0)) %>% 
+  mutate(educ_d4 = if_else(educ == "大学大学院", 1, 0)) 
+
+piaac %>% 
+  select(educ, educ_d2, educ_d3, educ_d4) %>% 
+  sample_n(size = 10) #それぞれどのような値となっているかチェック。
+```
+
+```{r}
+reg_res <- lm(data = piaac, wage ~ educ_d2 + educ_d3 + educ_d4)
+summary(reg_res)
+```
+
+それぞれの係数は、基準カテゴリ（今回なら中学卒）と比べて、それぞれどれくらい賃金が高いのかを表している。標準誤差やp値のみかたについてはどれも同じ。
+
+### 変数がfactorであれば自動でカテゴリとして投入される
+
+独立変数の型がカテゴリの場合には、Rが自動で先ほどのようなダミー変数を勝手に作って投入してくれる。
+
+```{r}
+reg_res <- lm(data = piaac, wage ~ educ)
+summary(reg_res)
+```
+
+ただし、基準カテゴリは一番最初（アルファベットが早い順、漢字の場合はよくわからない）のものが勝手に選ばれるので、たとえば高校を基準にしてその他を比較したい、と思ったときには、自分でカテゴリの順序を変更しておく必要がある。
+
+```{r}
+piaac <- piaac %>% 
+  mutate(educ_reorder = factor(educ,
+                               levels = c("高校", "中学", "短大高専", "大学大学院"),
+                               labels = c("高校", "中学", "短大高専", "大学大学院")))
+
+reg_res <- lm(data = piaac, wage ~ educ_reorder)
+summary(reg_res)
+```
+
+## 従属変数が2値のカテゴリ変数（0/1）の場合
+
+たとえば、性別によってこの1年間に職場での訓練（OJTとよぶ）を受ける率が異なっているかどうかを知りたいとする。これも今までと同じように回帰分析の枠組みで扱うことができる。
+
+まず、OJTを受けたならば1、受けていないならば0を取る変数があるとする。この値の平均をとれば、OJTを受けた人の割合に一致する。たとえば以下の2つを比較してみよう。
+
+```{r}
+piaac %>% 
+  tbl_cross(gender, ojt, percent = "row")
+```
+
+ついで、性別ごとにojtの平均値を計算し、図に書いてみる。
+
+```{r}
+piaac %>% 
+  group_by(gender) %>% 
+  summarize(mean_ojt = mean(ojt, na.rm = TRUE)) %>% 
+  ggplot(aes(x = gender, y = mean_ojt)) + 
+  geom_col() +
+  geom_text(aes(label = round(mean_ojt, digit = 3)), vjust = -1) + 
+  ylim(0, 0.4)
+```
+
+ここで示された値は、上記クロス表の「1」のほうに示されている行%、すなわち「OJTを受けた人の割合」に一致している。
+
+では、回帰式を推定してみよう。
+
+```{r}
+reg_res <- lm(data = piaac, ojt ~ gender)
+summary(reg_res)
+```
+
+「gender男性」と書かれている行が、女性と比べて男性が6.6%ポイントOJTを受ける割合が高いのかを示している）。この値が、ちょうど先ほどの棒グラフの男性と女性の割合（平均値）の差に一致していることを確認しよう。係数の見方も、標準誤差も、p値も、すべて今までの回帰分析と一緒。
+
+もちろん、年齢などの連続変数を独立変数（X）として使うこともできる。
+
+### （発展）ロバスト標準誤差
+
+上記のように従属変数が2値の場合の線形回帰分析のことを**線形確率モデル linear probability model**と呼ぶことがある。線形確率モデルの場合は、誤差が正規分布するという仮定に反し、普通の標準誤差は誤った値になってしまうことが知られている。そこで、こうした不均一分散の問題に対処するために、ロバスト標準誤差を用いることが推奨されている。
+
+ここではロバスト標準誤差のことについては説明しないし、授業でも使う必要はないが、推定の仕方だけ書いておく。`estimatr::lm_robust()`で、ロバスト標準誤差を得ることができる。使い方は[このページ](https://keita43a.hatenablog.com/entry/2019/04/17/232548#%E4%B8%8D%E5%9D%87%E4%B8%80%E5%88%86%E6%95%A3%E3%81%A7%E3%81%AE%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90)にくわしい。
+
+```{r, eval = FALSE}
+install.packages("estimatr") #未インストールの場合のみ
+
+library(estimatr)
+```
+
+```{r}
+reg_res <- lm_robust(data = piaac, ojt ~ gender)
+summary(reg_res)
+```
+
+## 非線形の関連
+
+### 対数変換
+
+```{r}
+piaac <- piaac %>% 
+  mutate(logwage = log(wage))
+```
+
+2つの変数の分布を比較してみよう。
+
+```{r}
+piaac %>% 
+  ggplot(aes(x = wage)) + 
+  geom_histogram()
+
+piaac %>% 
+  ggplot(aes(x = logwage)) + 
+  geom_histogram()
+```
+
+```{r}
+reg_res <- lm(data = piaac, logwage ~ age)
+summary(reg_res)
+```
+
+なお、対数変換した変数を新たに作成しなくても、次のように書くことで、回帰分析のコード中で対数変換を行う事ができる。以下でも同じ結果を得ることができる（結果は省略）。
+
+```{r, results="hide"}
+lm(data = piaac, log(wage) ~ age)
+```
+
+```{r}
+piaac %>% 
+  ggplot(aes(x = age, y = logwage)) + 
+  geom_point(alpha = 0.2) + 
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+### 2乗項
+
+```{r}
+piaac <- piaac %>% 
+  mutate(age_sq = age^2)
+
+piaac %>% 
+  ggplot(aes(x = age, y = age_sq)) + 
+  geom_point()
+```
+
+```{r}
+reg_res <- lm(data = piaac, logwage ~ age + age_sq)
+summary(reg_res)
+```
+
+このときの散布図と回帰式は次のようになる。
+
+```{r}
+piaac %>% 
+  ggplot(aes(x = age, y = logwage)) + 
+  geom_point(alpha = 0.2) + 
+  geom_smooth(method = "lm", formula = y ~ poly(x, 2), se = FALSE)
+```
+
+2乗した変数を別に作らなくても、回帰分析のコード中で2乗した変数を作成することができる。（結果は省略）
+
+```{r, results='hide'}
+lm(data = piaac, log(wage) ~ age + I(age^2))
+```
+
+## 結果をきれいに表示する
+
+先ほどの回気分析の結果をもう少しきれいに表示したいと思うかもしれない。これまで、こうしたときには`texreg`や`stargazer`などといったパッケージが使われてきたが、最近は`modelsummary`というパッケージが開発され、これがなかなか良さそうという情報をキャッチしたので、使ってみよう（2021-10-27現在）。
+
+はじめて使う場合は`install.packages()`。
+
+```{r, eval = FALSE}
+install.packages("modelsummary")  #未インストールの場合のみ
+
+library(modelsummary)
+```
+
+では、実際に使ってみよう。`msummary(list(model))`（modelという部分には、すでに保存しておいた回帰分析の結果を入れる）というのが最低限のコマンド。
+
+```{r}
+reg_res <- lm(data = piaac, log(wage) ~ age + I(age^2))
+
+msummary(list(reg_res)) 
+```
+
+よく論文でみる感じのきれいな見た目になる。とはいえ、まだたとえば変数名が何を指しているかなどは改善の余地がある。オプションを色々指定することで、よりわかりやすい表が作れる。
+
+```{r}
+msummary(list(reg_res),
+         stars = TRUE, # 有意水準を示す印をつける
+         coef_rename = c("(Intercept)" = "切片",
+                         "age" = "年齢",
+                         "I(age^2)" = "年齢2乗"), # 各変数に名前をつける
+         gof_omit = "R2 Adj.|AIC|BIC|Log.Lik.|F") # 不要な統計量を削除する
+
+```
+
+いい感じの表ができた！

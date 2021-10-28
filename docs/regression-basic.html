@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 回帰分析の基礎 | 社会調査データ分析のためのRの手引き</title>
+  <meta name="description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 回帰分析の基礎 | 社会調査データ分析のためのRの手引き" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 回帰分析の基礎 | 社会調査データ分析のためのRの手引き" />
+  
+  <meta name="twitter:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  
+
+<meta name="author" content="Ryota Mugiyama (Department of Political Studies, Gakushuin University)" />
+
+
+<meta name="date" content="2021-10-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="tabulate.html"/>
+<link rel="next" href="regression-advanced.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">社会調査データ分析のためのRの手引き</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>まえがき</a></li>
+<li class="chapter" data-level="1" data-path="import.html"><a href="import.html"><i class="fa fa-check"></i><b>1</b> データの読み込み</a></li>
+<li class="chapter" data-level="2" data-path="handling.html"><a href="handling.html"><i class="fa fa-check"></i><b>2</b> データの加工</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="handling.html"><a href="handling.html#サンプルの限定"><i class="fa fa-check"></i><b>2.1</b> サンプルの限定</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="handling.html"><a href="handling.html#条件に合う行のみ抽出filter"><i class="fa fa-check"></i><b>2.1.1</b> 条件に合う行のみ抽出：filter()</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="handling.html"><a href="handling.html#変数の作成"><i class="fa fa-check"></i><b>2.2</b> 変数の作成</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="handling.html"><a href="handling.html#新たな変数を作成mutate"><i class="fa fa-check"></i><b>2.2.1</b> 新たな変数を作成：mutate()</a></li>
+<li class="chapter" data-level="2.2.2" data-path="handling.html"><a href="handling.html#条件の指定if_else"><i class="fa fa-check"></i><b>2.2.2</b> 条件の指定：if_else()</a></li>
+<li class="chapter" data-level="2.2.3" data-path="handling.html"><a href="handling.html#複数条件の指定case_when"><i class="fa fa-check"></i><b>2.2.3</b> 複数条件の指定：case_when()</a></li>
+<li class="chapter" data-level="2.2.4" data-path="handling.html"><a href="handling.html#カテゴリ変数へ変換factor"><i class="fa fa-check"></i><b>2.2.4</b> カテゴリ変数へ変換：factor()</a></li>
+<li class="chapter" data-level="2.2.5" data-path="handling.html"><a href="handling.html#必要な列のみ抽出select"><i class="fa fa-check"></i><b>2.2.5</b> 必要な列のみ抽出：select()</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="handling.html"><a href="handling.html#変数の操作化についてのtips"><i class="fa fa-check"></i><b>2.3</b> 変数の操作化についてのtips</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="handling.html"><a href="handling.html#カテゴリをまとめる"><i class="fa fa-check"></i><b>2.3.1</b> カテゴリをまとめる</a></li>
+<li class="chapter" data-level="2.3.2" data-path="handling.html"><a href="handling.html#均等な順序を仮定して連続変数とする"><i class="fa fa-check"></i><b>2.3.2</b> 均等な順序を仮定して連続変数とする</a></li>
+<li class="chapter" data-level="2.3.3" data-path="handling.html"><a href="handling.html#カテゴリ変数の区間の中点をとって連続変数とする"><i class="fa fa-check"></i><b>2.3.3</b> カテゴリ変数の区間の中点をとって連続変数とする</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="descriptives.html"><a href="descriptives.html"><i class="fa fa-check"></i><b>3</b> 1変数の集計</a></li>
+<li class="chapter" data-level="4" data-path="tabulate.html"><a href="tabulate.html"><i class="fa fa-check"></i><b>4</b> 2変数の分析</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="tabulate.html"><a href="tabulate.html#平均値の比較"><i class="fa fa-check"></i><b>4.1</b> 平均値の比較</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="tabulate.html"><a href="tabulate.html#基本"><i class="fa fa-check"></i><b>4.1.1</b> 基本</a></li>
+<li class="chapter" data-level="4.1.2" data-path="tabulate.html"><a href="tabulate.html#棒グラフによる可視化"><i class="fa fa-check"></i><b>4.1.2</b> 棒グラフによる可視化</a></li>
+<li class="chapter" data-level="4.1.3" data-path="tabulate.html"><a href="tabulate.html#複数カテゴリの組み合わせ"><i class="fa fa-check"></i><b>4.1.3</b> 複数カテゴリの組み合わせ</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="tabulate.html"><a href="tabulate.html#分布の比較"><i class="fa fa-check"></i><b>4.2</b> 分布の比較</a></li>
+<li class="chapter" data-level="4.3" data-path="tabulate.html"><a href="tabulate.html#クロス集計"><i class="fa fa-check"></i><b>4.3</b> クロス集計</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="tabulate.html"><a href="tabulate.html#基本-1"><i class="fa fa-check"></i><b>4.3.1</b> 基本</a></li>
+<li class="chapter" data-level="4.3.2" data-path="tabulate.html"><a href="tabulate.html#きれいなクロス表をつくる---gtsummarytbl_cross"><i class="fa fa-check"></i><b>4.3.2</b> きれいなクロス表をつくる - gtsummary::tbl_cross()</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="tabulate.html"><a href="tabulate.html#クロス集計表を図示する"><i class="fa fa-check"></i><b>4.4</b> クロス集計表を図示する</a></li>
+<li class="chapter" data-level="4.5" data-path="tabulate.html"><a href="tabulate.html#散布図"><i class="fa fa-check"></i><b>4.5</b> 散布図</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="tabulate.html"><a href="tabulate.html#散布図をみる"><i class="fa fa-check"></i><b>4.5.1</b> 散布図をみる</a></li>
+<li class="chapter" data-level="4.5.2" data-path="tabulate.html"><a href="tabulate.html#カテゴリごとに散布図を分ける"><i class="fa fa-check"></i><b>4.5.2</b> カテゴリごとに散布図を分ける</a></li>
+<li class="chapter" data-level="4.5.3" data-path="tabulate.html"><a href="tabulate.html#相関係数"><i class="fa fa-check"></i><b>4.5.3</b> 相関係数</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="tabulate.html"><a href="tabulate.html#値が細かくない連続変数を扱う"><i class="fa fa-check"></i><b>4.6</b> 値が細かくない連続変数を扱う</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="regression-basic.html"><a href="regression-basic.html"><i class="fa fa-check"></i><b>5</b> 回帰分析の基礎</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="regression-basic.html"><a href="regression-basic.html#説明"><i class="fa fa-check"></i><b>5.1</b> 説明</a></li>
+<li class="chapter" data-level="5.2" data-path="regression-basic.html"><a href="regression-basic.html#最小二乗法ols工事中"><i class="fa fa-check"></i><b>5.2</b> 最小二乗法（OLS）（工事中）</a></li>
+<li class="chapter" data-level="5.3" data-path="regression-basic.html"><a href="regression-basic.html#独立変数がカテゴリ変数の場合"><i class="fa fa-check"></i><b>5.3</b> 独立変数がカテゴリ変数の場合</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="regression-basic.html"><a href="regression-basic.html#値のカテゴリ"><i class="fa fa-check"></i><b>5.3.1</b> 2値のカテゴリ</a></li>
+<li class="chapter" data-level="5.3.2" data-path="regression-basic.html"><a href="regression-basic.html#値以上のカテゴリ"><i class="fa fa-check"></i><b>5.3.2</b> 3値以上のカテゴリ</a></li>
+<li class="chapter" data-level="5.3.3" data-path="regression-basic.html"><a href="regression-basic.html#変数がfactorであれば自動でカテゴリとして投入される"><i class="fa fa-check"></i><b>5.3.3</b> 変数がfactorであれば自動でカテゴリとして投入される</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="regression-basic.html"><a href="regression-basic.html#従属変数が2値のカテゴリ変数01の場合"><i class="fa fa-check"></i><b>5.4</b> 従属変数が2値のカテゴリ変数（0/1）の場合</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="regression-basic.html"><a href="regression-basic.html#発展ロバスト標準誤差"><i class="fa fa-check"></i><b>5.4.1</b> （発展）ロバスト標準誤差</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="regression-basic.html"><a href="regression-basic.html#非線形の関連"><i class="fa fa-check"></i><b>5.5</b> 非線形の関連</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="regression-basic.html"><a href="regression-basic.html#対数変換"><i class="fa fa-check"></i><b>5.5.1</b> 対数変換</a></li>
+<li class="chapter" data-level="5.5.2" data-path="regression-basic.html"><a href="regression-basic.html#乗項"><i class="fa fa-check"></i><b>5.5.2</b> 2乗項</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="regression-basic.html"><a href="regression-basic.html#結果をきれいに表示する"><i class="fa fa-check"></i><b>5.6</b> 結果をきれいに表示する</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="regression-advanced.html"><a href="regression-advanced.html"><i class="fa fa-check"></i><b>6</b> 重回帰分析の活用</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="regression-advanced.html"><a href="regression-advanced.html#交絡要因の統制"><i class="fa fa-check"></i><b>6.1</b> 交絡要因の統制</a></li>
+<li class="chapter" data-level="6.2" data-path="regression-advanced.html"><a href="regression-advanced.html#結果の比較と解釈"><i class="fa fa-check"></i><b>6.2</b> 結果の比較と解釈</a></li>
+<li class="chapter" data-level="6.3" data-path="regression-advanced.html"><a href="regression-advanced.html#最小二乗法ols工事中-1"><i class="fa fa-check"></i><b>6.3</b> 最小二乗法（OLS）（工事中）</a></li>
+<li class="chapter" data-level="6.4" data-path="regression-advanced.html"><a href="regression-advanced.html#媒介分析要因分解"><i class="fa fa-check"></i><b>6.4</b> 媒介分析／要因分解</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="regression-advanced.html"><a href="regression-advanced.html#モチベーション"><i class="fa fa-check"></i><b>6.4.1</b> モチベーション</a></li>
+<li class="chapter" data-level="6.4.2" data-path="regression-advanced.html"><a href="regression-advanced.html#発展係数変化の可視化"><i class="fa fa-check"></i><b>6.4.2</b> （発展）係数変化の可視化</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="regression-advanced.html"><a href="regression-advanced.html#重回帰分析の実際"><i class="fa fa-check"></i><b>6.5</b> 重回帰分析の実際</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="domain.html"><a href="domain.html"><i class="fa fa-check"></i><b>7</b> 社会学のデータ分析でよくある処理</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="domain.html"><a href="domain.html#ssm職業小分類を大分類にまとめる"><i class="fa fa-check"></i><b>7.1</b> SSM職業小分類を大分類にまとめる</a></li>
+<li class="chapter" data-level="7.2" data-path="domain.html"><a href="domain.html#egp階級分類を作成する"><i class="fa fa-check"></i><b>7.2</b> EGP階級分類を作成する</a></li>
+<li class="chapter" data-level="7.3" data-path="domain.html"><a href="domain.html#旧制学歴と新制学歴の対応"><i class="fa fa-check"></i><b>7.3</b> 旧制学歴と新制学歴の対応</a></li>
+<li class="chapter" data-level="7.4" data-path="domain.html"><a href="domain.html#出身階層親学歴の測定"><i class="fa fa-check"></i><b>7.4</b> 出身階層（親学歴）の測定</a></li>
+<li class="chapter" data-level="7.5" data-path="domain.html"><a href="domain.html#年収と労働時間から時間給を作成する"><i class="fa fa-check"></i><b>7.5</b> 年収と労働時間から時間給を作成する</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>8</b> 参考文献・ウェブサイト</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">社会調査データ分析のためのRの手引き</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="regression_basic" class="section level1" number="5">
+<h1><span class="header-section-number">Chapter 5</span> 回帰分析の基礎</h1>
+<div id="説明" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> 説明</h2>
+<p>年齢が高いほど賃金（時給換算）が高いという傾向があるかどうかを知りたいとする。このとき、年齢を横軸、賃金を縦軸とする散布図を書いてみる。</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="regression-basic.html#cb46-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb46-2"><a href="regression-basic.html#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
+<span id="cb46-3"><a href="regression-basic.html#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+<p>なんとなく、年齢が高いほど賃金が高い傾向があるようにみえる。この関係を1つの直線で要約するとしたらどのようになるだろう？この直線を示したのが次の図になる。</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="regression-basic.html#cb47-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb47-2"><a href="regression-basic.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
+<span id="cb47-3"><a href="regression-basic.html#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb47-4"><a href="regression-basic.html#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<p>このように、従属変数と独立変数の関係を<span class="math inline">\(y = f(x)\)</span>というような関数で表現する分析方法を指して、<strong>回帰分析 regression analysis/regression model</strong> という。今回の式の場合は、次のようなかたちになる。とくに今回のような場合を<strong>線形回帰分析 Linear regression</strong>ということもある。</p>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1x
+\]</span></p>
+<p>今の例の場合は、<span class="math inline">\(y\)</span>は賃金、<span class="math inline">\(x\)</span>は年齢である。<span class="math inline">\(\beta_k\)</span>のことを<strong>係数 coefficient</strong> といい、なかでもとくに<span class="math inline">\(\beta_0\)</span>のことを<strong>切片 intercept</strong>、<span class="math inline">\(\beta_1\)</span>のことを<strong>傾き slope</strong> という。傾きは、<span class="math inline">\(x\)</span>が1単位高いときに<span class="math inline">\(y\)</span>がどれだけ高いかを表す。</p>
+<p>ここで関心があるのは傾きの値である。これが正であれば、<span class="math inline">\(x\)</span>が高いほど<span class="math inline">\(y\)</span>は高いという正の関係を表すし、負であれば、<span class="math inline">\(x\)</span>が高いほど<span class="math inline">\(y\)</span>は低いという負の関係を表す。絶対値が大きいほど、<span class="math inline">\(x\)</span> 1単位の変化に対して <span class="math inline">\(y\)</span>がより大きく変わるということを表すので、たんに正か負かというだけでなく、その値も重要。</p>
+<p>今回の場合は係数はどうなるだろうか？線形回帰分析を推定するときのコマンドが<code>lm()</code>である。<code>lm(data = xx, formula = )</code>という書き方になる。<code>formula =</code>の部分は省略しても大丈夫。</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="regression-basic.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> piaac, <span class="at">formula =</span> wage <span class="sc">~</span> age)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ age, data = piaac)
+## 
+## Coefficients:
+## (Intercept)          age  
+##     1124.92        14.86</code></pre>
+<p>(Intercept)の部分が切片<span class="math inline">\(\beta_0\)</span>、ageの部分がageの傾き<span class="math inline">\(\beta_1\)</span>にそれぞれ対応する。したがって、賃金と年齢の関係は以下の式のように表されるということを意味する：</p>
+<p><span class="math display">\[
+y = 1134.39 + 14.71x
+\]</span></p>
+<p>では、推定された係数というのが偶然ではなく、母集団においても確かに正であるということができるだろうか。そのことを確認するための結果をみるために、いったん、名前をつけて結果を保存する。</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="regression-basic.html#cb51-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> age)</span></code></pre></div>
+<p>名前をつけた結果は、<code>summary()</code>でよびだすことができる：</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="regression-basic.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ age, data = piaac)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1631.2  -807.8  -301.9   449.7  8048.3 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 1124.918     92.519  12.159  &lt; 2e-16 ***
+## age           14.860      2.043   7.273  4.5e-13 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1195 on 2880 degrees of freedom
+##   (537 observations deleted due to missingness)
+## Multiple R-squared:  0.01804,    Adjusted R-squared:  0.0177 
+## F-statistic:  52.9 on 1 and 2880 DF,  p-value: 4.497e-13</code></pre>
+<p>1列目のEstimateの列には、先ほどみたように係数の値が表示される。2列目のStd. Errorの列が<strong>標準誤差 standard error</strong>を表し、係数のばらつきを示している。4列めのPr(&gt;|t|)の列が<strong>p値 p-value</strong>を表している。p値は「もし母集団において係数が0であるという帰無仮説が正しいとしたときに、今回のような係数の値となる確率」を表しており、この値が十分に低いのなら、帰無仮説を棄却して、たしかに母集団においても係数は0でなさそうだ（正あるいは負だ）、ということを自信をもって主張できるということになる。</p>
+<p>ageの行をのp値を確認すると、6.19e-13となっている。つまり、母集団において年齢の係数が0であるとしたときに、今回のような係数の値（14.706）が得られる確率は0.0000000000000619だ、ということである。</p>
+<p>この確率がどれくらい低ければ自信をもって「関係がある」と言えるのかということだが、慣習的には、0.05という基準が使われている。Rでは、0.05よりも小さければ（正確には0.01 ≤ p &lt; 0.05）、p値の横に<code>*</code>という印がつく。同じようにして、0.01よりも小さければ（0.001 ≤ p &lt; 0.01）<code>**</code>、0.001よりも小さければ（p &lt; 0.001）、<code>***</code>という印がつく。</p>
+</div>
+<div id="最小二乗法ols工事中" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> 最小二乗法（OLS）（工事中）</h2>
+<p>もちろん、上記の回帰式は散布図をみて直観でえいやっと式の値を決めたのではなく、全体の傾向をもっともよく要約するような係数を推定している。その係数の推定方法を<strong>最小二乗法 ordinary least square, OLS</strong>という。</p>
+</div>
+<div id="独立変数がカテゴリ変数の場合" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> 独立変数がカテゴリ変数の場合</h2>
+<div id="値のカテゴリ" class="section level3" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> 2値のカテゴリ</h3>
+<p>線形回帰分析では、連続変数だけではなく、カテゴリ変数も扱うことができる。その例としてまず、性別によって賃金がどの程度異なるのかを知りたいとする。このとき、（無理やり）散布図を書くと、次のようになる。分布がわかりやすいように、バイオリン・プロットを重ねて示している。</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="regression-basic.html#cb54-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb54-2"><a href="regression-basic.html#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
+<span id="cb54-3"><a href="regression-basic.html#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span> </span>
+<span id="cb54-4"><a href="regression-basic.html#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) </span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p>図からわかる通り、男性と比べると女性の賃金が低いことがわかる。平均値を計算して棒グラフにしてみると、その差は歴然である。</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="regression-basic.html#cb55-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb55-2"><a href="regression-basic.html#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span> </span>
+<span id="cb55-3"><a href="regression-basic.html#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_wage =</span> <span class="fu">mean</span>(wage, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb55-4"><a href="regression-basic.html#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> mean_wage)) <span class="sc">+</span> </span>
+<span id="cb55-5"><a href="regression-basic.html#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> </span>
+<span id="cb55-6"><a href="regression-basic.html#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(mean_wage, <span class="at">digit =</span> <span class="dv">1</span>)), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb55-7"><a href="regression-basic.html#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">2500</span>)</span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p>ここで得られた男性の平均値と女性の平均値をそれぞれ散布図に書き入れてみたのが次の図である。実線が男性の平均値、点線が女性の平均値を表している。</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="regression-basic.html#cb56-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb56-2"><a href="regression-basic.html#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
+<span id="cb56-3"><a href="regression-basic.html#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span> </span>
+<span id="cb56-4"><a href="regression-basic.html#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb56-5"><a href="regression-basic.html#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">2196.5</span>) <span class="sc">+</span> </span>
+<span id="cb56-6"><a href="regression-basic.html#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">1327.8</span>, <span class="at">lty =</span> <span class="dv">2</span>) </span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p>いま、男性であれば1、女性であれば0をとる変数<span class="math inline">\(x\)</span>を考えよう。このように、カテゴリ変数のカテゴリを区別するために便宜的に0/1の値を振った変数のことを、<strong>ダミー変数 dummy variable</strong>という。このとき、性別による賃金の違いを表す回帰式は次のようになる：</p>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1x
+\]</span></p>
+<p>回帰式のかたちは先ほどと同じとなる。傾き<span class="math inline">\(\beta_1\)</span>は、女性（0）とくらべて男性（1）がどの程度賃金が高いのかを示している。実際、この係数を推定してみよう。</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="regression-basic.html#cb57-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb57-2"><a href="regression-basic.html#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">male_d =</span> <span class="fu">case_when</span>(</span>
+<span id="cb57-3"><a href="regression-basic.html#cb57-3" aria-hidden="true" tabindex="-1"></a>    gender <span class="sc">==</span> <span class="st">&quot;男性&quot;</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb57-4"><a href="regression-basic.html#cb57-4" aria-hidden="true" tabindex="-1"></a>    gender <span class="sc">==</span> <span class="st">&quot;女性&quot;</span> <span class="sc">~</span> <span class="dv">0</span></span>
+<span id="cb57-5"><a href="regression-basic.html#cb57-5" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb57-6"><a href="regression-basic.html#cb57-6" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb57-7"><a href="regression-basic.html#cb57-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(gender, male_d) <span class="sc">%&gt;%</span></span>
+<span id="cb57-8"><a href="regression-basic.html#cb57-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">6</span>) <span class="co"># どのような値になっているかをチェック。</span></span></code></pre></div>
+<pre><code>## # A tibble: 6 x 2
+##   gender male_d
+##   &lt;fct&gt;   &lt;dbl&gt;
+## 1 男性        1
+## 2 男性        1
+## 3 女性        0
+## 4 男性        1
+## 5 男性        1
+## 6 女性        0</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="regression-basic.html#cb59-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> male_d)</span>
+<span id="cb59-2"><a href="regression-basic.html#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ male_d, data = piaac)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1888.3  -610.1  -327.6   368.1  8672.4 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  1327.59      30.21   43.95   &lt;2e-16 ***
+## male_d        868.43      41.94   20.71   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1125 on 2880 degrees of freedom
+##   (537 observations deleted due to missingness)
+## Multiple R-squared:  0.1296, Adjusted R-squared:  0.1293 
+## F-statistic: 428.7 on 1 and 2880 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>male_dというのが、性別が男性のときに1、女性のときに0をとる変数である。この係数が868.7、切片（Intercept）が1327.8ということだから、推定された式はつぎのとおりとなる。</p>
+<p><span class="math display">\[
+y = 1327.8 + 868.7x
+\]</span></p>
+<p>傾きの値は、女性と比べて男性の賃金は868.7円高いということを意味している。</p>
+<p>この868.7という値は、2つのカテゴリ（この場合は男性・女性）、先ほど棒グラフに示した男性の平均値と女性の平均値の差に一致していることを確認しよう。傾きの値は、2つのカテゴリの平均値の差に一致する。</p>
+</div>
+<div id="値以上のカテゴリ" class="section level3" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> 3値以上のカテゴリ</h3>
+<p>カテゴリが3値以上の場合はどうだろう？これも、基本的には同じふうに考えることができる。</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="regression-basic.html#cb61-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb61-2"><a href="regression-basic.html#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(educ) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-3"><a href="regression-basic.html#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> educ, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
+<span id="cb61-4"><a href="regression-basic.html#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span> </span>
+<span id="cb61-5"><a href="regression-basic.html#cb61-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) </span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
+<p>中学卒を基準として、高校、短大高専、大学大学院卒だとどれくらい賃金が高いのかを推定することになる。</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="regression-basic.html#cb62-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb62-2"><a href="regression-basic.html#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ_d2 =</span> <span class="fu">if_else</span>(educ <span class="sc">==</span> <span class="st">&quot;高校&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-3"><a href="regression-basic.html#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ_d3 =</span> <span class="fu">if_else</span>(educ <span class="sc">==</span> <span class="st">&quot;短大高専&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-4"><a href="regression-basic.html#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ_d4 =</span> <span class="fu">if_else</span>(educ <span class="sc">==</span> <span class="st">&quot;大学大学院&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) </span>
+<span id="cb62-5"><a href="regression-basic.html#cb62-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-6"><a href="regression-basic.html#cb62-6" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb62-7"><a href="regression-basic.html#cb62-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(educ, educ_d2, educ_d3, educ_d4) <span class="sc">%&gt;%</span> </span>
+<span id="cb62-8"><a href="regression-basic.html#cb62-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">10</span>) <span class="co">#それぞれどのような値となっているかチェック。</span></span></code></pre></div>
+<pre><code>## # A tibble: 10 x 4
+##    educ       educ_d2 educ_d3 educ_d4
+##    &lt;fct&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 高校             1       0       0
+##  2 大学大学院       0       0       1
+##  3 高校             1       0       0
+##  4 短大高専         0       1       0
+##  5 高校             1       0       0
+##  6 短大高専         0       1       0
+##  7 大学大学院       0       0       1
+##  8 大学大学院       0       0       1
+##  9 短大高専         0       1       0
+## 10 短大高専         0       1       0</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="regression-basic.html#cb64-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> educ_d2 <span class="sc">+</span> educ_d3 <span class="sc">+</span> educ_d4)</span>
+<span id="cb64-2"><a href="regression-basic.html#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ educ_d2 + educ_d3 + educ_d4, data = piaac)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2035.1  -692.6  -316.9   390.7  8450.0 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  1453.13      72.82  19.954   &lt;2e-16 ***
+## educ_d2        66.61      81.20   0.820    0.412    
+## educ_d3        96.89      84.37   1.149    0.251    
+## educ_d4       889.67      82.23  10.819   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1145 on 2878 degrees of freedom
+##   (537 observations deleted due to missingness)
+## Multiple R-squared:  0.09976,    Adjusted R-squared:  0.09882 
+## F-statistic: 106.3 on 3 and 2878 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>それぞれの係数は、基準カテゴリ（今回なら中学卒）と比べて、それぞれどれくらい賃金が高いのかを表している。標準誤差やp値のみかたについてはどれも同じ。</p>
+</div>
+<div id="変数がfactorであれば自動でカテゴリとして投入される" class="section level3" number="5.3.3">
+<h3><span class="header-section-number">5.3.3</span> 変数がfactorであれば自動でカテゴリとして投入される</h3>
+<p>独立変数の型がカテゴリの場合には、Rが自動で先ほどのようなダミー変数を勝手に作って投入してくれる。</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="regression-basic.html#cb66-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> educ)</span>
+<span id="cb66-2"><a href="regression-basic.html#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ educ, data = piaac)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2035.1  -692.6  -316.9   390.7  8450.0 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     1453.13      72.82  19.954   &lt;2e-16 ***
+## educ高校          66.61      81.20   0.820    0.412    
+## educ短大高専      96.89      84.37   1.149    0.251    
+## educ大学大学院   889.67      82.23  10.819   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1145 on 2878 degrees of freedom
+##   (537 observations deleted due to missingness)
+## Multiple R-squared:  0.09976,    Adjusted R-squared:  0.09882 
+## F-statistic: 106.3 on 3 and 2878 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>ただし、基準カテゴリは一番最初（アルファベットが早い順、漢字の場合はよくわからない）のものが勝手に選ばれるので、たとえば高校を基準にしてその他を比較したい、と思ったときには、自分でカテゴリの順序を変更しておく必要がある。</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="regression-basic.html#cb68-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb68-2"><a href="regression-basic.html#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ_reorder =</span> <span class="fu">factor</span>(educ,</span>
+<span id="cb68-3"><a href="regression-basic.html#cb68-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;高校&quot;</span>, <span class="st">&quot;中学&quot;</span>, <span class="st">&quot;短大高専&quot;</span>, <span class="st">&quot;大学大学院&quot;</span>),</span>
+<span id="cb68-4"><a href="regression-basic.html#cb68-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;高校&quot;</span>, <span class="st">&quot;中学&quot;</span>, <span class="st">&quot;短大高専&quot;</span>, <span class="st">&quot;大学大学院&quot;</span>)))</span>
+<span id="cb68-5"><a href="regression-basic.html#cb68-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-6"><a href="regression-basic.html#cb68-6" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> educ_reorder)</span>
+<span id="cb68-7"><a href="regression-basic.html#cb68-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ educ_reorder, data = piaac)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2035.1  -692.6  -316.9   390.7  8450.0 
+## 
+## Coefficients:
+##                        Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)             1519.75      35.92  42.304   &lt;2e-16 ***
+## educ_reorder中学         -66.61      81.20  -0.820    0.412    
+## educ_reorder短大高専      30.28      55.72   0.543    0.587    
+## educ_reorder大学大学院   823.06      52.43  15.697   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1145 on 2878 degrees of freedom
+##   (537 observations deleted due to missingness)
+## Multiple R-squared:  0.09976,    Adjusted R-squared:  0.09882 
+## F-statistic: 106.3 on 3 and 2878 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div id="従属変数が2値のカテゴリ変数01の場合" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> 従属変数が2値のカテゴリ変数（0/1）の場合</h2>
+<p>たとえば、性別によってこの1年間に職場での訓練（OJTとよぶ）を受ける率が異なっているかどうかを知りたいとする。これも今までと同じように回帰分析の枠組みで扱うことができる。</p>
+<p>まず、OJTを受けたならば1、受けていないならば0を取る変数があるとする。この値の平均をとれば、OJTを受けた人の割合に一致する。たとえば以下の2つを比較してみよう。</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="regression-basic.html#cb70-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb70-2"><a href="regression-basic.html#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(gender, ojt, <span class="at">percent =</span> <span class="st">&quot;row&quot;</span>)</span></code></pre></div>
+<div id="fottzlywfy" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#fottzlywfy .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#fottzlywfy .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#fottzlywfy .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#fottzlywfy .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#fottzlywfy .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fottzlywfy .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#fottzlywfy .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#fottzlywfy .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#fottzlywfy .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#fottzlywfy .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#fottzlywfy .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#fottzlywfy .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#fottzlywfy .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#fottzlywfy .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#fottzlywfy .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#fottzlywfy .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#fottzlywfy .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#fottzlywfy .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fottzlywfy .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#fottzlywfy .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fottzlywfy .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#fottzlywfy .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#fottzlywfy .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fottzlywfy .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#fottzlywfy .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#fottzlywfy .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#fottzlywfy .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#fottzlywfy .gt_left {
+  text-align: left;
+}
+
+#fottzlywfy .gt_center {
+  text-align: center;
+}
+
+#fottzlywfy .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#fottzlywfy .gt_font_normal {
+  font-weight: normal;
+}
+
+#fottzlywfy .gt_font_bold {
+  font-weight: bold;
+}
+
+#fottzlywfy .gt_font_italic {
+  font-style: italic;
+}
+
+#fottzlywfy .gt_super {
+  font-size: 65%;
+}
+
+#fottzlywfy .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 65%;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1"><strong>Characteristic</strong></th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2">
+        <span class="gt_column_spanner"><strong>ojt</strong></span>
+      </th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="2" colspan="1"><strong>Total</strong></th>
+    </tr>
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">0</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">1</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left" style="font-weight: bold;">gender</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td></tr>
+    <tr><td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">女性</td>
+<td class="gt_row gt_center">1,092 (69%)</td>
+<td class="gt_row gt_center">488 (31%)</td>
+<td class="gt_row gt_center">1,580 (100%)</td></tr>
+    <tr><td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">男性</td>
+<td class="gt_row gt_center">1,150 (63%)</td>
+<td class="gt_row gt_center">689 (37%)</td>
+<td class="gt_row gt_center">1,839 (100%)</td></tr>
+    <tr><td class="gt_row gt_left" style="font-weight: bold;">Total</td>
+<td class="gt_row gt_center">2,242 (66%)</td>
+<td class="gt_row gt_center">1,177 (34%)</td>
+<td class="gt_row gt_center">3,419 (100%)</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+<p>ついで、性別ごとにojtの平均値を計算し、図に書いてみる。</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="regression-basic.html#cb71-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb71-2"><a href="regression-basic.html#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span> </span>
+<span id="cb71-3"><a href="regression-basic.html#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_ojt =</span> <span class="fu">mean</span>(ojt, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb71-4"><a href="regression-basic.html#cb71-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> mean_ojt)) <span class="sc">+</span> </span>
+<span id="cb71-5"><a href="regression-basic.html#cb71-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb71-6"><a href="regression-basic.html#cb71-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(mean_ojt, <span class="at">digit =</span> <span class="dv">3</span>)), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb71-7"><a href="regression-basic.html#cb71-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fl">0.4</span>)</span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<p>ここで示された値は、上記クロス表の「1」のほうに示されている行%、すなわち「OJTを受けた人の割合」に一致している。</p>
+<p>では、回帰式を推定してみよう。</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="regression-basic.html#cb72-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender)</span>
+<span id="cb72-2"><a href="regression-basic.html#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = ojt ~ gender, data = piaac)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.3747 -0.3747 -0.3089  0.6253  0.6911 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.30886    0.01193  25.894  &lt; 2e-16 ***
+## gender男性   0.06580    0.01626   4.046 5.33e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4741 on 3417 degrees of freedom
+## Multiple R-squared:  0.004767,   Adjusted R-squared:  0.004476 
+## F-statistic: 16.37 on 1 and 3417 DF,  p-value: 5.332e-05</code></pre>
+<p>「gender男性」と書かれている行が、女性と比べて男性が6.6%ポイントOJTを受ける割合が高いのかを示している）。この値が、ちょうど先ほどの棒グラフの男性と女性の割合（平均値）の差に一致していることを確認しよう。係数の見方も、標準誤差も、p値も、すべて今までの回帰分析と一緒。</p>
+<p>もちろん、年齢などの連続変数を独立変数（X）として使うこともできる。</p>
+<div id="発展ロバスト標準誤差" class="section level3" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> （発展）ロバスト標準誤差</h3>
+<p>上記のように従属変数が2値の場合の線形回帰分析のことを<strong>線形確率モデル linear probability model</strong>と呼ぶことがある。線形確率モデルの場合は、誤差が正規分布するという仮定に反し、普通の標準誤差は誤った値になってしまうことが知られている。そこで、こうした不均一分散の問題に対処するために、ロバスト標準誤差を用いることが推奨されている。</p>
+<p>ここではロバスト標準誤差のことについては説明しないし、授業でも使う必要はないが、推定の仕方だけ書いておく。<code>estimatr::lm_robust()</code>で、ロバスト標準誤差を得ることができる。使い方は<a href="https://keita43a.hatenablog.com/entry/2019/04/17/232548#%E4%B8%8D%E5%9D%87%E4%B8%80%E5%88%86%E6%95%A3%E3%81%A7%E3%81%AE%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90">このページ</a>にくわしい。</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="regression-basic.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;estimatr&quot;</span>) <span class="co">#未インストールの場合のみ</span></span>
+<span id="cb74-2"><a href="regression-basic.html#cb74-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-3"><a href="regression-basic.html#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(estimatr)</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="regression-basic.html#cb75-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender)</span>
+<span id="cb75-2"><a href="regression-basic.html#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm_robust(formula = ojt ~ gender, data = piaac)
+## 
+## Standard error type:  HC2 
+## 
+## Coefficients:
+##             Estimate Std. Error t value   Pr(&gt;|t|) CI Lower CI Upper   DF
+## (Intercept)   0.3089    0.01163   26.56 1.676e-141  0.28606  0.33166 3417
+## gender男性    0.0658    0.01621    4.06  5.018e-05  0.03402  0.09758 3417
+## 
+## Multiple R-squared:  0.004767 ,  Adjusted R-squared:  0.004476 
+## F-statistic: 16.48 on 1 and 3417 DF,  p-value: 5.018e-05</code></pre>
+</div>
+</div>
+<div id="非線形の関連" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> 非線形の関連</h2>
+<div id="対数変換" class="section level3" number="5.5.1">
+<h3><span class="header-section-number">5.5.1</span> 対数変換</h3>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="regression-basic.html#cb77-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb77-2"><a href="regression-basic.html#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logwage =</span> <span class="fu">log</span>(wage))</span></code></pre></div>
+<p>2つの変数の分布を比較してみよう。</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="regression-basic.html#cb78-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb78-2"><a href="regression-basic.html#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> </span>
+<span id="cb78-3"><a href="regression-basic.html#cb78-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="regression-basic.html#cb80-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb80-2"><a href="regression-basic.html#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> logwage)) <span class="sc">+</span> </span>
+<span id="cb80-3"><a href="regression-basic.html#cb80-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-52-2.png" width="672" /></p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="regression-basic.html#cb82-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> age)</span>
+<span id="cb82-2"><a href="regression-basic.html#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = logwage ~ age, data = piaac)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.59633 -0.46971 -0.03937  0.39219  1.91365 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 7.1331862  0.0434355 164.225  &lt; 2e-16 ***
+## age         0.0040713  0.0009592   4.245 2.26e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.561 on 2880 degrees of freedom
+##   (537 observations deleted due to missingness)
+## Multiple R-squared:  0.006217,   Adjusted R-squared:  0.005872 
+## F-statistic: 18.02 on 1 and 2880 DF,  p-value: 2.259e-05</code></pre>
+<p>なお、対数変換した変数を新たに作成しなくても、次のように書くことで、回帰分析のコード中で対数変換を行う事ができる。以下でも同じ結果を得ることができる（結果は省略）。</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="regression-basic.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> piaac, <span class="fu">log</span>(wage) <span class="sc">~</span> age)</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="regression-basic.html#cb85-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb85-2"><a href="regression-basic.html#cb85-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> logwage)) <span class="sc">+</span> </span>
+<span id="cb85-3"><a href="regression-basic.html#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb85-4"><a href="regression-basic.html#cb85-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+</div>
+<div id="乗項" class="section level3" number="5.5.2">
+<h3><span class="header-section-number">5.5.2</span> 2乗項</h3>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="regression-basic.html#cb87-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb87-2"><a href="regression-basic.html#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age_sq =</span> age<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb87-3"><a href="regression-basic.html#cb87-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-4"><a href="regression-basic.html#cb87-4" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb87-5"><a href="regression-basic.html#cb87-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> age_sq)) <span class="sc">+</span> </span>
+<span id="cb87-6"><a href="regression-basic.html#cb87-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="regression-basic.html#cb88-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> age <span class="sc">+</span> age_sq)</span>
+<span id="cb88-2"><a href="regression-basic.html#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = logwage ~ age + age_sq, data = piaac)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.67879 -0.45201 -0.02961  0.37393  1.99303 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  5.687e+00  1.759e-01  32.324   &lt;2e-16 ***
+## age          7.312e-02  8.203e-03   8.913   &lt;2e-16 ***
+## age_sq      -7.749e-04  9.144e-05  -8.474   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.5542 on 2879 degrees of freedom
+##   (537 observations deleted due to missingness)
+## Multiple R-squared:  0.0304, Adjusted R-squared:  0.02973 
+## F-statistic: 45.13 on 2 and 2879 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>このときの散布図と回帰式は次のようになる。</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="regression-basic.html#cb90-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb90-2"><a href="regression-basic.html#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> logwage)) <span class="sc">+</span> </span>
+<span id="cb90-3"><a href="regression-basic.html#cb90-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb90-4"><a href="regression-basic.html#cb90-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">2</span>), <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
+<p>2乗した変数を別に作らなくても、回帰分析のコード中で2乗した変数を作成することができる。（結果は省略）</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="regression-basic.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> piaac, <span class="fu">log</span>(wage) <span class="sc">~</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
+</div>
+</div>
+<div id="結果をきれいに表示する" class="section level2" number="5.6">
+<h2><span class="header-section-number">5.6</span> 結果をきれいに表示する</h2>
+<p>先ほどの回気分析の結果をもう少しきれいに表示したいと思うかもしれない。これまで、こうしたときには<code>texreg</code>や<code>stargazer</code>などといったパッケージが使われてきたが、最近は<code>modelsummary</code>というパッケージが開発され、これがなかなか良さそうという情報をキャッチしたので、使ってみよう（2021-10-27現在）。</p>
+<p>はじめて使う場合は<code>install.packages()</code>。</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="regression-basic.html#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;modelsummary&quot;</span>)  <span class="co">#未インストールの場合のみ</span></span>
+<span id="cb92-2"><a href="regression-basic.html#cb92-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-3"><a href="regression-basic.html#cb92-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span></code></pre></div>
+<p>では、実際に使ってみよう。<code>msummary(list(model))</code>（modelという部分には、すでに保存しておいた回帰分析の結果を入れる）というのが最低限のコマンド。</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="regression-basic.html#cb93-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, <span class="fu">log</span>(wage) <span class="sc">~</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb93-2"><a href="regression-basic.html#cb93-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-3"><a href="regression-basic.html#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="fu">msummary</span>(<span class="fu">list</span>(reg_res)) </span></code></pre></div>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Model 1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+5.687
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.176)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age
+</td>
+<td style="text-align:center;">
+0.073
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.008)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+I(age^2)
+</td>
+<td style="text-align:center;">
+−0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.000)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+2882
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.030
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2 Adj.
+</td>
+<td style="text-align:center;">
+0.030
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AIC
+</td>
+<td style="text-align:center;">
+4781.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BIC
+</td>
+<td style="text-align:center;">
+4805.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Log.Lik.
+</td>
+<td style="text-align:center;">
+−2386.921
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:center;">
+45.131
+</td>
+</tr>
+</tbody>
+</table>
+<p>よく論文でみる感じのきれいな見た目になる。とはいえ、まだたとえば変数名が何を指しているかなどは改善の余地がある。オプションを色々指定することで、よりわかりやすい表が作れる。</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="regression-basic.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">msummary</span>(<span class="fu">list</span>(reg_res),</span>
+<span id="cb94-2"><a href="regression-basic.html#cb94-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, <span class="co"># 有意水準を示す印をつける</span></span>
+<span id="cb94-3"><a href="regression-basic.html#cb94-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">coef_rename =</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>,</span>
+<span id="cb94-4"><a href="regression-basic.html#cb94-4" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb94-5"><a href="regression-basic.html#cb94-5" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>), <span class="co"># 各変数に名前をつける</span></span>
+<span id="cb94-6"><a href="regression-basic.html#cb94-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">gof_omit =</span> <span class="st">&quot;R2 Adj.|AIC|BIC|Log.Lik.|F&quot;</span>) <span class="co"># 不要な統計量を削除する</span></span></code></pre></div>
+<table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+Model 1
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+切片
+</td>
+<td style="text-align:center;">
+5.687***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.176)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+年齢
+</td>
+<td style="text-align:center;">
+0.073***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.008)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+年齢2乗
+</td>
+<td style="text-align:center;">
+−0.001***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.000)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+2882
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.030
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001
+</td>
+</tr>
+</tfoot>
+</table>
+<p>いい感じの表ができた！</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="tabulate.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regression-advanced.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

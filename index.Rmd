@@ -1,0 +1,36 @@
+--- 
+title: "社会調査データ分析のためのRの手引き"
+author: "Ryota Mugiyama (Department of Political Studies, Gakushuin University)"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This is the document for the class *Seminar in Sociology* held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference."
+---
+
+# まえがき {-}
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+
+knitr::opts_chunk$set(warning = FALSE, error = FALSE)
+```
+
+本資料は学習院大学法学部政治学科で開講される「社会学演習」の授業で使用する補足資料です。Rでのデータ加工や分析方法について、授業のなかで出た疑問点などをストックしていくことで、くり返し使える辞書的な位置づけを目指しています。
+
+本資料では説明のためのサンプルデータとしてOECDが実施している[PIAAC (Programme for the International Assessment of Adult Competencies)](https://www.oecd.org/skills/piaac/)の日本版データを利用しています。データは上記ウェブサイトから誰でもダウンロード可能です。このデータから、以下の条件に該当する対象者を抽出したデータを使っています。
+
+- 25-64歳
+- armed forces以外の職業に従事し、かつ職業（ISCO 1-digit）が無回答でない
+- 最終学歴を回答している
+
+本資料は上記データをもとに順次コードを実行して結果を照合する、というタイプの教科書**ではありません**。たとえば変数名などは説明にとってわかりやすいようにもともとのデータから変えたりしています。あくまでも、コードなどを参考にして、自分のデータに適用してもらう、ということを目的にしています。
+
+Rの基礎などについてはたくさんの優れた書籍やウェブサイトがあるのでそれらを参考にしてください。資料末尾に、参考書籍やウェブサイトへのリンクを載せています。
+
+この資料はまったくの未完成で、内容は不定期に更新されます。
