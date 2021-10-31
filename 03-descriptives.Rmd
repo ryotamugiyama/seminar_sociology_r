@@ -1,3 +1,265 @@
 # 1変数の集計 {#descriptives}
 
+以下の記述はすでに`tidyverse`パッケージを読み込んでおり、また読み込んだデータを`piaac`というデータフレームに入れていることを前提とします。データフレームの名前は`piaac`である必要はありません。以下のようなコードを実行していると思います。
 
+```{r, eval = FALSE}
+library(tidyverse)
+piaac <- read_csv("data/piaac.csv")
+```
+
+また、Macで`ggplot2`パッケージを使用し、グラフ中に日本語を使用する場合には、`library(tidyverse)`または`library(ggplot2)`を実行したうえで、たとえば以下のようなコードをあらかじめ実行しておく必要があります。
+
+```{r, eval = FALSE}
+theme_set(theme_grey(base_family = "HiraginoSans-W3"))
+```
+
+この資料で使用しているグラフについては以下のようにthemeを設定しています。
+
+```{r, eval = FALSE}
+theme_set(theme_bw(
+  base_family = "HiraginoSans-W3",
+  base_size = 11,
+  base_rect_size = 0.2,
+  base_line_size = 0.2
+))
+```
+
+Windowsユーザの方は上記コードから`base_family = `の行を除いたこちらのコードで同じような雰囲気になります：
+
+```{r, eval = FALSE}
+theme_set(theme_bw(
+  base_size = 11,
+  base_rect_size = 0.2,
+  base_line_size = 0.2
+))
+```
+
+
+
+## 連続変数を集計する
+
+```{r}
+piaac %>% 
+  summarize(mean = mean(wage))
+```
+
+NAになってしまった。集計する変数（この場合はwage）にNAが含まれている場合には、平均値が計算できず、NAとなってしまう。NAを除いて平均値を計算するときには、あらかじめwageがNAの行を除外しておくとよい。
+
+```{r}
+piaac %>% 
+  filter(is.na(wage) == FALSE) %>% 
+  summarize(mean = mean(wage))
+```
+
+平均値だけでなく、いろいろな統計量を計算できる。よく用いるものは以下のとおり。
+
+| 関数               | 意味                                                                                                              |
+|--------------------|-------------------------------------------------------------------------------------------------------------------|
+| `mean(x)`          | 平均値                                                                                                            |
+| `sd(x)`            | 標準偏差                                                                                                          |
+| `max(x)`           | 最大値                                                                                                            |
+| `min(x)`           | 最小値                                                                                                            |
+| `quantile(x, 0.5)` | 分位数。0.5とした場合には50パーセンタイル点（中央値）を計算する。0（最小）から1（最大）まで任意の点を指定できる。 |
+| `n()`              | 行数を数える。                                                                                                    |
+
+全部集計してみるとたとえば以下のような感じになる。
+
+```{r}
+piaac %>% 
+  filter(is.na(wage) == FALSE) %>% 
+  summarize(mean = mean(wage),
+            sd = sd(wage),
+            max = max(wage),
+            min = min(wage),
+            p25 = quantile(wage, 0.25),
+            p50 = quantile(wage, 0.5),
+            p75 = quantile(wage, 0.75),
+            n = n())
+```
+
+最小値、第1四分位点、中央値、平均値、第3四分位点、最大値をまとめて表示したい場合には、これらを計算したい変数だけを`select()`で抽出したうえで、`summary()`関数を使うとできる。
+
+```{r}
+piaac %>% 
+  select(wage) %>% 
+  summary()
+```
+
+## 連続変数の分布の可視化：ヒストグラム
+
+```{r}
+piaac %>% 
+  ggplot(aes(x = wage)) + 
+  geom_histogram()
+```
+
+```{r}
+piaac %>% 
+  ggplot(aes(x = wage)) + 
+  geom_histogram(bins = 10)
+```
+
+```{r}
+piaac %>% 
+  ggplot(aes(x = wage)) + 
+  geom_histogram(bins = 100)
+```
+
+## カテゴリ変数の集計
+
+カテゴリ変数の場合は平均値や標準偏差のような要約統計量を計算することはできない（意味がない）。最も基本的な集計は、各カテゴリにそれぞれ何人いるのかを確認することだ。`with(table())`を使うことで各カテゴリの人数（行数）をみることができる。
+
+```{r}
+piaac %>% 
+  with(table(occupation))
+```
+
+人数だけでなく、各職業にどれくらいの割合の人が含まれているのかも重要だ。先ほどのコマンドに`prop.table()`を加えることで、各カテゴリに含まれる人が全体に占める割合を計算できる。
+
+```{r}
+piaac %>% 
+  with(table(occupation)) %>% 
+  prop.table()
+```
+
+この値をすべて足すと1になる。
+
+小数点以下が多すぎて見にくいので、小数点第3位で丸めよう。先ほどのコマンドに`round(digits = 3)`を加えると、小数点第3位で丸めることができる。digitsのところの値が、小数点第○位の○の値に対応する。
+
+```{r}
+piaac %>% 
+  with(table(occupation)) %>% 
+  prop.table()  %>% 
+  round(3)
+```
+
+この値はすべて足すと1になる。なので、この値を100倍すると単位を百分率（%）に直すことができる。
+
+```{r}
+piaac %>% 
+  with(table(occupation)) %>% 
+  prop.table()  %>% 
+  round(3) * 100
+```
+
+##　カテゴリ変数の分布の可視化：棒グラフ
+
+こうして集計した値を棒グラフにして表すと見やすいかもしれない。
+
+```{r}
+piaac %>% 
+  with(table(occupation)) %>% 
+  prop.table() %>% 
+  as.data.frame() %>% 
+  ggplot(aes(x = occupation, y = Freq)) + 
+  geom_col()
+```
+
+```{r}
+piaac %>% 
+  with(table(occupation)) %>% 
+  prop.table() %>% 
+  as.data.frame() %>% 
+  ggplot(aes(x = occupation, y = Freq * 100)) + 
+  geom_col() + 
+  labs(x = "", y = "%")  +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) # X軸を45度傾ける
+```
+
+## 記述統計量の一覧表を作る
+
+```{r, eval = FALSE}
+install.packages("gtsummary") #未インストールの場合
+
+libary(gtsummary)
+```
+
+次の5つの変数の記述統計量の一覧表を作りたいとしよう。
+
+| 列名       | 型                 | 変数ラベル |
+|------------|--------------------|------------|
+| gender     | カテゴリ（factor） | 性別       |
+| age        | 連続（numeric）    | 年齢       |
+| educ       | カテゴリ（factor） | 最終学歴   |
+| occupation | カテゴリ（factor） | 職業       |
+| wage       | 連続（numeric）    | 賃金       |
+
+```{r}
+piaac_selectedvar <- piaac %>% 
+  select(gender, age, educ, occupation, wage)
+
+piaac_selectedvar %>% 
+  head()
+```
+
+この中には連続変数もカテゴリ変数もあり、またカテゴリの個数が2つのものもあればもっと多いものもあって複雑である。`gtsummary::tbl_summary()`は、きちんと変数の型がきちんとしていれば、それを読み取ってきれいな記述統計量の表を作ってくれる。
+
+`select()`を使って、事前に記述統計量を表示したい変数だけを残したデータフレームを作成しておくことを忘れずに！
+
+```{r}
+piaac_selectedvar %>% 
+  tbl_summary()
+```
+
+これでもすでにかなりきれいな表になっているが、以下の3点で改善の余地がある。
+
+1.  wageにはNAが含まれているので、賃金の平均値を計算するときの人数とその他の変数の分布を計算するときの人数にずれがある。
+2.  educやoccupationといった変数がそれぞれ何を示しているのか、自分以外の見る人にとっては必ずしも明らかではない。
+3.  連続変数については中央値（50パーセンタイル点）、第1四分位数（25パーセンタイル点）、第3四分位数（75パーセンタイル点）が示されているが、平均値と標準偏差を載せることのほうが多いので、そちらを表記したい。
+
+これらの点を1つずつ改善していこう。
+
+### 用いる変数に欠損があるケースを除外（list-wise delition）
+
+```{r}
+piaac_selectedvar_nona <- piaac_selectedvar %>% 
+  na.omit() #用いる5つの変数のいずれかが欠損のケースを除外する
+
+piaac_selectedvar_nona %>% 
+  tbl_summary()
+```
+
+「賃金」の行に表示されていた「Unknown」の表記が消え、どの変数についても欠損のないケースをもとに集計がされている。
+
+このような欠損値の処理の仕方をさして、**リストワイズ除去 listwise delition**という。今日ではあまり望ましくない処理とされているが、まずはこのやりかたでやるのがよいだろう。リストワイズ除去を行うとしても、欠損の扱いについては注意が必要だ。くわしくは[社会学のデータ分析でよくある処理](#domain)の箇所を参照。
+
+### 変数にラベル（名前）をつける
+
+```{r, eval = FALSE}
+install.packages("labelled") #未インストールの場合
+
+library(labelled)
+```
+
+```{r}
+piaac_selectedvar_nona <- piaac_selectedvar_nona %>% 
+  set_variable_labels(
+    gender = "性別",
+    age = "年齢",
+    educ = "最終学歴",
+    occupation = "職業",
+    wage = "賃金"
+    )
+```
+
+```{r}
+piaac_selectedvar_nona %>% 
+  tbl_summary()
+```
+
+### 連続変数は平均値・標準偏差を表示する
+
+```{r}
+piaac_selectedvar_nona %>% 
+  tbl_summary(statistic = list(all_continuous() ~ "{mean} ({sd})"))
+```
+
+### グループ別の記述統計量
+
+何らかの属性などでサンプルを分けて比較分析する場合には、属性ごとの記述統計量を示すとよい。これも、`tbl_summary()`のなかでオプションを指定することで簡単に実行することができる。
+
+```{r}
+piaac_selectedvar_nona %>% 
+  tbl_summary(statistic = list(all_continuous() ~ "{mean} ({sd})"),
+              by = gender)
+```

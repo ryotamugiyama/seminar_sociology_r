@@ -1,13 +1,37 @@
 # 重回帰分析の活用 {#regression_advanced}
 
-```{r, include = FALSE}
-library(ggdag)
-library(dagitty)
+以下の記述はすでに`tidyverse`パッケージを読み込んでおり、また読み込んだデータを`piaac`というデータフレームに入れていることを前提とします。データフレームの名前は`piaac`である必要はありません。以下のようなコードを実行していると思います。
+
+```{r, eval = FALSE}
+library(tidyverse)
+piaac <- read_csv("data/piaac.csv")
 ```
 
-```{r}
-library(tidyverse)
-library(modelsummary)
+また、Macで`ggplot2`パッケージを使用し、グラフ中に日本語を使用する場合には、`library(tidyverse)`または`library(ggplot2)`を実行したうえで、たとえば以下のようなコードをあらかじめ実行しておく必要があります。
+
+```{r, eval = FALSE}
+theme_set(theme_grey(base_family = "HiraginoSans-W3"))
+```
+
+この資料で使用しているグラフについては以下のようにthemeを設定しています。
+
+```{r, eval = FALSE}
+theme_set(theme_bw(
+  base_family = "HiraginoSans-W3",
+  base_size = 11,
+  base_rect_size = 0.2,
+  base_line_size = 0.2
+))
+```
+
+Windowsユーザの方は上記コードから`base_family = `の行を除いたこちらのコードで同じような雰囲気になります：
+
+```{r, eval = FALSE}
+theme_set(theme_bw(
+  base_size = 11,
+  base_rect_size = 0.2,
+  base_line_size = 0.2
+))
 ```
 
 ## 交絡要因の統制

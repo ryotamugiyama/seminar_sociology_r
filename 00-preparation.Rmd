@@ -6,8 +6,11 @@ library(dagitty)
 library(ggdag)
 library(estimatr)
 library(modelsummary)
+library(labelled)
 
-piaac <- read_dta("data/piaacjpn.dta")
+piaac <- read_csv("data/prgjpnp1.csv") %>% 
+  mutate_if(is.character, as.numeric) %>% 
+  rename_all(.funs = tolower)
 
 set.seed(1)
 
@@ -52,7 +55,9 @@ piaac <- piaac %>%
                              levels = 1:9,
                              labels = c("管理職","専門職","技術職・准専門職","事務補助","サービス・販売","農林漁業","技能工","設備・機械運転・組立","単純作業")
 )) %>% 
-  mutate(health = 6 - i_q08)
+  mutate(health = 6 - i_q08) %>% 
+  mutate(estsize = d_q06a) %>% 
+  mutate(workhour = d_q10)
 
 piaac <- piaac %>% 
   filter(25 <= age & age <= 64) %>% 

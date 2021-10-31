@@ -1,5 +1,39 @@
 # 回帰分析の基礎 {#regression_basic}
 
+以下の記述はすでに`tidyverse`パッケージを読み込んでおり、また読み込んだデータを`piaac`というデータフレームに入れていることを前提とします。データフレームの名前は`piaac`である必要はありません。以下のようなコードを実行していると思います。
+
+```{r, eval = FALSE}
+library(tidyverse)
+piaac <- read_csv("data/piaac.csv")
+```
+
+また、Macで`ggplot2`パッケージを使用し、グラフ中に日本語を使用する場合には、`library(tidyverse)`または`library(ggplot2)`を実行したうえで、たとえば以下のようなコードをあらかじめ実行しておく必要があります。
+
+```{r, eval = FALSE}
+theme_set(theme_grey(base_family = "HiraginoSans-W3"))
+```
+
+この資料で使用しているグラフについては以下のようにthemeを設定しています。
+
+```{r, eval = FALSE}
+theme_set(theme_bw(
+  base_family = "HiraginoSans-W3",
+  base_size = 11,
+  base_rect_size = 0.2,
+  base_line_size = 0.2
+))
+```
+
+Windowsユーザの方は上記コードから`base_family = `の行を除いたこちらのコードで同じような雰囲気になります：
+
+```{r, eval = FALSE}
+theme_set(theme_bw(
+  base_size = 11,
+  base_rect_size = 0.2,
+  base_line_size = 0.2
+))
+```
+
 ## 説明
 
 年齢が高いほど賃金（時給換算）が高いという傾向があるかどうかを知りたいとする。このとき、年齢を横軸、賃金を縦軸とする散布図を書いてみる。
