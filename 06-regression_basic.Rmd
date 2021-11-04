@@ -24,7 +24,7 @@ theme_set(theme_bw(
 ))
 ```
 
-Windowsユーザの方は上記コードから`base_family = `の行を除いたこちらのコードで同じような雰囲気になります：
+Windowsユーザの方は上記コードから`base_family =`の行を除いたこちらのコードで同じような雰囲気になります：
 
 ```{r, eval = FALSE}
 theme_set(theme_bw(
@@ -41,7 +41,7 @@ theme_set(theme_bw(
 ```{r}
 piaac %>% 
   ggplot(aes(x = age, y = wage)) + 
-  geom_point(alpha = 0.2)
+  geom_point(shape = 1)
 ```
 
 なんとなく、年齢が高いほど賃金が高い傾向があるようにみえる。この関係を1つの直線で要約するとしたらどのようになるだろう？この直線を示したのが次の図になる。
@@ -49,7 +49,7 @@ piaac %>%
 ```{r}
 piaac %>% 
   ggplot(aes(x = age, y = wage)) + 
-  geom_point(alpha = 0.2) + 
+  geom_point(shape = 1) + 
   geom_smooth(method = "lm", se = FALSE)
 ```
 
@@ -73,7 +73,8 @@ lm(data = piaac, formula = wage ~ age)
 
 ```{r, echo = FALSE}
 reg_res <- lm(data = piaac, wage ~ age)
-reg_res_tidy <- tidy(reg_res)
+reg_res_tidy <- tidy(reg_res) %>% 
+  mutate(estimate = round(estimate, digits = 1))
 ```
 
 $$
@@ -94,7 +95,7 @@ summary(reg_res)
 
 1列目のEstimateの列には、先ほどみたように係数の値が表示される。2列目のStd. Errorの列が**標準誤差 standard error**を表し、係数のばらつきを示している。4列めのPr(\>\|t\|)の列が**p値 p-value**を表している。p値は「もし母集団において係数が0であるという帰無仮説が正しいとしたときに、今回のような係数の値となる確率」を表しており、この値が十分に低いのなら、帰無仮説を棄却して、たしかに母集団においても係数は0でなさそうだ（正あるいは負だ）、ということを自信をもって主張できるということになる。
 
-ageの行をのp値を確認すると、`reg_res_tidy$p.value[1]`となっている。つまり、母集団において年齢の係数が0であるとしたときに、今回のような係数の値が得られる確率はとても低い、ということである。
+ageの行をのp値を確認すると、`r`reg_res_tidy\$p.value[2]\`となっている。つまり、母集団において年齢の係数が0であったとしたら、今回のような係数の値が得られる確率はとても低い（0.000000000000045）、ということである。
 
 この確率がどれくらい低ければ自信をもって「関係がある」と言えるのかということだが、慣習的には、0.05という基準が使われている。Rでは、0.05よりも小さければ（正確には0.01 ≤ p \< 0.05）、p値の横に`*`という印がつく。同じようにして、0.01よりも小さければ（0.001 ≤ p \< 0.01）`**`、0.001よりも小さければ（p \< 0.001）、`***`という印がつく。
 
@@ -112,7 +113,7 @@ ageの行をのp値を確認すると、`reg_res_tidy$p.value[1]`となってい
 piaac %>% 
   ggplot(aes(x = gender, y = wage)) + 
   geom_violin() + 
-  geom_point(alpha = 0.2) 
+  geom_point(shape = 1) 
 ```
 
 図からわかる通り、男性と比べると女性の賃金が低いことがわかる。平均値を計算して棒グラフにしてみてみよう。
@@ -137,7 +138,7 @@ meandata <- piaac %>%
 piaac %>% 
   ggplot(aes(x = gender, y = wage)) + 
   geom_violin() + 
-  geom_point(alpha = 0.2) +
+  geom_point(shape = 1) +
   geom_hline(yintercept = meandata$mean_wage[1]) + 
   geom_hline(yintercept = meandata$mean_wage[2], lty = 2) 
 ```
@@ -167,7 +168,9 @@ summary(reg_res)
 ```
 
 ```{r, echo = FALSE}
-reg_res_tidy <- tidy(reg_res)
+reg_res_tidy <- tidy(reg_res) %>% 
+  mutate(estimate = round(estimate))
+
 ```
 
 male_dというのが、性別が男性のときに1、女性のときに0をとる変数である。この係数は傾き$\beta_1$に対応し、切片（Intercept）は切片$\beta_0$に対応する。つまり、推定された式は次のようになる：
@@ -189,7 +192,7 @@ piaac %>%
   filter(is.na(educ) == FALSE) %>% 
   ggplot(aes(x = educ, y = wage)) + 
   geom_violin() + 
-  geom_point(alpha = 0.2) 
+  geom_point(shape = 1) 
 ```
 
 中学卒を基準として、高校、短大高専、大学大学院卒だとどれくらい賃金が高いのかを推定することになる。
@@ -286,9 +289,11 @@ reg_res <- lm_robust(data = piaac, ojt ~ gender)
 summary(reg_res)
 ```
 
-## 非線形の関連
+## 非線形の関連：対数変換
 
-### 対数変換
+### 対数変換とは
+
+用いる変数が正規分布から乖離しているときや、変数の単位に依存せず効果の大きさを測定したいときには、変数を対数変換することを検討するとよい。社会科学系では、底がeの対数（自然対数）を取ることで変数を対数変換することが多い。Rでは`log()`という関数で自然対数変換ができる。次のようにして、賃金を対数変換した変数を作ることができる。
 
 ```{r}
 piaac <- piaac %>% 
@@ -307,6 +312,33 @@ piaac %>%
   geom_histogram()
 ```
 
+対数変換した後の変数は、対数変換する前の変数よりも正規分布に近づいていることがわかる。
+
+### 自然対数と対数関数について
+
+$$
+e = \lim_{t\rightarrow0}(1 + t)^{\frac{1}{t}} \simeq 2.7182818\cdots
+$$ で定義される数のことを**ネイピア数**といい、$e$と書く（円周率$\pi$みたいな感じ）。慣習上、ネイピア数$e$を底とする指数$e^x$を$\exp(x)$と表記したりする。
+
+$\log_a x$のように表される関数を**対数関数**といい、次のように定義される： $$
+a^y = x \leftrightarrow y = \log_a x
+$$
+
+とくに底が$e$の場合を**自然対数**という。社会科学系の文脈ではこのときには底を省略して、$e^y = x \leftrightarrow y = \log(x)$というふうに書かれることが多い。
+
+### 対数を使った場合の回帰分析
+
+先にみたように、対数賃金と年齢との散布図を書くと、次のようになる。
+
+```{r}
+piaac %>% 
+  ggplot(aes(x = age, y = logwage)) + 
+  geom_point(shape = 1) + 
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+対数変換した後の賃金を従属変数として、回帰分析を推定してみよう。
+
 ```{r}
 reg_res <- lm(data = piaac, logwage ~ age)
 summary(reg_res)
@@ -318,39 +350,147 @@ summary(reg_res)
 lm(data = piaac, log(wage) ~ age)
 ```
 
-```{r}
-piaac %>% 
-  ggplot(aes(x = age, y = logwage)) + 
-  geom_point(alpha = 0.2) + 
-  geom_smooth(method = "lm", se = FALSE)
+```{r, echo = FALSE}
+reg_res <- lm(data = piaac, logwage ~ age)
+reg_res_tidy <- tidy(reg_res) %>% 
+  mutate(estimate = round(estimate, digits = 3))
+
+reg_res_tidy$estimate[2]
 ```
 
-### 2乗項
+年齢の係数は、年齢が1歳高いと、対数賃金が`r reg_res_tidy$estimate[2]`ポイント高いということを意味する。対数をとった場合、（微小な）変化は%の変化に一致する（後述）。すなわち、年齢が1歳高いと、賃金が0.4%高い（10歳高いと、4%高い）ということを意味している。
+
+### 対数を使った場合の回帰分析：なぜ%になるのか
+
+以下のような単回帰分析について考える。
+
+$$
+y = \beta_0 + \beta_1x
+$$
+
+このとき、$x$を1単位増やしたときの$y$の変化分を$\Delta y$と表すことにする。すると
+
+$$
+\begin{align}
+y + \Delta y &= \beta_0 + \beta_1 (x + 1) \\
+y + \Delta y &= (\beta_0 + \beta_1 x) + \beta_1 \\
+\Delta y &= \beta_1 \\
+\end{align}
+$$
+
+$\Delta y = \beta_1$となる。すなわち、$\beta_1$は、$x$を1単位増やしたときに$y$がどれだけ増えるかに一致する。
+
+では、次のような式のときはどうだろうか？
+
+$$
+\log(y) = \beta_0 + \beta_1x
+$$
+
+同じように、$x$が1単位増えたときの$y$の変化分を$\Delta y$と表すことにする。すると、
+
+$$
+\begin{aligned}
+\log(y + \Delta y)
+&= \beta_0 + \beta_1(x + 1) \\
+y + \Delta y &= \exp(\beta_0 + \beta_1x + \beta_1) \\
+y + \Delta y &= \exp(\beta_1)\exp(\beta_0 + \beta_1x) \\
+y + \Delta y &= \exp(\beta_1)y \\
+\Delta y &= (\exp(\beta_1) - 1)y 
+\end{aligned}
+$$
+
+となり、xが1単位増えたときに$y$は$(\exp(\beta_1) - 1)$倍ぶんだけ増える、ということがわかる。実際の値を計算してみると、次のようになる：
+
+$$
+\begin{align}
+\beta_1 &= 0.1 \leftrightarrow \exp(\beta_1) - 1 \simeq 0.11 \\
+\beta_1 &= 0 \leftrightarrow \exp(\beta_1) - 1 \simeq 0 \\
+\beta_1 &= -0.1 \leftrightarrow \exp(\beta_1) - 1\simeq -0.10 \\
+\end{align}
+$$
+
+$\beta_1$が0に近い値ならば、おおむね「$x$が1単位高いと、$y$が$100 \times \beta_1$%高い」といえる。
+
+```{r, eval = FALSE, echo = FALSE}
+#ただし、係数の絶対値が大きくなるほど$\beta_1$と$\exp(\beta_1) - 1$のずれが大きくなるという点は頭の片隅に入れておくとよい。図にするとこんな感じで、0から離れるほど点線からずれていく：
+
+b1 <- seq(-1, 1, length = 501)
+tibble(b1) %>% 
+  mutate(linear = b1) %>% 
+  mutate(exp = exp(b1) - 1) %>% 
+  pivot_longer(col = -b1) %>% 
+  ggplot(aes(x = b1, y = value, linetype = name)) +
+  geom_line() + 
+  labs(x = "β", y = "exp(β) - 1") + 
+  theme(legend.position = "none")
+```
+
+### 従属変数と独立変数の対数をとる
+
+従属変数だけではなく、独立変数についても対数を取ることができる。その場合の解釈はそれぞれ次のようになる：
+
+| 従属変数  | 独立変数  | 解釈                                             |
+|-----------|-----------|--------------------------------------------------|
+| $y$       | $x$       | $x$が1単位高いと、$y$が$b_1$高い                 |
+| $\log(y)$ | $x$       | $x$が1単位高いと、$y$が$100 \times \beta_1$%高い |
+| $y$       | $\log(x)$ | $x$が1%高いと、$y$が$\beta_1 / 100$高い          |
+| $\log(y)$ | $\log(x)$ | $x$が1%高いと、$y$が$\beta_1$%高い               |
+
+## 非線形の関連：2次関数型
+
+### いつ2次関数型が役に立つか
+
+年齢と賃金の関係は、たんに年齢が上がると賃金が上がるという線形の関連ではなく、年齢が上がるほど賃金の上昇が緩やかになっていって、ある程度年齢が上がると関係が反転する（負の関係になる）ということが考えられる。2次関数を使うことで、こうした関係をうまく表現できる。
+
+$$
+y = \beta_0 + \beta_1x + \beta_2x^2
+$$
+
+このような場合、$x$が1単位増加したときの$y$の増加量は、もともとの$x$の値によって異なる。$x$が1単位増えたときの$y$の変化分を$\Delta y$と表すとすると、
+
+$$
+\begin{align}
+y + \Delta y &= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
+&= (\beta_0 + \beta_1x + \beta_2x^2) + \beta_1 + (2x + 1)\beta_2 \\
+\Delta y &= \beta_1 + (2x + 1)\beta_2
+\end{align}
+$$
+
+となる。すなわち、$x$が1単位増加したときの$y$の増加量は、もともとの$x$の値によって異なるということになる。回帰式の形状や結果の読み方は次のようになる：
+
+| $\beta_2$の係数 | 解釈                                                 | 形状                                           |
+|-----------------|------------------------------------------------------|------------------------------------------------|
+| $\beta_2 < 0$   | xが大きいほど、x1単位の増加に対するyの増加量は小さい | $-\beta_1/2\beta_2$を底とする、上に凸な2次関数 |
+| $\beta_2 > 0$   | xが大きいほど、x1単位の増加に対するyの増加量は大きい | $-\beta_1/2\beta_2$を底とする、下に凸な2次関数 |
+
+### 変数の作成と結果
+
+年齢を2乗した変数は次のように作成できる。
 
 ```{r}
 piaac <- piaac %>% 
   mutate(age_sq = age^2)
-
-piaac %>% 
-  ggplot(aes(x = age, y = age_sq)) + 
-  geom_point()
 ```
+
+回帰分析を行ってみる：
 
 ```{r}
 reg_res <- lm(data = piaac, logwage ~ age + age_sq)
 summary(reg_res)
 ```
 
-このときの散布図と回帰式は次のようになる。
+二次曲線の場合、個々の係数だけではあまり解釈ができない。そこで、散布図と回帰直線（曲線）をみてみよう：
 
 ```{r}
 piaac %>% 
   ggplot(aes(x = age, y = logwage)) + 
-  geom_point(alpha = 0.2) + 
+  geom_point(shape = 1) + 
   geom_smooth(method = "lm", formula = y ~ poly(x, 2), se = FALSE)
 ```
 
-2乗した変数を別に作らなくても、回帰分析のコード中で2乗した変数を作成することができる。（結果は省略）
+このように、若いときには年齢による賃金の上昇は大きいけれども、その上昇幅は年齢が高くなるほど小さくなり、高い年齢ではむしろ負に転ずることがわかる。年齢についてはこのように二次曲線をつかうことはしばしば有効だ。
+
+なお2乗した変数を別に作らなくても、回帰分析のコード中で2乗した変数を作成することができる。（結果は省略）
 
 ```{r, results='hide'}
 lm(data = piaac, log(wage) ~ age + I(age^2))

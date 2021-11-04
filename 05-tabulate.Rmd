@@ -249,12 +249,12 @@ table %>%
 
 ### 散布図をみる
 
-連続変数どうしの関係をみたいときには、散布図を使う。散布図を書くときには、`geom_point()`を使う。サンプルサイズが大きい場合には点がかぶってしまうので、かぶっている箇所がわかりやすいよう、透明度を指定するとよいだろう。
+連続変数どうしの関係をみたいときには、散布図を使う。散布図を書くときには、`geom_point()`を使う。サンプルサイズが大きい場合には点がかぶってしまうので、かぶっている箇所がわかりやすいよう、透明度を指定するか、点の形状を変えると良い。`shape = 1`というオプションをつけると、白抜きの点にできる。
 
 ```{r}
 piaac %>% 
   ggplot(aes(x = age, y = wage)) + 
-  geom_point(alpha = 0.2)
+  geom_point(shape = 1)
 ```
 
 散布図の傾向を表すような直線を引くと、関係がよりわかりやすいだろう。
@@ -262,7 +262,7 @@ piaac %>%
 ```{r}
 piaac %>% 
   ggplot(aes(x = age, y = wage)) + 
-  geom_point(alpha = 0.2) + 
+  geom_point(shape = 1) + 
   geom_smooth(method = "lm", se = FALSE)
 ```
 
@@ -278,7 +278,7 @@ piaac %>%
 ```{r}
 piaac %>% 
   ggplot(aes(x = age, y = wage)) + 
-  geom_point(alpha = 0.2) + 
+  geom_point(shape = 1) + 
   geom_smooth(method = "lm", se = FALSE) + 
   facet_wrap(~gender)
 ```
@@ -286,7 +286,7 @@ piaac %>%
 ```{r}
 piaac %>% 
   ggplot(aes(x = age, y = wage, color = gender)) + 
-  geom_point(alpha = 0.2) + 
+  geom_point(shape = 1) + 
   geom_smooth(method = "lm", se = FALSE) 
 ```
 
