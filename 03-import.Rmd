@@ -1,0 +1,92 @@
+# データの読み込み {#import}
+
+```{r, eval = FALSE}
+library(tidyverse)
+library(readxl)
+library(haven)
+```
+
+## Rのサンプルデータの読み込み
+
+Rにはいくつかのサンプルデータがあらかじめ入っており、これを読み込んで試しに分析することもできる。ここでは例としてAnscombe's Quartetのデータをみてみよう：
+
+```{r}
+anscombe
+```
+
+このデータに`df`という名前をつけて格納する。
+
+```{r}
+df <- anscombe
+```
+
+## 作業ディレクトリ上のデータの読み込み
+
+### データを置く場所
+
+### csv形式のファイル
+
+`example.csv`というふうに、末尾に.csvとついているのはcsv形式といって、一つひとつの値をカンマで区切った形式である。`readr::read_csv()`でcsv形式のファイルを読み込むことができる。`readr`というのは`tidyverse`パッケージを読み込むと読み込まれるパッケージの一つである。
+
+```{r, eval = FALSE}
+df <- read_csv("data/example.csv")
+```
+
+### xlsx形式のファイル
+
+`example.xlsx`（古いExcel形式だと`example.xls`）というふうに、末尾に.xlsxとついているのはMicrosoft Excelのデータ形式である。`readxl::read_excel()`でxlsx形式のファイルを読み込むことができる。
+
+```{r, eval = FALSE}
+df <- read_excel("data/example.xlsx")
+```
+
+### sav形式のファイル
+
+`example.sav`というふうに、末尾に.savとついているのはSPSSという統計ソフトのデータ形式である。SSJDAなどからデータを借りた場合にはSPSS形式であることがほとんどである。`haven::read_sav()`でsav形式のファイルを読み込むことができる。
+
+```{r, eval = FALSE}
+df <- read_sav("data/example.sav")
+```
+
+### dta形式のファイル
+
+`example.dta`というふうに、末尾に.dtaとついているのはStataという統計ソフトのデータ形式である。`haven::read_dta()`でdta形式のファイルを読み込むことができる。
+
+```{r, eval = FALSE}
+df <- read_sav("data/example.dta")
+```
+
+### 文字コードに関わる問題
+
+日本語を含むファイルを読み込むときには、エラーが起こったりすることがある。このあたりの問題への詳しい対処は[土井翔平先生のページ](https://shohei-doi.github.io/quant_polisci/encoding-r.html)に記載されているので、参考にするとよい。
+
+## ウェブ上のデータの読み込み
+
+ウェブサイト上にExcel形式のファイルやcsv形式のファイルがアップロードされている場合、それを直接読み込んでくることができる。たとえば、[e-Stat上にアップロードされている国勢調査の主要時系列データ](https://www.e-stat.go.jp/stat-search/files?page=1&layout=datalist&toukei=00200521&tstat=000001011777&cycle=0&tclass1=000001094741&result_page=1&tclass2val=0)のうち、「年齢（５歳階級），男女別人口－全国（大正９年～平成27年）」のデータを読み込んでみよう：
+
+```{r}
+file_url <- "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000031524030&fileKind=1"
+
+df <- read_csv(file_url, locale = locale(encoding = "shift-jis"))
+```
+
+以下のようにちゃんと読み込めていることがわかる。
+
+```{r}
+df %>% head()
+```
+
+ただし、何度もアクセスするのは当該ウェブサイトのサーバーに負荷をかけてしまう。頻繁に更新されるようなファイルでなければ、自分のパソコン上にダウンロードしたほうがよいだろう。以下のコマンドでダウンロードできる。
+
+```{r}
+download.file(url = file_url, destfile = "data/census_pop.csv")
+```
+
+ダウンロードしたデータは、これまでと同じように、csvやexcelなどの形式に対応するかたちで読み込んでやればよい。
+
+```{r}
+df <- read_csv("data/census_pop.csv", locale = locale(encoding = "shift-jis"))
+
+df %>% 
+  head()
+```

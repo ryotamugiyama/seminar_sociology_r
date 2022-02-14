@@ -1,0 +1,271 @@
+# 社会学のデータ分析でよくある処理 {#domain}
+
+日本の社会学業界を念頭においたときのデータ分析でよくある処理についてランダムにまとめます。ただし内容には麦山の経験と好みが反映されており、業界で標準的な手続きなのかどうかはわかりません。
+
+## SSM職業小分類を大分類にまとめる
+
+いくつかの調査では、調査対象者に仕事の内容を自由記述で尋ね、その回答をもとに、職業名を割り当てているものがある。このときに使われる職業分類が1995年SSM職業小分類と呼ばれるものである。1995年SSM職業章分類は約200の小分類からなり、それぞれの職業に番号が振られている。この番号を振った調査を以下に列挙する。
+
+| 調査名                        | 調査年    | 現職職業小分類 | 初職職業小分類 | 前職職業小分類                         | 15歳時父親職業小分類 | 15歳時母親職業小分類 |
+|-------------------------------|-----------|----------------|----------------|----------------------------------------|----------------------|----------------------|
+| 社会階層と社会移動調査（SSM） | 1995      | 有             | 有             | 有（職歴変数を使えば可能、今回は省略） | 有（「主な仕事」）   | 有（「主な仕事」）   |
+|                               | 2005      | 有             | 有             | 有（職歴変数を使えば可能、今回は省略） | 有                   | 有                   |
+|                               | 2015      | 有             | 有             | 有（職歴変数を使えば可能、今回は省略） | 有                   | 有                   |
+| 日本版総合的社会調査（JGSS）  | 2000      | 有             | 有             | 有（無職で就業経験ある者のみ）         | 有                   |                      |
+|                               | 2001      | 有             | 有             | 有（無職で就業経験ある者のみ）         | 有                   |                      |
+|                               | 2002      | 有             | 有             | 有（無職で就業経験ある者のみ）         | 有                   |                      |
+|                               | 2003      | 有             |                |                                        | 有                   |                      |
+|                               | 2005      | 有             | 有             |                                        | 有                   |                      |
+|                               | 2006      | 有             | 有             |                                        | 有                   |                      |
+|                               | 2008      | 有             | 有             |                                        | 有                   |                      |
+|                               | 2010      | 有             | 有             |                                        | 有                   |                      |
+|                               | 2012      | 有             | 有             | 有（無職で就業経験ある者のみ）         | 有                   |                      |
+|                               | 2015      | 有             | 有             | 有（無職で就業経験ある者のみ）         | 有                   |                      |
+| 東大社研パネル調査（JLPS）    | 2007-2020 | 有             | 有             |                                        | 有                   | 有                   |
+
+ふつうはこうした200個近い分類をそのまま分析に使うということはなく、少数のカテゴリにまとめて使う。カテゴリへのまとめ方はいくつも種類があるが、ここでは代表的なものとして「SSM職業大分類」と「国勢調査職業分類」の2つを準備する。
+
+なおこの2つへの割当てについては麦山が作成したが、妥当かどうかは各自確認すること。700番台、800番台にも有効なコードを振っている。また888や8888（非該当）、999や9999（無回答）はNAとなるようにしている。
+
+### JGSSの場合
+
+たとえばこのようなデータフレーム（jgssとする）があったとする。
+
+```{r, echo = FALSE}
+xxjob <- c(509, 606, 554, 999)
+xxfstjb <- c(573, 571, 558, 559)
+xxlstjb <- c(888, 888, 888, 556)
+ppjbxx15 <- c(531, 999, 681, 588)
+jgss <- tibble(xxjob, xxlstjb, xxfstjb, ppjbxx15)
+```
+
+```{r}
+jgss %>% head()
+```
+
+次のようなコードを実行することで、現職、初職、前職、父職のそれぞれに対して2種類の職業大分類を付与することができる。前職に関する質問項目が含まれていない場合には、前職に関わる部分のコードを削除する必要がある。
+
+また、読み込んだデータ形式によっては変数名が大文字のことがある（xxjobではなくXXJOBというように）。このような場合は[手持ちのデータの変数名を小文字に変換する](https://stackoverflow.com/questions/29264028/dplyr-or-magrittr-tolower/44882926)か、以下のコードのxxjobなどを大文字に直すかどちらかを行う必要がある。
+
+```{r}
+ssm_code <- read_csv("https://raw.githubusercontent.com/mugiyama/seminar_sociology_r/master/data/ssm_occupation_code.csv") 
+
+ssm_code_current <- ssm_code %>% 
+  rename(xxjob = 1, ssmocc_current = 2, censusocc_current = 3)
+ssm_code_first <- ssm_code %>% 
+  rename(xxfstjb = 1, ssmocc_first = 2, censusocc_first = 3)
+ssm_code_last <- ssm_code %>% 
+  rename(xxlstjb = 1, ssmocc_last = 2, censusocc_last = 3) # 前職が含まれていないJGSSデータの場合は削除
+ssm_code_father <- ssm_code %>% 
+  rename(ppjbxx15 = 1, ssmocc_father = 2, censusocc_father = 3)
+
+label_ssm <- c("専門","管理","事務","販売","熟練","半熟練","非熟練","農業")
+label_census <- c("専門・技術","管理","事務","販売","サービス","保安","農林漁業","運輸・通信","製造・制作","定置機関運転・建設機械運転・電気作業","採掘・建設・労務")
+
+jgss <- jgss %>% 
+  left_join(ssm_code_current, by = "xxjob") %>% 
+  left_join(ssm_code_first, by = "xxfstjb") %>% 
+  left_join(ssm_code_last, by = "xxlstjb") %>%  # 前職が含まれていないJGSSデータの場合は削除
+  left_join(ssm_code_father, by = "ppjbxx15") %>%
+  mutate(ssmocc_current_name = factor(ssmocc_current,
+                                      levels = 1:8,
+                                      labels = label_ssm)) %>% 
+  mutate(ssmocc_first_name = factor(ssmocc_first,
+                                    levels = 1:8,
+                                    labels = label_ssm)) %>% 
+  mutate(ssmocc_last_name = factor(ssmocc_last,
+                                    levels = 1:8,
+                                    labels = label_ssm)) %>%  # 前職が含まれていないJGSSデータの場合は削除
+  mutate(ssmocc_father_name = factor(ssmocc_father,
+                                     levels = 1:8,
+                                     labels = label_ssm)) %>% 
+  mutate(censusocc_current_name = factor(censusocc_current,
+                                         levels = 1:11,
+                                         labels = label_census)) %>% 
+  mutate(censusocc_first_name = factor(censusocc_first,
+                                       levels = 1:11,
+                                       labels = label_census)) %>% 
+  mutate(censusocc_last_name = factor(censusocc_last,
+                                       levels = 1:11,
+                                       labels = label_census)) %>%  # 前職が含まれていないJGSSデータの場合は削除
+  mutate(censusocc_father_name = factor(censusocc_father,
+                                        levels = 1:11,
+                                        labels = label_census))
+```
+
+もともとの変数と作成した変数の一覧を確認しておく。
+
+```{r}
+jgss %>% glimpse()
+```
+
+### SSMの場合
+
+たとえばこのようなデータフレーム（ssmとする）があったとする。
+
+```{r, echo = FALSE}
+q02d <- c(608, 597, 588, 999)
+q07f <- c(539, 687, 631, 665)
+q23_1d <- c(601, 655, 554, 545)
+q23_3d <- c(531, 999, 681, 588)
+ssm <- tibble(q02d, q07f, q23_1d, q23_3d)
+```
+
+```{r}
+ssm %>% head()
+```
+
+次のようなコードを実行することで、現職、初職、前職、父職のそれぞれに対して2種類の職業大分類を付与することができる。前職に関する質問項目が含まれていない場合には、前職に関わる部分のコードを削除する必要がある。
+
+```{r}
+ssm_code <- read_csv("https://raw.githubusercontent.com/mugiyama/seminar_sociology_r/master/data/ssm_occupation_code.csv") 
+
+ssm_code_current <- ssm_code %>% 
+  rename(q02d = 1, ssmocc_current = 2, censusocc_current = 3)
+ssm_code_first <- ssm_code %>% 
+  rename(q07f = 1, ssmocc_first = 2, censusocc_first = 3)
+ssm_code_father <- ssm_code %>% 
+  rename(q23_1d = 1, ssmocc_father = 2, censusocc_father = 3)
+ssm_code_mother <- ssm_code %>% 
+  rename(q23_3d = 1, ssmocc_mother = 2, censusocc_mother = 3) 
+
+label_ssm <- c("専門","管理","事務","販売","熟練","半熟練","非熟練","農業")
+label_census <- c("専門・技術","管理","事務","販売","サービス","保安","農林漁業","運輸・通信","製造・制作","定置機関運転・建設機械運転・電気作業","採掘・建設・労務")
+
+ssm <- ssm %>% 
+  left_join(ssm_code_current, by = "q02d") %>% 
+  left_join(ssm_code_first, by = "q07f") %>% 
+  left_join(ssm_code_father, by = "q23_1d") %>%
+  left_join(ssm_code_mother, by = "q23_3d") %>% 
+  mutate(ssmocc_current_name = factor(ssmocc_current,
+                                      levels = 1:8,
+                                      labels = label_ssm)) %>% 
+  mutate(ssmocc_first_name = factor(ssmocc_first,
+                                    levels = 1:8,
+                                    labels = label_ssm)) %>% 
+  mutate(ssmocc_father_name = factor(ssmocc_father,
+                                     levels = 1:8,
+                                     labels = label_ssm)) %>% 
+  mutate(ssmocc_mother_name = factor(ssmocc_mother,
+                                    levels = 1:8,
+                                    labels = label_ssm)) %>%
+  mutate(censusocc_current_name = factor(censusocc_current,
+                                         levels = 1:11,
+                                         labels = label_census)) %>% 
+  mutate(censusocc_first_name = factor(censusocc_first,
+                                       levels = 1:11,
+                                       labels = label_census)) %>% 
+  mutate(censusocc_father_name = factor(censusocc_father,
+                                        levels = 1:11,
+                                        labels = label_census)) %>% 
+  mutate(censusocc_mother_name = factor(censusocc_mother,
+                                       levels = 1:11,
+                                       labels = label_census))
+```
+
+もともとの変数と作成した変数の一覧を確認しておく。
+
+```{r}
+ssm %>% glimpse()
+```
+
+## 旧制学歴と新制学歴の対応
+
+広い年齢層を対象にした調査であったり、親の最終学歴を尋ねているような調査では、最終学歴の選択肢に戦前に卒業した人（旧制学歴保有者）が含まれていることがあり、質問項目の選択肢にも旧制学歴が含まれていることがある。こうした旧制学歴を戦後の新制学歴に合わせたい場合には、諸説あるが、たとえばもっとも教育年数の近い学歴に割り当てるという方法がある。
+
+このような割り当てによる統合学歴の対応表を以下の3パターンにまとめた。
+
+| 旧制学歴                         | 新制学歴                       | 統合学歴（5分類） | 統合学歴（4分類） | 統合学歴（3分類） |
+|----------------------------------|--------------------------------|-------------------|-------------------|-------------------|
+| 旧制尋常小学校                   | 新制中学校                     | 中学              | 中学              | 初等教育          |
+| 旧制高等小学校                   | 新制中学校                     | 中学              | 中学              | 初等教育          |
+| 旧制中学校・高等女学校           | 新制高校                       | 高校              | 高校              | 中等教育          |
+| 旧制実業学校                     | 新制高校                       | 高校              | 高校              | 中等教育          |
+| \-                               | 専修学校高等課程\*             | 高校              | 高校              | 中等教育          |
+| \-                               | 専門学校（専修学校専門課程）\* | 専門学校          | 高校              | 高等教育\*\*      |
+| 旧制師範学校                     | 新制短大・高専                 | 短大高専          | 短大高専          | 高等教育          |
+| 旧制高校・専門学校・高等師範学校 | 新制短大・高専                 | 短大高専          | 短大高専          | 高等教育          |
+| 旧制大学                         | 新制大学                       | 大学大学院        | 大学大学院        | 高等教育          |
+| 旧制大学                         | 新制大学院                     | 大学大学院        | 大学大学院        | 高等教育          |
+
+\*専修学校高等課程は中学卒業者を対象として職業教育を実施する機関。専修学校専門課程は高校卒業者を対象として職業教育を実施する機関で、ふつう「専門学校」というときにはこちらを指すことが多い。調査票の選択肢に「専門学校」が設けられていた場合も、対象者はおそらくこちらを想定していると思われる。
+
+\*\*国際標準教育分類（ISCED2011）では専門学校はレベル5（Short-cycle tertiary education）に分類され高等教育相当となっている。しかし、伝統的に（？）高等教育に含まないこともある。これに関しては込み入った議論がある。例えば[多喜弘文，2018，「学歴としての専門学校に関する基礎的検討」中澤渉編『2015年SSM研究報告書5 教育II』2015年SSM調査研究会，57--80．](http://www.l.u-tokyo.ac.jp/2015SSM-PJ/05_04.pdf)などを参照のこと。
+
+## 年収と労働時間から時間給を作成する
+
+労働から得られる報酬を測定する場合、個人年収というのは必ずしも適切な指標ではないことがある。というのも、人によって労働時間の長さは違うので、同じ年収であったとしても、労働時間が短い人のほうがよりその報酬は高いと考えられるからだ。
+
+### SSM2005の例
+
+そこで、年収を1時間あたりの年収（時間給）に直し、それを分析に用いることがある。いま、2005年SSM調査のデータを持っているとする（数値は架空例）。
+
+| 変数   | 説明                                                                                                     |
+|--------|----------------------------------------------------------------------------------------------------------|
+| q02f_w | 週あたり労働時間。無回答の場合には9という値が入っている。                                                |
+| q02f_m | 月あたり労働時間（週の労働時間を回答している場合は回答しない）。無回答の場合には99という値が入っている。 |
+| q02f_d | 1日の労働時間                                                                                            |
+| q33a   | 個人年収を区間（単位：万円）で尋ねた項目                                                                 |
+
+```{r, echo = FALSE}
+q02f_d <- c(8, 4, 10, 9, 12, 5)
+q02f_w <- c(5, 4, 99, 99, 5, 1)
+q02f_m <- c(99, 99, 20, 15, 99, 99)
+q33a <- c(3, 5, 12, 9, 10, 4)
+ssm <- tibble(q02f_d, q02f_w, q02f_m, q33a)
+```
+
+```{r}
+ssm %>% head()
+```
+
+このデータに対して以下のコードを実行することで、時間あたり賃金の変数wageを計算することができる。
+
+```{r}
+ssm <- ssm %>% 
+  mutate(income = case_when(
+    q33a ==  1 ~ 0,
+    q33a ==  2 ~ 12.5,
+    q33a ==  3 ~ 37.5,
+    q33a ==  4 ~ 62.5,
+    q33a ==  5 ~ 87.5,
+    q33a ==  6 ~ 112.5,
+    q33a ==  7 ~ 137.5,
+    q33a ==  8 ~ 175,
+    q33a ==  9 ~ 225,
+    q33a == 10 ~ 275,
+    q33a == 11 ~ 325,
+    q33a == 12 ~ 375,
+    q33a == 13 ~ 425,
+    q33a == 14 ~ 500,
+    q33a == 15 ~ 600,
+    q33a == 16 ~ 700,
+    q33a == 17 ~ 800,
+    q33a == 18 ~ 900,
+    q33a == 19 ~ 1000,
+    q33a == 20 ~ 1100,
+    q33a == 21 ~ 1200,
+    q33a == 22 ~ 1300,
+    q33a == 23 ~ 1400,
+    q33a == 24 ~ 1500,
+    q33a == 25 ~ 1600,
+    q33a == 26 ~ 1700,
+    q33a == 27 ~ 1800,
+    q33a == 28 ~ 1900,
+    q33a == 29 ~ 2000,
+    q33a == 30 ~ 2050 * 1.4)) %>% 
+  mutate(workhour = if_else(q02f_d < 98, q02f_d, NA_real_)) %>% 
+  mutate(workmonth = case_when(
+    q02f_m < 98 ~ q02f_m,
+    (q02f_m == 98 | q02f_m == 99) & q02f_w < 8 ~ q02f_w * 4, 
+    (q02f_m == 98 | q02f_m == 99) & (q02f_w == 8 | q02f_w == 9) ~ NA_real_
+    )) %>% 
+  mutate(wage = income * 10000 / (workhour * workmonth * 12))
+```
+
+```{r}
+ssm %>% head()
+```
+
+### 「〜万円以上」というカテゴリの処理
+

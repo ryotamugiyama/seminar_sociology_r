@@ -1,0 +1,57 @@
+# ロジスティック回帰分析（作成中） {#logit}
+
+以下の記述はすでに`tidyverse`パッケージを読み込んでおり、また読み込んだデータを`piaac`というデータフレームに入れていることを前提とします。データフレームの名前は`piaac`である必要はありません。以下のようなコードを実行しています。
+
+```{r, eval = FALSE}
+library(tidyverse)
+```
+
+```{r}
+piaac <- read_csv("data/piaac_sample.csv")
+```
+
+
+また、Macで`ggplot2`パッケージを使用し、グラフ中に日本語を使用する場合には、`library(tidyverse)`または`library(ggplot2)`を実行したうえで、たとえば以下のようなコードをあらかじめ実行しておく必要があります。
+
+```{r, eval = FALSE}
+theme_set(theme_grey(base_family = "HiraginoSans-W3"))
+```
+
+この資料で使用しているグラフについては以下のようにthemeを設定しています。
+
+```{r, eval = FALSE}
+theme_set(theme_bw(
+  base_family = "HiraginoSans-W3",
+  base_size = 11,
+  base_rect_size = 0.2,
+  base_line_size = 0.2
+))
+```
+
+Windowsユーザの方は上記コードから`base_family =`の行を除いたこちらのコードで同じような雰囲気になります：
+
+```{r, echo = FALSE}
+theme_set(theme_bw(
+  base_size = 11,
+  base_rect_size = 0.2,
+  base_line_size = 0.2
+))
+```
+
+## 従属変数が2値の場合
+
+```{r}
+mean_ojt <- piaac %>% 
+  group_by(gender) %>% 
+  summarize(mean_ojt = mean(ojt)) 
+
+
+```
+
+
+```{r}
+ols <- glm(data = piaac, ojt ~ gender)
+logit <- glm(data = piaac, ojt ~ gender, family = binomial(link = logit))
+
+modelsummary(list(ols, logit), stars = TRUE)
+```
