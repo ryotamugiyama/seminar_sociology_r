@@ -7,7 +7,7 @@ library(tidyverse)
 ```
 
 ```{r}
-piaac <- read_csv("data/piaac_sample.csv")
+piaac <- read_rds("data/piaac_sample.rds")
 ```
 
 
@@ -38,7 +38,7 @@ theme_set(theme_bw(
 ))
 ```
 
-## 従属変数が2値の場合
+## 従属変数が2値の場合の回帰分析 - 再確認
 
 ```{r}
 mean_ojt <- piaac %>% 
@@ -55,3 +55,21 @@ logit <- glm(data = piaac, ojt ~ gender, family = binomial(link = logit))
 
 modelsummary(list(ols, logit), stars = TRUE)
 ```
+
+## ロジスティック回帰分析の考えかた
+
+### オッズと対数オッズ
+
+### LPMとLogitの解釈の比較
+
+## 限界効果を計算する
+
+### 平均限界効果（Average Marginal Effect）
+
+`margins`
+
+### LPMとAMEの結果の比較
+
+## 結果をファイルに書き出す
+
+2つ前の章の[結果をファイルに書き出す](#regression_basic_export)を参照。
