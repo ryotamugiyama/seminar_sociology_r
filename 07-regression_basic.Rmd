@@ -1,24 +1,24 @@
 # 回帰分析の基礎 {#regression_basic}
 
-以下の記述はすでに`tidyverse`パッケージを読み込んでおり、また読み込んだデータを`piaac`というデータフレームに入れていることを前提とします。データフレームの名前は`piaac`である必要はありません。以下のようなコードを実行しています。
+本章では、回帰分析の基礎について説明する。
 
-```{r, eval = FALSE}
-library(tidyverse)
-```
+内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project...」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。
+
+さらに、これまでの章で説明した以下のパッケージを読み込んだ上で、[第4章](#handling)で作成したデータを読み込んで`piaac`というデータフレームに入れていることを前提とする。具体的には、以下のコードを実行しておく必要がある。
 
 ```{r}
-piaac <- read_rds("data/piaac_sample.rds")
+library(tidyverse)
+library(gtsummary)
+library(flextable)
+
+piaac <- read_rds("data/piaac_sample_analytic.rds")
 ```
 
-また、Macで`ggplot2`パッケージを使用し、グラフ中に日本語を使用する場合には、`library(tidyverse)`または`library(ggplot2)`を実行したうえで、たとえば以下のようなコードをあらかじめ実行しておく必要があります。
+[第5章で確認したように](#descriptives_ggplot)、ggplotの設定を変更しておくことで見やすいグラフを作ることができる。ここでは以下のコードを実行している。
 
-```{r, eval = FALSE}
-theme_set(theme_grey(base_family = "HiraginoSans-W3"))
-```
+Macの場合：
 
-この資料で使用しているグラフについては以下のようにthemeを設定しています。
-
-```{r, eval = FALSE}
+```{r}
 theme_set(theme_bw(
   base_family = "HiraginoSans-W3",
   base_size = 11,
@@ -27,9 +27,9 @@ theme_set(theme_bw(
 ))
 ```
 
-Windowsユーザの方は上記コードから`base_family =`の行を除いたこちらのコードで同じような雰囲気になります：
+Windowsの場合：
 
-```{r, echo = FALSE}
+```{r, eval = FALSE}
 theme_set(theme_bw(
   base_size = 11,
   base_rect_size = 0.2,
@@ -37,9 +37,9 @@ theme_set(theme_bw(
 ))
 ```
 
-## 説明
+## 回帰分析とは何か
 
-### 散布図と回帰分析
+### 散布図を眺める
 
 数的思考力スコアが高いほど賃金（時給換算）が高いという傾向があるかどうかを知りたいとする。このとき、年齢を横軸、賃金を縦軸とする散布図を書いてみる。
 
@@ -60,7 +60,11 @@ piaac %>%
 
 ### 回帰式の読み方
 
-このように、従属変数と独立変数の関係を$y = f(x)$というような関数で表現する分析方法を指して、**回帰分析 regression analysis/regression model** という。今回の式の場合は、次のようなかたちになる。とくに今回のような場合を**線形回帰分析 Linear regression**ということもある。
+このように、2つの変数の関係を$y = f(x)$というような関数で表現する分析方法を指して、**回帰分析 regression analysis/regression model** という。とくに、今y軸に置かれている変数 （賃金）は、数的思考力スコアによって説明される変数であるという意味で、**被説明変数 explained variable**または**従属変数 dependent variable**、x軸に置かれている変数（数的思考力スコア）は、賃金を説明する変数であるという意味で、**説明変数 explanatory variable**または**独立変数 independent variable**という。
+
+今回の式は、次のようなかたちになる[^regression_basic-1]。
+
+[^regression_basic-1]: 今回のような場合を\*\*線形回帰分析 Linear regression\*\*ということもある。
 
 $$
 y = \beta_0 + \beta_1x
@@ -108,9 +112,9 @@ summary(reg_res)
 
 1列目のEstimateの列には、先ほどみたように係数の値が表示される。
 
-2列目のStd. Errorの列が**標準誤差 standard error**を表し、得られた係数のばらつき（標準偏差）を示している。標準誤差は、次に述べるp値の計算に使われている[^regression_basic-1]。
+2列目のStd. Errorの列が**標準誤差 standard error**を表し、得られた係数のばらつき（標準偏差）を示している。標準誤差は、次に述べるp値の計算に使われている[^regression_basic-2]。
 
-[^regression_basic-1]: 正確には、係数 - 0を標準誤差で割ることでt値を求める。自由度df（N - 推定した係数の個数）のt分布のもとで、t値の絶対値が得られたt値よりも極端な値になる確率を計算したものがここで表示されているp値である。
+[^regression_basic-2]: 正確には、係数 - 0を標準誤差で割ることでt値を求める。自由度df（N - 推定した係数の個数）のt分布のもとで、t値の絶対値が得られたt値よりも極端な値になる確率を計算したものがここで表示されているp値である。
 
 4列めのPr(\>\|t\|)の列が**p値 p-value**を表している。p値は「もし母集団において係数が0であるという帰無仮説が正しいとしたときに、今回のような係数の値となる確率」を表している。この値が十分に低いのならば、帰無仮説を棄却して、たしかに母集団においても係数は0でなさそうだ（正あるいは負だ）、ということを自信をもって主張できるということになる。
 
@@ -133,9 +137,7 @@ piaac %>%
   ylim(0, 10000)
 ```
 
-図からわかる通り、男性と比べると女性の賃金が低いことがわかる。平均値を計算して棒グラフにしてみてみよう。
-
-```{r}
+```{r, echo = FALSE, eval = FALSE}
 piaac %>% 
   group_by(gender) %>% 
   summarize(mean = mean(wage)) %>% 
@@ -145,9 +147,9 @@ piaac %>%
   ylim(0, 2500)
 ```
 
-ここで得られた男性の平均値と女性の平均値をそれぞれ散布図に書き入れてみたのが次の図である。実線が男性の平均値、点線が女性の平均値を表している。
+ここで得られた男性の平均値と女性の平均値をそれぞれ散布図に書き入れてみたのが次の図である。実線が男性の平均値、点線が女性の平均値を表している（コードはやや複雑なので省略しています）。
 
-```{r}
+```{r, echo = FALSE}
 meandata <- piaac %>% 
   group_by(gender) %>% 
   summarize(mean_wage = mean(wage)) 
@@ -156,7 +158,9 @@ piaac %>%
   ggplot(aes(x = gender, y = wage)) + 
   geom_point(shape = 1, position = position_jitter(w = 0.3, h = 0)) + 
   geom_hline(yintercept = meandata$mean_wage[1], lty = 2, color = "brown1") + 
-  geom_hline(yintercept = meandata$mean_wage[2], col = "deepskyblue") +
+  geom_hline(yintercept = meandata$mean_wage[2], color = "deepskyblue") +
+  annotate("text", x = 1.5, y = 1000, label = round(meandata$mean_wage[1], 1), color = "brown1") + 
+  annotate("text", x = 1.5, y = 2600, label = round(meandata$mean_wage[2], 1), color = "deepskyblue") +
   ylim(0, 10000)
 ```
 
@@ -195,7 +199,7 @@ $$
 
 つまり、女性（x = 0）とくらべて男性（x = 1）の賃金は`r reg_res_tidy$estimate[2]`円高いということを意味している。
 
-この値が、先ほど棒グラフに示した男性の平均値と女性の平均値の差に一致していることを確認しよう。すなわち、2値のカテゴリ変数を独立変数として用いる場合、傾きの値は、2つのカテゴリの平均値の差を表している。
+この値が、先ほど散布図に示した男性の平均値と女性の平均値の差に一致していることを確認しよう。すなわち、2値のカテゴリ変数を独立変数として用いる場合、傾きの値は、2つのカテゴリの平均値の差を表している。
 
 ### 3値以上のカテゴリ
 
@@ -324,7 +328,7 @@ reg_res_tidy$estimate[2]
 
 分析に先立ち、従属変数とする2値のカテゴリ変数のどちらを1とし、どちらを0とするかは自分であらかじめ決めておいて、数値型に変換しておく必要がある（カテゴリ変数のままでは分析できない）。
 
-なお、従属変数が2値のカテゴリ変数の場合にはロジスティック回帰分析がよく使われる。ただし、今紹介した（ふつうの）回帰分析と比べるとやや解釈が難しい。また上記の（ふつうの）回帰分析を使ってもそう間違った結論にはならないので、学部レベルではこれで十分である。もちろん関心のある人は積極的にチャレンジしてみてほしい。くわしくは、[ロジスティック回帰分析](#logit)の章を参照のこと。
+なお、従属変数が2値のカテゴリ変数の場合にはロジスティック回帰分析がよく使われる。ただし、今紹介した（ふつうの）回帰分析と比べるとやや解釈が難しい。また上記の（ふつうの）回帰分析を使っても、たいていの場合はそんなに間違った結論にはならないので、学部レベルではこれで十分である。もちろん、関心のある人は積極的にチャレンジしてみてほしい。
 
 ### （発展）ロバスト標準誤差
 
@@ -332,9 +336,11 @@ reg_res_tidy$estimate[2]
 
 ここではロバスト標準誤差のことについてはくわしく説明しないが、推定の仕方だけ書いておく。`estimatr::lm_robust()`で、ロバスト標準誤差を得ることができる。使い方は[このページ](https://keita43a.hatenablog.com/entry/2019/04/17/232548#%E4%B8%8D%E5%9D%87%E4%B8%80%E5%88%86%E6%95%A3%E3%81%A7%E3%81%AE%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90)にくわしい。まずは、`estimatr`パッケージを読み込む。
 
-```{r, eval = FALSE}
+```{r}
 library(estimatr)
 ```
+
+そのうえで、以下のように、ふつうの回帰分析と同じように実行すればよい。違うのは、関数が`lm()`ではなくて`lm_robust()`となっている点だけだ。
 
 ```{r}
 reg_res <- lm_robust(data = piaac, ojt ~ gender)
@@ -549,9 +555,10 @@ lm(data = piaac, log(wage) ~ age + I(age^2))
 ```
 
 ### 回帰分析の結果をきれいに表示する
+
 先ほどの回帰分析の結果をもう少しきれいに表示したいと思うかもしれない。このようなときに活躍するのが`modelsummary`パッケージである。
 
-```{r, eval = FALSE}
+```{r}
 library(modelsummary)
 ```
 
@@ -579,18 +586,16 @@ modelsummary(list(reg_res),
 
 ## 結果をファイルに書き出す {#regression_basic_export}
 
-レポートをWordで執筆している場合には、上記の結果をwordなどのファイルに貼り付けたりしたいと思うだろう。このようなときにも`modelsummary()`は活躍する。上記のコードに`output = "xxx.docx"`というようなオプションをつけることで、wordファイルに結果を書き出すことができる。
+第5章、第6章と同様、回帰分析についても結果をwordに書き出すことができる。`flextable`パッケージを読み込んでおいた状態で（この章では冒頭ですでに読み込んでおいた）、上記の`modelsummary()`のコードに`output = "xxx.docx"`というようなオプションをつけることで、wordファイルに結果を書き出すことができる。
 
-```{r, eval = FALSE}
+```{r}
 modelsummary(list(reg_res),
          stars = TRUE, # 有意水準を示す印をつける
          coef_rename = c("(Intercept)" = "切片",
                          "age" = "年齢",
                          "I(age^2)" = "年齢2乗"), # 各変数に名前をつける
          gof_omit = "R2 Adj.|AIC|BIC|Log.Lik.|F", # 不要な統計量を削除する
-         output = "regression_result.docx") # 出力先のファイル名をつける
+         output = "regression.docx") # 出力先のファイル名をつける
 ```
 
-実際の出力結果は以下のようになる。これをコピーして多少手直しすれば、きれいな回帰分析の表をWordに載せることができる。
-
-![](images/reg_res_word.png)
+`as_flex_table() %>% save_as_docs(path = "xxx.docx")`を使っていた第5章、第6章とは少し違う点に注意。多少の手直しが必要かもしれないが、きれいな回帰分析の表をWordファイルに書き出すことができる。

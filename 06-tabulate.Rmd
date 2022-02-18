@@ -1,24 +1,23 @@
 # 2変数の集計 {#tabulate}
 
-以下の記述はすでに`tidyverse`パッケージを読み込んでおり、また読み込んだデータを`piaac`というデータフレームに入れていることを前提とします。データフレームの名前は`piaac`である必要はありません。以下のようなコードを実行しています。
+本章では、2変数の集計方法を説明する。
 
-```{r, eval = FALSE}
-library(tidyverse)
-```
+内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project...」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。
+
+さらに、これまでの章で説明した以下のパッケージを読み込んだ上で、[第4章](#handling)で作成したデータを読み込んで`piaac`というデータフレームに入れていることを前提とする。具体的には、以下のコードを実行しておく必要がある。
 
 ```{r}
-piaac <- read_rds("data/piaac_sample.rds")
+library(tidyverse)
+library(gtsummary)
+
+piaac <- read_rds("data/piaac_sample_analytic.rds")
 ```
 
-また、Macで`ggplot2`パッケージを使用し、グラフ中に日本語を使用する場合には、`library(tidyverse)`または`library(ggplot2)`を実行したうえで、たとえば以下のようなコードをあらかじめ実行しておく必要があります。
+加えて、[第5章で確認したように](#descriptives_ggplot)、ggplotの設定を変更しておくことで見やすいグラフを作ることができる。ここでは以下のコードを実行している。
 
-```{r, eval = FALSE}
-theme_set(theme_grey(base_family = "HiraginoSans-W3"))
-```
+Macの場合：
 
-この資料で使用しているグラフについては以下のようにthemeを設定しています。
-
-```{r, eval = FALSE}
+```{r}
 theme_set(theme_bw(
   base_family = "HiraginoSans-W3",
   base_size = 11,
@@ -27,7 +26,7 @@ theme_set(theme_bw(
 ))
 ```
 
-Windowsユーザの方は上記コードから`base_family = `の行を除いたこちらのコードで同じような雰囲気になります：
+Windowsの場合：
 
 ```{r, eval = FALSE}
 theme_set(theme_bw(
@@ -41,32 +40,33 @@ theme_set(theme_bw(
 
 ### 基本
 
-カテゴリ変数の値ごとに連続変数の値を比較したい。たとえば性別ごとに賃金の値を比較したいとする。このようなときには、平均値の比較を行う。
+カテゴリ変数の値ごとに連続変数の値を比較したい。たとえば性別ごとに賃金の平均値を比較したいとする。このようなときには、前章で学んだ[連続変数を集計する](#descriptives_summarize)方法に、以下のようにグループに分けるための命令`group_by()`を付け加えることで、グループ別の集計を行うことができる。
 
 ```{r}
 piaac %>% 
-  group_by(gender) %>% # genderの値ごとに集計すると宣言
+  group_by(gender) %>% # genderの値ごとに分けると宣言
   summarize(mean = mean(wage))
 ```
 
-どちらもNAになってしまった。集計する変数（この場合はwage）にNAが含まれている場合には、平均値が計算できず、NAとなってしまう。NAを除いて平均値を計算するときには、あらかじめwageがNAの行を除外しておくとよい。
+前章で説明したときと同様、集計する変数にNAが含まれていると計算ができず、結果はNAとなる。グループ別に集計する場合は`group_by()`で分ける変数にNAが含まれている可能性も考えないといけない。たとえば、父親学歴`parenteduc`ごとに集計してみるとどうだろうか。ここでは、平均値だけではなく標準偏差と人数を合わせてチェックしてみよう。
 
 ```{r}
 piaac %>% 
-  filter(is.na(wage) == FALSE) %>% # is.na(wage)で、wageの値がNAならTRUE, NAでないならFALSEを返す
-  group_by(gender) %>% 
-  summarize(mean = mean(wage))
+  group_by(fathereduc) %>% 
+  summarize(mean = mean(wage), 
+            sd = sd(wage),
+            n = n())
 ```
 
-平均値だけでなく、標準偏差と各カテゴリの人数をチェックしておくとよいだろう。
+このように、`group_by()`で分ける変数にNAが含まれている場合には、それもグループとみなしたうえで集計を行う。これがそのまま残っているとグラフを作ったりするときに面倒になるので、やはりNAはあらかじめ除外しておくとよい。
 
 ```{r}
 piaac %>% 
-  filter(is.na(wage) == FALSE) %>%
-  group_by(gender) %>% 
+  filter(is.na(fathereduc) == FALSE) %>% # is.na(fathereduc)で、fathereducの値がNAならTRUE, NAでないならFALSEを返す
+  group_by(parenteduc) %>% 
   summarize(mean = mean(wage),
             sd = sd(wage),
-            n = n()) # n()で行の数を計算
+            n = n())
 ```
 
 ### 棒グラフによる可視化
@@ -75,7 +75,6 @@ piaac %>%
 
 ```{r}
 piaac %>% 
-  filter(is.na(wage) == FALSE) %>%
   group_by(gender) %>% 
   summarize(mean = mean(wage)) %>% 
   ggplot(aes(x = gender, y = mean)) + 
@@ -89,10 +88,9 @@ piaac %>%
 
 ```{r}
 piaac %>% 
-  filter(is.na(wage) == FALSE) %>%
-  filter(is.na(educ) == FALSE) %>% 
   group_by(gender, educ) %>% 
   summarize(mean = mean(wage), 
+            sd = sd(wage),
             n = n())
 ```
 
@@ -100,8 +98,6 @@ piaac %>%
 
 ```{r}
 meandata <- piaac %>% 
-  filter(is.na(wage) == FALSE) %>%
-  filter(is.na(educ) == FALSE) %>% 
   group_by(gender, educ) %>% 
   summarize(mean = mean(wage)) #いったん名前をつけて保存しておく
 ```
@@ -110,9 +106,9 @@ meandata <- piaac %>%
 
 ```{r}
 meandata %>% 
-  ggplot(aes(x = gender, y = mean, fill = educ)) + 
-  geom_col(position = "dodge") +
-  labs(x = "性別", y = "平均賃金")
+  ggplot(aes(x = gender, y = mean, fill = educ)) + # fillで色分けする変数を指定
+  geom_col(position = "dodge") + # position = "dodge"とすることで棒を重ねずに表示する
+  labs(x = "性別", y = "平均賃金", fill = "学歴")
 ```
 
 性別で色分けするパターン：
@@ -121,7 +117,7 @@ meandata %>%
 meandata %>% 
   ggplot(aes(x = educ, y = mean, fill = gender)) + 
   geom_col(position = "dodge") +
-  labs(x = "学歴", y = "平均賃金")
+  labs(x = "学歴", y = "平均賃金", fill = "性別")
 ```
 
 性別でグラフを分割するパターン：
@@ -136,6 +132,8 @@ meandata %>%
 
 ## 分布の比較
 
+平均値だけではなく、分布そのものを比較することでより全体の違いがわかりやすい事がある。前章では[ヒストグラム](#descriptives_ggplot)を使って連続変数の分布をみる方法を紹介した。これをグループ別にそれぞれ書いてみよう。
+
 複数のヒストグラムを重ねるときには、`geom_histogram()`のなかで`position = "identity"`と指定する。また、ヒストグラムが重なると片方が見えなくなってしまうので、`alpha = 0.5`などと指定することで、透明度をつける。`alpha = 1`がデフォルトで、0に近づくほど透明度が高くなる。
 
 ```{r}
@@ -145,7 +143,7 @@ piaac %>%
   labs(fill = "")
 ```
 
-カテゴリごとに人数が異なる場合、少し比較が難しいかもしれない。このような場合は縦軸を度数ではなく密度（density）にするとよい。
+グループ間で人数が異なると少し比較が難しいかもしれない。このような場合は縦軸を度数ではなく密度（density）にするとよい。
 
 ```{r}
 piaac %>% 
@@ -163,18 +161,19 @@ piaac %>%
   facet_wrap(~occupation)
 ```
 
-## クロス集計
+## クロス集計表
 
 ### 基本
 
-親の学歴によって本人の学歴の分布がどの程度異なるのかを知りたいとする。このようなときには、クロス集計表を作成する。
+カテゴリ変数の場合は平均値などを計算することはできないので、度数をみることが有効であった。カテゴリ変数の度数分布をグループ間で比べることも可能である。たとえば、親の学歴（父親と母親のうちどちらか高い方の学歴をとった変数）`parenteduc`によって本人の学歴の分布がどの程度異なるのかを知りたいとする。これは、[前章で紹介](#descriptives_table)した`with(table())`を使うとできる。
 
 ```{r}
 piaac %>% 
   with(table(parenteduc, educ))
 ```
 
-行%を計算することで、より親の学歴ごとの内訳がわかりやすくなる。
+このようなときに、カテゴリ変数の分布をグループごとに集計した表を指して、**クロス集計表**という。
+もちろんこれだけだと、どの学歴ではどの職業が多いのかというのは一見してすぐにわからない。そこで、行%を計算することで、より学歴ごとの内訳がわかりやすくなる。
 
 ```{r}
 piaac %>%
@@ -190,9 +189,7 @@ piaac %>%
 
 このようなときに、`gtsummary`パッケージに含まれている`gtsummary::tbl_cross()`関数が役に立つ。
 
-```{r, eval = FALSE}
-install.packages("gtsummary") #未インストールの場合はインストール
-
+```{r}
 library(gtsummary)
 ```
 
@@ -203,16 +200,28 @@ piaac %>%
   tbl_cross(parenteduc, educ, percent = "row")
 ```
 
-値が度数、括弧内が行%を意味している。`with(table())`のときと違って、`NA`のデータは自動的に除外されず、「Unknown」という行や列が追加される。NAのデータを除外したいときには、以下のようにする。
+値が度数、括弧内が行%を意味している。`with(table())`のときと違って、もし変数にNAが含まれている場合には表から自動的に除外されず、「Unknown」という行や列が追加される。
+
+このクロス集計表もいくつかの点で改良の余地がある。以下の3つの点で修正をしてみよう。
+
+1. parenteduc, educがそれぞれ何を指しているのか、日本語の名前をつけたい：`label = list(x ~ "名前")`
+1. 行および列の合計が"Total"と記載されているが、これを「合計」という日本語の名前にしたい：`margin_text = "合計"`
+1. 左上に書かれている「Characteristics」というのは特に必要がないので削除したい：`tbl_cross`のコマンドの後ろに`%>%`でつないで`modify_header(label ~ "")`
 
 ```{r}
 piaac %>% 
-  tbl_cross(parenteduc, educ, percent = "row", missing = "no")
+  tbl_cross(parenteduc, educ, 
+            percent = "row", 
+            label = list(parenteduc ~ "親学歴", educ ~ "本人学歴"),
+            margin_text = "合計") %>%
+  modify_header(label ~ "")
 ```
+
+これならばそのまま論文に掲載できるくらいきれいな図になっている。もちろんこれもwordファイルに書き出すことができる。この方法については本章最後に紹介する。
 
 ## クロス集計表を図示する
 
-クロス集計は数値が多いので、図で表されているとわかりやすいかもしれない。このようなときには、`with(table())`で作成した数値をデータフレームとすることで、比較的簡単に図をつくることができる。
+クロス集計表は数値が多いので、図で表されているとわかりやすいかもしれない。このようなときも、前章で説明したように、`with(table())`で作成した数値をデータフレームとすることで、比較的簡単に図をつくることができる。
 
 ```{r}
 table <- piaac %>%
@@ -236,8 +245,7 @@ table %>%
 table %>% 
   ggplot(aes(y = Freq, x = parenteduc, fill = educ)) + 
   geom_col(position = "dodge") + 
-  labs(x = "", y = "割合", fill = "本人学歴") + 
-  theme(legend.position = "bottom")
+  labs(x = "", y = "割合", fill = "本人学歴") 
 ```
 
 ## 散布図
@@ -304,7 +312,9 @@ piaac %>%
 ```
 
 
-## 値が粗い連続変数を扱う
+## 2変数集計のときのくふう
+
+### 値が粗い連続変数を扱う
 
 値が粗い連続変数を扱う場合、散布図があまり可視化の役に立たないことがある。例えば、健康状態について尋ねた質問の選択肢に次のように値を与え、高いほど健康であることを示すようにした変数（health）があるとする。
 
@@ -324,7 +334,7 @@ piaac %>%
   geom_point(alpha = 0.2)
 ```
 
-このような場合はどうしたらよいだろうか？解決策の1つは、平均値の比較のときのように、横軸の変数の値ごとに健康状態の平均値を計算し、それをプロットすることだ。
+このような場合はどうしたらよいだろうか？解決策の1つは、平均値の比較のときのように、横軸の変数の値ごとに健康状態の平均値を計算し、それをプロットするという方法がある。
 
 ```{r}
 piaac %>% 
@@ -334,7 +344,7 @@ piaac %>%
   geom_point()
 ```
 
-ただ、この図では人数が少ない年齢層も多い年齢層も同じ大きさの点で描かれてしまっていることが少し不満かもしれない。点の大きさを考慮したい場合には、バブル・プロットを使う。aestheticsのところで`size = `を指定することで、点の大きさを変えることができる。
+ただ、この図では人数が少ない年齢層も多い年齢層も同じ大きさの点で描かれてしまっていることが少し不満かもしれない。点の大きさを考慮したい場合には、バブル・プロットを使う。aestheticsのところで`size = `を指定することで、点の大きさを変えることができる。ただしその際、`scale_size_area(max_size = 5)`などというふうに円の面積に関するコマンドを含めないと円の大きさと人数が対応しなくなってしまうため、注意が必要。
 
 ```{r}
 piaac %>% 
@@ -342,12 +352,79 @@ piaac %>%
   summarize(mean = mean(health),
             n = n()) %>%  
   ggplot(aes(x = age, y = mean, size = n)) + 
-  geom_point(alpha = 0.5)
+  geom_point(shape = 1) + 
+  scale_size_area(max_size = 5)
 ```
+
+### カテゴリが多いクロス集計表を扱う
+
+学歴によって就いている職業の分布がどのように異なっているかを知りたいとする。このような場合にはクロス集計表を作る。
+
+```{r}
+piaac %>% 
+  tbl_cross(educ, occupation, percent = "row")
+```
+
+この表はやや横に大きく、数値も多いため、見にくい表になってしまっているかもしれない。実際、これを積み上げ棒グラフにすると、お世辞にもあまり見やすいとはいえないグラフができあがる。
+
+```{r}
+table <- piaac %>%
+  with(table(educ, occupation)) %>% 
+  prop.table(margin = 1) %>% 
+  as.data.frame() # データフレーム形式に変換
+
+table %>% 
+  ggplot(aes(x = educ, y = Freq, fill = occupation)) + 
+  geom_col() + 
+  labs(x = "", y = "", fill = "") 
+```
+
+そこで、学歴ごとにグラフをわけて、職業の分布を書くという方法がある。`facet_wrap()`を使うことで、グラフを分割することができる。
+
+```{r}
+table %>% 
+  ggplot(aes(y = Freq, x = occupation)) + 
+  geom_col() + 
+  facet_wrap(~educ) + 
+  labs(x = "", y = "割合") + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+もう一つの方法は、職業ごとにグラフをわけて、各学歴において当該職業に就いている人の割合を示すという方法である。
+
+```{r}
+table %>% 
+  ggplot(aes(y = Freq, x = educ)) + 
+  geom_col() + 
+  facet_wrap(~occupation) + 
+  labs(x = "", y = "割合") + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+どのように図示するかは、自分がどれだと文章を書きやすいか（何を伝えたいのか）によって決める。
+
+このようにカテゴリが多い場合には、そもそもカテゴリをまとめて簡単にするという方法が考えられる。くわしくは、「[カテゴリをまとめる](#handling-tips)」を参照のこと。
 
 ## 結果をファイルに書き出す
 
-```{r}
+### ggplotで作成した図を書き出す
 
+前章の「[結果をファイルに書き出す](#descriptive_export_ggplot)」を参照。
+
+### クロス集計表をwordファイルに書き出す
+
+これも基本的な方法は前章の「[記述統計の一覧表をwordに書き出す](#descriptive_export_tbl_summary)」と同じ。この章ではすでに冒頭で読み込んでおいたが、`flextable`パッケージを読み込んでおく。
+
+そのうえで、先ほど作成したグループ別の記述統計量の表をwordファイルに書き出したいときには、以下のように`%>%`演算子でつないで、`as_flex_table() %>% save_as_docs(path = "xxx.docx")`というコマンドを追加する。
+
+```{r}
+piaac %>% 
+  tbl_cross(parenteduc, educ, 
+            percent = "row", 
+            label = list(parenteduc ~ "親学歴", educ ~ "本人学歴"),
+            margin_text = "合計") %>%
+  modify_header(label ~ "") %>% 
+  as_flex_table() %>% 
+  save_as_docx(path = "results/tbl_cross.docx")
 ```
 

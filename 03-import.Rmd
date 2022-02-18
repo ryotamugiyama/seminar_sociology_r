@@ -1,6 +1,12 @@
 # データの読み込み {#import}
 
-```{r, eval = FALSE}
+本章では、Rを使ってデータを読み込む方法を説明する。
+
+内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project...」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。
+
+本章では以下の3つのパッケージを使用するので、あらかじめパッケージを読み込んでおこう。
+
+```{r, include = FALSE}
 library(tidyverse)
 library(readxl)
 library(haven)
@@ -20,20 +26,40 @@ anscombe
 df <- anscombe
 ```
 
+このようにデータフレームをオブジェクトに入れると、右上の「Environment」のウインドウに次のような表示が現れる。
+
+![](images/df.png)
+
+11 obs. of 8 variablesと書かれている。11 obs.というのは、「このデータフレームは全部で11行ありますよ」ということを示しており、8 variablesというのは、「このデータフレームには8つの列がありますよ」ということを示している。実際にどのようなデータが読み込まれているかは、上記画像のdfあたりをクリックするか、次のコードを実行すると新しいタブが開き、そこにデータの中身が表示される。
+
+```{r, eval = FALSE}
+df %>% view()
+```
+
+![](images/df_view.png)
+
+このようなデータが読み込まれているはずだ。
+
+その他にも、データのうち一部を表示したり、変数の一覧を表示したりするコマンドがある。ここではコードを紹介するにとどめるので、各自で実行してみてほしい。
+
+```{r, eval = FALSE}
+df %>% head()
+df %>% names()
+df %>% glimpse()
+```
+
 ## 作業ディレクトリ上のデータの読み込み
 
-### データを置く場所を作る{#import_dir}
+### データを置く場所を作る {#import_dir}
 
 前章では[プロジェクトを作成](#preparation_project)して、Rに作業を行う場所（作業ディレクトリ, working directory）を教えてあげた。この場所に、データを置くためのフォルダを別途作成しておくとよい。作成する方法は以下の2つである。
 
-- 作業ディレクトリとして設定したフォルダを開き、右クリック→「新規フォルダ」（Mac）または「新規作成」→「フォルダ」を選択（Windows）。フォルダの名前は「data」としよう。
-- 以下のコードを実行。
+1.  作業ディレクトリとして設定したフォルダを開き、右クリック→「新規フォルダ」（Mac）または「新規作成」→「フォルダ」を選択（Windows）。フォルダの名前は「data」としよう。
+2.  以下のコードを実行する。
 
 ```{r, eval = FALSE}
 dir.create("data")
 ```
-
-
 
 ```{r, eval = FALSE, echo = FALSE}
 #githubにアップロードする用のデータを準備
@@ -71,13 +97,14 @@ write_dta(df, "data/census_pop.dta")
 write_sav(df, "data/census_pop.sav")
 ```
 
+フォルダを作ったら、下記のコードを実行して練習用のデータをダウンロードしよう（コピー&ペーストでよい）。コードを実行すると、先ほど作った「data」フォルダにダウンロードしたデータが入っていることを確認しよう。
+
 ```{r, eval = FALSE}
 download.file("https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.csv", destfile = "data/census_pop.csv")
 download.file("https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.xlsx", destfile = "data/census_pop.xlsx")
 download.file("https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.rds", destfile = "data/census_pop.rds")
 download.file("https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.sav", destfile = "data/census_pop.sav")
 download.file("https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.dta", destfile = "data/census_pop.dta")
-
 ```
 
 ### csv形式のファイル
@@ -90,7 +117,7 @@ df <- read_csv("data/census_pop.csv")
 
 ### xlsx形式のファイル
 
-`census_pop.xlsx`というふうに、末尾に.xlsxとついている（古いExcel形式だと.xls）のはMicrosoft Excelのデータ形式である。`readxl::read_excel()`でxlsx形式のファイルを読み込むことができる。
+`census_pop.xlsx`というふうに、末尾に.xlsxとついている（古いExcel形式だと.xls）のはMicrosoft Excelのデータ形式である。`readxl::read_excel()`でxlsx形式のファイルを読み込むことができる。`readxl`は冒頭で読み込んだパッケージである。
 
 ```{r, eval = FALSE}
 df <- read_excel("data/census_pop.xlsx")
@@ -106,7 +133,7 @@ df <- read_rds("data/census_pop.rds")
 
 ### sav形式のファイル
 
-`census_pop.sav`というふうに、末尾に.savとついているのはSPSSという統計ソフトのデータ形式である。SSJDAなどからデータを借りた場合にはSPSS形式であることがほとんどである。`haven::read_sav()`でsav形式のファイルを読み込むことができる。
+`census_pop.sav`というふうに、末尾に.savとついているのはSPSSという統計ソフトのデータ形式である。SSJDAなどからデータを借りた場合にはSPSS形式であることがほとんどである。`haven::read_sav()`でsav形式のファイルを読み込むことができる。`haven`は冒頭で読み込んだパッケージである。
 
 ```{r, eval = FALSE}
 df <- read_sav("data/census_pop.sav")
@@ -134,16 +161,10 @@ file_url <- "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000031
 df <- read_csv(file_url, locale = locale(encoding = "shift-jis"))
 ```
 
-Windowsユーザーの場合は以下かもしれない（未確認）
+Windowsユーザーの場合は以下で大丈夫かもしれない（未確認）。
 
 ```{r, eval = FALSE}
 df <- read_csv(file_url)
-```
-
-以下のようにちゃんと読み込めていることがわかる。
-
-```{r}
-df %>% head()
 ```
 
 ただし、何度もアクセスするのは当該ウェブサイトのサーバーに負荷をかけてしまう。頻繁に更新されるようなファイルでなければ、自分のパソコン上にダウンロードしたほうがよいだろう。`download.file()`でファイルをダウンロードできる。
@@ -158,10 +179,10 @@ download.file(url = file_url, destfile = "data/census_pop_original.csv")
 df <- read_csv("data/census_pop_original.csv", locale = locale(encoding = "shift-jis"))
 ```
 
-Windowsユーザーの場合は以下かもしれない（未確認）
+Windowsユーザーの場合は以下で大丈夫かもしれない（未確認）。
 
 ```{r, eval = FALSE}
 df <- read_csv(file_url)
 ```
 
-なお、先ほど紹介した各種形式の「census_pop」のデータは、今ダウンロードしてきたデータに少し手を加えて作成した練習用データである。
+なお、先ほど紹介した各種形式の「census_pop」のデータは、今ダウンロードしてきたデータに少し手を加えて麦山が作成した練習用データである。

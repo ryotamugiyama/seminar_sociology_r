@@ -1,16 +1,18 @@
 # データの加工 {#handling}
 
-この章ではデータの加工方法について説明します。まずは以下のとおり`tidyverse`パッケージを読み込んでおきましょう。
+この章ではデータの加工方法について説明する。
 
-```{r, eval = FALSE}
+内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project...」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。
+
+準備ができていたら、まずは以下のとおり`tidyverse`パッケージを読み込もう。
+
+```{r}
 library(tidyverse)
 ```
 
 ## 本資料で用いるデータ
 
-ここでの説明は以下の各章とも関係します。
-
-この資料では基本的に、OECDが実施している国際成人力調査[Programme for the International Assessment of Adult Competencies, PIAAC](https://www.oecd.org/skills/piaac/)の日本版データをサンプルデータとして使用する。
+本資料では基本的に、OECDが実施している国際成人力調査[Programme for the International Assessment of Adult Competencies, PIAAC](https://www.oecd.org/skills/piaac/)の日本版データをサンプルデータとして使用する。
 
 ```{r, eval = FALSE}
 file_url <- "https://webfs.oecd.org/piaac/puf-data/CSV/prgjpnp1.csv"
@@ -22,7 +24,7 @@ download.file(url = file_url, destfile = "data/prgjpnp1.csv")
 
 ダウンロードしたら、データを読み込む。このデータは少し特殊で、数値のほかに文字列などが入っている。そのため、すこしだけ特殊な処理をほどこしてデータを読み込むことにする。
 
-```{r, include = FALSE}
+```{r}
 piaac <- read_csv("data/prgjpnp1.csv") %>% 
   mutate_if(is.character, as.numeric) %>% #すべての文字列変数を小文字に変換
   rename_all(.funs = tolower) #すべての大文字を小文字に変換
@@ -367,10 +369,10 @@ piaac <- piaac %>%
                        labels = c("中学", "高校", "短大高専", "大学大学院"))) %>% 
   mutate(mothereduc = factor(j_q06b,
                              levels = 1:3,
-                             labels = c("母親：初等教育", "母親：中等教育", "母親：高等教育"))) %>% 
+                             labels = c("初等教育", "中等教育", "高等教育"))) %>% 
   mutate(fathereduc = factor(j_q07b,
                              levels = 1:3,
-                             labels = c("父親：初等教育", "父親：中等教育", "父親：高等教育"))) %>% 
+                             labels = c("初等教育", "中等教育", "高等教育"))) %>% 
   mutate(parenteduc = case_when(
     j_q07b >= j_q06b ~ j_q07b,
     j_q07b < j_q06b ~ j_q06b,
@@ -379,7 +381,7 @@ piaac <- piaac %>%
   )) %>% 
   mutate(parenteduc = factor(parenteduc,
                              levels = 1:3,
-                             labels = c("親：初等教育", "親：中等教育", "親：高等教育"))) %>% 
+                             labels = c("初等教育", "中等教育", "高等教育"))) %>% 
   mutate(occupation = factor(isco1c,
                              levels = 1:9,
                              labels = c("管理職","専門職","技術職・准専門職","事務補助","サービス・販売","農林漁業","技能工","設備・機械運転・組立","単純作業")
@@ -396,7 +398,7 @@ piaac_variable <- piaac %>%
   select(id, wage, logwage, gender, age, work, workhour, workhour_fct, educ, mothereduc, fathereduc, parenteduc, occupation, numeracy, ojt, health)
 ```
 
-## 変数の作成についてのtips
+## 変数の作成についてのtips {#handling-tips}
 
 ### カテゴリをまとめる
 
@@ -532,11 +534,12 @@ piaac_sample %>% summary()
 
 `NA's`と書かれているのが、各変数でNAとなっている行の数である。項目によってはNAがない変数もあるし、たくさんNAがある変数もある。
 
-NAが含まれている変数は分析の際に集計が面倒だったりして、色々と取り扱いが難しい。そこで、分析に使う変数にNAが含まれている行はサンプルから除外しておくと集計が楽になる。`filter()`を使って、educ, occupation, wageの3つの変数についてNAが含まれている行を除外してみよう。
+NAが含まれている変数は分析の際に集計が面倒だったりして、色々と取り扱いが難しい。そこで、分析に使う変数にNAが含まれている行はサンプルから除外しておくと集計が楽になる。`filter()`を使って、educ, parenteduc, occupation, wageの4つの変数についてNAが含まれている行を除外したデータフレームを作成しよう。
 
 ```{r}
-piaac_sample <- piaac_sample %>% 
+piaac_sample_nona <- piaac_sample %>% 
   filter(is.na(educ) == FALSE) %>% 
+  filter(is.na(parenteduc) == FALSE) %>% 
   filter(is.na(occupation) == FALSE) %>% 
   filter(is.na(wage) == FALSE)
 ```
@@ -544,9 +547,9 @@ piaac_sample <- piaac_sample %>%
 `is.na()`は値がNAであれば`TRUE`、NAでなければ`FALSE`を返す関数である。`filter(is.na(educ) == FALSE)`とすると、educがNA**ではない**ケースだけを残してね、という命令になる。上記のコードを実行したあとの回答を再度チェックしてみよう：
 
 ```{r}
-piaac_sample %>% nrow()
+piaac_sample_nona %>% nrow()
 
-piaac_sample %>% summary()
+piaac_sample_nona %>% summary()
 ```
 
 データの行数は先ほどよりも減っており、またwage, educ, occupationに含まれていたNA'sの表記が消えていることがわかる。
@@ -555,46 +558,81 @@ piaac_sample %>% summary()
 
 ### 外れ値の扱い
 
+さて、上記のように欠損値を除いたサンプルを作成したあと、最後に考慮すべきは、外れ値の問題である。連続変数を分析に用いる場合、このような外れ値が結果に大きな影響をおよぼす場合がある。その一例として、時給換算した賃金について考えてみよう。この変数の分布をみると、常識的には理解しがたい高い値、あるいは低い値をとっているケースが存在することがわかる（ヒストグラムについては第5章で解説する）。たとえば以下のように、時間あたり賃金が極端に低かったり（300円未満など）、逆に極端に高かったり（20000円以上など）するケースが存在している。
+
 ```{r}
-piaac_sample %>% 
+piaac_sample_nona %>% 
   ggplot(aes(x = wage)) +
-  geom_histogram()
+  geom_histogram(bins = 100) + 
+  xlim(0, 800)
 ```
 
 ```{r}
-piaac_sample <- piaac_sample %>% 
-  mutate(wage_tile = ntile(wage, 100))
+piaac_sample_nona %>% 
+  ggplot(aes(x = wage)) +
+  geom_histogram(bins = 100) + 
+  xlim(5000, 100000)
+```
 
-piaac_sample %>% 
+このようなケースが発生する理由はいくつかあるのだが、分析上は、たとえば平均値を計算したりする場合に、これらの外れ値があることによって結果がこうした極端に高い・低い人によって大きく左右されるという問題がある。そこで、こうした極端に高いあるいは低いケースを除外することはしばしば有効になる。時給換算した賃金の場合にはたとえば、上位1%、下位1%のサンプルを除外するという処理を行うことが多い。このように上位1%、下位1%のサンプルを除外するときの方法について記す。
+
+まず、`ntile()`関数を使って、賃金の分位数を表す変数を作成する。
+
+```{r}
+piaac_sample_nona <- piaac_sample_nona %>% 
+  mutate(wage_tile = ntile(wage, 100))
+```
+
+下位1%と上位1%のケースにはどこからどこまでの値が含まれているのかチェックしてみよう：
+
+```{r}
+piaac_sample_nona %>% 
+  filter(wage_tile == 1 | wage_tile == 100) %>% 
   group_by(wage_tile) %>% 
   summarize(min = min(wage), 
             max = max(wage))
 ```
 
+```{r, include = FALSE, echo = FALSE}
+minmax <- piaac_sample_nona %>% 
+  filter(wage_tile == 1 | wage_tile == 100) %>% 
+  group_by(wage_tile) %>% 
+  summarize(min = min(wage), 
+            max = max(wage))
+
+minmax$min[2]
+```
+
+このように、下位1%には`r minmax$max[1]`円以下のケースが含まれ、上位1%には`r minmax$min[2]`円以上のケースが含まれていることがわかる。これらのケースを除外して、分析に使用するためのサンプルを作ろう。
+
 ```{r}
-piaac_sample <- piaac_sample %>% 
+piaac_sample_analytic <- piaac_sample_nona %>% 
   filter(2 <= wage_tile & wage_tile <= 99)
 ```
 
+このように極端に低いケースと極端に高いケースを除外することで、外れ値の影響を除いた賃金の分布を得ることができる。
+
 ```{r}
-piaac_sample %>% 
+piaac_sample_analytic %>% 
   ggplot(aes(x = wage)) +
-  geom_histogram()
+  geom_histogram(bins = 100)
 ```
 
 ### 分析用データを書き出す
 
-上記のような手順を経て、ようやく分析することのできるデータを準備することができる。晴れて準備できたデータを、新しいデータとして保存しておこう。`readr::write_excel_csv()`を使うと、データフレームを[rds形式](#import_rds)で書き出すことができる。
+上記のような手順を経て、ようやく分析することのできるデータを準備することができた。準備できたデータを、新しいデータとして保存しておこう。`readr::write_excel_csv()`を使うと、データフレームを[rds形式](#import_rds)で書き出すことができる。
 
 ```{r}
-write_rds(piaac_sample, file = "data/piaac_sample.rds")
+write_rds(piaac_sample_analytic, file = "data/piaac_sample_analytic.rds")
 ```
+
+このように、元々のデータから種々のデータ加工を行い、分析のために使用することにしたデータは、元々のデータとは別に保存しておくことで、データの加工のプロセスとデータの分析のプロセスを明示的に分けることにつながり、エラーを減らすことができる。
 
 以降では、このデータを使って分析を行っていく。
 
 ## データの追加：複数のデータを合併し、行を追加する（該当者のみ）
 
-たとえば複数の社会調査データを合併してサンプルサイズを増やしたり、時系列比較を行いたいといったことがあるかもしれない。このような場合には、データを追加する操作を行う。
+たとえば複数の社会調査データを合併してサンプルサイズを増やしたり、時系列比較を行いたいといったことがあるかもしれない。このような場合の処理について記しておく。
 
 以下のような2つのデータがあるとする。
 
@@ -620,3 +658,10 @@ df2
 df <- df1 %>% 
   bind_rows(df2) 
 ```
+
+これで、以下のように2つのデータを合併して行が増えたデータが得られる。
+
+```{r}
+df
+```
+

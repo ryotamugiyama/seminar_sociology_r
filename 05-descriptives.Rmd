@@ -1,45 +1,20 @@
 # 1変数の集計 {#descriptives}
 
-以下の記述はすでに`tidyverse`パッケージを読み込んでおり、また読み込んだデータを`piaac`というデータフレームに入れていることを前提とします。データフレームの名前は`piaac`である必要はありません。以下のようなコードを実行しています。
+本章では、1変数の集計方法を説明する。
 
-```{r, eval = FALSE}
-library(tidyverse)
-```
+内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project...」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。
+
+さらに、以下のパッケージを読み込んだ上で、[第4章](#handling)で作成したデータを読み込んで`piaac`というデータフレームに入れていることを前提とする。具体的には、以下のコードを実行しておく必要がある。
 
 ```{r}
-piaac <- read_rds("data/piaac_sample.rds")
+library(tidyverse)
+
+piaac <- read_rds("data/piaac_sample_analytic.rds")
 ```
 
-また、Macで`ggplot2`パッケージを使用し、グラフ中に日本語を使用する場合には、`library(tidyverse)`または`library(ggplot2)`を実行したうえで、たとえば以下のようなコードをあらかじめ実行しておく必要があります。
+## 連続変数を集計する 
 
-```{r, eval = FALSE}
-theme_set(theme_grey(base_family = "HiraginoSans-W3"))
-```
-
-この資料で使用しているグラフについては以下のようにthemeを設定しています。
-
-```{r, eval = FALSE}
-theme_set(theme_bw(
-  base_family = "HiraginoSans-W3",
-  base_size = 11,
-  base_rect_size = 0.2,
-  base_line_size = 0.2
-))
-```
-
-Windowsユーザの方は上記コードから`base_family =`の行を除いたこちらのコードで同じような雰囲気になります：
-
-```{r, eval = FALSE}
-theme_set(theme_bw(
-  base_size = 11,
-  base_rect_size = 0.2,
-  base_line_size = 0.2
-))
-```
-
-## 連続変数を集計する
-
-### 要約統計量の計算
+### 要約統計量の計算 {#descriptives_summarize}
 さまざまな変数を集計するときに最も基本的なコードが、`summarize()`である。たとえば、piaacというデータフレームに含まれている変数wageの平均値を求めたいとする。このようなときには、次のように記述する。
 
 ```{r}
@@ -97,9 +72,11 @@ piaac %>%
   summary()
 ```
 
-### 分布の可視化：ヒストグラム
+## 分布をみる {#descriptives_ggplot}
 
-連続変数の場合にはたんに平均値や中央値だけを見るだけでなく、分布を見ることも重要だ。連続変数の分布をみるときには、ヒストグラムを使うのが有効である。百聞は一見に如かず。まずはヒストグラムをみてみよう。
+### ヒストグラムとggplotの導入
+
+連続変数の場合にはたんに平均値や中央値だけを見るだけでなく、分布を見ることも重要だ。連続変数の分布をみるときには、ヒストグラムを使うのが有効である。コードの説明はさておき、まずはヒストグラムをみてみよう。
 
 ```{r}
 piaac %>% 
@@ -134,19 +111,60 @@ piaac %>%
   geom_histogram(bins = 100)
 ```
 
-以下、`+`でつないでいくことで、さらに層を重ねて、グラフの見た目を変更できる。たとえば、軸に名前をつけるコマンド`labs()`と、x軸の範囲を指定する`xlim()`を使って、より見やすいグラフを作ってみよう。
+以下、`+`でつないでいくことで、さらに層を重ねて、グラフの見た目をさまざまに変更できる。たとえば、x軸の範囲を指定する`xlim()`を使って、より見やすいグラフを作ってみよう。
 
 ```{r}
 piaac %>% 
   ggplot(aes(x = wage)) + 
   geom_histogram(bins = 100) + 
-  labs(x = "賃金", y = "度数") + 
   xlim(0, 10000)
 ```
 
-## カテゴリ変数の集計
+### ggplotの設定（日本語関係）
 
-### 度数の確認
+ところで、Macで`ggplot2`パッケージを使用し、グラフ中に日本語を使用する場合には、`library(tidyverse)`（または`library(ggplot2)`）を実行したうえで、たとえば以下のようなコードをあらかじめ実行しておく必要がある。
+
+```{r, eval = FALSE}
+theme_set(theme_grey(base_family = "HiraginoSans-W3"))
+```
+
+`theme_set()`関数はフォントのほかにいくつかの追加的な設定を行うことができる。
+この資料で使用しているグラフについては以下のようにthemeを設定しています。
+
+```{r}
+theme_set(theme_bw(
+  base_family = "HiraginoSans-W3",
+  base_size = 11, #文字の大きさを設定。デフォルトは11
+  base_line_size = 0.2, #罫線の線の太さを設定。デフォルトはbase_size/22
+  base_rect_size = 0.2 #外枠の線の太さを設定。デフォルトはbase_size/22
+))
+```
+
+Windowsユーザの方は上記コードから`base_family =`の行を除いたこちらのコードで同じような雰囲気になります：
+
+```{r, eval = FALSE}
+theme_set(theme_bw(
+  base_size = 11,
+  base_line_size = 0.2,
+  base_rect_size = 0.2
+))
+```
+
+### 軸に名前をつける
+
+上記の設定を終えて日本語問題をクリアしていれば（Windowsユーザならはじめからクリアしているのだけれども）、軸に名前をつけるコマンド`labs()`をさらに追加して、日本語の名前を付けてよりわかりやすいグラフを作ることができる。
+
+```{r}
+piaac %>% 
+  ggplot(aes(x = wage)) + 
+  geom_histogram(bins = 100) + 
+  xlim(0, 10000) + 
+  labs(x = "賃金", y = "度数")
+```
+
+## カテゴリ変数の集計 
+
+### 度数の確認 {#descriptives_table}
 カテゴリ変数の場合は平均値や標準偏差のような要約統計量を計算することはできない（意味がない）。最も基本的な集計は、各カテゴリにそれぞれ何人いるのかを確認することだ。`with(table())`を使うことで各カテゴリの人数（行数）をみることができる。
 
 ```{r}
@@ -212,8 +230,8 @@ piaac %>%
 
 論文などで分析に使用する変数の記述統計量の一覧表を示していることがよくある。このような表を作ることで、読む側にとっては変数の分布を確認でき、その後の結果も読みやすくなる。こうした一覧表を作るために非常に便利なパッケージが`gtsummary`だ。まずはこれを読み込もう。
 
-```{r, eval = FALSE}
-libary(gtsummary)
+```{r}
+library(gtsummary)
 ```
 
 次の5つの変数の記述統計量の一覧表を作りたいとしよう。`select()`を使って、こららの変数だけを残したデータフレームを作成する。
@@ -238,56 +256,24 @@ piaac_selected %>%
   tbl_summary()
 ```
 
-これでもすでにかなりきれいな表になっているが、以下の2点で改善の余地がある。
+これでもすでにかなりきれいな表になっているが、以下の4点で修正をしてみよう。
 
-1.  educやoccupationといった変数がそれぞれ何を示しているのか、自分以外の見る人にとっては必ずしも明らかではない。
-2.  連続変数については中央値（50パーセンタイル点）、第1四分位数（25パーセンタイル点）、第3四分位数（75パーセンタイル点）が示されているが、平均値と標準偏差を載せることのほうが多いので、そちらを表記したい。
-3. 左上のCharacteristicsというのがなんだか気になるので削除したい。
-
-これらを1つずつ改善していこう。
-
-### 変数にラベル（名前）をつける
-
-```{r, eval = FALSE}
-library(labelled)
-```
-
-```{r}
-piaac_selected <- piaac_selected %>% 
-  set_variable_labels(
-    gender = "性別",
-    age = "年齢",
-    educ = "最終学歴",
-    occupation = "職業",
-    wage = "賃金"
-    )
-```
+1.  educやoccupationといった変数がそれぞれ何を示しているのか、自分以外の見る人にとってもわかるように日本語の名前をつけたい：`label = list(x ~ "名前")`
+1. 連続変数については中央値（50パーセンタイル点）、第1四分位数（25パーセンタイル点）、第3四分位数（75パーセンタイル点）が示されているが、それよりは、平均値と標準偏差を載せたい：`statistic = list(all_continuous() ~ "{mean} ({sd})")`
+1. 同じく、連続変数については、小数点以下の桁数（小数点第1位に）揃えたい：`digits = all_continuous() ~ 1`
+1. 左上のCharacteristicsというのがなんだか気になるので削除したい：`tbl_cross`のコマンドの後ろに`%>%`でつないで`modify_header(label ~ "")`
 
 ```{r}
 piaac_selected %>% 
-  tbl_summary()
+  tbl_summary(label = list(gender ~ "性別",
+                           age ~ "年齢",
+                           educ ~ "最終学歴",
+                           occupation ~ "職業",
+                           wage ~ "賃金"), #~の前には列名、後ろにはつけたい名前を""で囲んで入れ、,で一つずつ区切る
+              statistic = list(all_continuous() ~ "{mean} ({sd})"), 
+              digits = all_continuous() ~ 1) %>% #数値の部分が小数点第y位の部分の値
+  modify_header(label ~ "") # ""の部分には好きな文字列を入れられる。何も入れなければ空欄になる
 ```
-
-### 連続変数は平均値・標準偏差を表示する
-
-```{r}
-piaac_selected %>% 
-  tbl_summary(statistic = list(all_continuous() ~ "{mean} ({sd})"),
-              digits = all_continuous() ~ 1)
-```
-
-### 左上のヘッダーの編集
-
-以下のように`%>%`でつないで`modify_header()`を指定すると、左上のヘッダー部分を編集できる。
-
-```{r}
-piaac_selected %>% 
-  tbl_summary(statistic = list(all_continuous() ~ "{mean} ({sd})"),
-              digits = all_continuous() ~ 1) %>% 
-  modify_header(label ~ "")
-```
-
-`modify_header(label ~ "")`の`""`の部分に好きな文字列を入れることができる。上記のように何も入れなければ、空欄になる。何か入れるとしたら、日本語なら"変数"、英語なら"Variables"かな。
 
 ### グループ別の記述統計量の一覧表
 
@@ -301,7 +287,7 @@ piaac_selected %>%
   modify_header(label ~ "")
 ```
 
-## 結果をファイルに書き出す
+## 結果をファイルに書き出す 
 
 ### 結果を入れるためのフォルダを作る
 
@@ -313,11 +299,11 @@ piaac_selected %>%
 dir.create("results")
 ```
 
-### ggplotで作成した図を書き出す
+### ggplotで作成した図を書き出す {#descriptive_export_ggplot}
 
 ggplotで作成した図を保存する方法は以下のとおりである。日本語フォントを含んでいるかどうか、および、出力形式によってどのようなコマンドを実行するかが変わってくるので、注意が必要。
 
-#### 日本語フォントを含まない図の場合
+#### 日本語フォントを含まない図の場合 
 
 ```{r, echo = FALSE}
 theme_set(theme_bw(
@@ -414,11 +400,11 @@ g
 dev.off() 
 ```
 
-### 記述統計の一覧表をwordに書き出す
+### 記述統計の一覧表をwordに書き出す {#descriptive_export_tbl_summary}
 
 `gtsummary::tbl_summary()`で作成した記述統計の表はword形式で書き出すことができる。その際に用いるパッケージが`flextable`である。まずはこのパッケージを読み込んでおく。
 
-```{r, eval = FALSE}
+```{r}
 library(flextable)
 ```
 
@@ -426,7 +412,12 @@ library(flextable)
 
 ```{r}
 piaac_selected %>% 
-  tbl_summary(statistic = list(all_continuous() ~ "{mean} ({sd})"),
+  tbl_summary(label = list(gender ~ "性別",
+                           age ~ "年齢",
+                           educ ~ "最終学歴",
+                           occupation ~ "職業",
+                           wage ~ "賃金"),
+              statistic = list(all_continuous() ~ "{mean} ({sd})"),
               by = gender,
               digits = all_continuous() ~ 1) %>% 
   modify_header(label ~ "") %>% 
