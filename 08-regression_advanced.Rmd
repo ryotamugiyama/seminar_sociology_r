@@ -11,6 +11,7 @@ library(tidyverse)
 library(gtsummary)
 library(flextable)
 library(modelsummary)
+library(broom)
 
 piaac <- read_rds("data/piaac_sample_analytic.rds")
 ```
@@ -245,6 +246,24 @@ modelsummary(list(reg_res1, reg_res2),
 年齢と性別を統制したうえでの学歴の係数が、職業を考慮することによってどの程度変わるのかをみる。これをみると、Model 1と比べて、職業を一定としたModel 2では学歴の係数がかなり小さくなる。学歴が高いと賃金が高いという関連のかなりの部分が、職業分布の違いによって生じているようだということを、2つのモデルの学歴の係数の違いから読み取ることができる。
 
 このように、回帰分析を使う際には、どのような効果を知りたいのかを意識して、何を交絡要因として統制すべきなのか、何を媒介要因と位置づけるのかを考えながら分析することが大事である。
+
+従属変数に対数を用いた場合には、係数の大きさが実質的にどれくらいであるのかを$\exp(\beta) - 1$を計算して求めるとよい。従属変数を対数変換している場合の解釈については[前章](#regression_basic_log)を参照のこと。`broom::tidy()`を用いることで、この計算をスムーズに行うことができる。先のModel 2の結果を変換してみよう。
+
+```{r}
+reg_res2 %>% 
+  tidy() %>% 
+  mutate(estimate_exp = exp(estimate) - 1)
+```
+
+```{r, include=FALSE, echo=FALSE}
+reg_res2_tidy <- reg_res2 %>% 
+  tidy() %>% 
+  mutate(estimate_exp = (exp(estimate) - 1) * 100) %>% 
+  mutate(estimate_exp = round(estimate_exp, 1)) %>% 
+  filter(term == "educ大学大学院")
+```
+
+例えば学歴（とくに大学大学院卒）の結果であれば、性別・年齢・職業を一定としてもなお、大学大学院卒の人は中学卒の人と比べて`r reg_res2_tidy$estimate_exp[1]`%賃金が高いということを意味している。
 
 ## 結果をファイルに書き出す
 

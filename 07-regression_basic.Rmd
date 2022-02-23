@@ -147,7 +147,7 @@ piaac %>%
   ylim(0, 2500)
 ```
 
-ここで得られた男性の平均値と女性の平均値をそれぞれ散布図に書き入れてみたのが次の図である。実線が男性の平均値、点線が女性の平均値を表している（コードはやや複雑なので省略しています）。
+ここで得られた男性の平均値と女性の平均値をそれぞれ散布図に書き入れてみたのが次の図である。実線が男性の平均値、点線が女性の平均値を表している（コードはやや複雑なので省略）。
 
 ```{r, echo = FALSE}
 meandata <- piaac %>% 
@@ -212,7 +212,7 @@ piaac %>%
   geom_point(shape = 1, position = position_jitter(w = 0.3, h = 0))
 ```
 
-中学卒を基準として、高校、短大高専、大学大学院卒だとどれくらい賃金が高いのかを推定することになる。
+中学卒を基準として、高校卒（高校卒 - 中学卒）、短大高専卒（短大高専卒 - 中学卒）、大学大学院卒（大学大学院卒 - 中学卒）だとどれくらい賃金が高いのかを推定することになる。
 
 ```{r}
 piaac <- piaac %>% 
@@ -236,6 +236,8 @@ summary(reg_res)
 reg_res <- lm(data = piaac, wage ~ educ)
 summary(reg_res)
 ```
+
+それぞれ、「educ高校」は中学卒と比べて高校卒の賃金はいくら高いか、「educ短大高専」は中学卒と比べて短大高専卒の賃金はいくら高いか、「educ大学大学院」は中学卒と比べて大学大学院卒の賃金はいくら高いか、をそれぞれ表す。
 
 ただし、基準カテゴリは一番最初のものが勝手に選ばれるので、たとえば高校を基準にしてその他を比較したい、と思ったときには、自分でカテゴリの順序を変更しておく必要がある。
 
@@ -280,12 +282,14 @@ piaac %>%
 ```{r, echo = FALSE}
 meandata <- piaac %>% 
   group_by(gender) %>% 
-  summarize(mean_ojt = mean(ojt, na.rm = TRUE))
+  summarize(mean_ojt = 100*mean(ojt, na.rm = TRUE)) %>% 
+  pivot_wider(names_from = "gender", values_from = mean_ojt) %>% 
+  mutate(gap = round(男性 - 女性, 1))
 ```
 
-ここで示された値は、上記クロス表の「1」のほうに示されている行%、すなわち「OJTを受けた人の割合」に一致している。男性は女性とくらべてOJTを受けた割合が`r round((meandata$mean_ojt[2] - meandata$mean_ojt[1])*100, 1)`%ポイント高いということがわかる。
+ここで示された値は、上記クロス表の「1」のほうに示されている行%、すなわち「OJTを受けた人の割合」に一致している。男性は女性とくらべてOJTを受けた割合が`r meandata$gap`%ポイント高いということがわかる。
 
-では、回帰式を推定してみよう。
+回帰式を推定してみよう。
 
 ```{r}
 reg_res <- lm(data = piaac, ojt ~ gender)
@@ -349,7 +353,7 @@ summary(reg_res)
 
 ## 非線形の関連
 
-### 対数変換
+### 対数変換 {#regression_basic_log}
 
 用いる変数が正規分布から乖離しているときや、変数の単位に依存せず効果の大きさを測定したいときには、変数を対数変換することを検討するとよい。社会科学系では、底がeの対数（自然対数）を取ることで変数を対数変換することが多い。Rでは`log()`という関数で自然対数変換ができる。次のようにして、賃金を対数変換した変数を作ることができる。
 
@@ -412,8 +416,6 @@ lm(data = piaac, log(wage) ~ age)
 reg_res <- lm(data = piaac, logwage ~ numeracy)
 reg_res_tidy <- tidy(reg_res) %>% 
   mutate(estimate = round(estimate, digits = 3))
-
-reg_res_tidy$estimate[2]
 ```
 
 numeracyの係数は、数的思考力スコアが1ポイント高いと、対数賃金が`r reg_res_tidy$estimate[2]`ポイント高いということを意味する。対数をとった場合、（微小な）変化は%の変化に一致する（後述）。すなわち、数的思考力スコアが1歳高いと、賃金が`r reg_res_tidy$estimate[2]*100`%高いということを意味している。
@@ -471,7 +473,7 @@ $\beta_1$が0に近い値ならば、おおむね「$x$が1単位高いと、$y$
 
 ただし、係数の絶対値が大きくなるほど$\beta_1$と$\exp(\beta_1) - 1$のずれが大きくなるという点は頭の片隅に入れておくとよい。図にするとこんな感じで、0から離れるほど点線からずれていく：
 
-```{r, eval = FALSE, echo = FALSE}
+```{r, echo = FALSE}
 b1 <- seq(-1, 1, length = 501)
 tibble(b1) %>% 
   mutate(linear = b1) %>% 
@@ -483,8 +485,6 @@ tibble(b1) %>%
   theme(legend.position = "none")
 ```
 
-#### 対数をとった場合の結果の解釈
-
 従属変数だけではなく、独立変数についても対数を取ることができる。その場合の解釈はそれぞれ次のようになる：
 
 | 従属変数  | 独立変数  | 解釈                                             |
@@ -493,6 +493,51 @@ tibble(b1) %>%
 | $\log(y)$ | $x$       | $x$が1単位高いと、$y$が$100 \times \beta_1$%高い |
 | $y$       | $\log(x)$ | $x$が1%高いと、$y$が$\beta_1 / 100$高い          |
 | $\log(y)$ | $\log(x)$ | $x$が1%高いと、$y$が$\beta_1$%高い               |
+
+#### 係数の絶対値が大きい場合の対数の解釈
+
+例えば次のように対数賃金を従属変数、性別を独立変数とする回帰分析を推定してみよう。
+
+```{r}
+reg_res <- lm(data = piaac, logwage ~ gender)
+
+summary(reg_res)
+```
+
+```{r, echo = FALSE, include = FALSE}
+reg_res_tidy <- tidy(reg_res) %>% 
+  mutate(estimate = round(estimate, digits = 3))
+
+```
+
+gender男性の係数の値は`r reg_res_tidy$estimate[2]`である。この係数は絶対値が大きいため、きちんと$\exp(\beta_1) - 1$を計算してやる必要がある。いろいろな方法があるが、ここでは回帰分析の結果をデータフレームにして扱いやすくするためのパッケージである`broom`パッケージを利用する方法を紹介する。まずは、`broom`パッケージを読み込もう。
+
+```{r}
+library(broom)
+```
+
+`broom::tidy()`関数を実行することで、回帰分析などのモデルの主要な結果をデータフレーム形式へと変換することができる。それぞれ、1行目が切片の推定結果、2行目が男性ダミーの推定結果である。
+
+```{r}
+reg_res_tidy <- reg_res %>% 
+  tidy()
+reg_res_tidy
+```
+
+この推定結果に含まれる`estimate`という列に対して$(\exp(\beta_1) - 1)$という計算を施した新しい列を作成すればよい。
+
+```{r}
+reg_res_tidy %>% 
+  mutate(estimate_exp = (exp(estimate) - 1))
+```
+
+```{r, include=FALSE, echo=FALSE}
+reg_res_tidy_df <- reg_res_tidy %>% 
+  mutate(estimate_exp = (exp(estimate) - 1)) %>% 
+  mutate(estimate_exp = round(estimate_exp, 3))
+```
+
+新しく作成した列のgender男性の値は`r reg_res_tidy_df$estimate_exp[2]`である。つまり、男性は女性と比べて、`r reg_res_tidy_df$estimate_exp[2] * 100`%賃金が高いということである。
 
 ### 2次関数型
 
@@ -595,7 +640,7 @@ modelsummary(list(reg_res),
                          "age" = "年齢",
                          "I(age^2)" = "年齢2乗"), # 各変数に名前をつける
          gof_omit = "R2 Adj.|AIC|BIC|Log.Lik.|F", # 不要な統計量を削除する
-         output = "regression.docx") # 出力先のファイル名をつける
+         output = "results/regression.docx") # 出力先のファイル名をつける
 ```
 
 `as_flex_table() %>% save_as_docs(path = "xxx.docx")`を使っていた第5章、第6章とは少し違う点に注意。多少の手直しが必要かもしれないが、きれいな回帰分析の表をWordファイルに書き出すことができる。
