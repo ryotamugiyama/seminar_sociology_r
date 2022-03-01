@@ -238,7 +238,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.5.3" data-path="handling.html"><a href="handling.html#外れ値の扱い"><i class="fa fa-check"></i><b>4.5.3</b> 外れ値の扱い</a></li>
 <li class="chapter" data-level="4.5.4" data-path="handling.html"><a href="handling.html#分析用データを書き出す"><i class="fa fa-check"></i><b>4.5.4</b> 分析用データを書き出す</a></li>
 </ul></li>
-<li class="chapter" data-level="4.6" data-path="handling.html"><a href="handling.html#データの追加複数のデータを合併し行を追加する該当者のみ"><i class="fa fa-check"></i><b>4.6</b> データの追加：複数のデータを合併し、行を追加する（該当者のみ）</a></li>
+<li class="chapter" data-level="4.6" data-path="handling.html"><a href="handling.html#データの追加該当者のみ"><i class="fa fa-check"></i><b>4.6</b> データの追加（該当者のみ）</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="descriptives.html"><a href="descriptives.html"><i class="fa fa-check"></i><b>5</b> 1変数の集計</a>
 <ul>
@@ -424,27 +424,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>本章では、前章で学んだ回帰分析を発展させて、複数の独立変数を扱う方法について説明する。</p>
 <p>内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project…」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。</p>
 <p>さらに、これまでの章で説明した以下のパッケージを読み込んだ上で、<a href="handling.html#handling">第4章</a>で作成したデータを読み込んで<code>piaac</code>というデータフレームに入れていることを前提とする。具体的には、以下のコードを実行しておく必要がある。</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="regression_advanced.html#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb281-2"><a href="regression_advanced.html#cb281-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb281-3"><a href="regression_advanced.html#cb281-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
-<span id="cb281-4"><a href="regression_advanced.html#cb281-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb281-5"><a href="regression_advanced.html#cb281-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb281-6"><a href="regression_advanced.html#cb281-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb281-7"><a href="regression_advanced.html#cb281-7" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="regression_advanced.html#cb282-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb282-2"><a href="regression_advanced.html#cb282-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb282-3"><a href="regression_advanced.html#cb282-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb282-4"><a href="regression_advanced.html#cb282-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb282-5"><a href="regression_advanced.html#cb282-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb282-6"><a href="regression_advanced.html#cb282-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb282-7"><a href="regression_advanced.html#cb282-7" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
 <p><a href="descriptives.html#descriptives_ggplot">第5章で確認したように</a>、ggplotの設定を変更しておくことで見やすいグラフを作ることができる。ここでは以下のコードを実行している。</p>
 <p>Macの場合：</p>
-<div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="regression_advanced.html#cb282-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
-<span id="cb282-2"><a href="regression_advanced.html#cb282-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>,</span>
-<span id="cb282-3"><a href="regression_advanced.html#cb282-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
-<span id="cb282-4"><a href="regression_advanced.html#cb282-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb282-5"><a href="regression_advanced.html#cb282-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
-<span id="cb282-6"><a href="regression_advanced.html#cb282-6" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
-<p>Windowsの場合：</p>
 <div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="regression_advanced.html#cb283-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
-<span id="cb283-2"><a href="regression_advanced.html#cb283-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
-<span id="cb283-3"><a href="regression_advanced.html#cb283-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb283-4"><a href="regression_advanced.html#cb283-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
-<span id="cb283-5"><a href="regression_advanced.html#cb283-5" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<span id="cb283-2"><a href="regression_advanced.html#cb283-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>,</span>
+<span id="cb283-3"><a href="regression_advanced.html#cb283-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb283-4"><a href="regression_advanced.html#cb283-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb283-5"><a href="regression_advanced.html#cb283-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb283-6"><a href="regression_advanced.html#cb283-6" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<p>Windowsの場合：</p>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="regression_advanced.html#cb284-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb284-2"><a href="regression_advanced.html#cb284-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb284-3"><a href="regression_advanced.html#cb284-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb284-4"><a href="regression_advanced.html#cb284-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb284-5"><a href="regression_advanced.html#cb284-5" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
 <div id="重回帰分析" class="section level2" number="8.1">
 <h2><span class="header-section-number">8.1</span> 重回帰分析</h2>
 <p>先の単回帰分析では、年齢、性別、学歴、数的思考力スコアによって賃金が異なっていることをみた。これら4つの変数を同時に考慮することで、賃金の分散をよりよく説明できるモデルを作ることができないだろうか？このようなときに役に立つのが、<strong>重回帰分析</strong>である。</p>
@@ -454,8 +454,8 @@ y = \beta_0 + \beta_1年齢 + \beta_2女性 + \beta_3高校卒 + \beta_4短大�
 \]</span></p>
 <p><span class="math inline">\(\beta_1\)</span>が年齢の係数、<span class="math inline">\(\beta_2\)</span>が（男性と比較したときの）女性の係数、<span class="math inline">\(\beta_3, \beta_4, \beta_5\)</span>が（中学卒と比較したときの）高校卒、短大高専卒、大学大学院卒の係数を、<span class="math inline">\(\beta_6\)</span>が数的思考力スコアの係数を、それぞれ表す。各係数は、<strong>他の変数を一定として</strong>（<strong>統制 control</strong>して、ともいう）、当該変数が1単位高いと<span class="math inline">\(y\)</span>がどれだけ高いのか、という独立の影響力を測っていることになる。</p>
 <p>単回帰分析のときと同じように、<code>lm()</code>関数を使って推定することができる。</p>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="regression_advanced.html#cb284-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> age <span class="sc">+</span> gender <span class="sc">+</span> educ <span class="sc">+</span> numeracy)</span>
-<span id="cb284-2"><a href="regression_advanced.html#cb284-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="regression_advanced.html#cb285-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> age <span class="sc">+</span> gender <span class="sc">+</span> educ <span class="sc">+</span> numeracy)</span>
+<span id="cb285-2"><a href="regression_advanced.html#cb285-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = wage ~ age + gender + educ + numeracy, data = piaac)
@@ -493,14 +493,14 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <h3><span class="header-section-number">8.2.1</span> 交絡とは何か</h3>
 <p>では実際、重回帰分析はどのようなことを知りたいときに使うのだろうか。たとえば、高い数的思考力スコアが高いとどれくらい対数賃金が高くなるのかを知りたいと思ったとする。もっともシンプルな方法が、前回みたように（単）回帰分析を使う方法だ。</p>
 <p>しかしこの方法では、数的思考力スコアの<strong>効果</strong>を知るには不十分である。一つの例を考えよう。たとえば、女性は男性と比べて数的思考力スコアが低い傾向がある。また、女性はさまざまな理由から労働市場で男性と比べて高い賃金を得られていない。だとすれば、数的思考力スコアが高いと賃金が高いというのはたんに見かけ上の関係に過ぎず、実際には数的思考力スコアは何ら賃金を高める効果を持っていないのかもしれない。性別に色分けした以下の散布図を見てみよう。たしかに、数的思考力も高く対数賃金も高い右上には男性が、数的思考力スコアが低く対数賃金も低い左下には女性が、それぞれ集中しているようにみえる。</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="regression_advanced.html#cb286-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb286-2"><a href="regression_advanced.html#cb286-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> numeracy, <span class="at">y =</span> logwage, <span class="at">color =</span> gender)) <span class="sc">+</span> </span>
-<span id="cb286-3"><a href="regression_advanced.html#cb286-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb286-4"><a href="regression_advanced.html#cb286-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-207-1.png" width="672" /></p>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="regression_advanced.html#cb287-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb287-2"><a href="regression_advanced.html#cb287-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> numeracy, <span class="at">y =</span> logwage, <span class="at">color =</span> gender)) <span class="sc">+</span> </span>
+<span id="cb287-3"><a href="regression_advanced.html#cb287-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb287-4"><a href="regression_advanced.html#cb287-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-208-1.png" width="672" /></p>
 <p>性別を<strong>一定としたうえで</strong>、言い換えれば、性別が同じであったとしてもなお、数的思考力スコアと（対数）賃金の関係をみることができたなら、「数的思考力スコアはどの程度賃金を高める効果を持つのか」という問いの答えに近づくことができる。重回帰分析は、こうしたモチベーションに答えるための方法である。</p>
 <p>今の議論を図にすると、次のようなかたちになる。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-208-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-209-1.png" width="672" /></p>
 <p>Xを数的思考力スコア、Yを賃金、Zを性別と考えよう。知りたいのは数的思考力スコアが賃金に与える効果（X → Y）だが、その背後にはXにもYにも影響する要因Z（Z → X、Z → Y）が存在する。そのため、数的思考力スコアが賃金に与える効果をみたいのならば、Zを一定とする必要がある。このように、XとYの両者に影響する要因を<strong>交絡要因 confounder</strong>とよぶ。</p>
 <p>複数の変数を使うときの回帰分析では、関心のある変数xと、統制したい変数zというふうに別々の役割があるということが多い。</p>
 </div>
@@ -514,22 +514,22 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <li>性別に加えてさらに年齢と学歴を統制した回帰分析</li>
 </ol>
 <p>を比較しながら、それぞれ数的思考力スコアの係数がどのように変わるのかをみてみよう。</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="regression_advanced.html#cb287-1" aria-hidden="true" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy)</span>
-<span id="cb287-2"><a href="regression_advanced.html#cb287-2" aria-hidden="true" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender)</span>
-<span id="cb287-3"><a href="regression_advanced.html#cb287-3" aria-hidden="true" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span>
-<span id="cb287-4"><a href="regression_advanced.html#cb287-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb287-5"><a href="regression_advanced.html#cb287-5" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2, reg_res3),</span>
-<span id="cb287-6"><a href="regression_advanced.html#cb287-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb287-7"><a href="regression_advanced.html#cb287-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">fmt =</span> <span class="dv">4</span>,</span>
-<span id="cb287-8"><a href="regression_advanced.html#cb287-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">coef_rename =</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>,</span>
-<span id="cb287-9"><a href="regression_advanced.html#cb287-9" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;numeracy&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア&quot;</span>,</span>
-<span id="cb287-10"><a href="regression_advanced.html#cb287-10" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb287-11"><a href="regression_advanced.html#cb287-11" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
-<span id="cb287-12"><a href="regression_advanced.html#cb287-12" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
-<span id="cb287-13"><a href="regression_advanced.html#cb287-13" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
-<span id="cb287-14"><a href="regression_advanced.html#cb287-14" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span></span>
-<span id="cb287-15"><a href="regression_advanced.html#cb287-15" aria-hidden="true" tabindex="-1"></a>                         ), </span>
-<span id="cb287-16"><a href="regression_advanced.html#cb287-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">gof_omit =</span> <span class="st">&quot;R2 Adj.|AIC|BIC|Log.Lik.|F&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="regression_advanced.html#cb288-1" aria-hidden="true" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy)</span>
+<span id="cb288-2"><a href="regression_advanced.html#cb288-2" aria-hidden="true" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender)</span>
+<span id="cb288-3"><a href="regression_advanced.html#cb288-3" aria-hidden="true" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span>
+<span id="cb288-4"><a href="regression_advanced.html#cb288-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb288-5"><a href="regression_advanced.html#cb288-5" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2, reg_res3),</span>
+<span id="cb288-6"><a href="regression_advanced.html#cb288-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb288-7"><a href="regression_advanced.html#cb288-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">fmt =</span> <span class="dv">4</span>,</span>
+<span id="cb288-8"><a href="regression_advanced.html#cb288-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">coef_rename =</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>,</span>
+<span id="cb288-9"><a href="regression_advanced.html#cb288-9" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;numeracy&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア&quot;</span>,</span>
+<span id="cb288-10"><a href="regression_advanced.html#cb288-10" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb288-11"><a href="regression_advanced.html#cb288-11" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
+<span id="cb288-12"><a href="regression_advanced.html#cb288-12" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
+<span id="cb288-13"><a href="regression_advanced.html#cb288-13" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
+<span id="cb288-14"><a href="regression_advanced.html#cb288-14" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span></span>
+<span id="cb288-15"><a href="regression_advanced.html#cb288-15" aria-hidden="true" tabindex="-1"></a>                         ), </span>
+<span id="cb288-16"><a href="regression_advanced.html#cb288-16" aria-hidden="true" tabindex="-1"></a>         <span class="at">gof_omit =</span> <span class="st">&quot;R2 Adj.|AIC|BIC|Log.Lik.|F&quot;</span>)</span></code></pre></div>
 <table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
 <thead>
 <tr>
@@ -764,23 +764,23 @@ R2
 <h2><span class="header-section-number">8.3</span> 媒介分析／要因分解</h2>
 <p>女性は男性と比べて賃金が低い（男女間賃金格差がある）のはなぜなのかを知りたいとする。たとえばその原因には、(1) 女性が男性よりも教育水準（学歴）が低い、(2) 女性が男性よりも数的思考力スコアが低い、ということがありえるだろう。このような原因を調べるというときにも、重回帰分析を活用することができる。</p>
 <p>性別をX、賃金をY、学歴および数的思考力スコアをMとすると、ここでのアイデアは次のような図に表すことができる。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-211-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-212-1.png" width="672" /></p>
 <p>性別が賃金に与える効果は、(1) 女性の学歴や数的思考力スコアが低く、したがって賃金も低い（X → M → Y）という部分と、(2) 学歴や数的思考力スコアを一定としてもなお女性のほうが賃金が低い（X → Y | M）という部分とに分けることができる。このようにして、XとYの中間にある要因（<strong>媒介要因 mediator</strong>）を考えることでグループ間の差や独立変数の効果を分けていくことを指して、<strong>媒介分析 mediation analysis</strong>や<strong>要因分解decomposition</strong>などという。</p>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="regression_advanced.html#cb288-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb288-2"><a href="regression_advanced.html#cb288-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">female_d =</span> <span class="fu">if_else</span>(gender <span class="sc">==</span> <span class="st">&quot;女性&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb288-3"><a href="regression_advanced.html#cb288-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb288-4"><a href="regression_advanced.html#cb288-4" aria-hidden="true" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> female_d)</span>
-<span id="cb288-5"><a href="regression_advanced.html#cb288-5" aria-hidden="true" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> female_d <span class="sc">+</span> educ <span class="sc">+</span> numeracy)</span>
-<span id="cb288-6"><a href="regression_advanced.html#cb288-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb288-7"><a href="regression_advanced.html#cb288-7" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
-<span id="cb288-8"><a href="regression_advanced.html#cb288-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb288-9"><a href="regression_advanced.html#cb288-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">coef_rename =</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>,</span>
-<span id="cb288-10"><a href="regression_advanced.html#cb288-10" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;female_d&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性（vs. 男性）&quot;</span>,</span>
-<span id="cb288-11"><a href="regression_advanced.html#cb288-11" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
-<span id="cb288-12"><a href="regression_advanced.html#cb288-12" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
-<span id="cb288-13"><a href="regression_advanced.html#cb288-13" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
-<span id="cb288-14"><a href="regression_advanced.html#cb288-14" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;numeracy&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア&quot;</span>), </span>
-<span id="cb288-15"><a href="regression_advanced.html#cb288-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">gof_omit =</span> <span class="st">&quot;R2 Adj.|AIC|BIC|Log.Lik.|F&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="regression_advanced.html#cb289-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb289-2"><a href="regression_advanced.html#cb289-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">female_d =</span> <span class="fu">if_else</span>(gender <span class="sc">==</span> <span class="st">&quot;女性&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb289-3"><a href="regression_advanced.html#cb289-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb289-4"><a href="regression_advanced.html#cb289-4" aria-hidden="true" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> female_d)</span>
+<span id="cb289-5"><a href="regression_advanced.html#cb289-5" aria-hidden="true" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> female_d <span class="sc">+</span> educ <span class="sc">+</span> numeracy)</span>
+<span id="cb289-6"><a href="regression_advanced.html#cb289-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb289-7"><a href="regression_advanced.html#cb289-7" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
+<span id="cb289-8"><a href="regression_advanced.html#cb289-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb289-9"><a href="regression_advanced.html#cb289-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">coef_rename =</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>,</span>
+<span id="cb289-10"><a href="regression_advanced.html#cb289-10" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;female_d&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性（vs. 男性）&quot;</span>,</span>
+<span id="cb289-11"><a href="regression_advanced.html#cb289-11" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
+<span id="cb289-12"><a href="regression_advanced.html#cb289-12" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
+<span id="cb289-13"><a href="regression_advanced.html#cb289-13" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
+<span id="cb289-14"><a href="regression_advanced.html#cb289-14" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;numeracy&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア&quot;</span>), </span>
+<span id="cb289-15"><a href="regression_advanced.html#cb289-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">gof_omit =</span> <span class="st">&quot;R2 Adj.|AIC|BIC|Log.Lik.|F&quot;</span>)</span></code></pre></div>
 <table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
 <thead>
 <tr>
@@ -951,16 +951,16 @@ R2
 <div id="回帰分析の実際" class="section level2" number="8.4">
 <h2><span class="header-section-number">8.4</span> 回帰分析の実際</h2>
 <p>実際の論文では、交絡要因の統制と媒介分析の両方を考慮しながら分析されることが多い。すなわち、次のような図になる。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-214-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-215-1.png" width="672" /></p>
 <p>たとえば、学歴が高いと賃金が高い（X → Y）のはなぜなのか知りたいとする。その原因の1つとして、学歴が高いとよりスキルレベルが高い（賃金の高い）職業につくことができるから（X → M → Y）、ということが考えられる。実際、学歴別に職業の分布を比べてみると、学歴が高いほど管理職や専門職といったスキルレベルの高い職業に就いている傾向があることがわかる。</p>
-<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="regression_advanced.html#cb289-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb289-2"><a href="regression_advanced.html#cb289-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(educ, occupation, <span class="at">percent =</span> <span class="st">&quot;row&quot;</span>)</span></code></pre></div>
-<div id="kjewwlkjee" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="regression_advanced.html#cb290-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb290-2"><a href="regression_advanced.html#cb290-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(educ, occupation, <span class="at">percent =</span> <span class="st">&quot;row&quot;</span>)</span></code></pre></div>
+<div id="gibeqathmj" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#kjewwlkjee .gt_table {
+#gibeqathmj .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -985,7 +985,7 @@ R2
   border-left-color: #D3D3D3;
 }
 
-#kjewwlkjee .gt_heading {
+#gibeqathmj .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -997,7 +997,7 @@ R2
   border-right-color: #D3D3D3;
 }
 
-#kjewwlkjee .gt_title {
+#gibeqathmj .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1007,7 +1007,7 @@ R2
   border-bottom-width: 0;
 }
 
-#kjewwlkjee .gt_subtitle {
+#gibeqathmj .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1017,13 +1017,13 @@ R2
   border-top-width: 0;
 }
 
-#kjewwlkjee .gt_bottom_border {
+#gibeqathmj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#kjewwlkjee .gt_col_headings {
+#gibeqathmj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1038,7 +1038,7 @@ R2
   border-right-color: #D3D3D3;
 }
 
-#kjewwlkjee .gt_col_heading {
+#gibeqathmj .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1058,7 +1058,7 @@ R2
   overflow-x: hidden;
 }
 
-#kjewwlkjee .gt_column_spanner_outer {
+#gibeqathmj .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1070,15 +1070,15 @@ R2
   padding-right: 4px;
 }
 
-#kjewwlkjee .gt_column_spanner_outer:first-child {
+#gibeqathmj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#kjewwlkjee .gt_column_spanner_outer:last-child {
+#gibeqathmj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#kjewwlkjee .gt_column_spanner {
+#gibeqathmj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1090,7 +1090,7 @@ R2
   width: 100%;
 }
 
-#kjewwlkjee .gt_group_heading {
+#gibeqathmj .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1112,7 +1112,7 @@ R2
   vertical-align: middle;
 }
 
-#kjewwlkjee .gt_empty_group_heading {
+#gibeqathmj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1127,15 +1127,15 @@ R2
   vertical-align: middle;
 }
 
-#kjewwlkjee .gt_from_md > :first-child {
+#gibeqathmj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#kjewwlkjee .gt_from_md > :last-child {
+#gibeqathmj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#kjewwlkjee .gt_row {
+#gibeqathmj .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1154,7 +1154,7 @@ R2
   overflow-x: hidden;
 }
 
-#kjewwlkjee .gt_stub {
+#gibeqathmj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1166,7 +1166,7 @@ R2
   padding-left: 12px;
 }
 
-#kjewwlkjee .gt_summary_row {
+#gibeqathmj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1176,7 +1176,7 @@ R2
   padding-right: 5px;
 }
 
-#kjewwlkjee .gt_first_summary_row {
+#gibeqathmj .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1186,7 +1186,7 @@ R2
   border-top-color: #D3D3D3;
 }
 
-#kjewwlkjee .gt_grand_summary_row {
+#gibeqathmj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1196,7 +1196,7 @@ R2
   padding-right: 5px;
 }
 
-#kjewwlkjee .gt_first_grand_summary_row {
+#gibeqathmj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1206,11 +1206,11 @@ R2
   border-top-color: #D3D3D3;
 }
 
-#kjewwlkjee .gt_striped {
+#gibeqathmj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#kjewwlkjee .gt_table_body {
+#gibeqathmj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1219,7 +1219,7 @@ R2
   border-bottom-color: #D3D3D3;
 }
 
-#kjewwlkjee .gt_footnotes {
+#gibeqathmj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1233,13 +1233,13 @@ R2
   border-right-color: #D3D3D3;
 }
 
-#kjewwlkjee .gt_footnote {
+#gibeqathmj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#kjewwlkjee .gt_sourcenotes {
+#gibeqathmj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1253,41 +1253,41 @@ R2
   border-right-color: #D3D3D3;
 }
 
-#kjewwlkjee .gt_sourcenote {
+#gibeqathmj .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#kjewwlkjee .gt_left {
+#gibeqathmj .gt_left {
   text-align: left;
 }
 
-#kjewwlkjee .gt_center {
+#gibeqathmj .gt_center {
   text-align: center;
 }
 
-#kjewwlkjee .gt_right {
+#gibeqathmj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#kjewwlkjee .gt_font_normal {
+#gibeqathmj .gt_font_normal {
   font-weight: normal;
 }
 
-#kjewwlkjee .gt_font_bold {
+#gibeqathmj .gt_font_bold {
   font-weight: bold;
 }
 
-#kjewwlkjee .gt_font_italic {
+#gibeqathmj .gt_font_italic {
   font-style: italic;
 }
 
-#kjewwlkjee .gt_super {
+#gibeqathmj .gt_super {
   font-size: 65%;
 }
 
-#kjewwlkjee .gt_footnote_marks {
+#gibeqathmj .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -1389,27 +1389,27 @@ R2
 </div>
 <p>先に確認したように、学歴と賃金の間には性別や年齢といった交絡要因が存在する（Z → X, Z → Y）。なので、あらかじめこれらを統制しておいたうえで、学歴による賃金の差が職業の違いによってどの程度説明されるのかというのをみる必要がある。</p>
 <p>実際の分析結果は次のようになる。賃金については実額よりも対数を取った値のほうがよく使われるので、従属変数は対数賃金とする。また賃金を従属変数とする回帰分析の場合、年齢の2乗も考慮することが多いので、2乗項についても投入しよう。</p>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="regression_advanced.html#cb290-1" aria-hidden="true" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb290-2"><a href="regression_advanced.html#cb290-2" aria-hidden="true" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> occupation)</span>
-<span id="cb290-3"><a href="regression_advanced.html#cb290-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb290-4"><a href="regression_advanced.html#cb290-4" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
-<span id="cb290-5"><a href="regression_advanced.html#cb290-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb290-6"><a href="regression_advanced.html#cb290-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">coef_rename =</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>,</span>
-<span id="cb290-7"><a href="regression_advanced.html#cb290-7" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
-<span id="cb290-8"><a href="regression_advanced.html#cb290-8" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
-<span id="cb290-9"><a href="regression_advanced.html#cb290-9" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
-<span id="cb290-10"><a href="regression_advanced.html#cb290-10" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
-<span id="cb290-11"><a href="regression_advanced.html#cb290-11" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb290-12"><a href="regression_advanced.html#cb290-12" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
-<span id="cb290-13"><a href="regression_advanced.html#cb290-13" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb290-14"><a href="regression_advanced.html#cb290-14" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb290-15"><a href="regression_advanced.html#cb290-15" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
-<span id="cb290-16"><a href="regression_advanced.html#cb290-16" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
-<span id="cb290-17"><a href="regression_advanced.html#cb290-17" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
-<span id="cb290-18"><a href="regression_advanced.html#cb290-18" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
-<span id="cb290-19"><a href="regression_advanced.html#cb290-19" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
-<span id="cb290-20"><a href="regression_advanced.html#cb290-20" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>), </span>
-<span id="cb290-21"><a href="regression_advanced.html#cb290-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">gof_omit =</span> <span class="st">&quot;R2 Adj.|AIC|BIC|Log.Lik.|F&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="regression_advanced.html#cb291-1" aria-hidden="true" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb291-2"><a href="regression_advanced.html#cb291-2" aria-hidden="true" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> occupation)</span>
+<span id="cb291-3"><a href="regression_advanced.html#cb291-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb291-4"><a href="regression_advanced.html#cb291-4" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
+<span id="cb291-5"><a href="regression_advanced.html#cb291-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb291-6"><a href="regression_advanced.html#cb291-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">coef_rename =</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>,</span>
+<span id="cb291-7"><a href="regression_advanced.html#cb291-7" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
+<span id="cb291-8"><a href="regression_advanced.html#cb291-8" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
+<span id="cb291-9"><a href="regression_advanced.html#cb291-9" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
+<span id="cb291-10"><a href="regression_advanced.html#cb291-10" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
+<span id="cb291-11"><a href="regression_advanced.html#cb291-11" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb291-12"><a href="regression_advanced.html#cb291-12" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
+<span id="cb291-13"><a href="regression_advanced.html#cb291-13" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb291-14"><a href="regression_advanced.html#cb291-14" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb291-15"><a href="regression_advanced.html#cb291-15" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
+<span id="cb291-16"><a href="regression_advanced.html#cb291-16" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
+<span id="cb291-17"><a href="regression_advanced.html#cb291-17" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
+<span id="cb291-18"><a href="regression_advanced.html#cb291-18" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
+<span id="cb291-19"><a href="regression_advanced.html#cb291-19" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
+<span id="cb291-20"><a href="regression_advanced.html#cb291-20" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>), </span>
+<span id="cb291-21"><a href="regression_advanced.html#cb291-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">gof_omit =</span> <span class="st">&quot;R2 Adj.|AIC|BIC|Log.Lik.|F&quot;</span>)</span></code></pre></div>
 <table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
 <thead>
 <tr>
@@ -1757,9 +1757,9 @@ R2
 <p>年齢と性別を統制したうえでの学歴の係数が、職業を考慮することによってどの程度変わるのかをみる。これをみると、Model 1と比べて、職業を一定としたModel 2では学歴の係数がかなり小さくなる。学歴が高いと賃金が高いという関連のかなりの部分が、職業分布の違いによって生じているようだということを、2つのモデルの学歴の係数の違いから読み取ることができる。</p>
 <p>このように、回帰分析を使う際には、どのような効果を知りたいのかを意識して、何を交絡要因として統制すべきなのか、何を媒介要因と位置づけるのかを考えながら分析することが大事である。</p>
 <p>従属変数に対数を用いた場合には、係数の大きさが実質的にどれくらいであるのかを<span class="math inline">\(\exp(\beta) - 1\)</span>を計算して求めるとよい。従属変数を対数変換している場合の解釈については<a href="regression_basic.html#regression_basic_log">前章</a>を参照のこと。<code>broom::tidy()</code>を用いることで、この計算をスムーズに行うことができる。先のModel 2の結果を変換してみよう。</p>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="regression_advanced.html#cb291-1" aria-hidden="true" tabindex="-1"></a>reg_res2 <span class="sc">%&gt;%</span> </span>
-<span id="cb291-2"><a href="regression_advanced.html#cb291-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb291-3"><a href="regression_advanced.html#cb291-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimate_exp =</span> <span class="fu">exp</span>(estimate) <span class="sc">-</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="regression_advanced.html#cb292-1" aria-hidden="true" tabindex="-1"></a>reg_res2 <span class="sc">%&gt;%</span> </span>
+<span id="cb292-2"><a href="regression_advanced.html#cb292-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb292-3"><a href="regression_advanced.html#cb292-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimate_exp =</span> <span class="fu">exp</span>(estimate) <span class="sc">-</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 15 × 6
 ##    term                      estimate std.error statistic   p.value estimate_exp
 ##    &lt;chr&gt;                        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
@@ -1783,45 +1783,45 @@ R2
 <div id="結果をファイルに書き出す-2" class="section level2" number="8.5">
 <h2><span class="header-section-number">8.5</span> 結果をファイルに書き出す</h2>
 <p>前章の<a href="regression_basic.html#regression_basic_export">結果をファイルに書き出す</a>を参照。念のため、再確認しておくと、 <code>flextable</code>パッケージを読みこんでおいた状態で、上記の<code>modelsummary()</code>のコードに<code>output = "xxx.docx"</code>というようなオプションをつけることで、wordファイルに結果を書き出すことができる。</p>
-<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="regression_advanced.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
-<span id="cb293-2"><a href="regression_advanced.html#cb293-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb293-3"><a href="regression_advanced.html#cb293-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">coef_rename =</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>,</span>
-<span id="cb293-4"><a href="regression_advanced.html#cb293-4" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
-<span id="cb293-5"><a href="regression_advanced.html#cb293-5" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
-<span id="cb293-6"><a href="regression_advanced.html#cb293-6" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
-<span id="cb293-7"><a href="regression_advanced.html#cb293-7" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
-<span id="cb293-8"><a href="regression_advanced.html#cb293-8" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb293-9"><a href="regression_advanced.html#cb293-9" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
-<span id="cb293-10"><a href="regression_advanced.html#cb293-10" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb293-11"><a href="regression_advanced.html#cb293-11" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb293-12"><a href="regression_advanced.html#cb293-12" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
-<span id="cb293-13"><a href="regression_advanced.html#cb293-13" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
-<span id="cb293-14"><a href="regression_advanced.html#cb293-14" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
-<span id="cb293-15"><a href="regression_advanced.html#cb293-15" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
-<span id="cb293-16"><a href="regression_advanced.html#cb293-16" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
-<span id="cb293-17"><a href="regression_advanced.html#cb293-17" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>), </span>
-<span id="cb293-18"><a href="regression_advanced.html#cb293-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">gof_omit =</span> <span class="st">&quot;R2 Adj.|AIC|BIC|Log.Lik.|F&quot;</span>,</span>
-<span id="cb293-19"><a href="regression_advanced.html#cb293-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">output =</span> <span class="st">&quot;results/regression_multiple.docx&quot;</span>)</span></code></pre></div>
-<p>ところで、上記の表のように独立変数が増えてくると、なんだか表が縦に長くて見にくいなあと思うかもしれない。そうした場には、次のように書くことで、標準誤差の値を係数の右側に並べて表記でき、表の縦の長さを短くできる。</p>
 <div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="regression_advanced.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
-<span id="cb294-2"><a href="regression_advanced.html#cb294-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">estimate =</span> <span class="st">&quot;{estimate} ({std.error}){stars}&quot;</span>, <span class="co"># 係数（半角スペース）(標準誤差)星印、となるように表記するオプション</span></span>
-<span id="cb294-3"><a href="regression_advanced.html#cb294-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">statistic =</span> <span class="cn">NULL</span>, <span class="co">#「2行目」の表記を省略するオプション。</span></span>
-<span id="cb294-4"><a href="regression_advanced.html#cb294-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">coef_rename =</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>,</span>
-<span id="cb294-5"><a href="regression_advanced.html#cb294-5" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
-<span id="cb294-6"><a href="regression_advanced.html#cb294-6" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
-<span id="cb294-7"><a href="regression_advanced.html#cb294-7" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
-<span id="cb294-8"><a href="regression_advanced.html#cb294-8" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
-<span id="cb294-9"><a href="regression_advanced.html#cb294-9" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb294-10"><a href="regression_advanced.html#cb294-10" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
-<span id="cb294-11"><a href="regression_advanced.html#cb294-11" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb294-12"><a href="regression_advanced.html#cb294-12" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb294-13"><a href="regression_advanced.html#cb294-13" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
-<span id="cb294-14"><a href="regression_advanced.html#cb294-14" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
-<span id="cb294-15"><a href="regression_advanced.html#cb294-15" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
-<span id="cb294-16"><a href="regression_advanced.html#cb294-16" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
-<span id="cb294-17"><a href="regression_advanced.html#cb294-17" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
-<span id="cb294-18"><a href="regression_advanced.html#cb294-18" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>), </span>
-<span id="cb294-19"><a href="regression_advanced.html#cb294-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">gof_omit =</span> <span class="st">&quot;R2 Adj.|AIC|BIC|Log.Lik.|F&quot;</span>)</span></code></pre></div>
+<span id="cb294-2"><a href="regression_advanced.html#cb294-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb294-3"><a href="regression_advanced.html#cb294-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">coef_rename =</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>,</span>
+<span id="cb294-4"><a href="regression_advanced.html#cb294-4" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
+<span id="cb294-5"><a href="regression_advanced.html#cb294-5" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
+<span id="cb294-6"><a href="regression_advanced.html#cb294-6" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
+<span id="cb294-7"><a href="regression_advanced.html#cb294-7" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
+<span id="cb294-8"><a href="regression_advanced.html#cb294-8" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb294-9"><a href="regression_advanced.html#cb294-9" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
+<span id="cb294-10"><a href="regression_advanced.html#cb294-10" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb294-11"><a href="regression_advanced.html#cb294-11" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb294-12"><a href="regression_advanced.html#cb294-12" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
+<span id="cb294-13"><a href="regression_advanced.html#cb294-13" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
+<span id="cb294-14"><a href="regression_advanced.html#cb294-14" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
+<span id="cb294-15"><a href="regression_advanced.html#cb294-15" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
+<span id="cb294-16"><a href="regression_advanced.html#cb294-16" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
+<span id="cb294-17"><a href="regression_advanced.html#cb294-17" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>), </span>
+<span id="cb294-18"><a href="regression_advanced.html#cb294-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">gof_omit =</span> <span class="st">&quot;R2 Adj.|AIC|BIC|Log.Lik.|F&quot;</span>,</span>
+<span id="cb294-19"><a href="regression_advanced.html#cb294-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">output =</span> <span class="st">&quot;results/regression_multiple.docx&quot;</span>)</span></code></pre></div>
+<p>ところで、上記の表のように独立変数が増えてくると、なんだか表が縦に長くて見にくいなあと思うかもしれない。そうした場には、次のように書くことで、標準誤差の値を係数の右側に並べて表記でき、表の縦の長さを短くできる。</p>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="regression_advanced.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
+<span id="cb295-2"><a href="regression_advanced.html#cb295-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">estimate =</span> <span class="st">&quot;{estimate} ({std.error}){stars}&quot;</span>, <span class="co"># 係数（半角スペース）(標準誤差)星印、となるように表記するオプション</span></span>
+<span id="cb295-3"><a href="regression_advanced.html#cb295-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">statistic =</span> <span class="cn">NULL</span>, <span class="co">#「2行目」の表記を省略するオプション。</span></span>
+<span id="cb295-4"><a href="regression_advanced.html#cb295-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">coef_rename =</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>,</span>
+<span id="cb295-5"><a href="regression_advanced.html#cb295-5" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
+<span id="cb295-6"><a href="regression_advanced.html#cb295-6" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
+<span id="cb295-7"><a href="regression_advanced.html#cb295-7" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
+<span id="cb295-8"><a href="regression_advanced.html#cb295-8" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
+<span id="cb295-9"><a href="regression_advanced.html#cb295-9" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb295-10"><a href="regression_advanced.html#cb295-10" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
+<span id="cb295-11"><a href="regression_advanced.html#cb295-11" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb295-12"><a href="regression_advanced.html#cb295-12" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb295-13"><a href="regression_advanced.html#cb295-13" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
+<span id="cb295-14"><a href="regression_advanced.html#cb295-14" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
+<span id="cb295-15"><a href="regression_advanced.html#cb295-15" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
+<span id="cb295-16"><a href="regression_advanced.html#cb295-16" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
+<span id="cb295-17"><a href="regression_advanced.html#cb295-17" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
+<span id="cb295-18"><a href="regression_advanced.html#cb295-18" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>), </span>
+<span id="cb295-19"><a href="regression_advanced.html#cb295-19" aria-hidden="true" tabindex="-1"></a>         <span class="at">gof_omit =</span> <span class="st">&quot;R2 Adj.|AIC|BIC|Log.Lik.|F&quot;</span>)</span></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>

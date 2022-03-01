@@ -537,7 +537,7 @@ piaac_young <- piaac_variable %>%
   filter(age >= 25 & age <= 34)
 ```
 
-今回の資料では、「25歳以上64歳未満の有業者」に対象を限定する。そのため、次のように条件を指定する。
+今回の資料では、「25歳以上64歳以下の有業者」に対象を限定する。そのため、次のように条件を指定する。
 
 ```{r}
 piaac_sample <- piaac_variable %>% 
@@ -625,9 +625,9 @@ minmax <- piaac_sample_nona %>%
   filter(wage_tile == 1 | wage_tile == 100) %>% 
   group_by(wage_tile) %>% 
   summarize(min = min(wage), 
-            max = max(wage))
-
-minmax$min[2]
+            max = max(wage)) %>% 
+  mutate(min = round(min)) %>% 
+  mutate(max = round(max)) 
 ```
 
 このように、下位1%には`r minmax$max[1]`円以下のケースが含まれ、上位1%には`r minmax$min[2]`円以上のケースが含まれていることがわかる。これらのケースを除外して、分析に使用するためのサンプルを作ろう。
@@ -659,7 +659,7 @@ write_rds(piaac_sample_analytic, file = "data/piaac_sample_analytic.rds")
 
 以降では、このデータを使って分析を行っていく。
 
-## データの追加：複数のデータを合併し、行を追加する（該当者のみ）
+## データの追加（該当者のみ）
 
 たとえば複数の社会調査データを合併してサンプルサイズを増やしたり、時系列比較を行いたいといったことがあるかもしれない。このような場合の処理について記しておく。
 
@@ -671,13 +671,17 @@ x1 <- c(5, 8, 2, 0, 6, 1)
 x2 <- c(1, 1, 1, 2, 2, 2)
 data <- c("data 1", "data 1", "data 1", "data 1", "data 1", "data 1")
 df1 <- tibble(id, x1, x2, data)
-df1
 
 id <- 7:10
 x1 <- c(9, 4, 0, 2)
 x2 <- c(2, 1, 2, 1)
 data <- c("data 2", "data 2", "data 2", "data 2")
 df2 <- tibble(id, x1, x2, data)
+```
+
+```{r}
+df1
+
 df2
 ```
 

@@ -238,7 +238,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.5.3" data-path="handling.html"><a href="handling.html#外れ値の扱い"><i class="fa fa-check"></i><b>4.5.3</b> 外れ値の扱い</a></li>
 <li class="chapter" data-level="4.5.4" data-path="handling.html"><a href="handling.html#分析用データを書き出す"><i class="fa fa-check"></i><b>4.5.4</b> 分析用データを書き出す</a></li>
 </ul></li>
-<li class="chapter" data-level="4.6" data-path="handling.html"><a href="handling.html#データの追加複数のデータを合併し行を追加する該当者のみ"><i class="fa fa-check"></i><b>4.6</b> データの追加：複数のデータを合併し、行を追加する（該当者のみ）</a></li>
+<li class="chapter" data-level="4.6" data-path="handling.html"><a href="handling.html#データの追加該当者のみ"><i class="fa fa-check"></i><b>4.6</b> データの追加（該当者のみ）</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="descriptives.html"><a href="descriptives.html"><i class="fa fa-check"></i><b>5</b> 1変数の集計</a>
 <ul>
@@ -1175,7 +1175,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>年齢が25歳以上34歳以下のケースのみを抽出し、抽出したデータに新しい名前（<code>piaac_young</code>）をつける。</p>
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="handling.html#cb89-1" aria-hidden="true" tabindex="-1"></a>piaac_young <span class="ot">&lt;-</span> piaac_variable <span class="sc">%&gt;%</span> </span>
 <span id="cb89-2"><a href="handling.html#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> age <span class="sc">&lt;=</span> <span class="dv">34</span>)</span></code></pre></div>
-<p>今回の資料では、「25歳以上64歳未満の有業者」に対象を限定する。そのため、次のように条件を指定する。</p>
+<p>今回の資料では、「25歳以上64歳以下の有業者」に対象を限定する。そのため、次のように条件を指定する。</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="handling.html#cb90-1" aria-hidden="true" tabindex="-1"></a>piaac_sample <span class="ot">&lt;-</span> piaac_variable <span class="sc">%&gt;%</span> </span>
 <span id="cb90-2"><a href="handling.html#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="dv">25</span> <span class="sc">&lt;=</span> age <span class="sc">&amp;</span> age <span class="sc">&lt;=</span> <span class="dv">64</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb90-3"><a href="handling.html#cb90-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(work <span class="sc">==</span> <span class="dv">1</span>)</span></code></pre></div>
@@ -1293,7 +1293,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##       &lt;int&gt;     &lt;dbl&gt;   &lt;dbl&gt;
 ## 1         1    0.0578    462.
 ## 2       100 9760.     266667.</code></pre>
-<p>このように、下位1%には461.5384615円以下のケースが含まれ、上位1%には9759.6153846円以上のケースが含まれていることがわかる。これらのケースを除外して、分析に使用するためのサンプルを作ろう。</p>
+<p>このように、下位1%には462円以下のケースが含まれ、上位1%には9760円以上のケースが含まれていることがわかる。これらのケースを除外して、分析に使用するためのサンプルを作ろう。</p>
 <div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="handling.html#cb105-1" aria-hidden="true" tabindex="-1"></a>piaac_sample_analytic <span class="ot">&lt;-</span> piaac_sample_nona <span class="sc">%&gt;%</span> </span>
 <span id="cb105-2"><a href="handling.html#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="dv">2</span> <span class="sc">&lt;=</span> wage_tile <span class="sc">&amp;</span> wage_tile <span class="sc">&lt;=</span> <span class="dv">99</span>)</span></code></pre></div>
 <p>このように極端に低いケースと極端に高いケースを除外することで、外れ値の影響を除いた賃金の分布を得ることができる。</p>
@@ -1311,10 +1311,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>以降では、このデータを使って分析を行っていく。</p>
 </div>
 </div>
-<div id="データの追加複数のデータを合併し行を追加する該当者のみ" class="section level2" number="4.6">
-<h2><span class="header-section-number">4.6</span> データの追加：複数のデータを合併し、行を追加する（該当者のみ）</h2>
+<div id="データの追加該当者のみ" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> データの追加（該当者のみ）</h2>
 <p>たとえば複数の社会調査データを合併してサンプルサイズを増やしたり、時系列比較を行いたいといったことがあるかもしれない。このような場合の処理について記しておく。</p>
 <p>以下のような2つのデータがあるとする。</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="handling.html#cb108-1" aria-hidden="true" tabindex="-1"></a>df1</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 4
 ##      id    x1    x2 data  
 ##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; 
@@ -1324,6 +1325,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4     4     0     2 data 1
 ## 5     5     6     2 data 1
 ## 6     6     1     2 data 1</code></pre>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="handling.html#cb110-1" aria-hidden="true" tabindex="-1"></a>df2</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 4
 ##      id    x1    x2 data  
 ##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; 
@@ -1332,10 +1334,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 3     9     0     2 data 2
 ## 4    10     2     1 data 2</code></pre>
 <p>この2つのデータを合併したいときには、<code>dplyr::bind_rows()</code>を使う。</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="handling.html#cb110-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> </span>
-<span id="cb110-2"><a href="handling.html#cb110-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(df2) </span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="handling.html#cb112-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> </span>
+<span id="cb112-2"><a href="handling.html#cb112-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(df2) </span></code></pre></div>
 <p>これで、以下のように2つのデータを合併して行が増えたデータが得られる。</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="handling.html#cb111-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="handling.html#cb113-1" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 4
 ##       id    x1    x2 data  
 ##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; 
