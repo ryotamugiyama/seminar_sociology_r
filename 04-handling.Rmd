@@ -2,9 +2,13 @@
 
 この章ではデータの加工方法について説明する。
 
-内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project...」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。
+内容に入る前にいくつか確認しておこう。
 
-準備ができていたら、まずは以下のとおり`tidyverse`パッケージを読み込もう。
+第1に、右上のプロジェクトのボックスの横が、[第2章](#preparation)で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project...」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。
+
+第2に、[第3章](#import)で確認したとおり、データを格納するためのフォルダがプロジェクトフォルダ内に準備されていることを確認しよう。作っていない場合には、[データを置く場所を作る](#import_dir)を確認し、作成しておこう。
+
+第3に、上記の準備をすませたうえで、以下のとおり`tidyverse`パッケージを読み込もう。
 
 ```{r}
 library(tidyverse)
@@ -334,69 +338,7 @@ piaac_sub <- piaac %>%
   select(-gender, -wage) #gender, wage「以外」の列を抽出
 ```
 
-### %>%をつなげてコマンドをまとめる
-
-変数を作成する過程では、正しく変数を作れているかどうかを一つひとつ確認しながら進めていくことが必須である。しかし、正しく作成できたことが確認できたら、`with(table())`などを使って確認するコードは必ずしもスクリプトに残しておく必要はない。分析に使う変数が固まってきたら、変数を作成するためのコードを（ある程度）まとめておくと、コードがシンプルになってよいだろう。このようなときに、パイプ記法は有用である。
-
-上記で作成した変数も含めて、本資料で使う変数をまとめて作成するためのコードを以下に記した。
-
-```{r}
-piaac <- piaac %>% 
-  mutate(id = 1:n()) %>% 
-  mutate(wage = earnhrbonus) %>% 
-  mutate(logwage = log(wage)) %>% 
-  mutate(gender = factor(gender_r, level = 2:1, label = c("女性","男性"))) %>% 
-  mutate(age = age_r) %>% 
-  mutate(work = 2 - c_q01a) %>% 
-  mutate(workhour = d_q10 / 5) %>% 
-  mutate(workhour_fct = case_when(
-    d_q10 < 35 ~ 1,
-    d_q10 >= 35 & d_q10 <= 49 ~ 2,
-    d_q10 >= 50 & d_q10 <= 59 ~ 3,
-    d_q10 >= 60 ~ 4
-  )) %>% 
-  mutate(workhour_fct = factor(workhour_fct,
-                               levels = 1:4,
-                               labels = c("短時間（35時間未満）", "通常（35-49時間）", "準長時間（50-59時間）", "長時間（60時間以上）"))) %>% 
-  mutate(educ = case_when(
-    edcat8 == 1 | edcat8 == 2 ~ 1,
-    edcat8 == 3 ~ 2,
-    edcat8 == 4 | edcat8 == 5 ~ 3,
-    edcat8 == 6 | edcat8 == 7 | edcat8 == 8 ~ 4)) %>% 
-  mutate(educ = factor(educ, levels = 1:4,
-                       labels = c("中学", "高校", "短大高専", "大学大学院"))) %>% 
-  mutate(mothereduc = factor(j_q06b,
-                             levels = 1:3,
-                             labels = c("初等教育", "中等教育", "高等教育"))) %>% 
-  mutate(fathereduc = factor(j_q07b,
-                             levels = 1:3,
-                             labels = c("初等教育", "中等教育", "高等教育"))) %>% 
-  mutate(parenteduc = case_when(
-    j_q07b >= j_q06b ~ j_q07b,
-    j_q07b < j_q06b ~ j_q06b,
-    is.na(j_q07b) == TRUE & is.na(j_q06b) == FALSE ~ j_q06b,
-    is.na(j_q06b) == TRUE & is.na(j_q07b) == FALSE ~ j_q07b
-  )) %>% 
-  mutate(parenteduc = factor(parenteduc,
-                             levels = 1:3,
-                             labels = c("初等教育", "中等教育", "高等教育"))) %>% 
-  mutate(occupation = factor(isco1c,
-                             levels = 1:9,
-                             labels = c("管理職","専門職","技術職・准専門職","事務補助","サービス・販売","農林漁業","技能工","設備・機械運転・組立","単純作業")
-)) %>% 
-  mutate(numeracy = pvnum1) %>% 
-  mutate(ojt = 2 - b_q12c) %>% 
-  mutate(health = 6 - i_q08)
-```
-
-このようにして作成した変数のみを残したデータを別途データフレームとして残しておこう。
-
-```{r}
-piaac_variable <- piaac %>% 
-  select(id, wage, logwage, gender, age, work, workhour, workhour_fct, educ, mothereduc, fathereduc, parenteduc, occupation, numeracy, ojt, health)
-```
-
-## 変数の作成についてのtips {#handling-tips}
+## 変数の作成についてのtips（発展） {#handling-tips}
 
 ### カテゴリをまとめる
 
@@ -514,6 +456,69 @@ jgss #変換後のデータ
 こうした扱いがどの程度許容されるかについては、先行研究での定義を参照するとよい。
 
 年収などもこうした区間で扱われることがあるが、この場合は中点を定義できない選択肢が設けられていることがある（例：2050万円以上）。こうした場合の扱いについては諸説あり、[こちら](#domain_wage)にも少しそのことを記載している。
+
+## %>%をつなげてコマンドをまとめる
+
+変数を作成する過程では、正しく変数を作れているかどうかを一つひとつ確認しながら進めていくことが必須である。しかし、正しく作成できたことが確認できたら、`with(table())`などを使って確認するコードは必ずしもスクリプトに残しておく必要はない。分析に使う変数が固まってきたら、変数を作成するためのコードを（ある程度）まとめておくと、コードがシンプルになってよいだろう。このようなときに、パイプ記法は有用である。
+
+上記で作成した変数も含めて、本資料で使う変数をまとめて作成するためのコードを以下に記した。
+
+```{r}
+piaac <- piaac %>% 
+  mutate(id = 1:n()) %>% 
+  mutate(wage = earnhrbonus) %>% 
+  mutate(logwage = log(wage)) %>% 
+  mutate(gender = factor(gender_r, level = 2:1, label = c("女性","男性"))) %>% 
+  mutate(age = age_r) %>% 
+  mutate(work = 2 - c_q01a) %>% 
+  mutate(workhour = d_q10 / 5) %>% 
+  mutate(workhour_fct = case_when(
+    d_q10 < 35 ~ 1,
+    d_q10 >= 35 & d_q10 <= 49 ~ 2,
+    d_q10 >= 50 & d_q10 <= 59 ~ 3,
+    d_q10 >= 60 ~ 4
+  )) %>% 
+  mutate(workhour_fct = factor(workhour_fct,
+                               levels = 1:4,
+                               labels = c("短時間（35時間未満）", "通常（35-49時間）", "準長時間（50-59時間）", "長時間（60時間以上）"))) %>% 
+  mutate(educ = case_when(
+    edcat8 == 1 | edcat8 == 2 ~ 1,
+    edcat8 == 3 ~ 2,
+    edcat8 == 4 | edcat8 == 5 ~ 3,
+    edcat8 == 6 | edcat8 == 7 | edcat8 == 8 ~ 4)) %>% 
+  mutate(educ = factor(educ, levels = 1:4,
+                       labels = c("中学", "高校", "短大高専", "大学大学院"))) %>% 
+  mutate(mothereduc = factor(j_q06b,
+                             levels = 1:3,
+                             labels = c("初等教育", "中等教育", "高等教育"))) %>% 
+  mutate(fathereduc = factor(j_q07b,
+                             levels = 1:3,
+                             labels = c("初等教育", "中等教育", "高等教育"))) %>% 
+  mutate(parenteduc = case_when(
+    j_q07b >= j_q06b ~ j_q07b,
+    j_q07b < j_q06b ~ j_q06b,
+    is.na(j_q07b) == TRUE & is.na(j_q06b) == FALSE ~ j_q06b,
+    is.na(j_q06b) == TRUE & is.na(j_q07b) == FALSE ~ j_q07b
+  )) %>% 
+  mutate(parenteduc = factor(parenteduc,
+                             levels = 1:3,
+                             labels = c("初等教育", "中等教育", "高等教育"))) %>% 
+  mutate(occupation = factor(isco1c,
+                             levels = 1:9,
+                             labels = c("管理職","専門職","技術職・准専門職","事務補助","サービス・販売","農林漁業","技能工","設備・機械運転・組立","単純作業")
+)) %>% 
+  mutate(numeracy = pvnum1) %>% 
+  mutate(ojt = 2 - b_q12c) %>% 
+  mutate(health = 6 - i_q08) %>% 
+  mutate(learning = i_q04d)
+```
+
+このようにして作成した変数のみを残したデータを別途データフレームとして残しておこう。
+
+```{r}
+piaac_variable <- piaac %>% 
+  select(id, wage, logwage, gender, age, work, workhour, workhour_fct, educ, mothereduc, fathereduc, parenteduc, occupation, numeracy, ojt, health, learning)
+```
 
 ## サンプルの限定 {#handling_sample}
 
@@ -659,7 +664,7 @@ write_rds(piaac_sample_analytic, file = "data/piaac_sample_analytic.rds")
 
 以降では、このデータを使って分析を行っていく。
 
-## データの追加（該当者のみ）
+## データの追加（発展）
 
 たとえば複数の社会調査データを合併してサンプルサイズを増やしたり、時系列比較を行いたいといったことがあるかもしれない。このような場合の処理について記しておく。
 
