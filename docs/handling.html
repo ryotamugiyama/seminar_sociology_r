@@ -1162,10 +1162,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb86-44"><a href="handling.html#cb86-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">numeracy =</span> pvnum1) <span class="sc">%&gt;%</span> </span>
 <span id="cb86-45"><a href="handling.html#cb86-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ojt =</span> <span class="dv">2</span> <span class="sc">-</span> b_q12c) <span class="sc">%&gt;%</span> </span>
 <span id="cb86-46"><a href="handling.html#cb86-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">health =</span> <span class="dv">6</span> <span class="sc">-</span> i_q08) <span class="sc">%&gt;%</span> </span>
-<span id="cb86-47"><a href="handling.html#cb86-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">learning =</span> i_q04d)</span></code></pre></div>
+<span id="cb86-47"><a href="handling.html#cb86-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">learning =</span> i_q04d) <span class="sc">%&gt;%</span> </span>
+<span id="cb86-48"><a href="handling.html#cb86-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">numwork =</span> numwork)</span></code></pre></div>
 <p>このようにして作成した変数のみを残したデータを別途データフレームとして残しておこう。</p>
 <div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="handling.html#cb87-1" aria-hidden="true" tabindex="-1"></a>piaac_variable <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb87-2"><a href="handling.html#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, wage, logwage, gender, age, work, workhour, workhour_fct, educ, mothereduc, fathereduc, parenteduc, occupation, numeracy, ojt, health, learning)</span></code></pre></div>
+<span id="cb87-2"><a href="handling.html#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, wage, logwage, gender, age, work, workhour, workhour_fct, educ, mothereduc, fathereduc, parenteduc, occupation, numeracy, ojt, health, learning, numwork)</span></code></pre></div>
 </div>
 <div id="handling_sample" class="section level2" number="4.6">
 <h2><span class="header-section-number">4.6</span> サンプルの限定</h2>
@@ -1223,14 +1224,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  技能工          :349   3rd Qu.:323.2   3rd Qu.:1.0000   3rd Qu.:4.000  
 ##  (Other)         :713   Max.   :440.9   Max.   :1.0000   Max.   :5.000  
 ##  NA&#39;s            : 21                                                   
-##     learning    
-##  Min.   :1.000  
-##  1st Qu.:3.000  
-##  Median :3.000  
-##  Mean   :3.323  
-##  3rd Qu.:4.000  
-##  Max.   :5.000  
-##  NA&#39;s   :1</code></pre>
+##     learning        numwork       
+##  Min.   :1.000   Min.   :-0.0902  
+##  1st Qu.:3.000   1st Qu.: 1.2468  
+##  Median :3.000   Median : 1.7690  
+##  Mean   :3.323   Mean   : 1.9018  
+##  3rd Qu.:4.000   3rd Qu.: 2.3693  
+##  Max.   :5.000   Max.   : 6.0499  
+##  NA&#39;s   :1       NA&#39;s   :420</code></pre>
 <p><code>NA's</code>と書かれているのが、各変数でNAとなっている行の数である。項目によってはNAがない変数もあるし、たくさんNAがある変数もある。</p>
 <p>NAが含まれている変数は分析の際に集計が面倒だったりして、色々と取り扱いが難しい。そこで、分析に使う変数にNAが含まれている行はサンプルから除外しておくと集計が楽になる。<code>filter()</code>を使って、educ, parenteduc, occupation, wageの4つの変数についてNAが含まれている行を除外したデータフレームを作成しよう。</p>
 <div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="handling.html#cb95-1" aria-hidden="true" tabindex="-1"></a>piaac_sample_nona <span class="ot">&lt;-</span> piaac_sample <span class="sc">%&gt;%</span> </span>
@@ -1274,14 +1275,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  技能工          :272   3rd Qu.:324.0   3rd Qu.:1.0000   3rd Qu.:4.000  
 ##  管理職          :227   Max.   :440.9   Max.   :1.0000   Max.   :5.000  
 ##  (Other)         :377                                                   
-##     learning    
-##  Min.   :1.000  
-##  1st Qu.:3.000  
-##  Median :3.000  
-##  Mean   :3.312  
-##  3rd Qu.:4.000  
-##  Max.   :5.000  
-## </code></pre>
+##     learning        numwork       
+##  Min.   :1.000   Min.   :-0.0902  
+##  1st Qu.:3.000   1st Qu.: 1.2244  
+##  Median :3.000   Median : 1.7651  
+##  Mean   :3.312   Mean   : 1.9057  
+##  3rd Qu.:4.000   3rd Qu.: 2.3798  
+##  Max.   :5.000   Max.   : 6.0499  
+##                  NA&#39;s   :365</code></pre>
 <p>データの行数は先ほどよりも減っており、またwage, educ, occupationに含まれていたNA’sの表記が消えていることがわかる。</p>
 <p>このように、変数に欠損が含まれるケースを除外するような処理の仕方をさして、<strong>リストワイズ削除 listwise delition</strong>という。今日では欠損値の処理としてあまり望ましくない処理とされているが、まずはこのやりかたでやるのがよいだろう。欠損があまりに多い場合には、何らかのデータ操作のミス、調査のうえでの何らかの問題、そのほかの理由が考えられるため、欠損の数がどれくらいあるのかは注意して見ておくとよいだろう。</p>
 </div>
