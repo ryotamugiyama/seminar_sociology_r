@@ -18,15 +18,11 @@ library(tidyverse)
 
 本資料では基本的に、OECDが実施している国際成人力調査[Programme for the International Assessment of Adult Competencies, PIAAC](https://www.oecd.org/skills/piaac/)の日本版データをサンプルデータとして使用する。
 
-```{r, eval = FALSE}
-file_url <- "https://webfs.oecd.org/piaac/puf-data/CSV/prgjpnp1.csv"
+ダウンロード手順は以下のとおり。まず、[Data](https://www.oecd.org/skills/piaac/data/)のページから "Download the datasets (Public Use Files)" \> "csv" \> "prgjpnp1.csv" を選択して、ファイルをダウンロードできる。
 
-download.file(url = file_url, destfile = "data/prgjpnp1.csv")
-```
+ダウンロードファイルを「data」のフォルダに入れるのを忘れずに。
 
-上記のコードだと、時間がかかってしまってダウンロードできないことがある。このような場合は、[Data](https://www.oecd.org/skills/piaac/data/)のページから "Download the datasets (Public Use Files)" \> "csv" \> "prgjpnp1.csv" を選択して、ファイルをダウンロードできる。
-
-ダウンロードしたら、データを読み込む。このデータは少し特殊で、数値のほかに文字列などが入っている。そのため、すこしだけ特殊な処理をほどこしてデータを読み込むことにする。
+「data」のフォルダに入っていることを確認して、データを読み込む。このデータは少し特殊で、数値のほかに文字列などが入っている。そのため、すこしだけ特殊な処理をほどこしてデータを読み込むことにする。
 
 ```{r}
 piaac <- read_csv("data/prgjpnp1.csv") %>% 
