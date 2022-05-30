@@ -1292,12 +1292,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb99-2"><a href="handling.html#cb99-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span></span>
 <span id="cb99-3"><a href="handling.html#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span> </span>
 <span id="cb99-4"><a href="handling.html#cb99-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">800</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
 <div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="handling.html#cb100-1" aria-hidden="true" tabindex="-1"></a>piaac_sample_nona <span class="sc">%&gt;%</span> </span>
 <span id="cb100-2"><a href="handling.html#cb100-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span></span>
 <span id="cb100-3"><a href="handling.html#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span> </span>
 <span id="cb100-4"><a href="handling.html#cb100-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">5000</span>, <span class="dv">100000</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
 <p>このようなケースが発生する理由はいくつかあるのだが、分析上は、たとえば平均値を計算したりする場合に、これらの外れ値があることによって結果がこうした極端に高い・低い人によって大きく左右されるという問題がある。そこで、こうした極端に高いあるいは低いケースを除外することはしばしば有効になる。時給換算した賃金の場合にはたとえば、上位1%、下位1%のサンプルを除外するという処理を行うことが多い。このように上位1%、下位1%のサンプルを除外するときの方法について記す。</p>
 <p>まず、<code>ntile()</code>関数を使って、賃金の分位数を表す変数を作成する。</p>
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="handling.html#cb101-1" aria-hidden="true" tabindex="-1"></a>piaac_sample_nona <span class="ot">&lt;-</span> piaac_sample_nona <span class="sc">%&gt;%</span> </span>
@@ -1320,7 +1320,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="handling.html#cb105-1" aria-hidden="true" tabindex="-1"></a>piaac_sample_analytic <span class="sc">%&gt;%</span> </span>
 <span id="cb105-2"><a href="handling.html#cb105-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span></span>
 <span id="cb105-3"><a href="handling.html#cb105-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
 <p>このように、分析に連続変数を用いる場合には、外れ値がないかどうか、外れ値を含むことで結果が大きく変わってしまわないかをチェックしておく必要がある。</p>
 </div>
 <div id="分析用データを書き出す" class="section level3" number="4.6.4">

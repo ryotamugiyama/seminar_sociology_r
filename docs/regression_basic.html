@@ -452,14 +452,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="regression_basic.html#cb224-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb224-2"><a href="regression_basic.html#cb224-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> numeracy, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
 <span id="cb224-3"><a href="regression_basic.html#cb224-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-157-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-158-1.png" width="672" /></p>
 <p>なんとなく、数的思考力スコアが高いほど賃金が高い傾向があるようにみえる。この関係を1つの直線で要約するとしたらどのようになるだろう？この直線を示したのが次の図になる。</p>
 <div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="regression_basic.html#cb225-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb225-2"><a href="regression_basic.html#cb225-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> numeracy, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
 <span id="cb225-3"><a href="regression_basic.html#cb225-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb225-4"><a href="regression_basic.html#cb225-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-158-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-159-1.png" width="672" /></p>
 </div>
 <div id="回帰式の読み方" class="section level3" number="7.1.2">
 <h3><span class="header-section-number">7.1.2</span> 回帰式の読み方</h3>
@@ -527,9 +527,9 @@ y = -521.1 + 7.8x
 <span id="cb232-2"><a href="regression_basic.html#cb232-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
 <span id="cb232-3"><a href="regression_basic.html#cb232-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>, <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">w =</span> <span class="fl">0.3</span>, <span class="at">h =</span> <span class="dv">0</span>)) <span class="sc">+</span> </span>
 <span id="cb232-4"><a href="regression_basic.html#cb232-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10000</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-163-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-164-1.png" width="672" /></p>
 <p>ここで得られた男性の平均値と女性の平均値をそれぞれ散布図に書き入れてみたのが次の図である。実線が男性の平均値、点線が女性の平均値を表している（コードはやや複雑なので省略）。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-165-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-166-1.png" width="672" /></p>
 <p>いま、男性であれば1、女性であれば0をとる変数<span class="math inline">\(x\)</span>を考えよう。このように、カテゴリ変数のカテゴリを区別するために便宜的に0/1の値を振った変数のことを、<strong>ダミー変数 dummy variable</strong>という。このとき、性別による賃金の違いを表す回帰式は次のようになる：</p>
 <p><span class="math display">\[
 y = \beta_0 + \beta_1x
@@ -574,7 +574,7 @@ y = 1339 + 856x
 <span id="cb236-2"><a href="regression_basic.html#cb236-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(educ) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb236-3"><a href="regression_basic.html#cb236-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> educ, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
 <span id="cb236-4"><a href="regression_basic.html#cb236-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>, <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">w =</span> <span class="fl">0.3</span>, <span class="at">h =</span> <span class="dv">0</span>))</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-169-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-170-1.png" width="672" /></p>
 <p>中学卒を基準として、高校卒（高校卒 - 中学卒）、短大高専卒（短大高専卒 - 中学卒）、大学大学院卒（大学大学院卒 - 中学卒）だとどれくらい賃金が高いのかを推定することになる。</p>
 <div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="regression_basic.html#cb237-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb237-2"><a href="regression_basic.html#cb237-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ_d2 =</span> <span class="fu">if_else</span>(educ <span class="sc">==</span> <span class="st">&quot;高校&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
@@ -683,7 +683,7 @@ y = 1339 + 856x
 <span id="cb246-6"><a href="regression_basic.html#cb246-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(mean_ojt, <span class="at">digit =</span> <span class="dv">3</span>)), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb246-7"><a href="regression_basic.html#cb246-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb246-8"><a href="regression_basic.html#cb246-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-175-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-176-1.png" width="672" /></p>
 <p>ここで示された値は、上記クロス表の「1」のほうに示されている行%、すなわち「OJTを受けた人の割合」に一致している。男性は女性とくらべてOJTを受けた割合が8.2%ポイント高いということがわかる。</p>
 <p>回帰式を推定してみよう。</p>
 <div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="regression_basic.html#cb247-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender)</span>
@@ -721,7 +721,7 @@ y = 1339 + 856x
 <span id="cb249-8"><a href="regression_basic.html#cb249-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by &#39;age&#39;. You can override using the `.groups` argument.</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-178-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-179-1.png" width="672" /></p>
 <p>縦軸のOJTは0または1しかとらないので、点はy = 1またはy = 0の位置のどちらかに描かれる。推定される回帰式は、この散布図全体の傾向を要約するような線として表される。実際に、回帰式を推定してみよう。</p>
 <div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="regression_basic.html#cb252-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> age)</span>
 <span id="cb252-2"><a href="regression_basic.html#cb252-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
@@ -785,12 +785,12 @@ y = 1339 + 856x
 <span id="cb258-2"><a href="regression_basic.html#cb258-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> </span>
 <span id="cb258-3"><a href="regression_basic.html#cb258-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-184-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
 <div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="regression_basic.html#cb260-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb260-2"><a href="regression_basic.html#cb260-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> logwage)) <span class="sc">+</span> </span>
 <span id="cb260-3"><a href="regression_basic.html#cb260-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-184-2.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-185-2.png" width="672" /></p>
 <p>対数変換した後の変数は、対数変換する前の変数よりも正規分布に近づいていることがわかる。</p>
 <div id="自然対数と対数関数について" class="section level4" number="7.4.1.1">
 <h4><span class="header-section-number">7.4.1.1</span> 自然対数と対数関数について</h4>
@@ -810,7 +810,7 @@ a^y = x \leftrightarrow y = \log_a x
 <span id="cb262-3"><a href="regression_basic.html#cb262-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb262-4"><a href="regression_basic.html#cb262-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
 <p>対数変換した後の賃金を従属変数として、回帰分析を推定してみよう。</p>
 <div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="regression_basic.html#cb264-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy)</span>
 <span id="cb264-2"><a href="regression_basic.html#cb264-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
@@ -876,7 +876,7 @@ y + \Delta y &amp;= \exp(\beta_1)y \\
 \]</span></p>
 <p><span class="math inline">\(\beta_1\)</span>が0に近い値ならば、おおむね「<span class="math inline">\(x\)</span>が1単位高いと、<span class="math inline">\(y\)</span>が<span class="math inline">\(100 \times \beta_1\)</span>%高い」といえる。</p>
 <p>ただし、係数の絶対値が大きくなるほど<span class="math inline">\(\beta_1\)</span>と<span class="math inline">\(\exp(\beta_1) - 1\)</span>のずれが大きくなるという点は頭の片隅に入れておくとよい。図にするとこんな感じで、0から離れるほど点線からずれていく：</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-189-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-190-1.png" width="672" /></p>
 <p>従属変数だけではなく、独立変数についても対数を取ることができる。その場合の解釈はそれぞれ次のようになる：</p>
 <table>
 <thead>
@@ -1027,7 +1027,7 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
 <span id="cb277-2"><a href="regression_basic.html#cb277-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> logwage)) <span class="sc">+</span> </span>
 <span id="cb277-3"><a href="regression_basic.html#cb277-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb277-4"><a href="regression_basic.html#cb277-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">2</span>), <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-198-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-199-1.png" width="672" /></p>
 <p>このように、若いときには年齢による賃金の上昇は大きいけれども、その上昇幅は年齢が高くなるほど小さくなり、高い年齢ではむしろ負に転ずることがわかる。年齢についてはこのように二次曲線をつかうことはしばしば有効である。</p>
 <p>なお2乗した変数を別に作らなくても、回帰分析のコード中で2乗した変数を作成することができる。（結果は省略）</p>
 <div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="regression_basic.html#cb278-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> piaac, <span class="fu">log</span>(wage) <span class="sc">~</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
