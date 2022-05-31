@@ -64,7 +64,7 @@ piaac %>%
 
 今回の式は、次のようなかたちになる[^regression_basic-1]。
 
-[^regression_basic-1]: 今回のような場合を\*\*線形回帰分析 Linear regression\*\*ということもある。
+[^regression_basic-1]: 今回のような場合を線形回帰分析 Linear regressionということもある。
 
 $$
 y = \beta_0 + \beta_1x
@@ -92,7 +92,63 @@ $$
 y = `r reg_res_tidy$estimate[1]` + `r reg_res_tidy$estimate[2]`x
 $$
 
+
+### （発展）回帰式の決め方：最小二乗法
+
 もちろん、上記の回帰式は散布図をみて直観でえいやっと式の値を決めたのではなく、全体の傾向をもっともよく要約するような係数を推定している。その係数の推定方法を**最小二乗法 ordinary least square, OLS**という。
+
+
+最小二乗法の意味は図にするとわかりやすい。例えば、次のような散布図と、そこに引いた直線を考えよう。
+
+```{r, echo = FALSE}
+n <- 30
+df <- tibble(x = rnorm(n, 4, 1),
+       y = x + rnorm(n, 0, 1))
+df %>% 
+  ggplot() + 
+  geom_point(aes(x = x, y = y)) + 
+  geom_line(aes(x = x, y = x), color = "red") +
+  theme(panel.grid.minor = element_blank(),
+        axis.text = element_blank())
+```
+
+このとき、散布図の各点の座標を$(x_i, y_i)$と表すことにしよう。すると、各点のy座標の位置$y_i$は、（1）回帰直線の式に$x_i$を当てはめた値と、（2）そこからのずれ（$e_i$とする）の和として表すことができる。すなわち：
+
+$$
+y_i = \beta_0 + \beta_1x_{i} + e_i
+$$
+
+この$e_i$というのは、散布図の点からx軸に垂線を下ろしたときの、回帰直線までの距離を表している。図で考えると次のようになる。
+
+```{r, echo = FALSE}
+df %>% 
+  ggplot() + 
+  geom_point(aes(x = x, y = y)) + 
+  geom_line(aes(x = x, y = x), color = "red") +
+  theme(panel.grid.minor = element_blank(),
+        axis.text = element_blank()) +
+  geom_errorbar(aes(x = x, ymin = x, ymax = y))
+```
+
+ずれ$e_i$のことを、**残差（residuals）**散布図に直線を引く方法はたくさんあるのだが、最小二乗法では、上記の残差の二乗和を最も小さくするような直線が、散布図全体の傾向をもっともよく反映する直線だとみなして、切片と傾きのパラメータを推定する。式で書くとつぎのようになる。
+
+$$
+\sum_{i = 1}^N e_i^2 
+&= \sum_{i = 1}^N(y_i - (\beta_0 + \beta_1x_{i}))^2 
+$$
+
+この式を最小にするような$\beta_0, \beta_1$を求めるということになる。上式は$\beta_0, \beta_1$に関して下に凸な二次関数であるので、$\beta_0$について微分した値と$\beta_1$について微分した値が同時に0になるような$\beta_0, \beta_1$というのが、上式を最小にするようなパラメータだ、ということになる。
+
+$$
+\left\{
+\begin{align}
+\frac{\partial}{\partial\beta_0}\sum_{i = 1}^N(y_i - (\beta_0 + \beta_1x_{i}))^2 &= 0\\
+\frac{\partial}{\partial\beta_1}\sum_{i = 1}^N(y_i - (\beta_0 + \beta_1x_{i}))^2 &= 0\\
+\end{align}
+\right.
+$$
+
+これより先のくわしい証明は省略するが、いずれにしてもポイントは、回帰直線は「回帰直線と各点とのずれ（残差）の二乗和が最も小さくなるように引かれた線だ」ということである。
 
 ### 母集団における関係の推測
 
@@ -381,7 +437,9 @@ $$
 e = \lim_{t\rightarrow0}(1 + t)^{\frac{1}{t}} \simeq 2.7182818\cdots
 $$ で定義される数のことを**ネイピア数**といい、$e$と書く（円周率$\pi$みたいな感じ）。慣習上、ネイピア数$e$を底とする指数$e^x$を$\exp(x)$と表記したりする。
 
-$\log_a x$のように表される関数を**対数関数**といい、次のように定義される： $$
+$\log_a x$のように表される関数を**対数関数**といい、次のように定義される：
+
+$$
 a^y = x \leftrightarrow y = \log_a x
 $$
 

@@ -307,7 +307,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="7.1.1" data-path="regression_basic.html"><a href="regression_basic.html#散布図を眺める"><i class="fa fa-check"></i><b>7.1.1</b> 散布図を眺める</a></li>
 <li class="chapter" data-level="7.1.2" data-path="regression_basic.html"><a href="regression_basic.html#回帰式の読み方"><i class="fa fa-check"></i><b>7.1.2</b> 回帰式の読み方</a></li>
-<li class="chapter" data-level="7.1.3" data-path="regression_basic.html"><a href="regression_basic.html#母集団における関係の推測"><i class="fa fa-check"></i><b>7.1.3</b> 母集団における関係の推測</a></li>
+<li class="chapter" data-level="7.1.3" data-path="regression_basic.html"><a href="regression_basic.html#発展回帰式の決め方最小二乗法"><i class="fa fa-check"></i><b>7.1.3</b> （発展）回帰式の決め方：最小二乗法</a></li>
+<li class="chapter" data-level="7.1.4" data-path="regression_basic.html"><a href="regression_basic.html#母集団における関係の推測"><i class="fa fa-check"></i><b>7.1.4</b> 母集団における関係の推測</a></li>
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="regression_basic.html"><a href="regression_basic.html#独立変数がカテゴリ変数の場合"><i class="fa fa-check"></i><b>7.2</b> 独立変数がカテゴリ変数の場合</a>
 <ul>
@@ -464,7 +465,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="回帰式の読み方" class="section level3" number="7.1.2">
 <h3><span class="header-section-number">7.1.2</span> 回帰式の読み方</h3>
 <p>このように、2つの変数の関係を<span class="math inline">\(y = f(x)\)</span>というような関数で表現する分析方法を指して、<strong>回帰分析 regression analysis/regression model</strong> という。とくに、今y軸に置かれている変数 （賃金）は、数的思考力スコアによって説明される変数であるという意味で、<strong>被説明変数 explained variable</strong>または<strong>従属変数 dependent variable</strong>、x軸に置かれている変数（数的思考力スコア）は、賃金を説明する変数であるという意味で、<strong>説明変数 explanatory variable</strong>または<strong>独立変数 independent variable</strong>という。</p>
-<p>今回の式は、次のようなかたちになる<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>。</p>
+<p>今回の式は、次のようなかたちになる<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>。</p>
 <p><span class="math display">\[
 y = \beta_0 + \beta_1x
 \]</span></p>
@@ -483,10 +484,36 @@ y = \beta_0 + \beta_1x
 <p><span class="math display">\[
 y = -521.1 + 7.8x
 \]</span></p>
-<p>もちろん、上記の回帰式は散布図をみて直観でえいやっと式の値を決めたのではなく、全体の傾向をもっともよく要約するような係数を推定している。その係数の推定方法を<strong>最小二乗法 ordinary least square, OLS</strong>という。</p>
 </div>
-<div id="母集団における関係の推測" class="section level3" number="7.1.3">
-<h3><span class="header-section-number">7.1.3</span> 母集団における関係の推測</h3>
+<div id="発展回帰式の決め方最小二乗法" class="section level3" number="7.1.3">
+<h3><span class="header-section-number">7.1.3</span> （発展）回帰式の決め方：最小二乗法</h3>
+<p>もちろん、上記の回帰式は散布図をみて直観でえいやっと式の値を決めたのではなく、全体の傾向をもっともよく要約するような係数を推定している。その係数の推定方法を<strong>最小二乗法 ordinary least square, OLS</strong>という。</p>
+<p>最小二乗法の意味は図にするとわかりやすい。例えば、次のような散布図と、そこに引いた直線を考えよう。</p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-162-1.png" width="672" /></p>
+<p>このとき、散布図の各点の座標を<span class="math inline">\((x_i, y_i)\)</span>と表すことにしよう。すると、各点のy座標の位置<span class="math inline">\(y_i\)</span>は、（1）回帰直線の式に<span class="math inline">\(x_i\)</span>を当てはめた値と、（2）そこからのずれ（<span class="math inline">\(e_i\)</span>とする）の和として表すことができる。すなわち：</p>
+<p><span class="math display">\[
+y_i = \beta_0 + \beta_1x_{i} + e_i
+\]</span></p>
+<p>この<span class="math inline">\(e_i\)</span>というのは、散布図の点からx軸に垂線を下ろしたときの、回帰直線までの距離を表している。図で考えると次のようになる。</p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-163-1.png" width="672" /></p>
+<p>ずれ<span class="math inline">\(e_i\)</span>のことを、<strong>残差（residuals）</strong>散布図に直線を引く方法はたくさんあるのだが、最小二乗法では、上記の残差の二乗和を最も小さくするような直線が、散布図全体の傾向をもっともよく反映する直線だとみなして、切片と傾きのパラメータを推定する。式で書くとつぎのようになる。</p>
+<p><span class="math display">\[
+\sum_{i = 1}^N e_i^2 
+&amp;= \sum_{i = 1}^N(y_i - (\beta_0 + \beta_1x_{i}))^2 
+\]</span></p>
+<p>この式を最小にするような<span class="math inline">\(\beta_0, \beta_1\)</span>を求めるということになる。上式は<span class="math inline">\(\beta_0, \beta_1\)</span>に関して下に凸な二次関数であるので、<span class="math inline">\(\beta_0\)</span>について微分した値と<span class="math inline">\(\beta_1\)</span>について微分した値が同時に0になるような<span class="math inline">\(\beta_0, \beta_1\)</span>というのが、上式を最小にするようなパラメータだ、ということになる。</p>
+<p><span class="math display">\[
+\left\{
+\begin{align}
+\frac{\partial}{\partial\beta_0}\sum_{i = 1}^N(y_i - (\beta_0 + \beta_1x_{i}))^2 &amp;= 0\\
+\frac{\partial}{\partial\beta_1}\sum_{i = 1}^N(y_i - (\beta_0 + \beta_1x_{i}))^2 &amp;= 0\\
+\end{align}
+\right.
+\]</span></p>
+<p>これより先のくわしい証明は省略するが、いずれにしてもポイントは、回帰直線は「回帰直線と各点とのずれ（残差）の二乗和が最も小さくなるように引かれた線だ」ということである。</p>
+</div>
+<div id="母集団における関係の推測" class="section level3" number="7.1.4">
+<h3><span class="header-section-number">7.1.4</span> 母集団における関係の推測</h3>
 <p>今回分析しているのはあくまで母集団から抽出された標本（サンプル）であり、本当に知りたいのは母集団においても確かに関係があるといえるかどうかである。今回のサンプルにおいて推定された係数は偶然生じたものではなく、母集団においても確かに正であるということはできるのだろうか。</p>
 <p>まずはいったん、回帰分析の結果をオブジェクトに格納しよう。</p>
 <div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="regression_basic.html#cb229-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> numeracy)</span></code></pre></div>
@@ -511,7 +538,7 @@ y = -521.1 + 7.8x
 ## Multiple R-squared:   0.08,  Adjusted R-squared:  0.07966 
 ## F-statistic:   237 on 1 and 2726 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>1列目のEstimateの列には、先ほどみたように係数の値が表示される。</p>
-<p>2列目のStd. Errorの列が<strong>標準誤差 standard error</strong>を表し、得られた係数のばらつき（標準偏差）を示している。標準誤差は、次に述べるp値の計算に使われている<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>。</p>
+<p>2列目のStd. Errorの列が<strong>標準誤差 standard error</strong>を表し、得られた係数のばらつき（標準偏差）を示している。標準誤差は、次に述べるp値の計算に使われている<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a>。</p>
 <p>4列めのPr(&gt;|t|)の列が<strong>p値 p-value</strong>を表している。p値は「もし母集団において係数が0であるという帰無仮説が正しいとしたときに、今回のような係数の値となる確率」を表している。この値が十分に低いのならば、帰無仮説を棄却して、たしかに母集団においても係数は0でなさそうだ（正あるいは負だ）、ということを自信をもって主張できるということになる。</p>
 <p>numeracyの行のp値は0.001よりずっと低いことがわかる。つまり、母集団において年齢の係数が0であったとしたら、今回のような係数の値が得られる確率はとても低い（0.001 = 0.1%未満）、ということである。</p>
 <p>この確率がどれくらい低ければ自信をもって関係があると言えるのか？ということについて、慣習的には、0.05という基準が使われている。Rでは、0.05よりも小さければ（正確には0.01 ≤ p &lt; 0.05）、p値の横に<code>*</code>という印がつく。同じようにして、0.01よりも小さければ（0.001 ≤ p &lt; 0.01）<code>**</code>、0.001よりも小さければ（p &lt; 0.001）、<code>***</code>という印がつく。</p>
@@ -527,9 +554,9 @@ y = -521.1 + 7.8x
 <span id="cb232-2"><a href="regression_basic.html#cb232-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
 <span id="cb232-3"><a href="regression_basic.html#cb232-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>, <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">w =</span> <span class="fl">0.3</span>, <span class="at">h =</span> <span class="dv">0</span>)) <span class="sc">+</span> </span>
 <span id="cb232-4"><a href="regression_basic.html#cb232-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">10000</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-164-1.png" width="672" /></p>
-<p>ここで得られた男性の平均値と女性の平均値をそれぞれ散布図に書き入れてみたのが次の図である。実線が男性の平均値、点線が女性の平均値を表している（コードはやや複雑なので省略）。</p>
 <p><img src="seminar_doc_files/figure-html/unnamed-chunk-166-1.png" width="672" /></p>
+<p>ここで得られた男性の平均値と女性の平均値をそれぞれ散布図に書き入れてみたのが次の図である。実線が男性の平均値、点線が女性の平均値を表している（コードはやや複雑なので省略）。</p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-168-1.png" width="672" /></p>
 <p>いま、男性であれば1、女性であれば0をとる変数<span class="math inline">\(x\)</span>を考えよう。このように、カテゴリ変数のカテゴリを区別するために便宜的に0/1の値を振った変数のことを、<strong>ダミー変数 dummy variable</strong>という。このとき、性別による賃金の違いを表す回帰式は次のようになる：</p>
 <p><span class="math display">\[
 y = \beta_0 + \beta_1x
@@ -574,7 +601,7 @@ y = 1339 + 856x
 <span id="cb236-2"><a href="regression_basic.html#cb236-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(educ) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb236-3"><a href="regression_basic.html#cb236-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> educ, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
 <span id="cb236-4"><a href="regression_basic.html#cb236-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>, <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">w =</span> <span class="fl">0.3</span>, <span class="at">h =</span> <span class="dv">0</span>))</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-170-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-172-1.png" width="672" /></p>
 <p>中学卒を基準として、高校卒（高校卒 - 中学卒）、短大高専卒（短大高専卒 - 中学卒）、大学大学院卒（大学大学院卒 - 中学卒）だとどれくらい賃金が高いのかを推定することになる。</p>
 <div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="regression_basic.html#cb237-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb237-2"><a href="regression_basic.html#cb237-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ_d2 =</span> <span class="fu">if_else</span>(educ <span class="sc">==</span> <span class="st">&quot;高校&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
@@ -683,7 +710,7 @@ y = 1339 + 856x
 <span id="cb246-6"><a href="regression_basic.html#cb246-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(mean_ojt, <span class="at">digit =</span> <span class="dv">3</span>)), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb246-7"><a href="regression_basic.html#cb246-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb246-8"><a href="regression_basic.html#cb246-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-176-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-178-1.png" width="672" /></p>
 <p>ここで示された値は、上記クロス表の「1」のほうに示されている行%、すなわち「OJTを受けた人の割合」に一致している。男性は女性とくらべてOJTを受けた割合が8.2%ポイント高いということがわかる。</p>
 <p>回帰式を推定してみよう。</p>
 <div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="regression_basic.html#cb247-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender)</span>
@@ -721,7 +748,7 @@ y = 1339 + 856x
 <span id="cb249-8"><a href="regression_basic.html#cb249-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by &#39;age&#39;. You can override using the `.groups` argument.</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-179-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-181-1.png" width="672" /></p>
 <p>縦軸のOJTは0または1しかとらないので、点はy = 1またはy = 0の位置のどちらかに描かれる。推定される回帰式は、この散布図全体の傾向を要約するような線として表される。実際に、回帰式を推定してみよう。</p>
 <div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="regression_basic.html#cb252-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> age)</span>
 <span id="cb252-2"><a href="regression_basic.html#cb252-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
@@ -785,19 +812,20 @@ y = 1339 + 856x
 <span id="cb258-2"><a href="regression_basic.html#cb258-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> </span>
 <span id="cb258-3"><a href="regression_basic.html#cb258-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-187-1.png" width="672" /></p>
 <div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="regression_basic.html#cb260-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb260-2"><a href="regression_basic.html#cb260-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> logwage)) <span class="sc">+</span> </span>
 <span id="cb260-3"><a href="regression_basic.html#cb260-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-185-2.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-187-2.png" width="672" /></p>
 <p>対数変換した後の変数は、対数変換する前の変数よりも正規分布に近づいていることがわかる。</p>
 <div id="自然対数と対数関数について" class="section level4" number="7.4.1.1">
 <h4><span class="header-section-number">7.4.1.1</span> 自然対数と対数関数について</h4>
 <p><span class="math display">\[
 e = \lim_{t\rightarrow0}(1 + t)^{\frac{1}{t}} \simeq 2.7182818\cdots
 \]</span> で定義される数のことを<strong>ネイピア数</strong>といい、<span class="math inline">\(e\)</span>と書く（円周率<span class="math inline">\(\pi\)</span>みたいな感じ）。慣習上、ネイピア数<span class="math inline">\(e\)</span>を底とする指数<span class="math inline">\(e^x\)</span>を<span class="math inline">\(\exp(x)\)</span>と表記したりする。</p>
-<p><span class="math inline">\(\log_a x\)</span>のように表される関数を<strong>対数関数</strong>といい、次のように定義される： <span class="math display">\[
+<p><span class="math inline">\(\log_a x\)</span>のように表される関数を<strong>対数関数</strong>といい、次のように定義される：</p>
+<p><span class="math display">\[
 a^y = x \leftrightarrow y = \log_a x
 \]</span></p>
 <p>とくに底が<span class="math inline">\(e\)</span>の場合を<strong>自然対数</strong>という。社会科学系の文脈ではこのときには底を省略して、<span class="math inline">\(e^y = x \leftrightarrow y = \log(x)\)</span>というふうに書かれることが多い。</p>
@@ -810,7 +838,7 @@ a^y = x \leftrightarrow y = \log_a x
 <span id="cb262-3"><a href="regression_basic.html#cb262-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb262-4"><a href="regression_basic.html#cb262-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-188-1.png" width="672" /></p>
 <p>対数変換した後の賃金を従属変数として、回帰分析を推定してみよう。</p>
 <div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="regression_basic.html#cb264-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy)</span>
 <span id="cb264-2"><a href="regression_basic.html#cb264-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
@@ -876,7 +904,7 @@ y + \Delta y &amp;= \exp(\beta_1)y \\
 \]</span></p>
 <p><span class="math inline">\(\beta_1\)</span>が0に近い値ならば、おおむね「<span class="math inline">\(x\)</span>が1単位高いと、<span class="math inline">\(y\)</span>が<span class="math inline">\(100 \times \beta_1\)</span>%高い」といえる。</p>
 <p>ただし、係数の絶対値が大きくなるほど<span class="math inline">\(\beta_1\)</span>と<span class="math inline">\(\exp(\beta_1) - 1\)</span>のずれが大きくなるという点は頭の片隅に入れておくとよい。図にするとこんな感じで、0から離れるほど点線からずれていく：</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-190-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-192-1.png" width="672" /></p>
 <p>従属変数だけではなく、独立変数についても対数を取ることができる。その場合の解釈はそれぞれ次のようになる：</p>
 <table>
 <thead>
@@ -1027,7 +1055,7 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
 <span id="cb277-2"><a href="regression_basic.html#cb277-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> logwage)) <span class="sc">+</span> </span>
 <span id="cb277-3"><a href="regression_basic.html#cb277-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb277-4"><a href="regression_basic.html#cb277-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">2</span>), <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-199-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-201-1.png" width="672" /></p>
 <p>このように、若いときには年齢による賃金の上昇は大きいけれども、その上昇幅は年齢が高くなるほど小さくなり、高い年齢ではむしろ負に転ずることがわかる。年齢についてはこのように二次曲線をつかうことはしばしば有効である。</p>
 <p>なお2乗した変数を別に作らなくても、回帰分析のコード中で2乗した変数を作成することができる。（結果は省略）</p>
 <div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="regression_basic.html#cb278-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> piaac, <span class="fu">log</span>(wage) <span class="sc">~</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
@@ -1271,9 +1299,9 @@ R2
 </div>
 <div class="footnotes">
 <hr />
-<ol start="10">
-<li id="fn10"><p>今回のような場合を**線形回帰分析 Linear regression**ということもある。<a href="regression_basic.html#fnref10" class="footnote-back">↩︎</a></p></li>
-<li id="fn11"><p>正確には、係数 - 0を標準誤差で割ることでt値を求める。自由度df（N - 推定した係数の個数）のt分布のもとで、t値の絶対値が得られたt値よりも極端な値になる確率を計算したものがここで表示されているp値である。<a href="regression_basic.html#fnref11" class="footnote-back">↩︎</a></p></li>
+<ol start="12">
+<li id="fn12"><p>今回のような場合を線形回帰分析 Linear regressionということもある。<a href="regression_basic.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<li id="fn13"><p>正確には、係数 - 0を標準誤差で割ることでt値を求める。自由度df（N - 推定した係数の個数）のt分布のもとで、t値の絶対値が得られたt値よりも極端な値になる確率を計算したものがここで表示されているp値である。<a href="regression_basic.html#fnref13" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
