@@ -405,7 +405,7 @@ reg_res <- lm_robust(data = piaac, ojt ~ gender)
 summary(reg_res)
 ```
 
-## 非線形の関連
+## （発展）非線形の関連
 
 ### 対数変換 {#regression_basic_log}
 
@@ -666,7 +666,7 @@ library(modelsummary)
 では、実際に使ってみよう。`modelsummary(list(model))`（modelという部分には、すでに保存しておいた回帰分析の結果を入れる）というのが最低限のコマンド。
 
 ```{r}
-reg_res <- lm(data = piaac, log(wage) ~ age + I(age^2))
+reg_res <- lm(data = piaac, log(wage) ~ age)
 
 modelsummary(list(reg_res)) 
 ```
@@ -677,8 +677,7 @@ modelsummary(list(reg_res))
 modelsummary(list(reg_res),
          stars = TRUE, # 有意水準を示す印をつける
          coef_rename = c("(Intercept)" = "切片",
-                         "age" = "年齢",
-                         "I(age^2)" = "年齢2乗"), # 各変数に名前をつける
+                         "age" = "年齢"), # 各変数に名前をつける
          gof_map = c("nobs", "r.squared") # サンプルサイズと決定係数のみ記載する
 )
 
@@ -694,8 +693,7 @@ modelsummary(list(reg_res),
 modelsummary(list(reg_res),
          stars = TRUE, # 有意水準を示す印をつける
          coef_rename = c("(Intercept)" = "切片",
-                         "age" = "年齢",
-                         "I(age^2)" = "年齢2乗"), # 各変数に名前をつける
+                         "age" = "年齢"), # 各変数に名前をつける
          gof_map = c("nobs", "r.squared"), # サンプルサイズと決定係数のみ記載する
          output = "results/regression.docx") # 出力先のファイル名をつける
 ```

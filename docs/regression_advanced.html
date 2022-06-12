@@ -323,7 +323,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.3" data-path="regression_basic.html"><a href="regression_basic.html#注意点"><i class="fa fa-check"></i><b>7.3.3</b> 注意点</a></li>
 <li class="chapter" data-level="7.3.4" data-path="regression_basic.html"><a href="regression_basic.html#発展ロバスト標準誤差"><i class="fa fa-check"></i><b>7.3.4</b> （発展）ロバスト標準誤差</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="regression_basic.html"><a href="regression_basic.html#非線形の関連"><i class="fa fa-check"></i><b>7.4</b> 非線形の関連</a>
+<li class="chapter" data-level="7.4" data-path="regression_basic.html"><a href="regression_basic.html#発展非線形の関連"><i class="fa fa-check"></i><b>7.4</b> （発展）非線形の関連</a>
 <ul>
 <li class="chapter" data-level="7.4.1" data-path="regression_basic.html"><a href="regression_basic.html#regression_basic_log"><i class="fa fa-check"></i><b>7.4.1</b> 対数変換</a></li>
 <li class="chapter" data-level="7.4.2" data-path="regression_basic.html"><a href="regression_basic.html#次関数型"><i class="fa fa-check"></i><b>7.4.2</b> 2次関数型</a></li>
@@ -455,32 +455,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 y = \beta_0 + \beta_1年齢 + \beta_2女性 + \beta_3高校卒 + \beta_4短大高専卒 + \beta_5大学大学院卒 + \beta_6数的思考力スコア
 \]</span></p>
 <p><span class="math inline">\(\beta_1\)</span>が年齢の係数、<span class="math inline">\(\beta_2\)</span>が（男性と比較したときの）女性の係数、<span class="math inline">\(\beta_3, \beta_4, \beta_5\)</span>が（中学卒と比較したときの）高校卒、短大高専卒、大学大学院卒の係数を、<span class="math inline">\(\beta_6\)</span>が数的思考力スコアの係数を、それぞれ表す。各係数は、<strong>他の変数を一定として</strong>（<strong>統制 control</strong>して、ともいう）、当該変数が1単位高いと<span class="math inline">\(y\)</span>がどれだけ高いのか、という独立の影響力を測っていることになる。</p>
-<p>単回帰分析のときと同じように、<code>lm()</code>関数を使って推定することができる。</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="regression_advanced.html#cb286-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> age <span class="sc">+</span> gender <span class="sc">+</span> educ <span class="sc">+</span> numeracy)</span>
+<p>単回帰分析のときと同じように、<code>lm()</code>関数を使って推定することができる。ここでは、賃金の測定の際により一般的に使われる、対数変換した賃金（logwage）を用いる。正負の解釈については通常と同じだが、係数の値についての解釈は少しだけ勉強が必要になる。くわしくは前章「<a href="regression_basic.html#regression_basic_log">対数変換</a>」を参照のこと。</p>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="regression_advanced.html#cb286-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> age <span class="sc">+</span> gender <span class="sc">+</span> educ <span class="sc">+</span> numeracy)</span>
 <span id="cb286-2"><a href="regression_advanced.html#cb286-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## lm(formula = wage ~ age + gender + educ + numeracy, data = piaac)
+## lm(formula = logwage ~ age + gender + educ + numeracy, data = piaac)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -2259.3  -596.8  -186.8   358.8  7723.4 
+##      Min       1Q   Median       3Q      Max 
+## -1.23602 -0.31230 -0.03953  0.29831  1.89012 
 ## 
 ## Coefficients:
 ##                 Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)    -1356.923    188.142  -7.212 7.10e-13 ***
-## age               22.760      1.883  12.088  &lt; 2e-16 ***
-## gender男性       710.976     41.621  17.082  &lt; 2e-16 ***
-## educ高校         123.573     78.395   1.576 0.115075    
-## educ短大高専     304.307     83.561   3.642 0.000276 ***
-## educ大学大学院   680.971     85.805   7.936 3.02e-15 ***
-## numeracy           4.880      0.536   9.104  &lt; 2e-16 ***
+## (Intercept)    5.7551032  0.0833818  69.021  &lt; 2e-16 ***
+## age            0.0085794  0.0008344  10.282  &lt; 2e-16 ***
+## gender男性     0.3915738  0.0184461  21.228  &lt; 2e-16 ***
+## educ高校       0.0784268  0.0347435   2.257   0.0241 *  
+## educ短大高専   0.1725538  0.0370332   4.659 3.32e-06 ***
+## educ大学大学院 0.3395225  0.0380275   8.928  &lt; 2e-16 ***
+## numeracy       0.0027443  0.0002375  11.553  &lt; 2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 1032 on 2721 degrees of freedom
-## Multiple R-squared:  0.2507, Adjusted R-squared:  0.2491 
-## F-statistic: 151.7 on 6 and 2721 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 0.4574 on 2721 degrees of freedom
+## Multiple R-squared:  0.3123, Adjusted R-squared:  0.3108 
+## F-statistic: 205.9 on 6 and 2721 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>それぞれ係数、標準誤差、p値のみかたはいずれも前回と同じである。</p>
 <p>一般に、重回帰分析の式は次のように書ける。</p>
 <p><span class="math display">\[
@@ -771,8 +771,8 @@ R2
 <div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="regression_advanced.html#cb290-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb290-2"><a href="regression_advanced.html#cb290-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">female_d =</span> <span class="fu">if_else</span>(gender <span class="sc">==</span> <span class="st">&quot;女性&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
 <span id="cb290-3"><a href="regression_advanced.html#cb290-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb290-4"><a href="regression_advanced.html#cb290-4" aria-hidden="true" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> female_d)</span>
-<span id="cb290-5"><a href="regression_advanced.html#cb290-5" aria-hidden="true" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> female_d <span class="sc">+</span> educ <span class="sc">+</span> numeracy)</span>
+<span id="cb290-4"><a href="regression_advanced.html#cb290-4" aria-hidden="true" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> female_d)</span>
+<span id="cb290-5"><a href="regression_advanced.html#cb290-5" aria-hidden="true" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> female_d <span class="sc">+</span> educ <span class="sc">+</span> numeracy)</span>
 <span id="cb290-6"><a href="regression_advanced.html#cb290-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb290-7"><a href="regression_advanced.html#cb290-7" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
 <span id="cb290-8"><a href="regression_advanced.html#cb290-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
@@ -802,20 +802,20 @@ Model 2
 切片
 </td>
 <td style="text-align:center;">
-2195.501***
+7.545***
 </td>
 <td style="text-align:center;">
-710.239***
+6.658***
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
 <td style="text-align:center;">
-(29.259)
+(0.013)
 </td>
 <td style="text-align:center;">
-(157.514)
+(0.069)
 </td>
 </tr>
 <tr>
@@ -823,20 +823,20 @@ Model 2
 女性（vs. 男性）
 </td>
 <td style="text-align:center;">
-−856.383***
+−0.464***
 </td>
 <td style="text-align:center;">
-−708.465***
+−0.391***
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
 <td style="text-align:center;">
-(42.648)
+(0.019)
 </td>
 <td style="text-align:center;">
-(42.716)
+(0.019)
 </td>
 </tr>
 <tr>
@@ -846,7 +846,7 @@ Model 2
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-40.154
+0.047
 </td>
 </tr>
 <tr>
@@ -855,7 +855,7 @@ Model 2
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-(80.145)
+(0.035)
 </td>
 </tr>
 <tr>
@@ -865,7 +865,7 @@ Model 2
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-154.441+
+0.116**
 </td>
 </tr>
 <tr>
@@ -874,7 +874,7 @@ Model 2
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-(84.811)
+(0.037)
 </td>
 </tr>
 <tr>
@@ -884,7 +884,7 @@ Model 2
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-565.164***
+0.296***
 </td>
 </tr>
 <tr>
@@ -893,7 +893,7 @@ Model 2
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-(87.512)
+(0.039)
 </td>
 </tr>
 <tr>
@@ -903,7 +903,7 @@ Model 2
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-4.011***
+0.002***
 </td>
 </tr>
 <tr>
@@ -912,7 +912,7 @@ Model 2
 <td style="text-align:center;box-shadow: 0px 1px">
 </td>
 <td style="text-align:center;box-shadow: 0px 1px">
-(0.545)
+(0.000)
 </td>
 </tr>
 <tr>
@@ -931,10 +931,10 @@ Num.Obs.
 R2
 </td>
 <td style="text-align:center;">
-0.129
+0.177
 </td>
 <td style="text-align:center;">
-0.210
+0.286
 </td>
 </tr>
 </tbody>
@@ -946,9 +946,9 @@ R2
 </tr>
 </tfoot>
 </table>
-<p>Model 1では女性は男性に比して-856円賃金が低いということがわかる。</p>
-<p>Model 2では、学歴と数的思考力スコアを追加している。高校、短大高専、大学大学院の係数はいずれも正であり、学歴が高いほど、賃金は高い傾向がある。また、数的思考力スコアも正であり、数的思考力スコアが高いほど賃金が高い傾向がある。これら学歴と数的思考力スコアを一定とすると、女性ダミーの係数は-708となり、Model 1の女性の係数よりも小さくなっていることがわかる。ただし係数はなお負で、統計的に有意である。</p>
-<p>この結果は次のことを意味している。女性の賃金が低いことの一部は、女性は男性と比べて学歴が低いことや、数的思考力スコアが低いことによって説明できる。しかしながら同時に、これらの個人属性を一定としてもなお、男女間には非常に大きな賃金格差が存在している。</p>
+<p>Model 1では、女性ダミーの係数は負であるので、女性は男性に比して賃金が低いということがわかる。</p>
+<p>Model 2では、学歴と数的思考力スコアを追加している。高校、短大高専、大学大学院の係数はいずれも正であり、学歴が高いほど、賃金は高い傾向がある。また、数的思考力スコアも正であり、数的思考力スコアが高いほど賃金が高い傾向がある。これら学歴と数的思考力スコアを一定とすると、女性ダミーの係数は0となり、Model 1の女性の係数（0）よりも絶対値が小さくなっている（0に近づいている）ことがわかる。ただし係数はなお負で、統計的に有意である。</p>
+<p>この結果は次のことを意味している。女性の賃金が低いことの一部は、女性は男性と比べて学歴が低いことや、数的思考力スコアが低いことによって説明できる。しかしながら同時に、これらの個人属性を一定としてもなお、男女間には大きな賃金格差が存在している。</p>
 </div>
 <div id="回帰分析の実際" class="section level2" number="8.4">
 <h2><span class="header-section-number">8.4</span> 回帰分析の実際</h2>
@@ -957,12 +957,12 @@ R2
 <p>たとえば、学歴が高いと賃金が高い（X → Y）のはなぜなのか知りたいとする。その原因の1つとして、学歴が高いとよりスキルレベルが高い（賃金の高い）職業につくことができるから（X → M → Y）、ということが考えられる。実際、学歴別に職業の分布を比べてみると、学歴が高いほど管理職や専門職といったスキルレベルの高い職業に就いている傾向があることがわかる。</p>
 <div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="regression_advanced.html#cb291-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb291-2"><a href="regression_advanced.html#cb291-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(educ, occupation, <span class="at">percent =</span> <span class="st">&quot;row&quot;</span>)</span></code></pre></div>
-<div id="mrooorblxf" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="gihwnsudyu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#mrooorblxf .gt_table {
+#gihwnsudyu .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -987,7 +987,7 @@ R2
   border-left-color: #D3D3D3;
 }
 
-#mrooorblxf .gt_heading {
+#gihwnsudyu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -999,7 +999,7 @@ R2
   border-right-color: #D3D3D3;
 }
 
-#mrooorblxf .gt_title {
+#gihwnsudyu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1009,7 +1009,7 @@ R2
   border-bottom-width: 0;
 }
 
-#mrooorblxf .gt_subtitle {
+#gihwnsudyu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1019,13 +1019,13 @@ R2
   border-top-width: 0;
 }
 
-#mrooorblxf .gt_bottom_border {
+#gihwnsudyu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mrooorblxf .gt_col_headings {
+#gihwnsudyu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1040,7 +1040,7 @@ R2
   border-right-color: #D3D3D3;
 }
 
-#mrooorblxf .gt_col_heading {
+#gihwnsudyu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1060,7 +1060,7 @@ R2
   overflow-x: hidden;
 }
 
-#mrooorblxf .gt_column_spanner_outer {
+#gihwnsudyu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1072,15 +1072,15 @@ R2
   padding-right: 4px;
 }
 
-#mrooorblxf .gt_column_spanner_outer:first-child {
+#gihwnsudyu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mrooorblxf .gt_column_spanner_outer:last-child {
+#gihwnsudyu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mrooorblxf .gt_column_spanner {
+#gihwnsudyu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1092,7 +1092,7 @@ R2
   width: 100%;
 }
 
-#mrooorblxf .gt_group_heading {
+#gihwnsudyu .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1114,7 +1114,7 @@ R2
   vertical-align: middle;
 }
 
-#mrooorblxf .gt_empty_group_heading {
+#gihwnsudyu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1129,15 +1129,15 @@ R2
   vertical-align: middle;
 }
 
-#mrooorblxf .gt_from_md > :first-child {
+#gihwnsudyu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mrooorblxf .gt_from_md > :last-child {
+#gihwnsudyu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mrooorblxf .gt_row {
+#gihwnsudyu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1156,7 +1156,7 @@ R2
   overflow-x: hidden;
 }
 
-#mrooorblxf .gt_stub {
+#gihwnsudyu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1168,7 +1168,7 @@ R2
   padding-left: 12px;
 }
 
-#mrooorblxf .gt_summary_row {
+#gihwnsudyu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1178,7 +1178,7 @@ R2
   padding-right: 5px;
 }
 
-#mrooorblxf .gt_first_summary_row {
+#gihwnsudyu .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1188,7 +1188,7 @@ R2
   border-top-color: #D3D3D3;
 }
 
-#mrooorblxf .gt_grand_summary_row {
+#gihwnsudyu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1198,7 +1198,7 @@ R2
   padding-right: 5px;
 }
 
-#mrooorblxf .gt_first_grand_summary_row {
+#gihwnsudyu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1208,11 +1208,11 @@ R2
   border-top-color: #D3D3D3;
 }
 
-#mrooorblxf .gt_striped {
+#gihwnsudyu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mrooorblxf .gt_table_body {
+#gihwnsudyu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1221,7 +1221,7 @@ R2
   border-bottom-color: #D3D3D3;
 }
 
-#mrooorblxf .gt_footnotes {
+#gihwnsudyu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1235,13 +1235,13 @@ R2
   border-right-color: #D3D3D3;
 }
 
-#mrooorblxf .gt_footnote {
+#gihwnsudyu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#mrooorblxf .gt_sourcenotes {
+#gihwnsudyu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1255,41 +1255,41 @@ R2
   border-right-color: #D3D3D3;
 }
 
-#mrooorblxf .gt_sourcenote {
+#gihwnsudyu .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#mrooorblxf .gt_left {
+#gihwnsudyu .gt_left {
   text-align: left;
 }
 
-#mrooorblxf .gt_center {
+#gihwnsudyu .gt_center {
   text-align: center;
 }
 
-#mrooorblxf .gt_right {
+#gihwnsudyu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mrooorblxf .gt_font_normal {
+#gihwnsudyu .gt_font_normal {
   font-weight: normal;
 }
 
-#mrooorblxf .gt_font_bold {
+#gihwnsudyu .gt_font_bold {
   font-weight: bold;
 }
 
-#mrooorblxf .gt_font_italic {
+#gihwnsudyu .gt_font_italic {
   font-style: italic;
 }
 
-#mrooorblxf .gt_super {
+#gihwnsudyu .gt_super {
   font-size: 65%;
 }
 
-#mrooorblxf .gt_footnote_marks {
+#gihwnsudyu .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 65%;
@@ -1758,7 +1758,7 @@ R2
 </table>
 <p>年齢と性別を統制したうえでの学歴の係数が、職業を考慮することによってどの程度変わるのかをみる。これをみると、Model 1と比べて、職業を一定としたModel 2では学歴の係数がかなり小さくなる。学歴が高いと賃金が高いという関連のかなりの部分が、職業分布の違いによって生じているようだということを、2つのモデルの学歴の係数の違いから読み取ることができる。</p>
 <p>このように、回帰分析を使う際には、どのような効果を知りたいのかを意識して、何を交絡要因として統制すべきなのか、何を媒介要因と位置づけるのかを考えながら分析することが大事である。</p>
-<p>従属変数に対数を用いた場合には、係数の大きさが実質的にどれくらいであるのかを<span class="math inline">\(\exp(\beta) - 1\)</span>を計算して求めるとよい。従属変数を対数変換している場合の解釈については<a href="regression_basic.html#regression_basic_log">前章</a>を参照のこと。<code>broom::tidy()</code>を用いることで、この計算をスムーズに行うことができる。先のModel 2の結果を変換してみよう。</p>
+<p>従属変数に対数を用いた場合には、係数の大きさが実質的にどれくらいであるのかを<span class="math inline">\(\exp(\beta) - 1\)</span>を計算して求めるとよい。くわしくは<a href="regression_basic.html#regression_basic_log">前章</a>を参照のこと。<code>broom::tidy()</code>を用いることで、この計算をスムーズに行うことができる。先のModel 2の結果を変換してみよう。</p>
 <div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="regression_advanced.html#cb293-1" aria-hidden="true" tabindex="-1"></a>reg_res2 <span class="sc">%&gt;%</span> </span>
 <span id="cb293-2"><a href="regression_advanced.html#cb293-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb293-3"><a href="regression_advanced.html#cb293-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimate_exp =</span> <span class="fu">exp</span>(estimate) <span class="sc">-</span> <span class="dv">1</span>)</span></code></pre></div>
@@ -1780,7 +1780,7 @@ R2
 ## 13 occupation技能工          -5.77e-1 0.0406       -14.2  3.33e- 44    -0.438   
 ## 14 occupation設備・機械運転… -6.09e-1 0.0430       -14.2  6.46e- 44    -0.456   
 ## 15 occupation単純作業        -7.45e-1 0.0489       -15.2  2.25e- 50    -0.525</code></pre>
-<p>例えば学歴（とくに大学大学院卒）の結果であれば、性別・年齢・職業を一定としてもなお、大学大学院卒の人は中学卒の人と比べて22.5%賃金が高いということを意味している。</p>
+<p>この結果は、例えば学歴（とくに大学大学院卒）の結果であれば、性別・年齢・職業を一定としてもなお、大学大学院卒の人は中学卒の人と比べて22.5%賃金が高いということを意味している。</p>
 </div>
 <div id="結果をファイルに書き出す-2" class="section level2" number="8.5">
 <h2><span class="header-section-number">8.5</span> 結果をファイルに書き出す</h2>

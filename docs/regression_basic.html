@@ -323,7 +323,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.3" data-path="regression_basic.html"><a href="regression_basic.html#注意点"><i class="fa fa-check"></i><b>7.3.3</b> 注意点</a></li>
 <li class="chapter" data-level="7.3.4" data-path="regression_basic.html"><a href="regression_basic.html#発展ロバスト標準誤差"><i class="fa fa-check"></i><b>7.3.4</b> （発展）ロバスト標準誤差</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="regression_basic.html"><a href="regression_basic.html#非線形の関連"><i class="fa fa-check"></i><b>7.4</b> 非線形の関連</a>
+<li class="chapter" data-level="7.4" data-path="regression_basic.html"><a href="regression_basic.html#発展非線形の関連"><i class="fa fa-check"></i><b>7.4</b> （発展）非線形の関連</a>
 <ul>
 <li class="chapter" data-level="7.4.1" data-path="regression_basic.html"><a href="regression_basic.html#regression_basic_log"><i class="fa fa-check"></i><b>7.4.1</b> 対数変換</a></li>
 <li class="chapter" data-level="7.4.2" data-path="regression_basic.html"><a href="regression_basic.html#次関数型"><i class="fa fa-check"></i><b>7.4.2</b> 2次関数型</a></li>
@@ -799,8 +799,8 @@ y = 1339 + 856x
 ## F-statistic: 19.64 on 1 and 2726 DF,  p-value: 9.698e-06</code></pre>
 </div>
 </div>
-<div id="非線形の関連" class="section level2" number="7.4">
-<h2><span class="header-section-number">7.4</span> 非線形の関連</h2>
+<div id="発展非線形の関連" class="section level2" number="7.4">
+<h2><span class="header-section-number">7.4</span> （発展）非線形の関連</h2>
 <div id="regression_basic_log" class="section level3" number="7.4.1">
 <h3><span class="header-section-number">7.4.1</span> 対数変換</h3>
 <p>用いる変数が正規分布から乖離しているときや、変数の単位に依存せず効果の大きさを測定したいときには、変数を対数変換することを検討するとよい。社会科学系では、底がeの対数（自然対数）を取ることで変数を対数変換することが多い。Rでは<code>log()</code>という関数で自然対数変換ができる。次のようにして、賃金を対数変換した変数を作ることができる。</p>
@@ -1065,7 +1065,7 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
 <p>先ほどの回帰分析の結果をもう少しきれいに表示したいと思うかもしれない。このようなときに活躍するのが<code>modelsummary</code>パッケージである。</p>
 <div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="regression_basic.html#cb279-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span></code></pre></div>
 <p>では、実際に使ってみよう。<code>modelsummary(list(model))</code>（modelという部分には、すでに保存しておいた回帰分析の結果を入れる）というのが最低限のコマンド。</p>
-<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="regression_basic.html#cb280-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, <span class="fu">log</span>(wage) <span class="sc">~</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="regression_basic.html#cb280-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, <span class="fu">log</span>(wage) <span class="sc">~</span> age)</span>
 <span id="cb280-2"><a href="regression_basic.html#cb280-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb280-3"><a href="regression_basic.html#cb280-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res)) </span></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -1084,14 +1084,14 @@ Model 1
 (Intercept)
 </td>
 <td style="text-align:center;">
-5.636
+7.136
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
 <td style="text-align:center;">
-(0.176)
+(0.044)
 </td>
 </tr>
 <tr>
@@ -1099,29 +1099,14 @@ Model 1
 age
 </td>
 <td style="text-align:center;">
-0.076
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-(0.008)
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-I(age^2)
-</td>
-<td style="text-align:center;">
-−0.001
+0.004
 </td>
 </tr>
 <tr>
 <td style="text-align:left;box-shadow: 0px 1px">
 </td>
 <td style="text-align:center;box-shadow: 0px 1px">
-(0.000)
+(0.001)
 </td>
 </tr>
 <tr>
@@ -1137,7 +1122,7 @@ Num.Obs.
 R2
 </td>
 <td style="text-align:center;">
-0.035
+0.007
 </td>
 </tr>
 <tr>
@@ -1145,7 +1130,7 @@ R2
 R2 Adj.
 </td>
 <td style="text-align:center;">
-0.034
+0.007
 </td>
 </tr>
 <tr>
@@ -1153,7 +1138,7 @@ R2 Adj.
 AIC
 </td>
 <td style="text-align:center;">
-4400.3
+4474.4
 </td>
 </tr>
 <tr>
@@ -1161,7 +1146,7 @@ AIC
 BIC
 </td>
 <td style="text-align:center;">
-4423.9
+4492.1
 </td>
 </tr>
 <tr>
@@ -1169,7 +1154,7 @@ BIC
 RMSE
 </td>
 <td style="text-align:center;">
-0.54
+0.55
 </td>
 </tr>
 </tbody>
@@ -1178,10 +1163,9 @@ RMSE
 <div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="regression_basic.html#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res),</span>
 <span id="cb281-2"><a href="regression_basic.html#cb281-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, <span class="co"># 有意水準を示す印をつける</span></span>
 <span id="cb281-3"><a href="regression_basic.html#cb281-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">coef_rename =</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>,</span>
-<span id="cb281-4"><a href="regression_basic.html#cb281-4" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb281-5"><a href="regression_basic.html#cb281-5" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>), <span class="co"># 各変数に名前をつける</span></span>
-<span id="cb281-6"><a href="regression_basic.html#cb281-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>) <span class="co"># サンプルサイズと決定係数のみ記載する</span></span>
-<span id="cb281-7"><a href="regression_basic.html#cb281-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<span id="cb281-4"><a href="regression_basic.html#cb281-4" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>), <span class="co"># 各変数に名前をつける</span></span>
+<span id="cb281-5"><a href="regression_basic.html#cb281-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>) <span class="co"># サンプルサイズと決定係数のみ記載する</span></span>
+<span id="cb281-6"><a href="regression_basic.html#cb281-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
 <thead>
 <tr>
@@ -1198,14 +1182,14 @@ Model 1
 切片
 </td>
 <td style="text-align:center;">
-5.636***
+7.136***
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
 <td style="text-align:center;">
-(0.176)
+(0.044)
 </td>
 </tr>
 <tr>
@@ -1213,29 +1197,14 @@ Model 1
 年齢
 </td>
 <td style="text-align:center;">
-0.076***
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-(0.008)
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-年齢2乗
-</td>
-<td style="text-align:center;">
-−0.001***
+0.004***
 </td>
 </tr>
 <tr>
 <td style="text-align:left;box-shadow: 0px 1px">
 </td>
 <td style="text-align:center;box-shadow: 0px 1px">
-(0.000)
+(0.001)
 </td>
 </tr>
 <tr>
@@ -1251,7 +1220,7 @@ Num.Obs.
 R2
 </td>
 <td style="text-align:center;">
-0.035
+0.007
 </td>
 </tr>
 </tbody>
@@ -1272,10 +1241,9 @@ R2
 <div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="regression_basic.html#cb282-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res),</span>
 <span id="cb282-2"><a href="regression_basic.html#cb282-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, <span class="co"># 有意水準を示す印をつける</span></span>
 <span id="cb282-3"><a href="regression_basic.html#cb282-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">coef_rename =</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>,</span>
-<span id="cb282-4"><a href="regression_basic.html#cb282-4" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb282-5"><a href="regression_basic.html#cb282-5" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>), <span class="co"># 各変数に名前をつける</span></span>
-<span id="cb282-6"><a href="regression_basic.html#cb282-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>), <span class="co"># サンプルサイズと決定係数のみ記載する</span></span>
-<span id="cb282-7"><a href="regression_basic.html#cb282-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">output =</span> <span class="st">&quot;results/regression.docx&quot;</span>) <span class="co"># 出力先のファイル名をつける</span></span></code></pre></div>
+<span id="cb282-4"><a href="regression_basic.html#cb282-4" aria-hidden="true" tabindex="-1"></a>                         <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>), <span class="co"># 各変数に名前をつける</span></span>
+<span id="cb282-5"><a href="regression_basic.html#cb282-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>), <span class="co"># サンプルサイズと決定係数のみ記載する</span></span>
+<span id="cb282-6"><a href="regression_basic.html#cb282-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">output =</span> <span class="st">&quot;results/regression.docx&quot;</span>) <span class="co"># 出力先のファイル名をつける</span></span></code></pre></div>
 <p><code>as_flex_table() %&gt;% save_as_docs(path = "xxx.docx")</code>を使っていた第5章、第6章とは少し違う点に注意。多少の手直しが必要かもしれないが、きれいな回帰分析の表をWordファイルに書き出すことができる。</p>
 
 </div>
