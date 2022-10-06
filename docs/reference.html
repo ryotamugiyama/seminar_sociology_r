@@ -352,6 +352,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li><a href="domain.html#旧制学歴と新制学歴の対応" id="toc-旧制学歴と新制学歴の対応"><span class="toc-section-number">9.2</span> 旧制学歴と新制学歴の対応</a></li>
 <li><a href="domain.html#domain_wage" id="toc-domain_wage"><span class="toc-section-number">9.3</span> 年収と労働時間から時間給を作成する</a></li>
+<li><a href="domain.html#都道府県変数の加工" id="toc-都道府県変数の加工"><span class="toc-section-number">9.4</span> 都道府県変数の加工</a>
+<ul>
+<li><a href="domain.html#都道府県にラベルをつける" id="toc-都道府県にラベルをつける"><span class="toc-section-number">9.4.1</span> 都道府県にラベルをつける</a></li>
+<li><a href="domain.html#都道府県レベルの指標を外挿する" id="toc-都道府県レベルの指標を外挿する"><span class="toc-section-number">9.4.2</span> 都道府県レベルの指標を外挿する</a></li>
+</ul></li>
 </ul></li>
 <li><a href="writepaper.html#writepaper" id="toc-writepaper"><span class="toc-section-number">10</span> 論文のまとめ方</a>
 <ul>
@@ -457,7 +462,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>本資料では基本的にすべて<code>ggplot2</code>を使って図（グラフ）を作成しているが、<code>ggplot2</code>による可視化は非常に優れており、さまざまな図を作ることができる。本資料で扱ったものにさらに工夫を重ねれば、より見やすい図を作ることができる。<code>ggplot2</code>の使い方に特化した参考文献としては以下のものが挙げられる：</p>
 <ul>
 <li>Chang, Winston. 2019. <em>R Graphics Cookbook: Practical Recipes for Visualizing Data. Second Edition.</em> O’Reilly（石井弓美子・川内崇・瀬戸山雅人訳，『Rグラフィックスクックブック：ggplot2によるグラフ作成のレシピ集』オライリー・ジャパン）．</li>
-<li>Healy, Kieran. 2019. <em>Data Visualization: A Practical Introduction.</em> Princeton University Press.（瓜生真也・江口哲史・三村喬生訳，『データ分析のためのデータ可視化入門』講談社．）<a href="reference.html#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a></li>
+<li>Healy, Kieran. 2019. <em>Data Visualization: A Practical Introduction.</em> Princeton University Press.（瓜生真也・江口哲史・三村喬生訳，『データ分析のためのデータ可視化入門』講談社．）<a href="reference.html#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a></li>
 </ul>
 </div>
 <div id="統計学計量分析を学ぶ" class="section level2" number="11.4">
@@ -500,13 +505,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li id="fn12"><p>今回のような場合を線形回帰分析 Linear regressionということもある。<a href="regression_basic.html#fnref12" class="footnote-back">↩︎</a></p></li>
 <li id="fn13"><p>正確には、係数 - 0を標準誤差で割ることでt値を求める。自由度df（N - 推定した係数の個数）のt分布のもとで、t値の絶対値が得られたt値よりも極端な値になる確率を計算したものがここで表示されているp値である。<a href="regression_basic.html#fnref13" class="footnote-back">↩︎</a></p></li>
 <li id="fn14"><p>たとえば女性は男性と同等の数学能力を持っていたとしても、男性と比べて数学を使う分野（理系など）に進みにくい傾向がある。このような傾向があると、小中学校の間は男女で数的思考力に違いがなかったとしても、高校、大学と段階が進むにつれて数学に触れる時間に差が生じ、結果、男女の数的思考力に差が生じる。こうした傾向については数多くの研究がある（たとえば、Xie, Yu and Kimberlee A. Shauman. 2005. <em>Women in Science: Career Processes and Outcomes.</em> Harvard University Press.など）。<a href="regression_advanced.html#fnref14" class="footnote-back">↩︎</a></p></li>
-<li id="fn15"><p>締切間際に書く大学の授業のレポートはまさに上から下へと順番に書いていって見直さないものの典型かもしれないが。。。<a href="writepaper.html#fnref15" class="footnote-back">↩︎</a></p></li>
-<li id="fn16"><p>つまり、映画の予告や小説の裏表紙のあらすじみたいに「さわりだけ触れている」ようなものはよくない。<a href="writepaper.html#fnref16" class="footnote-back">↩︎</a></p></li>
-<li id="fn17"><p>もちろんこれは理想であって、実際に実現するのはプロの研究者であっても難しい。<a href="writepaper.html#fnref17" class="footnote-back">↩︎</a></p></li>
-<li id="fn18"><p>ただし、論文の読者にとって自明な変数の場合はわざわざその定義までくわしく説明しないことは多い。たとえば、性別など。年齢については、年齢を連続変数として使う場合もあれば、10歳区切りなどの年齢層に区切って使う場合もあるので、どのように使うかについては説明が必要。学歴も、「最後に<strong>卒業した</strong>学校」なのか「最後に<strong>通った</strong>学校」なのか、また学歴のカテゴリ分けについても研究によって異なっているため、説明が必要。<a href="writepaper.html#fnref18" class="footnote-back">↩︎</a></p></li>
-<li id="fn19"><p>個人的には、結論での議論や考察に比べて課題が極端に長いと、せっかく行った研究のアピールポイントが削がれてしまうように感じてしまう。ただし、これについては課題を長々書くのが科学的に誠実な態度だと言う人もいて、好みがあると思う。<a href="writepaper.html#fnref19" class="footnote-back">↩︎</a></p></li>
-<li id="fn20"><p>たとえばこんなふうに。<a href="writepaper.html#fnref20" class="footnote-back">↩︎</a></p></li>
-<li id="fn21"><p><a href="https://socviz.co/">著者により原著のドラフトが公開</a>されている。<a href="reference.html#fnref21" class="footnote-back">↩︎</a></p></li>
+<li id="fn15"><p>なおここでの都道府県ごとの大学卒業者割合は2010年国勢調査より取得した。卒業者に占める大学・大学院卒割合を意味する。<a href="domain.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn16"><p>締切間際に書く大学の授業のレポートはまさに上から下へと順番に書いていって見直さないものの典型かもしれないが。。。<a href="writepaper.html#fnref16" class="footnote-back">↩︎</a></p></li>
+<li id="fn17"><p>つまり、映画の予告や小説の裏表紙のあらすじみたいに「さわりだけ触れている」ようなものはよくない。<a href="writepaper.html#fnref17" class="footnote-back">↩︎</a></p></li>
+<li id="fn18"><p>もちろんこれは理想であって、実際に実現するのはプロの研究者であっても難しい。<a href="writepaper.html#fnref18" class="footnote-back">↩︎</a></p></li>
+<li id="fn19"><p>ただし、論文の読者にとって自明な変数の場合はわざわざその定義までくわしく説明しないことは多い。たとえば、性別など。年齢については、年齢を連続変数として使う場合もあれば、10歳区切りなどの年齢層に区切って使う場合もあるので、どのように使うかについては説明が必要。学歴も、「最後に<strong>卒業した</strong>学校」なのか「最後に<strong>通った</strong>学校」なのか、また学歴のカテゴリ分けについても研究によって異なっているため、説明が必要。<a href="writepaper.html#fnref19" class="footnote-back">↩︎</a></p></li>
+<li id="fn20"><p>個人的には、結論での議論や考察に比べて課題が極端に長いと、せっかく行った研究のアピールポイントが削がれてしまうように感じてしまう。ただし、これについては課題を長々書くのが科学的に誠実な態度だと言う人もいて、好みがあると思う。<a href="writepaper.html#fnref20" class="footnote-back">↩︎</a></p></li>
+<li id="fn21"><p>たとえばこんなふうに。<a href="writepaper.html#fnref21" class="footnote-back">↩︎</a></p></li>
+<li id="fn22"><p><a href="https://socviz.co/">著者により原著のドラフトが公開</a>されている。<a href="reference.html#fnref22" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
