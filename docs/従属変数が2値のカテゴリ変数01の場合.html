@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>7.3 従属変数が2値のカテゴリ変数（0/1）の場合 | Rによる社会調査データ分析の手引き</title>
+  <meta name="description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="7.3 従属変数が2値のカテゴリ変数（0/1）の場合 | Rによる社会調査データ分析の手引き" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="7.3 従属変数が2値のカテゴリ変数（0/1）の場合 | Rによる社会調査データ分析の手引き" />
+  
+  <meta name="twitter:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  
+
+<meta name="author" content="麦山 亮太（学習院大学法学部政治学科）/ Ryota Mugiyama (Department of Political Studies, Gakushuin University)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="独立変数がカテゴリ変数の場合.html"/>
+<link rel="next" href="発展非線形の関連.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Rによる社会調査データ分析の手引き</a></li>
+
+<li class="divider"></li>
+<li><a href="index.html#まえがき" id="toc-まえがき">まえがき</a></li>
+<li><a href="plan.html#plan" id="toc-plan"><span class="toc-section-number">1</span> 研究計画を立てる</a>
+<ul>
+<li><a href="研究計画とは.html#研究計画とは" id="toc-研究計画とは"><span class="toc-section-number">1.1</span> 研究計画とは</a></li>
+<li><a href="plan_background.html#plan_background" id="toc-plan_background"><span class="toc-section-number">1.2</span> 研究背景</a>
+<ul>
+<li><a href="plan_background.html#問題背景1段落程度" id="toc-問題背景1段落程度"><span class="toc-section-number">1.2.1</span> 問題背景（1段落程度）</a></li>
+<li><a href="plan_background.html#先行研究の整理13段落程度" id="toc-先行研究の整理13段落程度"><span class="toc-section-number">1.2.2</span> 先行研究の整理（1–3段落程度）</a></li>
+</ul></li>
+<li><a href="plan_question.html#plan_question" id="toc-plan_question"><span class="toc-section-number">1.3</span> 研究目的・問い</a>
+<ul>
+<li><a href="plan_question.html#研究目的問い12段落程度" id="toc-研究目的問い12段落程度"><span class="toc-section-number">1.3.1</span> 研究目的・問い（1–2段落程度）</a></li>
+<li><a href="plan_question.html#仮説1段落程度あれば" id="toc-仮説1段落程度あれば"><span class="toc-section-number">1.3.2</span> 仮説（1段落程度、あれば）</a></li>
+</ul></li>
+<li><a href="方法.html#方法" id="toc-方法"><span class="toc-section-number">1.4</span> 方法</a>
+<ul>
+<li><a href="方法.html#データ" id="toc-データ"><span class="toc-section-number">1.4.1</span> データ</a></li>
+<li><a href="方法.html#分析対象" id="toc-分析対象"><span class="toc-section-number">1.4.2</span> 分析対象</a></li>
+<li><a href="方法.html#使用する変数" id="toc-使用する変数"><span class="toc-section-number">1.4.3</span> 使用する変数</a></li>
+<li><a href="方法.html#分析方法" id="toc-分析方法"><span class="toc-section-number">1.4.4</span> 分析方法</a></li>
+</ul></li>
+<li><a href="参考文献.html#参考文献" id="toc-参考文献"><span class="toc-section-number">1.5</span> 参考文献</a></li>
+<li><a href="使用する調査データの選定.html#使用する調査データの選定" id="toc-使用する調査データの選定"><span class="toc-section-number">1.6</span> 使用する調査データの選定</a>
+<ul>
+<li><a href="使用する調査データの選定.html#個票データとは何か" id="toc-個票データとは何か"><span class="toc-section-number">1.6.1</span> 個票データとは何か</a></li>
+<li><a href="使用する調査データの選定.html#jgss" id="toc-jgss"><span class="toc-section-number">1.6.2</span> JGSS</a></li>
+<li><a href="使用する調査データの選定.html#jgss以外の日本の社会調査" id="toc-jgss以外の日本の社会調査"><span class="toc-section-number">1.6.3</span> JGSS以外の日本の社会調査</a></li>
+<li><a href="使用する調査データの選定.html#日本以外の社会調査データ" id="toc-日本以外の社会調査データ"><span class="toc-section-number">1.6.4</span> 日本以外の社会調査データ</a></li>
+</ul></li>
+<li><a href="先行研究を探す.html#先行研究を探す" id="toc-先行研究を探す"><span class="toc-section-number">1.7</span> 先行研究を探す</a>
+<ul>
+<li><a href="先行研究を探す.html#査読つき論文" id="toc-査読つき論文"><span class="toc-section-number">1.7.1</span> 査読つき論文</a></li>
+<li><a href="先行研究を探す.html#研究の流れをつかむ" id="toc-研究の流れをつかむ"><span class="toc-section-number">1.7.2</span> 研究の流れをつかむ</a></li>
+<li><a href="先行研究を探す.html#書籍" id="toc-書籍"><span class="toc-section-number">1.7.3</span> 書籍</a></li>
+<li><a href="先行研究を探す.html#英語論文" id="toc-英語論文"><span class="toc-section-number">1.7.4</span> 英語論文</a></li>
+</ul></li>
+</ul></li>
+<li><a href="preparation.html#preparation" id="toc-preparation"><span class="toc-section-number">2</span> RとRStudioの下準備</a>
+<ul>
+<li><a href="rとrstudioのインストール方法.html#rとrstudioのインストール方法" id="toc-rとrstudioのインストール方法"><span class="toc-section-number">2.1</span> RとRStudioのインストール方法</a></li>
+<li><a href="データ分析のワークフロー.html#データ分析のワークフロー" id="toc-データ分析のワークフロー"><span class="toc-section-number">2.2</span> データ分析のワークフロー</a></li>
+<li><a href="preparation_project.html#preparation_project" id="toc-preparation_project"><span class="toc-section-number">2.3</span> プロジェクトの作成</a>
+<ul>
+<li><a href="preparation_project.html#rstudioを開いてみよう" id="toc-rstudioを開いてみよう"><span class="toc-section-number">2.3.1</span> RStudioを開いてみよう</a></li>
+<li><a href="preparation_project.html#授業用のフォルダを作ろう" id="toc-授業用のフォルダを作ろう"><span class="toc-section-number">2.3.2</span> 授業用のフォルダを作ろう</a></li>
+<li><a href="preparation_project.html#ファイルパスと作業ディレクトリ" id="toc-ファイルパスと作業ディレクトリ"><span class="toc-section-number">2.3.3</span> ファイルパスと作業ディレクトリ</a></li>
+<li><a href="preparation_project.html#プロジェクト作成の手順" id="toc-プロジェクト作成の手順"><span class="toc-section-number">2.3.4</span> プロジェクト作成の手順</a></li>
+</ul></li>
+<li><a href="基本的な操作.html#基本的な操作" id="toc-基本的な操作"><span class="toc-section-number">2.4</span> 基本的な操作</a>
+<ul>
+<li><a href="基本的な操作.html#スクリプトファイル" id="toc-スクリプトファイル"><span class="toc-section-number">2.4.1</span> スクリプトファイル</a></li>
+<li><a href="基本的な操作.html#スクリプトファイルを保存する" id="toc-スクリプトファイルを保存する"><span class="toc-section-number">2.4.2</span> スクリプトファイルを保存する</a></li>
+<li><a href="基本的な操作.html#パッケージのインストール" id="toc-パッケージのインストール"><span class="toc-section-number">2.4.3</span> パッケージのインストール</a></li>
+</ul></li>
+<li><a href="rの基礎.html#rの基礎" id="toc-rの基礎"><span class="toc-section-number">2.5</span> Rの基礎</a></li>
+</ul></li>
+<li><a href="import.html#import" id="toc-import"><span class="toc-section-number">3</span> データの読み込み</a>
+<ul>
+<li><a href="rのサンプルデータの読み込み.html#rのサンプルデータの読み込み" id="toc-rのサンプルデータの読み込み"><span class="toc-section-number">3.1</span> Rのサンプルデータの読み込み</a></li>
+<li><a href="作業ディレクトリ上のデータの読み込み.html#作業ディレクトリ上のデータの読み込み" id="toc-作業ディレクトリ上のデータの読み込み"><span class="toc-section-number">3.2</span> 作業ディレクトリ上のデータの読み込み</a>
+<ul>
+<li><a href="作業ディレクトリ上のデータの読み込み.html#import_dir" id="toc-import_dir"><span class="toc-section-number">3.2.1</span> データを置く場所を作る</a></li>
+<li><a href="作業ディレクトリ上のデータの読み込み.html#csv形式のファイル" id="toc-csv形式のファイル"><span class="toc-section-number">3.2.2</span> csv形式のファイル</a></li>
+<li><a href="作業ディレクトリ上のデータの読み込み.html#xlsx形式のファイル" id="toc-xlsx形式のファイル"><span class="toc-section-number">3.2.3</span> xlsx形式のファイル</a></li>
+<li><a href="作業ディレクトリ上のデータの読み込み.html#import_rds" id="toc-import_rds"><span class="toc-section-number">3.2.4</span> rds形式のファイル</a></li>
+<li><a href="作業ディレクトリ上のデータの読み込み.html#sav形式のファイル" id="toc-sav形式のファイル"><span class="toc-section-number">3.2.5</span> sav形式のファイル</a></li>
+<li><a href="作業ディレクトリ上のデータの読み込み.html#dta形式のファイル" id="toc-dta形式のファイル"><span class="toc-section-number">3.2.6</span> dta形式のファイル</a></li>
+<li><a href="作業ディレクトリ上のデータの読み込み.html#文字コードに関わる問題" id="toc-文字コードに関わる問題"><span class="toc-section-number">3.2.7</span> 文字コードに関わる問題</a></li>
+</ul></li>
+<li><a href="ウェブ上のデータの読み込み.html#ウェブ上のデータの読み込み" id="toc-ウェブ上のデータの読み込み"><span class="toc-section-number">3.3</span> ウェブ上のデータの読み込み</a></li>
+</ul></li>
+<li><a href="handling.html#handling" id="toc-handling"><span class="toc-section-number">4</span> データの加工</a>
+<ul>
+<li><a href="本資料で用いるデータ.html#本資料で用いるデータ" id="toc-本資料で用いるデータ"><span class="toc-section-number">4.1</span> 本資料で用いるデータ</a></li>
+<li><a href="データ加工のステップ.html#データ加工のステップ" id="toc-データ加工のステップ"><span class="toc-section-number">4.2</span> データ加工のステップ</a></li>
+<li><a href="変数の作成.html#変数の作成" id="toc-変数の作成"><span class="toc-section-number">4.3</span> 変数の作成</a>
+<ul>
+<li><a href="変数の作成.html#変数の型カテゴリ変数と連続変数" id="toc-変数の型カテゴリ変数と連続変数"><span class="toc-section-number">4.3.1</span> 変数の型（カテゴリ変数と連続変数）</a></li>
+<li><a href="変数の作成.html#新たな変数をつくるmutate" id="toc-新たな変数をつくるmutate"><span class="toc-section-number">4.3.2</span> 新たな変数をつくる：mutate()</a></li>
+<li><a href="変数の作成.html#条件の指定if_else" id="toc-条件の指定if_else"><span class="toc-section-number">4.3.3</span> 条件の指定：if_else()</a></li>
+<li><a href="変数の作成.html#複数条件の指定case_when" id="toc-複数条件の指定case_when"><span class="toc-section-number">4.3.4</span> 複数条件の指定：case_when()</a></li>
+<li><a href="変数の作成.html#カテゴリ変数へ変換factor" id="toc-カテゴリ変数へ変換factor"><span class="toc-section-number">4.3.5</span> カテゴリ変数へ変換：factor()</a></li>
+<li><a href="変数の作成.html#必要な列のみ抽出select" id="toc-必要な列のみ抽出select"><span class="toc-section-number">4.3.6</span> 必要な列のみ抽出：select()</a></li>
+</ul></li>
+<li><a href="handling-tips.html#handling-tips" id="toc-handling-tips"><span class="toc-section-number">4.4</span> 変数の作成についてのtips</a>
+<ul>
+<li><a href="handling-tips.html#カテゴリをまとめる" id="toc-カテゴリをまとめる"><span class="toc-section-number">4.4.1</span> カテゴリをまとめる</a></li>
+<li><a href="handling-tips.html#複数の変数を組み合わせた変数を作る" id="toc-複数の変数を組み合わせた変数を作る"><span class="toc-section-number">4.4.2</span> 複数の変数を組み合わせた変数を作る</a></li>
+<li><a href="handling-tips.html#均等な順序を仮定して連続変数とする" id="toc-均等な順序を仮定して連続変数とする"><span class="toc-section-number">4.4.3</span> 均等な順序を仮定して連続変数とする</a></li>
+<li><a href="handling-tips.html#無回答非該当わからないなどをnaに" id="toc-無回答非該当わからないなどをnaに"><span class="toc-section-number">4.4.4</span> 無回答、非該当、「わからない」などをNAに</a></li>
+<li><a href="handling-tips.html#カテゴリ変数の区間の中点をとって連続変数とする" id="toc-カテゴリ変数の区間の中点をとって連続変数とする"><span class="toc-section-number">4.4.5</span> カテゴリ変数の区間の中点をとって連続変数とする</a></li>
+</ul></li>
+<li><a href="をつなげてコマンドをまとめる.html#をつなげてコマンドをまとめる" id="toc-をつなげてコマンドをまとめる"><span class="toc-section-number">4.5</span> %&gt;%をつなげてコマンドをまとめる</a></li>
+<li><a href="handling_sample.html#handling_sample" id="toc-handling_sample"><span class="toc-section-number">4.6</span> サンプルの限定</a>
+<ul>
+<li><a href="handling_sample.html#該当するケースだけを残すfilter" id="toc-該当するケースだけを残すfilter"><span class="toc-section-number">4.6.1</span> 該当するケースだけを残す：filter()</a></li>
+<li><a href="handling_sample.html#欠損値の扱い" id="toc-欠損値の扱い"><span class="toc-section-number">4.6.2</span> 欠損値の扱い</a></li>
+<li><a href="handling_sample.html#外れ値の扱い" id="toc-外れ値の扱い"><span class="toc-section-number">4.6.3</span> 外れ値の扱い</a></li>
+<li><a href="handling_sample.html#分析用データを書き出す" id="toc-分析用データを書き出す"><span class="toc-section-number">4.6.4</span> 分析用データを書き出す</a></li>
+</ul></li>
+<li><a href="データの追加発展.html#データの追加発展" id="toc-データの追加発展"><span class="toc-section-number">4.7</span> データの追加（発展）</a></li>
+</ul></li>
+<li><a href="descriptives.html#descriptives" id="toc-descriptives"><span class="toc-section-number">5</span> 1変数の集計</a>
+<ul>
+<li><a href="連続変数を集計する.html#連続変数を集計する" id="toc-連続変数を集計する"><span class="toc-section-number">5.1</span> 連続変数を集計する</a>
+<ul>
+<li><a href="連続変数を集計する.html#descriptives_summarize" id="toc-descriptives_summarize"><span class="toc-section-number">5.1.1</span> 要約統計量の計算</a></li>
+</ul></li>
+<li><a href="descriptives_ggplot.html#descriptives_ggplot" id="toc-descriptives_ggplot"><span class="toc-section-number">5.2</span> 分布をみる</a>
+<ul>
+<li><a href="descriptives_ggplot.html#ヒストグラムとggplotの導入" id="toc-ヒストグラムとggplotの導入"><span class="toc-section-number">5.2.1</span> ヒストグラムとggplotの導入</a></li>
+<li><a href="descriptives_ggplot.html#ggplotの設定日本語関係" id="toc-ggplotの設定日本語関係"><span class="toc-section-number">5.2.2</span> ggplotの設定（日本語関係）</a></li>
+<li><a href="descriptives_ggplot.html#軸に名前をつける" id="toc-軸に名前をつける"><span class="toc-section-number">5.2.3</span> 軸に名前をつける</a></li>
+</ul></li>
+<li><a href="カテゴリ変数の集計.html#カテゴリ変数の集計" id="toc-カテゴリ変数の集計"><span class="toc-section-number">5.3</span> カテゴリ変数の集計</a>
+<ul>
+<li><a href="カテゴリ変数の集計.html#descriptives_table" id="toc-descriptives_table"><span class="toc-section-number">5.3.1</span> 度数の確認</a></li>
+<li><a href="カテゴリ変数の集計.html#分布の可視化棒グラフ" id="toc-分布の可視化棒グラフ"><span class="toc-section-number">5.3.2</span> 分布の可視化：棒グラフ</a></li>
+</ul></li>
+<li><a href="記述統計量の一覧表を作る.html#記述統計量の一覧表を作る" id="toc-記述統計量の一覧表を作る"><span class="toc-section-number">5.4</span> 記述統計量の一覧表を作る</a>
+<ul>
+<li><a href="記述統計量の一覧表を作る.html#グループ別の記述統計量の一覧表" id="toc-グループ別の記述統計量の一覧表"><span class="toc-section-number">5.4.1</span> グループ別の記述統計量の一覧表</a></li>
+</ul></li>
+<li><a href="結果をファイルに書き出す.html#結果をファイルに書き出す" id="toc-結果をファイルに書き出す"><span class="toc-section-number">5.5</span> 結果をファイルに書き出す</a>
+<ul>
+<li><a href="結果をファイルに書き出す.html#結果を入れるためのフォルダを作る" id="toc-結果を入れるためのフォルダを作る"><span class="toc-section-number">5.5.1</span> 結果を入れるためのフォルダを作る</a></li>
+<li><a href="結果をファイルに書き出す.html#descriptive_export_ggplot" id="toc-descriptive_export_ggplot"><span class="toc-section-number">5.5.2</span> ggplotで作成した図を書き出す</a></li>
+<li><a href="結果をファイルに書き出す.html#descriptive_export_tbl_summary" id="toc-descriptive_export_tbl_summary"><span class="toc-section-number">5.5.3</span> 記述統計の一覧表をwordに書き出す</a></li>
+</ul></li>
+</ul></li>
+<li><a href="tabulate.html#tabulate" id="toc-tabulate"><span class="toc-section-number">6</span> 2変数の集計</a>
+<ul>
+<li><a href="tabulate_summarize.html#tabulate_summarize" id="toc-tabulate_summarize"><span class="toc-section-number">6.1</span> 平均値の比較</a>
+<ul>
+<li><a href="tabulate_summarize.html#基本" id="toc-基本"><span class="toc-section-number">6.1.1</span> 基本</a></li>
+<li><a href="tabulate_summarize.html#棒グラフによる可視化" id="toc-棒グラフによる可視化"><span class="toc-section-number">6.1.2</span> 棒グラフによる可視化</a></li>
+<li><a href="tabulate_summarize.html#複数カテゴリの組み合わせ" id="toc-複数カテゴリの組み合わせ"><span class="toc-section-number">6.1.3</span> 複数カテゴリの組み合わせ</a></li>
+</ul></li>
+<li><a href="分布の比較.html#分布の比較" id="toc-分布の比較"><span class="toc-section-number">6.2</span> 分布の比較</a></li>
+<li><a href="クロス集計表.html#クロス集計表" id="toc-クロス集計表"><span class="toc-section-number">6.3</span> クロス集計表</a>
+<ul>
+<li><a href="クロス集計表.html#基本-1" id="toc-基本-1"><span class="toc-section-number">6.3.1</span> 基本</a></li>
+<li><a href="クロス集計表.html#カイ2乗検定発展" id="toc-カイ2乗検定発展"><span class="toc-section-number">6.3.2</span> カイ2乗検定（発展）</a></li>
+<li><a href="クロス集計表.html#きれいなクロス表をつくる---gtsummarytbl_cross" id="toc-きれいなクロス表をつくる---gtsummarytbl_cross"><span class="toc-section-number">6.3.3</span> きれいなクロス表をつくる - gtsummary::tbl_cross()</a></li>
+</ul></li>
+<li><a href="クロス集計表を図示する.html#クロス集計表を図示する" id="toc-クロス集計表を図示する"><span class="toc-section-number">6.4</span> クロス集計表を図示する</a></li>
+<li><a href="散布図.html#散布図" id="toc-散布図"><span class="toc-section-number">6.5</span> 散布図</a>
+<ul>
+<li><a href="散布図.html#散布図をみる" id="toc-散布図をみる"><span class="toc-section-number">6.5.1</span> 散布図をみる</a></li>
+<li><a href="散布図.html#カテゴリごとに散布図を分ける" id="toc-カテゴリごとに散布図を分ける"><span class="toc-section-number">6.5.2</span> カテゴリごとに散布図を分ける</a></li>
+<li><a href="散布図.html#相関係数" id="toc-相関係数"><span class="toc-section-number">6.5.3</span> 相関係数</a></li>
+</ul></li>
+<li><a href="変数集計のときのくふう.html#変数集計のときのくふう" id="toc-変数集計のときのくふう"><span class="toc-section-number">6.6</span> 2変数集計のときのくふう</a>
+<ul>
+<li><a href="変数集計のときのくふう.html#値が粗い連続変数を扱う" id="toc-値が粗い連続変数を扱う"><span class="toc-section-number">6.6.1</span> 値が粗い連続変数を扱う</a></li>
+<li><a href="変数集計のときのくふう.html#カテゴリが多いクロス集計表を扱う" id="toc-カテゴリが多いクロス集計表を扱う"><span class="toc-section-number">6.6.2</span> カテゴリが多いクロス集計表を扱う</a></li>
+</ul></li>
+<li><a href="結果をファイルに書き出す-1.html#結果をファイルに書き出す-1" id="toc-結果をファイルに書き出す-1"><span class="toc-section-number">6.7</span> 結果をファイルに書き出す</a>
+<ul>
+<li><a href="結果をファイルに書き出す-1.html#ggplotで作成した図を書き出す" id="toc-ggplotで作成した図を書き出す"><span class="toc-section-number">6.7.1</span> ggplotで作成した図を書き出す</a></li>
+<li><a href="結果をファイルに書き出す-1.html#クロス集計表をwordファイルに書き出す" id="toc-クロス集計表をwordファイルに書き出す"><span class="toc-section-number">6.7.2</span> クロス集計表をwordファイルに書き出す</a></li>
+</ul></li>
+</ul></li>
+<li><a href="regression_basic.html#regression_basic" id="toc-regression_basic"><span class="toc-section-number">7</span> 回帰分析の基礎</a>
+<ul>
+<li><a href="回帰分析とは何か.html#回帰分析とは何か" id="toc-回帰分析とは何か"><span class="toc-section-number">7.1</span> 回帰分析とは何か</a>
+<ul>
+<li><a href="回帰分析とは何か.html#散布図を眺める" id="toc-散布図を眺める"><span class="toc-section-number">7.1.1</span> 散布図を眺める</a></li>
+<li><a href="回帰分析とは何か.html#回帰式の読み方" id="toc-回帰式の読み方"><span class="toc-section-number">7.1.2</span> 回帰式の読み方</a></li>
+<li><a href="回帰分析とは何か.html#発展回帰式の決め方最小二乗法" id="toc-発展回帰式の決め方最小二乗法"><span class="toc-section-number">7.1.3</span> （発展）回帰式の決め方：最小二乗法</a></li>
+<li><a href="回帰分析とは何か.html#母集団における関係の推測" id="toc-母集団における関係の推測"><span class="toc-section-number">7.1.4</span> 母集団における関係の推測</a></li>
+</ul></li>
+<li><a href="独立変数がカテゴリ変数の場合.html#独立変数がカテゴリ変数の場合" id="toc-独立変数がカテゴリ変数の場合"><span class="toc-section-number">7.2</span> 独立変数がカテゴリ変数の場合</a>
+<ul>
+<li><a href="独立変数がカテゴリ変数の場合.html#値のカテゴリ" id="toc-値のカテゴリ"><span class="toc-section-number">7.2.1</span> 2値のカテゴリ</a></li>
+<li><a href="独立変数がカテゴリ変数の場合.html#値以上のカテゴリ" id="toc-値以上のカテゴリ"><span class="toc-section-number">7.2.2</span> 3値以上のカテゴリ</a></li>
+<li><a href="独立変数がカテゴリ変数の場合.html#変数がfactorであれば自動でカテゴリとして投入される" id="toc-変数がfactorであれば自動でカテゴリとして投入される"><span class="toc-section-number">7.2.3</span> 変数がfactorであれば自動でカテゴリとして投入される</a></li>
+</ul></li>
+<li><a href="従属変数が2値のカテゴリ変数01の場合.html#従属変数が2値のカテゴリ変数01の場合" id="toc-従属変数が2値のカテゴリ変数01の場合"><span class="toc-section-number">7.3</span> 従属変数が2値のカテゴリ変数（0/1）の場合</a>
+<ul>
+<li><a href="従属変数が2値のカテゴリ変数01の場合.html#クロス集計と比較しながら結果をみる" id="toc-クロス集計と比較しながら結果をみる"><span class="toc-section-number">7.3.1</span> クロス集計と比較しながら結果をみる</a></li>
+<li><a href="従属変数が2値のカテゴリ変数01の場合.html#散布図と比較しながら結果をみる" id="toc-散布図と比較しながら結果をみる"><span class="toc-section-number">7.3.2</span> 散布図と比較しながら結果をみる</a></li>
+<li><a href="従属変数が2値のカテゴリ変数01の場合.html#注意点" id="toc-注意点"><span class="toc-section-number">7.3.3</span> 注意点</a></li>
+<li><a href="従属変数が2値のカテゴリ変数01の場合.html#発展ロバスト標準誤差" id="toc-発展ロバスト標準誤差"><span class="toc-section-number">7.3.4</span> （発展）ロバスト標準誤差</a></li>
+</ul></li>
+<li><a href="発展非線形の関連.html#発展非線形の関連" id="toc-発展非線形の関連"><span class="toc-section-number">7.4</span> （発展）非線形の関連</a>
+<ul>
+<li><a href="発展非線形の関連.html#regression_basic_log" id="toc-regression_basic_log"><span class="toc-section-number">7.4.1</span> 対数変換</a></li>
+<li><a href="発展非線形の関連.html#次関数型" id="toc-次関数型"><span class="toc-section-number">7.4.2</span> 2次関数型</a></li>
+<li><a href="発展非線形の関連.html#回帰分析の結果をきれいに表示する" id="toc-回帰分析の結果をきれいに表示する"><span class="toc-section-number">7.4.3</span> 回帰分析の結果をきれいに表示する</a></li>
+</ul></li>
+<li><a href="regression_basic_export.html#regression_basic_export" id="toc-regression_basic_export"><span class="toc-section-number">7.5</span> 結果をファイルに書き出す</a></li>
+</ul></li>
+<li><a href="regression_advanced.html#regression_advanced" id="toc-regression_advanced"><span class="toc-section-number">8</span> 回帰分析の活用</a>
+<ul>
+<li><a href="重回帰分析.html#重回帰分析" id="toc-重回帰分析"><span class="toc-section-number">8.1</span> 重回帰分析</a></li>
+<li><a href="交絡要因の統制.html#交絡要因の統制" id="toc-交絡要因の統制"><span class="toc-section-number">8.2</span> 交絡要因の統制</a>
+<ul>
+<li><a href="交絡要因の統制.html#交絡とは何か" id="toc-交絡とは何か"><span class="toc-section-number">8.2.1</span> 交絡とは何か</a></li>
+<li><a href="交絡要因の統制.html#結果の比較と解釈" id="toc-結果の比較と解釈"><span class="toc-section-number">8.2.2</span> 結果の比較と解釈</a></li>
+</ul></li>
+<li><a href="媒介分析要因分解.html#媒介分析要因分解" id="toc-媒介分析要因分解"><span class="toc-section-number">8.3</span> 媒介分析／要因分解</a></li>
+<li><a href="回帰分析の実際.html#回帰分析の実際" id="toc-回帰分析の実際"><span class="toc-section-number">8.4</span> 回帰分析の実際</a></li>
+<li><a href="結果をファイルに書き出す-2.html#結果をファイルに書き出す-2" id="toc-結果をファイルに書き出す-2"><span class="toc-section-number">8.5</span> 結果をファイルに書き出す</a></li>
+</ul></li>
+<li><a href="domain.html#domain" id="toc-domain"><span class="toc-section-number">9</span> 社会学のデータ分析でよくある処理</a>
+<ul>
+<li><a href="ssm職業小分類を大分類にまとめる.html#ssm職業小分類を大分類にまとめる" id="toc-ssm職業小分類を大分類にまとめる"><span class="toc-section-number">9.1</span> SSM職業小分類を大分類にまとめる</a>
+<ul>
+<li><a href="ssm職業小分類を大分類にまとめる.html#jgssの場合" id="toc-jgssの場合"><span class="toc-section-number">9.1.1</span> JGSSの場合</a></li>
+<li><a href="ssm職業小分類を大分類にまとめる.html#ssmの場合" id="toc-ssmの場合"><span class="toc-section-number">9.1.2</span> SSMの場合</a></li>
+</ul></li>
+<li><a href="旧制学歴と新制学歴の対応.html#旧制学歴と新制学歴の対応" id="toc-旧制学歴と新制学歴の対応"><span class="toc-section-number">9.2</span> 旧制学歴と新制学歴の対応</a></li>
+<li><a href="domain_wage.html#domain_wage" id="toc-domain_wage"><span class="toc-section-number">9.3</span> 年収と労働時間から時間給を作成する</a></li>
+<li><a href="都道府県変数の加工.html#都道府県変数の加工" id="toc-都道府県変数の加工"><span class="toc-section-number">9.4</span> 都道府県変数の加工</a>
+<ul>
+<li><a href="都道府県変数の加工.html#都道府県にラベルをつける" id="toc-都道府県にラベルをつける"><span class="toc-section-number">9.4.1</span> 都道府県にラベルをつける</a></li>
+<li><a href="都道府県変数の加工.html#都道府県レベルの指標を外挿する" id="toc-都道府県レベルの指標を外挿する"><span class="toc-section-number">9.4.2</span> 都道府県レベルの指標を外挿する</a></li>
+</ul></li>
+</ul></li>
+<li><a href="writepaper.html#writepaper" id="toc-writepaper"><span class="toc-section-number">10</span> 論文のまとめ方</a>
+<ul>
+<li><a href="全体の構成.html#全体の構成" id="toc-全体の構成"><span class="toc-section-number">10.1</span> 全体の構成</a></li>
+<li><a href="タイトル.html#タイトル" id="toc-タイトル"><span class="toc-section-number">10.2</span> タイトル</a></li>
+<li><a href="要約.html#要約" id="toc-要約"><span class="toc-section-number">10.3</span> 要約</a></li>
+<li><a href="序論.html#序論" id="toc-序論"><span class="toc-section-number">10.4</span> 序論</a>
+<ul>
+<li><a href="序論.html#問題背景1段落" id="toc-問題背景1段落"><span class="toc-section-number">10.4.1</span> 問題背景（1段落）</a></li>
+<li><a href="序論.html#先行研究の検討12段落" id="toc-先行研究の検討12段落"><span class="toc-section-number">10.4.2</span> 先行研究の検討（1–2段落）</a></li>
+<li><a href="序論.html#研究目的と方法12段落" id="toc-研究目的と方法12段落"><span class="toc-section-number">10.4.3</span> 研究目的と方法（1–2段落）</a></li>
+</ul></li>
+<li><a href="先行研究理論枠組み仮説.html#先行研究理論枠組み仮説" id="toc-先行研究理論枠組み仮説"><span class="toc-section-number">10.5</span> 先行研究・理論枠組み・仮説</a></li>
+<li><a href="方法-1.html#方法-1" id="toc-方法-1"><span class="toc-section-number">10.6</span> 方法</a>
+<ul>
+<li><a href="方法-1.html#データと分析対象" id="toc-データと分析対象"><span class="toc-section-number">10.6.1</span> データと分析対象</a></li>
+<li><a href="方法-1.html#変数" id="toc-変数"><span class="toc-section-number">10.6.2</span> 変数</a></li>
+<li><a href="方法-1.html#分析手法" id="toc-分析手法"><span class="toc-section-number">10.6.3</span> 分析手法</a></li>
+</ul></li>
+<li><a href="結果.html#結果" id="toc-結果"><span class="toc-section-number">10.7</span> 結果</a>
+<ul>
+<li><a href="結果.html#記述的分析" id="toc-記述的分析"><span class="toc-section-number">10.7.1</span> 記述的分析</a></li>
+<li><a href="結果.html#回帰分析" id="toc-回帰分析"><span class="toc-section-number">10.7.2</span> 回帰分析</a></li>
+</ul></li>
+<li><a href="結論.html#結論" id="toc-結論"><span class="toc-section-number">10.8</span> 結論</a>
+<ul>
+<li><a href="結論.html#背景と目的の再確認1段落" id="toc-背景と目的の再確認1段落"><span class="toc-section-number">10.8.1</span> 背景と目的の再確認（1段落）</a></li>
+<li><a href="結論.html#分析結果の要約と解釈23段落" id="toc-分析結果の要約と解釈23段落"><span class="toc-section-number">10.8.2</span> 分析結果の要約と解釈（2–3段落）</a></li>
+<li><a href="結論.html#示唆12段落" id="toc-示唆12段落"><span class="toc-section-number">10.8.3</span> 示唆（1–2段落）</a></li>
+<li><a href="結論.html#課題限界1段落" id="toc-課題限界1段落"><span class="toc-section-number">10.8.4</span> 課題・限界（1段落）</a></li>
+<li><a href="結論.html#まとめ1段落任意" id="toc-まとめ1段落任意"><span class="toc-section-number">10.8.5</span> まとめ（1段落、任意）</a></li>
+</ul></li>
+<li><a href="謝辞.html#謝辞" id="toc-謝辞"><span class="toc-section-number">10.9</span> 謝辞</a></li>
+<li><a href="参考文献-1.html#参考文献-1" id="toc-参考文献-1"><span class="toc-section-number">10.10</span> 参考文献</a></li>
+<li><a href="形式上の注意事項.html#形式上の注意事項" id="toc-形式上の注意事項"><span class="toc-section-number">10.11</span> 形式上の注意事項</a>
+<ul>
+<li><a href="形式上の注意事項.html#推奨するwordの設定" id="toc-推奨するwordの設定"><span class="toc-section-number">10.11.1</span> 推奨するWordの設定</a></li>
+<li><a href="形式上の注意事項.html#引用の形式" id="toc-引用の形式"><span class="toc-section-number">10.11.2</span> 引用の形式</a></li>
+<li><a href="形式上の注意事項.html#図表の形式" id="toc-図表の形式"><span class="toc-section-number">10.11.3</span> 図表の形式</a></li>
+<li><a href="形式上の注意事項.html#脚注" id="toc-脚注"><span class="toc-section-number">10.11.4</span> 脚注</a></li>
+<li><a href="形式上の注意事項.html#参考文献の記載例" id="toc-参考文献の記載例"><span class="toc-section-number">10.11.5</span> 参考文献の記載例</a></li>
+</ul></li>
+</ul></li>
+<li><a href="reference.html#reference" id="toc-reference"><span class="toc-section-number">11</span> さらなる学習のための参考文献</a>
+<ul>
+<li><a href="実証研究の基礎スキル.html#実証研究の基礎スキル" id="toc-実証研究の基礎スキル"><span class="toc-section-number">11.1</span> 実証研究の基礎スキル</a></li>
+<li><a href="rの使い方.html#rの使い方" id="toc-rの使い方"><span class="toc-section-number">11.2</span> Rの使い方</a></li>
+<li><a href="ggplotの解説.html#ggplotの解説" id="toc-ggplotの解説"><span class="toc-section-number">11.3</span> ggplotの解説</a></li>
+<li><a href="統計学計量分析を学ぶ.html#統計学計量分析を学ぶ" id="toc-統計学計量分析を学ぶ"><span class="toc-section-number">11.4</span> 統計学・計量分析を学ぶ</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rによる社会調査データ分析の手引き</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="従属変数が2値のカテゴリ変数01の場合" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> 従属変数が2値のカテゴリ変数（0/1）の場合</h2>
+<div id="クロス集計と比較しながら結果をみる" class="section level3" number="7.3.1">
+<h3><span class="header-section-number">7.3.1</span> クロス集計と比較しながら結果をみる</h3>
+<p>たとえば、性別によってこの1年間に職場での訓練（OJTとよぶ）を受ける率が異なっているかどうかを知りたいとする。これも今までと同じように回帰分析の枠組みで扱うことができる。</p>
+<p>まず、OJTを受けたならば1、受けていないならば0を取る変数があるとする。この値の平均をとれば、OJTを受けた人の割合に一致する。たとえば以下の2つを比較してみよう。</p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb247-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb247-2"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb247-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(gender, ojt)) <span class="sc">%&gt;%</span> </span>
+<span id="cb247-3"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb247-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop.table</span>(<span class="at">margin =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb247-4"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb247-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##       ojt
+## gender     0     1
+##   女性 0.674 0.326
+##   男性 0.592 0.408</code></pre>
+<p>ついで、性別ごとにojtの平均値を計算し、図に書いてみる。</p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb249-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb249-2"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb249-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span> </span>
+<span id="cb249-3"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb249-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_ojt =</span> <span class="fu">mean</span>(ojt, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb249-4"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb249-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y =</span> mean_ojt, <span class="at">fill =</span> gender)) <span class="sc">+</span> </span>
+<span id="cb249-5"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb249-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb249-6"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb249-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(mean_ojt, <span class="at">digit =</span> <span class="dv">3</span>)), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb249-7"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb249-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb249-8"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb249-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-179-1.png" width="672" /></p>
+<p>ここで示された値は、上記クロス表の「1」のほうに示されている行%、すなわち「OJTを受けた人の割合」に一致している。男性は女性とくらべてOJTを受けた割合が8.2%ポイント高いということがわかる。</p>
+<p>回帰式を推定してみよう。</p>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb250-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender)</span>
+<span id="cb250-2"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb250-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = ojt ~ gender, data = piaac)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.4079 -0.4079 -0.3263  0.5921  0.6737 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.32632    0.01343   24.30  &lt; 2e-16 ***
+## gender男性   0.08157    0.01846    4.42 1.03e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4811 on 2726 degrees of freedom
+## Multiple R-squared:  0.007116,   Adjusted R-squared:  0.006751 
+## F-statistic: 19.54 on 1 and 2726 DF,  p-value: 1.026e-05</code></pre>
+<p>「gender男性」と書かれている行が、女性と比べて男性が何ポイントOJTを受ける割合が高いのかを示している。この値が、ちょうど先ほどの棒グラフの男性と女性の割合（平均値）の差に一致していることを確認しよう。係数の見方も、標準誤差も、p値も、すべて今までの回帰分析と同じである。</p>
+</div>
+<div id="散布図と比較しながら結果をみる" class="section level3" number="7.3.2">
+<h3><span class="header-section-number">7.3.2</span> 散布図と比較しながら結果をみる</h3>
+<p>もちろん、年齢などの連続変数を独立変数（X）として使うこともできる。たとえば、横軸に年齢、縦軸にOJTをとった散布図を考えてみよう。ここでは重なっているほど点が大きくなるように調整している。</p>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb252-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb252-2"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb252-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(age, ojt) <span class="sc">%&gt;%</span> </span>
+<span id="cb252-3"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb252-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb252-4"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb252-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> ojt)) <span class="sc">+</span> </span>
+<span id="cb252-5"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb252-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> n), <span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb252-6"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb252-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">10</span>)) <span class="sc">+</span> </span>
+<span id="cb252-7"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb252-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">weight =</span> n), <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb252-8"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb252-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;age&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-182-1.png" width="672" /></p>
+<p>縦軸のOJTは0または1しかとらないので、点はy = 1またはy = 0の位置のどちらかに描かれる。推定される回帰式は、この散布図全体の傾向を要約するような線として表される。実際に、回帰式を推定してみよう。</p>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb255-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> age)</span>
+<span id="cb255-2"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb255-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = ojt ~ age, data = piaac)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.4416 -0.3842 -0.3230  0.6043  0.7076 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.5372265  0.0383580  14.006  &lt; 2e-16 ***
+## age         -0.0038253  0.0008492  -4.504 6.94e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4811 on 2726 degrees of freedom
+## Multiple R-squared:  0.007388,   Adjusted R-squared:  0.007024 
+## F-statistic: 20.29 on 1 and 2726 DF,  p-value: 6.936e-06</code></pre>
+<p>年齢（age）の係数はマイナスであり、年齢が1歳高いと、OJTを受けている割合が0.004ポイント（0.4 %ポイント）低いということがわかる。</p>
+</div>
+<div id="注意点" class="section level3" number="7.3.3">
+<h3><span class="header-section-number">7.3.3</span> 注意点</h3>
+<p>分析に先立ち、従属変数とする2値のカテゴリ変数のどちらを1とし、どちらを0とするかは自分であらかじめ決めておいて、数値型に変換しておく必要がある（カテゴリ変数のままでは分析できない）。</p>
+<p>なお、従属変数が2値のカテゴリ変数の場合にはロジスティック回帰分析がよく使われる。ただし、今紹介した（ふつうの）回帰分析と比べるとやや解釈が難しい。また上記の（ふつうの）回帰分析を使っても、たいていの場合はそんなに間違った結論にはならないので、学部レベルではこれで十分である。もちろん、関心のある人は積極的にチャレンジしてみてほしい。</p>
+</div>
+<div id="発展ロバスト標準誤差" class="section level3" number="7.3.4">
+<h3><span class="header-section-number">7.3.4</span> （発展）ロバスト標準誤差</h3>
+<p>上記のように従属変数が2値の場合の線形回帰分析のことを<strong>線形確率モデル linear probability model</strong>と呼ぶことがある。線形確率モデルの場合は、誤差が正規分布するという仮定に反し、普通の標準誤差は誤った値になってしまうことが知られている。そこで、こうした不均一分散の問題に対処するために、ロバスト標準誤差を用いることが推奨されている。</p>
+<p>ここではロバスト標準誤差のことについてはくわしく説明しないが、推定の仕方だけ書いておく。<code>estimatr::lm_robust()</code>で、ロバスト標準誤差を得ることができる。使い方は<a href="https://keita43a.hatenablog.com/entry/2019/04/17/232548#%E4%B8%8D%E5%9D%87%E4%B8%80%E5%88%86%E6%95%A3%E3%81%A7%E3%81%AE%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90">このページ</a>にくわしい。まずは、<code>estimatr</code>パッケージを読み込む。</p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb257-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(estimatr)</span></code></pre></div>
+<p>そのうえで、以下のように、ふつうの回帰分析と同じように実行すればよい。違うのは、関数が<code>lm()</code>ではなくて<code>lm_robust()</code>となっている点だけだ。</p>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb258-1" aria-hidden="true" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender)</span>
+<span id="cb258-2"><a href="従属変数が2値のカテゴリ変数01の場合.html#cb258-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm_robust(formula = ojt ~ gender, data = piaac)
+## 
+## Standard error type:  HC2 
+## 
+## Coefficients:
+##             Estimate Std. Error t value   Pr(&gt;|t|) CI Lower CI Upper   DF
+## (Intercept)  0.32632    0.01309  24.929 9.569e-124  0.30066   0.3520 2726
+## gender男性   0.08157    0.01840   4.432  9.698e-06  0.04548   0.1177 2726
+## 
+## Multiple R-squared:  0.007116 ,  Adjusted R-squared:  0.006751 
+## F-statistic: 19.64 on 1 and 2726 DF,  p-value: 9.698e-06</code></pre>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="独立変数がカテゴリ変数の場合.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="発展非線形の関連.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
