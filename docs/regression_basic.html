@@ -266,7 +266,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li><a href="descriptives.html#descriptives_gtsummary" id="toc-descriptives_gtsummary"><span class="toc-section-number">5.4</span> 記述統計量の一覧表を作る</a>
 <ul>
-<li><a href="descriptives.html#グループ別の記述統計量の一覧表" id="toc-グループ別の記述統計量の一覧表"><span class="toc-section-number">5.4.1</span> グループ別の記述統計量の一覧表</a></li>
+<li><a href="descriptives.html#記述統計量の一覧表" id="toc-記述統計量の一覧表"><span class="toc-section-number">5.4.1</span> 記述統計量の一覧表</a></li>
+<li><a href="descriptives.html#グループ別の記述統計量の一覧表" id="toc-グループ別の記述統計量の一覧表"><span class="toc-section-number">5.4.2</span> グループ別の記述統計量の一覧表</a></li>
 </ul></li>
 <li><a href="descriptives.html#結果をファイルに書き出す" id="toc-結果をファイルに書き出す"><span class="toc-section-number">5.5</span> 結果をファイルに書き出す</a>
 <ul>
@@ -334,9 +335,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><a href="regression_basic.html#regression_basic_log" id="toc-regression_basic_log"><span class="toc-section-number">7.4.1</span> 対数変換</a></li>
 <li><a href="regression_basic.html#次関数型" id="toc-次関数型"><span class="toc-section-number">7.4.2</span> 2次関数型</a></li>
-<li><a href="regression_basic.html#回帰分析の結果をきれいに表示する" id="toc-回帰分析の結果をきれいに表示する"><span class="toc-section-number">7.4.3</span> 回帰分析の結果をきれいに表示する</a></li>
 </ul></li>
-<li><a href="regression_basic.html#regression_basic_export" id="toc-regression_basic_export"><span class="toc-section-number">7.5</span> 結果をファイルに書き出す</a></li>
+<li><a href="regression_basic.html#regression_modelsummary" id="toc-regression_modelsummary"><span class="toc-section-number">7.5</span> 回帰分析の結果をきれいに表示する</a></li>
+<li><a href="regression_basic.html#regression_basic_export" id="toc-regression_basic_export"><span class="toc-section-number">7.6</span> 結果をファイルに書き出す</a></li>
 </ul></li>
 <li><a href="regression_advanced.html#regression_advanced" id="toc-regression_advanced"><span class="toc-section-number">8</span> 回帰分析の活用</a>
 <ul>
@@ -1057,9 +1058,9 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
 <p>となる。すなわち、<span class="math inline">\(x\)</span>が1単位増加したときの<span class="math inline">\(y\)</span>の増加量は、もともとの<span class="math inline">\(x\)</span>の値によって異なるということになる。回帰式の形状や結果の読み方は次のようになる：</p>
 <table>
 <colgroup>
-<col width="14%" />
-<col width="45%" />
-<col width="40%" />
+<col width="22%" />
+<col width="41%" />
+<col width="36%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -1120,8 +1121,9 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
 <div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="regression_basic.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> piaac, <span class="fu">log</span>(wage) <span class="sc">~</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
 </div>
 </div>
-<div id="回帰分析の結果をきれいに表示する" class="section level3" number="7.4.3">
-<h3><span class="header-section-number">7.4.3</span> 回帰分析の結果をきれいに表示する</h3>
+</div>
+<div id="regression_modelsummary" class="section level2" number="7.5">
+<h2><span class="header-section-number">7.5</span> 回帰分析の結果をきれいに表示する</h2>
 <p>先ほどの回帰分析の結果をもう少しきれいに表示したいと思うかもしれない。このようなときに活躍するのが<code>modelsummary</code>パッケージである。</p>
 <div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="regression_basic.html#cb303-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span></code></pre></div>
 <p>では、実際に使ってみよう。<code>modelsummary(list(model))</code>（modelという部分には、すでに保存しておいた回帰分析の結果を入れる）というのが最低限のコマンド。</p>
@@ -1302,9 +1304,8 @@ R2
 </table>
 <p>このように各変数がそれぞれ何の変数なのか名前をつけてやると、読む人にとって見やすい表になる。</p>
 </div>
-</div>
-<div id="regression_basic_export" class="section level2" number="7.5">
-<h2><span class="header-section-number">7.5</span> 結果をファイルに書き出す</h2>
+<div id="regression_basic_export" class="section level2" number="7.6">
+<h2><span class="header-section-number">7.6</span> 結果をファイルに書き出す</h2>
 <p>第5章、第6章と同様、回帰分析についても結果をwordに書き出すことができる。<code>flextable</code>パッケージを読み込んでおいた状態で（この章では冒頭ですでに読み込んでおいた）、上記の<code>modelsummary()</code>のコードに<code>output = "xxx.docx"</code>というようなオプションをつけることで、wordファイルに結果を書き出すことができる。</p>
 <div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="regression_basic.html#cb306-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res),</span>
 <span id="cb306-2"><a href="regression_basic.html#cb306-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, <span class="co"># 有意水準を示す印をつける</span></span>
