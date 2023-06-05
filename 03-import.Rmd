@@ -4,9 +4,9 @@
 
 内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project...」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。
 
-本章では以下の3つのパッケージを使用するので、あらかじめパッケージを読み込んでおこう。
+本章では以下の3つのパッケージを使用するので、あらかじめ以下のコードを実行して、パッケージを読み込んでおこう。
 
-```{r, include = FALSE}
+```{r}
 library(tidyverse)
 library(readxl)
 library(haven)
@@ -103,6 +103,11 @@ Edit→Preferences...（ない場合は、Tools→Global options...）を選択�
 dir.create("data")
 ```
 
+いま、フォルダの状態は次のようになっているはずだ：
+
+![フォルダのなかみ](images/folder_data.png)
+
+
 ```{r, eval = FALSE, echo = FALSE}
 #githubにアップロードする用のデータを準備
 download.file(url = file_url, destfile = "data/census_pop_original.csv")
@@ -167,7 +172,7 @@ df <- read_excel("data/census_pop.xlsx")
 
 ### rds形式のファイル {#import_rds}
 
-`census_pop.rds`というふうに、末尾に.rdsとついているのはRびデータ形式である。rds形式で保存されたデータは、Rで読み込むうえではもっとも便利な形式である（が、rds形式で社会調査の個票データが提供されることはまれ）。`readr::read_rds()`でrds形式のファイルを読み込むことができる。
+`census_pop.rds`というふうに、末尾に.rdsとついているのはRのデータ形式である。rds形式で保存されたデータは、Rで読み込むうえではもっとも便利な形式である（が、rds形式で社会調査の個票データが提供されることはまれ）。`readr::read_rds()`でrds形式のファイルを読み込むことができる。
 
 ```{r, eval = FALSE}
 df <- read_rds("data/census_pop.rds")
@@ -228,5 +233,3 @@ df <- read_csv(file_url)
 ```
 
 なお、先ほど紹介した各種形式の「census_pop」のデータは、今ダウンロードしてきたデータに少し手を加えて麦山が作成した練習用データである。
-
-## データ・アーカイブ（SSJDA, ICPSR）からダウンロードしたデータの読み込み
