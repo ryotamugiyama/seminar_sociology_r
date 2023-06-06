@@ -327,25 +327,27 @@ piaac %>%
 ```{r}
 piaac %>% 
   with(table(gender, ojt)) %>% 
-  prop.table() %>% 
+  prop.table(margin = 1) %>% 
   round(digits = 3)
 ```
 
 ```{r, include = FALSE}
 counttable <- piaac %>% 
   count(gender, ojt)
+counttable$n[1]
 ```
 
 次に、このojtという変数の平均値を計算してみよう。するとどのようになるだろうか？まず、女性について平均値を計算するときの式は次のとおりだ：
 
+
 $$
-\frac{`r counttable$n[1]` \times 0 + `r counttable$n[2]` \times 1}{`r counttable$n[1]` + `r counttable$n[2]`} = `round(counttable$n[2] / (counttable$n[2] + counttable$n[1]), digit = 3)`
+\frac{`r counttable$n[1]` \times 0 + `r counttable$n[2]` \times 1}{`r counttable$n[1]` + `r counttable$n[2]`} = `r round(counttable$n[2] / (counttable$n[2] + counttable$n[1]), digit = 3)`
 $$
 
 同じようにして、男性の平均値は次のように計算できる。
 
 $$
-\frac{`r counttable$n[3]` \times 0 + `r counttable$n[4]` \times 1}{`r counttable$n[3]` + `r counttable$n[4]`} = `round(counttable$n[4] / (counttable$n[3] + counttable$n[4]), digit = 3)`
+\frac{`r counttable$n[3]` \times 0 + `r counttable$n[4]` \times 1}{`r counttable$n[3]` + `r counttable$n[4]`} = `r round(counttable$n[4] / (counttable$n[3] + counttable$n[4]), digit = 3)`
 $$
 
 これらの値は、上記クロス表の「1」のほうに示されている行%、すなわち「OJTを受けた人の割合」に一致している。つまり、ある二値変数（0/1）の平均値をとると、その二値変数が1を取る割合（行%）の値と一致するということだ。
@@ -501,7 +503,7 @@ summary(reg_res)
 なお、対数変換した変数を新たに作成しなくても、次のように書くことで、回帰分析のコード中で対数変換を行う事ができる。以下でも同じ結果を得ることができる（結果は省略）。
 
 ```{r, results="hide"}
-lm(data = piaac, log(wage) ~ age)
+lm(data = piaac, log(wage) ~ numeracy)
 ```
 
 ```{r, echo = FALSE}

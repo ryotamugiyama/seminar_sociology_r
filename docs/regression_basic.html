@@ -730,19 +730,19 @@ y = 1339 + 856x
 <p>クロス集計表の行%を見てみよう。</p>
 <div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="regression_basic.html#cb269-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb269-2"><a href="regression_basic.html#cb269-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(gender, ojt)) <span class="sc">%&gt;%</span> </span>
-<span id="cb269-3"><a href="regression_basic.html#cb269-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop.table</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb269-3"><a href="regression_basic.html#cb269-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop.table</span>(<span class="at">margin =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb269-4"><a href="regression_basic.html#cb269-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##       ojt
 ## gender     0     1
-##   女性 0.317 0.154
-##   男性 0.313 0.216</code></pre>
+##   女性 0.674 0.326
+##   男性 0.592 0.408</code></pre>
 <p>次に、このojtという変数の平均値を計算してみよう。するとどのようになるだろうか？まず、女性について平均値を計算するときの式は次のとおりだ：</p>
 <p><span class="math display">\[
-\frac{865 \times 0 + 419 \times 1}{865 + 419} = `round(counttable$n[2] / (counttable$n[2] + counttable$n[1]), digit = 3)`
+\frac{865 \times 0 + 419 \times 1}{865 + 419} = 0.326
 \]</span></p>
 <p>同じようにして、男性の平均値は次のように計算できる。</p>
 <p><span class="math display">\[
-\frac{855 \times 0 + 589 \times 1}{855 + 589} = `round(counttable$n[4] / (counttable$n[3] + counttable$n[4]), digit = 3)`
+\frac{855 \times 0 + 589 \times 1}{855 + 589} = 0.408
 \]</span></p>
 <p>これらの値は、上記クロス表の「1」のほうに示されている行%、すなわち「OJTを受けた人の割合」に一致している。つまり、ある二値変数（0/1）の平均値をとると、その二値変数が1を取る割合（行%）の値と一致するということだ。</p>
 <p>このことを図にして表してみよう。</p>
@@ -910,7 +910,7 @@ a^y = x \leftrightarrow y = \log_a x
 ## Multiple R-squared:  0.1164, Adjusted R-squared:  0.1161 
 ## F-statistic: 359.3 on 1 and 2726 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>なお、対数変換した変数を新たに作成しなくても、次のように書くことで、回帰分析のコード中で対数変換を行う事ができる。以下でも同じ結果を得ることができる（結果は省略）。</p>
-<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="regression_basic.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> piaac, <span class="fu">log</span>(wage) <span class="sc">~</span> age)</span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="regression_basic.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> piaac, <span class="fu">log</span>(wage) <span class="sc">~</span> numeracy)</span></code></pre></div>
 <p>numeracyの係数は、数的思考力スコアが1ポイント高いと、対数賃金が0.004ポイント高いということを意味する。対数をとった場合、（微小な）変化は%の変化に一致する（後述）。すなわち、数的思考力スコアが1歳高いと、賃金が0.4%高いということを意味している。</p>
 </div>
 <div id="対数を使った場合の回帰分析なぜになるのか" class="section level4" number="7.4.1.3">
