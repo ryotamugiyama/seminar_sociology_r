@@ -192,11 +192,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="preparation.html#スクリプトファイルを保存する" id="toc-スクリプトファイルを保存する"><span class="toc-section-number">2.4.2</span> スクリプトファイルを保存する</a></li>
 <li><a href="preparation.html#パッケージのインストール" id="toc-パッケージのインストール"><span class="toc-section-number">2.4.3</span> パッケージのインストール</a></li>
 </ul></li>
-<li><a href="preparation.html#rの基礎準備中" id="toc-rの基礎準備中"><span class="toc-section-number">2.5</span> Rの基礎（準備中）</a>
+<li><a href="preparation.html#その他の設定" id="toc-その他の設定"><span class="toc-section-number">2.5</span> その他の設定</a></li>
+<li><a href="preparation.html#rの基礎準備中" id="toc-rの基礎準備中"><span class="toc-section-number">2.6</span> Rの基礎（準備中）</a>
 <ul>
-<li><a href="preparation.html#オブジェクト" id="toc-オブジェクト"><span class="toc-section-number">2.5.1</span> オブジェクト</a></li>
-<li><a href="preparation.html#データフレーム" id="toc-データフレーム"><span class="toc-section-number">2.5.2</span> データフレーム</a></li>
-<li><a href="preparation.html#行観察と列変数" id="toc-行観察と列変数"><span class="toc-section-number">2.5.3</span> 行（観察）と列（変数）</a></li>
+<li><a href="preparation.html#オブジェクト" id="toc-オブジェクト"><span class="toc-section-number">2.6.1</span> オブジェクト</a></li>
+<li><a href="preparation.html#データフレーム" id="toc-データフレーム"><span class="toc-section-number">2.6.2</span> データフレーム</a></li>
+<li><a href="preparation.html#行観察と列変数" id="toc-行観察と列変数"><span class="toc-section-number">2.6.3</span> 行（観察）と列（変数）</a></li>
 </ul></li>
 </ul></li>
 <li><a href="import.html#import" id="toc-import"><span class="toc-section-number">3</span> データの読み込み</a>
@@ -443,13 +444,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>本章では、Rを使ってデータを読み込む方法を説明する。</p>
 <p>内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project…」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。</p>
 <p>本章では以下の3つのパッケージを使用するので、あらかじめ以下のコードを実行して、パッケージを読み込んでおこう。</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="import.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb12-2"><a href="import.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb12-3"><a href="import.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="import.html#cb12-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb12-2"><a href="import.html#cb12-2" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb12-3"><a href="import.html#cb12-3" tabindex="-1"></a><span class="fu">library</span>(haven)</span></code></pre></div>
 <div id="rのサンプルデータの読み込み" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Rのサンプルデータの読み込み</h2>
 <p>Rにはいくつかのサンプルデータがあらかじめ入っており、これを読み込んで試しに分析することもできる。ここでは例としてAnscombe’s Quartetのデータをみてみよう：</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="import.html#cb13-1" aria-hidden="true" tabindex="-1"></a>anscombe</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="import.html#cb13-1" tabindex="-1"></a>anscombe</span></code></pre></div>
 <pre><code>##    x1 x2 x3 x4    y1   y2    y3    y4
 ## 1  10 10 10  8  8.04 9.14  7.46  6.58
 ## 2   8  8  8  8  6.95 8.14  6.77  5.76
@@ -463,28 +464,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10  7  7  7  8  4.82 7.26  6.42  7.91
 ## 11  5  5  5  8  5.68 4.74  5.73  6.89</code></pre>
 <p>このデータに<code>ans</code>という名前をつけて格納する。</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="import.html#cb15-1" aria-hidden="true" tabindex="-1"></a>ans <span class="ot">&lt;-</span> anscombe</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="import.html#cb15-1" tabindex="-1"></a>ans <span class="ot">&lt;-</span> anscombe</span></code></pre></div>
 <p>このようにデータフレームをオブジェクトに入れると、右上の「Environment」のウインドウに次のような表示が現れる。</p>
 <p><img src="images/ans.png" /></p>
 <p>11 obs. of 8 variablesと書かれている。11 obs.というのは、「このデータフレームは全部で11行ありますよ」ということを示しており、8 variablesというのは、「このデータフレームには8つの列がありますよ」ということを示している。実際にどのようなデータが読み込まれているかは、上記画像のansあたりをクリックするか、次のコードを実行すると新しいタブが開き、そこにデータの中身が表示される。</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="import.html#cb16-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">view</span>(ans)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="import.html#cb16-1" tabindex="-1"></a> <span class="fu">view</span>(ans)</span></code></pre></div>
 <p><img src="images/df_view.png" /></p>
 <p>このようなデータが読み込まれているはずだ。</p>
 <p>その他にも、データのうち一部を表示したり、変数の一覧を表示したりするコマンドがある。ここではコードを紹介するにとどめるので、各自で実行してみてほしい。</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="import.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ans)</span>
-<span id="cb17-2"><a href="import.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(ans)</span>
-<span id="cb17-3"><a href="import.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ans)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="import.html#cb17-1" tabindex="-1"></a><span class="fu">head</span>(ans)</span>
+<span id="cb17-2"><a href="import.html#cb17-2" tabindex="-1"></a><span class="fu">colnames</span>(ans)</span>
+<span id="cb17-3"><a href="import.html#cb17-3" tabindex="-1"></a><span class="fu">glimpse</span>(ans)</span></code></pre></div>
 </div>
 <div id="パイプ演算子または" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> パイプ演算子（%&gt;%または|&gt;）</h2>
 <p><code>tidyverse</code>ではパイプ演算子（<code>%&gt;%</code>）を使って命令を書くことができる。たとえばデータの中身を確認する<code>view()</code>コマンドであれば、次のように書くことができる。</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="import.html#cb18-1" aria-hidden="true" tabindex="-1"></a>ans <span class="sc">%&gt;%</span> <span class="fu">view</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="import.html#cb18-1" tabindex="-1"></a>ans <span class="sc">%&gt;%</span> <span class="fu">view</span>()</span></code></pre></div>
 <p><code>%&gt;%</code>演算子を改行して書いてもよい。</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="import.html#cb19-1" aria-hidden="true" tabindex="-1"></a>ans <span class="sc">%&gt;%</span> <span class="co"># starデータフレームに対して、</span></span>
-<span id="cb19-2"><a href="import.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">view</span>() <span class="co"># viewを実行</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="import.html#cb19-1" tabindex="-1"></a>ans <span class="sc">%&gt;%</span> <span class="co"># starデータフレームに対して、</span></span>
+<span id="cb19-2"><a href="import.html#cb19-2" tabindex="-1"></a>  <span class="fu">view</span>() <span class="co"># viewを実行</span></span></code></pre></div>
 <p>データの上からいくつかの行を見る<code>head()</code>コマンドであれば、次のように書くことができる：</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="import.html#cb20-1" aria-hidden="true" tabindex="-1"></a>ans <span class="sc">%&gt;%</span> <span class="co"># starデータフレームに対して、</span></span>
-<span id="cb20-2"><a href="import.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>() <span class="co"># headを実行</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="import.html#cb20-1" tabindex="-1"></a>ans <span class="sc">%&gt;%</span> <span class="co"># starデータフレームに対して、</span></span>
+<span id="cb20-2"><a href="import.html#cb20-2" tabindex="-1"></a>  <span class="fu">head</span>() <span class="co"># headを実行</span></span></code></pre></div>
 <pre><code>##   x1 x2 x3 x4   y1   y2    y3   y4
 ## 1 10 10 10  8 8.04 9.14  7.46 6.58
 ## 2  8  8  8  8 6.95 8.14  6.77 5.76
@@ -492,22 +493,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4  9  9  9  8 8.81 8.77  7.11 8.84
 ## 5 11 11 11  8 8.33 9.26  7.81 8.47
 ## 6 14 14 14  8 9.96 8.10  8.84 7.04</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="import.html#cb22-1" aria-hidden="true" tabindex="-1"></a>ans <span class="sc">%&gt;%</span> </span>
-<span id="cb22-2"><a href="import.html#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="co"># 上から3行のみ表示</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="import.html#cb22-1" tabindex="-1"></a>ans <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="import.html#cb22-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="co"># 上から3行のみ表示</span></span></code></pre></div>
 <pre><code>##   x1 x2 x3 x4   y1   y2    y3   y4
 ## 1 10 10 10  8 8.04 9.14  7.46 6.58
 ## 2  8  8  8  8 6.95 8.14  6.77 5.76
 ## 3 13 13 13  8 7.58 8.74 12.74 7.71</code></pre>
 <p>ちなみに、Macであれば<code>Control + Shift + m</code>で、Windowsであれば<code>Ctrl + Shift + m</code>でパイプ演算子を出力することができる。</p>
 <p>ちなみに、最近RStudioを新しくインストールした場合だと、上記のショートカットキーを入力すると<code>|&gt;</code>というコマンドが出力されるかもしれない。ふつうに使う分だとどちらを使ってもとくに支障は生じない。試しに以下の2種類を実行して、どちらも同じものが出力されることを確かめてみよう。</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="import.html#cb24-1" aria-hidden="true" tabindex="-1"></a>ans <span class="sc">|&gt;</span> </span>
-<span id="cb24-2"><a href="import.html#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="import.html#cb24-1" tabindex="-1"></a>ans <span class="sc">|&gt;</span> </span>
+<span id="cb24-2"><a href="import.html#cb24-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##   x1 x2 x3 x4   y1   y2    y3   y4
 ## 1 10 10 10  8 8.04 9.14  7.46 6.58
 ## 2  8  8  8  8 6.95 8.14  6.77 5.76
 ## 3 13 13 13  8 7.58 8.74 12.74 7.71</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="import.html#cb26-1" aria-hidden="true" tabindex="-1"></a>ans <span class="sc">%&gt;%</span> </span>
-<span id="cb26-2"><a href="import.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="import.html#cb26-1" tabindex="-1"></a>ans <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="import.html#cb26-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##   x1 x2 x3 x4   y1   y2    y3   y4
 ## 1 10 10 10  8 8.04 9.14  7.46 6.58
 ## 2  8  8  8  8 6.95 8.14  6.77 5.76
@@ -524,43 +525,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>作業ディレクトリとして設定したフォルダを開き、右クリック→「新規フォルダ」（Mac）または「新規作成」→「フォルダ」を選択（Windows）。フォルダの名前は「data」としよう。</li>
 <li>以下のコードを実行する。</li>
 </ol>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="import.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;data&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="import.html#cb28-1" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;data&quot;</span>)</span></code></pre></div>
 <p>いま、フォルダの状態は次のようになっているはずだ：</p>
-<div class="figure">
-<img src="images/folder_data.png" alt="" />
-<p class="caption">フォルダのなかみ</p>
+<div class="float">
+<img src="images/folder_data.png" alt="フォルダのなかみ" />
+<div class="figcaption">フォルダのなかみ</div>
 </div>
 <p>フォルダを作ったら、下記のコードを実行して練習用のデータをダウンロードしよう（コピー&amp;ペーストでよい）。コードを実行すると、先ほど作った「data」フォルダにダウンロードしたデータが入っていることを確認しよう。</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="import.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.csv&quot;</span>, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop.csv&quot;</span>)</span>
-<span id="cb29-2"><a href="import.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.xlsx&quot;</span>, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop.xlsx&quot;</span>)</span>
-<span id="cb29-3"><a href="import.html#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.rds&quot;</span>, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop.rds&quot;</span>)</span>
-<span id="cb29-4"><a href="import.html#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.sav&quot;</span>, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop.sav&quot;</span>)</span>
-<span id="cb29-5"><a href="import.html#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.dta&quot;</span>, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop.dta&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="import.html#cb29-1" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.csv&quot;</span>, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop.csv&quot;</span>)</span>
+<span id="cb29-2"><a href="import.html#cb29-2" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.xlsx&quot;</span>, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop.xlsx&quot;</span>)</span>
+<span id="cb29-3"><a href="import.html#cb29-3" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.rds&quot;</span>, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop.rds&quot;</span>)</span>
+<span id="cb29-4"><a href="import.html#cb29-4" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.sav&quot;</span>, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop.sav&quot;</span>)</span>
+<span id="cb29-5"><a href="import.html#cb29-5" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.dta&quot;</span>, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop.dta&quot;</span>)</span></code></pre></div>
 </div>
 <div id="csv形式のファイル" class="section level3" number="3.3.2">
 <h3><span class="header-section-number">3.3.2</span> csv形式のファイル</h3>
 <p><code>example.csv</code>というふうに、末尾に.csvとついているのはcsv形式といって、一つひとつの値をカンマで区切った形式である。<code>readr::read_csv()</code>でcsv形式のファイルを読み込むことができる。<code>readr</code>というのは<code>tidyverse</code>パッケージを読み込むと読み込まれるパッケージの一つである。</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="import.html#cb30-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/census_pop.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="import.html#cb30-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/census_pop.csv&quot;</span>)</span></code></pre></div>
 </div>
 <div id="xlsx形式のファイル" class="section level3" number="3.3.3">
 <h3><span class="header-section-number">3.3.3</span> xlsx形式のファイル</h3>
 <p><code>census_pop.xlsx</code>というふうに、末尾に.xlsxとついている（古いExcel形式だと.xls）のはMicrosoft Excelのデータ形式である。<code>readxl::read_excel()</code>でxlsx形式のファイルを読み込むことができる。<code>readxl</code>は冒頭で読み込んだパッケージである。</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="import.html#cb31-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;data/census_pop.xlsx&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="import.html#cb31-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;data/census_pop.xlsx&quot;</span>)</span></code></pre></div>
 </div>
 <div id="import_rds" class="section level3" number="3.3.4">
 <h3><span class="header-section-number">3.3.4</span> rds形式のファイル</h3>
 <p><code>census_pop.rds</code>というふうに、末尾に.rdsとついているのはRのデータ形式である。rds形式で保存されたデータは、Rで読み込むうえではもっとも便利な形式である（が、rds形式で社会調査の個票データが提供されることはまれ）。<code>readr::read_rds()</code>でrds形式のファイルを読み込むことができる。</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="import.html#cb32-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/census_pop.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="import.html#cb32-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/census_pop.rds&quot;</span>)</span></code></pre></div>
 </div>
 <div id="sav形式のファイル" class="section level3" number="3.3.5">
 <h3><span class="header-section-number">3.3.5</span> sav形式のファイル</h3>
 <p><code>census_pop.sav</code>というふうに、末尾に.savとついているのはSPSSという統計ソフトのデータ形式である。SSJDAなどからデータを借りた場合にはSPSS形式であることがほとんどである。<code>haven::read_sav()</code>でsav形式のファイルを読み込むことができる。<code>haven</code>は冒頭で読み込んだパッケージである。</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="import.html#cb33-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">&quot;data/census_pop.sav&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="import.html#cb33-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">&quot;data/census_pop.sav&quot;</span>)</span></code></pre></div>
 </div>
 <div id="dta形式のファイル" class="section level3" number="3.3.6">
 <h3><span class="header-section-number">3.3.6</span> dta形式のファイル</h3>
 <p><code>example.dta</code>というふうに、末尾に.dtaとついているのはStataという統計ソフトのデータ形式である。<code>haven::read_dta()</code>でdta形式のファイルを読み込むことができる。</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="import.html#cb34-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">&quot;data/census_pop.dta&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="import.html#cb34-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">&quot;data/census_pop.dta&quot;</span>)</span></code></pre></div>
 </div>
 <div id="文字コードに関わる問題" class="section level3" number="3.3.7">
 <h3><span class="header-section-number">3.3.7</span> 文字コードに関わる問題</h3>
@@ -570,9 +571,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ウェブ上のデータの読み込み" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> ウェブ上のデータの読み込み</h2>
 <p>ウェブサイト上にExcel形式のファイルやcsv形式のファイルがアップロードされている場合、それを直接読み込んでくることができる。たとえば、<a href="https://www.e-stat.go.jp/stat-search/files?page=1&amp;layout=datalist&amp;toukei=00200521&amp;tstat=000001011777&amp;cycle=0&amp;tclass1=000001094741&amp;result_page=1&amp;tclass2val=0">e-Stat上にアップロードされている国勢調査の主要時系列データ</a>のうち、「年齢（５歳階級），男女別人口－全国（大正９年～平成27年）」のデータを読み込んでみよう。先ほどの文字コード絡みの問題があるため、<code>read_csv()</code>に少しくふうを加えている。</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="import.html#cb35-1" aria-hidden="true" tabindex="-1"></a>file_url <span class="ot">&lt;-</span> <span class="st">&quot;https://www.e-stat.go.jp/stat-search/file-download?statInfId=000031524030&amp;fileKind=1&quot;</span></span>
-<span id="cb35-2"><a href="import.html#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-3"><a href="import.html#cb35-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file_url, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">&quot;shift-jis&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="import.html#cb35-1" tabindex="-1"></a>file_url <span class="ot">&lt;-</span> <span class="st">&quot;https://www.e-stat.go.jp/stat-search/file-download?statInfId=000031524030&amp;fileKind=1&quot;</span></span>
+<span id="cb35-2"><a href="import.html#cb35-2" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="import.html#cb35-3" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file_url, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">&quot;shift-jis&quot;</span>))</span></code></pre></div>
 <pre><code>## Rows: 406 Columns: 7</code></pre>
 <pre><code>## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -582,11 +583,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <p>Windowsユーザーの場合は以下で大丈夫かもしれない（未確認）。</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="import.html#cb39-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file_url)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="import.html#cb39-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file_url)</span></code></pre></div>
 <p>ただし、何度もアクセスするのは当該ウェブサイトのサーバーに負荷をかけてしまう。頻繁に更新されるようなファイルでなければ、自分のパソコン上にダウンロードしたほうがよいだろう。<code>download.file()</code>でファイルをダウンロードできる。</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="import.html#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> file_url, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop_original.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="import.html#cb40-1" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> file_url, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop_original.csv&quot;</span>)</span></code></pre></div>
 <p>ダウンロードしたデータは、これまでと同じように、csvやexcelなどの形式に対応するかたちで読み込んでやればよい。</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="import.html#cb41-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/census_pop_original.csv&quot;</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">&quot;shift-jis&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="import.html#cb41-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/census_pop_original.csv&quot;</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">&quot;shift-jis&quot;</span>))</span></code></pre></div>
 <pre><code>## Rows: 406 Columns: 7</code></pre>
 <pre><code>## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -596,7 +597,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 <p>Windowsユーザーの場合は以下で大丈夫かもしれない（未確認）。</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="import.html#cb45-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file_url)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="import.html#cb45-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file_url)</span></code></pre></div>
 <p>なお、先ほど紹介した各種形式の「census_pop」のデータは、今ダウンロードしてきたデータに少し手を加えて麦山が作成した練習用データである。</p>
 
 </div>
