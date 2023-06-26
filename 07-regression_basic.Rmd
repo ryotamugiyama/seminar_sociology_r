@@ -737,3 +737,14 @@ modelsummary(list(reg_res),
 ```
 
 `as_flex_table() %>% save_as_docs(path = "xxx.docx")`を使っていた第5章、第6章とは少し違う点に注意。多少の手直しが必要かもしれないが、きれいな回帰分析の表をWordファイルに書き出すことができる。
+
+また、Excelファイルに書き出すことも可能である。この場合は、末尾の「.docx」の部分を「.xlsx」に変えればよい。ただし、Excelファイルの場合は少し余分な列などが入ってしまうので、適宜手直しが必要となる。
+
+```{r}
+modelsummary(list(reg_res),
+         stars = TRUE, # 有意水準を示す印をつける
+         coef_rename = c("(Intercept)" = "切片",
+                         "age" = "年齢"), # 各変数に名前をつける
+         gof_map = c("nobs", "r.squared"), # サンプルサイズと決定係数のみ記載する
+         output = "results/regression.xlsx") # 出力先のファイル名をつける
+```
