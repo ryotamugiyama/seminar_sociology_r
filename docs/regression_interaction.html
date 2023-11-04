@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 14 さらなる学習のための参考文献 | Rによる社会調査データ分析の手引き</title>
+  <title>Chapter 9 交互作用（作成中） | Rによる社会調査データ分析の手引き</title>
   <meta name="description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 14 さらなる学習のための参考文献 | Rによる社会調査データ分析の手引き" />
+  <meta property="og:title" content="Chapter 9 交互作用（作成中） | Rによる社会調査データ分析の手引き" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 14 さらなる学習のための参考文献 | Rによる社会調査データ分析の手引き" />
+  <meta name="twitter:title" content="Chapter 9 交互作用（作成中） | Rによる社会調査データ分析の手引き" />
   
   <meta name="twitter:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="presentation.html"/>
-
+<link rel="prev" href="regression_advanced.html"/>
+<link rel="next" href="logit.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -503,108 +503,710 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reference" class="section level1 hasAnchor" number="14">
-<h1><span class="header-section-number">Chapter 14</span> さらなる学習のための参考文献<a href="reference.html#reference" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>学部レベルを念頭において、学習のために役立つだろう参考文献をリストする。</p>
-<div id="実証研究の基礎スキル" class="section level2 hasAnchor" number="14.1">
-<h2><span class="header-section-number">14.1</span> 実証研究の基礎スキル<a href="reference.html#実証研究の基礎スキル" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>社会学（あるいは社会科学）の実証研究論文とはどのようなものか、ということについては、以下の書籍が参考になる。</p>
+<div id="regression_interaction" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> 交互作用（作成中）<a href="regression_interaction.html#regression_interaction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>本章では、前章で学んだ回帰分析において、独立変数の効果が他の独立変数によって異なるかどうか（<strong>交互作用</strong>）を検証するための方法について説明する。</p>
+<p>内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project…」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。</p>
+<p>さらに、これまでの章で説明した以下のパッケージを読み込んだ上で、<a href="handling.html#handling">第4章</a>で作成したデータを読み込んで<code>piaac</code>というデータフレームに入れていることを前提とする。具体的には、以下のコードを実行しておく必要がある。</p>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="regression_interaction.html#cb316-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb316-2"><a href="regression_interaction.html#cb316-2" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb316-3"><a href="regression_interaction.html#cb316-3" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb316-4"><a href="regression_interaction.html#cb316-4" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb316-5"><a href="regression_interaction.html#cb316-5" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb316-6"><a href="regression_interaction.html#cb316-6" tabindex="-1"></a></span>
+<span id="cb316-7"><a href="regression_interaction.html#cb316-7" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
+<p><a href="descriptives.html#descriptives_ggplot">第5章で確認したように</a>、ggplotの設定を変更しておくことで見やすいグラフを作ることができる。ここでは以下のコードを実行している。</p>
+<p>Macの場合：</p>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="regression_interaction.html#cb317-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb317-2"><a href="regression_interaction.html#cb317-2" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>,</span>
+<span id="cb317-3"><a href="regression_interaction.html#cb317-3" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb317-4"><a href="regression_interaction.html#cb317-4" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb317-5"><a href="regression_interaction.html#cb317-5" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb317-6"><a href="regression_interaction.html#cb317-6" tabindex="-1"></a>))</span></code></pre></div>
+<p>Windowsの場合：</p>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="regression_interaction.html#cb318-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb318-2"><a href="regression_interaction.html#cb318-2" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb318-3"><a href="regression_interaction.html#cb318-3" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb318-4"><a href="regression_interaction.html#cb318-4" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb318-5"><a href="regression_interaction.html#cb318-5" tabindex="-1"></a>))</span></code></pre></div>
+<div id="交互作用とはなにか" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> 交互作用とはなにか<a href="regression_interaction.html#交互作用とはなにか" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>ある独立変数が従属変数に与える効果が別の変数によって異なることを指して、<strong>交互作用（interaction）</strong>がある、または<strong>調整効果（moderation effect）</strong>があるという。例えば以下のような例がある。</p>
 <ul>
-<li>明石芳彦，2018，『社会科学系論文の書き方』ミネルヴァ書房．</li>
-<li>小熊英二，2022，『基礎からわかる論文の書き方』講談社現代新書．</li>
-<li>経済セミナー編集部編，2022，『経済論文の書き方』日本評論社．</li>
+<li>子どもを出産すると、女性の賃金は下がる一方で、男性の賃金は下がらないかむしろ上がる（出産が賃金に与える効果が性別によって異なる）<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a>。</li>
+<li>出身階層が到達階層に与える効果は、非大卒層よりも大卒層においてより大きい（出身階層が到達階層に与える効果が学歴によって異なる）<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a>。</li>
+<li>州が公的支出を行うと、高所得層の子どもに対する支出額は変わらないが、低所得層の子どもに対する支出額は増加する（公的投資が子どもに対する支出に与える効果が親所得によって異なる）<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a>。</li>
 </ul>
+<p>いずれも、ある独立変数（xとする）の効果が、別の変数（zとする）の値によって異なるということである。これを図にして表すと、次のようになる。</p>
+<p><img src="images/interaction.png" /></p>
+<p>こうした交互作用効果は回帰分析の枠組みで検証することができる。具体的には、次のような回帰式を推定する。</p>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1x + \beta_2z + \beta_3xz
+\]</span></p>
+<p><span class="math inline">\(\beta_3\)</span>が、<span class="math inline">\(z\)</span>の水準によって<span class="math inline">\(x\)</span>の効果がどの程度変化するのかを表す係数である。この式を次のように変形してみよう。</p>
+<p><span class="math display">\[
+y = \beta_0 + (\beta_1 + \beta_3z)x + \beta_2z
+\]</span></p>
+<p>このように書くと、<span class="math inline">\(\beta_3\)</span>はzの値に応じて<span class="math inline">\(x\)</span>の効果を強めたり弱めたりする「スイッチ」のような役割を果たす係数であることがわかる。</p>
+<p>それぞれ、<span class="math inline">\(\beta_1\)</span>の正負と<span class="math inline">\(\beta_3\)</span>の正負によって次のように解釈が変わる。</p>
+<table>
+<colgroup>
+<col width="27%" />
+<col width="36%" />
+<col width="36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><span class="math inline">\(\beta_3 &gt; 0\)</span>（zの係数が正）</th>
+<th><span class="math inline">\(\beta_3 &lt; 0\)</span>（zの係数が負）</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\beta_1 &gt; 0\)</span>（xの係数が正）</td>
+<td>zが大きいほど、xの正の効果は大きくなる</td>
+<td>zが大きいほど、xの正の効果は小さくなる</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\beta_1 &lt; 0\)</span>（xの係数が負）</td>
+<td>zが大きいほど、xの負の効果は小さくなる</td>
+<td>zが大きいほど、xの負の効果は大きくなる</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="rの使い方" class="section level2 hasAnchor" number="14.2">
-<h2><span class="header-section-number">14.2</span> Rの使い方<a href="reference.html#rの使い方" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Rは<code>tidyverse</code>パッケージの普及以前と以後で望ましいとされる文法が大きく変わっているため、<code>tidyverse</code>の使用を前提としたものを使うことを強くおすすめする。また、良書ではあるのだけれど、機械学習など社会学の関心とはやや離れた内容を念頭に置いたものも多く、ぴったりの書籍は少ない。こうしたなかで、日本語で読める書籍としては、以下の書籍がおすすめできる。</p>
+<div id="xが連続変数zがカテゴリ変数の場合" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> xが連続変数、zがカテゴリ変数の場合<a href="regression_interaction.html#xが連続変数zがカテゴリ変数の場合" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>zがカテゴリ変数（0、1の2値をとるものとする）の場合について考えてみよう。交互作用を含めた場合の回帰式は以下のようになる。</p>
+<p><span class="math display">\[
+\begin{align}
+y
+&amp;= \beta_0 + \beta_1x + \beta_2z + \beta_3xz \\
+&amp;= \beta_0 + (\beta_1 + \beta_3z)x + \beta_2z
+\end{align}
+\]</span></p>
+<p><span class="math inline">\(z\)</span>が0か1かの値を取るカテゴリ変数の場合には、次のような解釈ができる。</p>
 <ul>
-<li>藤井亮輔，2021，『超入門！Rでできるビジュアル統計学：学会・論文発表に役立つデータ可視化マニュアル』金芳堂．</li>
-<li>浅野正彦・矢内勇生，2018，『Rによる計量政治学入門』オーム社．</li>
-<li>星野匡郎・田中久稔・北川利津，2023，『Rによる実証分析［第2版］』オーム社．</li>
+<li><span class="math inline">\(z = 0\)</span>のとき：<span class="math inline">\(x\)</span>が1単位高いと、<span class="math inline">\(y\)</span>は<span class="math inline">\(\beta_1\)</span>高い。</li>
+<li><span class="math inline">\(z = 1\)</span>のとき：<span class="math inline">\(x\)</span>が1単位高いと、<span class="math inline">\(y\)</span>は<span class="math inline">\(\beta_1 + \beta_3\)</span>高い。</li>
 </ul>
-<p>そのほか、ウェブページでRの使い方を紹介してくれている方も多い。以下に挙げたウェブページはいずれも参考になる。</p>
-<ul>
-<li><a href="https://yukiyanai.github.io/jp/resources/">RとRStudioのインストール方法の解説</a></li>
-<li><a href="https://tomoecon.github.io/R_for_graduate_thesis/">卒業論文のためのR入門</a></li>
-<li><a href="https://www.jaysong.net/RBook/">私たちのR：ベストプラクティスの探求</a></li>
-</ul>
+<p>例えば、<span class="math inline">\(\beta_1 &gt; 0\)</span>、<span class="math inline">\(\beta_3 &gt; 0\)</span>のときは、次のような図になる。<span class="math inline">\(z = 1\)</span>の場合には、<span class="math inline">\(\beta_3\)</span>分だけ、正の傾きがより大きくなることになる。</p>
+<p>交互作用を表す変数<span class="math inline">\(xz\)</span>を含めた場合には、<span class="math inline">\(\beta_1\)</span>および<span class="math inline">\(\beta_2\)</span>はそれだけでは解釈できない値になることに注意が必要である。<span class="math inline">\(\beta_1\)</span>は、<span class="math inline">\(z = 0\)</span>のときの<span class="math inline">\(x\)</span>の効果（<span class="math inline">\(x\)</span>が1単位高いときに<span class="math inline">\(y\)</span>がどれだけ高いか）を表し、<span class="math inline">\(\beta_2\)</span>は<span class="math inline">\(x = 0\)</span>のときの<span class="math inline">\(z\)</span>の効果（<span class="math inline">\(z\)</span>が1単位高いときに<span class="math inline">\(y\)</span>がどれだけ高いか）を表す。交互作用を含めた場合には、交互作用を表す係数<span class="math inline">\(\beta_3\)</span>のみに注目して結果を解釈するとよい。</p>
+<div id="実例数的思考力が賃金を高める効果は性別によって異なるか" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> 実例：数的思考力が賃金を高める効果は性別によって異なるか？<a href="regression_interaction.html#実例数的思考力が賃金を高める効果は性別によって異なるか" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>男性は数学が得意だとより数学的な思考力を必要とする賃金の高い仕事に就く一方で、女性の場合には数学が得意だとしてもそうした傾向は見られないということがあるかもしれない。つまり、数的思考力が賃金を高める効果は、女性よりも男性においてより大きいかもしれない。これはまさに交互作用に関する仮説である。</p>
+<p>この仮説を検証するための式は次のように書くことができる。</p>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1数的思考力 + \beta_2男性 + \beta_3数的思考力\times 男性
+\]</span></p>
+<p>先の仮説が正しければ、数的思考力と性別の交互作用項の係数<span class="math inline">\(\beta_3\)</span>は正の値になるはずである。</p>
+<p>Rでは、次のように書くことで、交互作用を表現する回帰式を推定することができる。</p>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="regression_interaction.html#cb319-1" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> numeracy <span class="sc">*</span> gender) <span class="co"># *で変数どうしのかけ算を表す</span></span>
+<span id="cb319-2"><a href="regression_interaction.html#cb319-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = logwage ~ numeracy + gender + numeracy * gender, 
+##     data = piaac)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.2903 -0.3342 -0.0568  0.2948  1.9173 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)         6.1527849  0.0969034  63.494   &lt;2e-16 ***
+## numeracy            0.0032278  0.0003339   9.667   &lt;2e-16 ***
+## gender男性          0.2221950  0.1293254   1.718   0.0859 .  
+## numeracy:gender男性 0.0006563  0.0004366   1.503   0.1329    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4759 on 2724 degrees of freedom
+## Multiple R-squared:  0.2546, Adjusted R-squared:  0.2538 
+## F-statistic: 310.1 on 3 and 2724 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p><code>numeracy:gender男性</code>と表示されている箇所が交互作用項<span class="math inline">\(xz\)</span>の係数である。確かに係数は正であり、男性であると、数的思考力が高くなると賃金が高くなるという傾向がより強いことがわかる（男性であると、数的思考力が1単位高い場合に、6.6^{-4}だけ女性よりも大きく賃金が上昇する）。しかしながら<code>Pr(&gt;|t|)</code>の列をみると0.05を上回っており、係数は統計的に有意であるとはいえない。したがって、先の仮説は成り立つとはいえない。</p>
+<p>先に述べた通り、交互作用項を含めた場合には<span class="math inline">\(x\)</span>と<span class="math inline">\(z\)</span>の係数そのものを解釈することはできなくなる。そこで、交互作用を検討したい場合には、まず交互作用を含まないモデルを提示し、そのあと交互作用を含むモデルを提示するとわかりやすいだろう。</p>
+<p>もちろん、これまでの重回帰分析に関する説明同様、統制変数を含めることもできる。統制変数を含めたモデルを推定して、結果を提示する場合の例は次のとおりである。</p>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="regression_interaction.html#cb321-1" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> educ)</span>
+<span id="cb321-2"><a href="regression_interaction.html#cb321-2" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> numeracy <span class="sc">*</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> educ)</span>
+<span id="cb321-3"><a href="regression_interaction.html#cb321-3" tabindex="-1"></a></span>
+<span id="cb321-4"><a href="regression_interaction.html#cb321-4" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
+<span id="cb321-5"><a href="regression_interaction.html#cb321-5" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb321-6"><a href="regression_interaction.html#cb321-6" tabindex="-1"></a>         <span class="at">fmt =</span> <span class="dv">4</span>,</span>
+<span id="cb321-7"><a href="regression_interaction.html#cb321-7" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;numeracy&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア&quot;</span>,</span>
+<span id="cb321-8"><a href="regression_interaction.html#cb321-8" tabindex="-1"></a>                      <span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性&quot;</span>,</span>
+<span id="cb321-9"><a href="regression_interaction.html#cb321-9" tabindex="-1"></a>                      <span class="st">&quot;numeracy:gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア x 男性&quot;</span>,</span>
+<span id="cb321-10"><a href="regression_interaction.html#cb321-10" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb321-11"><a href="regression_interaction.html#cb321-11" tabindex="-1"></a>                      <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
+<span id="cb321-12"><a href="regression_interaction.html#cb321-12" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（ref: 中学）&quot;</span>,</span>
+<span id="cb321-13"><a href="regression_interaction.html#cb321-13" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（ref: 中学）&quot;</span>,</span>
+<span id="cb321-14"><a href="regression_interaction.html#cb321-14" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（ref: 中学）&quot;</span>,</span>
+<span id="cb321-15"><a href="regression_interaction.html#cb321-15" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>), </span>
+<span id="cb321-16"><a href="regression_interaction.html#cb321-16" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
+<div id="itpkgpxvxv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#itpkgpxvxv table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#itpkgpxvxv thead, #itpkgpxvxv tbody, #itpkgpxvxv tfoot, #itpkgpxvxv tr, #itpkgpxvxv td, #itpkgpxvxv th {
+  border-style: none;
+}
+
+#itpkgpxvxv p {
+  margin: 0;
+  padding: 0;
+}
+
+#itpkgpxvxv .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#itpkgpxvxv .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#itpkgpxvxv .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#itpkgpxvxv .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#itpkgpxvxv .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#itpkgpxvxv .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#itpkgpxvxv .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#itpkgpxvxv .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#itpkgpxvxv .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#itpkgpxvxv .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#itpkgpxvxv .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#itpkgpxvxv .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#itpkgpxvxv .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#itpkgpxvxv .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#itpkgpxvxv .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#itpkgpxvxv .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#itpkgpxvxv .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#itpkgpxvxv .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#itpkgpxvxv .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#itpkgpxvxv .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#itpkgpxvxv .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#itpkgpxvxv .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#itpkgpxvxv .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#itpkgpxvxv .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#itpkgpxvxv .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#itpkgpxvxv .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#itpkgpxvxv .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#itpkgpxvxv .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#itpkgpxvxv .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#itpkgpxvxv .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#itpkgpxvxv .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#itpkgpxvxv .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#itpkgpxvxv .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#itpkgpxvxv .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#itpkgpxvxv .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#itpkgpxvxv .gt_left {
+  text-align: left;
+}
+
+#itpkgpxvxv .gt_center {
+  text-align: center;
+}
+
+#itpkgpxvxv .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#itpkgpxvxv .gt_font_normal {
+  font-weight: normal;
+}
+
+#itpkgpxvxv .gt_font_bold {
+  font-weight: bold;
+}
+
+#itpkgpxvxv .gt_font_italic {
+  font-style: italic;
+}
+
+#itpkgpxvxv .gt_super {
+  font-size: 65%;
+}
+
+#itpkgpxvxv .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#itpkgpxvxv .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#itpkgpxvxv .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#itpkgpxvxv .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#itpkgpxvxv .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#itpkgpxvxv .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#itpkgpxvxv .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id=" "> </th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="(1)">(1)</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="(2)">(2)</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="" class="gt_row gt_left">数的思考力スコア</td>
+<td headers="(1)" class="gt_row gt_center">0.0025***</td>
+<td headers="(2)" class="gt_row gt_center">0.0024***</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="(1)" class="gt_row gt_center">(0.0002)</td>
+<td headers="(2)" class="gt_row gt_center">(0.0003)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">男性</td>
+<td headers="(1)" class="gt_row gt_center">0.3971***</td>
+<td headers="(2)" class="gt_row gt_center">0.3544**</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="(1)" class="gt_row gt_center">(0.0182)</td>
+<td headers="(2)" class="gt_row gt_center">(0.1229)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">数的思考力スコア x 男性</td>
+<td headers="(1)" class="gt_row gt_center"></td>
+<td headers="(2)" class="gt_row gt_center">0.0001</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="(1)" class="gt_row gt_center"></td>
+<td headers="(2)" class="gt_row gt_center">(0.0004)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">年齢</td>
+<td headers="(1)" class="gt_row gt_center">0.0712***</td>
+<td headers="(2)" class="gt_row gt_center">0.0711***</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="(1)" class="gt_row gt_center">(0.0069)</td>
+<td headers="(2)" class="gt_row gt_center">(0.0069)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">年齢2乗</td>
+<td headers="(1)" class="gt_row gt_center">-0.0007***</td>
+<td headers="(2)" class="gt_row gt_center">-0.0007***</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="(1)" class="gt_row gt_center">(0.0001)</td>
+<td headers="(2)" class="gt_row gt_center">(0.0001)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">高校（ref: 中学）</td>
+<td headers="(1)" class="gt_row gt_center">0.0518</td>
+<td headers="(2)" class="gt_row gt_center">0.0515</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="(1)" class="gt_row gt_center">(0.0344)</td>
+<td headers="(2)" class="gt_row gt_center">(0.0344)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">短大高専（ref: 中学）</td>
+<td headers="(1)" class="gt_row gt_center">0.1392***</td>
+<td headers="(2)" class="gt_row gt_center">0.1389***</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="(1)" class="gt_row gt_center">(0.0367)</td>
+<td headers="(2)" class="gt_row gt_center">(0.0367)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">大学大学院（ref: 中学）</td>
+<td headers="(1)" class="gt_row gt_center">0.3213***</td>
+<td headers="(2)" class="gt_row gt_center">0.3207***</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="(1)" class="gt_row gt_center">(0.0375)</td>
+<td headers="(2)" class="gt_row gt_center">(0.0376)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">切片</td>
+<td headers="(1)" class="gt_row gt_center">4.5493***</td>
+<td headers="(2)" class="gt_row gt_center">4.5755***</td></tr>
+    <tr><td headers="" class="gt_row gt_left" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;"></td>
+<td headers="(1)" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">(0.1559)</td>
+<td headers="(2)" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">(0.1728)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">Num.Obs.</td>
+<td headers="(1)" class="gt_row gt_center">2728</td>
+<td headers="(2)" class="gt_row gt_center">2728</td></tr>
+    <tr><td headers="" class="gt_row gt_left">R2</td>
+<td headers="(1)" class="gt_row gt_center">0.333</td>
+<td headers="(2)" class="gt_row gt_center">0.333</td></tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="3">+ p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td>
+    </tr>
+  </tfoot>
+  
+</table>
 </div>
-<div id="ggplotの解説" class="section level2 hasAnchor" number="14.3">
-<h2><span class="header-section-number">14.3</span> ggplotの解説<a href="reference.html#ggplotの解説" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>本資料では基本的にすべて<code>ggplot2</code>を使って図（グラフ）を作成しているが、<code>ggplot2</code>による可視化は非常に優れており、さまざまな図を作ることができる。本資料で扱ったものにさらに工夫を重ねれば、より見やすい図を作ることができる。<code>ggplot2</code>の使い方に特化した参考文献としては以下のものが挙げられる（下に行くほどむずかしい）：</p>
-<ul>
-<li>藤井亮輔，2021，『超入門！Rでできるビジュアル統計学：学会・論文発表に役立つデータ可視化マニュアル』金芳堂．</li>
-<li>Chang, Winston. 2019. <em>R Graphics Cookbook: Practical Recipes for Visualizing Data. Second Edition.</em> O’Reilly（石井弓美子・川内崇・瀬戸山雅人訳，『Rグラフィックスクックブック：ggplot2によるグラフ作成のレシピ集』オライリー・ジャパン）．</li>
-<li>Healy, Kieran. 2019. <em>Data Visualization: A Practical Introduction.</em> Princeton University Press.（瓜生真也・江口哲史・三村喬生訳，『データ分析のためのデータ可視化入門』講談社．）（<a href="https://socviz.co/">著者により原著のドラフトが公開</a>されている）</li>
-</ul>
+<p>この例のように、関心のある変数（今回の場合は交互作用項とそれに関係する変数）を上のほうに表示すると結果が見やすくてよい。</p>
 </div>
-<div id="統計学計量分析を学ぶ" class="section level2 hasAnchor" number="14.4">
-<h2><span class="header-section-number">14.4</span> 統計学・計量分析を学ぶ<a href="reference.html#統計学計量分析を学ぶ" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>統計ソフトの使い方を学ぶだけではなくて、統計学や計量分析の方法についての理論的な側面も学ぶと、より適切な分析をすることにつながるだろう。データ分析とはいったい何をするのかということについての入門書としては、（英語だが）以下の本が最もよく書かれている。</p>
-<ul>
-<li>Llaudet, Elena and Kosuke Imai. 2022. <em>Data Analysis for Social Science: A Friendly and Practical Introduction.</em> Princeton University Press.</li>
-</ul>
-<p>社会学の実証分析でもっともよく分析される社会調査データというのがどのような性質をもち、どのような方法で収集されているのかを知っておくと、その意味をより理解できるようになるだろう。最近だと以下の書籍はよい教科書だと思う。</p>
-<ul>
-<li>轟亮・杉野勇・平澤和司編，2021，『入門・社会調査法［第4版］：2ステップで基礎から学ぶ』法律文化社．</li>
-<li>毛塚和宏，2022，『社会科学のための統計学入門：実例からていねいに学ぶ』講談社．</li>
-</ul>
-<p>計量分析にはさまざまな方法があるが、そのほとんどで基礎になっているのが回帰分析であり、回帰分析をもっともきちんと説明しているのが計量経済学の教科書である。なので、計量経済学の入門書を読むのがいろいろな計量分析の方法を学ぶ上で有益だろう。</p>
-<ul>
-<li>田中隆一，2015，『計量経済学の第一歩：実証分析のススメ』有斐閣．</li>
-<li>西山慶彦・新谷元嗣・川口大司・奥井亮，2019，『計量経済学』有斐閣．（注：すばらしい教科書ですが、数学をやるぞという覚悟が必要です）</li>
-<li>Wooldridge, Jeffrey M. 2019. Introductory Econometrics: A Modern Approach, 7th Edition. Cengage Learning.（注：すばらしい教科書ですが、数学をやるぞという覚悟が必要です）</li>
-</ul>
-<p>また、最近は研究の世界でもそうでない世界でも因果推論が重要だといわれはじめて久しい。因果推論について勉強することは、仮に因果推論を使わないとしても自分が何を行っているのか、分析する際に何を考える必要があるのかを明確にする上で役に立つ。以下の書籍は内容もそこまで難しすぎないのでおすすめできる（下に行くほどむずかしい）。</p>
-<ul>
-<li>中室牧子・津川友介，2017，『原因と結果の経済学』ダイヤモンド社．</li>
-<li>松林哲也，2021，『政治学と因果推論：比較から見える政治と社会』岩波書店．</li>
-<li>安井翔太・株式会社ホクソエム，2020，『効果検証入門：正しい比較のための因果推論／計量経済学の基礎』技術評論社．</li>
-</ul>
+<div id="結果を図示する" class="section level3 hasAnchor" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> 結果を図示する<a href="regression_interaction.html#結果を図示する" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>たんに表の数式だけではなく、実際にどの程度の効果の大きさなのかを視覚的に調べることが重要である。このような用途の最適なのが、<code>ggeffects</code>パッケージ（→<a href="https://strengejacke.github.io/ggeffects/">説明</a>）である。まずはパッケージをインストールしよう。</p>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="regression_interaction.html#cb322-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggeffects&quot;</span>)</span></code></pre></div>
+<p><code>library()</code>で読み込んでおく。</p>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="regression_interaction.html#cb323-1" tabindex="-1"></a><span class="fu">library</span>(ggeffects)</span></code></pre></div>
+<p>使い方は簡単。交互作用効果を図示したい回帰式を指定し、<code>ggpredict(結果が入った回帰式, c("xになる変数", "zになる変数"）</code>とすることで、予測値や95%信頼区間を求めることができる。このデータフレームを何らかの名前をつけたオブジェクトに入れる。保存したオブジェクトに対して<code>plot()</code>を実行することで、先に見たような交互作用の図を出力することができる。</p>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="regression_interaction.html#cb324-1" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">ggpredict</span>(reg_res2, <span class="fu">c</span>(<span class="st">&quot;numeracy&quot;</span>, <span class="st">&quot;gender&quot;</span>)) <span class="co"># 予測値を求めて結果を保存</span></span>
+<span id="cb324-2"><a href="regression_interaction.html#cb324-2" tabindex="-1"></a></span>
+<span id="cb324-3"><a href="regression_interaction.html#cb324-3" tabindex="-1"></a>predicted <span class="sc">%&gt;%</span> <span class="fu">plot</span>() <span class="co"># 結果をプロット</span></span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-248-1.png" width="672" /></p>
+<p>また、<code>ggpredict()</code>で保存したデータフレームは<code>ggplot()</code>で図を作成するときと同じようにオプションを付けてより見やすい図を作ることもできる。編集の一例を以下に示す。</p>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="regression_interaction.html#cb325-1" tabindex="-1"></a>predicted <span class="sc">%&gt;%</span> </span>
+<span id="cb325-2"><a href="regression_interaction.html#cb325-2" tabindex="-1"></a>  <span class="fu">plot</span>() <span class="sc">+</span> </span>
+<span id="cb325-3"><a href="regression_interaction.html#cb325-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;数的思考力スコア&quot;</span>, <span class="at">y =</span> <span class="st">&quot;対数賃金&quot;</span>, <span class="at">color =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb325-4"><a href="regression_interaction.html#cb325-4" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-249-1.png" width="672" /></p>
+</div>
+</div>
+<div id="xがカテゴリ変数zが連続変数の場合作成中" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> xがカテゴリ変数、zが連続変数の場合（作成中）<a href="regression_interaction.html#xがカテゴリ変数zが連続変数の場合作成中" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="xが連続変数zが連続変数の場合作成中" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> xが連続変数、zが連続変数の場合（作成中）<a href="regression_interaction.html#xが連続変数zが連続変数の場合作成中" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 
 </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<div class="footnotes">
+<hr />
+<ol start="18">
+<li id="fn18"><p>出産すると女性の賃金が下がることは母親ペナルティと呼ばれ、他方男性の賃金は上がることは父親ペナルティと呼ばれそれぞれ研究がなされている。近年の研究としては例えば Yu, W.-H., &amp; Hara, Y. (2021). Motherhood Penalties and Fatherhood Premiums: Effects of Parenthood on Earnings Growth Within and Across Firms. <em>Demography</em>, <em>58</em>(1), 247–272. ただし父親ペナルティについては見せかけの関連（賃金が高くなりやすい男性ほど子どもを持ちやすい）なのではないかという指摘がある。たとえば Killewald, A., &amp; Lundberg, I. (2017). New Evidence Against a Causal Marriage Wage Premium. <em>Demography</em>, <em>54</em>, 1007–1028. など。<a href="regression_interaction.html#fnref18" class="footnote-back">↩︎</a></p></li>
+<li id="fn19"><p>Torche, F. (2011). Is a College Degree Still the Great Equalizer? Intergenerational Mobility across Levels of Schooling in the United States. <em>American Journal of Sociology</em>, <em>117</em>(3), 763–807. ただしこれも近年の研究では必ずしも成り立たないのではないかと指摘されている。たとえば Zhou, X. (2019). Equalization or Selection? Reassessing the "Meritocratic Power" of a College Degree in Intergenerational Income Mobility. <em>American Sociological Review</em>, <em>84</em>(3), 459–485. など。<a href="regression_interaction.html#fnref19" class="footnote-back">↩︎</a></p></li>
+<li id="fn20"><p>Jackson, M. I., &amp; Schneider, D. (2022). Public Investments and Class Gaps in Parents' Developmental Expenditures. <em>American Sociological Review</em>, <em>87</em>(1), 105–142.<a href="regression_interaction.html#fnref20" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="presentation.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="regression_advanced.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="logit.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

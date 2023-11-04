@@ -4,19 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 9 ロジスティック回帰分析（作成中） | Rによる社会調査データ分析の手引き</title>
+  <title>Chapter 10 ロジスティック回帰分析（作成中） | Rによる社会調査データ分析の手引き</title>
   <meta name="description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 9 ロジスティック回帰分析（作成中） | Rによる社会調査データ分析の手引き" />
+  <meta property="og:title" content="Chapter 10 ロジスティック回帰分析（作成中） | Rによる社会調査データ分析の手引き" />
   <meta property="og:type" content="book" />
-  
   
   <meta property="og:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 9 ロジスティック回帰分析（作成中） | Rによる社会調査データ分析の手引き" />
+  <meta name="twitter:title" content="Chapter 10 ロジスティック回帰分析（作成中） | Rによる社会調査データ分析の手引き" />
   
   <meta name="twitter:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
   
@@ -30,9 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="regression_advanced.html"/>
+<link rel="prev" href="regression_interaction.html"/>
 <link rel="next" href="domain.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,10 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-<script src="libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -121,6 +118,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -138,111 +139,350 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Rによる社会調査データ分析の手引き</a></li>
 
 <li class="divider"></li>
-<li><a href="index.html#まえがき" id="toc-まえがき">まえがき</a></li>
-<li><a href="plan.html#plan" id="toc-plan"><span class="toc-section-number">1</span> 研究計画を立てる</a>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>まえがき</a></li>
+<li class="chapter" data-level="1" data-path="plan.html"><a href="plan.html"><i class="fa fa-check"></i><b>1</b> 研究計画を立てる</a>
 <ul>
-<li><a href="plan.html#研究計画とは" id="toc-研究計画とは"><span class="toc-section-number">1.1</span> 研究計画とは</a></li>
-<li><a href="plan.html#plan_background" id="toc-plan_background"><span class="toc-section-number">1.2</span> 研究背景</a></li>
-<li><a href="plan.html#plan_question" id="toc-plan_question"><span class="toc-section-number">1.3</span> 研究目的・問い</a></li>
-<li><a href="plan.html#方法" id="toc-方法"><span class="toc-section-number">1.4</span> 方法</a></li>
-<li><a href="plan.html#参考文献" id="toc-参考文献"><span class="toc-section-number">1.5</span> 参考文献</a></li>
-<li><a href="plan.html#使用する調査データの選定" id="toc-使用する調査データの選定"><span class="toc-section-number">1.6</span> 使用する調査データの選定</a></li>
-<li><a href="plan.html#先行研究を探す" id="toc-先行研究を探す"><span class="toc-section-number">1.7</span> 先行研究を探す</a></li>
-</ul></li>
-<li><a href="preparation.html#preparation" id="toc-preparation"><span class="toc-section-number">2</span> RとRStudioの下準備</a>
+<li class="chapter" data-level="1.1" data-path="plan.html"><a href="plan.html#研究計画とは"><i class="fa fa-check"></i><b>1.1</b> 研究計画とは</a></li>
+<li class="chapter" data-level="1.2" data-path="plan.html"><a href="plan.html#plan_background"><i class="fa fa-check"></i><b>1.2</b> 研究背景</a>
 <ul>
-<li><a href="preparation.html#rとrstudioのインストール方法" id="toc-rとrstudioのインストール方法"><span class="toc-section-number">2.1</span> RとRStudioのインストール方法</a></li>
-<li><a href="preparation.html#データ分析のワークフロー" id="toc-データ分析のワークフロー"><span class="toc-section-number">2.2</span> データ分析のワークフロー</a></li>
-<li><a href="preparation.html#preparation_project" id="toc-preparation_project"><span class="toc-section-number">2.3</span> プロジェクトの作成</a></li>
-<li><a href="preparation.html#基本的な操作" id="toc-基本的な操作"><span class="toc-section-number">2.4</span> 基本的な操作</a></li>
-<li><a href="preparation.html#rの基礎準備中" id="toc-rの基礎準備中"><span class="toc-section-number">2.5</span> Rの基礎（準備中）</a></li>
+<li class="chapter" data-level="1.2.1" data-path="plan.html"><a href="plan.html#問題背景1段落程度"><i class="fa fa-check"></i><b>1.2.1</b> 問題背景（1段落程度）</a></li>
+<li class="chapter" data-level="1.2.2" data-path="plan.html"><a href="plan.html#先行研究の整理13段落程度"><i class="fa fa-check"></i><b>1.2.2</b> 先行研究の整理（1–3段落程度）</a></li>
 </ul></li>
-<li><a href="import.html#import" id="toc-import"><span class="toc-section-number">3</span> データの読み込み</a>
+<li class="chapter" data-level="1.3" data-path="plan.html"><a href="plan.html#plan_question"><i class="fa fa-check"></i><b>1.3</b> 研究目的・問い</a>
 <ul>
-<li><a href="import.html#rのサンプルデータの読み込み" id="toc-rのサンプルデータの読み込み"><span class="toc-section-number">3.1</span> Rのサンプルデータの読み込み</a></li>
-<li><a href="import.html#作業ディレクトリ上のデータの読み込み" id="toc-作業ディレクトリ上のデータの読み込み"><span class="toc-section-number">3.2</span> 作業ディレクトリ上のデータの読み込み</a></li>
-<li><a href="import.html#ウェブ上のデータの読み込み" id="toc-ウェブ上のデータの読み込み"><span class="toc-section-number">3.3</span> ウェブ上のデータの読み込み</a></li>
-<li><a href="import.html#データアーカイブssjda-icpsrからダウンロードしたデータの読み込み" id="toc-データアーカイブssjda-icpsrからダウンロードしたデータの読み込み"><span class="toc-section-number">3.4</span> データ・アーカイブ（SSJDA, ICPSR）からダウンロードしたデータの読み込み</a></li>
+<li class="chapter" data-level="1.3.1" data-path="plan.html"><a href="plan.html#研究目的問い12段落程度"><i class="fa fa-check"></i><b>1.3.1</b> 研究目的・問い（1–2段落程度）</a></li>
+<li class="chapter" data-level="1.3.2" data-path="plan.html"><a href="plan.html#仮説1段落程度あれば"><i class="fa fa-check"></i><b>1.3.2</b> 仮説（1段落程度、あれば）</a></li>
 </ul></li>
-<li><a href="handling.html#handling" id="toc-handling"><span class="toc-section-number">4</span> データの加工</a>
+<li class="chapter" data-level="1.4" data-path="plan.html"><a href="plan.html#方法"><i class="fa fa-check"></i><b>1.4</b> 方法</a>
 <ul>
-<li><a href="handling.html#本資料で用いるデータ" id="toc-本資料で用いるデータ"><span class="toc-section-number">4.1</span> 本資料で用いるデータ</a></li>
-<li><a href="handling.html#データ加工のステップ" id="toc-データ加工のステップ"><span class="toc-section-number">4.2</span> データ加工のステップ</a></li>
-<li><a href="handling.html#変数の作成" id="toc-変数の作成"><span class="toc-section-number">4.3</span> 変数の作成</a></li>
-<li><a href="handling.html#handling-tips" id="toc-handling-tips"><span class="toc-section-number">4.4</span> 変数の作成についてのtips</a></li>
-<li><a href="handling.html#をつなげてコマンドをまとめる" id="toc-をつなげてコマンドをまとめる"><span class="toc-section-number">4.5</span> %&gt;%をつなげてコマンドをまとめる</a></li>
-<li><a href="handling.html#handling_sample" id="toc-handling_sample"><span class="toc-section-number">4.6</span> サンプルの限定</a></li>
-<li><a href="handling.html#データの追加発展" id="toc-データの追加発展"><span class="toc-section-number">4.7</span> データの追加（発展）</a></li>
+<li class="chapter" data-level="1.4.1" data-path="plan.html"><a href="plan.html#データ"><i class="fa fa-check"></i><b>1.4.1</b> データ</a></li>
+<li class="chapter" data-level="1.4.2" data-path="plan.html"><a href="plan.html#分析対象"><i class="fa fa-check"></i><b>1.4.2</b> 分析対象</a></li>
+<li class="chapter" data-level="1.4.3" data-path="plan.html"><a href="plan.html#使用する変数"><i class="fa fa-check"></i><b>1.4.3</b> 使用する変数</a></li>
+<li class="chapter" data-level="1.4.4" data-path="plan.html"><a href="plan.html#分析方法"><i class="fa fa-check"></i><b>1.4.4</b> 分析方法</a></li>
 </ul></li>
-<li><a href="descriptives.html#descriptives" id="toc-descriptives"><span class="toc-section-number">5</span> 1変数の集計</a>
+<li class="chapter" data-level="1.5" data-path="plan.html"><a href="plan.html#参考文献"><i class="fa fa-check"></i><b>1.5</b> 参考文献</a></li>
+<li class="chapter" data-level="1.6" data-path="plan.html"><a href="plan.html#使用する調査データの選定"><i class="fa fa-check"></i><b>1.6</b> 使用する調査データの選定</a>
 <ul>
-<li><a href="descriptives.html#連続変数を集計する" id="toc-連続変数を集計する"><span class="toc-section-number">5.1</span> 連続変数を集計する</a></li>
-<li><a href="descriptives.html#descriptives_ggplot" id="toc-descriptives_ggplot"><span class="toc-section-number">5.2</span> 分布をみる</a></li>
-<li><a href="descriptives.html#カテゴリ変数を集計する" id="toc-カテゴリ変数を集計する"><span class="toc-section-number">5.3</span> カテゴリ変数を集計する</a></li>
-<li><a href="descriptives.html#descriptives_gtsummary" id="toc-descriptives_gtsummary"><span class="toc-section-number">5.4</span> 記述統計量の一覧表を作る</a></li>
-<li><a href="descriptives.html#結果をファイルに書き出す" id="toc-結果をファイルに書き出す"><span class="toc-section-number">5.5</span> 結果をファイルに書き出す</a></li>
+<li class="chapter" data-level="1.6.1" data-path="plan.html"><a href="plan.html#個票データとは何か"><i class="fa fa-check"></i><b>1.6.1</b> 個票データとは何か</a></li>
+<li class="chapter" data-level="1.6.2" data-path="plan.html"><a href="plan.html#jgss"><i class="fa fa-check"></i><b>1.6.2</b> JGSS</a></li>
+<li class="chapter" data-level="1.6.3" data-path="plan.html"><a href="plan.html#jgss以外の日本の社会調査"><i class="fa fa-check"></i><b>1.6.3</b> JGSS以外の日本の社会調査</a></li>
+<li class="chapter" data-level="1.6.4" data-path="plan.html"><a href="plan.html#日本以外の社会調査データ"><i class="fa fa-check"></i><b>1.6.4</b> 日本以外の社会調査データ</a></li>
 </ul></li>
-<li><a href="tabulate.html#tabulate" id="toc-tabulate"><span class="toc-section-number">6</span> 2変数の集計</a>
+<li class="chapter" data-level="1.7" data-path="plan.html"><a href="plan.html#先行研究を探す"><i class="fa fa-check"></i><b>1.7</b> 先行研究を探す</a>
 <ul>
-<li><a href="tabulate.html#tabulate_summarize" id="toc-tabulate_summarize"><span class="toc-section-number">6.1</span> 平均値の比較</a></li>
-<li><a href="tabulate.html#分布の比較" id="toc-分布の比較"><span class="toc-section-number">6.2</span> 分布の比較</a></li>
-<li><a href="tabulate.html#クロス集計表" id="toc-クロス集計表"><span class="toc-section-number">6.3</span> クロス集計表</a></li>
-<li><a href="tabulate.html#クロス集計表を図示する" id="toc-クロス集計表を図示する"><span class="toc-section-number">6.4</span> クロス集計表を図示する</a></li>
-<li><a href="tabulate.html#散布図" id="toc-散布図"><span class="toc-section-number">6.5</span> 散布図</a></li>
-<li><a href="tabulate.html#変数集計のときのくふう" id="toc-変数集計のときのくふう"><span class="toc-section-number">6.6</span> 2変数集計のときのくふう</a></li>
-<li><a href="tabulate.html#結果をファイルに書き出す-1" id="toc-結果をファイルに書き出す-1"><span class="toc-section-number">6.7</span> 結果をファイルに書き出す</a></li>
+<li class="chapter" data-level="1.7.1" data-path="plan.html"><a href="plan.html#査読つき論文"><i class="fa fa-check"></i><b>1.7.1</b> 査読つき論文</a></li>
+<li class="chapter" data-level="1.7.2" data-path="plan.html"><a href="plan.html#研究の流れをつかむ"><i class="fa fa-check"></i><b>1.7.2</b> 研究の流れをつかむ</a></li>
+<li class="chapter" data-level="1.7.3" data-path="plan.html"><a href="plan.html#書籍"><i class="fa fa-check"></i><b>1.7.3</b> 書籍</a></li>
+<li class="chapter" data-level="1.7.4" data-path="plan.html"><a href="plan.html#英語論文"><i class="fa fa-check"></i><b>1.7.4</b> 英語論文</a></li>
 </ul></li>
-<li><a href="regression_basic.html#regression_basic" id="toc-regression_basic"><span class="toc-section-number">7</span> 回帰分析の基礎</a>
+</ul></li>
+<li class="chapter" data-level="2" data-path="preparation.html"><a href="preparation.html"><i class="fa fa-check"></i><b>2</b> RとRStudioの下準備</a>
 <ul>
-<li><a href="regression_basic.html#回帰分析とは何か" id="toc-回帰分析とは何か"><span class="toc-section-number">7.1</span> 回帰分析とは何か</a></li>
-<li><a href="regression_basic.html#独立変数がカテゴリ変数の場合" id="toc-独立変数がカテゴリ変数の場合"><span class="toc-section-number">7.2</span> 独立変数がカテゴリ変数の場合</a></li>
-<li><a href="regression_basic.html#regression_basic_binary" id="toc-regression_basic_binary"><span class="toc-section-number">7.3</span> 従属変数が2値のカテゴリ変数（0/1）の場合</a></li>
-<li><a href="regression_basic.html#発展非線形の関連" id="toc-発展非線形の関連"><span class="toc-section-number">7.4</span> （発展）非線形の関連</a></li>
-<li><a href="regression_basic.html#regression_basic_export" id="toc-regression_basic_export"><span class="toc-section-number">7.5</span> 結果をファイルに書き出す</a></li>
-</ul></li>
-<li><a href="regression_advanced.html#regression_advanced" id="toc-regression_advanced"><span class="toc-section-number">8</span> 回帰分析の活用</a>
+<li class="chapter" data-level="2.1" data-path="preparation.html"><a href="preparation.html#rとrstudioのインストール方法"><i class="fa fa-check"></i><b>2.1</b> RとRStudioのインストール方法</a></li>
+<li class="chapter" data-level="2.2" data-path="preparation.html"><a href="preparation.html#データ分析のワークフロー"><i class="fa fa-check"></i><b>2.2</b> データ分析のワークフロー</a></li>
+<li class="chapter" data-level="2.3" data-path="preparation.html"><a href="preparation.html#preparation_project"><i class="fa fa-check"></i><b>2.3</b> プロジェクトの作成</a>
 <ul>
-<li><a href="regression_advanced.html#重回帰分析" id="toc-重回帰分析"><span class="toc-section-number">8.1</span> 重回帰分析</a></li>
-<li><a href="regression_advanced.html#交絡要因の統制" id="toc-交絡要因の統制"><span class="toc-section-number">8.2</span> 交絡要因の統制</a></li>
-<li><a href="regression_advanced.html#媒介分析要因分解" id="toc-媒介分析要因分解"><span class="toc-section-number">8.3</span> 媒介分析／要因分解</a></li>
-<li><a href="regression_advanced.html#回帰分析の実際" id="toc-回帰分析の実際"><span class="toc-section-number">8.4</span> 回帰分析の実際</a></li>
-<li><a href="regression_advanced.html#結果をファイルに書き出す-2" id="toc-結果をファイルに書き出す-2"><span class="toc-section-number">8.5</span> 結果をファイルに書き出す</a></li>
+<li class="chapter" data-level="2.3.1" data-path="preparation.html"><a href="preparation.html#rstudioを開いてみよう"><i class="fa fa-check"></i><b>2.3.1</b> RStudioを開いてみよう</a></li>
+<li class="chapter" data-level="2.3.2" data-path="preparation.html"><a href="preparation.html#授業用のフォルダを作ろう"><i class="fa fa-check"></i><b>2.3.2</b> 授業用のフォルダを作ろう</a></li>
+<li class="chapter" data-level="2.3.3" data-path="preparation.html"><a href="preparation.html#ファイルパスと作業ディレクトリ"><i class="fa fa-check"></i><b>2.3.3</b> ファイルパスと作業ディレクトリ</a></li>
+<li class="chapter" data-level="2.3.4" data-path="preparation.html"><a href="preparation.html#プロジェクト作成の手順"><i class="fa fa-check"></i><b>2.3.4</b> プロジェクト作成の手順</a></li>
 </ul></li>
-<li><a href="logit.html#logit" id="toc-logit"><span class="toc-section-number">9</span> ロジスティック回帰分析（作成中）</a>
+<li class="chapter" data-level="2.4" data-path="preparation.html"><a href="preparation.html#基本的な操作"><i class="fa fa-check"></i><b>2.4</b> 基本的な操作</a>
 <ul>
-<li><a href="logit.html#二値変数を従属変数にする線形回帰分析を使ったアプローチ" id="toc-二値変数を従属変数にする線形回帰分析を使ったアプローチ"><span class="toc-section-number">9.1</span> 二値変数を従属変数にする：線形回帰分析を使ったアプローチ</a></li>
-<li><a href="logit.html#ロジスティック回帰分析とは" id="toc-ロジスティック回帰分析とは"><span class="toc-section-number">9.2</span> ロジスティック回帰分析とは</a></li>
-<li><a href="logit.html#ロジスティック回帰分析の注意点" id="toc-ロジスティック回帰分析の注意点"><span class="toc-section-number">9.3</span> ロジスティック回帰分析の注意点</a></li>
+<li class="chapter" data-level="2.4.1" data-path="preparation.html"><a href="preparation.html#スクリプトファイル"><i class="fa fa-check"></i><b>2.4.1</b> スクリプトファイル</a></li>
+<li class="chapter" data-level="2.4.2" data-path="preparation.html"><a href="preparation.html#スクリプトファイルを保存する"><i class="fa fa-check"></i><b>2.4.2</b> スクリプトファイルを保存する</a></li>
+<li class="chapter" data-level="2.4.3" data-path="preparation.html"><a href="preparation.html#パッケージのインストール"><i class="fa fa-check"></i><b>2.4.3</b> パッケージのインストール</a></li>
 </ul></li>
-<li><a href="domain.html#domain" id="toc-domain"><span class="toc-section-number">10</span> 社会学のデータ分析でよくある処理</a>
+<li class="chapter" data-level="2.5" data-path="preparation.html"><a href="preparation.html#その他の設定"><i class="fa fa-check"></i><b>2.5</b> その他の設定</a></li>
+<li class="chapter" data-level="2.6" data-path="preparation.html"><a href="preparation.html#rの基礎準備中"><i class="fa fa-check"></i><b>2.6</b> Rの基礎（準備中）</a>
 <ul>
-<li><a href="domain.html#ssm職業小分類を大分類にまとめる" id="toc-ssm職業小分類を大分類にまとめる"><span class="toc-section-number">10.1</span> SSM職業小分類を大分類にまとめる</a></li>
-<li><a href="domain.html#旧制学歴と新制学歴の対応" id="toc-旧制学歴と新制学歴の対応"><span class="toc-section-number">10.2</span> 旧制学歴と新制学歴の対応</a></li>
-<li><a href="domain.html#domain_income" id="toc-domain_income"><span class="toc-section-number">10.3</span> 年収カテゴリを連続変数にする</a></li>
-<li><a href="domain.html#都道府県変数の加工" id="toc-都道府県変数の加工"><span class="toc-section-number">10.4</span> 都道府県変数の加工</a></li>
+<li class="chapter" data-level="2.6.1" data-path="preparation.html"><a href="preparation.html#オブジェクト"><i class="fa fa-check"></i><b>2.6.1</b> オブジェクト</a></li>
+<li class="chapter" data-level="2.6.2" data-path="preparation.html"><a href="preparation.html#データフレーム"><i class="fa fa-check"></i><b>2.6.2</b> データフレーム</a></li>
+<li class="chapter" data-level="2.6.3" data-path="preparation.html"><a href="preparation.html#行観察と列変数"><i class="fa fa-check"></i><b>2.6.3</b> 行（観察）と列（変数）</a></li>
 </ul></li>
-<li><a href="writepaper.html#writepaper" id="toc-writepaper"><span class="toc-section-number">11</span> 論文のまとめ方</a>
+</ul></li>
+<li class="chapter" data-level="3" data-path="import.html"><a href="import.html"><i class="fa fa-check"></i><b>3</b> データの読み込み</a>
 <ul>
-<li><a href="writepaper.html#全体の構成" id="toc-全体の構成"><span class="toc-section-number">11.1</span> 全体の構成</a></li>
-<li><a href="writepaper.html#タイトル" id="toc-タイトル"><span class="toc-section-number">11.2</span> タイトル</a></li>
-<li><a href="writepaper.html#要約" id="toc-要約"><span class="toc-section-number">11.3</span> 要約</a></li>
-<li><a href="writepaper.html#序論" id="toc-序論"><span class="toc-section-number">11.4</span> 序論</a></li>
-<li><a href="writepaper.html#先行研究理論枠組み仮説" id="toc-先行研究理論枠組み仮説"><span class="toc-section-number">11.5</span> 先行研究・理論枠組み・仮説</a></li>
-<li><a href="writepaper.html#方法-1" id="toc-方法-1"><span class="toc-section-number">11.6</span> 方法</a></li>
-<li><a href="writepaper.html#結果" id="toc-結果"><span class="toc-section-number">11.7</span> 結果</a></li>
-<li><a href="writepaper.html#結論" id="toc-結論"><span class="toc-section-number">11.8</span> 結論</a></li>
-<li><a href="writepaper.html#謝辞" id="toc-謝辞"><span class="toc-section-number">11.9</span> 謝辞</a></li>
-<li><a href="writepaper.html#参考文献-1" id="toc-参考文献-1"><span class="toc-section-number">11.10</span> 参考文献</a></li>
-<li><a href="writepaper.html#形式上の注意事項" id="toc-形式上の注意事項"><span class="toc-section-number">11.11</span> 形式上の注意事項</a></li>
-</ul></li>
-<li><a href="reference.html#reference" id="toc-reference"><span class="toc-section-number">12</span> さらなる学習のための参考文献</a>
+<li class="chapter" data-level="3.1" data-path="import.html"><a href="import.html#rのサンプルデータの読み込み"><i class="fa fa-check"></i><b>3.1</b> Rのサンプルデータの読み込み</a></li>
+<li class="chapter" data-level="3.2" data-path="import.html"><a href="import.html#パイプ演算子または"><i class="fa fa-check"></i><b>3.2</b> パイプ演算子（%&gt;%または|&gt;）</a></li>
+<li class="chapter" data-level="3.3" data-path="import.html"><a href="import.html#作業ディレクトリ上のデータの読み込み"><i class="fa fa-check"></i><b>3.3</b> 作業ディレクトリ上のデータの読み込み</a>
 <ul>
-<li><a href="reference.html#実証研究の基礎スキル" id="toc-実証研究の基礎スキル"><span class="toc-section-number">12.1</span> 実証研究の基礎スキル</a></li>
-<li><a href="reference.html#rの使い方" id="toc-rの使い方"><span class="toc-section-number">12.2</span> Rの使い方</a></li>
-<li><a href="reference.html#ggplotの解説" id="toc-ggplotの解説"><span class="toc-section-number">12.3</span> ggplotの解説</a></li>
-<li><a href="reference.html#統計学計量分析を学ぶ" id="toc-統計学計量分析を学ぶ"><span class="toc-section-number">12.4</span> 統計学・計量分析を学ぶ</a></li>
+<li class="chapter" data-level="3.3.1" data-path="import.html"><a href="import.html#import_dir"><i class="fa fa-check"></i><b>3.3.1</b> データを置く場所を作る</a></li>
+<li class="chapter" data-level="3.3.2" data-path="import.html"><a href="import.html#csv形式のファイル"><i class="fa fa-check"></i><b>3.3.2</b> csv形式のファイル</a></li>
+<li class="chapter" data-level="3.3.3" data-path="import.html"><a href="import.html#xlsx形式のファイル"><i class="fa fa-check"></i><b>3.3.3</b> xlsx形式のファイル</a></li>
+<li class="chapter" data-level="3.3.4" data-path="import.html"><a href="import.html#import_rds"><i class="fa fa-check"></i><b>3.3.4</b> rds形式のファイル</a></li>
+<li class="chapter" data-level="3.3.5" data-path="import.html"><a href="import.html#sav形式のファイル"><i class="fa fa-check"></i><b>3.3.5</b> sav形式のファイル</a></li>
+<li class="chapter" data-level="3.3.6" data-path="import.html"><a href="import.html#dta形式のファイル"><i class="fa fa-check"></i><b>3.3.6</b> dta形式のファイル</a></li>
+<li class="chapter" data-level="3.3.7" data-path="import.html"><a href="import.html#文字コードに関わる問題"><i class="fa fa-check"></i><b>3.3.7</b> 文字コードに関わる問題</a></li>
 </ul></li>
-<li><a href="footnote.html#footnote" id="toc-footnote"><span class="toc-section-number">13</span> 脚注</a></li>
+<li class="chapter" data-level="3.4" data-path="import.html"><a href="import.html#ウェブ上のデータの読み込み"><i class="fa fa-check"></i><b>3.4</b> ウェブ上のデータの読み込み</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="handling.html"><a href="handling.html"><i class="fa fa-check"></i><b>4</b> データの加工</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="handling.html"><a href="handling.html#本資料で用いるデータ"><i class="fa fa-check"></i><b>4.1</b> 本資料で用いるデータ</a></li>
+<li class="chapter" data-level="4.2" data-path="handling.html"><a href="handling.html#データ加工のステップ"><i class="fa fa-check"></i><b>4.2</b> データ加工のステップ</a></li>
+<li class="chapter" data-level="4.3" data-path="handling.html"><a href="handling.html#変数の作成"><i class="fa fa-check"></i><b>4.3</b> 変数の作成</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="handling.html"><a href="handling.html#変数の型カテゴリ変数と連続変数"><i class="fa fa-check"></i><b>4.3.1</b> 変数の型（カテゴリ変数と連続変数）</a></li>
+<li class="chapter" data-level="4.3.2" data-path="handling.html"><a href="handling.html#新たな変数をつくるmutate"><i class="fa fa-check"></i><b>4.3.2</b> 新たな変数をつくる：mutate()</a></li>
+<li class="chapter" data-level="4.3.3" data-path="handling.html"><a href="handling.html#条件の指定if_else"><i class="fa fa-check"></i><b>4.3.3</b> 条件の指定：if_else()</a></li>
+<li class="chapter" data-level="4.3.4" data-path="handling.html"><a href="handling.html#複数条件の指定case_when"><i class="fa fa-check"></i><b>4.3.4</b> 複数条件の指定：case_when()</a></li>
+<li class="chapter" data-level="4.3.5" data-path="handling.html"><a href="handling.html#カテゴリ変数へ変換factor"><i class="fa fa-check"></i><b>4.3.5</b> カテゴリ変数へ変換：factor()</a></li>
+<li class="chapter" data-level="4.3.6" data-path="handling.html"><a href="handling.html#必要な列のみ抽出select"><i class="fa fa-check"></i><b>4.3.6</b> 必要な列のみ抽出：select()</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="handling.html"><a href="handling.html#handling-tips"><i class="fa fa-check"></i><b>4.4</b> 変数の作成についてのtips</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="handling.html"><a href="handling.html#カテゴリをまとめる"><i class="fa fa-check"></i><b>4.4.1</b> カテゴリをまとめる</a></li>
+<li class="chapter" data-level="4.4.2" data-path="handling.html"><a href="handling.html#複数の変数を組み合わせた変数を作る"><i class="fa fa-check"></i><b>4.4.2</b> 複数の変数を組み合わせた変数を作る</a></li>
+<li class="chapter" data-level="4.4.3" data-path="handling.html"><a href="handling.html#均等な順序を仮定して連続変数とする"><i class="fa fa-check"></i><b>4.4.3</b> 均等な順序を仮定して連続変数とする</a></li>
+<li class="chapter" data-level="4.4.4" data-path="handling.html"><a href="handling.html#無回答非該当わからないなどをnaに"><i class="fa fa-check"></i><b>4.4.4</b> 無回答、非該当、「わからない」などをNAに</a></li>
+<li class="chapter" data-level="4.4.5" data-path="handling.html"><a href="handling.html#カテゴリ変数の区間の中点をとって連続変数とする"><i class="fa fa-check"></i><b>4.4.5</b> カテゴリ変数の区間の中点をとって連続変数とする</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="handling.html"><a href="handling.html#をつなげてコマンドをまとめる"><i class="fa fa-check"></i><b>4.5</b> %&gt;%をつなげてコマンドをまとめる</a></li>
+<li class="chapter" data-level="4.6" data-path="handling.html"><a href="handling.html#handling_sample"><i class="fa fa-check"></i><b>4.6</b> サンプルの限定</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="handling.html"><a href="handling.html#該当するケースだけを残すfilter"><i class="fa fa-check"></i><b>4.6.1</b> 該当するケースだけを残す：filter()</a></li>
+<li class="chapter" data-level="4.6.2" data-path="handling.html"><a href="handling.html#欠損値の扱い"><i class="fa fa-check"></i><b>4.6.2</b> 欠損値の扱い</a></li>
+<li class="chapter" data-level="4.6.3" data-path="handling.html"><a href="handling.html#外れ値の扱い"><i class="fa fa-check"></i><b>4.6.3</b> 外れ値の扱い</a></li>
+<li class="chapter" data-level="4.6.4" data-path="handling.html"><a href="handling.html#分析用データを書き出す"><i class="fa fa-check"></i><b>4.6.4</b> 分析用データを書き出す</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="handling.html"><a href="handling.html#データの追加発展"><i class="fa fa-check"></i><b>4.7</b> データの追加（発展）</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="descriptives.html"><a href="descriptives.html"><i class="fa fa-check"></i><b>5</b> 1変数の集計</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="descriptives.html"><a href="descriptives.html#連続変数を集計する"><i class="fa fa-check"></i><b>5.1</b> 連続変数を集計する</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="descriptives.html"><a href="descriptives.html#descriptives_summarize"><i class="fa fa-check"></i><b>5.1.1</b> 要約統計量の計算</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="descriptives.html"><a href="descriptives.html#descriptives_ggplot"><i class="fa fa-check"></i><b>5.2</b> 分布をみる</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="descriptives.html"><a href="descriptives.html#ヒストグラムとggplotの導入"><i class="fa fa-check"></i><b>5.2.1</b> ヒストグラムとggplotの導入</a></li>
+<li class="chapter" data-level="5.2.2" data-path="descriptives.html"><a href="descriptives.html#ggplotの設定日本語関係"><i class="fa fa-check"></i><b>5.2.2</b> ggplotの設定（日本語関係）</a></li>
+<li class="chapter" data-level="5.2.3" data-path="descriptives.html"><a href="descriptives.html#軸に名前をつける"><i class="fa fa-check"></i><b>5.2.3</b> 軸に名前をつける</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="descriptives.html"><a href="descriptives.html#カテゴリ変数を集計する"><i class="fa fa-check"></i><b>5.3</b> カテゴリ変数を集計する</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="descriptives.html"><a href="descriptives.html#descriptives_table"><i class="fa fa-check"></i><b>5.3.1</b> 度数の確認</a></li>
+<li class="chapter" data-level="5.3.2" data-path="descriptives.html"><a href="descriptives.html#分布の可視化棒グラフ"><i class="fa fa-check"></i><b>5.3.2</b> 分布の可視化：棒グラフ</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="descriptives.html"><a href="descriptives.html#descriptives_gtsummary"><i class="fa fa-check"></i><b>5.4</b> 記述統計量の一覧表を作る</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="descriptives.html"><a href="descriptives.html#記述統計量の一覧表"><i class="fa fa-check"></i><b>5.4.1</b> 記述統計量の一覧表</a></li>
+<li class="chapter" data-level="5.4.2" data-path="descriptives.html"><a href="descriptives.html#グループ別の記述統計量の一覧表"><i class="fa fa-check"></i><b>5.4.2</b> グループ別の記述統計量の一覧表</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="descriptives.html"><a href="descriptives.html#結果をファイルに書き出す"><i class="fa fa-check"></i><b>5.5</b> 結果をファイルに書き出す</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="descriptives.html"><a href="descriptives.html#結果を入れるためのフォルダを作る"><i class="fa fa-check"></i><b>5.5.1</b> 結果を入れるためのフォルダを作る</a></li>
+<li class="chapter" data-level="5.5.2" data-path="descriptives.html"><a href="descriptives.html#descriptive_export_ggplot"><i class="fa fa-check"></i><b>5.5.2</b> ggplotで作成した図を書き出す</a></li>
+<li class="chapter" data-level="5.5.3" data-path="descriptives.html"><a href="descriptives.html#descriptive_export_tbl_summary"><i class="fa fa-check"></i><b>5.5.3</b> 記述統計の一覧表をwordに書き出す</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="tabulate.html"><a href="tabulate.html"><i class="fa fa-check"></i><b>6</b> 2変数の集計</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="tabulate.html"><a href="tabulate.html#tabulate_summarize"><i class="fa fa-check"></i><b>6.1</b> 平均値の比較</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="tabulate.html"><a href="tabulate.html#基本"><i class="fa fa-check"></i><b>6.1.1</b> 基本</a></li>
+<li class="chapter" data-level="6.1.2" data-path="tabulate.html"><a href="tabulate.html#棒グラフによる可視化"><i class="fa fa-check"></i><b>6.1.2</b> 棒グラフによる可視化</a></li>
+<li class="chapter" data-level="6.1.3" data-path="tabulate.html"><a href="tabulate.html#複数カテゴリの組み合わせ"><i class="fa fa-check"></i><b>6.1.3</b> 複数カテゴリの組み合わせ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="tabulate.html"><a href="tabulate.html#分布の比較"><i class="fa fa-check"></i><b>6.2</b> 分布の比較</a></li>
+<li class="chapter" data-level="6.3" data-path="tabulate.html"><a href="tabulate.html#クロス集計表"><i class="fa fa-check"></i><b>6.3</b> クロス集計表</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="tabulate.html"><a href="tabulate.html#基本-1"><i class="fa fa-check"></i><b>6.3.1</b> 基本</a></li>
+<li class="chapter" data-level="6.3.2" data-path="tabulate.html"><a href="tabulate.html#カイ2乗検定発展"><i class="fa fa-check"></i><b>6.3.2</b> カイ2乗検定（発展）</a></li>
+<li class="chapter" data-level="6.3.3" data-path="tabulate.html"><a href="tabulate.html#きれいなクロス表をつくる---gtsummarytbl_cross"><i class="fa fa-check"></i><b>6.3.3</b> きれいなクロス表をつくる - gtsummary::tbl_cross()</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="tabulate.html"><a href="tabulate.html#クロス集計表を図示する"><i class="fa fa-check"></i><b>6.4</b> クロス集計表を図示する</a></li>
+<li class="chapter" data-level="6.5" data-path="tabulate.html"><a href="tabulate.html#散布図"><i class="fa fa-check"></i><b>6.5</b> 散布図</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="tabulate.html"><a href="tabulate.html#散布図をみる"><i class="fa fa-check"></i><b>6.5.1</b> 散布図をみる</a></li>
+<li class="chapter" data-level="6.5.2" data-path="tabulate.html"><a href="tabulate.html#カテゴリごとに散布図を分ける"><i class="fa fa-check"></i><b>6.5.2</b> カテゴリごとに散布図を分ける</a></li>
+<li class="chapter" data-level="6.5.3" data-path="tabulate.html"><a href="tabulate.html#相関係数"><i class="fa fa-check"></i><b>6.5.3</b> 相関係数</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="tabulate.html"><a href="tabulate.html#変数集計のときのくふう"><i class="fa fa-check"></i><b>6.6</b> 2変数集計のときのくふう</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="tabulate.html"><a href="tabulate.html#値が粗い連続変数を扱う"><i class="fa fa-check"></i><b>6.6.1</b> 値が粗い連続変数を扱う</a></li>
+<li class="chapter" data-level="6.6.2" data-path="tabulate.html"><a href="tabulate.html#カテゴリが多いクロス集計表を扱う"><i class="fa fa-check"></i><b>6.6.2</b> カテゴリが多いクロス集計表を扱う</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="tabulate.html"><a href="tabulate.html#結果をファイルに書き出す-1"><i class="fa fa-check"></i><b>6.7</b> 結果をファイルに書き出す</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="tabulate.html"><a href="tabulate.html#ggplotで作成した図を書き出す"><i class="fa fa-check"></i><b>6.7.1</b> ggplotで作成した図を書き出す</a></li>
+<li class="chapter" data-level="6.7.2" data-path="tabulate.html"><a href="tabulate.html#クロス集計表をwordファイルに書き出す"><i class="fa fa-check"></i><b>6.7.2</b> クロス集計表をwordファイルに書き出す</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="regression_basic.html"><a href="regression_basic.html"><i class="fa fa-check"></i><b>7</b> 回帰分析の基礎</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="regression_basic.html"><a href="regression_basic.html#回帰分析とは何か"><i class="fa fa-check"></i><b>7.1</b> 回帰分析とは何か</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="regression_basic.html"><a href="regression_basic.html#散布図を眺める"><i class="fa fa-check"></i><b>7.1.1</b> 散布図を眺める</a></li>
+<li class="chapter" data-level="7.1.2" data-path="regression_basic.html"><a href="regression_basic.html#回帰式の読み方"><i class="fa fa-check"></i><b>7.1.2</b> 回帰式の読み方</a></li>
+<li class="chapter" data-level="7.1.3" data-path="regression_basic.html"><a href="regression_basic.html#発展回帰式の決め方最小二乗法"><i class="fa fa-check"></i><b>7.1.3</b> （発展）回帰式の決め方：最小二乗法</a></li>
+<li class="chapter" data-level="7.1.4" data-path="regression_basic.html"><a href="regression_basic.html#母集団における関係の推測"><i class="fa fa-check"></i><b>7.1.4</b> 母集団における関係の推測</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="regression_basic.html"><a href="regression_basic.html#独立変数がカテゴリ変数の場合"><i class="fa fa-check"></i><b>7.2</b> 独立変数がカテゴリ変数の場合</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="regression_basic.html"><a href="regression_basic.html#値のカテゴリ"><i class="fa fa-check"></i><b>7.2.1</b> 2値のカテゴリ</a></li>
+<li class="chapter" data-level="7.2.2" data-path="regression_basic.html"><a href="regression_basic.html#値以上のカテゴリ"><i class="fa fa-check"></i><b>7.2.2</b> 3値以上のカテゴリ</a></li>
+<li class="chapter" data-level="7.2.3" data-path="regression_basic.html"><a href="regression_basic.html#変数がfactorであれば自動でカテゴリとして投入される"><i class="fa fa-check"></i><b>7.2.3</b> 変数がfactorであれば自動でカテゴリとして投入される</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="regression_basic.html"><a href="regression_basic.html#regression_basic_binary"><i class="fa fa-check"></i><b>7.3</b> 従属変数が2値のカテゴリ変数（0/1）の場合</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="regression_basic.html"><a href="regression_basic.html#クロス集計と比較しながら結果をみる"><i class="fa fa-check"></i><b>7.3.1</b> クロス集計と比較しながら結果をみる</a></li>
+<li class="chapter" data-level="7.3.2" data-path="regression_basic.html"><a href="regression_basic.html#散布図と比較しながら結果をみる"><i class="fa fa-check"></i><b>7.3.2</b> 散布図と比較しながら結果をみる</a></li>
+<li class="chapter" data-level="7.3.3" data-path="regression_basic.html"><a href="regression_basic.html#注意点"><i class="fa fa-check"></i><b>7.3.3</b> 注意点</a></li>
+<li class="chapter" data-level="7.3.4" data-path="regression_basic.html"><a href="regression_basic.html#発展ロバスト標準誤差"><i class="fa fa-check"></i><b>7.3.4</b> （発展）ロバスト標準誤差</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="regression_basic.html"><a href="regression_basic.html#発展非線形の関連"><i class="fa fa-check"></i><b>7.4</b> （発展）非線形の関連</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="regression_basic.html"><a href="regression_basic.html#regression_basic_log"><i class="fa fa-check"></i><b>7.4.1</b> 対数変換</a></li>
+<li class="chapter" data-level="7.4.2" data-path="regression_basic.html"><a href="regression_basic.html#次関数型"><i class="fa fa-check"></i><b>7.4.2</b> 2次関数型</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="regression_basic.html"><a href="regression_basic.html#regression_modelsummary"><i class="fa fa-check"></i><b>7.5</b> 回帰分析の結果をきれいに表示する</a></li>
+<li class="chapter" data-level="7.6" data-path="regression_basic.html"><a href="regression_basic.html#regression_basic_export"><i class="fa fa-check"></i><b>7.6</b> 結果をファイルに書き出す</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="regression_basic.html"><a href="regression_basic.html#wordファイルに書き出す"><i class="fa fa-check"></i><b>7.6.1</b> wordファイルに書き出す</a></li>
+<li class="chapter" data-level="7.6.2" data-path="regression_basic.html"><a href="regression_basic.html#excelファイルに書き出す"><i class="fa fa-check"></i><b>7.6.2</b> Excelファイルに書き出す</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="regression_advanced.html"><a href="regression_advanced.html"><i class="fa fa-check"></i><b>8</b> 回帰分析の活用</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="regression_advanced.html"><a href="regression_advanced.html#重回帰分析"><i class="fa fa-check"></i><b>8.1</b> 重回帰分析</a></li>
+<li class="chapter" data-level="8.2" data-path="regression_advanced.html"><a href="regression_advanced.html#交絡要因の統制"><i class="fa fa-check"></i><b>8.2</b> 交絡要因の統制</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="regression_advanced.html"><a href="regression_advanced.html#交絡とは何か"><i class="fa fa-check"></i><b>8.2.1</b> 交絡とは何か</a></li>
+<li class="chapter" data-level="8.2.2" data-path="regression_advanced.html"><a href="regression_advanced.html#結果の比較と解釈"><i class="fa fa-check"></i><b>8.2.2</b> 結果の比較と解釈</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="regression_advanced.html"><a href="regression_advanced.html#媒介分析要因分解"><i class="fa fa-check"></i><b>8.3</b> 媒介分析／要因分解</a></li>
+<li class="chapter" data-level="8.4" data-path="regression_advanced.html"><a href="regression_advanced.html#回帰分析の実際"><i class="fa fa-check"></i><b>8.4</b> 回帰分析の実際</a></li>
+<li class="chapter" data-level="8.5" data-path="regression_advanced.html"><a href="regression_advanced.html#結果をファイルに書き出す-2"><i class="fa fa-check"></i><b>8.5</b> 結果をファイルに書き出す</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regression_interaction.html"><a href="regression_interaction.html"><i class="fa fa-check"></i><b>9</b> 交互作用（作成中）</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="regression_interaction.html"><a href="regression_interaction.html#交互作用とはなにか"><i class="fa fa-check"></i><b>9.1</b> 交互作用とはなにか</a></li>
+<li class="chapter" data-level="9.2" data-path="regression_interaction.html"><a href="regression_interaction.html#xが連続変数zがカテゴリ変数の場合"><i class="fa fa-check"></i><b>9.2</b> xが連続変数、zがカテゴリ変数の場合</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="regression_interaction.html"><a href="regression_interaction.html#実例数的思考力が賃金を高める効果は性別によって異なるか"><i class="fa fa-check"></i><b>9.2.1</b> 実例：数的思考力が賃金を高める効果は性別によって異なるか？</a></li>
+<li class="chapter" data-level="9.2.2" data-path="regression_interaction.html"><a href="regression_interaction.html#結果を図示する"><i class="fa fa-check"></i><b>9.2.2</b> 結果を図示する</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="regression_interaction.html"><a href="regression_interaction.html#xがカテゴリ変数zが連続変数の場合作成中"><i class="fa fa-check"></i><b>9.3</b> xがカテゴリ変数、zが連続変数の場合（作成中）</a></li>
+<li class="chapter" data-level="9.4" data-path="regression_interaction.html"><a href="regression_interaction.html#xが連続変数zが連続変数の場合作成中"><i class="fa fa-check"></i><b>9.4</b> xが連続変数、zが連続変数の場合（作成中）</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="logit.html"><a href="logit.html"><i class="fa fa-check"></i><b>10</b> ロジスティック回帰分析（作成中）</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="logit.html"><a href="logit.html#二値変数を従属変数にする線形回帰分析を使ったアプローチ"><i class="fa fa-check"></i><b>10.1</b> 二値変数を従属変数にする：線形回帰分析を使ったアプローチ</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="logit.html"><a href="logit.html#線形確率モデル"><i class="fa fa-check"></i><b>10.1.1</b> 線形確率モデル</a></li>
+<li class="chapter" data-level="10.1.2" data-path="logit.html"><a href="logit.html#残差が正規分布しない問題への対処"><i class="fa fa-check"></i><b>10.1.2</b> 残差が正規分布しない問題への対処</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="logit.html"><a href="logit.html#ロジスティック回帰分析とは"><i class="fa fa-check"></i><b>10.2</b> ロジスティック回帰分析とは</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="logit.html"><a href="logit.html#ロジスティック回帰分析ロジットモデル"><i class="fa fa-check"></i><b>10.2.1</b> ロジスティック回帰分析（ロジットモデル）</a></li>
+<li class="chapter" data-level="10.2.2" data-path="logit.html"><a href="logit.html#対数オッズ比の解釈"><i class="fa fa-check"></i><b>10.2.2</b> 対数オッズ比の解釈</a></li>
+<li class="chapter" data-level="10.2.3" data-path="logit.html"><a href="logit.html#連続変数を独立変数とする場合"><i class="fa fa-check"></i><b>10.2.3</b> 連続変数を独立変数とする場合</a></li>
+<li class="chapter" data-level="10.2.4" data-path="logit.html"><a href="logit.html#平均限界効果"><i class="fa fa-check"></i><b>10.2.4</b> 平均限界効果</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="logit.html"><a href="logit.html#ロジスティック回帰分析の注意点"><i class="fa fa-check"></i><b>10.3</b> ロジスティック回帰分析の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="domain.html"><a href="domain.html"><i class="fa fa-check"></i><b>11</b> 社会学のデータ分析でよくある処理</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="domain.html"><a href="domain.html#ssm職業小分類を大分類にまとめる"><i class="fa fa-check"></i><b>11.1</b> SSM職業小分類を大分類にまとめる</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="domain.html"><a href="domain.html#jgssの場合"><i class="fa fa-check"></i><b>11.1.1</b> JGSSの場合</a></li>
+<li class="chapter" data-level="11.1.2" data-path="domain.html"><a href="domain.html#ssmの場合"><i class="fa fa-check"></i><b>11.1.2</b> SSMの場合</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="domain.html"><a href="domain.html#旧制学歴と新制学歴の対応"><i class="fa fa-check"></i><b>11.2</b> 旧制学歴と新制学歴の対応</a></li>
+<li class="chapter" data-level="11.3" data-path="domain.html"><a href="domain.html#domain_income"><i class="fa fa-check"></i><b>11.3</b> 年収カテゴリを連続変数にする</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="domain.html"><a href="domain.html#年収を連続変数にする"><i class="fa fa-check"></i><b>11.3.1</b> 年収を連続変数にする</a></li>
+<li class="chapter" data-level="11.3.2" data-path="domain.html"><a href="domain.html#時間あたり賃金を作成する"><i class="fa fa-check"></i><b>11.3.2</b> 時間あたり賃金を作成する</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="domain.html"><a href="domain.html#都道府県変数の加工"><i class="fa fa-check"></i><b>11.4</b> 都道府県変数の加工</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="domain.html"><a href="domain.html#都道府県にラベルをつける"><i class="fa fa-check"></i><b>11.4.1</b> 都道府県にラベルをつける</a></li>
+<li class="chapter" data-level="11.4.2" data-path="domain.html"><a href="domain.html#都道府県レベルの指標を外挿する"><i class="fa fa-check"></i><b>11.4.2</b> 都道府県レベルの指標を外挿する</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="writepaper.html"><a href="writepaper.html"><i class="fa fa-check"></i><b>12</b> 論文のまとめ方</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="writepaper.html"><a href="writepaper.html#全体の構成"><i class="fa fa-check"></i><b>12.1</b> 全体の構成</a></li>
+<li class="chapter" data-level="12.2" data-path="writepaper.html"><a href="writepaper.html#タイトル"><i class="fa fa-check"></i><b>12.2</b> タイトル</a></li>
+<li class="chapter" data-level="12.3" data-path="writepaper.html"><a href="writepaper.html#要約"><i class="fa fa-check"></i><b>12.3</b> 要約</a></li>
+<li class="chapter" data-level="12.4" data-path="writepaper.html"><a href="writepaper.html#序論"><i class="fa fa-check"></i><b>12.4</b> 序論</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="writepaper.html"><a href="writepaper.html#問題背景1段落"><i class="fa fa-check"></i><b>12.4.1</b> 問題背景（1段落）</a></li>
+<li class="chapter" data-level="12.4.2" data-path="writepaper.html"><a href="writepaper.html#先行研究の検討12段落"><i class="fa fa-check"></i><b>12.4.2</b> 先行研究の検討（1–2段落）</a></li>
+<li class="chapter" data-level="12.4.3" data-path="writepaper.html"><a href="writepaper.html#研究目的と方法12段落"><i class="fa fa-check"></i><b>12.4.3</b> 研究目的と方法（1–2段落）</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="writepaper.html"><a href="writepaper.html#先行研究理論枠組み仮説"><i class="fa fa-check"></i><b>12.5</b> 先行研究・理論枠組み・仮説</a></li>
+<li class="chapter" data-level="12.6" data-path="writepaper.html"><a href="writepaper.html#方法-1"><i class="fa fa-check"></i><b>12.6</b> 方法</a>
+<ul>
+<li class="chapter" data-level="12.6.1" data-path="writepaper.html"><a href="writepaper.html#データと分析対象"><i class="fa fa-check"></i><b>12.6.1</b> データと分析対象</a></li>
+<li class="chapter" data-level="12.6.2" data-path="writepaper.html"><a href="writepaper.html#変数"><i class="fa fa-check"></i><b>12.6.2</b> 変数</a></li>
+<li class="chapter" data-level="12.6.3" data-path="writepaper.html"><a href="writepaper.html#分析手法"><i class="fa fa-check"></i><b>12.6.3</b> 分析手法</a></li>
+</ul></li>
+<li class="chapter" data-level="12.7" data-path="writepaper.html"><a href="writepaper.html#結果"><i class="fa fa-check"></i><b>12.7</b> 結果</a>
+<ul>
+<li class="chapter" data-level="12.7.1" data-path="writepaper.html"><a href="writepaper.html#記述的分析"><i class="fa fa-check"></i><b>12.7.1</b> 記述的分析</a></li>
+<li class="chapter" data-level="12.7.2" data-path="writepaper.html"><a href="writepaper.html#回帰分析"><i class="fa fa-check"></i><b>12.7.2</b> 回帰分析</a></li>
+</ul></li>
+<li class="chapter" data-level="12.8" data-path="writepaper.html"><a href="writepaper.html#結論"><i class="fa fa-check"></i><b>12.8</b> 結論</a>
+<ul>
+<li class="chapter" data-level="12.8.1" data-path="writepaper.html"><a href="writepaper.html#背景と目的の再確認1段落"><i class="fa fa-check"></i><b>12.8.1</b> 背景と目的の再確認（1段落）</a></li>
+<li class="chapter" data-level="12.8.2" data-path="writepaper.html"><a href="writepaper.html#分析結果の要約と解釈23段落"><i class="fa fa-check"></i><b>12.8.2</b> 分析結果の要約と解釈（2–3段落）</a></li>
+<li class="chapter" data-level="12.8.3" data-path="writepaper.html"><a href="writepaper.html#課題限界1段落"><i class="fa fa-check"></i><b>12.8.3</b> 課題・限界（1段落）</a></li>
+<li class="chapter" data-level="12.8.4" data-path="writepaper.html"><a href="writepaper.html#まとめ1段落任意"><i class="fa fa-check"></i><b>12.8.4</b> まとめ（1段落、任意）</a></li>
+</ul></li>
+<li class="chapter" data-level="12.9" data-path="writepaper.html"><a href="writepaper.html#謝辞"><i class="fa fa-check"></i><b>12.9</b> 謝辞</a></li>
+<li class="chapter" data-level="12.10" data-path="writepaper.html"><a href="writepaper.html#参考文献-1"><i class="fa fa-check"></i><b>12.10</b> 参考文献</a></li>
+<li class="chapter" data-level="12.11" data-path="writepaper.html"><a href="writepaper.html#形式上の注意事項"><i class="fa fa-check"></i><b>12.11</b> 形式上の注意事項</a>
+<ul>
+<li class="chapter" data-level="12.11.1" data-path="writepaper.html"><a href="writepaper.html#推奨するwordの設定"><i class="fa fa-check"></i><b>12.11.1</b> 推奨するWordの設定</a></li>
+<li class="chapter" data-level="12.11.2" data-path="writepaper.html"><a href="writepaper.html#引用の形式"><i class="fa fa-check"></i><b>12.11.2</b> 引用の形式</a></li>
+<li class="chapter" data-level="12.11.3" data-path="writepaper.html"><a href="writepaper.html#図表の形式"><i class="fa fa-check"></i><b>12.11.3</b> 図表の形式</a></li>
+<li class="chapter" data-level="12.11.4" data-path="writepaper.html"><a href="writepaper.html#脚注"><i class="fa fa-check"></i><b>12.11.4</b> 脚注</a></li>
+<li class="chapter" data-level="12.11.5" data-path="writepaper.html"><a href="writepaper.html#参考文献の記載例"><i class="fa fa-check"></i><b>12.11.5</b> 参考文献の記載例</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="presentation.html"><a href="presentation.html"><i class="fa fa-check"></i><b>13</b> 研究発表をする</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="presentation.html"><a href="presentation.html#タイトルと名前"><i class="fa fa-check"></i><b>13.1</b> タイトルと名前</a></li>
+<li class="chapter" data-level="13.2" data-path="presentation.html"><a href="presentation.html#序論問題背景"><i class="fa fa-check"></i><b>13.2</b> 序論・問題背景</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="presentation.html"><a href="presentation.html#問題背景1ページ"><i class="fa fa-check"></i><b>13.2.1</b> 問題背景（1ページ）</a></li>
+<li class="chapter" data-level="13.2.2" data-path="presentation.html"><a href="presentation.html#先行研究で明らかになっていない点1ページ"><i class="fa fa-check"></i><b>13.2.2</b> 先行研究で明らかになっていない点（1ページ）</a></li>
+<li class="chapter" data-level="13.2.3" data-path="presentation.html"><a href="presentation.html#研究目的問い1ページ"><i class="fa fa-check"></i><b>13.2.3</b> 研究目的・問い（1ページ）</a></li>
+<li class="chapter" data-level="13.2.4" data-path="presentation.html"><a href="presentation.html#仮説任意-1ページ"><i class="fa fa-check"></i><b>13.2.4</b> 仮説（任意, 1ページ）</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="presentation.html"><a href="presentation.html#方法-2"><i class="fa fa-check"></i><b>13.3</b> 方法</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="presentation.html"><a href="presentation.html#データと分析対象1ページ"><i class="fa fa-check"></i><b>13.3.1</b> データと分析対象（1ページ）</a></li>
+<li class="chapter" data-level="13.3.2" data-path="presentation.html"><a href="presentation.html#用いる変数1ページ"><i class="fa fa-check"></i><b>13.3.2</b> 用いる変数（1ページ）</a></li>
+<li class="chapter" data-level="13.3.3" data-path="presentation.html"><a href="presentation.html#分析方法任意-1ページ"><i class="fa fa-check"></i><b>13.3.3</b> 分析方法（任意, 1ページ）</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="presentation.html"><a href="presentation.html#分析結果"><i class="fa fa-check"></i><b>13.4</b> 分析結果</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="presentation.html"><a href="presentation.html#変数の分析xページ"><i class="fa fa-check"></i><b>13.4.1</b> 2変数の分析（xページ）</a></li>
+<li class="chapter" data-level="13.4.2" data-path="presentation.html"><a href="presentation.html#回帰分析などxページ"><i class="fa fa-check"></i><b>13.4.2</b> 回帰分析など（xページ）</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="presentation.html"><a href="presentation.html#結論-1"><i class="fa fa-check"></i><b>13.5</b> 結論</a>
+<ul>
+<li class="chapter" data-level="13.5.1" data-path="presentation.html"><a href="presentation.html#分析結果のまとめ1ページ任意"><i class="fa fa-check"></i><b>13.5.1</b> 分析結果のまとめ（1ページ、任意）</a></li>
+<li class="chapter" data-level="13.5.2" data-path="presentation.html"><a href="presentation.html#考察課題1ページ"><i class="fa fa-check"></i><b>13.5.2</b> 考察・課題（1ページ）</a></li>
+</ul></li>
+<li class="chapter" data-level="13.6" data-path="presentation.html"><a href="presentation.html#その他の一般的なtips"><i class="fa fa-check"></i><b>13.6</b> その他の一般的なTips</a>
+<ul>
+<li class="chapter" data-level="13.6.1" data-path="presentation.html"><a href="presentation.html#文字は大きく少なく"><i class="fa fa-check"></i><b>13.6.1</b> 文字は大きく少なく</a></li>
+<li class="chapter" data-level="13.6.2" data-path="presentation.html"><a href="presentation.html#スライドにはページ数を書く"><i class="fa fa-check"></i><b>13.6.2</b> スライドにはページ数を書く</a></li>
+<li class="chapter" data-level="13.6.3" data-path="presentation.html"><a href="presentation.html#スライドつくりの参考資料"><i class="fa fa-check"></i><b>13.6.3</b> スライドつくりの参考資料</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>14</b> さらなる学習のための参考文献</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="reference.html"><a href="reference.html#実証研究の基礎スキル"><i class="fa fa-check"></i><b>14.1</b> 実証研究の基礎スキル</a></li>
+<li class="chapter" data-level="14.2" data-path="reference.html"><a href="reference.html#rの使い方"><i class="fa fa-check"></i><b>14.2</b> Rの使い方</a></li>
+<li class="chapter" data-level="14.3" data-path="reference.html"><a href="reference.html#ggplotの解説"><i class="fa fa-check"></i><b>14.3</b> ggplotの解説</a></li>
+<li class="chapter" data-level="14.4" data-path="reference.html"><a href="reference.html#統計学計量分析を学ぶ"><i class="fa fa-check"></i><b>14.4</b> 統計学・計量分析を学ぶ</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -263,44 +503,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="logit" class="section level1" number="9">
-<h1><span class="header-section-number">Chapter 9</span> ロジスティック回帰分析（作成中）</h1>
+<div id="logit" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Chapter 10</span> ロジスティック回帰分析（作成中）<a href="logit.html#logit" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>本章では、前章で学んだ回帰分析を発展させて、複数の独立変数を扱う方法について説明する。</p>
 <p>内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project…」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。</p>
 <p>さらに、これまでの章で説明した以下のパッケージを読み込んだ上で、<a href="handling.html#handling">第4章</a>で作成したデータを読み込んで<code>piaac</code>というデータフレームに入れていることを前提とする。具体的には、以下のコードを実行しておく必要がある。</p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="logit.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb311-2"><a href="logit.html#cb311-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb311-3"><a href="logit.html#cb311-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
-<span id="cb311-4"><a href="logit.html#cb311-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb311-5"><a href="logit.html#cb311-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb311-6"><a href="logit.html#cb311-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb311-7"><a href="logit.html#cb311-7" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="logit.html#cb326-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb326-2"><a href="logit.html#cb326-2" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb326-3"><a href="logit.html#cb326-3" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb326-4"><a href="logit.html#cb326-4" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb326-5"><a href="logit.html#cb326-5" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb326-6"><a href="logit.html#cb326-6" tabindex="-1"></a></span>
+<span id="cb326-7"><a href="logit.html#cb326-7" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
 <p><a href="descriptives.html#descriptives_ggplot">第5章で確認したように</a>、ggplotの設定を変更しておくことで見やすいグラフを作ることができる。ここでは以下のコードを実行している。</p>
 <p>Macの場合：</p>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="logit.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
-<span id="cb312-2"><a href="logit.html#cb312-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>,</span>
-<span id="cb312-3"><a href="logit.html#cb312-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
-<span id="cb312-4"><a href="logit.html#cb312-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb312-5"><a href="logit.html#cb312-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
-<span id="cb312-6"><a href="logit.html#cb312-6" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="logit.html#cb327-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb327-2"><a href="logit.html#cb327-2" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>,</span>
+<span id="cb327-3"><a href="logit.html#cb327-3" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb327-4"><a href="logit.html#cb327-4" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb327-5"><a href="logit.html#cb327-5" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb327-6"><a href="logit.html#cb327-6" tabindex="-1"></a>))</span></code></pre></div>
 <p>Windowsの場合：</p>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="logit.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
-<span id="cb313-2"><a href="logit.html#cb313-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
-<span id="cb313-3"><a href="logit.html#cb313-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb313-4"><a href="logit.html#cb313-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
-<span id="cb313-5"><a href="logit.html#cb313-5" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
-<div id="二値変数を従属変数にする線形回帰分析を使ったアプローチ" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> 二値変数を従属変数にする：線形回帰分析を使ったアプローチ</h2>
-<div id="線形確率モデル" class="section level3" number="9.1.1">
-<h3><span class="header-section-number">9.1.1</span> 線形確率モデル</h3>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="logit.html#cb328-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb328-2"><a href="logit.html#cb328-2" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb328-3"><a href="logit.html#cb328-3" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb328-4"><a href="logit.html#cb328-4" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb328-5"><a href="logit.html#cb328-5" tabindex="-1"></a>))</span></code></pre></div>
+<div id="二値変数を従属変数にする線形回帰分析を使ったアプローチ" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> 二値変数を従属変数にする：線形回帰分析を使ったアプローチ<a href="logit.html#二値変数を従属変数にする線形回帰分析を使ったアプローチ" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="線形確率モデル" class="section level3 hasAnchor" number="10.1.1">
+<h3><span class="header-section-number">10.1.1</span> 線形確率モデル<a href="logit.html#線形確率モデル" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><a href="regression_basic.html#regression_basic_binary">従属変数が2値のカテゴリ変数（0/1）の場合</a>ですでにみたように、0/1の値をとる二値変数を従属変数として回帰分析を使うことができる。</p>
 <p><span class="math display">\[
 y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 \]</span></p>
 <p>このとき、係数<span class="math inline">\(\beta_1\)</span>は他の変数<span class="math inline">\(x_2, \cdots, x_k\)</span>を一定としたうえで、<span class="math inline">\(x_1\)</span>が1単位高いと<span class="math inline">\(y\)</span>（従属変数が1をとる割合）がどれだけ高いのかを表す。</p>
 <p>たとえば、この1年間に職場での訓練（OJTとよぶ）を受ける率が性別によってどの程度異なるのかを知りたいとしたら、次のような式を推定する。</p>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="logit.html#cb314-1" aria-hidden="true" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender)</span>
-<span id="cb314-2"><a href="logit.html#cb314-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res1)</span></code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="logit.html#cb329-1" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender)</span>
+<span id="cb329-2"><a href="logit.html#cb329-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = ojt ~ gender, data = piaac)
@@ -320,8 +560,8 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 ## Multiple R-squared:  0.007116,   Adjusted R-squared:  0.006751 
 ## F-statistic: 19.54 on 1 and 2726 DF,  p-value: 1.026e-05</code></pre>
 <p>また、年齢とOJT受講の関係が線形であると仮定して、年齢および学歴が同じであったとしてもなお、性別によってOJTを受ける割合が異なっているかどうかを知りたいとしたら、次のような式を推定する。</p>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="logit.html#cb316-1" aria-hidden="true" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span>
-<span id="cb316-2"><a href="logit.html#cb316-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res2)</span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="logit.html#cb331-1" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span>
+<span id="cb331-2"><a href="logit.html#cb331-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = ojt ~ gender + age + educ, data = piaac)
@@ -347,291 +587,35 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 <p>この結果から、年齢および学歴が同程度であったとしても、男性がOJTを受ける割合は女性と比べて0.053ポイント（5.3 %ポイント）高いといえる。</p>
 <p>このように、0/1の値をとる二値変数を従属変数として回帰分析を推定するような場合を指して、線形確率モデル（linear probability model）と呼ぶ。</p>
 </div>
-<div id="残差が正規分布しない問題への対処" class="section level3" number="9.1.2">
-<h3><span class="header-section-number">9.1.2</span> 残差が正規分布しない問題への対処</h3>
+<div id="残差が正規分布しない問題への対処" class="section level3 hasAnchor" number="10.1.2">
+<h3><span class="header-section-number">10.1.2</span> 残差が正規分布しない問題への対処<a href="logit.html#残差が正規分布しない問題への対処" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>回帰分析で係数の標準誤差を求めるときには、残差が正規分布するという仮定が置かれている。しかしながら、線形確率モデルの場合はこの仮定は通常満たされない。このことを、<strong>不均一分散 heteroskedasticity</strong>という。不均一分散が生じている場合には、標準誤差にバイアスが生じる。そこで、不均一分散に対して頑健な標準誤差（<strong>ロバスト標準誤差 robust standard error</strong>）を用いることで、適切な標準誤差を計算することができる。</p>
 <p>ロバスト標準誤差を求める場合には、<code>estimatr</code>パッケージに含まれている<code>lm_robust()</code>関数を使うのが手っ取り早い。通常の<code>lm()</code>を、<code>lm_robust()</code>に変えるだけで、ロバスト標準誤差を計算してくれる。</p>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="logit.html#cb318-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(estimatr)</span></code></pre></div>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="logit.html#cb319-1" aria-hidden="true" tabindex="-1"></a>reg_res2_robust <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="logit.html#cb333-1" tabindex="-1"></a><span class="fu">library</span>(estimatr)</span></code></pre></div>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="logit.html#cb334-1" tabindex="-1"></a>reg_res2_robust <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span></code></pre></div>
 <p><code>lm()</code>で求めた推定結果と、<code>lm_robust()</code>で求めた推定結果を比べてみよう：</p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="logit.html#cb320-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;通常のSE&quot;</span> <span class="ot">=</span> reg_res2, <span class="st">&quot;Robust SE&quot;</span> <span class="ot">=</span> reg_res2_robust),</span>
-<span id="cb320-2"><a href="logit.html#cb320-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>,<span class="at">fmt =</span> <span class="dv">4</span>)</span></code></pre></div>
-<table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:center;">
-通常のSE
-</th>
-<th style="text-align:center;">
-Robust SE
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-(Intercept)
-</td>
-<td style="text-align:center;">
-0.2791***
-</td>
-<td style="text-align:center;">
-0.2791***
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-(0.0539)
-</td>
-<td style="text-align:center;">
-(0.0518)
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-gender男性
-</td>
-<td style="text-align:center;">
-0.0532**
-</td>
-<td style="text-align:center;">
-0.0532**
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-(0.0188)
-</td>
-<td style="text-align:center;">
-(0.0188)
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-age
-</td>
-<td style="text-align:center;">
-−0.0021*
-</td>
-<td style="text-align:center;">
-−0.0021*
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-(0.0008)
-</td>
-<td style="text-align:center;">
-(0.0008)
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-educ高校
-</td>
-<td style="text-align:center;">
-0.0635+
-</td>
-<td style="text-align:center;">
-0.0635*
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-(0.0350)
-</td>
-<td style="text-align:center;">
-(0.0308)
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-educ短大高専
-</td>
-<td style="text-align:center;">
-0.1653***
-</td>
-<td style="text-align:center;">
-0.1653***
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-(0.0370)
-</td>
-<td style="text-align:center;">
-(0.0338)
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-educ大学大学院
-</td>
-<td style="text-align:center;">
-0.2890***
-</td>
-<td style="text-align:center;">
-0.2890***
-</td>
-</tr>
-<tr>
-<td style="text-align:left;box-shadow: 0px 1px">
-</td>
-<td style="text-align:center;box-shadow: 0px 1px">
-(0.0357)
-</td>
-<td style="text-align:center;box-shadow: 0px 1px">
-(0.0326)
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Num.Obs.
-</td>
-<td style="text-align:center;">
-2728
-</td>
-<td style="text-align:center;">
-2728
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-R2
-</td>
-<td style="text-align:center;">
-0.058
-</td>
-<td style="text-align:center;">
-0.058
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-R2 Adj.
-</td>
-<td style="text-align:center;">
-0.056
-</td>
-<td style="text-align:center;">
-0.056
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-AIC
-</td>
-<td style="text-align:center;">
-3618.6
-</td>
-<td style="text-align:center;">
-3618.6
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-BIC
-</td>
-<td style="text-align:center;">
-3660.0
-</td>
-<td style="text-align:center;">
-3660.0
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-F
-</td>
-<td style="text-align:center;">
-33.484
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-RMSE
-</td>
-<td style="text-align:center;">
-0.47
-</td>
-<td style="text-align:center;">
-0.47
-</td>
-</tr>
-</tbody>
-<tfoot>
-<tr>
-<td style="padding: 0; " colspan="100%">
-<sup></sup> + p
-</td>
-</tr>
-</tfoot>
-</table>
-<p>通常の標準誤差を用いた場合と、ロバスト標準誤差を用いた場合とでは、わずかに標準誤差の値が異なっていることがわかる。このずれがどれくらい大きくなるかは、データや変数の性質によって変わってくる。ただし、係数の値には変化はないため、実質的な結論に違いが出ることはあまりない。線形確率モデルを使う場合には、基本的にはロバスト標準誤差を使うことが推奨されている。</p>
-</div>
-</div>
-<div id="ロジスティック回帰分析とは" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> ロジスティック回帰分析とは</h2>
-<div id="ロジスティック回帰分析ロジットモデル" class="section level3" number="9.2.1">
-<h3><span class="header-section-number">9.2.1</span> ロジスティック回帰分析（ロジットモデル）</h3>
-<p><span class="math display">\[
-\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
-\]</span></p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="logit.html#cb321-1" aria-hidden="true" tabindex="-1"></a>logit_res1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender, <span class="at">family =</span> binomial)</span>
-<span id="cb321-2"><a href="logit.html#cb321-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit_res1)</span></code></pre></div>
-<pre><code>## 
-## Call:
-## glm(formula = ojt ~ gender, family = binomial, data = piaac)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.0238  -1.0238  -0.8888   1.3392   1.4966  
-## 
-## Coefficients:
-##             Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept) -0.72486    0.05952 -12.178  &lt; 2e-16 ***
-## gender男性   0.35218    0.08006   4.399 1.09e-05 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 3593.8  on 2727  degrees of freedom
-## Residual deviance: 3574.3  on 2726  degrees of freedom
-## AIC: 3578.3
-## 
-## Number of Fisher Scoring iterations: 4</code></pre>
-<p>「gender男性」の行は、女性と比べて男性であると<strong>対数オッズ（log-odds）</strong>が<code>coef</code>高いことを表している。</p>
-</div>
-<div id="対数オッズ比の解釈" class="section level3" number="9.2.2">
-<h3><span class="header-section-number">9.2.2</span> 対数オッズ比の解釈</h3>
-<p>急に出てきた「対数オッズ比」とはなんだろうか？これを理解するために、クロス集計表を作ってみよう。性別ごとにOJTを受ける・受けない人数を集計したクロス集計表は次のようになる。ここでは説明を分かりやすくするために順序を変更している。</p>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="logit.html#cb323-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb323-2"><a href="logit.html#cb323-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">fct_relevel</span>(gender, <span class="st">&quot;男性&quot;</span>, <span class="st">&quot;女性&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb323-3"><a href="logit.html#cb323-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ojt =</span> <span class="fu">factor</span>(ojt, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">0</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;1（受けた）&quot;</span>, <span class="st">&quot;0（受けなかった）&quot;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb323-4"><a href="logit.html#cb323-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(gender, ojt)</span></code></pre></div>
-<div id="btsgyvmubb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>html {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="logit.html#cb335-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;通常のSE&quot;</span> <span class="ot">=</span> reg_res2, <span class="st">&quot;Robust SE&quot;</span> <span class="ot">=</span> reg_res2_robust),</span>
+<span id="cb335-2"><a href="logit.html#cb335-2" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>,<span class="at">fmt =</span> <span class="dv">4</span>)</span></code></pre></div>
+<div id="uwifhxejyn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#uwifhxejyn table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-#btsgyvmubb .gt_table {
+#uwifhxejyn thead, #uwifhxejyn tbody, #uwifhxejyn tfoot, #uwifhxejyn tr, #uwifhxejyn td, #uwifhxejyn th {
+  border-style: none;
+}
+
+#uwifhxejyn p {
+  margin: 0;
+  padding: 0;
+}
+
+#uwifhxejyn .gt_table {
   display: table;
   border-collapse: collapse;
+  line-height: normal;
   margin-left: auto;
   margin-right: auto;
   color: #333333;
@@ -654,7 +638,36 @@ RMSE
   border-left-color: #D3D3D3;
 }
 
-#btsgyvmubb .gt_heading {
+#uwifhxejyn .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#uwifhxejyn .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#uwifhxejyn .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#uwifhxejyn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -666,33 +679,13 @@ RMSE
   border-right-color: #D3D3D3;
 }
 
-#btsgyvmubb .gt_title {
-  color: #333333;
-  font-size: 125%;
-  font-weight: initial;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  border-bottom-color: #FFFFFF;
-  border-bottom-width: 0;
-}
-
-#btsgyvmubb .gt_subtitle {
-  color: #333333;
-  font-size: 85%;
-  font-weight: initial;
-  padding-top: 0;
-  padding-bottom: 6px;
-  border-top-color: #FFFFFF;
-  border-top-width: 0;
-}
-
-#btsgyvmubb .gt_bottom_border {
+#uwifhxejyn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#btsgyvmubb .gt_col_headings {
+#uwifhxejyn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -707,7 +700,7 @@ RMSE
   border-right-color: #D3D3D3;
 }
 
-#btsgyvmubb .gt_col_heading {
+#uwifhxejyn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -727,7 +720,7 @@ RMSE
   overflow-x: hidden;
 }
 
-#btsgyvmubb .gt_column_spanner_outer {
+#uwifhxejyn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -739,15 +732,15 @@ RMSE
   padding-right: 4px;
 }
 
-#btsgyvmubb .gt_column_spanner_outer:first-child {
+#uwifhxejyn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#btsgyvmubb .gt_column_spanner_outer:last-child {
+#uwifhxejyn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#btsgyvmubb .gt_column_spanner {
+#uwifhxejyn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -759,8 +752,15 @@ RMSE
   width: 100%;
 }
 
-#btsgyvmubb .gt_group_heading {
-  padding: 8px;
+#uwifhxejyn .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#uwifhxejyn .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -779,9 +779,10 @@ RMSE
   border-right-width: 1px;
   border-right-color: #D3D3D3;
   vertical-align: middle;
+  text-align: left;
 }
 
-#btsgyvmubb .gt_empty_group_heading {
+#uwifhxejyn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -796,15 +797,15 @@ RMSE
   vertical-align: middle;
 }
 
-#btsgyvmubb .gt_from_md > :first-child {
+#uwifhxejyn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#btsgyvmubb .gt_from_md > :last-child {
+#uwifhxejyn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#btsgyvmubb .gt_row {
+#uwifhxejyn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -823,7 +824,7 @@ RMSE
   overflow-x: hidden;
 }
 
-#btsgyvmubb .gt_stub {
+#uwifhxejyn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -832,10 +833,33 @@ RMSE
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #D3D3D3;
-  padding-left: 12px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
-#btsgyvmubb .gt_summary_row {
+#uwifhxejyn .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#uwifhxejyn .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#uwifhxejyn .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#uwifhxejyn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -845,17 +869,26 @@ RMSE
   padding-right: 5px;
 }
 
-#btsgyvmubb .gt_first_summary_row {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  padding-right: 5px;
+#uwifhxejyn .gt_first_summary_row {
   border-top-style: solid;
-  border-top-width: 2px;
   border-top-color: #D3D3D3;
 }
 
-#btsgyvmubb .gt_grand_summary_row {
+#uwifhxejyn .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#uwifhxejyn .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#uwifhxejyn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -865,7 +898,7 @@ RMSE
   padding-right: 5px;
 }
 
-#btsgyvmubb .gt_first_grand_summary_row {
+#uwifhxejyn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -875,11 +908,21 @@ RMSE
   border-top-color: #D3D3D3;
 }
 
-#btsgyvmubb .gt_striped {
+#uwifhxejyn .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#uwifhxejyn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#btsgyvmubb .gt_table_body {
+#uwifhxejyn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -888,7 +931,7 @@ RMSE
   border-bottom-color: #D3D3D3;
 }
 
-#btsgyvmubb .gt_footnotes {
+#uwifhxejyn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -902,13 +945,16 @@ RMSE
   border-right-color: #D3D3D3;
 }
 
-#btsgyvmubb .gt_footnote {
+#uwifhxejyn .gt_footnote {
   margin: 0px;
   font-size: 90%;
-  padding: 4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
-#btsgyvmubb .gt_sourcenotes {
+#uwifhxejyn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -922,78 +968,664 @@ RMSE
   border-right-color: #D3D3D3;
 }
 
-#btsgyvmubb .gt_sourcenote {
+#uwifhxejyn .gt_sourcenote {
   font-size: 90%;
-  padding: 4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
-#btsgyvmubb .gt_left {
+#uwifhxejyn .gt_left {
   text-align: left;
 }
 
-#btsgyvmubb .gt_center {
+#uwifhxejyn .gt_center {
   text-align: center;
 }
 
-#btsgyvmubb .gt_right {
+#uwifhxejyn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#btsgyvmubb .gt_font_normal {
+#uwifhxejyn .gt_font_normal {
   font-weight: normal;
 }
 
-#btsgyvmubb .gt_font_bold {
+#uwifhxejyn .gt_font_bold {
   font-weight: bold;
 }
 
-#btsgyvmubb .gt_font_italic {
+#uwifhxejyn .gt_font_italic {
   font-style: italic;
 }
 
-#btsgyvmubb .gt_super {
+#uwifhxejyn .gt_super {
   font-size: 65%;
 }
 
-#btsgyvmubb .gt_footnote_marks {
-  font-style: italic;
-  font-weight: normal;
-  font-size: 65%;
+#uwifhxejyn .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#uwifhxejyn .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#uwifhxejyn .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#uwifhxejyn .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#uwifhxejyn .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#uwifhxejyn .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#uwifhxejyn .gt_indent_5 {
+  text-indent: 25px;
 }
 </style>
-<table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1"><strong>Characteristic</strong></th>
-      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2">
-        <span class="gt_column_spanner"><strong>ojt</strong></span>
-      </th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="2" colspan="1"><strong>Total</strong></th>
-    </tr>
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">1（受けた）</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">0（受けなかった）</th>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id=" "> </th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="通常のSE">通常のSE</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Robust SE">Robust SE</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_left" style="font-weight: bold;">gender</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td></tr>
-    <tr><td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">男性</td>
-<td class="gt_row gt_center">589</td>
-<td class="gt_row gt_center">855</td>
-<td class="gt_row gt_center">1,444</td></tr>
-    <tr><td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">女性</td>
-<td class="gt_row gt_center">419</td>
-<td class="gt_row gt_center">865</td>
-<td class="gt_row gt_center">1,284</td></tr>
-    <tr><td class="gt_row gt_left" style="font-weight: bold;">Total</td>
-<td class="gt_row gt_center">1,008</td>
-<td class="gt_row gt_center">1,720</td>
-<td class="gt_row gt_center">2,728</td></tr>
+    <tr><td headers="" class="gt_row gt_left">(Intercept)</td>
+<td headers="通常のSE" class="gt_row gt_center">0.2791***</td>
+<td headers="Robust SE" class="gt_row gt_center">0.2791***</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="通常のSE" class="gt_row gt_center">(0.0539)</td>
+<td headers="Robust SE" class="gt_row gt_center">(0.0518)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">gender男性</td>
+<td headers="通常のSE" class="gt_row gt_center">0.0532**</td>
+<td headers="Robust SE" class="gt_row gt_center">0.0532**</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="通常のSE" class="gt_row gt_center">(0.0188)</td>
+<td headers="Robust SE" class="gt_row gt_center">(0.0188)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">age</td>
+<td headers="通常のSE" class="gt_row gt_center">-0.0021*</td>
+<td headers="Robust SE" class="gt_row gt_center">-0.0021*</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="通常のSE" class="gt_row gt_center">(0.0008)</td>
+<td headers="Robust SE" class="gt_row gt_center">(0.0008)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">educ高校</td>
+<td headers="通常のSE" class="gt_row gt_center">0.0635+</td>
+<td headers="Robust SE" class="gt_row gt_center">0.0635*</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="通常のSE" class="gt_row gt_center">(0.0350)</td>
+<td headers="Robust SE" class="gt_row gt_center">(0.0308)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">educ短大高専</td>
+<td headers="通常のSE" class="gt_row gt_center">0.1653***</td>
+<td headers="Robust SE" class="gt_row gt_center">0.1653***</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="通常のSE" class="gt_row gt_center">(0.0370)</td>
+<td headers="Robust SE" class="gt_row gt_center">(0.0338)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">educ大学大学院</td>
+<td headers="通常のSE" class="gt_row gt_center">0.2890***</td>
+<td headers="Robust SE" class="gt_row gt_center">0.2890***</td></tr>
+    <tr><td headers="" class="gt_row gt_left" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;"></td>
+<td headers="通常のSE" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">(0.0357)</td>
+<td headers="Robust SE" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">(0.0326)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">Num.Obs.</td>
+<td headers="通常のSE" class="gt_row gt_center">2728</td>
+<td headers="Robust SE" class="gt_row gt_center">2728</td></tr>
+    <tr><td headers="" class="gt_row gt_left">R2</td>
+<td headers="通常のSE" class="gt_row gt_center">0.058</td>
+<td headers="Robust SE" class="gt_row gt_center">0.058</td></tr>
+    <tr><td headers="" class="gt_row gt_left">R2 Adj.</td>
+<td headers="通常のSE" class="gt_row gt_center">0.056</td>
+<td headers="Robust SE" class="gt_row gt_center">0.056</td></tr>
+    <tr><td headers="" class="gt_row gt_left">AIC</td>
+<td headers="通常のSE" class="gt_row gt_center">3618.6</td>
+<td headers="Robust SE" class="gt_row gt_center">3618.6</td></tr>
+    <tr><td headers="" class="gt_row gt_left">BIC</td>
+<td headers="通常のSE" class="gt_row gt_center">3660.0</td>
+<td headers="Robust SE" class="gt_row gt_center">3660.0</td></tr>
+    <tr><td headers="" class="gt_row gt_left">Log.Lik.</td>
+<td headers="通常のSE" class="gt_row gt_center">-1802.312</td>
+<td headers="Robust SE" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left">F</td>
+<td headers="通常のSE" class="gt_row gt_center">33.484</td>
+<td headers="Robust SE" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left">RMSE</td>
+<td headers="通常のSE" class="gt_row gt_center">0.47</td>
+<td headers="Robust SE" class="gt_row gt_center">0.47</td></tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="3">+ p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td>
+    </tr>
+  </tfoot>
+  
+</table>
+</div>
+<p>通常の標準誤差を用いた場合と、ロバスト標準誤差を用いた場合とでは、わずかに標準誤差の値が異なっていることがわかる。このずれがどれくらい大きくなるかは、データや変数の性質によって変わってくる。ただし、係数の値には変化はないため、実質的な結論に違いが出ることはあまりない。線形確率モデルを使う場合には、基本的にはロバスト標準誤差を使うことが推奨されている。</p>
+</div>
+</div>
+<div id="ロジスティック回帰分析とは" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> ロジスティック回帰分析とは<a href="logit.html#ロジスティック回帰分析とは" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="ロジスティック回帰分析ロジットモデル" class="section level3 hasAnchor" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span> ロジスティック回帰分析（ロジットモデル）<a href="logit.html#ロジスティック回帰分析ロジットモデル" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math display">\[
+\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
+\]</span></p>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="logit.html#cb336-1" tabindex="-1"></a>logit_res1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender, <span class="at">family =</span> binomial)</span>
+<span id="cb336-2"><a href="logit.html#cb336-2" tabindex="-1"></a><span class="fu">summary</span>(logit_res1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = ojt ~ gender, family = binomial, data = piaac)
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -0.72486    0.05952 -12.178  &lt; 2e-16 ***
+## gender男性   0.35218    0.08006   4.399 1.09e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 3593.8  on 2727  degrees of freedom
+## Residual deviance: 3574.3  on 2726  degrees of freedom
+## AIC: 3578.3
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<p>「gender男性」の行は、女性と比べて男性であると<strong>対数オッズ（log-odds）</strong>が<code>coef</code>高いことを表している。</p>
+</div>
+<div id="対数オッズ比の解釈" class="section level3 hasAnchor" number="10.2.2">
+<h3><span class="header-section-number">10.2.2</span> 対数オッズ比の解釈<a href="logit.html#対数オッズ比の解釈" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>急に出てきた「対数オッズ比」とはなんだろうか？これを理解するために、クロス集計表を作ってみよう。性別ごとにOJTを受ける・受けない人数を集計したクロス集計表は次のようになる。ここでは説明を分かりやすくするために順序を変更している。</p>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="logit.html#cb338-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb338-2"><a href="logit.html#cb338-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">fct_relevel</span>(gender, <span class="st">&quot;男性&quot;</span>, <span class="st">&quot;女性&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb338-3"><a href="logit.html#cb338-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ojt =</span> <span class="fu">factor</span>(ojt, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">0</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;1（受けた）&quot;</span>, <span class="st">&quot;0（受けなかった）&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb338-4"><a href="logit.html#cb338-4" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(gender, ojt)</span></code></pre></div>
+<div id="nkwqrcbplk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nkwqrcbplk table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#nkwqrcbplk thead, #nkwqrcbplk tbody, #nkwqrcbplk tfoot, #nkwqrcbplk tr, #nkwqrcbplk td, #nkwqrcbplk th {
+  border-style: none;
+}
+
+#nkwqrcbplk p {
+  margin: 0;
+  padding: 0;
+}
+
+#nkwqrcbplk .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#nkwqrcbplk .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#nkwqrcbplk .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#nkwqrcbplk .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#nkwqrcbplk .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nkwqrcbplk .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nkwqrcbplk .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nkwqrcbplk .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#nkwqrcbplk .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#nkwqrcbplk .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#nkwqrcbplk .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#nkwqrcbplk .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#nkwqrcbplk .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#nkwqrcbplk .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#nkwqrcbplk .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#nkwqrcbplk .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#nkwqrcbplk .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#nkwqrcbplk .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#nkwqrcbplk .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nkwqrcbplk .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#nkwqrcbplk .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#nkwqrcbplk .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#nkwqrcbplk .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nkwqrcbplk .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#nkwqrcbplk .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#nkwqrcbplk .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nkwqrcbplk .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nkwqrcbplk .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#nkwqrcbplk .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nkwqrcbplk .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#nkwqrcbplk .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nkwqrcbplk .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nkwqrcbplk .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nkwqrcbplk .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nkwqrcbplk .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nkwqrcbplk .gt_left {
+  text-align: left;
+}
+
+#nkwqrcbplk .gt_center {
+  text-align: center;
+}
+
+#nkwqrcbplk .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#nkwqrcbplk .gt_font_normal {
+  font-weight: normal;
+}
+
+#nkwqrcbplk .gt_font_bold {
+  font-weight: bold;
+}
+
+#nkwqrcbplk .gt_font_italic {
+  font-style: italic;
+}
+
+#nkwqrcbplk .gt_super {
+  font-size: 65%;
+}
+
+#nkwqrcbplk .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#nkwqrcbplk .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#nkwqrcbplk .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#nkwqrcbplk .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#nkwqrcbplk .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#nkwqrcbplk .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#nkwqrcbplk .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings gt_spanner_row">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id=""></th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="ojt">
+        <span class="gt_column_spanner">ojt</span>
+      </th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="2" colspan="1" scope="col" id="Total">Total</th>
+    </tr>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="1（受けた）">1（受けた）</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="0（受けなかった）">0（受けなかった）</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left">gender</td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    男性</td>
+<td headers="stat_1" class="gt_row gt_center">589</td>
+<td headers="stat_2" class="gt_row gt_center">855</td>
+<td headers="stat_0" class="gt_row gt_center">1,444</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    女性</td>
+<td headers="stat_1" class="gt_row gt_center">419</td>
+<td headers="stat_2" class="gt_row gt_center">865</td>
+<td headers="stat_0" class="gt_row gt_center">1,284</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Total</td>
+<td headers="stat_1" class="gt_row gt_center">1,008</td>
+<td headers="stat_2" class="gt_row gt_center">1,720</td>
+<td headers="stat_0" class="gt_row gt_center">2,728</td></tr>
   </tbody>
   
   
@@ -1076,18 +1708,14 @@ RMSE
 </table>
 <p>なお、対数の性質より、対数オッズ比は<span class="math inline">\(\log((N_{11} / N_{10}) / (N_{01} / N_{00})) = \log(N_{11} / N_{10}) - (N_{01} / N_{00})\)</span>などと書くこともできる。</p>
 </div>
-<div id="連続変数を独立変数とする場合" class="section level3" number="9.2.3">
-<h3><span class="header-section-number">9.2.3</span> 連続変数を独立変数とする場合</h3>
+<div id="連続変数を独立変数とする場合" class="section level3 hasAnchor" number="10.2.3">
+<h3><span class="header-section-number">10.2.3</span> 連続変数を独立変数とする場合<a href="logit.html#連続変数を独立変数とする場合" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>連続変数を独立変数とする場合は先のような表をイメージするのは難しくなってくるが、解釈は類似している。たとえば次のように性別と年齢を独立変数とするロジスティック回帰分析を推定する。</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="logit.html#cb324-1" aria-hidden="true" tabindex="-1"></a>logit_res2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age, <span class="at">family =</span> binomial)</span>
-<span id="cb324-2"><a href="logit.html#cb324-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit_res2)</span></code></pre></div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="logit.html#cb339-1" tabindex="-1"></a>logit_res2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age, <span class="at">family =</span> binomial)</span>
+<span id="cb339-2"><a href="logit.html#cb339-2" tabindex="-1"></a><span class="fu">summary</span>(logit_res2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = ojt ~ gender + age, family = binomial, data = piaac)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.1487  -0.9691  -0.8658   1.3426   1.6474  
 ## 
 ## Coefficients:
 ##              Estimate Std. Error z value Pr(&gt;|z|)    
@@ -1106,8 +1734,8 @@ RMSE
 ## Number of Fisher Scoring iterations: 4</code></pre>
 <p>このときの年齢の係数は年齢が1高いとOJTを受ける対数オッズが-0.016だけ高いということを意味している。</p>
 </div>
-<div id="平均限界効果" class="section level3" number="9.2.4">
-<h3><span class="header-section-number">9.2.4</span> 平均限界効果</h3>
+<div id="平均限界効果" class="section level3 hasAnchor" number="10.2.4">
+<h3><span class="header-section-number">10.2.4</span> 平均限界効果<a href="logit.html#平均限界効果" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>上記の回りくどい説明からも察せられるとおり、ロジスティック回帰分析の係数の解釈は、線形確率モデルのそれと比べるとかなり複雑だ。そこで、ロジスティック回帰分析を使う場合には、<strong>平均限界効果 Average marginal effect, AME</strong>と合わせて結果を解釈することが強く推奨される。</p>
 <p>平均限界効果とはなんだろうか。これを理解するため、先ほどのロジスティック回帰分析を次のように変形する（式変形については対数の知識が必要）：</p>
 <p><span class="math display">\[
@@ -1119,8 +1747,8 @@ RMSE
 \Pr(y = 1) &amp;= \frac{\exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k)}{1 + \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k)}
 \end{align}
 \]</span></p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="logit.html#cb326-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb326-2"><a href="logit.html#cb326-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, gender, age)</span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="logit.html#cb341-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb341-2"><a href="logit.html#cb341-2" tabindex="-1"></a>  <span class="fu">select</span>(id, gender, age)</span></code></pre></div>
 <pre><code>## # A tibble: 2,728 × 3
 ##       id gender   age
 ##    &lt;int&gt; &lt;fct&gt;  &lt;dbl&gt;
@@ -1134,296 +1762,558 @@ RMSE
 ##  8    15 男性      45
 ##  9    18 男性      30
 ## 10    19 男性      46
-## # … with 2,718 more rows</code></pre>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="logit.html#cb328-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(margins)</span></code></pre></div>
-<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="logit.html#cb329-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(margins)</span></code></pre></div>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="logit.html#cb330-1" aria-hidden="true" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span>
-<span id="cb330-2"><a href="logit.html#cb330-2" aria-hidden="true" tabindex="-1"></a>logit_res3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
-<span id="cb330-3"><a href="logit.html#cb330-3" aria-hidden="true" tabindex="-1"></a>margins_logit_res3 <span class="ot">&lt;-</span> <span class="fu">margins</span>(logit_res3)</span></code></pre></div>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="logit.html#cb331-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;LPM&quot;</span> <span class="ot">=</span> reg_res3, <span class="st">&quot;Logit&quot;</span> <span class="ot">=</span> logit_res3, <span class="st">&quot;AME&quot;</span> <span class="ot">=</span> margins_logit_res3),</span>
-<span id="cb331-2"><a href="logit.html#cb331-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
-<thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:center;">
-LPM
-</th>
-<th style="text-align:center;">
-Logit
-</th>
-<th style="text-align:center;">
-AME
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-(Intercept)
-</td>
-<td style="text-align:center;">
-0.279***
-</td>
-<td style="text-align:center;">
-−1.022***
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-(0.054)
-</td>
-<td style="text-align:center;">
-(0.258)
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-gender男性
-</td>
-<td style="text-align:center;">
-0.053**
-</td>
-<td style="text-align:center;">
-0.247**
-</td>
-<td style="text-align:center;">
-0.054**
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-(0.019)
-</td>
-<td style="text-align:center;">
-(0.086)
-</td>
-<td style="text-align:center;">
-(0.019)
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-age
-</td>
-<td style="text-align:center;">
-−0.002*
-</td>
-<td style="text-align:center;">
-−0.010*
-</td>
-<td style="text-align:center;">
-−0.002*
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-(0.001)
-</td>
-<td style="text-align:center;">
-(0.004)
-</td>
-<td style="text-align:center;">
-(0.001)
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-educ高校
-</td>
-<td style="text-align:center;">
-0.064+
-</td>
-<td style="text-align:center;">
-0.360*
-</td>
-<td style="text-align:center;">
-0.066*
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-(0.035)
-</td>
-<td style="text-align:center;">
-(0.182)
-</td>
-<td style="text-align:center;">
-(0.031)
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-educ短大高専
-</td>
-<td style="text-align:center;">
-0.165***
-</td>
-<td style="text-align:center;">
-0.832***
-</td>
-<td style="text-align:center;">
-0.169***
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-</td>
-<td style="text-align:center;">
-(0.037)
-</td>
-<td style="text-align:center;">
-(0.188)
-</td>
-<td style="text-align:center;">
-(0.034)
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-educ大学大学院
-</td>
-<td style="text-align:center;">
-0.289***
-</td>
-<td style="text-align:center;">
-1.329***
-</td>
-<td style="text-align:center;">
-0.290***
-</td>
-</tr>
-<tr>
-<td style="text-align:left;box-shadow: 0px 1px">
-</td>
-<td style="text-align:center;box-shadow: 0px 1px">
-(0.036)
-</td>
-<td style="text-align:center;box-shadow: 0px 1px">
-(0.181)
-</td>
-<td style="text-align:center;box-shadow: 0px 1px">
-(0.033)
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Num.Obs.
-</td>
-<td style="text-align:center;">
-2728
-</td>
-<td style="text-align:center;">
-2728
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-R2
-</td>
-<td style="text-align:center;">
-0.058
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-R2 Adj.
-</td>
-<td style="text-align:center;">
-0.056
-</td>
-<td style="text-align:center;">
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-AIC
-</td>
-<td style="text-align:center;">
-3618.6
-</td>
-<td style="text-align:center;">
-3445.4
-</td>
-<td style="text-align:center;">
-3445.4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-BIC
-</td>
-<td style="text-align:center;">
-3660.0
-</td>
-<td style="text-align:center;">
-3480.8
-</td>
-<td style="text-align:center;">
-3480.8
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-F
-</td>
-<td style="text-align:center;">
-33.484
-</td>
-<td style="text-align:center;">
-30.326
-</td>
-<td style="text-align:center;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-RMSE
-</td>
-<td style="text-align:center;">
-0.47
-</td>
-<td style="text-align:center;">
-0.47
-</td>
-<td style="text-align:center;">
-0.47
-</td>
-</tr>
-</tbody>
-<tfoot>
-<tr>
-<td style="padding: 0; " colspan="100%">
-<sup></sup> + p
-</td>
-</tr>
-</tfoot>
+## # ℹ 2,718 more rows</code></pre>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="logit.html#cb343-1" tabindex="-1"></a><span class="fu">install.packages</span>(margins)</span></code></pre></div>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="logit.html#cb344-1" tabindex="-1"></a><span class="fu">library</span>(margins)</span></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="logit.html#cb345-1" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span>
+<span id="cb345-2"><a href="logit.html#cb345-2" tabindex="-1"></a>logit_res3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb345-3"><a href="logit.html#cb345-3" tabindex="-1"></a>margins_logit_res3 <span class="ot">&lt;-</span> <span class="fu">margins</span>(logit_res3)</span></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="logit.html#cb346-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;LPM&quot;</span> <span class="ot">=</span> reg_res3, <span class="st">&quot;Logit&quot;</span> <span class="ot">=</span> logit_res3, <span class="st">&quot;AME&quot;</span> <span class="ot">=</span> margins_logit_res3),</span>
+<span id="cb346-2"><a href="logit.html#cb346-2" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div id="onjlfhmqfv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#onjlfhmqfv table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#onjlfhmqfv thead, #onjlfhmqfv tbody, #onjlfhmqfv tfoot, #onjlfhmqfv tr, #onjlfhmqfv td, #onjlfhmqfv th {
+  border-style: none;
+}
+
+#onjlfhmqfv p {
+  margin: 0;
+  padding: 0;
+}
+
+#onjlfhmqfv .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#onjlfhmqfv .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#onjlfhmqfv .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#onjlfhmqfv .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#onjlfhmqfv .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#onjlfhmqfv .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#onjlfhmqfv .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#onjlfhmqfv .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#onjlfhmqfv .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#onjlfhmqfv .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#onjlfhmqfv .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#onjlfhmqfv .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#onjlfhmqfv .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#onjlfhmqfv .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#onjlfhmqfv .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#onjlfhmqfv .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#onjlfhmqfv .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#onjlfhmqfv .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#onjlfhmqfv .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#onjlfhmqfv .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#onjlfhmqfv .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#onjlfhmqfv .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#onjlfhmqfv .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#onjlfhmqfv .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#onjlfhmqfv .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#onjlfhmqfv .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#onjlfhmqfv .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#onjlfhmqfv .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#onjlfhmqfv .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#onjlfhmqfv .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#onjlfhmqfv .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#onjlfhmqfv .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#onjlfhmqfv .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#onjlfhmqfv .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#onjlfhmqfv .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#onjlfhmqfv .gt_left {
+  text-align: left;
+}
+
+#onjlfhmqfv .gt_center {
+  text-align: center;
+}
+
+#onjlfhmqfv .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#onjlfhmqfv .gt_font_normal {
+  font-weight: normal;
+}
+
+#onjlfhmqfv .gt_font_bold {
+  font-weight: bold;
+}
+
+#onjlfhmqfv .gt_font_italic {
+  font-style: italic;
+}
+
+#onjlfhmqfv .gt_super {
+  font-size: 65%;
+}
+
+#onjlfhmqfv .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#onjlfhmqfv .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#onjlfhmqfv .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#onjlfhmqfv .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#onjlfhmqfv .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#onjlfhmqfv .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#onjlfhmqfv .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id=" "> </th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="LPM">LPM</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Logit">Logit</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="AME">AME</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="" class="gt_row gt_left">(Intercept)</td>
+<td headers="LPM" class="gt_row gt_center">0.279***</td>
+<td headers="Logit" class="gt_row gt_center">-1.022***</td>
+<td headers="AME" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="LPM" class="gt_row gt_center">(0.054)</td>
+<td headers="Logit" class="gt_row gt_center">(0.258)</td>
+<td headers="AME" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left">gender男性</td>
+<td headers="LPM" class="gt_row gt_center">0.053**</td>
+<td headers="Logit" class="gt_row gt_center">0.247**</td>
+<td headers="AME" class="gt_row gt_center">0.054**</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="LPM" class="gt_row gt_center">(0.019)</td>
+<td headers="Logit" class="gt_row gt_center">(0.086)</td>
+<td headers="AME" class="gt_row gt_center">(0.019)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">age</td>
+<td headers="LPM" class="gt_row gt_center">-0.002*</td>
+<td headers="Logit" class="gt_row gt_center">-0.010*</td>
+<td headers="AME" class="gt_row gt_center">-0.002*</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="LPM" class="gt_row gt_center">(0.001)</td>
+<td headers="Logit" class="gt_row gt_center">(0.004)</td>
+<td headers="AME" class="gt_row gt_center">(0.001)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">educ高校</td>
+<td headers="LPM" class="gt_row gt_center">0.064+</td>
+<td headers="Logit" class="gt_row gt_center">0.360*</td>
+<td headers="AME" class="gt_row gt_center">0.066*</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="LPM" class="gt_row gt_center">(0.035)</td>
+<td headers="Logit" class="gt_row gt_center">(0.182)</td>
+<td headers="AME" class="gt_row gt_center">(0.031)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">educ短大高専</td>
+<td headers="LPM" class="gt_row gt_center">0.165***</td>
+<td headers="Logit" class="gt_row gt_center">0.832***</td>
+<td headers="AME" class="gt_row gt_center">0.169***</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="LPM" class="gt_row gt_center">(0.037)</td>
+<td headers="Logit" class="gt_row gt_center">(0.188)</td>
+<td headers="AME" class="gt_row gt_center">(0.034)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">educ大学大学院</td>
+<td headers="LPM" class="gt_row gt_center">0.289***</td>
+<td headers="Logit" class="gt_row gt_center">1.329***</td>
+<td headers="AME" class="gt_row gt_center">0.290***</td></tr>
+    <tr><td headers="" class="gt_row gt_left" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;"></td>
+<td headers="LPM" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">(0.036)</td>
+<td headers="Logit" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">(0.181)</td>
+<td headers="AME" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">(0.033)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">Num.Obs.</td>
+<td headers="LPM" class="gt_row gt_center">2728</td>
+<td headers="Logit" class="gt_row gt_center">2728</td>
+<td headers="AME" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left">R2</td>
+<td headers="LPM" class="gt_row gt_center">0.058</td>
+<td headers="Logit" class="gt_row gt_center"></td>
+<td headers="AME" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left">R2 Adj.</td>
+<td headers="LPM" class="gt_row gt_center">0.056</td>
+<td headers="Logit" class="gt_row gt_center"></td>
+<td headers="AME" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left">AIC</td>
+<td headers="LPM" class="gt_row gt_center">3618.6</td>
+<td headers="Logit" class="gt_row gt_center">3445.4</td>
+<td headers="AME" class="gt_row gt_center">3445.4</td></tr>
+    <tr><td headers="" class="gt_row gt_left">BIC</td>
+<td headers="LPM" class="gt_row gt_center">3660.0</td>
+<td headers="Logit" class="gt_row gt_center">3480.8</td>
+<td headers="AME" class="gt_row gt_center">3480.8</td></tr>
+    <tr><td headers="" class="gt_row gt_left">Log.Lik.</td>
+<td headers="LPM" class="gt_row gt_center">-1802.312</td>
+<td headers="Logit" class="gt_row gt_center">-1716.687</td>
+<td headers="AME" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left">F</td>
+<td headers="LPM" class="gt_row gt_center">33.484</td>
+<td headers="Logit" class="gt_row gt_center">30.326</td>
+<td headers="AME" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left">RMSE</td>
+<td headers="LPM" class="gt_row gt_center">0.47</td>
+<td headers="Logit" class="gt_row gt_center">0.47</td>
+<td headers="AME" class="gt_row gt_center">0.47</td></tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="4">+ p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td>
+    </tr>
+  </tfoot>
+  
 </table>
 </div>
 </div>
-<div id="ロジスティック回帰分析の注意点" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> ロジスティック回帰分析の注意点</h2>
+</div>
+<div id="ロジスティック回帰分析の注意点" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> ロジスティック回帰分析の注意点<a href="logit.html#ロジスティック回帰分析の注意点" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 
 </div>
 </div>
@@ -1432,7 +2322,7 @@ RMSE
           </div>
         </div>
       </div>
-<a href="regression_advanced.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regression_interaction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="domain.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -1493,7 +2383,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

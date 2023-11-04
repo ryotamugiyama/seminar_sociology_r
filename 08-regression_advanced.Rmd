@@ -60,7 +60,7 @@ summary(reg_res)
 
 それぞれ係数、標準誤差、p値のみかたはいずれも前回と同じである。
 
-一般に、重回帰分析の式は次のように書ける。
+一般的に、重回帰分析の式は次のように書ける。
 
 $$
 y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
@@ -125,18 +125,19 @@ reg_res3 <- lm(data = piaac, logwage ~ numeracy + gender + age + educ)
 modelsummary(list(reg_res1, reg_res2, reg_res3),
          stars = TRUE, 
          fmt = 4,
-         coef_rename = c("(Intercept)" = "切片",
-                         "numeracy" = "数的思考力スコア",
-                         "age" = "年齢",
-                         "gender男性" = "男性（vs. 女性）",
-                         "educ高校" = "高校（vs. 中学）",
-                         "educ短大高専" = "短大高専（vs. 中学）",
-                         "educ大学大学院" = "大学大学院（vs. 中学）"
-                         ), 
+         coef_map = c("numeracy" = "数的思考力スコア",
+                      "age" = "年齢",
+                      "gender男性" = "男性（vs. 女性）",
+                      "educ高校" = "高校（vs. 中学）",
+                      "educ短大高専" = "短大高専（vs. 中学）",
+                      "educ大学大学院" = "大学大学院（vs. 中学）",
+                      "(Intercept)" = "切片"), 
          gof_map = c("nobs", "r.squared"))
 ```
 
 なお、この例のように、回帰分析の表を作るときには、カテゴリ変数の比較対象（参照カテゴリ）が何かを書くとわかりやすいだろう。
+
+また、一般的に切片の値そのものにはあまり興味がないことが多いので、切片の係数は下の方に表示されることが多い。`coef_map = c()`の箇所に表記した順番に係数が表示されるので、ここの順番を調整すると、切片の係数を下の方に表示することができる。
 
 ```{r, echo = FALSE}
 reg_res2_tidy <- tidy(reg_res2) %>% 
@@ -174,12 +175,12 @@ reg_res2 <- lm(data = piaac, logwage ~ female_d + educ + numeracy)
 
 modelsummary(list(reg_res1, reg_res2),
                   stars = TRUE, 
-         coef_rename = c("(Intercept)" = "切片",
-                         "female_d" = "女性（vs. 男性）",
-                         "educ高校" = "高校（vs. 中学）",
-                         "educ短大高専" = "短大高専（vs. 中学）",
-                         "educ大学大学院" = "大学大学院（vs. 中学）",
-                         "numeracy" = "数的思考力スコア"), 
+         coef_map = c("female_d" = "女性（vs. 男性）",
+                      "educ高校" = "高校（vs. 中学）",
+                      "educ短大高専" = "短大高専（vs. 中学）",
+                      "educ大学大学院" = "大学大学院（vs. 中学）",
+                      "numeracy" = "数的思考力スコア",
+                      "(Intercept)" = "切片"), 
          gof_map = c("nobs", "r.squared"))
 ```
 
@@ -227,21 +228,21 @@ reg_res2 <- lm(data = piaac, logwage ~ educ + gender + age + I(age^2) + occupati
 
 modelsummary(list(reg_res1, reg_res2),
          stars = TRUE, 
-         coef_rename = c("(Intercept)" = "切片",
-                         "gender男性" = "男性（vs. 女性）",
-                         "educ高校" = "高校（vs. 中学）",
-                         "educ短大高専" = "短大高専（vs. 中学）",
-                         "educ大学大学院" = "大学大学院（vs. 中学）",
-                         "age" = "年齢",
-                         "I(age^2)" = "年齢2乗",
-                         "occupation専門職" = "専門職（vs. 管理職）",
-                         "occupation技術職・准専門職" = "技術職・准専門職（vs. 管理職）",
-                         "occupation事務補助" = "事務補助（vs. 管理職）",
-                         "occupationサービス・販売" = "サービス・販売（vs. 管理職）",
-                         "occupation農林漁業" = "農林漁業（vs. 管理職）",
-                         "occupation技能工" = "技能工（vs. 管理職）",
-                         "occupation設備・機械運転・組立" = "設備・機械運転・組立（vs. 管理職）",
-                         "occupation単純作業" = "単純作業（vs. 管理職）"), 
+         coef_map = c("gender男性" = "男性（vs. 女性）",
+                      "educ高校" = "高校（vs. 中学）",
+                      "educ短大高専" = "短大高専（vs. 中学）",
+                      "educ大学大学院" = "大学大学院（vs. 中学）",
+                      "age" = "年齢",
+                      "I(age^2)" = "年齢2乗",
+                      "occupation専門職" = "専門職（vs. 管理職）",
+                      "occupation技術職・准専門職" = "技術職・准専門職（vs. 管理職）",
+                      "occupation事務補助" = "事務補助（vs. 管理職）",
+                      "occupationサービス・販売" = "サービス・販売（vs. 管理職）",
+                      "occupation農林漁業" = "農林漁業（vs. 管理職）",
+                      "occupation技能工" = "技能工（vs. 管理職）",
+                      "occupation設備・機械運転・組立" = "設備・機械運転・組立（vs. 管理職）",
+                      "occupation単純作業" = "単純作業（vs. 管理職）",
+                      "(Intercept)" = "切片"),
          gof_map = c("nobs", "r.squared"))
 ```
 
@@ -274,21 +275,21 @@ reg_res2_tidy <- reg_res2 %>%
 ```{r}
 modelsummary(list(reg_res1, reg_res2),
          stars = TRUE, 
-         coef_rename = c("(Intercept)" = "切片",
-                         "gender男性" = "男性（vs. 女性）",
-                         "educ高校" = "高校（vs. 中学）",
-                         "educ短大高専" = "短大高専（vs. 中学）",
-                         "educ大学大学院" = "大学大学院（vs. 中学）",
-                         "age" = "年齢",
-                         "I(age^2)" = "年齢2乗",
-                         "occupation専門職" = "専門職（vs. 管理職）",
-                         "occupation技術職・准専門職" = "技術職・准専門職（vs. 管理職）",
-                         "occupation事務補助" = "事務補助（vs. 管理職）",
-                         "occupationサービス・販売" = "サービス・販売（vs. 管理職）",
-                         "occupation農林漁業" = "農林漁業（vs. 管理職）",
-                         "occupation技能工" = "技能工（vs. 管理職）",
-                         "occupation設備・機械運転・組立" = "設備・機械運転・組立（vs. 管理職）",
-                         "occupation単純作業" = "単純作業（vs. 管理職）"), 
+         coef_map = c("gender男性" = "男性（vs. 女性）",
+                      "educ高校" = "高校（vs. 中学）",
+                      "educ短大高専" = "短大高専（vs. 中学）",
+                      "educ大学大学院" = "大学大学院（vs. 中学）",
+                      "age" = "年齢",
+                      "I(age^2)" = "年齢2乗",
+                      "occupation専門職" = "専門職（vs. 管理職）",
+                      "occupation技術職・准専門職" = "技術職・准専門職（vs. 管理職）",
+                      "occupation事務補助" = "事務補助（vs. 管理職）",
+                      "occupationサービス・販売" = "サービス・販売（vs. 管理職）",
+                      "occupation農林漁業" = "農林漁業（vs. 管理職）",
+                      "occupation技能工" = "技能工（vs. 管理職）",
+                      "occupation設備・機械運転・組立" = "設備・機械運転・組立（vs. 管理職）",
+                      "occupation単純作業" = "単純作業（vs. 管理職）",
+                      "(Intercept)" = "切片"),
          gof_map = c("nobs", "r.squared"),
          output = "results/regression_multiple.docx")
 ```
@@ -299,21 +300,21 @@ modelsummary(list(reg_res1, reg_res2),
 modelsummary(list(reg_res1, reg_res2),
          estimate = "{estimate} ({std.error}){stars}", # 係数（半角スペース）(標準誤差)星印、となるように表記するオプション
          statistic = NULL, #「2行目」の表記を省略するオプション。
-         coef_rename = c("(Intercept)" = "切片",
-                         "gender男性" = "男性（vs. 女性）",
-                         "educ高校" = "高校（vs. 中学）",
-                         "educ短大高専" = "短大高専（vs. 中学）",
-                         "educ大学大学院" = "大学大学院（vs. 中学）",
-                         "age" = "年齢",
-                         "I(age^2)" = "年齢2乗",
-                         "occupation専門職" = "専門職（vs. 管理職）",
-                         "occupation技術職・准専門職" = "技術職・准専門職（vs. 管理職）",
-                         "occupation事務補助" = "事務補助（vs. 管理職）",
-                         "occupationサービス・販売" = "サービス・販売（vs. 管理職）",
-                         "occupation農林漁業" = "農林漁業（vs. 管理職）",
-                         "occupation技能工" = "技能工（vs. 管理職）",
-                         "occupation設備・機械運転・組立" = "設備・機械運転・組立（vs. 管理職）",
-                         "occupation単純作業" = "単純作業（vs. 管理職）"), 
+         coef_map = c("gender男性" = "男性（vs. 女性）",
+                      "educ高校" = "高校（vs. 中学）",
+                      "educ短大高専" = "短大高専（vs. 中学）",
+                      "educ大学大学院" = "大学大学院（vs. 中学）",
+                      "age" = "年齢",
+                      "I(age^2)" = "年齢2乗",
+                      "occupation専門職" = "専門職（vs. 管理職）",
+                      "occupation技術職・准専門職" = "技術職・准専門職（vs. 管理職）",
+                      "occupation事務補助" = "事務補助（vs. 管理職）",
+                      "occupationサービス・販売" = "サービス・販売（vs. 管理職）",
+                      "occupation農林漁業" = "農林漁業（vs. 管理職）",
+                      "occupation技能工" = "技能工（vs. 管理職）",
+                      "occupation設備・機械運転・組立" = "設備・機械運転・組立（vs. 管理職）",
+                      "occupation単純作業" = "単純作業（vs. 管理職）",
+                      "(Intercept)" = "切片"),  
          gof_map = c("nobs", "r.squared") )
 ```
 
