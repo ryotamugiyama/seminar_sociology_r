@@ -11,7 +11,7 @@ library(tidyverse)
 library(gtsummary)
 library(flextable)
 library(modelsummary)
-library(broom)
+library(ggeffects) #第9章（交互作用）で紹介
 
 piaac <- read_rds("data/piaac_sample_analytic.rds")
 ```
@@ -206,9 +206,9 @@ coef <- round(coef_logit_res2$estimate[3], digits = 3)
 
 このときの年齢の係数は年齢が1高いとOJTを受ける対数オッズが`r coef`だけ高いということを意味している。
 
-### 平均限界効果
+## 平均限界効果
 
-上記の回りくどい説明からも察せられるとおり、ロジスティック回帰分析の係数の解釈は、線形確率モデルのそれと比べるとかなり複雑だ。そこで、ロジスティック回帰分析を使う場合には、**平均限界効果 Average marginal effect, AME**と合わせて結果を解釈することが強く推奨される。
+ロジスティック回帰分析では係数は対数オッズを表す。しかし、対数オッズ比は線形確率モデルと比べると直感的に解釈しにくい。そこで、ロジスティック回帰分析を使う場合には、**平均限界効果 Average marginal effect, AME**と合わせて結果を解釈することが強く推奨される。
 
 平均限界効果とはなんだろうか。これを理解するため、先ほどのロジスティック回帰分析を次のように変形する（式変形については対数の知識が必要）：
 
