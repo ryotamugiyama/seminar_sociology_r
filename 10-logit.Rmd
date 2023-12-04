@@ -105,6 +105,18 @@ modelsummary(list("通常のSE" = reg_res2, "Robust SE" = reg_res2_robust),
 $$
 \log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 $$
+または、式を変形して次のように書く。
+
+$$
+\begin{align}
+\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &= \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k \\
+\frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &= \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k) \\
+\Pr(y = 1) &= (1 - \Pr(y = 1))\exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k) \\
+(1 + \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k))\Pr(y = 1) &= \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k) \\
+\Pr(y = 1) &= \frac{\exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k)}{1 + \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k)}
+\end{align}
+$$
+
 
 ```{r}
 logit_res1 <- glm(data = piaac, ojt ~ gender, family = binomial)
@@ -212,15 +224,7 @@ coef <- round(coef_logit_res2$estimate[3], digits = 3)
 
 平均限界効果とはなんだろうか。これを理解するため、先ほどのロジスティック回帰分析を次のように変形する（式変形については対数の知識が必要）：
 
-$$
-\begin{align}
-\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &= \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k \\
-\frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &= \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k) \\
-\Pr(y = 1) &= (1 - \Pr(y = 1))\exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k) \\
-(1 + \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k))\Pr(y = 1) &= \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k) \\
-\Pr(y = 1) &= \frac{\exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k)}{1 + \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k)}
-\end{align}
-$$
+
 
 
 ```{r}

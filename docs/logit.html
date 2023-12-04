@@ -276,6 +276,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.5.2" data-path="descriptives.html"><a href="descriptives.html#descriptive_export_ggplot"><i class="fa fa-check"></i><b>5.5.2</b> ggplotで作成した図を書き出す</a></li>
 <li class="chapter" data-level="5.5.3" data-path="descriptives.html"><a href="descriptives.html#descriptive_export_tbl_summary"><i class="fa fa-check"></i><b>5.5.3</b> 記述統計の一覧表をwordに書き出す</a></li>
 </ul></li>
+<li class="chapter" data-level="5.6" data-path="descriptives.html"><a href="descriptives.html#発展tbl_summaryの注意点"><i class="fa fa-check"></i><b>5.6</b> （発展）tbl_summary()の注意点</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="descriptives.html"><a href="descriptives.html#値が少ない連続変数はカテゴリ変数とみなして集計される"><i class="fa fa-check"></i><b>5.6.1</b> 値が少ない連続変数はカテゴリ変数とみなして集計される</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="tabulate.html"><a href="tabulate.html"><i class="fa fa-check"></i><b>6</b> 2変数の集計</a>
 <ul>
@@ -292,7 +296,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.3.2" data-path="tabulate.html"><a href="tabulate.html#カイ2乗検定発展"><i class="fa fa-check"></i><b>6.3.2</b> カイ2乗検定（発展）</a></li>
 <li class="chapter" data-level="6.3.3" data-path="tabulate.html"><a href="tabulate.html#きれいなクロス表をつくる---gtsummarytbl_cross"><i class="fa fa-check"></i><b>6.3.3</b> きれいなクロス表をつくる - gtsummary::tbl_cross()</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="tabulate.html"><a href="tabulate.html#クロス集計表を図示する"><i class="fa fa-check"></i><b>6.4</b> クロス集計表を図示する</a></li>
+<li class="chapter" data-level="6.4" data-path="tabulate.html"><a href="tabulate.html#クロス集計表を図示する"><i class="fa fa-check"></i><b>6.4</b> クロス集計表を図示する</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="tabulate.html"><a href="tabulate.html#countを利用する"><i class="fa fa-check"></i><b>6.4.1</b> count()を利用する</a></li>
+<li class="chapter" data-level="6.4.2" data-path="tabulate.html"><a href="tabulate.html#発展countの応用"><i class="fa fa-check"></i><b>6.4.2</b> （発展）count()の応用</a></li>
+</ul></li>
 <li class="chapter" data-level="6.5" data-path="tabulate.html"><a href="tabulate.html#散布図"><i class="fa fa-check"></i><b>6.5</b> 散布図</a>
 <ul>
 <li class="chapter" data-level="6.5.1" data-path="tabulate.html"><a href="tabulate.html#散布図をみる"><i class="fa fa-check"></i><b>6.5.1</b> 散布図をみる</a></li>
@@ -509,27 +517,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>本章では、前章で学んだ回帰分析を発展させて、複数の独立変数を扱う方法について説明する。</p>
 <p>内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project…」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。</p>
 <p>さらに、これまでの章で説明した以下のパッケージを読み込んだ上で、<a href="handling.html#handling">第4章</a>で作成したデータを読み込んで<code>piaac</code>というデータフレームに入れていることを前提とする。具体的には、以下のコードを実行しておく必要がある。</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="logit.html#cb330-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb330-2"><a href="logit.html#cb330-2" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb330-3"><a href="logit.html#cb330-3" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
-<span id="cb330-4"><a href="logit.html#cb330-4" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb330-5"><a href="logit.html#cb330-5" tabindex="-1"></a><span class="fu">library</span>(ggeffects) <span class="co">#第9章（交互作用）で紹介</span></span>
-<span id="cb330-6"><a href="logit.html#cb330-6" tabindex="-1"></a></span>
-<span id="cb330-7"><a href="logit.html#cb330-7" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="logit.html#cb340-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb340-2"><a href="logit.html#cb340-2" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb340-3"><a href="logit.html#cb340-3" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb340-4"><a href="logit.html#cb340-4" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb340-5"><a href="logit.html#cb340-5" tabindex="-1"></a><span class="fu">library</span>(ggeffects) <span class="co">#第9章（交互作用）で紹介</span></span>
+<span id="cb340-6"><a href="logit.html#cb340-6" tabindex="-1"></a></span>
+<span id="cb340-7"><a href="logit.html#cb340-7" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
 <p><a href="descriptives.html#descriptives_ggplot">第5章で確認したように</a>、ggplotの設定を変更しておくことで見やすいグラフを作ることができる。ここでは以下のコードを実行している。</p>
 <p>Macの場合：</p>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="logit.html#cb331-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
-<span id="cb331-2"><a href="logit.html#cb331-2" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>,</span>
-<span id="cb331-3"><a href="logit.html#cb331-3" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
-<span id="cb331-4"><a href="logit.html#cb331-4" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb331-5"><a href="logit.html#cb331-5" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
-<span id="cb331-6"><a href="logit.html#cb331-6" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="logit.html#cb341-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb341-2"><a href="logit.html#cb341-2" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>,</span>
+<span id="cb341-3"><a href="logit.html#cb341-3" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb341-4"><a href="logit.html#cb341-4" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb341-5"><a href="logit.html#cb341-5" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb341-6"><a href="logit.html#cb341-6" tabindex="-1"></a>))</span></code></pre></div>
 <p>Windowsの場合：</p>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="logit.html#cb332-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
-<span id="cb332-2"><a href="logit.html#cb332-2" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
-<span id="cb332-3"><a href="logit.html#cb332-3" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb332-4"><a href="logit.html#cb332-4" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
-<span id="cb332-5"><a href="logit.html#cb332-5" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="logit.html#cb342-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb342-2"><a href="logit.html#cb342-2" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb342-3"><a href="logit.html#cb342-3" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb342-4"><a href="logit.html#cb342-4" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb342-5"><a href="logit.html#cb342-5" tabindex="-1"></a>))</span></code></pre></div>
 <div id="二値変数を従属変数にする線形回帰分析を使ったアプローチ" class="section level2 hasAnchor" number="10.1">
 <h2><span class="header-section-number">10.1</span> 二値変数を従属変数にする：線形回帰分析を使ったアプローチ<a href="logit.html#二値変数を従属変数にする線形回帰分析を使ったアプローチ" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="線形確率モデル" class="section level3 hasAnchor" number="10.1.1">
@@ -540,8 +548,8 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 \]</span></p>
 <p>このとき、係数<span class="math inline">\(\beta_1\)</span>は他の変数<span class="math inline">\(x_2, \cdots, x_k\)</span>を一定としたうえで、<span class="math inline">\(x_1\)</span>が1単位高いと<span class="math inline">\(y\)</span>（従属変数が1をとる割合）がどれだけ高いのかを表す。</p>
 <p>たとえば、この1年間に職場での訓練（OJTとよぶ）を受ける率が性別によってどの程度異なるのかを知りたいとしたら、次のような式を推定する。</p>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="logit.html#cb333-1" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender)</span>
-<span id="cb333-2"><a href="logit.html#cb333-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res1)</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="logit.html#cb343-1" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender)</span>
+<span id="cb343-2"><a href="logit.html#cb343-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = ojt ~ gender, data = piaac)
@@ -561,8 +569,8 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 ## Multiple R-squared:  0.007116,   Adjusted R-squared:  0.006751 
 ## F-statistic: 19.54 on 1 and 2726 DF,  p-value: 1.026e-05</code></pre>
 <p>また、年齢とOJT受講の関係が線形であると仮定して、年齢および学歴が同じであったとしてもなお、性別によってOJTを受ける割合が異なっているかどうかを知りたいとしたら、次のような式を推定する。</p>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="logit.html#cb335-1" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span>
-<span id="cb335-2"><a href="logit.html#cb335-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res2)</span></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="logit.html#cb345-1" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span>
+<span id="cb345-2"><a href="logit.html#cb345-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = ojt ~ gender + age + educ, data = piaac)
@@ -592,28 +600,28 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 <h3><span class="header-section-number">10.1.2</span> 残差が正規分布しない問題への対処<a href="logit.html#残差が正規分布しない問題への対処" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>回帰分析で係数の標準誤差を求めるときには、残差が正規分布するという仮定が置かれている。しかしながら、線形確率モデルの場合はこの仮定は通常満たされない。このことを、<strong>不均一分散 heteroskedasticity</strong>という。不均一分散が生じている場合には、標準誤差にバイアスが生じる。そこで、不均一分散に対して頑健な標準誤差（<strong>ロバスト標準誤差 robust standard error</strong>）を用いることで、適切な標準誤差を計算することができる。</p>
 <p>ロバスト標準誤差を求める場合には、<code>estimatr</code>パッケージに含まれている<code>lm_robust()</code>関数を使うのが手っ取り早い。通常の<code>lm()</code>を、<code>lm_robust()</code>に変えるだけで、ロバスト標準誤差を計算してくれる。</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="logit.html#cb337-1" tabindex="-1"></a><span class="fu">library</span>(estimatr)</span></code></pre></div>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="logit.html#cb338-1" tabindex="-1"></a>reg_res2_robust <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="logit.html#cb347-1" tabindex="-1"></a><span class="fu">library</span>(estimatr)</span></code></pre></div>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="logit.html#cb348-1" tabindex="-1"></a>reg_res2_robust <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span></code></pre></div>
 <p><code>lm()</code>で求めた推定結果と、<code>lm_robust()</code>で求めた推定結果を比べてみよう：</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="logit.html#cb339-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;通常のSE&quot;</span> <span class="ot">=</span> reg_res2, <span class="st">&quot;Robust SE&quot;</span> <span class="ot">=</span> reg_res2_robust),</span>
-<span id="cb339-2"><a href="logit.html#cb339-2" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>,<span class="at">fmt =</span> <span class="dv">4</span>)</span></code></pre></div>
-<div id="rkkcoyzdrk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#rkkcoyzdrk table {
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="logit.html#cb349-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;通常のSE&quot;</span> <span class="ot">=</span> reg_res2, <span class="st">&quot;Robust SE&quot;</span> <span class="ot">=</span> reg_res2_robust),</span>
+<span id="cb349-2"><a href="logit.html#cb349-2" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>,<span class="at">fmt =</span> <span class="dv">4</span>)</span></code></pre></div>
+<div id="dbotdywiph" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dbotdywiph table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#rkkcoyzdrk thead, #rkkcoyzdrk tbody, #rkkcoyzdrk tfoot, #rkkcoyzdrk tr, #rkkcoyzdrk td, #rkkcoyzdrk th {
+#dbotdywiph thead, #dbotdywiph tbody, #dbotdywiph tfoot, #dbotdywiph tr, #dbotdywiph td, #dbotdywiph th {
   border-style: none;
 }
 
-#rkkcoyzdrk p {
+#dbotdywiph p {
   margin: 0;
   padding: 0;
 }
 
-#rkkcoyzdrk .gt_table {
+#dbotdywiph .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -639,12 +647,12 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-left-color: #D3D3D3;
 }
 
-#rkkcoyzdrk .gt_caption {
+#dbotdywiph .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#rkkcoyzdrk .gt_title {
+#dbotdywiph .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -656,7 +664,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-width: 0;
 }
 
-#rkkcoyzdrk .gt_subtitle {
+#dbotdywiph .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -668,7 +676,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-top-width: 0;
 }
 
-#rkkcoyzdrk .gt_heading {
+#dbotdywiph .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -680,13 +688,13 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#rkkcoyzdrk .gt_bottom_border {
+#dbotdywiph .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rkkcoyzdrk .gt_col_headings {
+#dbotdywiph .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -701,7 +709,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#rkkcoyzdrk .gt_col_heading {
+#dbotdywiph .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -721,7 +729,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#rkkcoyzdrk .gt_column_spanner_outer {
+#dbotdywiph .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -733,15 +741,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 4px;
 }
 
-#rkkcoyzdrk .gt_column_spanner_outer:first-child {
+#dbotdywiph .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rkkcoyzdrk .gt_column_spanner_outer:last-child {
+#dbotdywiph .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rkkcoyzdrk .gt_column_spanner {
+#dbotdywiph .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -753,11 +761,11 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   width: 100%;
 }
 
-#rkkcoyzdrk .gt_spanner_row {
+#dbotdywiph .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#rkkcoyzdrk .gt_group_heading {
+#dbotdywiph .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -783,7 +791,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   text-align: left;
 }
 
-#rkkcoyzdrk .gt_empty_group_heading {
+#dbotdywiph .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -798,15 +806,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   vertical-align: middle;
 }
 
-#rkkcoyzdrk .gt_from_md > :first-child {
+#dbotdywiph .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rkkcoyzdrk .gt_from_md > :last-child {
+#dbotdywiph .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rkkcoyzdrk .gt_row {
+#dbotdywiph .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -825,7 +833,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#rkkcoyzdrk .gt_stub {
+#dbotdywiph .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -838,7 +846,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#rkkcoyzdrk .gt_stub_row_group {
+#dbotdywiph .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -852,15 +860,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   vertical-align: top;
 }
 
-#rkkcoyzdrk .gt_row_group_first td {
+#dbotdywiph .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#rkkcoyzdrk .gt_row_group_first th {
+#dbotdywiph .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#rkkcoyzdrk .gt_summary_row {
+#dbotdywiph .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -870,16 +878,16 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#rkkcoyzdrk .gt_first_summary_row {
+#dbotdywiph .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#rkkcoyzdrk .gt_first_summary_row.thick {
+#dbotdywiph .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#rkkcoyzdrk .gt_last_summary_row {
+#dbotdywiph .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -889,7 +897,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#rkkcoyzdrk .gt_grand_summary_row {
+#dbotdywiph .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -899,7 +907,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#rkkcoyzdrk .gt_first_grand_summary_row {
+#dbotdywiph .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -909,7 +917,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-top-color: #D3D3D3;
 }
 
-#rkkcoyzdrk .gt_last_grand_summary_row_top {
+#dbotdywiph .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -919,11 +927,11 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#rkkcoyzdrk .gt_striped {
+#dbotdywiph .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rkkcoyzdrk .gt_table_body {
+#dbotdywiph .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -932,7 +940,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#rkkcoyzdrk .gt_footnotes {
+#dbotdywiph .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -946,7 +954,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#rkkcoyzdrk .gt_footnote {
+#dbotdywiph .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -955,7 +963,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#rkkcoyzdrk .gt_sourcenotes {
+#dbotdywiph .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -969,7 +977,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#rkkcoyzdrk .gt_sourcenote {
+#dbotdywiph .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -977,63 +985,63 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#rkkcoyzdrk .gt_left {
+#dbotdywiph .gt_left {
   text-align: left;
 }
 
-#rkkcoyzdrk .gt_center {
+#dbotdywiph .gt_center {
   text-align: center;
 }
 
-#rkkcoyzdrk .gt_right {
+#dbotdywiph .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rkkcoyzdrk .gt_font_normal {
+#dbotdywiph .gt_font_normal {
   font-weight: normal;
 }
 
-#rkkcoyzdrk .gt_font_bold {
+#dbotdywiph .gt_font_bold {
   font-weight: bold;
 }
 
-#rkkcoyzdrk .gt_font_italic {
+#dbotdywiph .gt_font_italic {
   font-style: italic;
 }
 
-#rkkcoyzdrk .gt_super {
+#dbotdywiph .gt_super {
   font-size: 65%;
 }
 
-#rkkcoyzdrk .gt_footnote_marks {
+#dbotdywiph .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#rkkcoyzdrk .gt_asterisk {
+#dbotdywiph .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#rkkcoyzdrk .gt_indent_1 {
+#dbotdywiph .gt_indent_1 {
   text-indent: 5px;
 }
 
-#rkkcoyzdrk .gt_indent_2 {
+#dbotdywiph .gt_indent_2 {
   text-indent: 10px;
 }
 
-#rkkcoyzdrk .gt_indent_3 {
+#dbotdywiph .gt_indent_3 {
   text-indent: 15px;
 }
 
-#rkkcoyzdrk .gt_indent_4 {
+#dbotdywiph .gt_indent_4 {
   text-indent: 20px;
 }
 
-#rkkcoyzdrk .gt_indent_5 {
+#dbotdywiph .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1125,9 +1133,19 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 <h3><span class="header-section-number">10.2.1</span> ロジスティック回帰分析（ロジットモデル）<a href="logit.html#ロジスティック回帰分析ロジットモデル" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><span class="math display">\[
 \log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
+\]</span>
+または、式を変形して次のように書く。</p>
+<p><span class="math display">\[
+\begin{align}
+\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &amp;= \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k \\
+\frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &amp;= \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k) \\
+\Pr(y = 1) &amp;= (1 - \Pr(y = 1))\exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k) \\
+(1 + \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k))\Pr(y = 1) &amp;= \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k) \\
+\Pr(y = 1) &amp;= \frac{\exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k)}{1 + \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k)}
+\end{align}
 \]</span></p>
-<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="logit.html#cb340-1" tabindex="-1"></a>logit_res1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender, <span class="at">family =</span> binomial)</span>
-<span id="cb340-2"><a href="logit.html#cb340-2" tabindex="-1"></a><span class="fu">summary</span>(logit_res1)</span></code></pre></div>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="logit.html#cb350-1" tabindex="-1"></a>logit_res1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender, <span class="at">family =</span> binomial)</span>
+<span id="cb350-2"><a href="logit.html#cb350-2" tabindex="-1"></a><span class="fu">summary</span>(logit_res1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = ojt ~ gender, family = binomial, data = piaac)
@@ -1151,27 +1169,27 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 <div id="対数オッズ比の解釈" class="section level3 hasAnchor" number="10.2.2">
 <h3><span class="header-section-number">10.2.2</span> 対数オッズ比の解釈<a href="logit.html#対数オッズ比の解釈" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>急に出てきた「対数オッズ比」とはなんだろうか？これを理解するために、クロス集計表を作ってみよう。性別ごとにOJTを受ける・受けない人数を集計したクロス集計表は次のようになる。ここでは説明を分かりやすくするために順序を変更している。</p>
-<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="logit.html#cb342-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb342-2"><a href="logit.html#cb342-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">fct_relevel</span>(gender, <span class="st">&quot;男性&quot;</span>, <span class="st">&quot;女性&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb342-3"><a href="logit.html#cb342-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ojt =</span> <span class="fu">factor</span>(ojt, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">0</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;1（受けた）&quot;</span>, <span class="st">&quot;0（受けなかった）&quot;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb342-4"><a href="logit.html#cb342-4" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(gender, ojt)</span></code></pre></div>
-<div id="dggduqrzen" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dggduqrzen table {
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="logit.html#cb352-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb352-2"><a href="logit.html#cb352-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">fct_relevel</span>(gender, <span class="st">&quot;男性&quot;</span>, <span class="st">&quot;女性&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb352-3"><a href="logit.html#cb352-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ojt =</span> <span class="fu">factor</span>(ojt, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">0</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;1（受けた）&quot;</span>, <span class="st">&quot;0（受けなかった）&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb352-4"><a href="logit.html#cb352-4" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(gender, ojt)</span></code></pre></div>
+<div id="zppnhxaapb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#zppnhxaapb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#dggduqrzen thead, #dggduqrzen tbody, #dggduqrzen tfoot, #dggduqrzen tr, #dggduqrzen td, #dggduqrzen th {
+#zppnhxaapb thead, #zppnhxaapb tbody, #zppnhxaapb tfoot, #zppnhxaapb tr, #zppnhxaapb td, #zppnhxaapb th {
   border-style: none;
 }
 
-#dggduqrzen p {
+#zppnhxaapb p {
   margin: 0;
   padding: 0;
 }
 
-#dggduqrzen .gt_table {
+#zppnhxaapb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1197,12 +1215,12 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-left-color: #D3D3D3;
 }
 
-#dggduqrzen .gt_caption {
+#zppnhxaapb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#dggduqrzen .gt_title {
+#zppnhxaapb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1214,7 +1232,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-width: 0;
 }
 
-#dggduqrzen .gt_subtitle {
+#zppnhxaapb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1226,7 +1244,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-top-width: 0;
 }
 
-#dggduqrzen .gt_heading {
+#zppnhxaapb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1238,13 +1256,13 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#dggduqrzen .gt_bottom_border {
+#zppnhxaapb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dggduqrzen .gt_col_headings {
+#zppnhxaapb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1259,7 +1277,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#dggduqrzen .gt_col_heading {
+#zppnhxaapb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1279,7 +1297,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#dggduqrzen .gt_column_spanner_outer {
+#zppnhxaapb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1291,15 +1309,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 4px;
 }
 
-#dggduqrzen .gt_column_spanner_outer:first-child {
+#zppnhxaapb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dggduqrzen .gt_column_spanner_outer:last-child {
+#zppnhxaapb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dggduqrzen .gt_column_spanner {
+#zppnhxaapb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1311,11 +1329,11 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   width: 100%;
 }
 
-#dggduqrzen .gt_spanner_row {
+#zppnhxaapb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#dggduqrzen .gt_group_heading {
+#zppnhxaapb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1341,7 +1359,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   text-align: left;
 }
 
-#dggduqrzen .gt_empty_group_heading {
+#zppnhxaapb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1356,15 +1374,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   vertical-align: middle;
 }
 
-#dggduqrzen .gt_from_md > :first-child {
+#zppnhxaapb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dggduqrzen .gt_from_md > :last-child {
+#zppnhxaapb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dggduqrzen .gt_row {
+#zppnhxaapb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1383,7 +1401,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#dggduqrzen .gt_stub {
+#zppnhxaapb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1396,7 +1414,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#dggduqrzen .gt_stub_row_group {
+#zppnhxaapb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1410,15 +1428,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   vertical-align: top;
 }
 
-#dggduqrzen .gt_row_group_first td {
+#zppnhxaapb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dggduqrzen .gt_row_group_first th {
+#zppnhxaapb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#dggduqrzen .gt_summary_row {
+#zppnhxaapb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1428,16 +1446,16 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#dggduqrzen .gt_first_summary_row {
+#zppnhxaapb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#dggduqrzen .gt_first_summary_row.thick {
+#zppnhxaapb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dggduqrzen .gt_last_summary_row {
+#zppnhxaapb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1447,7 +1465,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#dggduqrzen .gt_grand_summary_row {
+#zppnhxaapb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1457,7 +1475,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#dggduqrzen .gt_first_grand_summary_row {
+#zppnhxaapb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1467,7 +1485,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-top-color: #D3D3D3;
 }
 
-#dggduqrzen .gt_last_grand_summary_row_top {
+#zppnhxaapb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1477,11 +1495,11 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#dggduqrzen .gt_striped {
+#zppnhxaapb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dggduqrzen .gt_table_body {
+#zppnhxaapb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1490,7 +1508,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#dggduqrzen .gt_footnotes {
+#zppnhxaapb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1504,7 +1522,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#dggduqrzen .gt_footnote {
+#zppnhxaapb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1513,7 +1531,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#dggduqrzen .gt_sourcenotes {
+#zppnhxaapb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1527,7 +1545,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#dggduqrzen .gt_sourcenote {
+#zppnhxaapb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1535,63 +1553,63 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#dggduqrzen .gt_left {
+#zppnhxaapb .gt_left {
   text-align: left;
 }
 
-#dggduqrzen .gt_center {
+#zppnhxaapb .gt_center {
   text-align: center;
 }
 
-#dggduqrzen .gt_right {
+#zppnhxaapb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dggduqrzen .gt_font_normal {
+#zppnhxaapb .gt_font_normal {
   font-weight: normal;
 }
 
-#dggduqrzen .gt_font_bold {
+#zppnhxaapb .gt_font_bold {
   font-weight: bold;
 }
 
-#dggduqrzen .gt_font_italic {
+#zppnhxaapb .gt_font_italic {
   font-style: italic;
 }
 
-#dggduqrzen .gt_super {
+#zppnhxaapb .gt_super {
   font-size: 65%;
 }
 
-#dggduqrzen .gt_footnote_marks {
+#zppnhxaapb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#dggduqrzen .gt_asterisk {
+#zppnhxaapb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dggduqrzen .gt_indent_1 {
+#zppnhxaapb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#dggduqrzen .gt_indent_2 {
+#zppnhxaapb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#dggduqrzen .gt_indent_3 {
+#zppnhxaapb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#dggduqrzen .gt_indent_4 {
+#zppnhxaapb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#dggduqrzen .gt_indent_5 {
+#zppnhxaapb .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1712,8 +1730,8 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 <div id="連続変数を独立変数とする場合" class="section level3 hasAnchor" number="10.2.3">
 <h3><span class="header-section-number">10.2.3</span> 連続変数を独立変数とする場合<a href="logit.html#連続変数を独立変数とする場合" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>連続変数を独立変数とする場合は先のような表をイメージするのは難しくなってくるが、解釈は類似している。たとえば次のように性別と年齢を独立変数とするロジスティック回帰分析を推定する。</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="logit.html#cb343-1" tabindex="-1"></a>logit_res2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age, <span class="at">family =</span> binomial)</span>
-<span id="cb343-2"><a href="logit.html#cb343-2" tabindex="-1"></a><span class="fu">summary</span>(logit_res2)</span></code></pre></div>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="logit.html#cb353-1" tabindex="-1"></a>logit_res2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age, <span class="at">family =</span> binomial)</span>
+<span id="cb353-2"><a href="logit.html#cb353-2" tabindex="-1"></a><span class="fu">summary</span>(logit_res2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = ojt ~ gender + age, family = binomial, data = piaac)
@@ -1740,17 +1758,8 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 <h2><span class="header-section-number">10.3</span> 平均限界効果<a href="logit.html#平均限界効果" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>ロジスティック回帰分析では係数は対数オッズを表す。しかし、対数オッズ比は線形確率モデルと比べると直感的に解釈しにくい。そこで、ロジスティック回帰分析を使う場合には、<strong>平均限界効果 Average marginal effect, AME</strong>と合わせて結果を解釈することが強く推奨される。</p>
 <p>平均限界効果とはなんだろうか。これを理解するため、先ほどのロジスティック回帰分析を次のように変形する（式変形については対数の知識が必要）：</p>
-<p><span class="math display">\[
-\begin{align}
-\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &amp;= \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k \\
-\frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &amp;= \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k) \\
-\Pr(y = 1) &amp;= (1 - \Pr(y = 1))\exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k) \\
-(1 + \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k))\Pr(y = 1) &amp;= \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k) \\
-\Pr(y = 1) &amp;= \frac{\exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k)}{1 + \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k)}
-\end{align}
-\]</span></p>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="logit.html#cb345-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb345-2"><a href="logit.html#cb345-2" tabindex="-1"></a>  <span class="fu">select</span>(id, gender, age)</span></code></pre></div>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="logit.html#cb355-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb355-2"><a href="logit.html#cb355-2" tabindex="-1"></a>  <span class="fu">select</span>(id, gender, age)</span></code></pre></div>
 <pre><code>## # A tibble: 2,728 × 3
 ##       id gender   age
 ##    &lt;int&gt; &lt;fct&gt;  &lt;dbl&gt;
@@ -1765,30 +1774,30 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 ##  9    18 男性      30
 ## 10    19 男性      46
 ## # ℹ 2,718 more rows</code></pre>
-<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="logit.html#cb347-1" tabindex="-1"></a><span class="fu">install.packages</span>(margins)</span></code></pre></div>
-<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="logit.html#cb348-1" tabindex="-1"></a><span class="fu">library</span>(margins)</span></code></pre></div>
-<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="logit.html#cb349-1" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span>
-<span id="cb349-2"><a href="logit.html#cb349-2" tabindex="-1"></a>logit_res3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
-<span id="cb349-3"><a href="logit.html#cb349-3" tabindex="-1"></a>margins_logit_res3 <span class="ot">&lt;-</span> <span class="fu">margins</span>(logit_res3)</span></code></pre></div>
-<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="logit.html#cb350-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;LPM&quot;</span> <span class="ot">=</span> reg_res3, <span class="st">&quot;Logit&quot;</span> <span class="ot">=</span> logit_res3, <span class="st">&quot;AME&quot;</span> <span class="ot">=</span> margins_logit_res3),</span>
-<span id="cb350-2"><a href="logit.html#cb350-2" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div id="mlqlcalsyj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mlqlcalsyj table {
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="logit.html#cb357-1" tabindex="-1"></a><span class="fu">install.packages</span>(margins)</span></code></pre></div>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="logit.html#cb358-1" tabindex="-1"></a><span class="fu">library</span>(margins)</span></code></pre></div>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="logit.html#cb359-1" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span>
+<span id="cb359-2"><a href="logit.html#cb359-2" tabindex="-1"></a>logit_res3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb359-3"><a href="logit.html#cb359-3" tabindex="-1"></a>margins_logit_res3 <span class="ot">&lt;-</span> <span class="fu">margins</span>(logit_res3)</span></code></pre></div>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="logit.html#cb360-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;LPM&quot;</span> <span class="ot">=</span> reg_res3, <span class="st">&quot;Logit&quot;</span> <span class="ot">=</span> logit_res3, <span class="st">&quot;AME&quot;</span> <span class="ot">=</span> margins_logit_res3),</span>
+<span id="cb360-2"><a href="logit.html#cb360-2" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div id="xbfukgwieb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xbfukgwieb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mlqlcalsyj thead, #mlqlcalsyj tbody, #mlqlcalsyj tfoot, #mlqlcalsyj tr, #mlqlcalsyj td, #mlqlcalsyj th {
+#xbfukgwieb thead, #xbfukgwieb tbody, #xbfukgwieb tfoot, #xbfukgwieb tr, #xbfukgwieb td, #xbfukgwieb th {
   border-style: none;
 }
 
-#mlqlcalsyj p {
+#xbfukgwieb p {
   margin: 0;
   padding: 0;
 }
 
-#mlqlcalsyj .gt_table {
+#xbfukgwieb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1814,12 +1823,12 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-left-color: #D3D3D3;
 }
 
-#mlqlcalsyj .gt_caption {
+#xbfukgwieb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mlqlcalsyj .gt_title {
+#xbfukgwieb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1831,7 +1840,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-width: 0;
 }
 
-#mlqlcalsyj .gt_subtitle {
+#xbfukgwieb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1843,7 +1852,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-top-width: 0;
 }
 
-#mlqlcalsyj .gt_heading {
+#xbfukgwieb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1855,13 +1864,13 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#mlqlcalsyj .gt_bottom_border {
+#xbfukgwieb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mlqlcalsyj .gt_col_headings {
+#xbfukgwieb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1876,7 +1885,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#mlqlcalsyj .gt_col_heading {
+#xbfukgwieb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1896,7 +1905,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#mlqlcalsyj .gt_column_spanner_outer {
+#xbfukgwieb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1908,15 +1917,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 4px;
 }
 
-#mlqlcalsyj .gt_column_spanner_outer:first-child {
+#xbfukgwieb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mlqlcalsyj .gt_column_spanner_outer:last-child {
+#xbfukgwieb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mlqlcalsyj .gt_column_spanner {
+#xbfukgwieb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1928,11 +1937,11 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   width: 100%;
 }
 
-#mlqlcalsyj .gt_spanner_row {
+#xbfukgwieb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mlqlcalsyj .gt_group_heading {
+#xbfukgwieb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1958,7 +1967,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   text-align: left;
 }
 
-#mlqlcalsyj .gt_empty_group_heading {
+#xbfukgwieb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1973,15 +1982,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   vertical-align: middle;
 }
 
-#mlqlcalsyj .gt_from_md > :first-child {
+#xbfukgwieb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mlqlcalsyj .gt_from_md > :last-child {
+#xbfukgwieb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mlqlcalsyj .gt_row {
+#xbfukgwieb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2000,7 +2009,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#mlqlcalsyj .gt_stub {
+#xbfukgwieb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2013,7 +2022,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#mlqlcalsyj .gt_stub_row_group {
+#xbfukgwieb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2027,15 +2036,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   vertical-align: top;
 }
 
-#mlqlcalsyj .gt_row_group_first td {
+#xbfukgwieb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mlqlcalsyj .gt_row_group_first th {
+#xbfukgwieb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mlqlcalsyj .gt_summary_row {
+#xbfukgwieb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2045,16 +2054,16 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#mlqlcalsyj .gt_first_summary_row {
+#xbfukgwieb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mlqlcalsyj .gt_first_summary_row.thick {
+#xbfukgwieb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mlqlcalsyj .gt_last_summary_row {
+#xbfukgwieb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2064,7 +2073,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#mlqlcalsyj .gt_grand_summary_row {
+#xbfukgwieb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2074,7 +2083,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#mlqlcalsyj .gt_first_grand_summary_row {
+#xbfukgwieb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2084,7 +2093,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-top-color: #D3D3D3;
 }
 
-#mlqlcalsyj .gt_last_grand_summary_row_top {
+#xbfukgwieb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2094,11 +2103,11 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#mlqlcalsyj .gt_striped {
+#xbfukgwieb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mlqlcalsyj .gt_table_body {
+#xbfukgwieb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2107,7 +2116,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#mlqlcalsyj .gt_footnotes {
+#xbfukgwieb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2121,7 +2130,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#mlqlcalsyj .gt_footnote {
+#xbfukgwieb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2130,7 +2139,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#mlqlcalsyj .gt_sourcenotes {
+#xbfukgwieb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2144,7 +2153,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#mlqlcalsyj .gt_sourcenote {
+#xbfukgwieb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2152,63 +2161,63 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#mlqlcalsyj .gt_left {
+#xbfukgwieb .gt_left {
   text-align: left;
 }
 
-#mlqlcalsyj .gt_center {
+#xbfukgwieb .gt_center {
   text-align: center;
 }
 
-#mlqlcalsyj .gt_right {
+#xbfukgwieb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mlqlcalsyj .gt_font_normal {
+#xbfukgwieb .gt_font_normal {
   font-weight: normal;
 }
 
-#mlqlcalsyj .gt_font_bold {
+#xbfukgwieb .gt_font_bold {
   font-weight: bold;
 }
 
-#mlqlcalsyj .gt_font_italic {
+#xbfukgwieb .gt_font_italic {
   font-style: italic;
 }
 
-#mlqlcalsyj .gt_super {
+#xbfukgwieb .gt_super {
   font-size: 65%;
 }
 
-#mlqlcalsyj .gt_footnote_marks {
+#xbfukgwieb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mlqlcalsyj .gt_asterisk {
+#xbfukgwieb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mlqlcalsyj .gt_indent_1 {
+#xbfukgwieb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mlqlcalsyj .gt_indent_2 {
+#xbfukgwieb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mlqlcalsyj .gt_indent_3 {
+#xbfukgwieb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mlqlcalsyj .gt_indent_4 {
+#xbfukgwieb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mlqlcalsyj .gt_indent_5 {
+#xbfukgwieb .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
