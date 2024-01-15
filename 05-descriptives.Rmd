@@ -327,14 +327,14 @@ piaac_selected %>%
 
 ```{r}
 piaac_selected %>% 
-  tbl_summary(label = list(gender ~ "性別",
-                           age ~ "年齢",
+  tbl_summary(label = list(age ~ "年齢",
                            educ ~ "最終学歴",
                            occupation ~ "職業",
                            wage ~ "賃金"), #~の前には列名、後ろにはつけたい名前を""で囲んで入れ、,で一つずつ区切る
+              by = gender, # 性別（gender）で分割
               statistic = list(all_continuous() ~ "{mean} ({sd})"), 
-              digits = all_continuous() ~ 1) %>% #数値の部分が小数点第y位の部分の値
-  modify_header(label ~ "") # ""の部分には好きな文字列を入れられる。何も入れなければ空欄になる
+              digits = all_continuous() ~ 1) %>% 
+  modify_header(label ~ "") 
 ```
 
 ## 結果をファイルに書き出す 
