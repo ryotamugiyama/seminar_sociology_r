@@ -1,0 +1,2413 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Rによる社会調査データ分析の手引き - 10&nbsp; ロジスティック回帰分析（作成中）</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./11-domain.html" rel="next">
+<link href="./09-interaction.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10-logit.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ロジスティック回帰分析（作成中）</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Rによる社会調査データ分析の手引き</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">まえがき</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-plan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">研究計画を立てる</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">RとRStudioの下準備</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-import.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">データの読み込み</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-handling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">データの加工</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-descriptives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">1変数の集計</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-tabulate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">2変数の集計</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-regression_basic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">回帰分析の基礎</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-regression_advanced.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">回帰分析の活用</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-interaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">交互作用</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-logit.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ロジスティック回帰分析（作成中）</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-domain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">社会学のデータ分析でよくある処理</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-writepaper.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">論文のまとめ方</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-presentation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">研究発表をする</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">さらなる学習のための参考文献</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#二値変数を従属変数にする線形回帰分析を使ったアプローチ" id="toc-二値変数を従属変数にする線形回帰分析を使ったアプローチ" class="nav-link active" data-scroll-target="#二値変数を従属変数にする線形回帰分析を使ったアプローチ"><span class="header-section-number">10.1</span> 二値変数を従属変数にする：線形回帰分析を使ったアプローチ</a>
+  <ul class="collapse">
+  <li><a href="#線形確率モデル" id="toc-線形確率モデル" class="nav-link" data-scroll-target="#線形確率モデル"><span class="header-section-number">10.1.1</span> 線形確率モデル</a></li>
+  <li><a href="#残差が正規分布しない問題への対処" id="toc-残差が正規分布しない問題への対処" class="nav-link" data-scroll-target="#残差が正規分布しない問題への対処"><span class="header-section-number">10.1.2</span> 残差が正規分布しない問題への対処</a></li>
+  </ul></li>
+  <li><a href="#ロジスティック回帰分析とは" id="toc-ロジスティック回帰分析とは" class="nav-link" data-scroll-target="#ロジスティック回帰分析とは"><span class="header-section-number">10.2</span> ロジスティック回帰分析とは</a>
+  <ul class="collapse">
+  <li><a href="#ロジスティック回帰分析ロジットモデル" id="toc-ロジスティック回帰分析ロジットモデル" class="nav-link" data-scroll-target="#ロジスティック回帰分析ロジットモデル"><span class="header-section-number">10.2.1</span> ロジスティック回帰分析（ロジットモデル）</a></li>
+  <li><a href="#対数オッズ比の解釈" id="toc-対数オッズ比の解釈" class="nav-link" data-scroll-target="#対数オッズ比の解釈"><span class="header-section-number">10.2.2</span> 対数オッズ比の解釈</a></li>
+  <li><a href="#連続変数を独立変数とする場合" id="toc-連続変数を独立変数とする場合" class="nav-link" data-scroll-target="#連続変数を独立変数とする場合"><span class="header-section-number">10.2.3</span> 連続変数を独立変数とする場合</a></li>
+  </ul></li>
+  <li><a href="#平均限界効果" id="toc-平均限界効果" class="nav-link" data-scroll-target="#平均限界効果"><span class="header-section-number">10.3</span> 平均限界効果</a></li>
+  <li><a href="#ロジスティック回帰分析の注意点" id="toc-ロジスティック回帰分析の注意点" class="nav-link" data-scroll-target="#ロジスティック回帰分析の注意点"><span class="header-section-number">10.4</span> ロジスティック回帰分析の注意点</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="logit" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ロジスティック回帰分析（作成中）</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>本章では、前章で学んだ回帰分析を発展させて、複数の独立変数を扱う方法について説明する。</p>
+<p>内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project…」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。</p>
+<p>さらに、これまでの章で説明した以下のパッケージを読み込んだ上で、<a href="04-handling.html">第4章</a>で作成したデータを読み込んで<code>piaac</code>というデータフレームに入れていることを前提とする。具体的には、以下のコードを実行しておく必要がある。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary) <span class="co"># 第5章（1変数の集計）で紹介</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(flextable) <span class="co"># 第5章（1変数の集計）で紹介</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'flextable'
+
+The following objects are masked from 'package:gtsummary':
+
+    as_flextable, continuous_summary
+
+The following object is masked from 'package:purrr':
+
+    compose</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary) <span class="co"># 第7章（回帰分析の基礎）で紹介</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom) <span class="co"># 第8章（回帰分析の活用）で紹介</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggeffects) <span class="co"># 第9章（交互作用）で紹介</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data/piaac_sample_analytic.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><a href="05-descriptives.html#descriptives_ggplot">第5章で確認したように</a>、ggplotの設定を変更しておくことで見やすいグラフを作ることができる。ここでは以下のコードを実行している。</p>
+<p>Macの場合：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">"HiraginoSans-W3"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Windowsの場合：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="二値変数を従属変数にする線形回帰分析を使ったアプローチ" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="二値変数を従属変数にする線形回帰分析を使ったアプローチ"><span class="header-section-number">10.1</span> 二値変数を従属変数にする：線形回帰分析を使ったアプローチ</h2>
+<section id="線形確率モデル" class="level3" data-number="10.1.1">
+<h3 data-number="10.1.1" class="anchored" data-anchor-id="線形確率モデル"><span class="header-section-number">10.1.1</span> 線形確率モデル</h3>
+<p><a href="07-regression_basic.html#regression_basic_binary">従属変数が2値のカテゴリ変数（0/1）の場合</a>ですでにみたように、0/1の値をとる二値変数を従属変数として回帰分析を使うことができる。</p>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
+\]</span></p>
+<p>このとき、係数<span class="math inline">\(\beta_1\)</span>は他の変数<span class="math inline">\(x_2, \cdots, x_k\)</span>を一定としたうえで、<span class="math inline">\(x_1\)</span>が1単位高いと<span class="math inline">\(y\)</span>（従属変数が1をとる割合）がどれだけ高いのかを表す。</p>
+<p>たとえば、この1年間に職場での訓練（OJTとよぶ）を受ける率が性別によってどの程度異なるのかを知りたいとしたら、次のような式を推定する。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = ojt ~ gender, data = piaac)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.4079 -0.4079 -0.3263  0.5921  0.6737 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.32632    0.01343   24.30  &lt; 2e-16 ***
+gender男性   0.08157    0.01846    4.42 1.03e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4811 on 2726 degrees of freedom
+Multiple R-squared:  0.007116,  Adjusted R-squared:  0.006751 
+F-statistic: 19.54 on 1 and 2726 DF,  p-value: 1.026e-05</code></pre>
+</div>
+</div>
+<p>また、年齢とOJT受講の関係が線形であると仮定して、年齢および学歴が同じであったとしてもなお、性別によってOJTを受ける割合が異なっているかどうかを知りたいとしたら、次のような式を推定する。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(reg_res2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = ojt ~ gender + age + educ, data = piaac)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.5679 -0.3590 -0.2487  0.4981  0.8575 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)     0.2790638  0.0539055   5.177 2.42e-07 ***
+gender男性      0.0532179  0.0188275   2.827  0.00474 ** 
+age            -0.0021335  0.0008478  -2.516  0.01192 *  
+educ高校        0.0635070  0.0349841   1.815  0.06959 .  
+educ短大高専    0.1652651  0.0369943   4.467 8.24e-06 ***
+educ大学大学院  0.2890064  0.0356772   8.101 8.17e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.469 on 2722 degrees of freedom
+Multiple R-squared:  0.05794,   Adjusted R-squared:  0.05621 
+F-statistic: 33.48 on 5 and 2722 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>この結果から、年齢および学歴が同程度であったとしても、男性がOJTを受ける割合は女性と比べて0.053ポイント（5.3 %ポイント）高いといえる。</p>
+<p>このように、0/1の値をとる二値変数を従属変数として回帰分析を推定するような場合を指して、線形確率モデル（linear probability model）と呼ぶ。</p>
+</section>
+<section id="残差が正規分布しない問題への対処" class="level3" data-number="10.1.2">
+<h3 data-number="10.1.2" class="anchored" data-anchor-id="残差が正規分布しない問題への対処"><span class="header-section-number">10.1.2</span> 残差が正規分布しない問題への対処</h3>
+<p>回帰分析で係数の標準誤差を求めるときには、残差が正規分布するという仮定が置かれている。しかしながら、線形確率モデルの場合はこの仮定は通常満たされない。このことを、<strong>不均一分散 heteroskedasticity</strong>という。不均一分散が生じている場合には、標準誤差にバイアスが生じる。そこで、不均一分散に対して頑健な標準誤差（<strong>ロバスト標準誤差 robust standard error</strong>）を用いることで、適切な標準誤差を計算することができる。</p>
+<p>ロバスト標準誤差を求める場合には、<code>estimatr</code>パッケージに含まれている<code>lm_robust()</code>関数を使うのが手っ取り早い。通常の<code>lm()</code>を、<code>lm_robust()</code>に変えるだけで、ロバスト標準誤差を計算してくれる。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(estimatr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>reg_res2_robust <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>lm()</code>で求めた推定結果と、<code>lm_robust()</code>で求めた推定結果を比べてみよう：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">"通常のSE"</span> <span class="ot">=</span> reg_res2, <span class="st">"Robust SE"</span> <span class="ot">=</span> reg_res2_robust),</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>,<span class="at">fmt =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="nticrpszlb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nticrpszlb table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#nticrpszlb thead, #nticrpszlb tbody, #nticrpszlb tfoot, #nticrpszlb tr, #nticrpszlb td, #nticrpszlb th {
+  border-style: none;
+}
+
+#nticrpszlb p {
+  margin: 0;
+  padding: 0;
+}
+
+#nticrpszlb .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#nticrpszlb .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#nticrpszlb .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#nticrpszlb .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#nticrpszlb .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nticrpszlb .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nticrpszlb .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nticrpszlb .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#nticrpszlb .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#nticrpszlb .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#nticrpszlb .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#nticrpszlb .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#nticrpszlb .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#nticrpszlb .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#nticrpszlb .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#nticrpszlb .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#nticrpszlb .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#nticrpszlb .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#nticrpszlb .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nticrpszlb .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#nticrpszlb .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#nticrpszlb .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#nticrpszlb .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nticrpszlb .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#nticrpszlb .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#nticrpszlb .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nticrpszlb .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nticrpszlb .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#nticrpszlb .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nticrpszlb .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#nticrpszlb .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nticrpszlb .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nticrpszlb .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nticrpszlb .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nticrpszlb .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nticrpszlb .gt_left {
+  text-align: left;
+}
+
+#nticrpszlb .gt_center {
+  text-align: center;
+}
+
+#nticrpszlb .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#nticrpszlb .gt_font_normal {
+  font-weight: normal;
+}
+
+#nticrpszlb .gt_font_bold {
+  font-weight: bold;
+}
+
+#nticrpszlb .gt_font_italic {
+  font-style: italic;
+}
+
+#nticrpszlb .gt_super {
+  font-size: 65%;
+}
+
+#nticrpszlb .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#nticrpszlb .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#nticrpszlb .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#nticrpszlb .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#nticrpszlb .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#nticrpszlb .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#nticrpszlb .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id=" "> </th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="通常のSE">通常のSE</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Robust SE">Robust SE</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="" class="gt_row gt_left">(Intercept)</td>
+<td headers="通常のSE" class="gt_row gt_center">0.2791***</td>
+<td headers="Robust SE" class="gt_row gt_center">0.2791***</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="通常のSE" class="gt_row gt_center">(0.0539)</td>
+<td headers="Robust SE" class="gt_row gt_center">(0.0518)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">gender男性</td>
+<td headers="通常のSE" class="gt_row gt_center">0.0532**</td>
+<td headers="Robust SE" class="gt_row gt_center">0.0532**</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="通常のSE" class="gt_row gt_center">(0.0188)</td>
+<td headers="Robust SE" class="gt_row gt_center">(0.0188)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">age</td>
+<td headers="通常のSE" class="gt_row gt_center">-0.0021*</td>
+<td headers="Robust SE" class="gt_row gt_center">-0.0021*</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="通常のSE" class="gt_row gt_center">(0.0008)</td>
+<td headers="Robust SE" class="gt_row gt_center">(0.0008)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">educ高校</td>
+<td headers="通常のSE" class="gt_row gt_center">0.0635+</td>
+<td headers="Robust SE" class="gt_row gt_center">0.0635*</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="通常のSE" class="gt_row gt_center">(0.0350)</td>
+<td headers="Robust SE" class="gt_row gt_center">(0.0308)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">educ短大高専</td>
+<td headers="通常のSE" class="gt_row gt_center">0.1653***</td>
+<td headers="Robust SE" class="gt_row gt_center">0.1653***</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="通常のSE" class="gt_row gt_center">(0.0370)</td>
+<td headers="Robust SE" class="gt_row gt_center">(0.0338)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">educ大学大学院</td>
+<td headers="通常のSE" class="gt_row gt_center">0.2890***</td>
+<td headers="Robust SE" class="gt_row gt_center">0.2890***</td></tr>
+    <tr><td headers="" class="gt_row gt_left" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;"></td>
+<td headers="通常のSE" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">(0.0357)</td>
+<td headers="Robust SE" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">(0.0326)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">Num.Obs.</td>
+<td headers="通常のSE" class="gt_row gt_center">2728</td>
+<td headers="Robust SE" class="gt_row gt_center">2728</td></tr>
+    <tr><td headers="" class="gt_row gt_left">R2</td>
+<td headers="通常のSE" class="gt_row gt_center">0.058</td>
+<td headers="Robust SE" class="gt_row gt_center">0.058</td></tr>
+    <tr><td headers="" class="gt_row gt_left">R2 Adj.</td>
+<td headers="通常のSE" class="gt_row gt_center">0.056</td>
+<td headers="Robust SE" class="gt_row gt_center">0.056</td></tr>
+    <tr><td headers="" class="gt_row gt_left">AIC</td>
+<td headers="通常のSE" class="gt_row gt_center">3618.6</td>
+<td headers="Robust SE" class="gt_row gt_center">3618.6</td></tr>
+    <tr><td headers="" class="gt_row gt_left">BIC</td>
+<td headers="通常のSE" class="gt_row gt_center">3660.0</td>
+<td headers="Robust SE" class="gt_row gt_center">3660.0</td></tr>
+    <tr><td headers="" class="gt_row gt_left">Log.Lik.</td>
+<td headers="通常のSE" class="gt_row gt_center">-1802.312</td>
+<td headers="Robust SE" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left">F</td>
+<td headers="通常のSE" class="gt_row gt_center">33.484</td>
+<td headers="Robust SE" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left">RMSE</td>
+<td headers="通常のSE" class="gt_row gt_center">0.47</td>
+<td headers="Robust SE" class="gt_row gt_center">0.47</td></tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="3">+ p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td>
+    </tr>
+  </tfoot>
+  
+</table>
+</div>
+</div>
+</div>
+<p>通常の標準誤差を用いた場合と、ロバスト標準誤差を用いた場合とでは、わずかに標準誤差の値が異なっていることがわかる。このずれがどれくらい大きくなるかは、データや変数の性質によって変わってくる。ただし、係数の値には変化はないため、実質的な結論に違いが出ることはあまりない。線形確率モデルを使う場合には、基本的にはロバスト標準誤差を使うことが推奨されている。</p>
+</section>
+</section>
+<section id="ロジスティック回帰分析とは" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="ロジスティック回帰分析とは"><span class="header-section-number">10.2</span> ロジスティック回帰分析とは</h2>
+<section id="ロジスティック回帰分析ロジットモデル" class="level3" data-number="10.2.1">
+<h3 data-number="10.2.1" class="anchored" data-anchor-id="ロジスティック回帰分析ロジットモデル"><span class="header-section-number">10.2.1</span> ロジスティック回帰分析（ロジットモデル）</h3>
+<p><span class="math display">\[
+\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
+\]</span> または、式を変形して次のように書く。</p>
+<p><span class="math display">\[
+\begin{align}
+\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &amp;= \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k \\
+\frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &amp;= \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k) \\
+\Pr(y = 1) &amp;= (1 - \Pr(y = 1))\exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k) \\
+(1 + \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k))\Pr(y = 1) &amp;= \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k) \\
+\Pr(y = 1) &amp;= \frac{\exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k)}{1 + \exp(\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k)}
+\end{align}
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>logit_res1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender, <span class="at">family =</span> binomial)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit_res1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = ojt ~ gender, family = binomial, data = piaac)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -0.72486    0.05952 -12.178  &lt; 2e-16 ***
+gender男性   0.35218    0.08006   4.399 1.09e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 3593.8  on 2727  degrees of freedom
+Residual deviance: 3574.3  on 2726  degrees of freedom
+AIC: 3578.3
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<p>「gender男性」の行は、女性と比べて男性であると<strong>対数オッズ（log-odds）</strong>が<code>coef</code>高いことを表している。</p>
+</section>
+<section id="対数オッズ比の解釈" class="level3" data-number="10.2.2">
+<h3 data-number="10.2.2" class="anchored" data-anchor-id="対数オッズ比の解釈"><span class="header-section-number">10.2.2</span> 対数オッズ比の解釈</h3>
+<p>急に出てきた「対数オッズ比」とはなんだろうか？これを理解するために、クロス集計表を作ってみよう。性別ごとにOJTを受ける・受けない人数を集計したクロス集計表は次のようになる。ここでは説明を分かりやすくするために順序を変更している。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">fct_relevel</span>(gender, <span class="st">"男性"</span>, <span class="st">"女性"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ojt =</span> <span class="fu">factor</span>(ojt, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">0</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"1（受けた）"</span>, <span class="st">"0（受けなかった）"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(gender, ojt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="ikndeflqpa" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ikndeflqpa table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#ikndeflqpa thead, #ikndeflqpa tbody, #ikndeflqpa tfoot, #ikndeflqpa tr, #ikndeflqpa td, #ikndeflqpa th {
+  border-style: none;
+}
+
+#ikndeflqpa p {
+  margin: 0;
+  padding: 0;
+}
+
+#ikndeflqpa .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ikndeflqpa .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#ikndeflqpa .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ikndeflqpa .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ikndeflqpa .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ikndeflqpa .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ikndeflqpa .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ikndeflqpa .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ikndeflqpa .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ikndeflqpa .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ikndeflqpa .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ikndeflqpa .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ikndeflqpa .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#ikndeflqpa .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#ikndeflqpa .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ikndeflqpa .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ikndeflqpa .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ikndeflqpa .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ikndeflqpa .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ikndeflqpa .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#ikndeflqpa .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#ikndeflqpa .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#ikndeflqpa .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ikndeflqpa .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#ikndeflqpa .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#ikndeflqpa .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ikndeflqpa .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ikndeflqpa .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ikndeflqpa .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ikndeflqpa .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ikndeflqpa .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ikndeflqpa .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ikndeflqpa .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ikndeflqpa .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ikndeflqpa .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ikndeflqpa .gt_left {
+  text-align: left;
+}
+
+#ikndeflqpa .gt_center {
+  text-align: center;
+}
+
+#ikndeflqpa .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ikndeflqpa .gt_font_normal {
+  font-weight: normal;
+}
+
+#ikndeflqpa .gt_font_bold {
+  font-weight: bold;
+}
+
+#ikndeflqpa .gt_font_italic {
+  font-style: italic;
+}
+
+#ikndeflqpa .gt_super {
+  font-size: 65%;
+}
+
+#ikndeflqpa .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#ikndeflqpa .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#ikndeflqpa .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#ikndeflqpa .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#ikndeflqpa .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#ikndeflqpa .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#ikndeflqpa .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings gt_spanner_row">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id=""></th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="ojt">
+        <span class="gt_column_spanner">ojt</span>
+      </th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="2" colspan="1" scope="col" id="Total">Total</th>
+    </tr>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="1（受けた）">1（受けた）</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="0（受けなかった）">0（受けなかった）</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left">gender</td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td>
+<td headers="stat_0" class="gt_row gt_center"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;男性</td>
+<td headers="stat_1" class="gt_row gt_center">589</td>
+<td headers="stat_2" class="gt_row gt_center">855</td>
+<td headers="stat_0" class="gt_row gt_center">1,444</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">&nbsp;&nbsp;&nbsp;&nbsp;女性</td>
+<td headers="stat_1" class="gt_row gt_center">419</td>
+<td headers="stat_2" class="gt_row gt_center">865</td>
+<td headers="stat_0" class="gt_row gt_center">1,284</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Total</td>
+<td headers="stat_1" class="gt_row gt_center">1,008</td>
+<td headers="stat_2" class="gt_row gt_center">1,720</td>
+<td headers="stat_0" class="gt_row gt_center">2,728</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+</div>
+<p>この表から、「OJTを受けなかった人数に対する受けた人数の比」を計算してみる。</p>
+<p>男性の場合はこのように：</p>
+<p><span class="math display">\[
+589 / 855 = 0.689
+\]</span></p>
+<p>女性の場合はこのように：</p>
+<p><span class="math display">\[
+419 / 865 = 0.484
+\]</span></p>
+<p>それぞれ計算できる。このように、0をとる人数（確率）に対する1をとる人数（確率）の比を取った値のことを指して、<strong>オッズ（odds）</strong>という。オッズは1をとる人数と0をとる人数がちょうど同じときに1となり、1をとる人数（分子）が0をとる人数（分母）に対して少ないほど0に近づいていき、逆に1をとる人数（分子）が0をとる人数（分母）に対して多いほど無限大に近づいていく。</p>
+<p>つぎに、こうして計算したオッズどうしの比（<strong>オッズ比 odds ratio</strong>）をとった値を計算してみよう。</p>
+<p><span class="math display">\[
+\frac{589 / 855}{419 / 865} = 1.422
+\]</span></p>
+<p>この値は、「女性のオッズに対して男性のオッズが何倍であるか」を示しており、1をとるときには女性と男性のオッズが同じであることを意味し、1よりも大きいときには女性のオッズ（分母）よりも男性のオッズ（分子）のほうが大きいことを意味し、1よりも小さいときには男性のオッズ（分子）よりも女性のオッズ（分母）のほうが大きいことを意味する。</p>
+<p>このオッズ比の自然対数をとったのが、<strong>対数オッズ比 log-odds ratio</strong>である。</p>
+<p><span class="math display">\[
+\log \left( \frac{589 / 855}{419 / 865} \right) = 0.352
+\]</span></p>
+<p>この値は、「女性の対数オッズに対して男性の対数オッズがどれくらい大きいか」を示しており、0をとるときには女性と男性の（対数）オッズが同じであることを意味し、0よりも大きいときには女性の（対数）オッズ（分母）よりも男性の（対数）オッズ（分子）のほうが大きいことを意味し、0よりも小さいときには男性の（対数）オッズ（分子）よりも女性の（対数）オッズ（分母）のほうが大きいことを意味する。</p>
+<p>この対数オッズ比の値が、先ほど推定したロジスティック回帰分析の「gender男性」の係数の値に一致していることを確認しよう。このことが、ロジスティック回帰分析の係数が対数オッズ比を表すという意味である。</p>
+<p>今までの話を一般化しよう。次のような2×2のクロス集計表があるとする。</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Y = 1</th>
+<th>Y = 0</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>X = 1</td>
+<td><span class="math inline">\(N_{11}\)</span></td>
+<td><span class="math inline">\(N_{10}\)</span></td>
+</tr>
+<tr class="even">
+<td>X = 0</td>
+<td><span class="math inline">\(N_{01}\)</span></td>
+<td><span class="math inline">\(N_{00}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>このとき、オッズ比および対数オッズ比はそれぞれ次のように定義され、次のような特徴をもつ。</p>
+<table class="table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 31%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>オッズ比 <span class="math inline">\((N_{11} / N_{10}) / (N_{01} / N_{00})\)</span></th>
+<th>対数オッズ比 <span class="math inline">\(\log((N_{11} / N_{10}) / (N_{01} / N_{00}))\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>X = 0と比べてX = 1のほうがよりY = 1をとりやすい場合</td>
+<td>1よりも大きくなり、大きくなるほど∞に近づく</td>
+<td>0よりも大きくなり、大きくなるほど+∞に近づく</td>
+</tr>
+<tr class="even">
+<td>Y = 1のとりやすさが等しい場合</td>
+<td>1をとる</td>
+<td>0をとる</td>
+</tr>
+<tr class="odd">
+<td>X = 1と比べてX = 0のほうがよりY = 1をとりやすい場合</td>
+<td>1よりも小さくなり、小さくなるほど0に近づく</td>
+<td>0よりも小さくなり、小さくなるほど-∞に近づく</td>
+</tr>
+</tbody>
+</table>
+<p>なお、対数の性質より、対数オッズ比は<span class="math inline">\(\log((N_{11} / N_{10}) / (N_{01} / N_{00})) = \log(N_{11} / N_{10}) - (N_{01} / N_{00})\)</span>などと書くこともできる。</p>
+</section>
+<section id="連続変数を独立変数とする場合" class="level3" data-number="10.2.3">
+<h3 data-number="10.2.3" class="anchored" data-anchor-id="連続変数を独立変数とする場合"><span class="header-section-number">10.2.3</span> 連続変数を独立変数とする場合</h3>
+<p>連続変数を独立変数とする場合は先のような表をイメージするのは難しくなってくるが、解釈は類似している。たとえば次のように性別と年齢を独立変数とするロジスティック回帰分析を推定する。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>logit_res2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age, <span class="at">family =</span> binomial)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(logit_res2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = ojt ~ gender + age, family = binomial, data = piaac)
+
+Coefficients:
+             Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -0.006992   0.171320  -0.041    0.967    
+gender男性   0.350124   0.080351   4.357 1.32e-05 ***
+age         -0.016442   0.003705  -4.437 9.10e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 3593.8  on 2727  degrees of freedom
+Residual deviance: 3554.5  on 2725  degrees of freedom
+AIC: 3560.5
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<p>このときの年齢の係数は年齢が1高いとOJTを受ける対数オッズが-0.016だけ高いということを意味している。</p>
+</section>
+</section>
+<section id="平均限界効果" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="平均限界効果"><span class="header-section-number">10.3</span> 平均限界効果</h2>
+<p>ロジスティック回帰分析では係数は対数オッズを表す。しかし、対数オッズ比は線形確率モデルと比べると直感的に解釈しにくい。そこで、ロジスティック回帰分析を使う場合には、<strong>平均限界効果 Average marginal effect, AME</strong>と合わせて結果を解釈することが強く推奨される。</p>
+<p>平均限界効果とはなんだろうか。これを理解するため、先ほどのロジスティック回帰分析を次のように変形する（式変形については対数の知識が必要）：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, gender, age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,728 × 3
+      id gender   age
+   &lt;int&gt; &lt;fct&gt;  &lt;dbl&gt;
+ 1     1 女性      45
+ 2     2 男性      48
+ 3     3 男性      47
+ 4     4 男性      58
+ 5     6 女性      35
+ 6     9 男性      56
+ 7    12 女性      32
+ 8    15 男性      45
+ 9    18 男性      30
+10    19 男性      46
+# ℹ 2,718 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(margins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(margins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>logit_res3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ, <span class="at">family =</span> <span class="fu">binomial</span>())</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>margins_logit_res3 <span class="ot">&lt;-</span> <span class="fu">margins</span>(logit_res3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">"LPM"</span> <span class="ot">=</span> reg_res3, <span class="st">"Logit"</span> <span class="ot">=</span> logit_res3, <span class="st">"AME"</span> <span class="ot">=</span> margins_logit_res3),</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div id="vvveolejkj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vvveolejkj table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#vvveolejkj thead, #vvveolejkj tbody, #vvveolejkj tfoot, #vvveolejkj tr, #vvveolejkj td, #vvveolejkj th {
+  border-style: none;
+}
+
+#vvveolejkj p {
+  margin: 0;
+  padding: 0;
+}
+
+#vvveolejkj .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#vvveolejkj .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#vvveolejkj .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#vvveolejkj .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#vvveolejkj .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#vvveolejkj .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vvveolejkj .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#vvveolejkj .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#vvveolejkj .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#vvveolejkj .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#vvveolejkj .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#vvveolejkj .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#vvveolejkj .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#vvveolejkj .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#vvveolejkj .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#vvveolejkj .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#vvveolejkj .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#vvveolejkj .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#vvveolejkj .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vvveolejkj .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#vvveolejkj .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#vvveolejkj .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#vvveolejkj .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vvveolejkj .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#vvveolejkj .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#vvveolejkj .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vvveolejkj .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vvveolejkj .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#vvveolejkj .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vvveolejkj .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#vvveolejkj .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vvveolejkj .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#vvveolejkj .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vvveolejkj .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#vvveolejkj .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vvveolejkj .gt_left {
+  text-align: left;
+}
+
+#vvveolejkj .gt_center {
+  text-align: center;
+}
+
+#vvveolejkj .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#vvveolejkj .gt_font_normal {
+  font-weight: normal;
+}
+
+#vvveolejkj .gt_font_bold {
+  font-weight: bold;
+}
+
+#vvveolejkj .gt_font_italic {
+  font-style: italic;
+}
+
+#vvveolejkj .gt_super {
+  font-size: 65%;
+}
+
+#vvveolejkj .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#vvveolejkj .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#vvveolejkj .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#vvveolejkj .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#vvveolejkj .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#vvveolejkj .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#vvveolejkj .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id=" "> </th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="LPM">LPM</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Logit">Logit</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="AME">AME</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="" class="gt_row gt_left">(Intercept)</td>
+<td headers="LPM" class="gt_row gt_center">0.279***</td>
+<td headers="Logit" class="gt_row gt_center">-1.022***</td>
+<td headers="AME" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="LPM" class="gt_row gt_center">(0.054)</td>
+<td headers="Logit" class="gt_row gt_center">(0.258)</td>
+<td headers="AME" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left">gender男性</td>
+<td headers="LPM" class="gt_row gt_center">0.053**</td>
+<td headers="Logit" class="gt_row gt_center">0.247**</td>
+<td headers="AME" class="gt_row gt_center">0.054**</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="LPM" class="gt_row gt_center">(0.019)</td>
+<td headers="Logit" class="gt_row gt_center">(0.086)</td>
+<td headers="AME" class="gt_row gt_center">(0.019)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">age</td>
+<td headers="LPM" class="gt_row gt_center">-0.002*</td>
+<td headers="Logit" class="gt_row gt_center">-0.010*</td>
+<td headers="AME" class="gt_row gt_center">-0.002*</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="LPM" class="gt_row gt_center">(0.001)</td>
+<td headers="Logit" class="gt_row gt_center">(0.004)</td>
+<td headers="AME" class="gt_row gt_center">(0.001)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">educ高校</td>
+<td headers="LPM" class="gt_row gt_center">0.064+</td>
+<td headers="Logit" class="gt_row gt_center">0.360*</td>
+<td headers="AME" class="gt_row gt_center">0.066*</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="LPM" class="gt_row gt_center">(0.035)</td>
+<td headers="Logit" class="gt_row gt_center">(0.182)</td>
+<td headers="AME" class="gt_row gt_center">(0.031)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">educ短大高専</td>
+<td headers="LPM" class="gt_row gt_center">0.165***</td>
+<td headers="Logit" class="gt_row gt_center">0.832***</td>
+<td headers="AME" class="gt_row gt_center">0.169***</td></tr>
+    <tr><td headers="" class="gt_row gt_left"></td>
+<td headers="LPM" class="gt_row gt_center">(0.037)</td>
+<td headers="Logit" class="gt_row gt_center">(0.188)</td>
+<td headers="AME" class="gt_row gt_center">(0.034)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">educ大学大学院</td>
+<td headers="LPM" class="gt_row gt_center">0.289***</td>
+<td headers="Logit" class="gt_row gt_center">1.329***</td>
+<td headers="AME" class="gt_row gt_center">0.290***</td></tr>
+    <tr><td headers="" class="gt_row gt_left" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;"></td>
+<td headers="LPM" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">(0.036)</td>
+<td headers="Logit" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">(0.181)</td>
+<td headers="AME" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">(0.033)</td></tr>
+    <tr><td headers="" class="gt_row gt_left">Num.Obs.</td>
+<td headers="LPM" class="gt_row gt_center">2728</td>
+<td headers="Logit" class="gt_row gt_center">2728</td>
+<td headers="AME" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left">R2</td>
+<td headers="LPM" class="gt_row gt_center">0.058</td>
+<td headers="Logit" class="gt_row gt_center"></td>
+<td headers="AME" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left">R2 Adj.</td>
+<td headers="LPM" class="gt_row gt_center">0.056</td>
+<td headers="Logit" class="gt_row gt_center"></td>
+<td headers="AME" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left">AIC</td>
+<td headers="LPM" class="gt_row gt_center">3618.6</td>
+<td headers="Logit" class="gt_row gt_center">3445.4</td>
+<td headers="AME" class="gt_row gt_center">3445.4</td></tr>
+    <tr><td headers="" class="gt_row gt_left">BIC</td>
+<td headers="LPM" class="gt_row gt_center">3660.0</td>
+<td headers="Logit" class="gt_row gt_center">3480.8</td>
+<td headers="AME" class="gt_row gt_center">3480.8</td></tr>
+    <tr><td headers="" class="gt_row gt_left">Log.Lik.</td>
+<td headers="LPM" class="gt_row gt_center">-1802.312</td>
+<td headers="Logit" class="gt_row gt_center">-1716.687</td>
+<td headers="AME" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left">F</td>
+<td headers="LPM" class="gt_row gt_center">33.484</td>
+<td headers="Logit" class="gt_row gt_center">30.326</td>
+<td headers="AME" class="gt_row gt_center"></td></tr>
+    <tr><td headers="" class="gt_row gt_left">RMSE</td>
+<td headers="LPM" class="gt_row gt_center">0.47</td>
+<td headers="Logit" class="gt_row gt_center">0.47</td>
+<td headers="AME" class="gt_row gt_center">0.47</td></tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="4">+ p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td>
+    </tr>
+  </tfoot>
+  
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="ロジスティック回帰分析の注意点" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="ロジスティック回帰分析の注意点"><span class="header-section-number">10.4</span> ロジスティック回帰分析の注意点</h2>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./09-interaction.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">交互作用</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./11-domain.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">社会学のデータ分析でよくある処理</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

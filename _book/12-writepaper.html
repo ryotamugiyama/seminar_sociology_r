@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Rによる社会調査データ分析の手引き - 12&nbsp; 論文のまとめ方</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./13-presentation.html" rel="next">
+<link href="./11-domain.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./12-writepaper.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">論文のまとめ方</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Rによる社会調査データ分析の手引き</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">まえがき</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-plan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">研究計画を立てる</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">RとRStudioの下準備</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-import.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">データの読み込み</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-handling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">データの加工</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-descriptives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">1変数の集計</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-tabulate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">2変数の集計</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-regression_basic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">回帰分析の基礎</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-regression_advanced.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">回帰分析の活用</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-interaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">交互作用</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-logit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ロジスティック回帰分析（作成中）</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-domain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">社会学のデータ分析でよくある処理</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-writepaper.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">論文のまとめ方</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-presentation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">研究発表をする</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">さらなる学習のための参考文献</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#全体の構成" id="toc-全体の構成" class="nav-link active" data-scroll-target="#全体の構成"><span class="header-section-number">12.1</span> 全体の構成</a></li>
+  <li><a href="#タイトル" id="toc-タイトル" class="nav-link" data-scroll-target="#タイトル"><span class="header-section-number">12.2</span> タイトル</a></li>
+  <li><a href="#要約" id="toc-要約" class="nav-link" data-scroll-target="#要約"><span class="header-section-number">12.3</span> 要約</a></li>
+  <li><a href="#序論" id="toc-序論" class="nav-link" data-scroll-target="#序論"><span class="header-section-number">12.4</span> 序論</a>
+  <ul class="collapse">
+  <li><a href="#問題背景1段落" id="toc-問題背景1段落" class="nav-link" data-scroll-target="#問題背景1段落"><span class="header-section-number">12.4.1</span> 問題背景（1段落）</a></li>
+  <li><a href="#先行研究の検討12段落" id="toc-先行研究の検討12段落" class="nav-link" data-scroll-target="#先行研究の検討12段落"><span class="header-section-number">12.4.2</span> 先行研究の検討（1–2段落）</a></li>
+  <li><a href="#研究目的と方法12段落" id="toc-研究目的と方法12段落" class="nav-link" data-scroll-target="#研究目的と方法12段落"><span class="header-section-number">12.4.3</span> 研究目的と方法（1–2段落）</a></li>
+  </ul></li>
+  <li><a href="#先行研究理論枠組み仮説" id="toc-先行研究理論枠組み仮説" class="nav-link" data-scroll-target="#先行研究理論枠組み仮説"><span class="header-section-number">12.5</span> 先行研究・理論枠組み・仮説</a></li>
+  <li><a href="#方法" id="toc-方法" class="nav-link" data-scroll-target="#方法"><span class="header-section-number">12.6</span> 方法</a>
+  <ul class="collapse">
+  <li><a href="#データと分析対象" id="toc-データと分析対象" class="nav-link" data-scroll-target="#データと分析対象"><span class="header-section-number">12.6.1</span> データと分析対象</a></li>
+  <li><a href="#変数" id="toc-変数" class="nav-link" data-scroll-target="#変数"><span class="header-section-number">12.6.2</span> 変数</a></li>
+  <li><a href="#分析手法" id="toc-分析手法" class="nav-link" data-scroll-target="#分析手法"><span class="header-section-number">12.6.3</span> 分析手法</a></li>
+  </ul></li>
+  <li><a href="#結果" id="toc-結果" class="nav-link" data-scroll-target="#結果"><span class="header-section-number">12.7</span> 結果</a>
+  <ul class="collapse">
+  <li><a href="#記述的分析" id="toc-記述的分析" class="nav-link" data-scroll-target="#記述的分析"><span class="header-section-number">12.7.1</span> 記述的分析</a></li>
+  <li><a href="#回帰分析" id="toc-回帰分析" class="nav-link" data-scroll-target="#回帰分析"><span class="header-section-number">12.7.2</span> 回帰分析</a></li>
+  </ul></li>
+  <li><a href="#結論" id="toc-結論" class="nav-link" data-scroll-target="#結論"><span class="header-section-number">12.8</span> 結論</a>
+  <ul class="collapse">
+  <li><a href="#背景と目的の再確認1段落" id="toc-背景と目的の再確認1段落" class="nav-link" data-scroll-target="#背景と目的の再確認1段落"><span class="header-section-number">12.8.1</span> 背景と目的の再確認（1段落）</a></li>
+  <li><a href="#分析結果の要約と解釈23段落" id="toc-分析結果の要約と解釈23段落" class="nav-link" data-scroll-target="#分析結果の要約と解釈23段落"><span class="header-section-number">12.8.2</span> 分析結果の要約と解釈（2–3段落）</a></li>
+  <li><a href="#課題限界1段落" id="toc-課題限界1段落" class="nav-link" data-scroll-target="#課題限界1段落"><span class="header-section-number">12.8.3</span> 課題・限界（1段落）</a></li>
+  <li><a href="#まとめ1段落任意" id="toc-まとめ1段落任意" class="nav-link" data-scroll-target="#まとめ1段落任意"><span class="header-section-number">12.8.4</span> まとめ（1段落、任意）</a></li>
+  </ul></li>
+  <li><a href="#謝辞" id="toc-謝辞" class="nav-link" data-scroll-target="#謝辞"><span class="header-section-number">12.9</span> 謝辞</a></li>
+  <li><a href="#参考文献" id="toc-参考文献" class="nav-link" data-scroll-target="#参考文献"><span class="header-section-number">12.10</span> 参考文献</a></li>
+  <li><a href="#形式上の注意事項" id="toc-形式上の注意事項" class="nav-link" data-scroll-target="#形式上の注意事項"><span class="header-section-number">12.11</span> 形式上の注意事項</a>
+  <ul class="collapse">
+  <li><a href="#推奨するwordの設定" id="toc-推奨するwordの設定" class="nav-link" data-scroll-target="#推奨するwordの設定"><span class="header-section-number">12.11.1</span> 推奨するWordの設定</a></li>
+  <li><a href="#引用の形式" id="toc-引用の形式" class="nav-link" data-scroll-target="#引用の形式"><span class="header-section-number">12.11.2</span> 引用の形式</a></li>
+  <li><a href="#図表の形式" id="toc-図表の形式" class="nav-link" data-scroll-target="#図表の形式"><span class="header-section-number">12.11.3</span> 図表の形式</a></li>
+  <li><a href="#脚注" id="toc-脚注" class="nav-link" data-scroll-target="#脚注"><span class="header-section-number">12.11.4</span> 脚注</a></li>
+  <li><a href="#参考文献の記載例" id="toc-参考文献の記載例" class="nav-link" data-scroll-target="#参考文献の記載例"><span class="header-section-number">12.11.5</span> 参考文献の記載例</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="writepaper" class="quarto-section-identifier"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">論文のまとめ方</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>本章では、データ分析の結果をもとに論文をまとめる際の構成や注意事項を説明する。</p>
+<p>もちろん、ここで紹介する形式は絶対というわけではなく、標準的な構成の一例に過ぎない。しかし、標準的な構成がどのようなものであるのかを押さえておくと、論文を書く上で何を考えればよいのか、いったい何をどのように書けばよいのか、といったことが明確になるというメリットがある。</p>
+<p>なお、期末レポートの分量は、Microsoft Wordの左下の文字数（単語数）表記で<strong>12,000字以上〜20,000字以内</strong>とする。ただし、タイトル・名前・要約部分は文字数に含まない。参考文献は字数に含む。図表内の文字は文字数に含まないが、図表1点につき400字と換算して文字数に含める。</p>
+<section id="全体の構成" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="全体の構成"><span class="header-section-number">12.1</span> 全体の構成</h2>
+<p>おおまかにいって、実証研究論文はIMRaD（Introduction, Methods, Results, and Discussion）とよばれる形式をとる。社会学の場合は先行研究や理論を長めに検討するため、IntroductionとMethodの間にLiterature review（先行研究の検討）あるいは、Theoretical framework（理論枠組み）といった章が入り、全部で5章の構成を標準とすることが多い。</p>
+<p>よくある構成は次のようなものである。</p>
+<blockquote class="blockquote">
+<p>タイトル</p>
+<p>要約</p>
+<ol type="1">
+<li><p>序論</p></li>
+<li><p>先行研究・理論枠組み・仮説</p></li>
+<li><p>方法</p>
+<ol type="1">
+<li>データと分析対象</li>
+<li>変数</li>
+<li>分析手法</li>
+</ol></li>
+<li><p>結果</p>
+<ol type="1">
+<li>記述的分析（クロス表、平均値の比較など）</li>
+<li>回帰分析など</li>
+</ol></li>
+<li><p>結論</p></li>
+</ol>
+<p>謝辞</p>
+<p>参考文献</p>
+</blockquote>
+<p>なお、論文の構成を学ぶためには、たくさんの（それなりに質の高い）論文を読んで構成を体得するのが最も近道である。あるいは、標準的な構成にしたがった論文を参考にして、その構成を真似るのもよいだろう<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>。</p>
+<p>以下では、一つひとつについてくわしくみていく。</p>
+<p>一点、論文のまとめ方について注記しておく。上記のように論文の標準的な構成を示したが、これは上から順番に書いていくものではまったくない<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。書けるところは先に書いてしまってもよい。また、結果を修正したり結論に変更が生じれば、それに対応して序論や先行研究の部分も変わることは普通である。執筆の過程で、さらに調べるべき先行研究が出てくることもある。何度も行き来しながら、少しずつ全体を完成させていくものである。</p>
+</section>
+<section id="タイトル" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="タイトル"><span class="header-section-number">12.2</span> タイトル</h2>
+<p>タイトルは、その論文が何の論文であるのかを示す最も重要な箇所となる。そのため、<strong>何をやっているのかがひと目でわかる</strong>タイトルを付けることが大事である。「期末レポート」はタイトルではない。</p>
+<p>たとえば「XがYに与える影響」とか、「X1とX2の間にYの格差が生まれる要因」とか、そういったタイトルがつくことが多い。具体的にどのようなタイトルがついているかは、先行研究を参考にしよう。</p>
+</section>
+<section id="要約" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="要約"><span class="header-section-number">12.3</span> 要約</h2>
+<p><strong>400字以内の要約</strong>をつける。要約は論文全体の内容をコンパクトにまとめたもので、<strong>要約を読めば論文の概要がわかる</strong>、というものになっている必要がある<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。標準的には、次のように構成することが多い。字数がもっと長い場合には、今後の課題を加えたり、結果についてよりくわしく書く。</p>
+<ul>
+<li>問題背景と先行研究の限界（1–2文）</li>
+<li>目的・問い（1文）</li>
+<li>方法（1文）</li>
+<li>結果（2–3文）</li>
+<li>結論（1文）</li>
+</ul>
+</section>
+<section id="序論" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="序論"><span class="header-section-number">12.4</span> 序論</h2>
+<p><strong>序論は読者の関心を引きつけて自分の問いへと導く章であると同時に、論文全体の見取り図を示す</strong>章である。次の全3〜5段落程度で構成する。ちょうど、<a href="01-plan.html">研究計画書について説明した第1章</a>のうち、「<a href="01-plan.html#plan_background">研究背景</a>」「<a href="01-plan.html#plan_question">研究目的・問い</a>」で言及した内容と意識することは同じである。もちろん、データ分析を経て多かれ少なかれ研究背景や問いを修正したり発展させたり、先行研究のリサーチを進めて再検討した部分もあるだろうから、研究計画書とまったく同じに書く必要はない。</p>
+<section id="問題背景1段落" class="level3" data-number="12.4.1">
+<h3 data-number="12.4.1" class="anchored" data-anchor-id="問題背景1段落"><span class="header-section-number">12.4.1</span> 問題背景（1段落）</h3>
+<p>研究で扱うトピックが社会問題としてand/or社会学的に重要であることを述べる。</p>
+<p>もちろん、「自分が関心を持った」というのは最初のモチベーションとして大事だが、「自分が関心をもった」というだけでは、他の人にとっては説得的できない。他の人にとって関心をもってもらえるような理由を述べることが大事である。</p>
+</section>
+<section id="先行研究の検討12段落" class="level3" data-number="12.4.2">
+<h3 data-number="12.4.2" class="anchored" data-anchor-id="先行研究の検討12段落"><span class="header-section-number">12.4.2</span> 先行研究の検討（1–2段落）</h3>
+<p>先に述べた問題に関連して、先行研究がこれまでに何を明らかにし、何を明らかにしていないのか、あるいは先行研究に存在する限界点を提示する。</p>
+<p>ここでは、先行研究の内容を一つひとつ詳しく述べるのではなく、調べた先行研究をまとめた全体像を示す。この全体像から、（重要であるにもかかわらず）明らかになっていないこと・解決されていない課題が何であるのかを示す。</p>
+</section>
+<section id="研究目的と方法12段落" class="level3" data-number="12.4.3">
+<h3 data-number="12.4.3" class="anchored" data-anchor-id="研究目的と方法12段落"><span class="header-section-number">12.4.3</span> 研究目的と方法（1–2段落）</h3>
+<p>研究目的（問い）を提示する。「本稿では、xxxを明らかにする」「どの程度yyyなのか？」など、何をやるのかが明確になるような具体的な目的や問いを提示する。</p>
+<p>さらに、上記の問いに答えるための方法について述べるとよい。</p>
+</section>
+</section>
+<section id="先行研究理論枠組み仮説" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="先行研究理論枠組み仮説"><span class="header-section-number">12.5</span> 先行研究・理論枠組み・仮説</h2>
+<p>この章では、<strong>序論で述べた背景および研究目的に照らして、必要となる情報をよりくわしくまとめ、分析への橋渡しをする</strong>。便宜的にこれを「第2章」とよぼう。通常、章の下に2–3程度の節を設ける。論文によって分け方は様々なので、これと決まった形式はない。しかし、なんでも書けばよいということではない。ここでは、いくつか既存論文の例を紹介して、どのようにこの章が構成されているのかを見ていこう。</p>
+<blockquote class="blockquote">
+<p><a href="https://doi.org/10.1093/esr/jcab037">Mugiyama, Ryota and kohei Toyonaga. 2021. “Role of Cohort Size in Trends in Class and Occupational Returns to Education at First Job: The Case of Japan.” European Sociological Review.</a></p>
+<p><strong>論文の背景と目的</strong>：高学歴化が進むと学歴（大卒資格）の価値が低下し、大卒であったとしてもよい職業には就けなくなるとされている。しかし、実は高学歴化が進んでもあまりそうした傾向が見られない社会がある。こうした社会では、高学歴化（大卒割合の増加）と並行して少子化（若いコーホートの人数の減少）が進んだために、大卒者が就くことのできるよい職業が足りなくなるといった変化が起こらなかったのではないだろうか？そこで、高学歴化と並行して少子化が進んだ社会である日本のデータを分析して、この仮説を検証する。</p>
+<p>この論文の「第2章」は、上記の背景と問いに対応する、次の内容から構成されている。</p>
+<ul>
+<li>先行研究における学歴と職業の関係に対する説明</li>
+<li>なぜ少子化（コホートの人数の減少）が起こると大卒は有利になるのか</li>
+<li>日本における高学歴化と少子化のトレンド（および仮説）</li>
+</ul>
+</blockquote>
+<blockquote class="blockquote">
+<p><a href="https://doi.org/10.4234/jjoffamilysociology.29.129">麦山亮太，2017，「職業経歴と結婚への移行：雇用形態・職種・企業規模と地位変化の効果における男女差」『家族社会学研究』29(2): 129-141．</a></p>
+<p><strong>論文の背景と目的</strong>：不安定な雇用は日本をはじめ先進諸国における家族形成、とりわけ結婚の遅れの原因と目されており、これは日本でも例外ではない。しかしながら、雇用形態以外の労働市場における地位は結婚への移行とどのように関係しているのか、および、地位が変わることがどのように関係しているのかといった点については十分に明らかになっていない。そこで、雇用形態だけでなく職種・企業規模がどのような効果を持つのか、および、地位の（非）変化がそれぞれ結婚に対してどのような効果を持つのかを明らかにする。</p>
+<p>この論文の「第2章」は次の内容から構成されている。</p>
+<ul>
+<li>地位と結婚への移行の関係を説明する理論</li>
+<li>職種と企業規模はなぜ・どのように結婚への移行と関係をもつと考えられるか</li>
+<li>地位の（非）変化はなぜ・どのように結婚への移行と関係をもつと考えられるか</li>
+</ul>
+</blockquote>
+<p>上記の論文の例のように、いずれも序論で提示した背景と目的から導かれる疑問点に合わせて、その内容を詳述するかたちで書かれるのが理想である<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>。一般的にいって、「第2章」には次のような内容が書かれる傾向がある（すべて書く必要はない）。</p>
+<ul>
+<li>先行研究における（現象を説明する）理論</li>
+<li>先行研究における知見</li>
+<li>先行研究の問題点</li>
+<li>先行研究の問題点の克服方法</li>
+<li>仮説とその根拠</li>
+</ul>
+<p>もちろん、すぐにこのような構成を導くのはとても難しいので、はじめはお手本となる論文をみつけて、その構成や書き方をまねたりしてみるのがよい。</p>
+</section>
+<section id="方法" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="方法"><span class="header-section-number">12.6</span> 方法</h2>
+<p>方法では、<strong>用いるデータと分析対象、分析に使用した変数、分析手法</strong>を書く。</p>
+<section id="データと分析対象" class="level3" data-number="12.6.1">
+<h3 data-number="12.6.1" class="anchored" data-anchor-id="データと分析対象"><span class="header-section-number">12.6.1</span> データと分析対象</h3>
+<p>第1段落では、何の調査データを使用するのか、そのデータがいつ、どのような人を対象にして、どのように収集されたのかを書く。また、このデータが研究目的に照らして適切なデータであること、その理由を書く。</p>
+<p>第2段落では、上記調査データのうち誰を分析の対象とするのかを書く（例:25–64歳の有業の男女、ひとり親世帯のみ、etc）。可能であれば、もともとの分析対象者の人数と、欠損値（NA）を除いた後の人数とを書く。</p>
+</section>
+<section id="変数" class="level3" data-number="12.6.2">
+<h3 data-number="12.6.2" class="anchored" data-anchor-id="変数"><span class="header-section-number">12.6.2</span> 変数</h3>
+<p>分析に使用する変数について書く。それぞれ、<strong>変数が何を指していて、どのように定義されたのかを正確に説明する</strong><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>。「他の人が読んだら自分と同じように理解できるか」というのを意識しながら書くとよい。おおむね、このような順番で変数を説明していくことが多い：</p>
+<p>まず最初に、従属変数について書く。変数の説明については、たとえばたんに「最終学歴を使う」とだけ書くのではなく、どのようなカテゴリに分けたのかといったことまで書く。いくつかの変数を組み合わせて加工する場合（例：年収と労働時間を組み合わせて時間あたり賃金の変数を作成した場合）には、その手続きについても書く。分野において一般的でない変数については、どのような質問項目でそれを尋ねているのかということについても書く。</p>
+<p>ついで、独立変数について書く。とくに、最も主眼となる変数を一番はじめに書く。男女で賃金がどの程度異なるのかを分析するという場合であれば性別、ひとり親世帯出身者とふたり親世帯出身者で教育達成がどの程度異なるのかを分析するという場合であれば世帯構成（ひとり親か、ふたり親か）が、ここに書くべき変数ということになる。</p>
+<p>その次に、媒介変数や交互作用の検討に使う変数について書く。男女の賃金格差が職業の違いによってどの程度説明できるのかを分析するという論文であれば、職業に関する説明がここに書くべき内容になる。このような変数がない場合には、省略してよい。</p>
+<p>最後に、その他の統制変数について書く。</p>
+<p>なお変数については見出しをつけて（箇条書きにして）、一つひとつ説明していくというスタイルもあるので、好きな書き方で書くと良い。もちろんその場合であっても、その変数がどのように作成されたのかを丁寧に説明する。</p>
+</section>
+<section id="分析手法" class="level3" data-number="12.6.3">
+<h3 data-number="12.6.3" class="anchored" data-anchor-id="分析手法"><span class="header-section-number">12.6.3</span> 分析手法</h3>
+<p>どのように分析を行うかを書く。</p>
+<p>一般的でない分析手法を使う場合には、その手法についての具体的な説明が必要。説明が必要かどうかは、聞く人の理解度によって異なる。この授業では、度数分布、クロス集計、相関係数、平均値の比較、回帰分析くらいであれば、説明は不要。それ以外の手法を使う場合には、説明を書く。</p>
+</section>
+</section>
+<section id="結果" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="結果"><span class="header-section-number">12.7</span> 結果</h2>
+<p>結果では、どのような分析をしたのか、その結果について記述する。<strong>自身の提示した問いに関係するものだけを書き</strong>、そうでないものについては（たとえそれがどんなに興味深い内容であったとしても）書く必要はない。</p>
+<p>表や図を使う場合、細かい数字を一つひとつ確認する必要はない。しかし、仮に読者が表や図を見なかったり、あるいはそれを読むことができる知識を持っていなかったとしても、どのような結果なのか本文だけを読めば理解できるような記述が望ましい。「もしこの授業を取っていない（=統計や社会学を勉強していない）大学の友だちがこのレポートを読んだとしたら、理解できるだろうか？」というのが一つの目安になるだろう。</p>
+<p>原則として「結果」の部分では考察や解釈には大きく踏み込まず、結果が表すことの意味については「結論」の部分で論じる。</p>
+<p>「第2章」の部分と同じく、結果の構成は比較的自由度が高く、必ずしも以下のように分ける必要はない。ただし、基本的には単純な分析から難しい分析へと展開していくことが多く（たとえば<a href="06-tabulate.html#tabulate_summarize">平均値の比較</a>→<a href="08-regression_advanced.html">重回帰分析</a>）、その逆はほとんどない。</p>
+<section id="記述的分析" class="level3" data-number="12.7.1">
+<h3 data-number="12.7.1" class="anchored" data-anchor-id="記述的分析"><span class="header-section-number">12.7.1</span> 記述的分析</h3>
+<p>分析結果について述べる場合、まずはじめに記述的な（2変量の）分析が置かれることが多い。次項で回帰分析など他の要因を統制した分析を行う場合には、それにつながるような分析をするに留める。</p>
+</section>
+<section id="回帰分析" class="level3" data-number="12.7.2">
+<h3 data-number="12.7.2" class="anchored" data-anchor-id="回帰分析"><span class="header-section-number">12.7.2</span> 回帰分析</h3>
+<p>前項の記述的分析を踏まえて、回帰分析などを行う。</p>
+</section>
+</section>
+<section id="結論" class="level2" data-number="12.8">
+<h2 data-number="12.8" class="anchored" data-anchor-id="結論"><span class="header-section-number">12.8</span> 結論</h2>
+<p>結論は<strong>研究でわかったことをまとめたうえで、考察と議論を展開し、そのインパクトについて論じる</strong>章である。以下のような内容から構成される。</p>
+<section id="背景と目的の再確認1段落" class="level3" data-number="12.8.1">
+<h3 data-number="12.8.1" class="anchored" data-anchor-id="背景と目的の再確認1段落"><span class="header-section-number">12.8.1</span> 背景と目的の再確認（1段落）</h3>
+<ol type="1">
+<li>研究の背景を再確認する。</li>
+<li>先行研究でわかっていなかったこと・不十分な点を再確認する。</li>
+<li>研究目的あるいは問いを再確認する。</li>
+</ol>
+<p>読者は論文をさかのぼって読まない。なので、改めて「序論」で示した内容を簡潔に確認し、論文で提示した問いに対する答えを述べるための準備をする。</p>
+</section>
+<section id="分析結果の要約と解釈23段落" class="level3" data-number="12.8.2">
+<h3 data-number="12.8.2" class="anchored" data-anchor-id="分析結果の要約と解釈23段落"><span class="header-section-number">12.8.2</span> 分析結果の要約と解釈（2–3段落）</h3>
+<p>分析の結果を要約する。そのうえで、その結果がどのようなことを意味しているのか、考察や議論を展開する。</p>
+<p>事前の仮説を立てたのだとしたら、それが当てはまったか、当てはまらなかったかについて書く。当てはまったとしたら、その仮説を導いたときの根拠に照らしながら、考察や議論を述べる。当てはまらなかったとしたら、なぜ当てはまらなかったのか、その原因について考察する。</p>
+<p>また、分析結果を受けて、さらに広い議論を展開するとよい。たとえば、次のようなものが挙げられる。</p>
+<ul>
+<li>政策的示唆：本研究の分析結果を踏まえれば、論文冒頭で掲げた社会問題を解決するためには、このような政策が有効なのではないか？従来は見落とされてきた、このような層への支援が必要なのではないか？etc.</li>
+<li>学術的示唆：先行研究は主としてこのような点に焦点を当ててきたが、それでは不十分なのではないか？先行研究が提示してきた説明というのは、必ずしも正しくないのではないか？etc.</li>
+</ul>
+<p>もちろん、研究目的から大きく外れた議論を展開してはいけない。あくまで、分析結果（や先行研究）をもとにした自分なりの示唆・考察を述べる。</p>
+</section>
+<section id="課題限界1段落" class="level3" data-number="12.8.3">
+<h3 data-number="12.8.3" class="anchored" data-anchor-id="課題限界1段落"><span class="header-section-number">12.8.3</span> 課題・限界（1段落）</h3>
+<p>本論文に残る課題、限界について書く。ただし、反省文ではなく、今後の研究では、このようなことを分析すると良いのではないかというような方向性を提示する。そうすると、この論文を読んだ他の人が研究を進めやすくなる。</p>
+<p>課題や限界は、あまり長く書き過ぎないように<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>。できなかったことよりもできたことに目を向けよう。</p>
+</section>
+<section id="まとめ1段落任意" class="level3" data-number="12.8.4">
+<h3 data-number="12.8.4" class="anchored" data-anchor-id="まとめ1段落任意"><span class="header-section-number">12.8.4</span> まとめ（1段落、任意）</h3>
+<p>最後が課題で終わるとなんだか後ろ向きの印象を残してしまう。そこで最後に、「こうした課題はあるけれど、でも本論文はとても重要な貢献をしたんだよ！」ということを書く。</p>
+</section>
+</section>
+<section id="謝辞" class="level2" data-number="12.9">
+<h2 data-number="12.9" class="anchored" data-anchor-id="謝辞"><span class="header-section-number">12.9</span> 謝辞</h2>
+<p>社会調査データは回答者、調査の企画・実施者を含めたくさんの人の協力があってはじめて成り立っていることを忘れてはいけない。また多くの場合、既存社会調査データを二次分析する際には、謝辞の記載が求められる。既存社会調査データを借り出して論文を書いた場合には、<strong>必ずデータを利用した旨の謝辞を書く</strong>。</p>
+<p>JGSSの場合は、<a href="https://jgss.daishodai.ac.jp/data/dat_acknowledgement.html">こちらのページ</a>を参照して謝辞を書く。たとえばJGSS2015を利用した場合には次のような謝辞を書くことになっている：</p>
+<blockquote class="blockquote">
+<p>日本版General Social Surveys（JGSS）は、大阪商業大学JGSS研究センター（文部科学大臣認定日本版総合的社会調査共同研究拠点）が、大阪商業大学の支援を得て実施している研究プロジェクトである。JGSS-2015は、JSPS科研費JP26245060、JP15H03485、JP24243057、大阪商業大学アミューズメント産業研究所、日本経済研究センター研究奨励金2014年度（岩井紀子）、労働問題に関する調査研究助成金2015年度（岩井八郎ほか）の支援を受けた。</p>
+</blockquote>
+<p>SSJDA経由でデータを取得した場合は、次のように書く（「2005年SSM日本調査，2005」の例）：</p>
+<blockquote class="blockquote">
+<p>二次分析にあたり、東京大学社会科学研究所附属社会調査・データアーカイブ研究センターSSJデータアーカイブから「2005年SSM日本調査，2005」（2015SSM調査管理委員会）の個票データの提供を受けた。</p>
+</blockquote>
+<p>謝辞の記載方法については、データ利用の際の規約などをよく確認すること。</p>
+</section>
+<section id="参考文献" class="level2" data-number="12.10">
+<h2 data-number="12.10" class="anchored" data-anchor-id="参考文献"><span class="header-section-number">12.10</span> 参考文献</h2>
+<p>本文中で引用した参考文献を記載する。参考文献は著者名のアルファベット順に並べる。引用していないものは書かない。形式については次項を参照のこと。</p>
+</section>
+<section id="形式上の注意事項" class="level2" data-number="12.11">
+<h2 data-number="12.11" class="anchored" data-anchor-id="形式上の注意事項"><span class="header-section-number">12.11</span> 形式上の注意事項</h2>
+<p>形式上の注意事項は以下のとおり。なお、以下の形式を全体としてまとめたWordのテンプレートファイルを作成している。<a href="https://drive.google.com/drive/folders/1-KpewwZ4M-nZl72Q6h1xpDfB1llfhWnZ?usp=sharing">こちら</a>にアップロードしているので、ダウンロードして上書きするかたちで使ってよい。</p>
+<section id="推奨するwordの設定" class="level3" data-number="12.11.1">
+<h3 data-number="12.11.1" class="anchored" data-anchor-id="推奨するwordの設定"><span class="header-section-number">12.11.1</span> 推奨するWordの設定</h3>
+<p>タイトルのフォントサイズは16pt, サブタイトルは14pt, 章タイトルは12pt, 節タイトルは11pt, その他本文は10.5ptを目安とする。</p>
+<p>章タイトルや節タイトルのフォントはゴシック体（游ゴシック、ヒラギノ角ゴシックなど）、それ以外は明朝体（游明朝、ヒラギノ明朝など）とする。</p>
+<p>本文中のアルファベットや半角数字、表中のフォントはTimes New Romanを推奨する。</p>
+<p>余白は上下左右いずれも30mmとし、1行あたりの文字数は40、1ページあたりの行数は35とする。</p>
+<p>フッターにはページ数を記載する。ページ数の位置は中央揃えとする。</p>
+</section>
+<section id="引用の形式" class="level3" data-number="12.11.2">
+<h3 data-number="12.11.2" class="anchored" data-anchor-id="引用の形式"><span class="header-section-number">12.11.2</span> 引用の形式</h3>
+<p>原則としてauthor-date方式とする。つまり、脚注で引用文献などを示すのではなく、該当する記述の後に（筆者 出版年）を付け、末尾に参考文献としてその書誌情報を記載する方式。何らかの書籍、論文、新聞、雑誌、ウェブサイト、等々、何らかの先行研究や資料を引用するときには必ず引用を記載し、自分の主張や記述とは区別する。より細かい記載方法については<a href="https://jss-sociology.org/bulletin/guide/quotation/">「社会学評論スタイルガイド」</a>におおむね準拠する。</p>
+<p>本文中の記載例：</p>
+<ul>
+<li><p>近年では男性と女性ともに非正規雇用者は正規雇用者と比べて結婚しにくいことが示されている（佐々木 2012; 麦山 2017）。</p></li>
+<li><p>Blau and Duncan (1967)が提示した地位達成モデルでは…</p></li>
+</ul>
+</section>
+<section id="図表の形式" class="level3" data-number="12.11.3">
+<h3 data-number="12.11.3" class="anchored" data-anchor-id="図表の形式"><span class="header-section-number">12.11.3</span> 図表の形式</h3>
+<p>原則として、表と図はそれぞれ別々の通し番号をつける。</p>
+<p>表や図には一見してわかりやすいタイトルをつける。表や図の下には、必要に応じて出所や注をつける。</p>
+<p>カテゴリや軸はたんにRの変数名ではなく、それが何を表しているかがわかるような名前がついている状態にする。たとえば1, 2, というふうな数値であれば「そう思う」「どちらかといえばそう思う」…などといった値が入っているほうが良いし、クロス表であれば、行と列がそれぞれ何の変数であるのかわかるようにする、といったような具合である。</p>
+<p>表はテンプレートに示したようにWord上の表機能を使ってきれいな状態にすることが好まれることが多い。表を作成する場合、罫線はできるだけ少なくし、かつ、横の罫線のみ使うというのが一般的。本資料第5–9章の各章で紹介したように、<code>gtsummary::tbl_summary()</code>や<code>gtsummary::tbl_cross()</code>、<code>modelsummary::modelsummary()</code>を使うことである程度きれいな表を出力することができるので、活用するとよい。</p>
+<p>図であれば、文字が小さくなりすぎないようにする。</p>
+<p>図表の例は<a href="https://drive.google.com/drive/folders/1-KpewwZ4M-nZl72Q6h1xpDfB1llfhWnZ?usp=sharing">先に示したテンプレート</a>上に記載している。</p>
+</section>
+<section id="脚注" class="level3" data-number="12.11.4">
+<h3 data-number="12.11.4" class="anchored" data-anchor-id="脚注"><span class="header-section-number">12.11.4</span> 脚注</h3>
+<p>本文の流れのうえでは不要であるが、より詳細な情報などを記載したいときには脚注を使用する<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>。Wordの脚注機能を使ってつける。</p>
+</section>
+<section id="参考文献の記載例" class="level3" data-number="12.11.5">
+<h3 data-number="12.11.5" class="anchored" data-anchor-id="参考文献の記載例"><span class="header-section-number">12.11.5</span> 参考文献の記載例</h3>
+<p>社会学評論スタイルではサブタイトルは——（2倍ダッシュ）で表記しているが、この授業では、：（コロン）で構わない。<a href="http://www.jams-sociology.org/?page_id=50">『理論と方法』スタイル</a>。</p>
+<p>また英語論文のスタイルは、社会学評論スタイルではなく、<a href="https://www.asanet.org/sites/default/files/savvy/documents/teaching/pdfs/Quick_Tips_for_ASA_Style.pdf">American Sociological Associationスタイル</a>にしている。これはたんに自分の好みの問題なので、統一的な形式が取られていれば別のものでも構わない。</p>
+<p>参考文献リストはアルファベット（ABC）順で記載し、書籍とウェブサイト、日本語と英語といったふうに分けることはしない。</p>
+<section id="書籍の場合" class="level4" data-number="12.11.5.1">
+<h4 data-number="12.11.5.1" class="anchored" data-anchor-id="書籍の場合"><span class="header-section-number">12.11.5.1</span> 書籍の場合</h4>
+<p>岩間暁子，2008，『女性の就業と家族のゆくえ：格差社会のなかの変容』東京大学出版会．</p>
+<p>浅野正彦・矢内勇生，2018，『Rによる計量政治学』オーム社．</p>
+</section>
+<section id="編著書籍中の論文の場合" class="level4" data-number="12.11.5.2">
+<h4 data-number="12.11.5.2" class="anchored" data-anchor-id="編著書籍中の論文の場合"><span class="header-section-number">12.11.5.2</span> 編著書籍中の論文の場合</h4>
+<p>松浦司，2021，「有配偶者の出産意欲の日台比較」寺村絵理子編『日本・台湾の高学歴女性』晃洋書房，54–72．</p>
+</section>
+<section id="雑誌論文の場合" class="level4" data-number="12.11.5.3">
+<h4 data-number="12.11.5.3" class="anchored" data-anchor-id="雑誌論文の場合"><span class="header-section-number">12.11.5.3</span> 雑誌論文の場合</h4>
+<p>余田翔平，2012，「子ども期の家族構造と教育達成格差」『家族社会学研究』24(1): 60–71．</p>
+<p>永吉希久子，2012，「日本人の排外意識に対する分断労働市場の影響：JGSS-2006の分析から」『社会学評論』19–35．</p>
+</section>
+<section id="英語論文の場合" class="level4" data-number="12.11.5.4">
+<h4 data-number="12.11.5.4" class="anchored" data-anchor-id="英語論文の場合"><span class="header-section-number">12.11.5.4</span> 英語論文の場合</h4>
+<p>Torche, Florencia. 2011. “Is a College Degree Still the Great Equalizer? Intergenerational Mobility across Levels of Schooling in the United States.” <em>American Journal of Sociology</em> 117(3):763–807.</p>
+</section>
+<section id="英語の書籍の場合" class="level4" data-number="12.11.5.5">
+<h4 data-number="12.11.5.5" class="anchored" data-anchor-id="英語の書籍の場合"><span class="header-section-number">12.11.5.5</span> 英語の書籍の場合</h4>
+<p>Blau, Peter M. and Otis Dudley Duncan. 1967. <em>The American Occupational Structure</em>. Free Press.</p>
+</section>
+<section id="翻訳書の場合" class="level4" data-number="12.11.5.6">
+<h4 data-number="12.11.5.6" class="anchored" data-anchor-id="翻訳書の場合"><span class="header-section-number">12.11.5.6</span> 翻訳書の場合</h4>
+<p>Watts, Duncan J. 2011. <em>Everything is Obvious *Once You Know the Answer: Why Common Sense is Nonsense.</em> Atlantic Books.（青木創訳，2014，『偶然の科学』早川書房．）</p>
+</section>
+<section id="ウェブサイトの場合" class="level4" data-number="12.11.5.7">
+<h4 data-number="12.11.5.7" class="anchored" data-anchor-id="ウェブサイトの場合"><span class="header-section-number">12.11.5.7</span> ウェブサイトの場合</h4>
+<p>内閣府，2021，「令和3年版 男女共同参画白書」内閣府男女共同参画局ホームページ．（2021年11月22日閲覧，<a href="https://www.gender.go.jp/about_danjo/whitepaper/r03/zentai/index.html" class="uri">https://www.gender.go.jp/about_danjo/whitepaper/r03/zentai/index.html</a>）</p>
+
+
+</section>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>自分でいうのもおかしいかもしれないが、筆者はこうした標準的な構成に強く準拠して書いているので、筆者の過去に書いた論文を真似するとだいたい標準的な構成になるだろう。もちろん、文章そのものは盗用しないように。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>締切間際に書く大学の授業のレポートはまさに上から下へと順番に書いていって見直さないものの典型かもしれないが。。。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>つまり、映画の予告や小説の裏表紙のあらすじみたいに「さわりだけ触れている」ようなものはよくない。<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>もちろんこれは理想であって、実際に実現するのはプロの研究者であっても難しい。<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>ただし、論文の読者にとって自明な変数の場合はわざわざその定義までくわしく説明しないことは多い。たとえば、性別など。年齢については、年齢を連続変数として使う場合もあれば、10歳区切りなどの年齢層に区切って使う場合もあるので、どのように使うかについては説明が必要。学歴も、「最後に<strong>卒業した</strong>学校」なのか「最後に<strong>通った</strong>学校」なのか、また学歴のカテゴリ分けについても研究によって異なっているため、説明が必要。<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>個人的には、結論での議論や考察に比べて課題が極端に長いと、せっかく行った研究のアピールポイントが削がれてしまうように感じてしまう。ただし、これについては課題を長々書くのが科学的に誠実な態度だと言う人もいて、好みがあると思う。<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>たとえばこんなふうに。<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./11-domain.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">社会学のデータ分析でよくある処理</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./13-presentation.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">研究発表をする</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

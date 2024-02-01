@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Rによる社会調査データ分析の手引き - 1&nbsp; 研究計画を立てる</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./02-preparation.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-plan.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">研究計画を立てる</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Rによる社会調査データ分析の手引き</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">まえがき</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-plan.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">研究計画を立てる</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">RとRStudioの下準備</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-import.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">データの読み込み</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-handling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">データの加工</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-descriptives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">1変数の集計</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-tabulate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">2変数の集計</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-regression_basic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">回帰分析の基礎</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-regression_advanced.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">回帰分析の活用</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-interaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">交互作用</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-logit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ロジスティック回帰分析（作成中）</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-domain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">社会学のデータ分析でよくある処理</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-writepaper.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">論文のまとめ方</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-presentation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">研究発表をする</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">さらなる学習のための参考文献</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#研究計画とは" id="toc-研究計画とは" class="nav-link active" data-scroll-target="#研究計画とは"><span class="header-section-number">1.1</span> 研究計画とは</a></li>
+  <li><a href="#plan_background" id="toc-plan_background" class="nav-link" data-scroll-target="#plan_background"><span class="header-section-number">1.2</span> 研究背景</a>
+  <ul class="collapse">
+  <li><a href="#問題背景1段落程度" id="toc-問題背景1段落程度" class="nav-link" data-scroll-target="#問題背景1段落程度"><span class="header-section-number">1.2.1</span> 問題背景（1段落程度）</a></li>
+  <li><a href="#先行研究の整理13段落程度" id="toc-先行研究の整理13段落程度" class="nav-link" data-scroll-target="#先行研究の整理13段落程度"><span class="header-section-number">1.2.2</span> 先行研究の整理（1–3段落程度）</a></li>
+  </ul></li>
+  <li><a href="#plan_question" id="toc-plan_question" class="nav-link" data-scroll-target="#plan_question"><span class="header-section-number">1.3</span> 研究目的・問い</a>
+  <ul class="collapse">
+  <li><a href="#研究目的問い12段落程度" id="toc-研究目的問い12段落程度" class="nav-link" data-scroll-target="#研究目的問い12段落程度"><span class="header-section-number">1.3.1</span> 研究目的・問い（1–2段落程度）</a></li>
+  <li><a href="#仮説1段落程度あれば" id="toc-仮説1段落程度あれば" class="nav-link" data-scroll-target="#仮説1段落程度あれば"><span class="header-section-number">1.3.2</span> 仮説（1段落程度、あれば）</a></li>
+  </ul></li>
+  <li><a href="#方法" id="toc-方法" class="nav-link" data-scroll-target="#方法"><span class="header-section-number">1.4</span> 方法</a>
+  <ul class="collapse">
+  <li><a href="#データ" id="toc-データ" class="nav-link" data-scroll-target="#データ"><span class="header-section-number">1.4.1</span> データ</a></li>
+  <li><a href="#分析対象" id="toc-分析対象" class="nav-link" data-scroll-target="#分析対象"><span class="header-section-number">1.4.2</span> 分析対象</a></li>
+  <li><a href="#使用する変数" id="toc-使用する変数" class="nav-link" data-scroll-target="#使用する変数"><span class="header-section-number">1.4.3</span> 使用する変数</a></li>
+  <li><a href="#分析方法" id="toc-分析方法" class="nav-link" data-scroll-target="#分析方法"><span class="header-section-number">1.4.4</span> 分析方法</a></li>
+  </ul></li>
+  <li><a href="#参考文献" id="toc-参考文献" class="nav-link" data-scroll-target="#参考文献"><span class="header-section-number">1.5</span> 参考文献</a></li>
+  <li><a href="#使用する調査データの選定" id="toc-使用する調査データの選定" class="nav-link" data-scroll-target="#使用する調査データの選定"><span class="header-section-number">1.6</span> 使用する調査データの選定</a>
+  <ul class="collapse">
+  <li><a href="#個票データとは何か" id="toc-個票データとは何か" class="nav-link" data-scroll-target="#個票データとは何か"><span class="header-section-number">1.6.1</span> 個票データとは何か</a></li>
+  <li><a href="#jgss" id="toc-jgss" class="nav-link" data-scroll-target="#jgss"><span class="header-section-number">1.6.2</span> JGSS</a></li>
+  <li><a href="#jgss以外の日本の社会調査" id="toc-jgss以外の日本の社会調査" class="nav-link" data-scroll-target="#jgss以外の日本の社会調査"><span class="header-section-number">1.6.3</span> JGSS以外の日本の社会調査</a></li>
+  <li><a href="#日本以外の社会調査データ" id="toc-日本以外の社会調査データ" class="nav-link" data-scroll-target="#日本以外の社会調査データ"><span class="header-section-number">1.6.4</span> 日本以外の社会調査データ</a></li>
+  </ul></li>
+  <li><a href="#先行研究を探す" id="toc-先行研究を探す" class="nav-link" data-scroll-target="#先行研究を探す"><span class="header-section-number">1.7</span> 先行研究を探す</a>
+  <ul class="collapse">
+  <li><a href="#査読つき論文" id="toc-査読つき論文" class="nav-link" data-scroll-target="#査読つき論文"><span class="header-section-number">1.7.1</span> 査読つき論文</a></li>
+  <li><a href="#研究の流れをつかむ" id="toc-研究の流れをつかむ" class="nav-link" data-scroll-target="#研究の流れをつかむ"><span class="header-section-number">1.7.2</span> 研究の流れをつかむ</a></li>
+  <li><a href="#書籍" id="toc-書籍" class="nav-link" data-scroll-target="#書籍"><span class="header-section-number">1.7.3</span> 書籍</a></li>
+  <li><a href="#英語論文" id="toc-英語論文" class="nav-link" data-scroll-target="#英語論文"><span class="header-section-number">1.7.4</span> 英語論文</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="plan" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">研究計画を立てる</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>本章では、データ分析に着手し、論文をまとめるための大前提となる研究計画の立て方を説明する。</p>
+<section id="研究計画とは" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="研究計画とは"><span class="header-section-number">1.1</span> 研究計画とは</h2>
+<p>何も考えずにただデータを分析し始めても、よい論文を書くのは難しい。実際にデータを開いて分析を始める前に十分に計画を練っておくことで、有意義な論文を書くことにつながる。そこで後期が始まるまでに、グループごとに研究計画書を作成してもらう。研究計画書では以下のような内容を書く。分量としてはだいたい3–5ページくらい（参考文献リスト含む）。ここで書いた研究計画書を最初のたたき台として、データ分析を行い、期末レポートを執筆する。</p>
+<p>研究計画書は、以下の4つの要素からなる：</p>
+<ol type="1">
+<li>研究背景</li>
+<li>研究目的・問い</li>
+<li>方法</li>
+<li>参考文献</li>
+</ol>
+<p>これら研究計画に書いた内容は、たんに計画を立てるというだけでなく、これを土台にして（膨らませて）論文にしていくものでもある。研究計画は次のような役割を果たす：</p>
+<ol type="1">
+<li><strong>何を明らかにするのか（問い）を明確にする</strong>：問いは、何をどのように分析するのかについての指針を与えてくれる。問いが明確であるほど、やるべきことはクリアになる。</li>
+<li><strong>先行研究で解かれていない謎を明確にする</strong>：先行研究を整理することで、先行研究で解かれていない点や、矛盾している点、先行研究のやり方では十分に明らかにできていないことが見えてくる。</li>
+<li><strong>問いがなぜ重要なのかを明確にする</strong>：先行研究で解かれていないことやまだ明らかになっていないことがあるのは、もしかするとそれらがあまり重要ではないからかもしれない。問いがなぜ重要なのか、何が問うに値する重要な問いなのかをあらかじめきちんと考えておけば、あまり重要ではない問いに時間を浪費せずにすむ。</li>
+</ol>
+<p>よく練られた研究計画であればあるほど、論文を書くときの苦労は少なくなり、よい論文につながる可能性は高くなる。たとえば自分で調査をしたり実験をしたりしてデータを集めるときに研究計画が重要であることは言うまでもない。しかしながら、たとえこの授業のように自分でデータを集めないのだとしても、上記の効用はとても大きく、研究計画の作成には時間をかける価値がある。以下、上記の要素一つひとつについてくわしくみていく。</p>
+</section>
+<section id="plan_background" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="plan_background"><span class="header-section-number">1.2</span> 研究背景</h2>
+<p>研究背景は、次の2–4段落からなる。</p>
+<section id="問題背景1段落程度" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="問題背景1段落程度"><span class="header-section-number">1.2.1</span> 問題背景（1段落程度）</h3>
+<p><strong>研究で扱いたい問題が社会問題としてand/or社会学的に重要である</strong>ことを述べる。</p>
+<ul>
+<li>社会問題として重要、というのは、平等、人権、健康、持続可能性などなど、人間社会において重要とされている価値に照らして、その重要性を主張するものである。一見個人的な問題であっても社会問題と関わりをもつことは多いので<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>、必ずしも世の中で「社会問題」だと言われている必要はない。どのようなトピックであっても、それがなぜ社会問題として重要であるのかを考える必要がある。また、その問題の重要性や規模感を示す根拠として公的統計の値などを提示することもある。</li>
+<li>社会学的に重要、というのは、社会学で伝統的に扱われてきた問題に照らして、その重要性を主張するものである。不平等に関係する社会学の伝統的な問題としては、世代間社会移動、教育機会の不平等、労働市場におけるジェンダー不平等、家族形成のパターン、夫婦間の無償労働の分担（権力関係）などが挙げられる。伝統的に扱われてきた問題はそれだけその重要性が認められており、したがって扱うトピックが重要であることを示す根拠にもなる。</li>
+</ul>
+<p>もちろん、「自分が関心を持った」というのは最初のモチベーションとして大事だが、「自分が関心をもった」というだけでは、他の人にとっては説得的できない。他の人にとって関心をもってもらえるような理由を述べることが大事である。</p>
+</section>
+<section id="先行研究の整理13段落程度" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="先行研究の整理13段落程度"><span class="header-section-number">1.2.2</span> 先行研究の整理（1–3段落程度）</h3>
+<p>先に述べた問題に関連して、先行研究がこれまでに何を明らかにし、何を明らかにしていないのか、あるいは先行研究に存在する限界点を提示する。</p>
+<p>調べた先行研究を1つひとつすべて羅列するわけではなく、それらをまとめた全体像を意識する。</p>
+<p>先行研究の検討を通じて、<strong>（重要であるにもかかわらず）明らかになっていないこと・課題が何か</strong>を示す。<strong>この箇所こそが、自分たちの研究で解く「問い」になる</strong>。研究のオリジナリティを示すためには、十分に先行研究を読み込み、整理しなければならない。</p>
+<p>先行研究が乏しいからといって、必ずしもそのテーマが「悪い」テーマであるということではない。重要であるにもかかわらず、これまで注目されてこなかったり、利用可能なデータが限られていたりするために十分に扱われていないテーマは少なくない。ただし、あまり扱う意義がない（社会問題として and/or 社会学的に重要性が低い）ために先行研究が少ないという場合には、そのテーマを選択するのはあまり良くないだろう。両者の違いはしばしば見分けるのが難しいので、教員に相談するとよい。</p>
+</section>
+</section>
+<section id="plan_question" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="plan_question"><span class="header-section-number">1.3</span> 研究目的・問い</h2>
+<p>研究目的・問いは、次の1–3段落程度からなる。</p>
+<section id="研究目的問い12段落程度" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="研究目的問い12段落程度"><span class="header-section-number">1.3.1</span> 研究目的・問い（1–2段落程度）</h3>
+<p>研究目的（問い）を提示する。「xxxを明らかにする」「どの程度yyyなのか？」など、何をやるのかが明確な問いを提示する。</p>
+<p>社会調査データを使った分析で取り組まれる問いには、大きく分けて2種類の問いがある。</p>
+<ol type="1">
+<li><strong>記述的問い</strong>：実態を明らかにすることを目的とする問い。すでに明らかになっている実態をさらに掘り下げてみていくことも含まれる。</li>
+<li><strong>説明的問い</strong>：実態が明らかになっていることを（ある程度）前提として、それがなぜ生じるのかを明らかにすることを目的とする問い。</li>
+</ol>
+<p><strong>問いを立てるときには、先行研究をよく読んで、問いを「絞る」ことが大切</strong>になる。たとえば、「なぜジェンダー格差があるのか？」というのは、問いの形ではあるけれども、それだけではあまりに大きすぎ、かつ漠然としているため、到底1つの論文で答えることはできず、分析の焦点もぼやけてしまう。そこで、答えることができる問いへと焦点を絞っていくことが大事になる。</p>
+<p>問いを絞るときには、次のような要素を考えるとよい。</p>
+<ol type="1">
+<li>誰を対象とするのか？：国、時代、年齢、就業状態、など</li>
+<li>どのような集団どうしを比較するのか？：男性と女性、ひとり親世帯出身者とふたり親世帯出身者、大卒者と非大卒者、既婚者と未婚者、時代、など</li>
+<li>何の変数を比較するのか？：教育達成、賃金、幸福度、友人の有無、など</li>
+</ol>
+<p>また、問いを立てるときには、実際にデータによって検証可能な問いにする必要がある。社会問題として and/or 社会学的に重要な問いはいくらでもあるが、問いに答えるのに十分な情報を収集したデータがなければ、検証することはできない。そのような場合には、類似する検証可能な問いに変換したり、別の問いを探したりする必要がある。完璧なデータというのは存在しない以上、問いをずらして検証可能なようにするというのはよく行われることである。</p>
+<p>たいていの場合、問いは「大きすぎる」ことが多い。問いを絞れているというのはつまり、それだけ先行研究をチェックして、何がわかっていないのかを特定できているということであるから、問いは小さくても構わないどころか、むしろ小さい方がよいといえる（ただし、あまりに小さすぎて意義がほとんどないというのはよくない）。どんなに小さくても、明確な問いを立ててそれを検証することができれば、それによってこれまでわかっていなかったことを明らかにするという貢献につながる。</p>
+</section>
+<section id="仮説1段落程度あれば" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="仮説1段落程度あれば"><span class="header-section-number">1.3.2</span> 仮説（1段落程度、あれば）</h3>
+<p>上記の問いに対する仮説を提示する。1つでもよいし、複数（最大で4つほど）あってもよい。このとき、ただ仮説だけを書くのではなく、そのような仮説が導かれる根拠（なぜそのように考えられるのか？）についても書く。仮説を導くときには、理論（的に考えること）がしばしば有効である。</p>
+<p>仮説は、「男性は女性と比べて近所との付き合いが少ない」「所得が高いほど、政府による所得の再分配に反対しやすい」といったように、比較の視点が入っており、かつ、検証可能なものであるとよい。</p>
+</section>
+</section>
+<section id="方法" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="方法"><span class="header-section-number">1.4</span> 方法</h2>
+<section id="データ" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="データ"><span class="header-section-number">1.4.1</span> データ</h3>
+<p>何の調査データを使用するのかを書く。またその調査データがどのような人を対象としており、いつ、どのような方法で調査が実施されたのか、どのような質問項目を聴取しているのかについて書く。</p>
+</section>
+<section id="分析対象" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="分析対象"><span class="header-section-number">1.4.2</span> 分析対象</h3>
+<p>実際に分析する対象（母集団）について書く。たいていの社会調査データは広い母集団を対象としているので、そこから分析対象を絞ることが多い。何歳から何歳までか。男性も女性も含むか、どちらかだけか。働いている人か、働いていない人も含むか、結婚している人か、など。</p>
+<p>データや分析対象が先に設定した問いときちんと対応しているかをよく確認する。たとえば、「親の労働時間が長いと子どものメンタルヘルスは悪化するのではないか？」という問いを立てたとする。このような場合であれば、子どもを分析対象とする必要があり、大人（成人）を対象とした調査では答えることが難しい。また、子どもを対象とした調査だとしても、親の労働時間を尋ねていない調査であったとしたら、やはりこの問いには答えることができない。</p>
+</section>
+<section id="使用する変数" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" class="anchored" data-anchor-id="使用する変数"><span class="header-section-number">1.4.3</span> 使用する変数</h3>
+<p>従属変数、独立変数、あるいは統制変数について、使用予定の変数を書く。また、変数の名前だけでなく、どのように値を加工するかについても書くと良い。たとえばJGSSの場合は次のように書く。</p>
+<ul>
+<li>子どもへの教育費支出（SZEXED：世帯支出 - 教育費）。回答区間の中央値をとって、連続変数に変換する。</li>
+<li>本人の最終学歴（XXLSTSCH：最終学校（本人））。中学、高校、短大高専、大学の4カテゴリにまとめる。</li>
+</ul>
+</section>
+<section id="分析方法" class="level3" data-number="1.4.4">
+<h3 data-number="1.4.4" class="anchored" data-anchor-id="分析方法"><span class="header-section-number">1.4.4</span> 分析方法</h3>
+<p>クロス集計、散布図、平均値の比較、回帰分析、など、使用予定の分析手法について書く。また、どのように分析するのか（何の変数と何の変数のクロス集計を作成するのか？など）についても書けるとよい。</p>
+</section>
+</section>
+<section id="参考文献" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="参考文献"><span class="header-section-number">1.5</span> 参考文献</h2>
+<p>研究計画書で引用した文献（書籍、論文、ウェブサイト等）について書く。読んだけれども引用はしていない文献は含めない。書籍・論文を含め少なくとも10本以上は引用するのが望ましい。実際には読んだけれど引用しないという文献もあるので、数十本は目を通すことになる。</p>
+<p>後で述べるとおり文献の質は玉石混交であり、また研究には「流れ」があるため、手当り次第にインターネットを検索して文献を羅列してもあまりよい先行研究のサーベイにはならない。先行研究の探し方については後述する。</p>
+</section>
+<section id="使用する調査データの選定" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="使用する調査データの選定"><span class="header-section-number">1.6</span> 使用する調査データの選定</h2>
+<section id="個票データとは何か" class="level3" data-number="1.6.1">
+<h3 data-number="1.6.1" class="anchored" data-anchor-id="個票データとは何か"><span class="header-section-number">1.6.1</span> 個票データとは何か</h3>
+<p>たとえば「学歴が高い人ほど平均年収が高い」といった仮説や、「学歴が高い人ほど子どもがいる割合が高い」といった仮説を検証したいとする。このような仮説を検証する場合には、一人ひとりについて（1）学歴、（2）年収、そして（3）子どもがいるかどうか、についての情報を得ることが必要である。このように、一人ひとりについてさまざまな情報を（アンケートなどによって）聴取し、その回答を集めたデータを個票データと呼ぶ。たとえば今回の場合は、以下の［A］のような回答を格納した個票データが得られたとしよう。</p>
+<table class="table">
+<caption>［A］個票データ</caption>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th><strong>最終学歴</strong></th>
+<th><strong>個人年収</strong></th>
+<th><strong>子どもの有無</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>大学</td>
+<td>500</td>
+<td>1（あり）</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>中学</td>
+<td>300</td>
+<td>1（あり）</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>高校</td>
+<td>500</td>
+<td>0（なし）</td>
+</tr>
+<tr class="even">
+<td>︙</td>
+<td>︙</td>
+<td>︙</td>
+<td>︙</td>
+</tr>
+<tr class="odd">
+<td>99</td>
+<td>大学</td>
+<td>700</td>
+<td>1（あり）</td>
+</tr>
+<tr class="even">
+<td>100</td>
+<td>高校</td>
+<td>400</td>
+<td>0（なし）</td>
+</tr>
+</tbody>
+</table>
+<p>たんに個票データをじっと眺めてみても、それだけでは傾向は見えてこない（おもしろいかもしれないが）。このような個票データから先に立てた問いに答えるためには、学歴ごとに、年収の平均値や、子どもがいる人の割合を計算する必要がある。このように計算を行って得られたのが、以下の［B］の集計データである。研究者はこのような個票データをもとにさまざまな集計を行って、属性間の傾向の違いを検討したりしており、実際に論文に示されたり、政府の白書などで示されたり、<a href="https://www.e-stat.go.jp/">e-Stat</a>に掲載されたりしているのは、［B］のように加工されたあとの結果である。</p>
+<table class="table">
+<caption>［B］集計データ</caption>
+<tbody>
+<tr class="odd">
+<td><strong>最終学歴</strong></td>
+<td><strong>個人年収の平均</strong></td>
+<td><strong>子どもがいる割合</strong></td>
+</tr>
+<tr class="even">
+<td>中学</td>
+<td>319</td>
+<td>0.8</td>
+</tr>
+<tr class="odd">
+<td>高校</td>
+<td>424</td>
+<td>0.85</td>
+</tr>
+<tr class="even">
+<td>大学</td>
+<td>566</td>
+<td>0.91</td>
+</tr>
+</tbody>
+</table>
+<p>自分の関心にもとづいて、先行研究ではまだわかっていない独自の仮説を検証したいとき、多くの場合は［A］の個票データを手に入れる必要がある。もちろん、このような個票データを取得することは簡単ではない。そのへんを歩いている人にアンケートを配ってみたり、SNSでGoogleFormに回答するよう呼びかけて集めたとしても、知りたい対象からランダムに選ばれたデータになるとは到底言えないし、回答する人も大変である。</p>
+<p>そこで、過去の研究者や研究機関などが実施した質の高い調査を二次利用することで、新しく調査を行ったり、回答の負担をかけることなく、自分独自の問いに答え、社会の実態を明らかにすることができる。</p>
+</section>
+<section id="jgss" class="level3" data-number="1.6.2">
+<h3 data-number="1.6.2" class="anchored" data-anchor-id="jgss"><span class="header-section-number">1.6.2</span> JGSS</h3>
+<p>このような個票データを使おうと思った場合、まずは、大阪商業大学JGSS研究センターが実施している、<a href="https://jgss.daishodai.ac.jp/index.html">日本版総合的社会調査（Japan General Social Survey, JGSS）</a>のデータを使うことを考えてみるとよい。JGSSでは調査年ごとに非常に多様な質問項目が設けられているので、大抵の問題関心に沿った分析が可能である。</p>
+<ol type="1">
+<li>まず、どのような調査がされているのかを確認してみよう。調査対象者は？調査の形式は？どのような調査票？調査の詳細は、<a href="https://jgss.daishodai.ac.jp/surveys/sur_top.html">こちら</a>に記されている。</li>
+<li>次に、関心に合う項目を探してみよう。項目は<a href="https://jgss.daishodai.ac.jp/surveys/sur_hpdata.html">こちら</a>から調べることができる。</li>
+<li>関心に合う項目を見つけたら、その項目が何年の調査で尋ねられているか確認しよう。2022/6/3時点では2000–2018年のデータが使用できる。</li>
+<li>JGSSは20–89歳という幅広い年齢層を対象としているため、たとえば5000人の有効回答があったとしても、分析対象者を限定していくと、対象人数は少なくなり、分析が難しいことがある。このような場合には、複数時点の調査データを合併して分析する（もしくは後述のように別のデータを使う）という方法がある<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。ただし、関心のある変数がどの時点にも含まれているかどうかをよく確認すること。</li>
+<li>居住都道府県に関する情報は2006年まで、地域ブロック（北海道・東北、関東、中部、近畿、中国・四国、九州の6区分）に関する情報は2010年までのデータにしか含まれていないことに注意。詳しくは<a href="https://jgss.daishodai.ac.jp/data/dat_application_pref.html">こちら</a>を参照のこと。</li>
+</ol>
+</section>
+<section id="jgss以外の日本の社会調査" class="level3" data-number="1.6.3">
+<h3 data-number="1.6.3" class="anchored" data-anchor-id="jgss以外の日本の社会調査"><span class="header-section-number">1.6.3</span> JGSS以外の日本の社会調査</h3>
+<p>JGSSでは自分たちの関心にあった研究が難しいという場合もあるかもしれない。その場合には、別のデータセットの使用を考えてみよう。<a href="https://csrda.iss.u-tokyo.ac.jp/">東京大学社会科学研究所附属社会調査・データアーカイブ研究センター</a>が提供するデータアーカイブでは、研究用に個票データを貸し出している。<a href="https://csrda.iss.u-tokyo.ac.jp/infrastructure/access/choice/">ここ</a>から、データを探してみよう。</p>
+<p><a href="https://ssjda.iss.u-tokyo.ac.jp/Direct/datasearch.php">データ検索システム</a>にアクセスし、「教育目的利用」の欄を「利用可」に設定し、適当な単語などを入れて検索すると、条件に該当する調査データの一覧が表示される<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。</p>
+<p>ただし、調査の質はさまざまなので注意したい。気になるデータがあれば、教員に聞くこと。個人的におすすめできる調査データ、および過去の授業で使われた実績のある調査データは次のとおり。</p>
+<table class="table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 31%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>調査名</th>
+<th>実施者</th>
+<th>実施年</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>社会階層と社会移動全国調査（SSM調査）</td>
+<td>SSM調査管理委員会</td>
+<td>1955年から10年ごと</td>
+</tr>
+<tr class="even">
+<td>全国家族調査（NFRJ）</td>
+<td>日本家族社会学会</td>
+<td>1998, 2001, 2003, 2008–2012年、2018年（未公開）</td>
+</tr>
+<tr class="odd">
+<td>東大社研・若年壮年パネル調査（JLPS）</td>
+<td>東京大学社会科学研究所</td>
+<td>2007年から毎年</td>
+</tr>
+<tr class="even">
+<td>全国就業実態パネル調査（JPSED）</td>
+<td>リクルートワークス研究所</td>
+<td>2016年から毎年</td>
+</tr>
+<tr class="odd">
+<td>子どもの生活と学びに関する親子調査</td>
+<td>ベネッセ教育総合研究所</td>
+<td>2015年から毎年</td>
+</tr>
+<tr class="even">
+<td>日本人の意識調査</td>
+<td>NHK放送文化研究所世論調査部</td>
+<td>1973年から5年ごと</td>
+</tr>
+<tr class="odd">
+<td>親と子の生活意識に関する調査</td>
+<td>内閣府子ども若者・子育て施策総合推進室</td>
+<td>2011年</td>
+</tr>
+</tbody>
+</table>
+<p>そのほか、上記のページから入手することはできないが利用可能でかつ定評のある調査データもある。いくつか上げておく。ただし、いずれもパネル調査データなので、分析にはそれなりのスキルが必要になる。</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>調査名</th>
+<th>実施者</th>
+<th>実施年</th>
+<th>詳細へのリンク</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>消費生活に関するパネル調査（JPSC）</td>
+<td>慶應義塾大学パネルデータ設計・解析センター</td>
+<td>1993年から毎年</td>
+<td><a href="https://www.pdrc.keio.ac.jp/paneldata/datasets/jpsc/" class="uri">https://www.pdrc.keio.ac.jp/paneldata/datasets/jpsc/</a></td>
+</tr>
+<tr class="even">
+<td>日本家計パネル調査（JHPS/KHPS）</td>
+<td>同上</td>
+<td>2004年から毎年</td>
+<td><a href="https://www.pdrc.keio.ac.jp/paneldata/datasets/jhpskhps/" class="uri">https://www.pdrc.keio.ac.jp/paneldata/datasets/jhpskhps/</a></td>
+</tr>
+<tr class="odd">
+<td>日本子どもパネル調査</td>
+<td>同上</td>
+<td>2010年から2014年まで毎年、以降2年に一度</td>
+<td><a href="https://www.pdrc.keio.ac.jp/paneldata/datasets/jcps/" class="uri">https://www.pdrc.keio.ac.jp/paneldata/datasets/jcps/</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="日本以外の社会調査データ" class="level3" data-number="1.6.4">
+<h3 data-number="1.6.4" class="anchored" data-anchor-id="日本以外の社会調査データ"><span class="header-section-number">1.6.4</span> 日本以外の社会調査データ</h3>
+<p>もちろん、日本以外の国を対象とした調査データを分析してもよい。中国・韓国・台湾であれば、JGSS同様、大阪商業大学JGSS研究センターが実施しているEast Asian Social Survey（EASS）を使うことを考えてみるとよい。数年に一度、テーマを変えながら毎年実施されている。</p>
+<p>その他の国であれば、たとえば<a href="https://www.icpsr.umich.edu/web/pages/">ICPSR</a>や<a href="https://www.gesis.org/home">GESIS</a>といった国際的なデータアーカイブから調査データを探すことができる。ICPSRのデータであれば、学部生でも、学内のネットワークからアクセスできる。</p>
+<p>また、OECDが実施している<a href="https://www.oecd.org/pisa/">PISA</a>（Programme for International Student Assessment）や<a href="https://www.oecd.org/skills/piaac/">PIAAC</a>（Programme for the International Assessment of Adult Competencies）といった国際比較調査も、誰でも利用可能なようにデータが公開されている。本資料でもPIAACの日本版データを例として使用している。</p>
+<p>残念ながら、既存の調査で尋ねられていない項目や、既存の調査で尋ねられているものの、それと組み合わせるための項目が尋ねられていないような問いの場合は、研究することができない。たとえば、「性別適合手術を受けて身体の性別を男性から女性に変えた人は、手術前と比べて賃金が低下するのか？」という問い<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>を立てたとする。しかしながら、管見の限り日本でこの問いを検証可能なデータは存在しないため、この授業では検証することはできない。このように、データによって検証不可能な場合は、それと関連する別の問いへと問いを「ずらす」ことで、検証可能な問いを立てる必要がある。</p>
+</section>
+</section>
+<section id="先行研究を探す" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="先行研究を探す"><span class="header-section-number">1.7</span> 先行研究を探す</h2>
+<p>分析以前の段階でたくさんの先行研究を読み、先行研究で何が明らかになっていないのかを明確にすればするほど、何をすべきかが明確になり、データ分析や論文執筆がスムーズに進むようになる。研究の質は、分析内容それ自体よりもむしろ、先行研究との違いを正確に見出しているかどうかに大きく左右される。それゆえ、先行研究を探すことはとても重要である。もちろん、こうした作業はデータ分析を始めてからもさらに進めていくことになる。</p>
+<p>ただたんにGoogleで検索にかけてても、良い論文にたどり着くことは難しい。たとえばGoogle Scholarを使って論文を探すというのは基礎演習などで教わったかもしれない。しかし、世の中には数え切れないくらいたくさんの論文があり、かつ、論文の質も玉石混交である。さらに、研究には「流れ」があり、手当たり次第に参考文献を並べたとしても、貢献すべき先行研究群（literature）を設定することは難しい。</p>
+<p>そこで、文献を探し先行研究群を設定するにあたって、一般的な方針をいくつか紹介しておく。</p>
+<section id="査読つき論文" class="level3" data-number="1.7.1">
+<h3 data-number="1.7.1" class="anchored" data-anchor-id="査読つき論文"><span class="header-section-number">1.7.1</span> 査読つき論文</h3>
+<p>まずは、査読付きの学術雑誌に掲載された論文を優先的に探して読むとよい。査読とは、論文が掲載される前に匿名の審査員によって審査し、修正を要求することを指す。査読を通っていることは、その論文が一定以上の質が担保されていることを意味する。例えば『◯◯大学紀要』のような雑誌は査読がないことが多い。もちろん、目が肥えてくれば査読の有無にかかわらず良い論文を判断できるようになる（わからない場合は教員に聞くこと）が、それまではまず査読を通った論文を優先して読むとよい。</p>
+<p>日本語で書かれた社会学に関連する査読付き論文を掲載している学術雑誌としては、たとえば以下のようなものがある<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>。</p>
+<ul>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/jsr/-char/ja">社会学評論</a></p></li>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/jjoffamilysociology/-char/ja">家族社会学研究</a></p></li>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/eds/-char/ja">教育社会学研究</a></p></li>
+<li><p><a href="https://www.jil.go.jp/institute/zassi/index.html">日本労働研究雑誌</a></p></li>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/ojjams/-char/ja">理論と方法</a></p></li>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/jps/-char/ja/">人口学研究</a></p></li>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/soshioroji/-char/ja">ソシオロジ</a></p></li>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/ksr/-char/ja">フォーラム現代社会学</a></p></li>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/kantoh/-char/ja">年報社会学論集</a></p></li>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/tss/-char/ja">社会学年報</a></p></li>
+</ul>
+</section>
+<section id="研究の流れをつかむ" class="level3" data-number="1.7.2">
+<h3 data-number="1.7.2" class="anchored" data-anchor-id="研究の流れをつかむ"><span class="header-section-number">1.7.2</span> 研究の流れをつかむ</h3>
+<p>ある程度よい論文を見つけたら、次はその論文で参考文献として引用されている論文、もしくはその論文を参考文献として引用している論文（被引用論文、という）を読んでいくことをおすすめする。ある論文が参考にしている論文は当然重要な論文である可能性が高い。また読んだ論文にその後インパクトがあったのであれば、別の論文にも引用されているはずである。被引用論文は論文それ自体にはもちろん書いていないが、Google Scholarで探すことができる。</p>
+<p>このように、ある論文の参考文献と被引用論文を示した一例が次の図である。この図は<a href="https://www.connectedpapers.com/">Connected papers</a>というページで作ることができる。図の真ん中にあるTorche, 2011は、それ以前の多くの先行研究を引用している（主に左側に配置）。そしてその後多くの研究がTorche, 2011を引用していることがわかる（主に右側に配置）。このように、ある研究から影響のある論文へとたどっていくことで、研究の流れが見えるようになってくる。このような研究の流れのなかに自分の研究を位置づけることができたならば、その研究のインパクトはますます大きくなる。</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/citation_map.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Torche, Florencia. 2011. “Is a College Degree Still the Great Equalizer? Intergenerational Mobility across Levels of Schooling in the United States.” American Journal of Sociology 117(3):763–807. の引用ネットワーク 出所）<a href="https://www.connectedpapers.com/" class="uri">https://www.connectedpapers.com/</a> （2022年2月1日作成）</figcaption>
+</figure>
+</div>
+<p>分野がある程度発展している場合には、レビュー論文といって、当該領域に関する論文をまとめて、何がわかっていて何がわかってないのかを示した論文がある場合がある<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>。こうしたレビュー論文は、先行研究を探したりテーマを絞り込んだりするのに役に立つ。</p>
+</section>
+<section id="書籍" class="level3" data-number="1.7.3">
+<h3 data-number="1.7.3" class="anchored" data-anchor-id="書籍"><span class="header-section-number">1.7.3</span> 書籍</h3>
+<p>日本語圏の社会学業界では書籍文化が強く、重要な論文がしばしば雑誌論文としてではなく書籍として出版されていることも多い。しかし、やはり手当たり次第に書籍を読んだところで、みるべき先行研究群を見つけ出すのは簡単ではない（少し経験を積めば判別できるようになるが）。大雑把に言って、研究として信頼できるに足る書籍は、次のような特徴を備えている。</p>
+<ul>
+<li><p>先に述べたような査読付き論文で引用されている。</p></li>
+<li><p>大学図書館または（比較的最近の書籍であれば）学内の書店の書棚に置かれている。</p></li>
+<li><p>参考文献リストが記載されており、少なくない参考文献が参照されている。</p></li>
+</ul>
+<p>もちろん、これらの条件を満たしていればすべて信頼に足るというわけではないが、amazonでキーワード検索して出てくる書籍を手当たり次第に読むとか、主に一般書だけを扱っている書店に行くとかよりは、信頼に足る書籍に出会える見込みは高い。</p>
+</section>
+<section id="英語論文" class="level3" data-number="1.7.4">
+<h3 data-number="1.7.4" class="anchored" data-anchor-id="英語論文"><span class="header-section-number">1.7.4</span> 英語論文</h3>
+<p>英語が読める（読もうという意欲がある）のであれば、英語論文も探せるととてもよい。競争も激しく、査読も厳しいため、日本語論文よりも内容的に優れたものに出会える可能性は多い。同じテーマであっても、日本国内の数倍〜数十倍は蓄積があることがほとんどである。ただし英語論文については、大学内のネットワークからでないとアクセスできないことが多いので注意。</p>
+<p>社会学における代表的な英文雑誌には以下のようなものがある。</p>
+<ul>
+<li><p><a href="https://journals.sagepub.com/home/asr">American Sociological Review</a></p></li>
+<li><p><a href="https://www.journals.uchicago.edu/toc/ajs/current">American Journal of Sociology</a></p></li>
+<li><p><a href="https://www.annualreviews.org/journal/soc">Annual Review of Sociology</a><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p></li>
+<li><p><a href="https://academic.oup.com/sf">Social Forces</a></p></li>
+<li><p><a href="https://academic.oup.com/esr">European Sociological Review</a></p></li>
+<li><p><a href="https://journals.sagepub.com/home/soe">Sociology of Education</a></p></li>
+<li><p><a href="https://onlinelibrary.wiley.com/journal/17413737">Journal of Marriage and Family</a></p></li>
+<li><p><a href="https://www.populationassociation.org/demography/home">Demography</a></p></li>
+<li><p><a href="https://www.journals.elsevier.com/research-in-social-stratification-and-mobility">Research in Social Stratification and Mobility</a></p></li>
+</ul>
+<p>最近では、かなり質の高い翻訳をしてくれるサービス（e.g.&nbsp;<a href="https://www.deepl.com/ja/translator">DeepL</a>や、それを活用して英語論文をレイアウトを保ったまま日本語訳してくれる便利なウェブページ（e.g.&nbsp;<a href="https://readable.jp/">Readable</a>）、あるいはウェブページ上で（pdf形式ではなく）本文を読める場合にはGoogle翻訳するといったように、英語を楽に読むためのさまざまな手段がある。英語だからといって最初から読まないよりは、たとえ機械翻訳であったとしても読むほうがいいに決まっているので、積極的にチャレンジしてみるとよい。</p>
+
+
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Mills, C. Wright. 1959. <em>The Sociological Imagination.</em> Oxford University Press.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>日本の社会調査データを合併して分析している例としてたとえば <a href="https://doi.org/10.1093/esr/jcab037">Mugiyama, Ryota &amp; Kohei Toyonaga. 2021. “Role of Cohort Size in Trends in Class and Occupational Returns to Education at First Job: The Case of Japan.” <em>European Sociological Review.</em> Advance Access.</a>、<a href="https://doi.org/10.4234/jjoffamilysociology.28.136">打越文弥，2016，「学歴同類婚の世代間連鎖とその趨勢：大規模調査データの統合による計量分析」『家族社会学研究』28(2): 136–147．</a>など。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>大学院生の場合は教育目的利用不可のデータであっても、研究目的でデータの利用申請を行うことができる。ただし、利用申請を行う前に必ず指導教員の了解を得ること。<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://www.degruyter.com/document/doi/10.2202/1935-1682.1862/html">Schilt, Kristen, and Matthew Wiswall. 2008. “Before and After:Gender Transitions, Human Capital, and Workplace Experiences.” The B.E.Journal of Economic Analysis &amp; Policy 8(1).</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>ただし日本の学術雑誌の場合は査読付きの投稿論文ではなく、特集論文などがかなりの紙幅を占めていることが多い。<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>たとえば日本語のレビュー論文の典型的な例としては以下のような論文がある： <a href="https://doi.org/10.11151/eds.93.151">平沢和司・古田和久・藤原翔，2013，「社会階層と教育研究の動向と課題：高学歴化社会における格差の構造」『教育社会学研究』93: 151–91．</a> 後述するように、Annual Review of Sociologyというレビュー論文だけを掲載した学術雑誌もある。<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>レビュー論文のみを掲載している雑誌である。噂によるとこの雑誌を購読している大学は日本だとかなり少ないようだ。おそらく本学も購読していない。。<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">まえがき</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./02-preparation.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">RとRStudioの下準備</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Rによる社会調査データ分析の手引き - 4&nbsp; データの加工</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./05-descriptives.html" rel="next">
+<link href="./03-import.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-handling.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">データの加工</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Rによる社会調査データ分析の手引き</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">まえがき</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-plan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">研究計画を立てる</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-preparation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">RとRStudioの下準備</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-import.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">データの読み込み</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-handling.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">データの加工</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-descriptives.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">1変数の集計</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-tabulate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">2変数の集計</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-regression_basic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">回帰分析の基礎</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-regression_advanced.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">回帰分析の活用</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-interaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">交互作用</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-logit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ロジスティック回帰分析（作成中）</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-domain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">社会学のデータ分析でよくある処理</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-writepaper.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">論文のまとめ方</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-presentation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">研究発表をする</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-reference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">さらなる学習のための参考文献</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#本資料で用いるデータ" id="toc-本資料で用いるデータ" class="nav-link active" data-scroll-target="#本資料で用いるデータ"><span class="header-section-number">4.1</span> 本資料で用いるデータ</a></li>
+  <li><a href="#データ加工のステップ" id="toc-データ加工のステップ" class="nav-link" data-scroll-target="#データ加工のステップ"><span class="header-section-number">4.2</span> データ加工のステップ</a></li>
+  <li><a href="#変数の作成" id="toc-変数の作成" class="nav-link" data-scroll-target="#変数の作成"><span class="header-section-number">4.3</span> 変数の作成</a>
+  <ul class="collapse">
+  <li><a href="#変数の型カテゴリ変数と連続変数" id="toc-変数の型カテゴリ変数と連続変数" class="nav-link" data-scroll-target="#変数の型カテゴリ変数と連続変数"><span class="header-section-number">4.3.1</span> 変数の型（カテゴリ変数と連続変数）</a></li>
+  <li><a href="#新たな変数をつくるmutate" id="toc-新たな変数をつくるmutate" class="nav-link" data-scroll-target="#新たな変数をつくるmutate"><span class="header-section-number">4.3.2</span> 新たな変数をつくる：mutate()</a></li>
+  <li><a href="#条件の指定if_else" id="toc-条件の指定if_else" class="nav-link" data-scroll-target="#条件の指定if_else"><span class="header-section-number">4.3.3</span> 条件の指定：if_else()</a></li>
+  <li><a href="#複数条件の指定case_when" id="toc-複数条件の指定case_when" class="nav-link" data-scroll-target="#複数条件の指定case_when"><span class="header-section-number">4.3.4</span> 複数条件の指定：case_when()</a></li>
+  <li><a href="#カテゴリ変数へ変換factor" id="toc-カテゴリ変数へ変換factor" class="nav-link" data-scroll-target="#カテゴリ変数へ変換factor"><span class="header-section-number">4.3.5</span> カテゴリ変数へ変換：factor()</a></li>
+  <li><a href="#必要な列のみ抽出select" id="toc-必要な列のみ抽出select" class="nav-link" data-scroll-target="#必要な列のみ抽出select"><span class="header-section-number">4.3.6</span> 必要な列のみ抽出：select()</a></li>
+  </ul></li>
+  <li><a href="#handling-tips" id="toc-handling-tips" class="nav-link" data-scroll-target="#handling-tips"><span class="header-section-number">4.4</span> 変数の作成についてのtips</a>
+  <ul class="collapse">
+  <li><a href="#カテゴリをまとめる" id="toc-カテゴリをまとめる" class="nav-link" data-scroll-target="#カテゴリをまとめる"><span class="header-section-number">4.4.1</span> カテゴリをまとめる</a></li>
+  <li><a href="#複数の変数を組み合わせた変数を作る" id="toc-複数の変数を組み合わせた変数を作る" class="nav-link" data-scroll-target="#複数の変数を組み合わせた変数を作る"><span class="header-section-number">4.4.2</span> 複数の変数を組み合わせた変数を作る</a></li>
+  <li><a href="#均等な順序を仮定して連続変数とする" id="toc-均等な順序を仮定して連続変数とする" class="nav-link" data-scroll-target="#均等な順序を仮定して連続変数とする"><span class="header-section-number">4.4.3</span> 均等な順序を仮定して連続変数とする</a></li>
+  <li><a href="#無回答非該当わからないなどをnaに" id="toc-無回答非該当わからないなどをnaに" class="nav-link" data-scroll-target="#無回答非該当わからないなどをnaに"><span class="header-section-number">4.4.4</span> 無回答、非該当、「わからない」などをNAに</a></li>
+  <li><a href="#カテゴリ変数の区間の中点をとって連続変数とする" id="toc-カテゴリ変数の区間の中点をとって連続変数とする" class="nav-link" data-scroll-target="#カテゴリ変数の区間の中点をとって連続変数とする"><span class="header-section-number">4.4.5</span> カテゴリ変数の区間の中点をとって連続変数とする</a></li>
+  </ul></li>
+  <li><a href="#をつなげてコマンドをまとめる" id="toc-をつなげてコマンドをまとめる" class="nav-link" data-scroll-target="#をつなげてコマンドをまとめる"><span class="header-section-number">4.5</span> %&gt;%をつなげてコマンドをまとめる</a></li>
+  <li><a href="#handling_sample" id="toc-handling_sample" class="nav-link" data-scroll-target="#handling_sample"><span class="header-section-number">4.6</span> サンプルの限定</a>
+  <ul class="collapse">
+  <li><a href="#該当するケースだけを残すfilter" id="toc-該当するケースだけを残すfilter" class="nav-link" data-scroll-target="#該当するケースだけを残すfilter"><span class="header-section-number">4.6.1</span> 該当するケースだけを残す：filter()</a></li>
+  <li><a href="#欠損値の扱い" id="toc-欠損値の扱い" class="nav-link" data-scroll-target="#欠損値の扱い"><span class="header-section-number">4.6.2</span> 欠損値の扱い</a></li>
+  <li><a href="#外れ値の扱い" id="toc-外れ値の扱い" class="nav-link" data-scroll-target="#外れ値の扱い"><span class="header-section-number">4.6.3</span> 外れ値の扱い</a></li>
+  <li><a href="#分析用データを書き出す" id="toc-分析用データを書き出す" class="nav-link" data-scroll-target="#分析用データを書き出す"><span class="header-section-number">4.6.4</span> 分析用データを書き出す</a></li>
+  </ul></li>
+  <li><a href="#データの追加発展" id="toc-データの追加発展" class="nav-link" data-scroll-target="#データの追加発展"><span class="header-section-number">4.7</span> データの追加（発展）</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="handling" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">データの加工</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>この章ではデータの加工方法について説明する。</p>
+<p>内容に入る前にいくつか確認しておこう。</p>
+<p>第1に、右上のプロジェクトのボックスの横が、<a href="02-preparation.html">第2章</a>で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project…」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。</p>
+<p>第2に、<a href="03-import.html">第3章</a>で確認したとおり、データを格納するためのフォルダがプロジェクトフォルダ内に準備されていることを確認しよう。作っていない場合には、<a href="03-import.html#import_dir">データを置く場所を作る</a>を確認し、作成しておこう。</p>
+<p>第3に、上記の準備をすませたうえで、以下のとおり<code>tidyverse</code>パッケージを読み込もう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<section id="本資料で用いるデータ" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="本資料で用いるデータ"><span class="header-section-number">4.1</span> 本資料で用いるデータ</h2>
+<p>本資料では基本的に、OECDが実施している国際成人力調査<a href="https://www.oecd.org/skills/piaac/">Programme for the International Assessment of Adult Competencies, PIAAC</a>の日本版データをサンプルデータとして使用する。</p>
+<p>ダウンロード手順は以下のとおり。まず、<a href="https://www.oecd.org/skills/piaac/data/">Data</a>のページから “Download the datasets (Public Use Files)” &gt; “csv” &gt; “prgjpnp1.csv” を選択して、ファイルをダウンロードできる。</p>
+<p>ダウンロードファイルを「data」のフォルダに入れるのを忘れずに。</p>
+<p>「data」のフォルダに入っていることを確認して、データを読み込む。このデータは少し特殊で、数値のほかに文字列などが入っている。そのため、すこしだけ特殊な処理をほどこしてデータを読み込むことにする。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/prgjpnp1.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.character, as.numeric) <span class="sc">%&gt;%</span> <span class="co">#すべての文字列変数を小文字に変換</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename_all</span>(<span class="at">.funs =</span> tolower) <span class="co">#すべての大文字を小文字に変換</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat &lt;- vroom(...)
+  problems(dat)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 5278 Columns: 1328
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (470): DISP_MAIN, B_Q01a3, B_Q01a3_C, B_Q01b, B_Q01c1, B_Q01c1_C, B_Q01c...
+dbl (656): CNTRYID, CNTRYID_E, SEQID, AGE_R, GENDER_R, DISP_CIBQ, A_N01_T, B...
+lgl (202): DISP_MAINWRC, D_Q16b_T, P901002R, P901002S, P904012R, P904012S, P...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There were 468 warnings in `mutate()`.
+The first warning was:
+ℹ In argument: `DISP_MAIN = .Primitive("as.double")(DISP_MAIN)`.
+Caused by warning:
+! NAs introduced by coercion
+ℹ Run `dplyr::last_dplyr_warnings()` to see the 467 remaining warnings.</code></pre>
+</div>
+</div>
+<p>通常、SSJDAなどの機関を通して社会調査データをダウンロードしたときに文字列が入っていることはまれなので、あまり心配しなくてよい。</p>
+</section>
+<section id="データ加工のステップ" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="データ加工のステップ"><span class="header-section-number">4.2</span> データ加工のステップ</h2>
+<p>いざデータを手に入れて読み込むことができたとしても、そこから分析に至るまでにはデータを加工して、分析の準備をしなくてはならない。このデータ加工は、大きく分けて以下の2つ（3つ）のステップからなる。</p>
+<ul>
+<li>変数の作成</li>
+<li>サンプルの限定</li>
+<li>データの追加（該当者のみ）</li>
+</ul>
+<p>データの加工を行う際には、今書いているコードがそれぞれ上記3つの作業のうちどの作業に該当するのかを混同しないように注意する。</p>
+<p>変数の作成とサンプルの限定とはそれぞれ次のような操作を指す。たとえば、以下のようなデータがあるとする。</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+     id    x1    x2
+  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     1     5     1
+2     2     8     1
+3     3     2     1
+4     4     0     2
+5     5     6     2
+6     6     1     2</code></pre>
+</div>
+</div>
+<p>「変数の作成」では、この元データを加工して、次のような<strong>列</strong>を追加する作業にあたる。</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+     id    x1    x2    x3 x4   
+  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+1     1     5     1   500 男性 
+2     2     8     1   800 男性 
+3     3     2     1   200 男性 
+4     4     0     2     0 女性 
+5     5     6     2   600 女性 
+6     6     1     2   100 女性 </code></pre>
+</div>
+</div>
+<p>「サンプルの限定」は、データから一部の対象者だけを選ぶ、言い換えれば行を削除する作業にあたる。</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+     id    x1    x2    x3 x4   
+  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+1     1     5     1   500 男性 
+2     2     8     1   800 男性 
+3     5     6     2   600 女性 </code></pre>
+</div>
+</div>
+</section>
+<section id="変数の作成" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="変数の作成"><span class="header-section-number">4.3</span> 変数の作成</h2>
+<p>データを読み込んだとしても、調査で尋ねられた回答（列）をそのまま使えることはまれで、無回答を示す番号（9など）が含まれていたり、数値が意図しているならびと逆向きになっていたりと、そのままでは使えないことが多い。このような場合には、回答を記録した列を加工して、自分で意図した変数へと変換していく必要がある。社会調査データの分析を行う場合、かなり多くの作業がこの「変数の作成」に使われることになる。</p>
+<section id="変数の型カテゴリ変数と連続変数" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="変数の型カテゴリ変数と連続変数"><span class="header-section-number">4.3.1</span> 変数の型（カテゴリ変数と連続変数）</h3>
+<p>変数は、その種類によって（大きく）カテゴリ変数と量的変数に分けることができる<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>。</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>カテゴリ変数の例</th>
+<th>Rで扱うときの型</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>カテゴリ変数</td>
+<td>性別、居住地域、職業など</td>
+<td>factor</td>
+</tr>
+<tr class="even">
+<td>連続変数</td>
+<td>所得、幸福度など</td>
+<td>numeric</td>
+</tr>
+</tbody>
+</table>
+<p>カテゴリ変数は、グループや属性といったように、足し算や引き算をしたり、平均値を取ったりといった操作に意味のない変数を指す。たとえば居住地域の場合は、「東京都」「京都府」といったふうな値が入っているだろう。この値の平均値というのはそもそも定義することができない。</p>
+<p>連続変数は、足し算や引き算をしたり平均値を取ったりといった操作に意味がある。たとえば所得の場合は、個々人は300万円だったり700万円だったりといった値を取るわけだが、平均値を取れば所得平均という意味のある値になる。</p>
+<p>ものによっては、カテゴリ変数とも連続変数ともとれる変数もある。たとえば学歴は、「中学」「高校」「専門」「短大」「高専」「大学」「大学院」と分けるのであればカテゴリ変数であるが、教育年数（何年学校に通ったか）で測定する場合には、9, 12, 14, 16, 18などの値を取る連続変数とみなすことができる。カテゴリ変数とみなすべきか、連続変数とみなすべきかは先行研究での扱いや、問題関心に依存する。くわしくは「<a href="#handling-tips">変数の作成についてのtips</a>」を参照。</p>
+<p>多くの場合、社会調査データの個票でははじめからこれらカテゴリ変数と連続変数が区別されているわけではない。たとえば性別であれば、「男性」であれば1、「女性」であれば2というふうな値が入っている。あるいは所得であれば、「0万円」であれば1、「0〜25万円」であれば2、というふうな値が入っている。そのため、単純に平均値を取ってしまうと、本来は連続変数とはみなせないものの平均値を計算できてしまう。しかし、それには何の意味もない。そのため、分析に入る前に、自分が使用する変数を適切な型や値へと加工していく必要があるのである。</p>
+</section>
+<section id="新たな変数をつくるmutate" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="新たな変数をつくるmutate"><span class="header-section-number">4.3.2</span> 新たな変数をつくる：mutate()</h3>
+<p>データ操作の基本は、すでにある変数を書き換えたりして、自分の関心に即した新しい変数を作ることである。このときに使用するのが<code>mutate()</code>。変数の加工を行うときには、ほとんどの場合この<code>mutate()</code>を使うことになる。以下に、いくつか簡単な例を挙げる。</p>
+<section id="例1-もとの変数の内容をそのままコピーする" class="level4" data-number="4.3.2.1">
+<h4 data-number="4.3.2.1" class="anchored" data-anchor-id="例1-もとの変数の内容をそのままコピーする"><span class="header-section-number">4.3.2.1</span> 例1: もとの変数の内容をそのままコピーする</h4>
+<p>PIAACには、ボーナスの額を含めて、対象者の給与を時給換算した<code>earnhrbonus</code>という変数が含まれている。この変数をそのままコピーして、時給換算した賃金を表す変数<code>wage</code>を作成する。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage =</span> earnhrbonus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>このコードは、「<code>piaac</code>というデータフレームに<code>wage</code>という列を追加してね、ちなみにその列には（既存の列である）<code>earnhrbonus</code>の値を入れてね」という命令を表している。</p>
+<p>ただしこれだけだと新たに列を追加した結果だけが表示されて、データフレームそのものは更新されることはない。そこで、次のようにして、列を追加した結果を新たなデータフレームに格納してみる。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>piaac_new <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage =</span> earnhrbonus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>すると、右側のEnvironmentのウインドウに新たに「piaac_new」というデータフレームが追加される。</p>
+<p><img src="images/Rstudio_environment.png" class="img-fluid"></p>
+<p><code>piaac_new</code> というのが、新たに1つ列を追加したデータフレームである。</p>
+<p>もしくは、次のように同じデータフレームに格納してもよい。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage =</span> earnhrbonus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>先ほど<code>piaac_new</code> というデータフレームに格納したのが「名前をつけて保存」に当たるとしたら、これは「上書き保存」に当たるようなイメージである。どちらでも、個人の好みに応じて使い分けるとよいだろう。</p>
+<p>さて、上記の処理を行った結果、<code>piaac</code>というデータフレームには、<code>earnhrbonus</code>とまったく同じ値が含まれる<code>wage</code>という列が作られたことがわかる。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(earnhrbonus, wage) <span class="sc">%&gt;%</span> <span class="co"># select()についてはこのあと解説があります</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  earnhrbonus  wage
+        &lt;dbl&gt; &lt;dbl&gt;
+1        793.  793.
+2       1763. 1763.
+3       2692. 2692.
+4       2312. 2312.
+5         NA    NA 
+6       5192. 5192.</code></pre>
+</div>
+</div>
+<p>もとの変数を何ら加工せずにそのまま使うとしても、元々の変数の名前がわかりやすいとはいえない名前になっていることはよくある（たとえば、<code>q31_3</code>、など）。このような場合には、今行ったように、その列が何の変数であるかがすぐに分かるように新たに名前を付けた列を作成すると、後から間違いが少なくなる。</p>
+</section>
+<section id="例2-もとの変数に何らかの計算を施す" class="level4" data-number="4.3.2.2">
+<h4 data-number="4.3.2.2" class="anchored" data-anchor-id="例2-もとの変数に何らかの計算を施す"><span class="header-section-number">4.3.2.2</span> 例2: もとの変数に何らかの計算を施す</h4>
+<p>たとえば、1週間の労働時間を尋ねた変数<code>d_q10</code>を5で割って、平日1日あたりの労働時間に変換した列を作りたいというときがあるだろう。このような場合には次のように計算する。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour =</span> d_q10 <span class="sc">/</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>新しく作った列<code>workhour</code>は、たしかにもともとの変数を5で割った値になっていることがわかる。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(d_q10, workhour) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  d_q10 workhour
+  &lt;dbl&gt;    &lt;dbl&gt;
+1    48      9.6
+2    60     12  
+3    50     10  
+4    60     12  
+5    NA     NA  
+6    40      8  </code></pre>
+</div>
+</div>
+<p>調査時点での就業状態（働いているか否か）を尋ねた項目<code>c_q01a</code>では、働いていれば1、そうでなければ2という値が入っている。これを変換して、働いていれば1、そうでなければ0となるような変数<code>work</code>を作ってみよう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">work =</span> <span class="dv">2</span> <span class="sc">-</span> c_q01a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>新しく作った列<code>work</code>は、確かにもともとの変数の値が1であれば1、2であれば0となっていることがわかる。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(c_q01a, work) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  c_q01a  work
+   &lt;dbl&gt; &lt;dbl&gt;
+1      1     1
+2      1     1
+3      1     1
+4      1     1
+5      2     0
+6      1     1</code></pre>
+</div>
+</div>
+</section>
+<section id="例3-もとの変数と関係なくまったく新しい変数を作成する" class="level4" data-number="4.3.2.3">
+<h4 data-number="4.3.2.3" class="anchored" data-anchor-id="例3-もとの変数と関係なくまったく新しい変数を作成する"><span class="header-section-number">4.3.2.3</span> 例3: もとの変数と関係なく、まったく新しい変数を作成する</h4>
+<p>たとえば、以下のように1ずつ増える変数を作成することもできる。この変数を分析に直接使用するということはないが、通し番号が振ってあると何かと便利なことが多い。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>n()</code> はデータフレーム内の行数を返す関数。上記3つの例で作成した変数を並べてみよう：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, wage, workhour) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+     id  wage workhour
+  &lt;int&gt; &lt;dbl&gt;    &lt;dbl&gt;
+1     1  793.      9.6
+2     2 1763.     12  
+3     3 2692.     10  
+4     4 2312.     12  
+5     5   NA      NA  
+6     6 5192.      8  </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="条件の指定if_else" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="条件の指定if_else"><span class="header-section-number">4.3.3</span> 条件の指定：if_else()</h3>
+<p>実際に<code>mutate()</code>で既存の変数の値を書き換えたりする場合には、カテゴリをまとめたり、複数の変数を組み合わせて新しい変数を作成したりすることが多い。そこでよく使う関数が<code>if_else()</code>、<code>case_when()</code>、<code>factor()</code>の3つである。</p>
+<section id="if_elseの説明" class="level4" data-number="4.3.3.1">
+<h4 data-number="4.3.3.1" class="anchored" data-anchor-id="if_elseの説明"><span class="header-section-number">4.3.3.1</span> if_else()の説明</h4>
+<p><code>if_else()</code>は、条件を指定し、その条件に合う場合と合わない場合の値を返す関数。<code>if_else(条件, 条件に合う場合の値, 条件に合わない場合の値)</code>、というふうに使う。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">if_else</span>(gender_r <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"男性"</span>, <span class="st">"女性"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>上記は、<code>gender</code>という列に対して、<code>gender_r</code>の列の値が1ならば”男性”、そうでないならば”女性”という文字列を入れてね、という命令である。</p>
+<p>新しく変数を作ったときには、きちんとできているかどうかを逐一確認するのがよい。たとえば以下のように、古い変数と新しい変数の<a href="06-tabulate.html">クロス集計表</a>を作ってみるのが良い方法だろう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(gender_r, gender))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        gender
+gender_r 女性 男性
+       1    0 2517
+       2 2761    0</code></pre>
+</div>
+</div>
+</section>
+<section id="論理演算子の説明" class="level4" data-number="4.3.3.2">
+<h4 data-number="4.3.3.2" class="anchored" data-anchor-id="論理演算子の説明"><span class="header-section-number">4.3.3.2</span> 論理演算子の説明</h4>
+<p>上記の例のように、条件を指定するときには論理演算子というのを使用する。よく使う論理演算子の意味は次の通り。</p>
+<table class="table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 23%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>条件記号</th>
+<th>意味</th>
+<th>コード例</th>
+<th>コード例の意味</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>==</code></td>
+<td>等しい</td>
+<td><code>age == 25</code></td>
+<td>年齢が25に等しい</td>
+</tr>
+<tr class="even">
+<td><code>!=</code></td>
+<td>ではない</td>
+<td><code>age != 25</code></td>
+<td>年齢が25ではない</td>
+</tr>
+<tr class="odd">
+<td><code>&gt;</code></td>
+<td>より大きい</td>
+<td><code>age &gt; 25</code></td>
+<td>年齢が25より大きい</td>
+</tr>
+<tr class="even">
+<td><code>&lt;</code></td>
+<td>より小さい</td>
+<td><code>age &lt; 25</code></td>
+<td>年齢が25より小さい</td>
+</tr>
+<tr class="odd">
+<td><code>&gt;=</code></td>
+<td>以上</td>
+<td><code>age &gt;= 25</code></td>
+<td>年齢が25以上（25を含む）</td>
+</tr>
+<tr class="even">
+<td><code>&lt;=</code></td>
+<td>以下</td>
+<td><code>age &lt;= 25</code></td>
+<td>年齢が25以下（25を含む）</td>
+</tr>
+<tr class="odd">
+<td><code>&amp;</code></td>
+<td>かつ</td>
+<td><code>age &gt;= 25 &amp; age &lt;= 54</code></td>
+<td>年齢が25以上54以下</td>
+</tr>
+<tr class="even">
+<td><code>|</code></td>
+<td>または</td>
+<td><code>age &lt; 35 | age &gt; 54</code></td>
+<td>年齢が35より小さいまたは54より大きい</td>
+</tr>
+</tbody>
+</table>
+<p>以上、以下のときの不等号の位置（どちらも左側！）、等しいときには=ではなく==、などは間違えやすいので注意しよう。</p>
+</section>
+</section>
+<section id="複数条件の指定case_when" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="複数条件の指定case_when"><span class="header-section-number">4.3.4</span> 複数条件の指定：case_when()</h3>
+<p><code>if_else()</code>の場合は条件節は一つだが、複数の条件を指定して、それぞれの条件に対応するときに特定の値を入れたい、というような時がある。このときには、複数条件を指定して値を書き換えるコマンドである、<code>case_when()</code>をつかうとよい。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">agegroup =</span> <span class="fu">case_when</span>(</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">25</span> <span class="sc">&lt;=</span> age_r <span class="sc">&amp;</span> age_r <span class="sc">&lt;=</span> <span class="dv">34</span> <span class="sc">~</span> <span class="st">"25-34歳"</span>,</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">35</span> <span class="sc">&lt;=</span> age_r <span class="sc">&amp;</span> age_r <span class="sc">&lt;=</span> <span class="dv">44</span> <span class="sc">~</span> <span class="st">"35-44歳"</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">45</span> <span class="sc">&lt;=</span> age_r <span class="sc">&amp;</span> age_r <span class="sc">&lt;=</span> <span class="dv">54</span> <span class="sc">~</span> <span class="st">"45-54歳"</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">55</span> <span class="sc">&lt;=</span> age_r <span class="sc">&amp;</span> age_r <span class="sc">&lt;=</span> <span class="dv">64</span> <span class="sc">~</span> <span class="st">"55-64歳"</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>ちゃんとできたかを確認しよう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(age_r, agegroup))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     agegroup
+age_r 25-34歳 35-44歳 45-54歳 55-64歳
+   16       0       0       0       0
+   17       0       0       0       0
+   18       0       0       0       0
+   19       0       0       0       0
+   20       0       0       0       0
+   21       0       0       0       0
+   22       0       0       0       0
+   23       0       0       0       0
+   24       0       0       0       0
+   25      70       0       0       0
+   26      86       0       0       0
+   27      83       0       0       0
+   28      77       0       0       0
+   29     104       0       0       0
+   30      86       0       0       0
+   31     105       0       0       0
+   32     106       0       0       0
+   33     106       0       0       0
+   34     110       0       0       0
+   35       0     126       0       0
+   36       0     124       0       0
+   37       0     123       0       0
+   38       0     144       0       0
+   39       0     133       0       0
+   40       0     128       0       0
+   41       0     110       0       0
+   42       0     116       0       0
+   43       0     127       0       0
+   44       0     111       0       0
+   45       0       0      93       0
+   46       0       0     119       0
+   47       0       0     114       0
+   48       0       0     110       0
+   49       0       0     109       0
+   50       0       0      85       0
+   51       0       0      97       0
+   52       0       0     102       0
+   53       0       0     110       0
+   54       0       0      98       0
+   55       0       0       0     103
+   56       0       0       0      95
+   57       0       0       0      88
+   58       0       0       0     133
+   59       0       0       0      98
+   60       0       0       0     136
+   61       0       0       0     138
+   62       0       0       0     132
+   63       0       0       0     143
+   64       0       0       0     145
+   65       0       0       0       0</code></pre>
+</div>
+</div>
+<p>もともとのデータには年齢が16歳から65歳の人が含まれているが、先ほどのコードでは16歳から24歳、65歳の人が条件に含まれていなかったので、新しく作成した列である<code>agegroup</code>には該当するものがないという結果になっている。このようなケースには<code>NA</code>が与えられる。</p>
+<p>実際、<code>NA</code>が与えられているかどうかを確認してみよう。以下のように<code>with(table())</code>にオプション<code>useNA = "always"</code>を指定することで、<code>NA</code>についても集計することができる。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(age_r, agegroup, <span class="at">useNA =</span> <span class="st">"always"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      agegroup
+age_r  25-34歳 35-44歳 45-54歳 55-64歳 &lt;NA&gt;
+  16         0       0       0       0  114
+  17         0       0       0       0   90
+  18         0       0       0       0   96
+  19         0       0       0       0   76
+  20         0       0       0       0   90
+  21         0       0       0       0   75
+  22         0       0       0       0   72
+  23         0       0       0       0   88
+  24         0       0       0       0   84
+  25        70       0       0       0    0
+  26        86       0       0       0    0
+  27        83       0       0       0    0
+  28        77       0       0       0    0
+  29       104       0       0       0    0
+  30        86       0       0       0    0
+  31       105       0       0       0    0
+  32       106       0       0       0    0
+  33       106       0       0       0    0
+  34       110       0       0       0    0
+  35         0     126       0       0    0
+  36         0     124       0       0    0
+  37         0     123       0       0    0
+  38         0     144       0       0    0
+  39         0     133       0       0    0
+  40         0     128       0       0    0
+  41         0     110       0       0    0
+  42         0     116       0       0    0
+  43         0     127       0       0    0
+  44         0     111       0       0    0
+  45         0       0      93       0    0
+  46         0       0     119       0    0
+  47         0       0     114       0    0
+  48         0       0     110       0    0
+  49         0       0     109       0    0
+  50         0       0      85       0    0
+  51         0       0      97       0    0
+  52         0       0     102       0    0
+  53         0       0     110       0    0
+  54         0       0      98       0    0
+  55         0       0       0     103    0
+  56         0       0       0      95    0
+  57         0       0       0      88    0
+  58         0       0       0     133    0
+  59         0       0       0      98    0
+  60         0       0       0     136    0
+  61         0       0       0     138    0
+  62         0       0       0     132    0
+  63         0       0       0     143    0
+  64         0       0       0     145    0
+  65         0       0       0       0   70
+  &lt;NA&gt;       0       0       0       0    0</code></pre>
+</div>
+</div>
+</section>
+<section id="カテゴリ変数へ変換factor" class="level3" data-number="4.3.5">
+<h3 data-number="4.3.5" class="anchored" data-anchor-id="カテゴリ変数へ変換factor"><span class="header-section-number">4.3.5</span> カテゴリ変数へ変換：factor()</h3>
+<p>PIAACには次のように、母親の最終学歴を尋ねた質問項目（j_q06b）がある。</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>選択肢</th>
+<th>調査票の番号</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>小学校・中学校</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>高校（旧制の中学校、高校を含む）</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>専門学校、高等専門学校、短大、大学以上</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(j_q06b))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>j_q06b
+   1    2    3 
+1553 2303 1098 </code></pre>
+</div>
+</div>
+<p>この数値だけでは、何番が何を指しているのかよくわからない。そこで、この変数の値にそれぞれ名前を付けてカテゴリ変数（factor型）へと変換した変数<code>mothereduc</code>を作成する。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mothereduc =</span> <span class="fu">factor</span>(j_q06b,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"初等教育"</span>, <span class="st">"中等教育"</span>, <span class="st">"高等教育"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>結果を確認：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(j_q06b, mothereduc))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      mothereduc
+j_q06b 初等教育 中等教育 高等教育
+     1     1553        0        0
+     2        0     2303        0
+     3        0        0     1098</code></pre>
+</div>
+</div>
+<p><code>if_else()</code>や<code>case_when()</code>を使って新しくカテゴリ変数を作るとき、カテゴリの順序が意図していたものとは違う順序になってしまうことがある。これは、文字列の場合はアルファベット順、日本語の場合はshift-jis順で並んでしまうことによる。</p>
+<p>たとえば、1週間の労働時間（<code>d_q10</code>）に関する変数をもとに、次のように労働時間の長さ別に分けたカテゴリ変数を作成したいと思ったとする。</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>d_q10</th>
+<th>workhour_fct</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>35時間未満</td>
+<td>短時間</td>
+</tr>
+<tr class="even">
+<td>35時間以上49時間以下</td>
+<td>標準</td>
+</tr>
+<tr class="odd">
+<td>50時間以上59時間以下</td>
+<td>長時間</td>
+</tr>
+<tr class="even">
+<td>60時間以上</td>
+<td>過労死ライン</td>
+</tr>
+</tbody>
+</table>
+<p><code>case_when()</code> を使って作成すると、意図していた順序とは違ったバラバラの順番になってしまう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">case_when</span>(</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    d_q10 <span class="sc">&lt;</span> <span class="dv">35</span> <span class="sc">~</span> <span class="st">"短時間（35時間未満）"</span>,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">49</span> <span class="sc">~</span> <span class="st">"標準（35-49時間）"</span>,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">59</span> <span class="sc">~</span> <span class="st">"長時間（50-59時間）"</span>,</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">60</span> <span class="sc">~</span> <span class="st">"過労死ライン（60時間以上）"</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(workhour_fct))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>workhour_fct
+         標準（35-49時間）       短時間（35時間未満） 
+                      1848                        960 
+過労死ライン（60時間以上）        長時間（50-59時間） 
+                       396                        648 </code></pre>
+</div>
+</div>
+<p>このような場合には、以下の2つの方法で順序を制御することができる。どちらを使っても良い。</p>
+<section id="一度数値変数に変換し数値変数をカテゴリ変数に変換" class="level4" data-number="4.3.5.1">
+<h4 data-number="4.3.5.1" class="anchored" data-anchor-id="一度数値変数に変換し数値変数をカテゴリ変数に変換"><span class="header-section-number">4.3.5.1</span> 一度数値変数に変換し、数値変数をカテゴリ変数に変換</h4>
+<p>いったん数値の変数を挟んでから<code>factor()</code> を使って変数を作成することで、順番がばらばらになってしまうのを防ぐことができる。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 方法1</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">case_when</span>(</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    d_q10 <span class="sc">&lt;</span> <span class="dv">35</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">49</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">59</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">60</span> <span class="sc">~</span> <span class="dv">4</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">factor</span>(workhour_fct,</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>                               <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"短時間（35時間未満）"</span>, <span class="st">"通常（35-49時間）"</span>, <span class="st">"長時間（50-59時間）"</span>, <span class="st">"過労死ライン（60時間以上）"</span>)))</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(workhour_fct)) <span class="co"># 確認</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>workhour_fct
+      短時間（35時間未満）          通常（35-49時間） 
+                       960                       1848 
+       長時間（50-59時間） 過労死ライン（60時間以上） 
+                       648                        396 </code></pre>
+</div>
+</div>
+</section>
+<section id="fct_relevelを使う" class="level4" data-number="4.3.5.2">
+<h4 data-number="4.3.5.2" class="anchored" data-anchor-id="fct_relevelを使う"><span class="header-section-number">4.3.5.2</span> fct_relevel()を使う</h4>
+<p><code>fct_relevel()</code>は、文字列変数の値の順序を任意の順序に並び替えるコマンドである。これを使う場合には次のようなコマンドになる。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">case_when</span>(</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    d_q10 <span class="sc">&lt;</span> <span class="dv">35</span> <span class="sc">~</span> <span class="st">"短時間（35時間未満）"</span>,</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">49</span> <span class="sc">~</span> <span class="st">"標準（35-49時間）"</span>,</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">59</span> <span class="sc">~</span> <span class="st">"長時間（50-59時間）"</span>,</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">60</span> <span class="sc">~</span> <span class="st">"過労死ライン（60時間以上）"</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">fct_relevel</span>(workhour_fct,</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"短時間（35時間未満）"</span>,</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"標準（35-49時間）"</span>,</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"長時間（50-59時間）"</span>,</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>                                    <span class="st">"過労死ライン（60時間以上）"</span>))</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(workhour_fct)) <span class="co"># 確認</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>workhour_fct
+      短時間（35時間未満）          標準（35-49時間） 
+                       960                       1848 
+       長時間（50-59時間） 過労死ライン（60時間以上） 
+                       648                        396 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="必要な列のみ抽出select" class="level3" data-number="4.3.6">
+<h3 data-number="4.3.6" class="anchored" data-anchor-id="必要な列のみ抽出select"><span class="header-section-number">4.3.6</span> 必要な列のみ抽出：select()</h3>
+<p>このコマンドは「変数の作成」の節で扱ったコマンドと比べるとやや特殊で、列を追加するのではなく、列を<strong>削除する</strong>という操作を行う。普通に分析をする限りは列を削除する必要はないが、一部の列だけを取り出してどのようになっているのかを確認したりしたいときなどに使う。</p>
+<p>このときに使うコマンドが<code>select()</code>である。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>piaac_sub <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(gender, wage) <span class="co">#gender, wageの列を抽出</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>piaac_sub <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>gender, <span class="sc">-</span>wage) <span class="co">#gender, wage「以外」の列を抽出</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="handling-tips" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="handling-tips"><span class="header-section-number">4.4</span> 変数の作成についてのtips</h2>
+<section id="カテゴリをまとめる" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="カテゴリをまとめる"><span class="header-section-number">4.4.1</span> カテゴリをまとめる</h3>
+<p>たとえば、親の職業（階級）によって、対象者の学歴がどの程度異なるのかを知りたいとする。このとき、学歴を「中学」「高校」「短大高専」「大学大学院」という4つのカテゴリで定義しているとする。この場合には、たとえば「大学大学院」を1、それ以外を0とすることで、大学以上か大学未満か、という2値のカテゴリにする。</p>
+<p>一つひとつのカテゴリに該当する人数が少ないときや、議論を単純化したいときに有効な方法といえる。</p>
+</section>
+<section id="複数の変数を組み合わせた変数を作る" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="複数の変数を組み合わせた変数を作る"><span class="header-section-number">4.4.2</span> 複数の変数を組み合わせた変数を作る</h3>
+<p>PIAACでは、父親および母親の学歴を「初等教育」「中等教育」「高等教育」の3つの選択肢から選ぶ形式で尋ねている。この項目をもとに、父親と母親のうちどちらか高い方のの学歴を採用して、親学歴に関する変数を作りたいとする。ただし、どちらかが欠損の場合には、わかっているほうの学歴を採用することとする。この場合の対応表は以下のとおり：</p>
+<table class="table">
+<caption>父親学歴と母親学歴のうち高いほうをとって親学歴を作成する</caption>
+<colgroup>
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>母親学歴</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>父親学歴</strong></td>
+<td>1（初等教育）</td>
+<td>2（中等教育）</td>
+<td>3（高等教育）</td>
+<td>NA</td>
+</tr>
+<tr class="even">
+<td>1（初等教育）</td>
+<td>初等教育</td>
+<td>中等教育</td>
+<td>高等教育</td>
+<td>初等教育</td>
+</tr>
+<tr class="odd">
+<td>2（中等教育）</td>
+<td>中等教育</td>
+<td>中等教育</td>
+<td>高等教育</td>
+<td>中等教育</td>
+</tr>
+<tr class="even">
+<td>3（高等教育）</td>
+<td>高等教育</td>
+<td>高等教育</td>
+<td>高等教育</td>
+<td>高等教育</td>
+</tr>
+<tr class="odd">
+<td>NA</td>
+<td>初等教育</td>
+<td>中等教育</td>
+<td>高等教育</td>
+<td>NA</td>
+</tr>
+</tbody>
+</table>
+<p>このようにやや複雑な変換に対しても<code>case_when()</code> が利用可能である。具体的には、以下のようにする。また、作成した変数にはやはり<code>factor()</code>をつかってカテゴリ変数（factor型）へ変換し、ラベルを付けておこう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parenteduc =</span> <span class="fu">case_when</span>(</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    j_q07b <span class="sc">&gt;=</span> j_q06b <span class="sc">~</span> j_q07b,</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    j_q07b <span class="sc">&lt;</span> j_q06b <span class="sc">~</span> j_q06b,</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(j_q07b) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">&amp;</span> <span class="fu">is.na</span>(j_q06b) <span class="sc">==</span> <span class="cn">FALSE</span> <span class="sc">~</span> j_q06b,</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(j_q06b) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">&amp;</span> <span class="fu">is.na</span>(j_q07b) <span class="sc">==</span> <span class="cn">FALSE</span> <span class="sc">~</span> j_q07b</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parenteduc =</span> <span class="fu">factor</span>(parenteduc,</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"初等教育"</span>, <span class="st">"中等教育"</span>, <span class="st">"高等教育"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="均等な順序を仮定して連続変数とする" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="均等な順序を仮定して連続変数とする"><span class="header-section-number">4.4.3</span> 均等な順序を仮定して連続変数とする</h3>
+<p>ある程度均等な順序があると仮定できるならば、数値として扱うことを考えてみるとよい。JGSSでは、「現在の仕事にどの程度満足していますか」という質問（ST5JOB）で、仕事への満足度が尋ねられている。選択肢は「満足している」「どちらかといえば満足している」「どちらともいえない」「どちらかといえば不満である」「不満である」という5つから1つを選択する形式である（わからないや無回答もあるが（後述）、ここでは省略する）。このようなときには、以下のように数値を割り当てることで、値が高いほど満足していることを表す連続変数に見立てることができる。もちろん、選択肢間の間隔がどれも同じ1であるというのはあくまで仮定であり本当は違うかもしれないということには注意が必要だが、解釈はわかりやすくなるというメリットがある。</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>選択肢</th>
+<th>調査票上の番号</th>
+<th>数値化例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>満足している</td>
+<td>1</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>どちらかといえば満足している</td>
+<td>2</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>どちらでもない</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>どちらかといえば不満である</td>
+<td>4</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>不満である</td>
+<td>5</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>jgss <span class="co">#元のデータ（架空例）</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 1
+  ST5JOB
+   &lt;dbl&gt;
+1      1
+2      5
+3      4
+4      2
+5      1
+6      3</code></pre>
+</div>
+</div>
+<p>以下のようにして値を変えた変数を作成する。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>jgss <span class="ot">&lt;-</span> jgss <span class="sc">%&gt;%</span> </span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">jobsatis =</span> <span class="dv">6</span> <span class="sc">-</span> ST5JOB)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>jgss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  ST5JOB jobsatis
+   &lt;dbl&gt;    &lt;dbl&gt;
+1      1        5
+2      5        1
+3      4        2
+4      2        4
+5      1        5
+6      3        3</code></pre>
+</div>
+</div>
+<p>なお、こうした扱いが認められるかどうかは扱う変数によって異なるので、先行研究での定義を参考にするとよい。たとえば今回のような仕事への満足度についてはおおむねこのような処理は認められているが、「中学」に1、「高校」に2、「短大高専」に3、「大学大学院」に4を振る、というような処理はあまり認められていない。しかしながら、受けた教育年数として、「中学」に9、「高校」に12、「短大高専」に14、「大学」に16、「大学院」に18（など）といった値を振ることはある程度認められている。このあたりは先行研究の操作化を参考にしつつ、最終的には自分たちの関心によって決めるとよいだろう。</p>
+</section>
+<section id="無回答非該当わからないなどをnaに" class="level3" data-number="4.4.4">
+<h3 data-number="4.4.4" class="anchored" data-anchor-id="無回答非該当わからないなどをnaに"><span class="header-section-number">4.4.4</span> 無回答、非該当、「わからない」などをNAに</h3>
+<p>JGSSでは「夫は外で働き、妻は家庭を守るべきだ」という意見に対して賛成か反対かを4つの選択肢を設けて尋ねている。ただし、この質問に（何らかの理由で）回答していない者もおり、そのような場合には9という値が便宜的に振られている。</p>
+<p>この質問に対する回答を連続値とみなして集計したりしたいとする。このような場合、無回答の9という値は計算から除外したいので、9という値ではなくNAとしたい。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>jgss <span class="co">#元のデータ（架空例）</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 1
+  Q4WWHHX
+    &lt;dbl&gt;
+1       1
+2       9
+3       4
+4       3
+5       2
+6       1</code></pre>
+</div>
+</div>
+<p>以下のようにして9をNAに置き換えた変数を作成する。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>jgss <span class="ot">&lt;-</span> jgss <span class="sc">%&gt;%</span> </span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">genderrole =</span> <span class="fu">if_else</span>(Q4WWHHX <span class="sc">==</span> <span class="dv">9</span>, <span class="cn">NA_real_</span>, Q4WWHHX))  <span class="co"># 9をNAに置換</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>jgss <span class="co">#変換後のデータ</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  Q4WWHHX genderrole
+    &lt;dbl&gt;      &lt;dbl&gt;
+1       1          1
+2       9         NA
+3       4          4
+4       3          3
+5       2          2
+6       1          1</code></pre>
+</div>
+</div>
+<p>調査によってはこのように無回答やあるいは「わからない」という選択肢に対して便宜的に99という数字が振られていたり、非該当（たとえば結婚している人に対してのみ尋ねる質問の場合、結婚していない人はその質問に回答しない。このような場合には、回答対象ではないという意味で、非該当とされる）のケースに対して便宜的に88といったような数字が振られていることがある。このような場合にも同じようにNAに変換する。</p>
+<p>この作業を忘れて平均値などを計算するととんでもない間違いを犯してしまうことになるため、忘れないようにしっかりチェックしておきたい<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。</p>
+<p>用いる変数については平均値だけではなく、分布や実際の値、調査票の文言などをきちんとチェックしておき、くれぐれもこのようなミスが起こらないようにしたい。</p>
+</section>
+<section id="カテゴリ変数の区間の中点をとって連続変数とする" class="level3" data-number="4.4.5">
+<h3 data-number="4.4.5" class="anchored" data-anchor-id="カテゴリ変数の区間の中点をとって連続変数とする"><span class="header-section-number">4.4.5</span> カテゴリ変数の区間の中点をとって連続変数とする</h3>
+<p>なんらかの区間をとって尋ねられている場合、その区間の中点をとって、連続変数とみなす。たとえば、日本家族社会学会が行っている2008年全国家族調査（NFRJ08）では、「あなたご自身…は、次にあげる…家事を現在どのくらいの頻度で行っていますか」という質問項目で、たとえば「食事の用意」について、以下のような選択肢で家事頻度を尋ねている。</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>選択肢</th>
+<th>調査票上の番号</th>
+<th>数値化例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ほぼ毎日（週6〜7回）</td>
+<td>1</td>
+<td>6.5</td>
+</tr>
+<tr class="even">
+<td>1週間に4〜5回</td>
+<td>2</td>
+<td>4.5</td>
+</tr>
+<tr class="odd">
+<td>1週間に2〜3回</td>
+<td>3</td>
+<td>2.5</td>
+</tr>
+<tr class="even">
+<td>1週間に1回くらい</td>
+<td>4</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>ほとんど行わない</td>
+<td>5</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>このような場合、週6〜7回という区間の中点をとって6.5、週4〜5回という区間の中点をとって4.5、、etcとすることで、1週間当たりの家事頻度を表す連続変数と見立てることができる。</p>
+<p>こうした扱いがどの程度許容されるかについては、先行研究での定義を参照するとよい。</p>
+<p>年収などもこうした区間で扱われることがあるが、この場合は中点を定義できない選択肢が設けられていることがある（例：2050万円以上）。こうした場合の扱いについては諸説あり、<a href="#domain_wage">こちら</a>にも少しそのことを記載している。</p>
+</section>
+</section>
+<section id="をつなげてコマンドをまとめる" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="をつなげてコマンドをまとめる"><span class="header-section-number">4.5</span> %&gt;%をつなげてコマンドをまとめる</h2>
+<p>変数を作成する過程では、正しく変数を作れているかどうかを一つひとつ確認しながら進めていくことが必須である。しかし、正しく作成できたことが確認できたら、<code>with(table())</code>などを使って確認するコードは必ずしもスクリプトに残しておく必要はない。分析に使う変数が固まってきたら、変数を作成するためのコードを（ある程度）まとめておくと、コードがシンプルになってよいだろう。このようなときに、パイプ記法は有用である。</p>
+<p>上記で作成した変数も含めて、本資料で使う変数をまとめて作成するためのコードを以下に記した。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage =</span> earnhrbonus) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logwage =</span> <span class="fu">log</span>(wage)) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">factor</span>(gender_r, <span class="at">level =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">1</span>, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">"女性"</span>,<span class="st">"男性"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age =</span> age_r) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">work =</span> <span class="dv">2</span> <span class="sc">-</span> c_q01a) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour =</span> d_q10 <span class="sc">/</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">case_when</span>(</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>    d_q10 <span class="sc">&lt;</span> <span class="dv">35</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">49</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">59</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">60</span> <span class="sc">~</span> <span class="dv">4</span></span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">factor</span>(workhour_fct,</span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a>                               <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"短時間（35時間未満）"</span>, <span class="st">"標準（35-49時間）"</span>, <span class="st">"長時間（50-59時間）"</span>, <span class="st">"過労死ライン（60時間以上）"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ =</span> <span class="fu">case_when</span>(</span>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a>    edcat8 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> edcat8 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a>    edcat8 <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a>    edcat8 <span class="sc">==</span> <span class="dv">4</span> <span class="sc">|</span> edcat8 <span class="sc">==</span> <span class="dv">5</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb54-22"><a href="#cb54-22" aria-hidden="true" tabindex="-1"></a>    edcat8 <span class="sc">==</span> <span class="dv">6</span> <span class="sc">|</span> edcat8 <span class="sc">==</span> <span class="dv">7</span> <span class="sc">|</span> edcat8 <span class="sc">==</span> <span class="dv">8</span> <span class="sc">~</span> <span class="dv">4</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-23"><a href="#cb54-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ =</span> <span class="fu">factor</span>(educ, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb54-24"><a href="#cb54-24" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"中学"</span>, <span class="st">"高校"</span>, <span class="st">"短大高専"</span>, <span class="st">"大学大学院"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-25"><a href="#cb54-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mothereduc =</span> <span class="fu">factor</span>(j_q06b,</span>
+<span id="cb54-26"><a href="#cb54-26" aria-hidden="true" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb54-27"><a href="#cb54-27" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"初等教育"</span>, <span class="st">"中等教育"</span>, <span class="st">"高等教育"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-28"><a href="#cb54-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fathereduc =</span> <span class="fu">factor</span>(j_q07b,</span>
+<span id="cb54-29"><a href="#cb54-29" aria-hidden="true" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb54-30"><a href="#cb54-30" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"初等教育"</span>, <span class="st">"中等教育"</span>, <span class="st">"高等教育"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-31"><a href="#cb54-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parenteduc =</span> <span class="fu">case_when</span>(</span>
+<span id="cb54-32"><a href="#cb54-32" aria-hidden="true" tabindex="-1"></a>    j_q07b <span class="sc">&gt;=</span> j_q06b <span class="sc">~</span> j_q07b,</span>
+<span id="cb54-33"><a href="#cb54-33" aria-hidden="true" tabindex="-1"></a>    j_q07b <span class="sc">&lt;</span> j_q06b <span class="sc">~</span> j_q06b,</span>
+<span id="cb54-34"><a href="#cb54-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(j_q07b) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">&amp;</span> <span class="fu">is.na</span>(j_q06b) <span class="sc">==</span> <span class="cn">FALSE</span> <span class="sc">~</span> j_q06b,</span>
+<span id="cb54-35"><a href="#cb54-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.na</span>(j_q06b) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">&amp;</span> <span class="fu">is.na</span>(j_q07b) <span class="sc">==</span> <span class="cn">FALSE</span> <span class="sc">~</span> j_q07b</span>
+<span id="cb54-36"><a href="#cb54-36" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-37"><a href="#cb54-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parenteduc =</span> <span class="fu">factor</span>(parenteduc,</span>
+<span id="cb54-38"><a href="#cb54-38" aria-hidden="true" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb54-39"><a href="#cb54-39" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"初等教育"</span>, <span class="st">"中等教育"</span>, <span class="st">"高等教育"</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-40"><a href="#cb54-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">occupation =</span> <span class="fu">factor</span>(isco1c,</span>
+<span id="cb54-41"><a href="#cb54-41" aria-hidden="true" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>,</span>
+<span id="cb54-42"><a href="#cb54-42" aria-hidden="true" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"管理職"</span>,<span class="st">"専門職"</span>,<span class="st">"技術職・准専門職"</span>,<span class="st">"事務補助"</span>,<span class="st">"サービス・販売"</span>,<span class="st">"農林漁業"</span>,<span class="st">"技能工"</span>,<span class="st">"設備・機械運転・組立"</span>,<span class="st">"単純作業"</span>)</span>
+<span id="cb54-43"><a href="#cb54-43" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-44"><a href="#cb54-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">numeracy =</span> pvnum1) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-45"><a href="#cb54-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ojt =</span> <span class="dv">2</span> <span class="sc">-</span> b_q12c) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-46"><a href="#cb54-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">health =</span> <span class="dv">6</span> <span class="sc">-</span> i_q08) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-47"><a href="#cb54-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">learning =</span> i_q04d) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-48"><a href="#cb54-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">readwork =</span> readwork) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-49"><a href="#cb54-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">numwork =</span> numwork)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>このようにして作成した変数のみを残したデータを別途データフレームとして残しておこう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>piaac_variable <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, wage, logwage, gender, age, work, workhour, workhour_fct, educ, mothereduc, fathereduc, parenteduc, occupation, numeracy, ojt, health, learning, readwork, numwork)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="handling_sample" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="handling_sample"><span class="header-section-number">4.6</span> サンプルの限定</h2>
+<p>社会調査データを分析する場合、調査対象者をすべて分析対象に含めるわけではなく、年齢を限定したり、働いている人だけに限定したりといったふうに、分析対象を一部に限定することが多い。このときに使うコードや注意点について記す。</p>
+<section id="該当するケースだけを残すfilter" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="該当するケースだけを残すfilter"><span class="header-section-number">4.6.1</span> 該当するケースだけを残す：filter()</h3>
+<p>関心によっては、若年の人だけ分析したいとか、高齢の人だけ分析したいとか、女性（男性）だけ分析したいというときがある。それ以外にも、使う変数にNAが含まれているケースをあらかじめ除外するということはふつうにある。このようなときには、<code>filter()</code>を使う。</p>
+<p>性別（<code>gender</code>）が男性のケースのみを抽出し、抽出したデータに新しい名前（<code>piaac_male</code>）をつける場合には次のようにする。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>piaac_male <span class="ot">&lt;-</span> piaac_variable <span class="sc">%&gt;%</span> </span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(gender <span class="sc">==</span> <span class="st">"男性"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>年齢が25歳以上34歳以下のケースのみを抽出し、抽出したデータに新しい名前（<code>piaac_young</code>）をつける。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>piaac_young <span class="ot">&lt;-</span> piaac_variable <span class="sc">%&gt;%</span> </span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> age <span class="sc">&lt;=</span> <span class="dv">34</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>今回の資料では、「25歳以上64歳以下の有業者」に対象を限定する。そのため、次のように条件を指定する。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>piaac_sample <span class="ot">&lt;-</span> piaac_variable <span class="sc">%&gt;%</span> </span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="dv">25</span> <span class="sc">&lt;=</span> age <span class="sc">&amp;</span> age <span class="sc">&lt;=</span> <span class="dv">64</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(work <span class="sc">==</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="欠損値の扱い" class="level3" data-number="4.6.2">
+<h3 data-number="4.6.2" class="anchored" data-anchor-id="欠損値の扱い"><span class="header-section-number">4.6.2</span> 欠損値の扱い</h3>
+<p>さて、上記のように分析対象を限定した。このデータに含まれる人数を確認してみる。<code>nrow()</code>を使うと、データフレーム（あるいはベクトル）の長さを調べることができる。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>piaac_sample <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3330</code></pre>
+</div>
+</div>
+<p>このように、3330行からなるデータであることがわかる。しかしながら、回答者がすべての質問について回答しているわけではなく、回答を拒否したり、当該質問項目の対象者に当てはまらない（非該当）ために、値が入っていない（NAとなっている）場合がある。今回の資料で用いる変数について、<code>NA</code>となっている回答がどの程度あるかをみてみよう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>piaac_sample <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       id            wage              logwage        gender    
+ Min.   :   1   Min.   :     0.06   Min.   :-2.851   女性:1508  
+ 1st Qu.:1310   1st Qu.:   937.50   1st Qu.: 6.843   男性:1822  
+ Median :2654   Median :  1445.09   Median : 7.276              
+ Mean   :2650   Mean   :  2027.32   Mean   : 7.311              
+ 3rd Qu.:4008   3rd Qu.:  2224.38   3rd Qu.: 7.707              
+ Max.   :5278   Max.   :266666.67   Max.   :12.494              
+                NA's   :464         NA's   :464                 
+      age             work      workhour                          workhour_fct 
+ Min.   :25.00   Min.   :1   Min.   : 0.200   短時間（35時間未満）      : 721  
+ 1st Qu.:36.00   1st Qu.:1   1st Qu.: 7.000   標準（35-49時間）         :1643  
+ Median :44.00   Median :1   Median : 8.000   長時間（50-59時間）       : 590  
+ Mean   :44.66   Mean   :1   Mean   : 8.272   過労死ライン（60時間以上）: 368  
+ 3rd Qu.:54.00   3rd Qu.:1   3rd Qu.:10.000   NA's                      :   8  
+ Max.   :64.00   Max.   :1   Max.   :22.400                                    
+                             NA's   :8                                         
+         educ         mothereduc      fathereduc      parenteduc  
+ 中学      : 305   初等教育:1112   初等教育:1110   初等教育: 853  
+ 高校      :1187   中等教育:1504   中等教育:1305   中等教育:1411  
+ 短大高専  : 793   高等教育: 583   高等教育: 760   高等教育: 977  
+ 大学大学院:1044   NA's    : 131   NA's    : 155   NA's    :  89  
+ NA's      :   1                                                  
+                                                                  
+                                                                  
+            occupation     numeracy          ojt             health     
+ サービス・販売  :712   Min.   :103.4   Min.   :0.0000   Min.   :1.000  
+ 技術職・准専門職:532   1st Qu.:266.6   1st Qu.:0.0000   1st Qu.:2.000  
+ 専門職          :512   Median :296.3   Median :0.0000   Median :3.000  
+ 事務補助        :491   Mean   :293.6   Mean   :0.3459   Mean   :3.038  
+ 技能工          :349   3rd Qu.:323.2   3rd Qu.:1.0000   3rd Qu.:4.000  
+ (Other)         :713   Max.   :440.9   Max.   :1.0000   Max.   :5.000  
+ NA's            : 21                                                   
+    learning        readwork          numwork       
+ Min.   :1.000   Min.   :-0.9555   Min.   :-0.0902  
+ 1st Qu.:3.000   1st Qu.: 1.6390   1st Qu.: 1.2468  
+ Median :3.000   Median : 2.1992   Median : 1.7690  
+ Mean   :3.323   Mean   : 2.2236   Mean   : 1.9018  
+ 3rd Qu.:4.000   3rd Qu.: 2.7557   3rd Qu.: 2.3693  
+ Max.   :5.000   Max.   : 7.0208   Max.   : 6.0499  
+ NA's   :1       NA's   :174       NA's   :420      </code></pre>
+</div>
+</div>
+<p><code>NA's</code>と書かれているのが、各変数でNAとなっている行の数である。項目によってはNAがない変数もあるし、たくさんNAがある変数もある。</p>
+<p>NAが含まれている変数は分析の際に集計が面倒だったりして、色々と取り扱いが難しい。そこで、分析に使う変数にNAが含まれている行はサンプルから除外しておくと集計が楽になる。<code>filter()</code>を使って、educ, parenteduc, occupation, wageの4つの変数についてNAが含まれている行を除外したデータフレームを作成しよう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>piaac_sample_nona <span class="ot">&lt;-</span> piaac_sample <span class="sc">%&gt;%</span> </span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(educ) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(parenteduc) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(occupation) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(wage) <span class="sc">==</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>is.na()</code>は値がNAであれば<code>TRUE</code>、NAでなければ<code>FALSE</code>を返す関数である。<code>filter(is.na(educ) == FALSE)</code>とすると、educがNA<strong>ではない</strong>ケースだけを残してね、という命令になる。上記のコードを実行したあとの回答を再度チェックしてみよう：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>piaac_sample_nona <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2783</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>piaac_sample_nona <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       id            wage              logwage        gender    
+ Min.   :   1   Min.   :     0.06   Min.   :-2.851   女性:1309  
+ 1st Qu.:1306   1st Qu.:   940.00   1st Qu.: 6.846   男性:1474  
+ Median :2663   Median :  1445.09   Median : 7.276              
+ Mean   :2653   Mean   :  2040.36   Mean   : 7.315              
+ 3rd Qu.:3987   3rd Qu.:  2240.80   3rd Qu.: 7.715              
+ Max.   :5278   Max.   :266666.67   Max.   :12.494              
+                                                                
+      age             work      workhour                          workhour_fct 
+ Min.   :25.00   Min.   :1   Min.   : 0.200   短時間（35時間未満）      : 610  
+ 1st Qu.:35.00   1st Qu.:1   1st Qu.: 7.000   標準（35-49時間）         :1419  
+ Median :43.00   Median :1   Median : 8.000   長時間（50-59時間）       : 490  
+ Mean   :43.95   Mean   :1   Mean   : 8.189   過労死ライン（60時間以上）: 264  
+ 3rd Qu.:53.00   3rd Qu.:1   3rd Qu.:10.000                                    
+ Max.   :64.00   Max.   :1   Max.   :21.600                                    
+                                                                               
+         educ        mothereduc      fathereduc      parenteduc  
+ 中学      :230   初等教育: 931   初等教育: 931   初等教育: 711  
+ 高校      :972   中等教育:1305   中等教育:1141   中等教育:1228  
+ 短大高専  :690   高等教育: 511   高等教育: 653   高等教育: 844  
+ 大学大学院:891   NA's    :  36   NA's    :  58                  
+                                                                 
+                                                                 
+                                                                 
+            occupation     numeracy          ojt             health     
+ サービス・販売  :587   Min.   :127.3   Min.   :0.0000   Min.   :1.000  
+ 事務補助        :450   1st Qu.:267.7   1st Qu.:0.0000   1st Qu.:2.000  
+ 技術職・准専門職:445   Median :297.2   Median :0.0000   Median :3.000  
+ 専門職          :425   Mean   :294.7   Mean   :0.3672   Mean   :3.046  
+ 技能工          :272   3rd Qu.:324.0   3rd Qu.:1.0000   3rd Qu.:4.000  
+ 管理職          :227   Max.   :440.9   Max.   :1.0000   Max.   :5.000  
+ (Other)         :377                                                   
+    learning        readwork          numwork       
+ Min.   :1.000   Min.   :-0.9555   Min.   :-0.0902  
+ 1st Qu.:3.000   1st Qu.: 1.6240   1st Qu.: 1.2244  
+ Median :3.000   Median : 2.1789   Median : 1.7651  
+ Mean   :3.312   Mean   : 2.1966   Mean   : 1.9057  
+ 3rd Qu.:4.000   3rd Qu.: 2.7169   3rd Qu.: 2.3798  
+ Max.   :5.000   Max.   : 7.0208   Max.   : 6.0499  
+                 NA's   :149       NA's   :365      </code></pre>
+</div>
+</div>
+<p>データの行数は先ほどよりも減っており、またwage, educ, occupationに含まれていたNA’sの表記が消えていることがわかる。</p>
+<p>このように、変数に欠損が含まれるケースを除外するような処理の仕方をさして、<strong>リストワイズ削除 listwise delition</strong>という。今日では欠損値の処理としてあまり望ましくない処理とされているが、まずはこのやりかたでやるのがよいだろう。欠損があまりに多い場合には、何らかのデータ操作のミス、調査のうえでの何らかの問題、そのほかの理由が考えられるため、欠損の数がどれくらいあるのかは注意して見ておくとよいだろう。</p>
+</section>
+<section id="外れ値の扱い" class="level3" data-number="4.6.3">
+<h3 data-number="4.6.3" class="anchored" data-anchor-id="外れ値の扱い"><span class="header-section-number">4.6.3</span> 外れ値の扱い</h3>
+<p>さて、上記のように欠損値を除いたサンプルを作成したあと、最後に考慮すべきは、外れ値の問題である。連続変数を分析に用いる場合、このような外れ値が結果に大きな影響をおよぼす場合がある。その一例として、時給換算した賃金について考えてみよう。この変数の分布をみると、常識的には理解しがたい高い値、あるいは低い値をとっているケースが存在することがわかる（ヒストグラムについては第5章で解説する）。たとえば以下のように、時間あたり賃金が極端に低かったり（300円未満など）、逆に極端に高かったり（20000円以上など）するケースが存在している。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>piaac_sample_nona <span class="sc">%&gt;%</span> </span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span> </span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">800</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2450 rows containing non-finite values (`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_bar()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="04-handling_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>piaac_sample_nona <span class="sc">%&gt;%</span> </span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span> </span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">5000</span>, <span class="dv">100000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2695 rows containing non-finite values (`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_bar()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="04-handling_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>このようなケースが発生する理由はいくつかあるのだが、分析上は、たとえば平均値を計算したりする場合に、これらの外れ値があることによって結果がこうした極端に高い・低い人によって大きく左右されるという問題がある。そこで、こうした極端に高いあるいは低いケースを除外することはしばしば有効になる。時給換算した賃金の場合にはたとえば、上位1%、下位1%のサンプルを除外するという処理を行うことが多い。このように上位1%、下位1%のサンプルを除外するときの方法について記す。</p>
+<p>まず、<code>ntile()</code>関数を使って、賃金の分位数を表す変数を作成する。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>piaac_sample_nona <span class="ot">&lt;-</span> piaac_sample_nona <span class="sc">%&gt;%</span> </span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage_tile =</span> <span class="fu">ntile</span>(wage, <span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>下位1%と上位1%のケースにはどこからどこまでの値が含まれているのかチェックしてみよう：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>piaac_sample_nona <span class="sc">%&gt;%</span> </span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(wage_tile <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> wage_tile <span class="sc">==</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(wage_tile) <span class="sc">%&gt;%</span> </span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">min =</span> <span class="fu">min</span>(wage), </span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">max =</span> <span class="fu">max</span>(wage))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  wage_tile       min     max
+      &lt;int&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+1         1    0.0578    462.
+2       100 9760.     266667.</code></pre>
+</div>
+</div>
+<p>このように、下位1%には462円以下のケースが含まれ、上位1%には9760円以上のケースが含まれていることがわかる。これらのケースを除外して、分析に使用するためのサンプルを作ろう。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>piaac_sample_analytic <span class="ot">&lt;-</span> piaac_sample_nona <span class="sc">%&gt;%</span> </span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="dv">2</span> <span class="sc">&lt;=</span> wage_tile <span class="sc">&amp;</span> wage_tile <span class="sc">&lt;=</span> <span class="dv">99</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>このように極端に低いケースと極端に高いケースを除外することで、外れ値の影響を除いた賃金の分布を得ることができる。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>piaac_sample_analytic <span class="sc">%&gt;%</span> </span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span></span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="04-handling_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>このように、分析に連続変数を用いる場合には、外れ値がないかどうか、外れ値を含むことで結果が大きく変わってしまわないかをチェックしておく必要がある。</p>
+</section>
+<section id="分析用データを書き出す" class="level3" data-number="4.6.4">
+<h3 data-number="4.6.4" class="anchored" data-anchor-id="分析用データを書き出す"><span class="header-section-number">4.6.4</span> 分析用データを書き出す</h3>
+<p>上記のような手順を経て、ようやく分析することのできるデータを準備することができた。準備できたデータを、新しいデータとして保存しておこう。<code>readr::write_excel_csv()</code>を使うと、データフレームを<a href="03-import.html#import_rds">rds形式</a>で書き出すことができる。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(piaac_sample_analytic, <span class="at">file =</span> <span class="st">"data/piaac_sample_analytic.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>このように、元々のデータから種々のデータ加工を行い、分析のために使用することにしたデータは、元々のデータとは別に保存しておくことで、データの加工のプロセスとデータの分析のプロセスを明示的に分けることにつながり、エラーを減らすことができる。</p>
+<p>以降では、このデータを使って分析を行っていく。</p>
+</section>
+</section>
+<section id="データの追加発展" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="データの追加発展"><span class="header-section-number">4.7</span> データの追加（発展）</h2>
+<p>たとえば複数の社会調査データを合併してサンプルサイズを増やしたり、時系列比較を行いたいといったことがあるかもしれない。このような場合の処理について記しておく。</p>
+<p>以下のような2つのデータがあるとする。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>df1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+     id    x1    x2 data  
+  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; 
+1     1     5     1 data 1
+2     2     8     1 data 1
+3     3     2     1 data 1
+4     4     0     2 data 1
+5     5     6     2 data 1
+6     6     1     2 data 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>df2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+     id    x1    x2 data  
+  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; 
+1     7     9     2 data 2
+2     8     4     1 data 2
+3     9     0     2 data 2
+4    10     2     1 data 2</code></pre>
+</div>
+</div>
+<p>この2つのデータを合併したいときには、<code>dplyr::bind_rows()</code>を使う。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> </span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(df2) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>これで、以下のように2つのデータを合併して行が増えたデータが得られる。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 4
+      id    x1    x2 data  
+   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; 
+ 1     1     5     1 data 1
+ 2     2     8     1 data 1
+ 3     3     2     1 data 1
+ 4     4     0     2 data 1
+ 5     5     6     2 data 1
+ 6     6     1     2 data 1
+ 7     7     9     2 data 2
+ 8     8     4     1 data 2
+ 9     9     0     2 data 2
+10    10     2     1 data 2</code></pre>
+</div>
+</div>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>テキストによっては前者を「質的変数」、後者を「量的変数」と表記しているものもある。しかしこの呼び方は「質的研究」「量的研究」などと混同しやすいうえ、その数を数えられるという意味では「質的変数」を「量的」に扱えるというよくわからない事態が生じる。そこでここでは一貫して「カテゴリ変数」「連続変数」と表記する。また、尺度水準（比例尺度、間隔尺度、順序尺度、名義尺度）について紹介しているテキストもあるが、これらを区別しても分析上あまり意味はないのでここでは扱わない。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>実際、ある査読付き雑誌に掲載された論文が、売上高がわからないケースに対して付されていた88,888,888,888という値をNAにすることなく分析していたのではないか（実際、それをNAにすると分析の結果はまったく違うものになる）という<a href="https://doi.org/10.1177/0003122417714422">指摘</a>がなされたことがある。院生のころは「先行研究で言われていないような意外な結果が出たら、たいていはプログラムが間違っているものだ（だからちゃんとチェックしなさい）」とよく言われたものだった。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./03-import.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">データの読み込み</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./05-descriptives.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">1変数の集計</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
