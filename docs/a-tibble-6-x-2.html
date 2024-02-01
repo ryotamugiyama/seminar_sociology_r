@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 A tibble: 6 x 2 | 社会調査データ分析のためのRの手引き</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 A tibble: 6 x 2 | 社会調査データ分析のためのRの手引き" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 A tibble: 6 x 2 | 社会調査データ分析のためのRの手引き" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Ryota Mugiyama (Department of Political Studies, Gakushuin University)" />
+
+
+<meta name="date" content="2021-10-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="regression-basic.html"/>
+<link rel="next" href="regression-advanced.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">社会調査データ分析のためのRの手引き</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>まえがき</a></li>
+<li class="chapter" data-level="1" data-path="handling.html"><a href="handling.html"><i class="fa fa-check"></i><b>1</b> データの加工</a></li>
+<li class="chapter" data-level="2" data-path="descriptives.html"><a href="descriptives.html"><i class="fa fa-check"></i><b>2</b> 1変数の集計</a></li>
+<li class="chapter" data-level="3" data-path="tabulate.html"><a href="tabulate.html"><i class="fa fa-check"></i><b>3</b> 2変数の分析</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="tabulate.html"><a href="tabulate.html#クロス集計"><i class="fa fa-check"></i><b>3.1</b> クロス集計</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="visualization.html"><a href="visualization.html"><i class="fa fa-check"></i><b>4</b> データの可視化</a></li>
+<li class="chapter" data-level="5" data-path="regression-basic.html"><a href="regression-basic.html"><i class="fa fa-check"></i><b>5</b> 回帰分析の基礎</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="regression-basic.html"><a href="regression-basic.html#基礎"><i class="fa fa-check"></i><b>5.1</b> 基礎</a></li>
+<li class="chapter" data-level="5.2" data-path="regression-basic.html"><a href="regression-basic.html#最小二乗法ols"><i class="fa fa-check"></i><b>5.2</b> 最小二乗法（OLS）</a></li>
+<li class="chapter" data-level="5.3" data-path="regression-basic.html"><a href="regression-basic.html#独立変数がカテゴリ変数の場合"><i class="fa fa-check"></i><b>5.3</b> 独立変数がカテゴリ変数の場合</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="regression-basic.html"><a href="regression-basic.html#値のカテゴリ"><i class="fa fa-check"></i><b>5.3.1</b> 2値のカテゴリ</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="a-tibble-6-x-2.html"><a href="a-tibble-6-x-2.html"><i class="fa fa-check"></i><b>6</b> A tibble: 6 x 2</a>
+<ul>
+<li class="chapter" data-level="6.0.1" data-path="a-tibble-6-x-2.html"><a href="a-tibble-6-x-2.html#値のカテゴリ変数"><i class="fa fa-check"></i><b>6.0.1</b> 3値のカテゴリ変数</a></li>
+<li class="chapter" data-level="6.0.2" data-path="a-tibble-6-x-2.html"><a href="a-tibble-6-x-2.html#変数がfactorであれば自動でカテゴリとして投入される"><i class="fa fa-check"></i><b>6.0.2</b> 変数がfactorであれば自動でカテゴリとして投入される</a></li>
+<li class="chapter" data-level="6.1" data-path="a-tibble-6-x-2.html"><a href="a-tibble-6-x-2.html#従属変数が2値のカテゴリ変数01の場合"><i class="fa fa-check"></i><b>6.1</b> 従属変数が2値のカテゴリ変数（0/1）の場合</a></li>
+<li class="chapter" data-level="6.2" data-path="a-tibble-6-x-2.html"><a href="a-tibble-6-x-2.html#従属変数が3値以上のカテゴリ変数の場合"><i class="fa fa-check"></i><b>6.2</b> 従属変数が3値以上のカテゴリ変数の場合</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="a-tibble-6-x-2.html"><a href="a-tibble-6-x-2.html#どうにかして2値にする"><i class="fa fa-check"></i><b>6.2.1</b> どうにかして2値にする</a></li>
+<li class="chapter" data-level="6.2.2" data-path="a-tibble-6-x-2.html"><a href="a-tibble-6-x-2.html#均等な順序を仮定して連続変数とする"><i class="fa fa-check"></i><b>6.2.2</b> 均等な順序を仮定して連続変数とする</a></li>
+<li class="chapter" data-level="6.2.3" data-path="a-tibble-6-x-2.html"><a href="a-tibble-6-x-2.html#区間の中点をとって連続変数とする"><i class="fa fa-check"></i><b>6.2.3</b> 区間の中点をとって連続変数とする</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="a-tibble-6-x-2.html"><a href="a-tibble-6-x-2.html#連続変数の変換"><i class="fa fa-check"></i><b>6.3</b> 連続変数の変換</a></li>
+<li class="chapter" data-level="6.4" data-path="a-tibble-6-x-2.html"><a href="a-tibble-6-x-2.html#発展ロバスト標準誤差"><i class="fa fa-check"></i><b>6.4</b> （発展）ロバスト標準誤差</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="regression-advanced.html"><a href="regression-advanced.html"><i class="fa fa-check"></i><b>7</b> 重回帰分析の活用</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="regression-advanced.html"><a href="regression-advanced.html#他の要因を統制する"><i class="fa fa-check"></i><b>7.1</b> 他の要因を統制する</a></li>
+<li class="chapter" data-level="7.2" data-path="regression-advanced.html"><a href="regression-advanced.html#媒介分析の考え方"><i class="fa fa-check"></i><b>7.2</b> 媒介分析の考え方</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">社会調査データ分析のためのRの手引き</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="a-tibble-6-x-2" class="section level1" number="6">
+<h1><span class="header-section-number">Chapter 6</span> A tibble: 6 x 2</h1>
+<p>gender male_d
+<fct> <dbl>
+1 女性 0
+2 女性 0
+3 男性 1
+4 男性 1
+5 男性 1
+6 女性 0</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="a-tibble-6-x-2.html#cb20-1" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> male_d)</span>
+<span id="cb20-2"><a href="a-tibble-6-x-2.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ male_d, data = piaac)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1888.8  -610.0  -327.8   367.6  8672.2 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  1327.81      30.13   44.08   &lt;2e-16 ***
+## male_d        868.67      41.75   20.81   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1123 on 2898 degrees of freedom
+##   (1523 observations deleted due to missingness)
+## Multiple R-squared:   0.13,  Adjusted R-squared:  0.1297 
+## F-statistic: 432.9 on 1 and 2898 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>male_dというのが、性別が男性のときに1、女性のときに0をとる変数である。この係数が868.7、切片（Intercept）が1327.8ということだから、推定された式はつぎのとおりとなる。</p>
+<p><span class="math display">\[
+y = 1327.8 + 868.7x
+\]</span></p>
+<p>傾きの値は、女性と比べて男性の賃金は868.7円高いということを意味している。</p>
+<p>この868.7という値は、2つのカテゴリ（この場合は男性・女性）、先ほど棒グラフに示した男性の平均値と女性の平均値の差に一致していることを確認しよう。傾きの値は、2つのカテゴリの平均値の差に一致する。</p>
+<div id="値のカテゴリ変数" class="section level3" number="6.0.1">
+<h3><span class="header-section-number">6.0.1</span> 3値のカテゴリ変数</h3>
+<p>カテゴリが3値以上の場合はどうだろう？これも、基本的には同じふうに考えることができる。</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="a-tibble-6-x-2.html#cb22-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="a-tibble-6-x-2.html#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(educ) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="a-tibble-6-x-2.html#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> educ, <span class="at">y =</span> wage, <span class="at">color =</span> educ)) <span class="sc">+</span> </span>
+<span id="cb22-4"><a href="a-tibble-6-x-2.html#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span> </span>
+<span id="cb22-5"><a href="a-tibble-6-x-2.html#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb22-6"><a href="a-tibble-6-x-2.html#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: Removed 1435 rows containing non-finite values (stat_ydensity).</code></pre>
+<pre><code>## Warning: Removed 1435 rows containing missing values (geom_point).</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>中学卒を基準として、高校、短大高専、大学大学院卒だとどれくらい賃金が高いのかを推定することになる。</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="a-tibble-6-x-2.html#cb25-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="a-tibble-6-x-2.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ_d2 =</span> <span class="fu">if_else</span>(educ <span class="sc">==</span> <span class="st">&quot;高校&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="a-tibble-6-x-2.html#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ_d3 =</span> <span class="fu">if_else</span>(educ <span class="sc">==</span> <span class="st">&quot;短大高専&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-4"><a href="a-tibble-6-x-2.html#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ_d4 =</span> <span class="fu">if_else</span>(educ <span class="sc">==</span> <span class="st">&quot;大学大学院&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) </span>
+<span id="cb25-5"><a href="a-tibble-6-x-2.html#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="a-tibble-6-x-2.html#cb25-6" aria-hidden="true" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb25-7"><a href="a-tibble-6-x-2.html#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(educ, educ_d2, educ_d3, educ_d4) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-8"><a href="a-tibble-6-x-2.html#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">10</span>) <span class="co">#それぞれどのような値となっているかチェック。行をシャッフルしています</span></span></code></pre></div>
+<pre><code>## # A tibble: 10 x 4
+##    educ       educ_d2 educ_d3 educ_d4
+##    &lt;fct&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 短大高専         0       1       0
+##  2 大学大学院       0       0       1
+##  3 大学大学院       0       0       1
+##  4 短大高専         0       1       0
+##  5 大学大学院       0       0       1
+##  6 大学大学院       0       0       1
+##  7 高校             1       0       0
+##  8 高校             1       0       0
+##  9 高校             1       0       0
+## 10 短大高専         0       1       0</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="a-tibble-6-x-2.html#cb27-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> educ_d2 <span class="sc">+</span> educ_d3 <span class="sc">+</span> educ_d4)</span>
+<span id="cb27-2"><a href="a-tibble-6-x-2.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model3)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ educ_d2 + educ_d3 + educ_d4, data = piaac)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2034.1  -693.9  -317.5   396.3  8450.0 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  1455.48      72.63  20.040   &lt;2e-16 ***
+## educ_d2        71.26      80.92   0.881    0.379    
+## educ_d3        94.55      84.18   1.123    0.261    
+## educ_d4       886.32      82.01  10.808   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1144 on 2895 degrees of freedom
+##   (1524 observations deleted due to missingness)
+## Multiple R-squared:  0.09873,    Adjusted R-squared:  0.0978 
+## F-statistic: 105.7 on 3 and 2895 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>それぞれの係数は、基準カテゴリ（今回なら中学卒）と比べて、それぞれどれくらい賃金が高いのかを表している。標準誤差やp値のみかたについてはどれも同じ。</p>
+</div>
+<div id="変数がfactorであれば自動でカテゴリとして投入される" class="section level3" number="6.0.2">
+<h3><span class="header-section-number">6.0.2</span> 変数がfactorであれば自動でカテゴリとして投入される</h3>
+<p>独立変数の型がカテゴリの場合には、Rが自動で先ほどのようなダミー変数を勝手に作って投入してくれる。</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="a-tibble-6-x-2.html#cb29-1" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> educ)</span>
+<span id="cb29-2"><a href="a-tibble-6-x-2.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model4)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ educ, data = piaac)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2034.1  -693.9  -317.5   396.3  8450.0 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     1455.48      72.63  20.040   &lt;2e-16 ***
+## educ高校          71.26      80.92   0.881    0.379    
+## educ短大高専      94.55      84.18   1.123    0.261    
+## educ大学大学院   886.32      82.01  10.808   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1144 on 2895 degrees of freedom
+##   (1524 observations deleted due to missingness)
+## Multiple R-squared:  0.09873,    Adjusted R-squared:  0.0978 
+## F-statistic: 105.7 on 3 and 2895 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>ただし、基準カテゴリは一番最初（アルファベットが早い順、漢字の場合はよくわからない）のものが勝手に選ばれるので、たとえば高校を基準にしてその他を比較したい、と思ったときには、自分でカテゴリの順序を変更しておく必要がある。</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="a-tibble-6-x-2.html#cb31-1" aria-hidden="true" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="a-tibble-6-x-2.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ_reorder =</span> <span class="fu">factor</span>(educ,</span>
+<span id="cb31-3"><a href="a-tibble-6-x-2.html#cb31-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;高校&quot;</span>, <span class="st">&quot;中学&quot;</span>, <span class="st">&quot;短大高専&quot;</span>, <span class="st">&quot;大学大学院&quot;</span>),</span>
+<span id="cb31-4"><a href="a-tibble-6-x-2.html#cb31-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;高校&quot;</span>, <span class="st">&quot;中学&quot;</span>, <span class="st">&quot;短大高専&quot;</span>, <span class="st">&quot;大学大学院&quot;</span>)))</span>
+<span id="cb31-5"><a href="a-tibble-6-x-2.html#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="a-tibble-6-x-2.html#cb31-6" aria-hidden="true" tabindex="-1"></a>model5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, wage <span class="sc">~</span> educ_reorder)</span>
+<span id="cb31-7"><a href="a-tibble-6-x-2.html#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model5)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = wage ~ educ_reorder, data = piaac)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2034.1  -693.9  -317.5   396.3  8450.0 
+## 
+## Coefficients:
+##                        Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)             1526.74      35.69  42.778   &lt;2e-16 ***
+## educ_reorder中学         -71.26      80.92  -0.881    0.379    
+## educ_reorder短大高専      23.29      55.55   0.419    0.675    
+## educ_reorder大学大学院   815.06      52.19  15.616   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1144 on 2895 degrees of freedom
+##   (1524 observations deleted due to missingness)
+## Multiple R-squared:  0.09873,    Adjusted R-squared:  0.0978 
+## F-statistic: 105.7 on 3 and 2895 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div id="従属変数が2値のカテゴリ変数01の場合" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> 従属変数が2値のカテゴリ変数（0/1）の場合</h2>
+</div>
+<div id="従属変数が3値以上のカテゴリ変数の場合" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> 従属変数が3値以上のカテゴリ変数の場合</h2>
+<p>この場合は線形回帰分析では扱うことができない。次のような対処法がある。</p>
+<div id="どうにかして2値にする" class="section level3" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> どうにかして2値にする</h3>
+<p>たとえば、親の職業（階級）によって、対象者の学歴がどの程度異なるのかを知りたいとする。このとき、学歴を「中学」「高校」「短大高専」「大学大学院」という4つのカテゴリで定義しているとする。この場合には、「大学大学院」を1、それ以外を0とすることで、大学以上か大学未満か、という2値のカテゴリに直すことで、分析が可能になる。</p>
+</div>
+<div id="均等な順序を仮定して連続変数とする" class="section level3" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> 均等な順序を仮定して連続変数とする</h3>
+<p>ある程度均等な順序があると仮定できるならば、数値として扱う。たとえば、性別によって、仕事への満足度が異なるかどうかを知りたいとする。このとき、仕事への満足度は、「全体的にみて、あなたは現在の仕事にどの程度満足していますか」という質問に対して、「非常に満足」「満足」「どちらでもない」「不満」「非常に不満」という5つの選択肢から1つを選択する形式で尋ねられているとする。このときには、「非常に満足」に5、「満足」に4、「どちらでもない」に3、「不満」に2、「非常に不満」に1を振ることで、連続変数に見立てることができる。もちろん、「非常に満足」と「満足」、「満足」と「どちらでもない」の間隔が同じ1であるというのはあくまで仮定であり本当は違うかもしれないということには注意が必要だが、解釈はわかりやすくなるというメリットがある。</p>
+<table>
+<thead>
+<tr class="header">
+<th>選択肢</th>
+<th>調査票上の番号</th>
+<th>数値化例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>非常に満足</td>
+<td>1</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>満足</td>
+<td>2</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>どちらでもない</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>不満</td>
+<td>4</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>非常に不満</td>
+<td>5</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>なお、こうした扱いが認められるかどうかは扱う変数によって異なるので、先行研究での定義を参考にするとよい。たとえば今回のような仕事への満足度についてはおおむねこのような処理は認められているが、「中学」に1、「高校」に2、「短大高専」に3、「大学大学院」に4を振る、というような処理はあまり認められていない。しかしながら、受けた教育年数として、「中学」に9、「高校」に12、「短大高専」に14、「大学」に16、「大学院」に18（など）といった値を振ることはある程度認められている。このあたりは先行研究の操作化を参考にしつつ、最終的には自分たちの関心によって決めるとよいだろう。</p>
+</div>
+<div id="区間の中点をとって連続変数とする" class="section level3" number="6.2.3">
+<h3><span class="header-section-number">6.2.3</span> 区間の中点をとって連続変数とする</h3>
+<p>なんらかの区間をとって尋ねられている場合、その区間の中点をとって、連続変数とみなす。たとえば、日本家族社会学会が行っている2008年全国家族調査（NFRJ08）では、「あなたご自身…は、次にあげる…家事を現在どのくらいの頻度で行っていますか」という質問項目で、たとえば「食事の用意」について、以下のような選択肢で家事頻度を尋ねている。</p>
+<table>
+<thead>
+<tr class="header">
+<th>選択肢</th>
+<th>調査表上の番号</th>
+<th>数値化例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ほぼ毎日（週6〜7回）</td>
+<td>1</td>
+<td>6.5</td>
+</tr>
+<tr class="even">
+<td>1週間に4〜5回</td>
+<td>2</td>
+<td>4.5</td>
+</tr>
+<tr class="odd">
+<td>1週間に2〜3回</td>
+<td>3</td>
+<td>2.5</td>
+</tr>
+<tr class="even">
+<td>1週間に1回くらい</td>
+<td>4</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>ほとんど行わない</td>
+<td>5</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>このような場合、週6〜7回という区間の中点をとって6.5、週4〜5回という区間の中点をとって4.5…とすることで、1週間当たりの家事頻度を表す連続変数と見立てることができる。</p>
+<p>こうした扱いについても、これが妥当なのかどうかは先行研究での定義を参照すると良い。</p>
+<p>年収などもこうした区間で扱われることがあるが、この場合は中点を定義できない（例：2050万円以上）選択肢が設けられていることがある。こうした場合の扱いについては別途書く（工事中）</p>
+</div>
+</div>
+<div id="連続変数の変換" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> 連続変数の変換</h2>
+<ul>
+<li>2乗項</li>
+<li>対数変換</li>
+</ul>
+</div>
+<div id="発展ロバスト標準誤差" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> （発展）ロバスト標準誤差</h2>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="regression-basic.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regression-advanced.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

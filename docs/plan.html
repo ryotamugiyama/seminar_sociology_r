@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 研究計画を立てる | Rによる社会調査データ分析の手引き</title>
+  <meta name="description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 研究計画を立てる | Rによる社会調査データ分析の手引き" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 研究計画を立てる | Rによる社会調査データ分析の手引き" />
+  
+  <meta name="twitter:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  
+
+<meta name="author" content="麦山 亮太（学習院大学法学部政治学科）/ Ryota Mugiyama (Department of Political Studies, Gakushuin University)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="preparation.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Rによる社会調査データ分析の手引き</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>まえがき</a></li>
+<li class="chapter" data-level="1" data-path="plan.html"><a href="plan.html"><i class="fa fa-check"></i><b>1</b> 研究計画を立てる</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="plan.html"><a href="plan.html#研究計画とは"><i class="fa fa-check"></i><b>1.1</b> 研究計画とは</a></li>
+<li class="chapter" data-level="1.2" data-path="plan.html"><a href="plan.html#plan_background"><i class="fa fa-check"></i><b>1.2</b> 研究背景</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="plan.html"><a href="plan.html#問題背景1段落程度"><i class="fa fa-check"></i><b>1.2.1</b> 問題背景（1段落程度）</a></li>
+<li class="chapter" data-level="1.2.2" data-path="plan.html"><a href="plan.html#先行研究の整理13段落程度"><i class="fa fa-check"></i><b>1.2.2</b> 先行研究の整理（1–3段落程度）</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="plan.html"><a href="plan.html#plan_question"><i class="fa fa-check"></i><b>1.3</b> 研究目的・問い</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="plan.html"><a href="plan.html#研究目的問い12段落程度"><i class="fa fa-check"></i><b>1.3.1</b> 研究目的・問い（1–2段落程度）</a></li>
+<li class="chapter" data-level="1.3.2" data-path="plan.html"><a href="plan.html#仮説1段落程度あれば"><i class="fa fa-check"></i><b>1.3.2</b> 仮説（1段落程度、あれば）</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="plan.html"><a href="plan.html#方法"><i class="fa fa-check"></i><b>1.4</b> 方法</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="plan.html"><a href="plan.html#データ"><i class="fa fa-check"></i><b>1.4.1</b> データ</a></li>
+<li class="chapter" data-level="1.4.2" data-path="plan.html"><a href="plan.html#分析対象"><i class="fa fa-check"></i><b>1.4.2</b> 分析対象</a></li>
+<li class="chapter" data-level="1.4.3" data-path="plan.html"><a href="plan.html#使用する変数"><i class="fa fa-check"></i><b>1.4.3</b> 使用する変数</a></li>
+<li class="chapter" data-level="1.4.4" data-path="plan.html"><a href="plan.html#分析方法"><i class="fa fa-check"></i><b>1.4.4</b> 分析方法</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="plan.html"><a href="plan.html#参考文献"><i class="fa fa-check"></i><b>1.5</b> 参考文献</a></li>
+<li class="chapter" data-level="1.6" data-path="plan.html"><a href="plan.html#使用する調査データの選定"><i class="fa fa-check"></i><b>1.6</b> 使用する調査データの選定</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="plan.html"><a href="plan.html#個票データとは何か"><i class="fa fa-check"></i><b>1.6.1</b> 個票データとは何か</a></li>
+<li class="chapter" data-level="1.6.2" data-path="plan.html"><a href="plan.html#jgss"><i class="fa fa-check"></i><b>1.6.2</b> JGSS</a></li>
+<li class="chapter" data-level="1.6.3" data-path="plan.html"><a href="plan.html#jgss以外の日本の社会調査"><i class="fa fa-check"></i><b>1.6.3</b> JGSS以外の日本の社会調査</a></li>
+<li class="chapter" data-level="1.6.4" data-path="plan.html"><a href="plan.html#日本以外の社会調査データ"><i class="fa fa-check"></i><b>1.6.4</b> 日本以外の社会調査データ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="plan.html"><a href="plan.html#先行研究を探す"><i class="fa fa-check"></i><b>1.7</b> 先行研究を探す</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="plan.html"><a href="plan.html#査読つき論文"><i class="fa fa-check"></i><b>1.7.1</b> 査読つき論文</a></li>
+<li class="chapter" data-level="1.7.2" data-path="plan.html"><a href="plan.html#研究の流れをつかむ"><i class="fa fa-check"></i><b>1.7.2</b> 研究の流れをつかむ</a></li>
+<li class="chapter" data-level="1.7.3" data-path="plan.html"><a href="plan.html#書籍"><i class="fa fa-check"></i><b>1.7.3</b> 書籍</a></li>
+<li class="chapter" data-level="1.7.4" data-path="plan.html"><a href="plan.html#英語論文"><i class="fa fa-check"></i><b>1.7.4</b> 英語論文</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="preparation.html"><a href="preparation.html"><i class="fa fa-check"></i><b>2</b> RとRStudioの下準備</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="preparation.html"><a href="preparation.html#rとrstudioのインストール方法"><i class="fa fa-check"></i><b>2.1</b> RとRStudioのインストール方法</a></li>
+<li class="chapter" data-level="2.2" data-path="preparation.html"><a href="preparation.html#データ分析のワークフロー"><i class="fa fa-check"></i><b>2.2</b> データ分析のワークフロー</a></li>
+<li class="chapter" data-level="2.3" data-path="preparation.html"><a href="preparation.html#preparation_project"><i class="fa fa-check"></i><b>2.3</b> プロジェクトの作成</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="preparation.html"><a href="preparation.html#rstudioを開いてみよう"><i class="fa fa-check"></i><b>2.3.1</b> RStudioを開いてみよう</a></li>
+<li class="chapter" data-level="2.3.2" data-path="preparation.html"><a href="preparation.html#授業用のフォルダを作ろう"><i class="fa fa-check"></i><b>2.3.2</b> 授業用のフォルダを作ろう</a></li>
+<li class="chapter" data-level="2.3.3" data-path="preparation.html"><a href="preparation.html#ファイルパスと作業ディレクトリ"><i class="fa fa-check"></i><b>2.3.3</b> ファイルパスと作業ディレクトリ</a></li>
+<li class="chapter" data-level="2.3.4" data-path="preparation.html"><a href="preparation.html#プロジェクト作成の手順"><i class="fa fa-check"></i><b>2.3.4</b> プロジェクト作成の手順</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="preparation.html"><a href="preparation.html#基本的な操作"><i class="fa fa-check"></i><b>2.4</b> 基本的な操作</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="preparation.html"><a href="preparation.html#スクリプトファイル"><i class="fa fa-check"></i><b>2.4.1</b> スクリプトファイル</a></li>
+<li class="chapter" data-level="2.4.2" data-path="preparation.html"><a href="preparation.html#スクリプトファイルを保存する"><i class="fa fa-check"></i><b>2.4.2</b> スクリプトファイルを保存する</a></li>
+<li class="chapter" data-level="2.4.3" data-path="preparation.html"><a href="preparation.html#パッケージのインストール"><i class="fa fa-check"></i><b>2.4.3</b> パッケージのインストール</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="preparation.html"><a href="preparation.html#その他の設定"><i class="fa fa-check"></i><b>2.5</b> その他の設定</a></li>
+<li class="chapter" data-level="2.6" data-path="preparation.html"><a href="preparation.html#rの基礎準備中"><i class="fa fa-check"></i><b>2.6</b> Rの基礎（準備中）</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="preparation.html"><a href="preparation.html#オブジェクト"><i class="fa fa-check"></i><b>2.6.1</b> オブジェクト</a></li>
+<li class="chapter" data-level="2.6.2" data-path="preparation.html"><a href="preparation.html#データフレーム"><i class="fa fa-check"></i><b>2.6.2</b> データフレーム</a></li>
+<li class="chapter" data-level="2.6.3" data-path="preparation.html"><a href="preparation.html#行観察と列変数"><i class="fa fa-check"></i><b>2.6.3</b> 行（観察）と列（変数）</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="import.html"><a href="import.html"><i class="fa fa-check"></i><b>3</b> データの読み込み</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="import.html"><a href="import.html#rのサンプルデータの読み込み"><i class="fa fa-check"></i><b>3.1</b> Rのサンプルデータの読み込み</a></li>
+<li class="chapter" data-level="3.2" data-path="import.html"><a href="import.html#パイプ演算子または"><i class="fa fa-check"></i><b>3.2</b> パイプ演算子（%&gt;%または|&gt;）</a></li>
+<li class="chapter" data-level="3.3" data-path="import.html"><a href="import.html#作業ディレクトリ上のデータの読み込み"><i class="fa fa-check"></i><b>3.3</b> 作業ディレクトリ上のデータの読み込み</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="import.html"><a href="import.html#import_dir"><i class="fa fa-check"></i><b>3.3.1</b> データを置く場所を作る</a></li>
+<li class="chapter" data-level="3.3.2" data-path="import.html"><a href="import.html#csv形式のファイル"><i class="fa fa-check"></i><b>3.3.2</b> csv形式のファイル</a></li>
+<li class="chapter" data-level="3.3.3" data-path="import.html"><a href="import.html#xlsx形式のファイル"><i class="fa fa-check"></i><b>3.3.3</b> xlsx形式のファイル</a></li>
+<li class="chapter" data-level="3.3.4" data-path="import.html"><a href="import.html#import_rds"><i class="fa fa-check"></i><b>3.3.4</b> rds形式のファイル</a></li>
+<li class="chapter" data-level="3.3.5" data-path="import.html"><a href="import.html#sav形式のファイル"><i class="fa fa-check"></i><b>3.3.5</b> sav形式のファイル</a></li>
+<li class="chapter" data-level="3.3.6" data-path="import.html"><a href="import.html#dta形式のファイル"><i class="fa fa-check"></i><b>3.3.6</b> dta形式のファイル</a></li>
+<li class="chapter" data-level="3.3.7" data-path="import.html"><a href="import.html#文字コードに関わる問題"><i class="fa fa-check"></i><b>3.3.7</b> 文字コードに関わる問題</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="import.html"><a href="import.html#ウェブ上のデータの読み込み"><i class="fa fa-check"></i><b>3.4</b> ウェブ上のデータの読み込み</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="handling.html"><a href="handling.html"><i class="fa fa-check"></i><b>4</b> データの加工</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="handling.html"><a href="handling.html#本資料で用いるデータ"><i class="fa fa-check"></i><b>4.1</b> 本資料で用いるデータ</a></li>
+<li class="chapter" data-level="4.2" data-path="handling.html"><a href="handling.html#データ加工のステップ"><i class="fa fa-check"></i><b>4.2</b> データ加工のステップ</a></li>
+<li class="chapter" data-level="4.3" data-path="handling.html"><a href="handling.html#変数の作成"><i class="fa fa-check"></i><b>4.3</b> 変数の作成</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="handling.html"><a href="handling.html#変数の型カテゴリ変数と連続変数"><i class="fa fa-check"></i><b>4.3.1</b> 変数の型（カテゴリ変数と連続変数）</a></li>
+<li class="chapter" data-level="4.3.2" data-path="handling.html"><a href="handling.html#新たな変数をつくるmutate"><i class="fa fa-check"></i><b>4.3.2</b> 新たな変数をつくる：mutate()</a></li>
+<li class="chapter" data-level="4.3.3" data-path="handling.html"><a href="handling.html#条件の指定if_else"><i class="fa fa-check"></i><b>4.3.3</b> 条件の指定：if_else()</a></li>
+<li class="chapter" data-level="4.3.4" data-path="handling.html"><a href="handling.html#複数条件の指定case_when"><i class="fa fa-check"></i><b>4.3.4</b> 複数条件の指定：case_when()</a></li>
+<li class="chapter" data-level="4.3.5" data-path="handling.html"><a href="handling.html#カテゴリ変数へ変換factor"><i class="fa fa-check"></i><b>4.3.5</b> カテゴリ変数へ変換：factor()</a></li>
+<li class="chapter" data-level="4.3.6" data-path="handling.html"><a href="handling.html#必要な列のみ抽出select"><i class="fa fa-check"></i><b>4.3.6</b> 必要な列のみ抽出：select()</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="handling.html"><a href="handling.html#handling-tips"><i class="fa fa-check"></i><b>4.4</b> 変数の作成についてのtips</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="handling.html"><a href="handling.html#カテゴリをまとめる"><i class="fa fa-check"></i><b>4.4.1</b> カテゴリをまとめる</a></li>
+<li class="chapter" data-level="4.4.2" data-path="handling.html"><a href="handling.html#複数の変数を組み合わせた変数を作る"><i class="fa fa-check"></i><b>4.4.2</b> 複数の変数を組み合わせた変数を作る</a></li>
+<li class="chapter" data-level="4.4.3" data-path="handling.html"><a href="handling.html#均等な順序を仮定して連続変数とする"><i class="fa fa-check"></i><b>4.4.3</b> 均等な順序を仮定して連続変数とする</a></li>
+<li class="chapter" data-level="4.4.4" data-path="handling.html"><a href="handling.html#無回答非該当わからないなどをnaに"><i class="fa fa-check"></i><b>4.4.4</b> 無回答、非該当、「わからない」などをNAに</a></li>
+<li class="chapter" data-level="4.4.5" data-path="handling.html"><a href="handling.html#カテゴリ変数の区間の中点をとって連続変数とする"><i class="fa fa-check"></i><b>4.4.5</b> カテゴリ変数の区間の中点をとって連続変数とする</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="handling.html"><a href="handling.html#をつなげてコマンドをまとめる"><i class="fa fa-check"></i><b>4.5</b> %&gt;%をつなげてコマンドをまとめる</a></li>
+<li class="chapter" data-level="4.6" data-path="handling.html"><a href="handling.html#handling_sample"><i class="fa fa-check"></i><b>4.6</b> サンプルの限定</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="handling.html"><a href="handling.html#該当するケースだけを残すfilter"><i class="fa fa-check"></i><b>4.6.1</b> 該当するケースだけを残す：filter()</a></li>
+<li class="chapter" data-level="4.6.2" data-path="handling.html"><a href="handling.html#欠損値の扱い"><i class="fa fa-check"></i><b>4.6.2</b> 欠損値の扱い</a></li>
+<li class="chapter" data-level="4.6.3" data-path="handling.html"><a href="handling.html#外れ値の扱い"><i class="fa fa-check"></i><b>4.6.3</b> 外れ値の扱い</a></li>
+<li class="chapter" data-level="4.6.4" data-path="handling.html"><a href="handling.html#分析用データを書き出す"><i class="fa fa-check"></i><b>4.6.4</b> 分析用データを書き出す</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="handling.html"><a href="handling.html#データの追加発展"><i class="fa fa-check"></i><b>4.7</b> データの追加（発展）</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="descriptives.html"><a href="descriptives.html"><i class="fa fa-check"></i><b>5</b> 1変数の集計</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="descriptives.html"><a href="descriptives.html#連続変数を集計する"><i class="fa fa-check"></i><b>5.1</b> 連続変数を集計する</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="descriptives.html"><a href="descriptives.html#descriptives_summarize"><i class="fa fa-check"></i><b>5.1.1</b> 要約統計量の計算</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="descriptives.html"><a href="descriptives.html#descriptives_ggplot"><i class="fa fa-check"></i><b>5.2</b> 分布をみる</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="descriptives.html"><a href="descriptives.html#ヒストグラムとggplotの導入"><i class="fa fa-check"></i><b>5.2.1</b> ヒストグラムとggplotの導入</a></li>
+<li class="chapter" data-level="5.2.2" data-path="descriptives.html"><a href="descriptives.html#ggplotの設定日本語関係"><i class="fa fa-check"></i><b>5.2.2</b> ggplotの設定（日本語関係）</a></li>
+<li class="chapter" data-level="5.2.3" data-path="descriptives.html"><a href="descriptives.html#軸に名前をつける"><i class="fa fa-check"></i><b>5.2.3</b> 軸に名前をつける</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="descriptives.html"><a href="descriptives.html#カテゴリ変数を集計する"><i class="fa fa-check"></i><b>5.3</b> カテゴリ変数を集計する</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="descriptives.html"><a href="descriptives.html#descriptives_table"><i class="fa fa-check"></i><b>5.3.1</b> 度数の確認</a></li>
+<li class="chapter" data-level="5.3.2" data-path="descriptives.html"><a href="descriptives.html#分布の可視化棒グラフ"><i class="fa fa-check"></i><b>5.3.2</b> 分布の可視化：棒グラフ</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="descriptives.html"><a href="descriptives.html#descriptives_gtsummary"><i class="fa fa-check"></i><b>5.4</b> 記述統計量の一覧表を作る</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="descriptives.html"><a href="descriptives.html#記述統計量の一覧表"><i class="fa fa-check"></i><b>5.4.1</b> 記述統計量の一覧表</a></li>
+<li class="chapter" data-level="5.4.2" data-path="descriptives.html"><a href="descriptives.html#グループ別の記述統計量の一覧表"><i class="fa fa-check"></i><b>5.4.2</b> グループ別の記述統計量の一覧表</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="descriptives.html"><a href="descriptives.html#結果をファイルに書き出す"><i class="fa fa-check"></i><b>5.5</b> 結果をファイルに書き出す</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="descriptives.html"><a href="descriptives.html#結果を入れるためのフォルダを作る"><i class="fa fa-check"></i><b>5.5.1</b> 結果を入れるためのフォルダを作る</a></li>
+<li class="chapter" data-level="5.5.2" data-path="descriptives.html"><a href="descriptives.html#descriptive_export_ggplot"><i class="fa fa-check"></i><b>5.5.2</b> ggplotで作成した図を書き出す</a></li>
+<li class="chapter" data-level="5.5.3" data-path="descriptives.html"><a href="descriptives.html#descriptive_export_tbl_summary"><i class="fa fa-check"></i><b>5.5.3</b> 記述統計の一覧表をwordに書き出す</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="descriptives.html"><a href="descriptives.html#発展tbl_summaryの注意点"><i class="fa fa-check"></i><b>5.6</b> （発展）tbl_summary()の注意点</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="descriptives.html"><a href="descriptives.html#値が少ない連続変数はカテゴリ変数とみなして集計される"><i class="fa fa-check"></i><b>5.6.1</b> 値が少ない連続変数はカテゴリ変数とみなして集計される</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="tabulate.html"><a href="tabulate.html"><i class="fa fa-check"></i><b>6</b> 2変数の集計</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="tabulate.html"><a href="tabulate.html#tabulate_summarize"><i class="fa fa-check"></i><b>6.1</b> 平均値の比較</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="tabulate.html"><a href="tabulate.html#基本"><i class="fa fa-check"></i><b>6.1.1</b> 基本</a></li>
+<li class="chapter" data-level="6.1.2" data-path="tabulate.html"><a href="tabulate.html#棒グラフによる可視化"><i class="fa fa-check"></i><b>6.1.2</b> 棒グラフによる可視化</a></li>
+<li class="chapter" data-level="6.1.3" data-path="tabulate.html"><a href="tabulate.html#複数カテゴリの組み合わせ"><i class="fa fa-check"></i><b>6.1.3</b> 複数カテゴリの組み合わせ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="tabulate.html"><a href="tabulate.html#分布の比較"><i class="fa fa-check"></i><b>6.2</b> 分布の比較</a></li>
+<li class="chapter" data-level="6.3" data-path="tabulate.html"><a href="tabulate.html#クロス集計表"><i class="fa fa-check"></i><b>6.3</b> クロス集計表</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="tabulate.html"><a href="tabulate.html#基本-1"><i class="fa fa-check"></i><b>6.3.1</b> 基本</a></li>
+<li class="chapter" data-level="6.3.2" data-path="tabulate.html"><a href="tabulate.html#カイ2乗検定発展"><i class="fa fa-check"></i><b>6.3.2</b> カイ2乗検定（発展）</a></li>
+<li class="chapter" data-level="6.3.3" data-path="tabulate.html"><a href="tabulate.html#きれいなクロス表をつくる---gtsummarytbl_cross"><i class="fa fa-check"></i><b>6.3.3</b> きれいなクロス表をつくる - gtsummary::tbl_cross()</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="tabulate.html"><a href="tabulate.html#クロス集計表を図示する"><i class="fa fa-check"></i><b>6.4</b> クロス集計表を図示する</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="tabulate.html"><a href="tabulate.html#countを利用する"><i class="fa fa-check"></i><b>6.4.1</b> count()を利用する</a></li>
+<li class="chapter" data-level="6.4.2" data-path="tabulate.html"><a href="tabulate.html#発展countの応用"><i class="fa fa-check"></i><b>6.4.2</b> （発展）count()の応用</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="tabulate.html"><a href="tabulate.html#散布図"><i class="fa fa-check"></i><b>6.5</b> 散布図</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="tabulate.html"><a href="tabulate.html#散布図をみる"><i class="fa fa-check"></i><b>6.5.1</b> 散布図をみる</a></li>
+<li class="chapter" data-level="6.5.2" data-path="tabulate.html"><a href="tabulate.html#カテゴリごとに散布図を分ける"><i class="fa fa-check"></i><b>6.5.2</b> カテゴリごとに散布図を分ける</a></li>
+<li class="chapter" data-level="6.5.3" data-path="tabulate.html"><a href="tabulate.html#相関係数"><i class="fa fa-check"></i><b>6.5.3</b> 相関係数</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="tabulate.html"><a href="tabulate.html#変数集計のときのくふう"><i class="fa fa-check"></i><b>6.6</b> 2変数集計のときのくふう</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="tabulate.html"><a href="tabulate.html#値が粗い連続変数を扱う"><i class="fa fa-check"></i><b>6.6.1</b> 値が粗い連続変数を扱う</a></li>
+<li class="chapter" data-level="6.6.2" data-path="tabulate.html"><a href="tabulate.html#カテゴリが多いクロス集計表を扱う"><i class="fa fa-check"></i><b>6.6.2</b> カテゴリが多いクロス集計表を扱う</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="tabulate.html"><a href="tabulate.html#結果をファイルに書き出す-1"><i class="fa fa-check"></i><b>6.7</b> 結果をファイルに書き出す</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="tabulate.html"><a href="tabulate.html#ggplotで作成した図を書き出す"><i class="fa fa-check"></i><b>6.7.1</b> ggplotで作成した図を書き出す</a></li>
+<li class="chapter" data-level="6.7.2" data-path="tabulate.html"><a href="tabulate.html#クロス集計表をwordファイルに書き出す"><i class="fa fa-check"></i><b>6.7.2</b> クロス集計表をwordファイルに書き出す</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="regression_basic.html"><a href="regression_basic.html"><i class="fa fa-check"></i><b>7</b> 回帰分析の基礎</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="regression_basic.html"><a href="regression_basic.html#回帰分析とは何か"><i class="fa fa-check"></i><b>7.1</b> 回帰分析とは何か</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="regression_basic.html"><a href="regression_basic.html#散布図を眺める"><i class="fa fa-check"></i><b>7.1.1</b> 散布図を眺める</a></li>
+<li class="chapter" data-level="7.1.2" data-path="regression_basic.html"><a href="regression_basic.html#回帰式の読み方"><i class="fa fa-check"></i><b>7.1.2</b> 回帰式の読み方</a></li>
+<li class="chapter" data-level="7.1.3" data-path="regression_basic.html"><a href="regression_basic.html#発展回帰式の決め方最小二乗法"><i class="fa fa-check"></i><b>7.1.3</b> （発展）回帰式の決め方：最小二乗法</a></li>
+<li class="chapter" data-level="7.1.4" data-path="regression_basic.html"><a href="regression_basic.html#母集団における関係の推測"><i class="fa fa-check"></i><b>7.1.4</b> 母集団における関係の推測</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="regression_basic.html"><a href="regression_basic.html#独立変数がカテゴリ変数の場合"><i class="fa fa-check"></i><b>7.2</b> 独立変数がカテゴリ変数の場合</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="regression_basic.html"><a href="regression_basic.html#値のカテゴリ"><i class="fa fa-check"></i><b>7.2.1</b> 2値のカテゴリ</a></li>
+<li class="chapter" data-level="7.2.2" data-path="regression_basic.html"><a href="regression_basic.html#値以上のカテゴリ"><i class="fa fa-check"></i><b>7.2.2</b> 3値以上のカテゴリ</a></li>
+<li class="chapter" data-level="7.2.3" data-path="regression_basic.html"><a href="regression_basic.html#変数がfactorであれば自動でカテゴリとして投入される"><i class="fa fa-check"></i><b>7.2.3</b> 変数がfactorであれば自動でカテゴリとして投入される</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="regression_basic.html"><a href="regression_basic.html#regression_basic_binary"><i class="fa fa-check"></i><b>7.3</b> 従属変数が2値のカテゴリ変数（0/1）の場合</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="regression_basic.html"><a href="regression_basic.html#クロス集計と比較しながら結果をみる"><i class="fa fa-check"></i><b>7.3.1</b> クロス集計と比較しながら結果をみる</a></li>
+<li class="chapter" data-level="7.3.2" data-path="regression_basic.html"><a href="regression_basic.html#散布図と比較しながら結果をみる"><i class="fa fa-check"></i><b>7.3.2</b> 散布図と比較しながら結果をみる</a></li>
+<li class="chapter" data-level="7.3.3" data-path="regression_basic.html"><a href="regression_basic.html#注意点"><i class="fa fa-check"></i><b>7.3.3</b> 注意点</a></li>
+<li class="chapter" data-level="7.3.4" data-path="regression_basic.html"><a href="regression_basic.html#発展ロバスト標準誤差"><i class="fa fa-check"></i><b>7.3.4</b> （発展）ロバスト標準誤差</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="regression_basic.html"><a href="regression_basic.html#発展非線形の関連"><i class="fa fa-check"></i><b>7.4</b> （発展）非線形の関連</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="regression_basic.html"><a href="regression_basic.html#regression_basic_log"><i class="fa fa-check"></i><b>7.4.1</b> 対数変換</a></li>
+<li class="chapter" data-level="7.4.2" data-path="regression_basic.html"><a href="regression_basic.html#次関数型"><i class="fa fa-check"></i><b>7.4.2</b> 2次関数型</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="regression_basic.html"><a href="regression_basic.html#regression_modelsummary"><i class="fa fa-check"></i><b>7.5</b> 回帰分析の結果をきれいに表示する</a></li>
+<li class="chapter" data-level="7.6" data-path="regression_basic.html"><a href="regression_basic.html#regression_basic_export"><i class="fa fa-check"></i><b>7.6</b> 結果をファイルに書き出す</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="regression_basic.html"><a href="regression_basic.html#wordファイルに書き出す"><i class="fa fa-check"></i><b>7.6.1</b> wordファイルに書き出す</a></li>
+<li class="chapter" data-level="7.6.2" data-path="regression_basic.html"><a href="regression_basic.html#excelファイルに書き出す"><i class="fa fa-check"></i><b>7.6.2</b> Excelファイルに書き出す</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="regression_advanced.html"><a href="regression_advanced.html"><i class="fa fa-check"></i><b>8</b> 回帰分析の活用</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="regression_advanced.html"><a href="regression_advanced.html#重回帰分析"><i class="fa fa-check"></i><b>8.1</b> 重回帰分析</a></li>
+<li class="chapter" data-level="8.2" data-path="regression_advanced.html"><a href="regression_advanced.html#交絡要因の統制"><i class="fa fa-check"></i><b>8.2</b> 交絡要因の統制</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="regression_advanced.html"><a href="regression_advanced.html#交絡とは何か"><i class="fa fa-check"></i><b>8.2.1</b> 交絡とは何か</a></li>
+<li class="chapter" data-level="8.2.2" data-path="regression_advanced.html"><a href="regression_advanced.html#結果の比較と解釈"><i class="fa fa-check"></i><b>8.2.2</b> 結果の比較と解釈</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="regression_advanced.html"><a href="regression_advanced.html#媒介分析要因分解"><i class="fa fa-check"></i><b>8.3</b> 媒介分析／要因分解</a></li>
+<li class="chapter" data-level="8.4" data-path="regression_advanced.html"><a href="regression_advanced.html#回帰分析の実際"><i class="fa fa-check"></i><b>8.4</b> 回帰分析の実際</a></li>
+<li class="chapter" data-level="8.5" data-path="regression_advanced.html"><a href="regression_advanced.html#結果をファイルに書き出す-2"><i class="fa fa-check"></i><b>8.5</b> 結果をファイルに書き出す</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regression_interaction.html"><a href="regression_interaction.html"><i class="fa fa-check"></i><b>9</b> 交互作用</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="regression_interaction.html"><a href="regression_interaction.html#交互作用とはなにか"><i class="fa fa-check"></i><b>9.1</b> 交互作用とはなにか</a></li>
+<li class="chapter" data-level="9.2" data-path="regression_interaction.html"><a href="regression_interaction.html#xが連続変数zがカテゴリ変数またはその逆の場合"><i class="fa fa-check"></i><b>9.2</b> xが連続変数、zがカテゴリ変数（またはその逆）の場合</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="regression_interaction.html"><a href="regression_interaction.html#実例数的思考力が賃金を高める効果は性別によって異なるか"><i class="fa fa-check"></i><b>9.2.1</b> 実例：数的思考力が賃金を高める効果は性別によって異なるか？</a></li>
+<li class="chapter" data-level="9.2.2" data-path="regression_interaction.html"><a href="regression_interaction.html#結果を図示する"><i class="fa fa-check"></i><b>9.2.2</b> 結果を図示する</a></li>
+<li class="chapter" data-level="9.2.3" data-path="regression_interaction.html"><a href="regression_interaction.html#xがカテゴリ変数zが連続変数の場合"><i class="fa fa-check"></i><b>9.2.3</b> xがカテゴリ変数、zが連続変数の場合</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="regression_interaction.html"><a href="regression_interaction.html#xがカテゴリ変数zがカテゴリ変数の場合"><i class="fa fa-check"></i><b>9.3</b> xがカテゴリ変数、zがカテゴリ変数の場合</a></li>
+<li class="chapter" data-level="9.4" data-path="regression_interaction.html"><a href="regression_interaction.html#xが連続変数zが連続変数の場合作成中"><i class="fa fa-check"></i><b>9.4</b> xが連続変数、zが連続変数の場合（作成中）</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="logit.html"><a href="logit.html"><i class="fa fa-check"></i><b>10</b> ロジスティック回帰分析（作成中）</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="logit.html"><a href="logit.html#二値変数を従属変数にする線形回帰分析を使ったアプローチ"><i class="fa fa-check"></i><b>10.1</b> 二値変数を従属変数にする：線形回帰分析を使ったアプローチ</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="logit.html"><a href="logit.html#線形確率モデル"><i class="fa fa-check"></i><b>10.1.1</b> 線形確率モデル</a></li>
+<li class="chapter" data-level="10.1.2" data-path="logit.html"><a href="logit.html#残差が正規分布しない問題への対処"><i class="fa fa-check"></i><b>10.1.2</b> 残差が正規分布しない問題への対処</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="logit.html"><a href="logit.html#ロジスティック回帰分析とは"><i class="fa fa-check"></i><b>10.2</b> ロジスティック回帰分析とは</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="logit.html"><a href="logit.html#ロジスティック回帰分析ロジットモデル"><i class="fa fa-check"></i><b>10.2.1</b> ロジスティック回帰分析（ロジットモデル）</a></li>
+<li class="chapter" data-level="10.2.2" data-path="logit.html"><a href="logit.html#対数オッズ比の解釈"><i class="fa fa-check"></i><b>10.2.2</b> 対数オッズ比の解釈</a></li>
+<li class="chapter" data-level="10.2.3" data-path="logit.html"><a href="logit.html#連続変数を独立変数とする場合"><i class="fa fa-check"></i><b>10.2.3</b> 連続変数を独立変数とする場合</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="logit.html"><a href="logit.html#平均限界効果"><i class="fa fa-check"></i><b>10.3</b> 平均限界効果</a></li>
+<li class="chapter" data-level="10.4" data-path="logit.html"><a href="logit.html#ロジスティック回帰分析の注意点"><i class="fa fa-check"></i><b>10.4</b> ロジスティック回帰分析の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="domain.html"><a href="domain.html"><i class="fa fa-check"></i><b>11</b> 社会学のデータ分析でよくある処理</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="domain.html"><a href="domain.html#ssm職業小分類を大分類にまとめる"><i class="fa fa-check"></i><b>11.1</b> SSM職業小分類を大分類にまとめる</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="domain.html"><a href="domain.html#jgssの場合"><i class="fa fa-check"></i><b>11.1.1</b> JGSSの場合</a></li>
+<li class="chapter" data-level="11.1.2" data-path="domain.html"><a href="domain.html#ssmの場合"><i class="fa fa-check"></i><b>11.1.2</b> SSMの場合</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="domain.html"><a href="domain.html#旧制学歴と新制学歴の対応"><i class="fa fa-check"></i><b>11.2</b> 旧制学歴と新制学歴の対応</a></li>
+<li class="chapter" data-level="11.3" data-path="domain.html"><a href="domain.html#domain_income"><i class="fa fa-check"></i><b>11.3</b> 年収カテゴリを連続変数にする</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="domain.html"><a href="domain.html#年収を連続変数にする"><i class="fa fa-check"></i><b>11.3.1</b> 年収を連続変数にする</a></li>
+<li class="chapter" data-level="11.3.2" data-path="domain.html"><a href="domain.html#時間あたり賃金を作成する"><i class="fa fa-check"></i><b>11.3.2</b> 時間あたり賃金を作成する</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="domain.html"><a href="domain.html#都道府県変数の加工"><i class="fa fa-check"></i><b>11.4</b> 都道府県変数の加工</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="domain.html"><a href="domain.html#都道府県にラベルをつける"><i class="fa fa-check"></i><b>11.4.1</b> 都道府県にラベルをつける</a></li>
+<li class="chapter" data-level="11.4.2" data-path="domain.html"><a href="domain.html#都道府県レベルの指標を外挿する"><i class="fa fa-check"></i><b>11.4.2</b> 都道府県レベルの指標を外挿する</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="writepaper.html"><a href="writepaper.html"><i class="fa fa-check"></i><b>12</b> 論文のまとめ方</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="writepaper.html"><a href="writepaper.html#全体の構成"><i class="fa fa-check"></i><b>12.1</b> 全体の構成</a></li>
+<li class="chapter" data-level="12.2" data-path="writepaper.html"><a href="writepaper.html#タイトル"><i class="fa fa-check"></i><b>12.2</b> タイトル</a></li>
+<li class="chapter" data-level="12.3" data-path="writepaper.html"><a href="writepaper.html#要約"><i class="fa fa-check"></i><b>12.3</b> 要約</a></li>
+<li class="chapter" data-level="12.4" data-path="writepaper.html"><a href="writepaper.html#序論"><i class="fa fa-check"></i><b>12.4</b> 序論</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="writepaper.html"><a href="writepaper.html#問題背景1段落"><i class="fa fa-check"></i><b>12.4.1</b> 問題背景（1段落）</a></li>
+<li class="chapter" data-level="12.4.2" data-path="writepaper.html"><a href="writepaper.html#先行研究の検討12段落"><i class="fa fa-check"></i><b>12.4.2</b> 先行研究の検討（1–2段落）</a></li>
+<li class="chapter" data-level="12.4.3" data-path="writepaper.html"><a href="writepaper.html#研究目的と方法12段落"><i class="fa fa-check"></i><b>12.4.3</b> 研究目的と方法（1–2段落）</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="writepaper.html"><a href="writepaper.html#先行研究理論枠組み仮説"><i class="fa fa-check"></i><b>12.5</b> 先行研究・理論枠組み・仮説</a></li>
+<li class="chapter" data-level="12.6" data-path="writepaper.html"><a href="writepaper.html#方法-1"><i class="fa fa-check"></i><b>12.6</b> 方法</a>
+<ul>
+<li class="chapter" data-level="12.6.1" data-path="writepaper.html"><a href="writepaper.html#データと分析対象"><i class="fa fa-check"></i><b>12.6.1</b> データと分析対象</a></li>
+<li class="chapter" data-level="12.6.2" data-path="writepaper.html"><a href="writepaper.html#変数"><i class="fa fa-check"></i><b>12.6.2</b> 変数</a></li>
+<li class="chapter" data-level="12.6.3" data-path="writepaper.html"><a href="writepaper.html#分析手法"><i class="fa fa-check"></i><b>12.6.3</b> 分析手法</a></li>
+</ul></li>
+<li class="chapter" data-level="12.7" data-path="writepaper.html"><a href="writepaper.html#結果"><i class="fa fa-check"></i><b>12.7</b> 結果</a>
+<ul>
+<li class="chapter" data-level="12.7.1" data-path="writepaper.html"><a href="writepaper.html#記述的分析"><i class="fa fa-check"></i><b>12.7.1</b> 記述的分析</a></li>
+<li class="chapter" data-level="12.7.2" data-path="writepaper.html"><a href="writepaper.html#回帰分析"><i class="fa fa-check"></i><b>12.7.2</b> 回帰分析</a></li>
+</ul></li>
+<li class="chapter" data-level="12.8" data-path="writepaper.html"><a href="writepaper.html#結論"><i class="fa fa-check"></i><b>12.8</b> 結論</a>
+<ul>
+<li class="chapter" data-level="12.8.1" data-path="writepaper.html"><a href="writepaper.html#背景と目的の再確認1段落"><i class="fa fa-check"></i><b>12.8.1</b> 背景と目的の再確認（1段落）</a></li>
+<li class="chapter" data-level="12.8.2" data-path="writepaper.html"><a href="writepaper.html#分析結果の要約と解釈23段落"><i class="fa fa-check"></i><b>12.8.2</b> 分析結果の要約と解釈（2–3段落）</a></li>
+<li class="chapter" data-level="12.8.3" data-path="writepaper.html"><a href="writepaper.html#課題限界1段落"><i class="fa fa-check"></i><b>12.8.3</b> 課題・限界（1段落）</a></li>
+<li class="chapter" data-level="12.8.4" data-path="writepaper.html"><a href="writepaper.html#まとめ1段落任意"><i class="fa fa-check"></i><b>12.8.4</b> まとめ（1段落、任意）</a></li>
+</ul></li>
+<li class="chapter" data-level="12.9" data-path="writepaper.html"><a href="writepaper.html#謝辞"><i class="fa fa-check"></i><b>12.9</b> 謝辞</a></li>
+<li class="chapter" data-level="12.10" data-path="writepaper.html"><a href="writepaper.html#参考文献-1"><i class="fa fa-check"></i><b>12.10</b> 参考文献</a></li>
+<li class="chapter" data-level="12.11" data-path="writepaper.html"><a href="writepaper.html#形式上の注意事項"><i class="fa fa-check"></i><b>12.11</b> 形式上の注意事項</a>
+<ul>
+<li class="chapter" data-level="12.11.1" data-path="writepaper.html"><a href="writepaper.html#推奨するwordの設定"><i class="fa fa-check"></i><b>12.11.1</b> 推奨するWordの設定</a></li>
+<li class="chapter" data-level="12.11.2" data-path="writepaper.html"><a href="writepaper.html#引用の形式"><i class="fa fa-check"></i><b>12.11.2</b> 引用の形式</a></li>
+<li class="chapter" data-level="12.11.3" data-path="writepaper.html"><a href="writepaper.html#図表の形式"><i class="fa fa-check"></i><b>12.11.3</b> 図表の形式</a></li>
+<li class="chapter" data-level="12.11.4" data-path="writepaper.html"><a href="writepaper.html#脚注"><i class="fa fa-check"></i><b>12.11.4</b> 脚注</a></li>
+<li class="chapter" data-level="12.11.5" data-path="writepaper.html"><a href="writepaper.html#参考文献の記載例"><i class="fa fa-check"></i><b>12.11.5</b> 参考文献の記載例</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="presentation.html"><a href="presentation.html"><i class="fa fa-check"></i><b>13</b> 研究発表をする</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="presentation.html"><a href="presentation.html#タイトルと名前"><i class="fa fa-check"></i><b>13.1</b> タイトルと名前</a></li>
+<li class="chapter" data-level="13.2" data-path="presentation.html"><a href="presentation.html#序論問題背景"><i class="fa fa-check"></i><b>13.2</b> 序論・問題背景</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="presentation.html"><a href="presentation.html#問題背景1ページ"><i class="fa fa-check"></i><b>13.2.1</b> 問題背景（1ページ）</a></li>
+<li class="chapter" data-level="13.2.2" data-path="presentation.html"><a href="presentation.html#先行研究で明らかになっていない点1ページ"><i class="fa fa-check"></i><b>13.2.2</b> 先行研究で明らかになっていない点（1ページ）</a></li>
+<li class="chapter" data-level="13.2.3" data-path="presentation.html"><a href="presentation.html#研究目的問い1ページ"><i class="fa fa-check"></i><b>13.2.3</b> 研究目的・問い（1ページ）</a></li>
+<li class="chapter" data-level="13.2.4" data-path="presentation.html"><a href="presentation.html#仮説任意-1ページ"><i class="fa fa-check"></i><b>13.2.4</b> 仮説（任意, 1ページ）</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="presentation.html"><a href="presentation.html#方法-2"><i class="fa fa-check"></i><b>13.3</b> 方法</a>
+<ul>
+<li class="chapter" data-level="13.3.1" data-path="presentation.html"><a href="presentation.html#データと分析対象1ページ"><i class="fa fa-check"></i><b>13.3.1</b> データと分析対象（1ページ）</a></li>
+<li class="chapter" data-level="13.3.2" data-path="presentation.html"><a href="presentation.html#用いる変数1ページ"><i class="fa fa-check"></i><b>13.3.2</b> 用いる変数（1ページ）</a></li>
+<li class="chapter" data-level="13.3.3" data-path="presentation.html"><a href="presentation.html#分析方法任意-1ページ"><i class="fa fa-check"></i><b>13.3.3</b> 分析方法（任意, 1ページ）</a></li>
+</ul></li>
+<li class="chapter" data-level="13.4" data-path="presentation.html"><a href="presentation.html#分析結果"><i class="fa fa-check"></i><b>13.4</b> 分析結果</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="presentation.html"><a href="presentation.html#変数の分析xページ"><i class="fa fa-check"></i><b>13.4.1</b> 2変数の分析（xページ）</a></li>
+<li class="chapter" data-level="13.4.2" data-path="presentation.html"><a href="presentation.html#回帰分析などxページ"><i class="fa fa-check"></i><b>13.4.2</b> 回帰分析など（xページ）</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="presentation.html"><a href="presentation.html#結論-1"><i class="fa fa-check"></i><b>13.5</b> 結論</a>
+<ul>
+<li class="chapter" data-level="13.5.1" data-path="presentation.html"><a href="presentation.html#分析結果のまとめ1ページ任意"><i class="fa fa-check"></i><b>13.5.1</b> 分析結果のまとめ（1ページ、任意）</a></li>
+<li class="chapter" data-level="13.5.2" data-path="presentation.html"><a href="presentation.html#考察課題1ページ"><i class="fa fa-check"></i><b>13.5.2</b> 考察・課題（1ページ）</a></li>
+</ul></li>
+<li class="chapter" data-level="13.6" data-path="presentation.html"><a href="presentation.html#その他の一般的なtips"><i class="fa fa-check"></i><b>13.6</b> その他の一般的なTips</a>
+<ul>
+<li class="chapter" data-level="13.6.1" data-path="presentation.html"><a href="presentation.html#文字は大きく少なく"><i class="fa fa-check"></i><b>13.6.1</b> 文字は大きく少なく</a></li>
+<li class="chapter" data-level="13.6.2" data-path="presentation.html"><a href="presentation.html#スライドにはページ数を書く"><i class="fa fa-check"></i><b>13.6.2</b> スライドにはページ数を書く</a></li>
+<li class="chapter" data-level="13.6.3" data-path="presentation.html"><a href="presentation.html#スライドつくりの参考資料"><i class="fa fa-check"></i><b>13.6.3</b> スライドつくりの参考資料</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>14</b> さらなる学習のための参考文献</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="reference.html"><a href="reference.html#実証研究の基礎スキル"><i class="fa fa-check"></i><b>14.1</b> 実証研究の基礎スキル</a></li>
+<li class="chapter" data-level="14.2" data-path="reference.html"><a href="reference.html#rの使い方"><i class="fa fa-check"></i><b>14.2</b> Rの使い方</a></li>
+<li class="chapter" data-level="14.3" data-path="reference.html"><a href="reference.html#ggplotの解説"><i class="fa fa-check"></i><b>14.3</b> ggplotの解説</a></li>
+<li class="chapter" data-level="14.4" data-path="reference.html"><a href="reference.html#統計学計量分析を学ぶ"><i class="fa fa-check"></i><b>14.4</b> 統計学・計量分析を学ぶ</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rによる社会調査データ分析の手引き</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="plan" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1</span> 研究計画を立てる<a href="plan.html#plan" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>本章では、データ分析に着手し、論文をまとめるための大前提となる研究計画の立て方を説明する。</p>
+<div id="研究計画とは" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> 研究計画とは<a href="plan.html#研究計画とは" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>何も考えずにただデータを分析し始めても、よい論文を書くのは難しい。実際にデータを開いて分析を始める前に十分に計画を練っておくことで、有意義な論文を書くことにつながる。そこで後期が始まるまでに、グループごとに研究計画書を作成してもらう。研究計画書では以下のような内容を書く。分量としてはだいたい3–5ページくらい（参考文献リスト含む）。ここで書いた研究計画書を最初のたたき台として、データ分析を行い、期末レポートを執筆する。</p>
+<p>研究計画書は、以下の4つの要素からなる：</p>
+<ol style="list-style-type: decimal">
+<li>研究背景</li>
+<li>研究目的・問い</li>
+<li>方法</li>
+<li>参考文献</li>
+</ol>
+<p>これら研究計画に書いた内容は、たんに計画を立てるというだけでなく、これを土台にして（膨らませて）論文にしていくものでもある。研究計画は次のような役割を果たす：</p>
+<ol style="list-style-type: decimal">
+<li><strong>何を明らかにするのか（問い）を明確にする</strong>：問いは、何をどのように分析するのかについての指針を与えてくれる。問いが明確であるほど、やるべきことはクリアになる。</li>
+<li><strong>先行研究で解かれていない謎を明確にする</strong>：先行研究を整理することで、先行研究で解かれていない点や、矛盾している点、先行研究のやり方では十分に明らかにできていないことが見えてくる。</li>
+<li><strong>問いがなぜ重要なのかを明確にする</strong>：先行研究で解かれていないことやまだ明らかになっていないことがあるのは、もしかするとそれらがあまり重要ではないからかもしれない。問いがなぜ重要なのか、何が問うに値する重要な問いなのかをあらかじめきちんと考えておけば、あまり重要ではない問いに時間を浪費せずにすむ。</li>
+</ol>
+<p>よく練られた研究計画であればあるほど、論文を書くときの苦労は少なくなり、よい論文につながる可能性は高くなる。たとえば自分で調査をしたり実験をしたりしてデータを集めるときに研究計画が重要であることは言うまでもない。しかしながら、たとえこの授業のように自分でデータを集めないのだとしても、上記の効用はとても大きく、研究計画の作成には時間をかける価値がある。以下、上記の要素一つひとつについてくわしくみていく。</p>
+</div>
+<div id="plan_background" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> 研究背景<a href="plan.html#plan_background" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>研究背景は、次の2–4段落からなる。</p>
+<div id="問題背景1段落程度" class="section level3 hasAnchor" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> 問題背景（1段落程度）<a href="plan.html#問題背景1段落程度" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>研究で扱いたい問題が社会問題としてand/or社会学的に重要である</strong>ことを述べる。</p>
+<ul>
+<li>社会問題として重要、というのは、平等、人権、健康、持続可能性などなど、人間社会において重要とされている価値に照らして、その重要性を主張するものである。一見個人的な問題であっても社会問題と関わりをもつことは多いので<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>、必ずしも世の中で「社会問題」だと言われている必要はない。どのようなトピックであっても、それがなぜ社会問題として重要であるのかを考える必要がある。また、その問題の重要性や規模感を示す根拠として公的統計の値などを提示することもある。</li>
+<li>社会学的に重要、というのは、社会学で伝統的に扱われてきた問題に照らして、その重要性を主張するものである。不平等に関係する社会学の伝統的な問題としては、世代間社会移動、教育機会の不平等、労働市場におけるジェンダー不平等、家族形成のパターン、夫婦間の無償労働の分担（権力関係）などが挙げられる。伝統的に扱われてきた問題はそれだけその重要性が認められており、したがって扱うトピックが重要であることを示す根拠にもなる。</li>
+</ul>
+<p>もちろん、「自分が関心を持った」というのは最初のモチベーションとして大事だが、「自分が関心をもった」というだけでは、他の人にとっては説得的できない。他の人にとって関心をもってもらえるような理由を述べることが大事である。</p>
+</div>
+<div id="先行研究の整理13段落程度" class="section level3 hasAnchor" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> 先行研究の整理（1–3段落程度）<a href="plan.html#先行研究の整理13段落程度" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>先に述べた問題に関連して、先行研究がこれまでに何を明らかにし、何を明らかにしていないのか、あるいは先行研究に存在する限界点を提示する。</p>
+<p>調べた先行研究を1つひとつすべて羅列するわけではなく、それらをまとめた全体像を意識する。</p>
+<p>先行研究の検討を通じて、<strong>（重要であるにもかかわらず）明らかになっていないこと・課題が何か</strong>を示す。<strong>この箇所こそが、自分たちの研究で解く「問い」になる</strong>。研究のオリジナリティを示すためには、十分に先行研究を読み込み、整理しなければならない。</p>
+<p>先行研究が乏しいからといって、必ずしもそのテーマが「悪い」テーマであるということではない。重要であるにもかかわらず、これまで注目されてこなかったり、利用可能なデータが限られていたりするために十分に扱われていないテーマは少なくない。ただし、あまり扱う意義がない（社会問題として and/or 社会学的に重要性が低い）ために先行研究が少ないという場合には、そのテーマを選択するのはあまり良くないだろう。両者の違いはしばしば見分けるのが難しいので、教員に相談するとよい。</p>
+</div>
+</div>
+<div id="plan_question" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> 研究目的・問い<a href="plan.html#plan_question" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>研究目的・問いは、次の1–3段落程度からなる。</p>
+<div id="研究目的問い12段落程度" class="section level3 hasAnchor" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> 研究目的・問い（1–2段落程度）<a href="plan.html#研究目的問い12段落程度" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>研究目的（問い）を提示する。「xxxを明らかにする」「どの程度yyyなのか？」など、何をやるのかが明確な問いを提示する。</p>
+<p>社会調査データを使った分析で取り組まれる問いには、大きく分けて2種類の問いがある。</p>
+<ol style="list-style-type: decimal">
+<li><strong>記述的問い</strong>：実態を明らかにすることを目的とする問い。すでに明らかになっている実態をさらに掘り下げてみていくことも含まれる。</li>
+<li><strong>説明的問い</strong>：実態が明らかになっていることを（ある程度）前提として、それがなぜ生じるのかを明らかにすることを目的とする問い。</li>
+</ol>
+<p><strong>問いを立てるときには、先行研究をよく読んで、問いを「絞る」ことが大切</strong>になる。たとえば、「なぜジェンダー格差があるのか？」というのは、問いの形ではあるけれども、それだけではあまりに大きすぎ、かつ漠然としているため、到底1つの論文で答えることはできず、分析の焦点もぼやけてしまう。そこで、答えることができる問いへと焦点を絞っていくことが大事になる。</p>
+<p>問いを絞るときには、次のような要素を考えるとよい。</p>
+<ol style="list-style-type: decimal">
+<li>誰を対象とするのか？：国、時代、年齢、就業状態、など</li>
+<li>どのような集団どうしを比較するのか？：男性と女性、ひとり親世帯出身者とふたり親世帯出身者、大卒者と非大卒者、既婚者と未婚者、時代、など</li>
+<li>何の変数を比較するのか？：教育達成、賃金、幸福度、友人の有無、など</li>
+</ol>
+<p>また、問いを立てるときには、実際にデータによって検証可能な問いにする必要がある。社会問題として and/or 社会学的に重要な問いはいくらでもあるが、問いに答えるのに十分な情報を収集したデータがなければ、検証することはできない。そのような場合には、類似する検証可能な問いに変換したり、別の問いを探したりする必要がある。完璧なデータというのは存在しない以上、問いをずらして検証可能なようにするというのはよく行われることである。</p>
+<p>たいていの場合、問いは「大きすぎる」ことが多い。問いを絞れているというのはつまり、それだけ先行研究をチェックして、何がわかっていないのかを特定できているということであるから、問いは小さくても構わないどころか、むしろ小さい方がよいといえる（ただし、あまりに小さすぎて意義がほとんどないというのはよくない）。どんなに小さくても、明確な問いを立ててそれを検証することができれば、それによってこれまでわかっていなかったことを明らかにするという貢献につながる。</p>
+</div>
+<div id="仮説1段落程度あれば" class="section level3 hasAnchor" number="1.3.2">
+<h3><span class="header-section-number">1.3.2</span> 仮説（1段落程度、あれば）<a href="plan.html#仮説1段落程度あれば" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>上記の問いに対する仮説を提示する。1つでもよいし、複数（最大で4つほど）あってもよい。このとき、ただ仮説だけを書くのではなく、そのような仮説が導かれる根拠（なぜそのように考えられるのか？）についても書く。仮説を導くときには、理論（的に考えること）がしばしば有効である。</p>
+<p>仮説は、「男性は女性と比べて近所との付き合いが少ない」「所得が高いほど、政府による所得の再分配に反対しやすい」といったように、比較の視点が入っており、かつ、検証可能なものであるとよい。</p>
+</div>
+</div>
+<div id="方法" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> 方法<a href="plan.html#方法" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="データ" class="section level3 hasAnchor" number="1.4.1">
+<h3><span class="header-section-number">1.4.1</span> データ<a href="plan.html#データ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>何の調査データを使用するのかを書く。またその調査データがどのような人を対象としており、いつ、どのような方法で調査が実施されたのか、どのような質問項目を聴取しているのかについて書く。</p>
+</div>
+<div id="分析対象" class="section level3 hasAnchor" number="1.4.2">
+<h3><span class="header-section-number">1.4.2</span> 分析対象<a href="plan.html#分析対象" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>実際に分析する対象（母集団）について書く。たいていの社会調査データは広い母集団を対象としているので、そこから分析対象を絞ることが多い。何歳から何歳までか。男性も女性も含むか、どちらかだけか。働いている人か、働いていない人も含むか、結婚している人か、など。</p>
+<p>データや分析対象が先に設定した問いときちんと対応しているかをよく確認する。たとえば、「親の労働時間が長いと子どものメンタルヘルスは悪化するのではないか？」という問いを立てたとする。このような場合であれば、子どもを分析対象とする必要があり、大人（成人）を対象とした調査では答えることが難しい。また、子どもを対象とした調査だとしても、親の労働時間を尋ねていない調査であったとしたら、やはりこの問いには答えることができない。</p>
+</div>
+<div id="使用する変数" class="section level3 hasAnchor" number="1.4.3">
+<h3><span class="header-section-number">1.4.3</span> 使用する変数<a href="plan.html#使用する変数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>従属変数、独立変数、あるいは統制変数について、使用予定の変数を書く。また、変数の名前だけでなく、どのように値を加工するかについても書くと良い。たとえばJGSSの場合は次のように書く。</p>
+<ul>
+<li>子どもへの教育費支出（SZEXED：世帯支出 - 教育費）。回答区間の中央値をとって、連続変数に変換する。</li>
+<li>本人の最終学歴（XXLSTSCH：最終学校（本人））。中学、高校、短大高専、大学の4カテゴリにまとめる。</li>
+</ul>
+</div>
+<div id="分析方法" class="section level3 hasAnchor" number="1.4.4">
+<h3><span class="header-section-number">1.4.4</span> 分析方法<a href="plan.html#分析方法" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>クロス集計、散布図、平均値の比較、回帰分析、など、使用予定の分析手法について書く。また、どのように分析するのか（何の変数と何の変数のクロス集計を作成するのか？など）についても書けるとよい。</p>
+</div>
+</div>
+<div id="参考文献" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> 参考文献<a href="plan.html#参考文献" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>研究計画書で引用した文献（書籍、論文、ウェブサイト等）について書く。読んだけれども引用はしていない文献は含めない。書籍・論文を含め少なくとも10本以上は引用するのが望ましい。実際には読んだけれど引用しないという文献もあるので、数十本は目を通すことになる。</p>
+<p>後で述べるとおり文献の質は玉石混交であり、また研究には「流れ」があるため、手当り次第にインターネットを検索して文献を羅列してもあまりよい先行研究のサーベイにはならない。先行研究の探し方については後述する。</p>
+</div>
+<div id="使用する調査データの選定" class="section level2 hasAnchor" number="1.6">
+<h2><span class="header-section-number">1.6</span> 使用する調査データの選定<a href="plan.html#使用する調査データの選定" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="個票データとは何か" class="section level3 hasAnchor" number="1.6.1">
+<h3><span class="header-section-number">1.6.1</span> 個票データとは何か<a href="plan.html#個票データとは何か" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>たとえば「学歴が高い人ほど平均年収が高い」といった仮説や、「学歴が高い人ほど子どもがいる割合が高い」といった仮説を検証したいとする。このような仮説を検証する場合には、一人ひとりについて（1）学歴、（2）年収、そして（3）子どもがいるかどうか、についての情報を得ることが必要である。このように、一人ひとりについてさまざまな情報を（アンケートなどによって）聴取し、その回答を集めたデータを個票データと呼ぶ。たとえば今回の場合は、以下の［A］のような回答を格納した個票データが得られたとしよう。</p>
+<table>
+<caption>［A］個票データ</caption>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th><strong>最終学歴</strong></th>
+<th><strong>個人年収</strong></th>
+<th><strong>子どもの有無</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>大学</td>
+<td>500</td>
+<td>1（あり）</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>中学</td>
+<td>300</td>
+<td>1（あり）</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>高校</td>
+<td>500</td>
+<td>0（なし）</td>
+</tr>
+<tr class="even">
+<td>︙</td>
+<td>︙</td>
+<td>︙</td>
+<td>︙</td>
+</tr>
+<tr class="odd">
+<td>99</td>
+<td>大学</td>
+<td>700</td>
+<td>1（あり）</td>
+</tr>
+<tr class="even">
+<td>100</td>
+<td>高校</td>
+<td>400</td>
+<td>0（なし）</td>
+</tr>
+</tbody>
+</table>
+<p>たんに個票データをじっと眺めてみても、それだけでは傾向は見えてこない（おもしろいかもしれないが）。このような個票データから先に立てた問いに答えるためには、学歴ごとに、年収の平均値や、子どもがいる人の割合を計算する必要がある。このように計算を行って得られたのが、以下の［B］の集計データである。研究者はこのような個票データをもとにさまざまな集計を行って、属性間の傾向の違いを検討したりしており、実際に論文に示されたり、政府の白書などで示されたり、<a href="https://www.e-stat.go.jp/">e-Stat</a>に掲載されたりしているのは、［B］のように加工されたあとの結果である。</p>
+<table>
+<caption>［B］集計データ</caption>
+<tbody>
+<tr class="odd">
+<td><strong>最終学歴</strong></td>
+<td><strong>個人年収の平均</strong></td>
+<td><strong>子どもがいる割合</strong></td>
+</tr>
+<tr class="even">
+<td>中学</td>
+<td>319</td>
+<td>0.8</td>
+</tr>
+<tr class="odd">
+<td>高校</td>
+<td>424</td>
+<td>0.85</td>
+</tr>
+<tr class="even">
+<td>大学</td>
+<td>566</td>
+<td>0.91</td>
+</tr>
+</tbody>
+</table>
+<p>自分の関心にもとづいて、先行研究ではまだわかっていない独自の仮説を検証したいとき、多くの場合は［A］の個票データを手に入れる必要がある。もちろん、このような個票データを取得することは簡単ではない。そのへんを歩いている人にアンケートを配ってみたり、SNSでGoogleFormに回答するよう呼びかけて集めたとしても、知りたい対象からランダムに選ばれたデータになるとは到底言えないし、回答する人も大変である。</p>
+<p>そこで、過去の研究者や研究機関などが実施した質の高い調査を二次利用することで、新しく調査を行ったり、回答の負担をかけることなく、自分独自の問いに答え、社会の実態を明らかにすることができる。</p>
+</div>
+<div id="jgss" class="section level3 hasAnchor" number="1.6.2">
+<h3><span class="header-section-number">1.6.2</span> JGSS<a href="plan.html#jgss" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>このような個票データを使おうと思った場合、まずは、大阪商業大学JGSS研究センターが実施している、<a href="https://jgss.daishodai.ac.jp/index.html">日本版総合的社会調査（Japan General Social Survey, JGSS）</a>のデータを使うことを考えてみるとよい。JGSSでは調査年ごとに非常に多様な質問項目が設けられているので、大抵の問題関心に沿った分析が可能である。</p>
+<ol style="list-style-type: decimal">
+<li>まず、どのような調査がされているのかを確認してみよう。調査対象者は？調査の形式は？どのような調査票？調査の詳細は、<a href="https://jgss.daishodai.ac.jp/surveys/sur_top.html">こちら</a>に記されている。</li>
+<li>次に、関心に合う項目を探してみよう。項目は<a href="https://jgss.daishodai.ac.jp/surveys/sur_hpdata.html">こちら</a>から調べることができる。</li>
+<li>関心に合う項目を見つけたら、その項目が何年の調査で尋ねられているか確認しよう。2022/6/3時点では2000–2018年のデータが使用できる。</li>
+<li>JGSSは20–89歳という幅広い年齢層を対象としているため、たとえば5000人の有効回答があったとしても、分析対象者を限定していくと、対象人数は少なくなり、分析が難しいことがある。このような場合には、複数時点の調査データを合併して分析する（もしくは後述のように別のデータを使う）という方法がある<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>。ただし、関心のある変数がどの時点にも含まれているかどうかをよく確認すること。</li>
+<li>居住都道府県に関する情報は2006年まで、地域ブロック（北海道・東北、関東、中部、近畿、中国・四国、九州の6区分）に関する情報は2010年までのデータにしか含まれていないことに注意。詳しくは<a href="https://jgss.daishodai.ac.jp/data/dat_application_pref.html">こちら</a>を参照のこと。</li>
+</ol>
+</div>
+<div id="jgss以外の日本の社会調査" class="section level3 hasAnchor" number="1.6.3">
+<h3><span class="header-section-number">1.6.3</span> JGSS以外の日本の社会調査<a href="plan.html#jgss以外の日本の社会調査" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>JGSSでは自分たちの関心にあった研究が難しいという場合もあるかもしれない。その場合には、別のデータセットの使用を考えてみよう。<a href="https://csrda.iss.u-tokyo.ac.jp/">東京大学社会科学研究所附属社会調査・データアーカイブ研究センター</a>が提供するデータアーカイブでは、研究用に個票データを貸し出している。<a href="https://csrda.iss.u-tokyo.ac.jp/infrastructure/access/choice/">ここ</a>から、データを探してみよう。</p>
+<p><a href="https://ssjda.iss.u-tokyo.ac.jp/Direct/datasearch.php">データ検索システム</a>にアクセスし、「教育目的利用」の欄を「利用可」に設定し、適当な単語などを入れて検索すると、条件に該当する調査データの一覧が表示される<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>。</p>
+<p>ただし、調査の質はさまざまなので注意したい。気になるデータがあれば、教員に聞くこと。個人的におすすめできる調査データ、および過去の授業で使われた実績のある調査データは次のとおり。</p>
+<table>
+<colgroup>
+<col width="30%" />
+<col width="31%" />
+<col width="38%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>調査名</th>
+<th>実施者</th>
+<th>実施年</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>社会階層と社会移動全国調査（SSM調査）</td>
+<td>SSM調査管理委員会</td>
+<td>1955年から10年ごと</td>
+</tr>
+<tr class="even">
+<td>全国家族調査（NFRJ）</td>
+<td>日本家族社会学会</td>
+<td>1998, 2001, 2003, 2008–2012年、2018年（未公開）</td>
+</tr>
+<tr class="odd">
+<td>東大社研・若年壮年パネル調査（JLPS）</td>
+<td>東京大学社会科学研究所</td>
+<td>2007年から毎年</td>
+</tr>
+<tr class="even">
+<td>全国就業実態パネル調査（JPSED）</td>
+<td>リクルートワークス研究所</td>
+<td>2016年から毎年</td>
+</tr>
+<tr class="odd">
+<td>子どもの生活と学びに関する親子調査</td>
+<td>ベネッセ教育総合研究所</td>
+<td>2015年から毎年</td>
+</tr>
+<tr class="even">
+<td>日本人の意識調査</td>
+<td>NHK放送文化研究所世論調査部</td>
+<td>1973年から5年ごと</td>
+</tr>
+<tr class="odd">
+<td>親と子の生活意識に関する調査</td>
+<td>内閣府子ども若者・子育て施策総合推進室</td>
+<td>2011年</td>
+</tr>
+</tbody>
+</table>
+<p>そのほか、上記のページから入手することはできないが利用可能でかつ定評のある調査データもある。いくつか上げておく。ただし、いずれもパネル調査データなので、分析にはそれなりのスキルが必要になる。</p>
+<table>
+<colgroup>
+<col width="24%" />
+<col width="24%" />
+<col width="24%" />
+<col width="27%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>調査名</th>
+<th>実施者</th>
+<th>実施年</th>
+<th>詳細へのリンク</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>消費生活に関するパネル調査（JPSC）</td>
+<td>慶應義塾大学パネルデータ設計・解析センター</td>
+<td>1993年から毎年</td>
+<td><a href="https://www.pdrc.keio.ac.jp/paneldata/datasets/jpsc/" class="uri">https://www.pdrc.keio.ac.jp/paneldata/datasets/jpsc/</a></td>
+</tr>
+<tr class="even">
+<td>日本家計パネル調査（JHPS/KHPS）</td>
+<td>同上</td>
+<td>2004年から毎年</td>
+<td><a href="https://www.pdrc.keio.ac.jp/paneldata/datasets/jhpskhps/" class="uri">https://www.pdrc.keio.ac.jp/paneldata/datasets/jhpskhps/</a></td>
+</tr>
+<tr class="odd">
+<td>日本子どもパネル調査</td>
+<td>同上</td>
+<td>2010年から2014年まで毎年、以降2年に一度</td>
+<td><a href="https://www.pdrc.keio.ac.jp/paneldata/datasets/jcps/" class="uri">https://www.pdrc.keio.ac.jp/paneldata/datasets/jcps/</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="日本以外の社会調査データ" class="section level3 hasAnchor" number="1.6.4">
+<h3><span class="header-section-number">1.6.4</span> 日本以外の社会調査データ<a href="plan.html#日本以外の社会調査データ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>もちろん、日本以外の国を対象とした調査データを分析してもよい。中国・韓国・台湾であれば、JGSS同様、大阪商業大学JGSS研究センターが実施しているEast Asian Social Survey（EASS）を使うことを考えてみるとよい。数年に一度、テーマを変えながら毎年実施されている。</p>
+<p>その他の国であれば、たとえば<a href="https://www.icpsr.umich.edu/web/pages/">ICPSR</a>や<a href="https://www.gesis.org/home">GESIS</a>といった国際的なデータアーカイブから調査データを探すことができる。ICPSRのデータであれば、学部生でも、学内のネットワークからアクセスできる。</p>
+<p>また、OECDが実施している<a href="https://www.oecd.org/pisa/">PISA</a>（Programme for International Student Assessment）や<a href="https://www.oecd.org/skills/piaac/">PIAAC</a>（Programme for the International Assessment of Adult Competencies）といった国際比較調査も、誰でも利用可能なようにデータが公開されている。本資料でもPIAACの日本版データを例として使用している。</p>
+<p>残念ながら、既存の調査で尋ねられていない項目や、既存の調査で尋ねられているものの、それと組み合わせるための項目が尋ねられていないような問いの場合は、研究することができない。たとえば、「性別適合手術を受けて身体の性別を男性から女性に変えた人は、手術前と比べて賃金が低下するのか？」という問い<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>を立てたとする。しかしながら、管見の限り日本でこの問いを検証可能なデータは存在しないため、この授業では検証することはできない。このように、データによって検証不可能な場合は、それと関連する別の問いへと問いを「ずらす」ことで、検証可能な問いを立てる必要がある。</p>
+</div>
+</div>
+<div id="先行研究を探す" class="section level2 hasAnchor" number="1.7">
+<h2><span class="header-section-number">1.7</span> 先行研究を探す<a href="plan.html#先行研究を探す" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>分析以前の段階でたくさんの先行研究を読み、先行研究で何が明らかになっていないのかを明確にすればするほど、何をすべきかが明確になり、データ分析や論文執筆がスムーズに進むようになる。研究の質は、分析内容それ自体よりもむしろ、先行研究との違いを正確に見出しているかどうかに大きく左右される。それゆえ、先行研究を探すことはとても重要である。もちろん、こうした作業はデータ分析を始めてからもさらに進めていくことになる。</p>
+<p>ただたんにGoogleで検索にかけてても、良い論文にたどり着くことは難しい。たとえばGoogle Scholarを使って論文を探すというのは基礎演習などで教わったかもしれない。しかし、世の中には数え切れないくらいたくさんの論文があり、かつ、論文の質も玉石混交である。さらに、研究には「流れ」があり、手当たり次第に参考文献を並べたとしても、貢献すべき先行研究群（literature）を設定することは難しい。</p>
+<p>そこで、文献を探し先行研究群を設定するにあたって、一般的な方針をいくつか紹介しておく。</p>
+<div id="査読つき論文" class="section level3 hasAnchor" number="1.7.1">
+<h3><span class="header-section-number">1.7.1</span> 査読つき論文<a href="plan.html#査読つき論文" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>まずは、査読付きの学術雑誌に掲載された論文を優先的に探して読むとよい。査読とは、論文が掲載される前に匿名の審査員によって審査し、修正を要求することを指す。査読を通っていることは、その論文が一定以上の質が担保されていることを意味する。例えば『◯◯大学紀要』のような雑誌は査読がないことが多い。もちろん、目が肥えてくれば査読の有無にかかわらず良い論文を判断できるようになる（わからない場合は教員に聞くこと）が、それまではまず査読を通った論文を優先して読むとよい。</p>
+<p>日本語で書かれた社会学に関連する査読付き論文を掲載している学術雑誌としては、たとえば以下のようなものがある<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>。</p>
+<ul>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/jsr/-char/ja">社会学評論</a></p></li>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/jjoffamilysociology/-char/ja">家族社会学研究</a></p></li>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/eds/-char/ja">教育社会学研究</a></p></li>
+<li><p><a href="https://www.jil.go.jp/institute/zassi/index.html">日本労働研究雑誌</a></p></li>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/ojjams/-char/ja">理論と方法</a></p></li>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/jps/-char/ja/">人口学研究</a></p></li>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/soshioroji/-char/ja">ソシオロジ</a></p></li>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/ksr/-char/ja">フォーラム現代社会学</a></p></li>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/kantoh/-char/ja">年報社会学論集</a></p></li>
+<li><p><a href="https://www.jstage.jst.go.jp/browse/tss/-char/ja">社会学年報</a></p></li>
+</ul>
+</div>
+<div id="研究の流れをつかむ" class="section level3 hasAnchor" number="1.7.2">
+<h3><span class="header-section-number">1.7.2</span> 研究の流れをつかむ<a href="plan.html#研究の流れをつかむ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>ある程度よい論文を見つけたら、次はその論文で参考文献として引用されている論文、もしくはその論文を参考文献として引用している論文（被引用論文、という）を読んでいくことをおすすめする。ある論文が参考にしている論文は当然重要な論文である可能性が高い。また読んだ論文にその後インパクトがあったのであれば、別の論文にも引用されているはずである。被引用論文は論文それ自体にはもちろん書いていないが、Google Scholarで探すことができる。</p>
+<p>このように、ある論文の参考文献と被引用論文を示した一例が次の図である。この図は<a href="https://www.connectedpapers.com/">Connected papers</a>というページで作ることができる。図の真ん中にあるTorche, 2011は、それ以前の多くの先行研究を引用している（主に左側に配置）。そしてその後多くの研究がTorche, 2011を引用していることがわかる（主に右側に配置）。このように、ある研究から影響のある論文へとたどっていくことで、研究の流れが見えるようになってくる。このような研究の流れのなかに自分の研究を位置づけることができたならば、その研究のインパクトはますます大きくなる。</p>
+<div class="float">
+<img src="images/citation_map.png" alt="Torche, Florencia. 2011. “Is a College Degree Still the Great Equalizer? Intergenerational Mobility across Levels of Schooling in the United States.” American Journal of Sociology 117(3):763–807. の引用ネットワーク 出所）https://www.connectedpapers.com/ （2022年2月1日作成）" />
+<div class="figcaption">Torche, Florencia. 2011. “Is a College Degree Still the Great Equalizer? Intergenerational Mobility across Levels of Schooling in the United States.” American Journal of Sociology 117(3):763–807. の引用ネットワーク 出所）<a href="https://www.connectedpapers.com/" class="uri">https://www.connectedpapers.com/</a> （2022年2月1日作成）</div>
+</div>
+<p>分野がある程度発展している場合には、レビュー論文といって、当該領域に関する論文をまとめて、何がわかっていて何がわかってないのかを示した論文がある場合がある<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>。こうしたレビュー論文は、先行研究を探したりテーマを絞り込んだりするのに役に立つ。</p>
+</div>
+<div id="書籍" class="section level3 hasAnchor" number="1.7.3">
+<h3><span class="header-section-number">1.7.3</span> 書籍<a href="plan.html#書籍" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>日本語圏の社会学業界では書籍文化が強く、重要な論文がしばしば雑誌論文としてではなく書籍として出版されていることも多い。しかし、やはり手当たり次第に書籍を読んだところで、みるべき先行研究群を見つけ出すのは簡単ではない（少し経験を積めば判別できるようになるが）。大雑把に言って、研究として信頼できるに足る書籍は、次のような特徴を備えている。</p>
+<ul>
+<li><p>先に述べたような査読付き論文で引用されている。</p></li>
+<li><p>大学図書館または（比較的最近の書籍であれば）学内の書店の書棚に置かれている。</p></li>
+<li><p>参考文献リストが記載されており、少なくない参考文献が参照されている。</p></li>
+</ul>
+<p>もちろん、これらの条件を満たしていればすべて信頼に足るというわけではないが、amazonでキーワード検索して出てくる書籍を手当たり次第に読むとか、主に一般書だけを扱っている書店に行くとかよりは、信頼に足る書籍に出会える見込みは高い。</p>
+</div>
+<div id="英語論文" class="section level3 hasAnchor" number="1.7.4">
+<h3><span class="header-section-number">1.7.4</span> 英語論文<a href="plan.html#英語論文" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>英語が読める（読もうという意欲がある）のであれば、英語論文も探せるととてもよい。競争も激しく、査読も厳しいため、日本語論文よりも内容的に優れたものに出会える可能性は多い。同じテーマであっても、日本国内の数倍〜数十倍は蓄積があることがほとんどである。ただし英語論文については、大学内のネットワークからでないとアクセスできないことが多いので注意。</p>
+<p>社会学における代表的な英文雑誌には以下のようなものがある。</p>
+<ul>
+<li><p><a href="https://journals.sagepub.com/home/asr">American Sociological Review</a></p></li>
+<li><p><a href="https://www.journals.uchicago.edu/toc/ajs/current">American Journal of Sociology</a></p></li>
+<li><p><a href="https://www.annualreviews.org/journal/soc">Annual Review of Sociology</a><a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a></p></li>
+<li><p><a href="https://academic.oup.com/sf">Social Forces</a></p></li>
+<li><p><a href="https://academic.oup.com/esr">European Sociological Review</a></p></li>
+<li><p><a href="https://journals.sagepub.com/home/soe">Sociology of Education</a></p></li>
+<li><p><a href="https://onlinelibrary.wiley.com/journal/17413737">Journal of Marriage and Family</a></p></li>
+<li><p><a href="https://www.populationassociation.org/demography/home">Demography</a></p></li>
+<li><p><a href="https://www.journals.elsevier.com/research-in-social-stratification-and-mobility">Research in Social Stratification and Mobility</a></p></li>
+</ul>
+<p>最近では、かなり質の高い翻訳をしてくれるサービス（e.g. <a href="https://www.deepl.com/ja/translator">DeepL</a>や、それを活用して英語論文をレイアウトを保ったまま日本語訳してくれる便利なウェブページ（e.g. <a href="https://readable.jp/">Readable</a>）、あるいはウェブページ上で（pdf形式ではなく）本文を読める場合にはGoogle翻訳するといったように、英語を楽に読むためのさまざまな手段がある。英語だからといって最初から読まないよりは、たとえ機械翻訳であったとしても読むほうがいいに決まっているので、積極的にチャレンジしてみるとよい。</p>
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Mills, C. Wright. 1959. <em>The Sociological Imagination.</em> Oxford University Press.<a href="plan.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>日本の社会調査データを合併して分析している例としてたとえば <a href="https://doi.org/10.1093/esr/jcab037">Mugiyama, Ryota &amp; Kohei Toyonaga. 2021. “Role of Cohort Size in Trends in Class and Occupational Returns to Education at First Job: The Case of Japan.” <em>European Sociological Review.</em> Advance Access.</a>、<a href="https://doi.org/10.4234/jjoffamilysociology.28.136">打越文弥，2016，「学歴同類婚の世代間連鎖とその趨勢：大規模調査データの統合による計量分析」『家族社会学研究』28(2): 136–147．</a>など。<a href="plan.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>大学院生の場合は教育目的利用不可のデータであっても、研究目的でデータの利用申請を行うことができる。ただし、利用申請を行う前に必ず指導教員の了解を得ること。<a href="plan.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://www.degruyter.com/document/doi/10.2202/1935-1682.1862/html">Schilt, Kristen, and Matthew Wiswall. 2008. “Before and After:Gender Transitions, Human Capital, and Workplace Experiences.” The B.E.Journal of Economic Analysis &amp; Policy 8(1).</a><a href="plan.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>ただし日本の学術雑誌の場合は査読付きの投稿論文ではなく、特集論文などがかなりの紙幅を占めていることが多い。<a href="plan.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>たとえば日本語のレビュー論文の典型的な例としては以下のような論文がある： <a href="https://doi.org/10.11151/eds.93.151">平沢和司・古田和久・藤原翔，2013，「社会階層と教育研究の動向と課題：高学歴化社会における格差の構造」『教育社会学研究』93: 151–91．</a> 後述するように、Annual Review of Sociologyというレビュー論文だけを掲載した学術雑誌もある。<a href="plan.html#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>レビュー論文のみを掲載している雑誌である。噂によるとこの雑誌を購読している大学は日本だとかなり少ないようだ。おそらく本学も購読していない。。<a href="plan.html#fnref7" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="preparation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
