@@ -1,0 +1,235 @@
+# データの読み込み {#import}
+
+本章では、Rを使ってデータを読み込む方法を説明する。
+
+内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project...」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。
+
+本章では以下の3つのパッケージを使用するので、あらかじめ以下のコードを実行して、パッケージを読み込んでおこう。
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(haven)
+```
+
+## Rのサンプルデータの読み込み
+
+Rにはいくつかのサンプルデータがあらかじめ入っており、これを読み込んで試しに分析することもできる。ここでは例としてAnscombe's Quartetのデータをみてみよう：
+
+```{r}
+anscombe
+```
+
+このデータに`ans`という名前をつけて格納する。
+
+```{r}
+ans <- anscombe
+```
+
+このようにデータフレームをオブジェクトに入れると、右上の「Environment」のウインドウに次のような表示が現れる。
+
+![](images/ans.png)
+
+11 obs. of 8 variablesと書かれている。11 obs.というのは、「このデータフレームは全部で11行ありますよ」ということを示しており、8 variablesというのは、「このデータフレームには8つの列がありますよ」ということを示している。実際にどのようなデータが読み込まれているかは、上記画像のansあたりをクリックするか、次のコードを実行すると新しいタブが開き、そこにデータの中身が表示される。
+
+```{r, eval = FALSE}
+ view(ans)
+```
+
+![](images/df_view.png)
+
+このようなデータが読み込まれているはずだ。
+
+その他にも、データのうち一部を表示したり、変数の一覧を表示したりするコマンドがある。ここではコードを紹介するにとどめるので、各自で実行してみてほしい。
+
+```{r, eval = FALSE}
+head(ans)
+colnames(ans)
+glimpse(ans)
+```
+
+## パイプ演算子：%>%または|>
+
+`tidyverse`ではパイプ演算子（`%>%`）を使って命令を書くことができる。たとえばデータの中身を確認する`view()`コマンドであれば、次のように書くことができる。
+
+```{r, eval=FALSE}
+ans %>% view()
+```
+
+`%>%`演算子を改行して書いてもよい。
+
+```{r, eval=FALSE}
+ans %>% # starデータフレームに対して、
+  view() # viewを実行
+```
+
+データの上からいくつかの行を見る`head()`コマンドであれば、次のように書くことができる：
+
+```{r}
+ans %>% # starデータフレームに対して、
+  head() # headを実行
+
+ans %>% 
+  head(n = 3) # 上から3行のみ表示
+```
+
+ちなみに、Macであれば`Control + Shift + m`で、Windowsであれば`Ctrl + Shift + m`でパイプ演算子を出力することができる。
+
+ちなみに、最近RStudioを新しくインストールした場合だと、上記のショートカットキーを入力すると`|>`というコマンドが出力されるかもしれない。ふつうに使う分だとどちらを使ってもとくに支障は生じない。試しに以下の2種類を実行して、どちらも同じものが出力されることを確かめてみよう。
+
+```{r}
+ans |> 
+  head(n = 3)
+
+ans %>% 
+  head(n = 3)
+```
+
+
+Edit→Preferences...（ない場合は、Tools→Global options...）を選択する。以下の画面が開いたら、Codeを選択して、以下の「Use native pipe operator, \|\> (requires R 4.1+)」のチェックを外すと、上記ショートカットキーを入力したときに`%>%`が表示されるようになる。
+
+![](images/pipe.jpg)
+
+## 作業ディレクトリ上のデータの読み込み
+
+### データを置く場所を作る {#import_dir}
+
+前章では[プロジェクトを作成](#preparation_project)して、Rに作業を行う場所（作業ディレクトリ, working directory）を教えてあげた。この場所に、データを置くためのフォルダを別途作成しておくとよい。作成する方法は以下の2つである。
+
+1.  作業ディレクトリとして設定したフォルダを開き、右クリック→「新規フォルダ」（Mac）または「新規作成」→「フォルダ」を選択（Windows）。フォルダの名前は「data」としよう。
+2.  以下のコードを実行する。
+
+```{r, eval = FALSE}
+dir.create("data")
+```
+
+いま、フォルダの状態は次のようになっているはずだ：
+
+![フォルダのなかみ](images/folder_data.png)
+
+
+```{r, eval = FALSE, echo = FALSE}
+#githubにアップロードする用のデータを準備
+download.file(url = file_url, destfile = "data/census_pop_original.csv")
+
+df <- read_csv("data/census_pop_original.csv", locale = locale(encoding = "shift-jis")) %>% 
+  select(year = 3, age_temp = 4, pop = 5, pop_male = 6, pop_female = 7) %>% 
+  filter(age_temp != "総数") %>% 
+  group_by(year) %>% 
+  mutate(age = 1:n()) %>% 
+  ungroup() %>% 
+  mutate(age = factor(age, levels = 1:23, labels = c(
+    "0-4", "5-9",
+    "10-14", "15-19",
+    "20-24", "25-29",
+    "30-34", "35-39",
+    "40-44", "45-49",
+    "50-54", "55-59",
+    "60-64", "65-69",
+    "70-74", "75-79",
+    "80-84", "85+", 
+    "85+", "85+", 
+    "85+", "85+", 
+    "85+"))) %>% 
+  select(-age_temp) %>% 
+  group_by(year, age) %>% 
+  summarize(pop = sum(pop),
+            pop_male = sum(pop_male),
+            pop_female = sum(pop_female))
+
+write_excel_csv(df, "data/census_pop.csv")
+write.xlsx(df, "data/census_pop.xlsx")
+write_rds(df, "data/census_pop.rds")
+write_dta(df, "data/census_pop.dta")
+write_sav(df, "data/census_pop.sav")
+```
+
+フォルダを作ったら、下記のコードを実行して練習用のデータをダウンロードしよう（コピー&ペーストでよい）。コードを実行すると、先ほど作った「data」フォルダにダウンロードしたデータが入っていることを確認しよう。
+
+```{r, eval = FALSE}
+download.file("https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.csv", destfile = "data/census_pop.csv")
+download.file("https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.xlsx", destfile = "data/census_pop.xlsx")
+download.file("https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.rds", destfile = "data/census_pop.rds")
+download.file("https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.sav", destfile = "data/census_pop.sav")
+download.file("https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.dta", destfile = "data/census_pop.dta")
+```
+
+### csv形式のファイル
+
+`example.csv`というふうに、末尾に.csvとついているのはcsv形式といって、一つひとつの値をカンマで区切った形式である。`readr::read_csv()`でcsv形式のファイルを読み込むことができる。`readr`というのは`tidyverse`パッケージを読み込むと読み込まれるパッケージの一つである。
+
+```{r, eval = FALSE}
+df <- read_csv("data/census_pop.csv")
+```
+
+### xlsx形式のファイル
+
+`census_pop.xlsx`というふうに、末尾に.xlsxとついている（古いExcel形式だと.xls）のはMicrosoft Excelのデータ形式である。`readxl::read_excel()`でxlsx形式のファイルを読み込むことができる。`readxl`は冒頭で読み込んだパッケージである。
+
+```{r, eval = FALSE}
+df <- read_excel("data/census_pop.xlsx")
+```
+
+### rds形式のファイル {#import_rds}
+
+`census_pop.rds`というふうに、末尾に.rdsとついているのはRのデータ形式である。rds形式で保存されたデータは、Rで読み込むうえではもっとも便利な形式である（が、rds形式で社会調査の個票データが提供されることはまれ）。`readr::read_rds()`でrds形式のファイルを読み込むことができる。
+
+```{r, eval = FALSE}
+df <- read_rds("data/census_pop.rds")
+```
+
+### sav形式のファイル
+
+`census_pop.sav`というふうに、末尾に.savとついているのはSPSSという統計ソフトのデータ形式である。SSJDAなどからデータを借りた場合にはSPSS形式であることがほとんどである。`haven::read_sav()`でsav形式のファイルを読み込むことができる。`haven`は冒頭で読み込んだパッケージである。
+
+```{r, eval = FALSE}
+df <- read_sav("data/census_pop.sav")
+```
+
+### dta形式のファイル
+
+`example.dta`というふうに、末尾に.dtaとついているのはStataという統計ソフトのデータ形式である。`haven::read_dta()`でdta形式のファイルを読み込むことができる。
+
+```{r, eval = FALSE}
+df <- read_dta("data/census_pop.dta")
+```
+
+### 文字コードに関わる問題
+
+ファイルを読み込む際に、ファイルのなかに日本語が含まれていたりすると、エラーが起こることがある。このあたりの問題への詳しい対処は[土井翔平先生のページ](https://shohei-doi.github.io/quant_polisci/encoding-r.html)に記載されているので、参考にするとよい。
+
+## ウェブ上のデータの読み込み
+
+ウェブサイト上にExcel形式のファイルやcsv形式のファイルがアップロードされている場合、それを直接読み込んでくることができる。たとえば、[e-Stat上にアップロードされている国勢調査の主要時系列データ](https://www.e-stat.go.jp/stat-search/files?page=1&layout=datalist&toukei=00200521&tstat=000001011777&cycle=0&tclass1=000001094741&result_page=1&tclass2val=0)のうち、「年齢（５歳階級），男女別人口－全国（大正９年～平成27年）」のデータを読み込んでみよう。先ほどの文字コード絡みの問題があるため、`read_csv()`に少しくふうを加えている。
+
+```{r}
+file_url <- "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000031524030&fileKind=1"
+
+df <- read_csv(file_url, locale = locale(encoding = "shift-jis"))
+```
+
+Windowsユーザーの場合は以下で大丈夫かもしれない（未確認）。
+
+```{r, eval = FALSE}
+df <- read_csv(file_url)
+```
+
+ただし、何度もアクセスするのは当該ウェブサイトのサーバーに負荷をかけてしまう。頻繁に更新されるようなファイルでなければ、自分のパソコン上にダウンロードしたほうがよいだろう。`download.file()`でファイルをダウンロードできる。
+
+```{r}
+download.file(url = file_url, destfile = "data/census_pop_original.csv")
+```
+
+ダウンロードしたデータは、これまでと同じように、csvやexcelなどの形式に対応するかたちで読み込んでやればよい。
+
+```{r}
+df <- read_csv("data/census_pop_original.csv", locale = locale(encoding = "shift-jis"))
+```
+
+Windowsユーザーの場合は以下で大丈夫かもしれない（未確認）。
+
+```{r, eval = FALSE}
+df <- read_csv(file_url)
+```
+
+なお、先ほど紹介した各種形式の「census_pop」のデータは、今ダウンロードしてきたデータに少し手を加えて麦山が作成した練習用データである。
