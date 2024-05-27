@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 データの読み込み | Rによる社会調査データ分析の手引き</title>
+  <title>Rによる社会調査データ分析の手引き</title>
   <meta name="description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 データの読み込み | Rによる社会調査データ分析の手引き" />
+  <meta property="og:title" content="Rによる社会調査データ分析の手引き" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 データの読み込み | Rによる社会調査データ分析の手引き" />
+  <meta name="twitter:title" content="Rによる社会調査データ分析の手引き" />
   
   <meta name="twitter:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="preparation.html"/>
-<link rel="next" href="handling.html"/>
+
+<link rel="next" href="plan.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -509,176 +509,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="import" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">Chapter 3</span> データの読み込み<a href="import.html#import" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>本章では、Rを使ってデータを読み込む方法を説明する。</p>
-<p>内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project…」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。</p>
-<p>本章では以下の3つのパッケージを使用するので、あらかじめ以下のコードを実行して、パッケージを読み込んでおこう。</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="import.html#cb12-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb12-2"><a href="import.html#cb12-2" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb12-3"><a href="import.html#cb12-3" tabindex="-1"></a><span class="fu">library</span>(haven)</span></code></pre></div>
-<div id="rのサンプルデータの読み込み" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Rのサンプルデータの読み込み<a href="import.html#rのサンプルデータの読み込み" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Rにはいくつかのサンプルデータがあらかじめ入っており、これを読み込んで試しに分析することもできる。ここでは例としてAnscombe’s Quartetのデータをみてみよう：</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="import.html#cb13-1" tabindex="-1"></a>anscombe</span></code></pre></div>
-<pre><code>##    x1 x2 x3 x4    y1   y2    y3    y4
-## 1  10 10 10  8  8.04 9.14  7.46  6.58
-## 2   8  8  8  8  6.95 8.14  6.77  5.76
-## 3  13 13 13  8  7.58 8.74 12.74  7.71
-## 4   9  9  9  8  8.81 8.77  7.11  8.84
-## 5  11 11 11  8  8.33 9.26  7.81  8.47
-## 6  14 14 14  8  9.96 8.10  8.84  7.04
-## 7   6  6  6  8  7.24 6.13  6.08  5.25
-## 8   4  4  4 19  4.26 3.10  5.39 12.50
-## 9  12 12 12  8 10.84 9.13  8.15  5.56
-## 10  7  7  7  8  4.82 7.26  6.42  7.91
-## 11  5  5  5  8  5.68 4.74  5.73  6.89</code></pre>
-<p>このデータに<code>ans</code>という名前をつけて格納する。</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="import.html#cb15-1" tabindex="-1"></a>ans <span class="ot">&lt;-</span> anscombe</span></code></pre></div>
-<p>このようにデータフレームをオブジェクトに入れると、右上の「Environment」のウインドウに次のような表示が現れる。</p>
-<p><img src="images/ans.png" /></p>
-<p>11 obs. of 8 variablesと書かれている。11 obs.というのは、「このデータフレームは全部で11行ありますよ」ということを示しており、8 variablesというのは、「このデータフレームには8つの列がありますよ」ということを示している。実際にどのようなデータが読み込まれているかは、上記画像のansあたりをクリックするか、次のコードを実行すると新しいタブが開き、そこにデータの中身が表示される。</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="import.html#cb16-1" tabindex="-1"></a> <span class="fu">view</span>(ans)</span></code></pre></div>
-<p><img src="images/df_view.png" /></p>
-<p>このようなデータが読み込まれているはずだ。</p>
-<p>その他にも、データのうち一部を表示したり、変数の一覧を表示したりするコマンドがある。ここではコードを紹介するにとどめるので、各自で実行してみてほしい。</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="import.html#cb17-1" tabindex="-1"></a><span class="fu">head</span>(ans)</span>
-<span id="cb17-2"><a href="import.html#cb17-2" tabindex="-1"></a><span class="fu">colnames</span>(ans)</span>
-<span id="cb17-3"><a href="import.html#cb17-3" tabindex="-1"></a><span class="fu">glimpse</span>(ans)</span></code></pre></div>
+<div id="header">
+<h1 class="title">Rによる社会調査データ分析の手引き</h1>
+<p class="author"><em>麦山 亮太（学習院大学法学部政治学科）/ Ryota Mugiyama (Department of Political Studies, Gakushuin University)</em></p>
+<p class="date"><em>Last update: 2024-05-28</em></p>
 </div>
-<div id="パイプ演算子または" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> パイプ演算子：%&gt;%または|&gt;<a href="import.html#パイプ演算子または" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><code>tidyverse</code>ではパイプ演算子（<code>%&gt;%</code>）を使って命令を書くことができる。たとえばデータの中身を確認する<code>view()</code>コマンドであれば、次のように書くことができる。</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="import.html#cb18-1" tabindex="-1"></a>ans <span class="sc">%&gt;%</span> <span class="fu">view</span>()</span></code></pre></div>
-<p><code>%&gt;%</code>演算子を改行して書いてもよい。</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="import.html#cb19-1" tabindex="-1"></a>ans <span class="sc">%&gt;%</span> <span class="co"># starデータフレームに対して、</span></span>
-<span id="cb19-2"><a href="import.html#cb19-2" tabindex="-1"></a>  <span class="fu">view</span>() <span class="co"># viewを実行</span></span></code></pre></div>
-<p>データの上からいくつかの行を見る<code>head()</code>コマンドであれば、次のように書くことができる：</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="import.html#cb20-1" tabindex="-1"></a>ans <span class="sc">%&gt;%</span> <span class="co"># starデータフレームに対して、</span></span>
-<span id="cb20-2"><a href="import.html#cb20-2" tabindex="-1"></a>  <span class="fu">head</span>() <span class="co"># headを実行</span></span></code></pre></div>
-<pre><code>##   x1 x2 x3 x4   y1   y2    y3   y4
-## 1 10 10 10  8 8.04 9.14  7.46 6.58
-## 2  8  8  8  8 6.95 8.14  6.77 5.76
-## 3 13 13 13  8 7.58 8.74 12.74 7.71
-## 4  9  9  9  8 8.81 8.77  7.11 8.84
-## 5 11 11 11  8 8.33 9.26  7.81 8.47
-## 6 14 14 14  8 9.96 8.10  8.84 7.04</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="import.html#cb22-1" tabindex="-1"></a>ans <span class="sc">%&gt;%</span> </span>
-<span id="cb22-2"><a href="import.html#cb22-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="co"># 上から3行のみ表示</span></span></code></pre></div>
-<pre><code>##   x1 x2 x3 x4   y1   y2    y3   y4
-## 1 10 10 10  8 8.04 9.14  7.46 6.58
-## 2  8  8  8  8 6.95 8.14  6.77 5.76
-## 3 13 13 13  8 7.58 8.74 12.74 7.71</code></pre>
-<p>ちなみに、Macであれば<code>Control + Shift + m</code>で、Windowsであれば<code>Ctrl + Shift + m</code>でパイプ演算子を出力することができる。</p>
-<p>ちなみに、最近RStudioを新しくインストールした場合だと、上記のショートカットキーを入力すると<code>|&gt;</code>というコマンドが出力されるかもしれない。ふつうに使う分だとどちらを使ってもとくに支障は生じない。試しに以下の2種類を実行して、どちらも同じものが出力されることを確かめてみよう。</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="import.html#cb24-1" tabindex="-1"></a>ans <span class="sc">|&gt;</span> </span>
-<span id="cb24-2"><a href="import.html#cb24-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div>
-<pre><code>##   x1 x2 x3 x4   y1   y2    y3   y4
-## 1 10 10 10  8 8.04 9.14  7.46 6.58
-## 2  8  8  8  8 6.95 8.14  6.77 5.76
-## 3 13 13 13  8 7.58 8.74 12.74 7.71</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="import.html#cb26-1" tabindex="-1"></a>ans <span class="sc">%&gt;%</span> </span>
-<span id="cb26-2"><a href="import.html#cb26-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div>
-<pre><code>##   x1 x2 x3 x4   y1   y2    y3   y4
-## 1 10 10 10  8 8.04 9.14  7.46 6.58
-## 2  8  8  8  8 6.95 8.14  6.77 5.76
-## 3 13 13 13  8 7.58 8.74 12.74 7.71</code></pre>
-<p>Edit→Preferences…（ない場合は、Tools→Global options…）を選択する。以下の画面が開いたら、Codeを選択して、以下の「Use native pipe operator, |&gt; (requires R 4.1+)」のチェックを外すと、上記ショートカットキーを入力したときに<code>%&gt;%</code>が表示されるようになる。</p>
-<p><img src="images/pipe.jpg" /></p>
-</div>
-<div id="作業ディレクトリ上のデータの読み込み" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> 作業ディレクトリ上のデータの読み込み<a href="import.html#作業ディレクトリ上のデータの読み込み" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="import_dir" class="section level3 hasAnchor" number="3.3.1">
-<h3><span class="header-section-number">3.3.1</span> データを置く場所を作る<a href="import.html#import_dir" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>前章では<a href="preparation.html#preparation_project">プロジェクトを作成</a>して、Rに作業を行う場所（作業ディレクトリ, working directory）を教えてあげた。この場所に、データを置くためのフォルダを別途作成しておくとよい。作成する方法は以下の2つである。</p>
-<ol style="list-style-type: decimal">
-<li>作業ディレクトリとして設定したフォルダを開き、右クリック→「新規フォルダ」（Mac）または「新規作成」→「フォルダ」を選択（Windows）。フォルダの名前は「data」としよう。</li>
-<li>以下のコードを実行する。</li>
-</ol>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="import.html#cb28-1" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;data&quot;</span>)</span></code></pre></div>
-<p>いま、フォルダの状態は次のようになっているはずだ：</p>
-<div class="float">
-<img src="images/folder_data.png" alt="フォルダのなかみ" />
-<div class="figcaption">フォルダのなかみ</div>
-</div>
-<p>フォルダを作ったら、下記のコードを実行して練習用のデータをダウンロードしよう（コピー&amp;ペーストでよい）。コードを実行すると、先ほど作った「data」フォルダにダウンロードしたデータが入っていることを確認しよう。</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="import.html#cb29-1" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.csv&quot;</span>, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop.csv&quot;</span>)</span>
-<span id="cb29-2"><a href="import.html#cb29-2" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.xlsx&quot;</span>, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop.xlsx&quot;</span>)</span>
-<span id="cb29-3"><a href="import.html#cb29-3" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.rds&quot;</span>, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop.rds&quot;</span>)</span>
-<span id="cb29-4"><a href="import.html#cb29-4" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.sav&quot;</span>, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop.sav&quot;</span>)</span>
-<span id="cb29-5"><a href="import.html#cb29-5" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://github.com/mugiyama/seminar_sociology_r/raw/master/data/census_pop.dta&quot;</span>, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop.dta&quot;</span>)</span></code></pre></div>
-</div>
-<div id="csv形式のファイル" class="section level3 hasAnchor" number="3.3.2">
-<h3><span class="header-section-number">3.3.2</span> csv形式のファイル<a href="import.html#csv形式のファイル" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><code>example.csv</code>というふうに、末尾に.csvとついているのはcsv形式といって、一つひとつの値をカンマで区切った形式である。<code>readr::read_csv()</code>でcsv形式のファイルを読み込むことができる。<code>readr</code>というのは<code>tidyverse</code>パッケージを読み込むと読み込まれるパッケージの一つである。</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="import.html#cb30-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/census_pop.csv&quot;</span>)</span></code></pre></div>
-</div>
-<div id="xlsx形式のファイル" class="section level3 hasAnchor" number="3.3.3">
-<h3><span class="header-section-number">3.3.3</span> xlsx形式のファイル<a href="import.html#xlsx形式のファイル" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><code>census_pop.xlsx</code>というふうに、末尾に.xlsxとついている（古いExcel形式だと.xls）のはMicrosoft Excelのデータ形式である。<code>readxl::read_excel()</code>でxlsx形式のファイルを読み込むことができる。<code>readxl</code>は冒頭で読み込んだパッケージである。</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="import.html#cb31-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;data/census_pop.xlsx&quot;</span>)</span></code></pre></div>
-</div>
-<div id="import_rds" class="section level3 hasAnchor" number="3.3.4">
-<h3><span class="header-section-number">3.3.4</span> rds形式のファイル<a href="import.html#import_rds" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><code>census_pop.rds</code>というふうに、末尾に.rdsとついているのはRのデータ形式である。rds形式で保存されたデータは、Rで読み込むうえではもっとも便利な形式である（が、rds形式で社会調査の個票データが提供されることはまれ）。<code>readr::read_rds()</code>でrds形式のファイルを読み込むことができる。</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="import.html#cb32-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/census_pop.rds&quot;</span>)</span></code></pre></div>
-</div>
-<div id="sav形式のファイル" class="section level3 hasAnchor" number="3.3.5">
-<h3><span class="header-section-number">3.3.5</span> sav形式のファイル<a href="import.html#sav形式のファイル" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><code>census_pop.sav</code>というふうに、末尾に.savとついているのはSPSSという統計ソフトのデータ形式である。SSJDAなどからデータを借りた場合にはSPSS形式であることがほとんどである。<code>haven::read_sav()</code>でsav形式のファイルを読み込むことができる。<code>haven</code>は冒頭で読み込んだパッケージである。</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="import.html#cb33-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">&quot;data/census_pop.sav&quot;</span>)</span></code></pre></div>
-</div>
-<div id="dta形式のファイル" class="section level3 hasAnchor" number="3.3.6">
-<h3><span class="header-section-number">3.3.6</span> dta形式のファイル<a href="import.html#dta形式のファイル" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><code>example.dta</code>というふうに、末尾に.dtaとついているのはStataという統計ソフトのデータ形式である。<code>haven::read_dta()</code>でdta形式のファイルを読み込むことができる。</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="import.html#cb34-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">&quot;data/census_pop.dta&quot;</span>)</span></code></pre></div>
-</div>
-<div id="文字コードに関わる問題" class="section level3 hasAnchor" number="3.3.7">
-<h3><span class="header-section-number">3.3.7</span> 文字コードに関わる問題<a href="import.html#文字コードに関わる問題" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>ファイルを読み込む際に、ファイルのなかに日本語が含まれていたりすると、エラーが起こることがある。このあたりの問題への詳しい対処は<a href="https://shohei-doi.github.io/quant_polisci/encoding-r.html">土井翔平先生のページ</a>に記載されているので、参考にするとよい。</p>
-</div>
-</div>
-<div id="ウェブ上のデータの読み込み" class="section level2 hasAnchor" number="3.4">
-<h2><span class="header-section-number">3.4</span> ウェブ上のデータの読み込み<a href="import.html#ウェブ上のデータの読み込み" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>ウェブサイト上にExcel形式のファイルやcsv形式のファイルがアップロードされている場合、それを直接読み込んでくることができる。たとえば、<a href="https://www.e-stat.go.jp/stat-search/files?page=1&amp;layout=datalist&amp;toukei=00200521&amp;tstat=000001011777&amp;cycle=0&amp;tclass1=000001094741&amp;result_page=1&amp;tclass2val=0">e-Stat上にアップロードされている国勢調査の主要時系列データ</a>のうち、「年齢（５歳階級），男女別人口－全国（大正９年～平成27年）」のデータを読み込んでみよう。先ほどの文字コード絡みの問題があるため、<code>read_csv()</code>に少しくふうを加えている。</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="import.html#cb35-1" tabindex="-1"></a>file_url <span class="ot">&lt;-</span> <span class="st">&quot;https://www.e-stat.go.jp/stat-search/file-download?statInfId=000031524030&amp;fileKind=1&quot;</span></span>
-<span id="cb35-2"><a href="import.html#cb35-2" tabindex="-1"></a></span>
-<span id="cb35-3"><a href="import.html#cb35-3" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file_url, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">&quot;shift-jis&quot;</span>))</span></code></pre></div>
-<pre><code>## Rows: 406 Columns: 7
-## ── Column specification ──────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (2): 元号, 年齢5歳階級
-## dbl (5): 和暦（年）, 西暦（年）, 人口（総数）, 人口（男）, 人口（女）
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<p>Windowsユーザーの場合は以下で大丈夫かもしれない（未確認）。</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="import.html#cb37-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file_url)</span></code></pre></div>
-<p>ただし、何度もアクセスするのは当該ウェブサイトのサーバーに負荷をかけてしまう。頻繁に更新されるようなファイルでなければ、自分のパソコン上にダウンロードしたほうがよいだろう。<code>download.file()</code>でファイルをダウンロードできる。</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="import.html#cb38-1" tabindex="-1"></a><span class="fu">download.file</span>(<span class="at">url =</span> file_url, <span class="at">destfile =</span> <span class="st">&quot;data/census_pop_original.csv&quot;</span>)</span></code></pre></div>
-<p>ダウンロードしたデータは、これまでと同じように、csvやexcelなどの形式に対応するかたちで読み込んでやればよい。</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="import.html#cb39-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/census_pop_original.csv&quot;</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">encoding =</span> <span class="st">&quot;shift-jis&quot;</span>))</span></code></pre></div>
-<pre><code>## Rows: 406 Columns: 7
-## ── Column specification ──────────────────────────
-## Delimiter: &quot;,&quot;
-## chr (2): 元号, 年齢5歳階級
-## dbl (5): 和暦（年）, 西暦（年）, 人口（総数）, 人口（男）, 人口（女）
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<p>Windowsユーザーの場合は以下で大丈夫かもしれない（未確認）。</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="import.html#cb41-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file_url)</span></code></pre></div>
-<p>なお、先ほど紹介した各種形式の「census_pop」のデータは、今ダウンロードしてきたデータに少し手を加えて麦山が作成した練習用データである。</p>
+<div id="まえがき" class="section level1 unnumbered hasAnchor">
+<h1>まえがき<a href="index.html#まえがき" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>本資料は麦山が担当する学習院大学法学部政治学科「社会学演習（社会的不平等に関する実証研究）」、同大学院政治学研究科「統計解析I」「公共秩序の数理モデル（社会調査データの計量分析）」の授業で使用する資料です。その他の授業でも活用することがあります。授業では適宜口頭で説明を補いながら使うことを想定しているため説明を簡単に済ませているところもありますが、どなたでも参照できるかと思います。分かりやすさを重視しているため、厳密性には欠けるところがあるかもしれません。</p>
+<p>タイトルに示されているとおり、本資料の目的はとくに社会調査の個票データを分析するうえで必要となるR/RStudioの使い方、そしてその前後に研究計画の立て方と論文のまとめかたを置き、一通り社会調査データの分析のための作法を整理して記したものです。扱っている内容は左記の目次のとおりです。スマートフォンで見ている場合には上部にある4本線のアイコンをクリックすることで目次をみることができます。</p>
+<p>本資料は、麦山の専門分野である社会学、とりわけ社会階層研究を念頭に置き、かつ既存の社会調査データを利用することを念頭において作成しています。そのため、分野が異なる、扱うデータの形式が異なるといった場合には適宜距離を取って参照してください。</p>
+<p>【発展】と書いてある節または項は発展的な内容を扱っているため、必ずしもチェックする必要はありませんが、読んでおくと勉強になるかもしれません。</p>
+<p>本資料は（いつまでも）ベータ版で、今後授業などを通じて少しずつアップデートしていく予定です。アップデートは予告なしに行いますのでご了承ください。</p>
 
-</div>
+
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="preparation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="handling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+
+<a href="plan.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
