@@ -220,15 +220,13 @@ piaac %>%
 
 1.  parenteduc, educがそれぞれ何を指しているのか、日本語の名前をつけたい：`label = list(x ~ "名前")`
 2.  行および列の合計が"Total"と記載されているが、これを「合計」という日本語の名前にしたい：`margin_text = "合計"`
-3.  左上に書かれている「Characteristics」というのは特に必要がないので削除したい：`tbl_cross`のコマンドの後ろに`%>%`でつないで`modify_header(label ~ "")`
 
 ```{r}
 piaac %>% 
   tbl_cross(parenteduc, educ, 
             percent = "row", 
             label = list(parenteduc ~ "親学歴", educ ~ "本人学歴"),
-            margin_text = "合計") %>%
-  modify_header(label ~ "")
+            margin_text = "合計") 
 ```
 
 これならばそのまま論文に掲載できるくらいきれいな図になっている。もちろんこれもwordファイルに書き出すことができる。この方法については本章最後に紹介する。
@@ -488,7 +486,6 @@ piaac %>%
             percent = "row", 
             label = list(parenteduc ~ "親学歴", educ ~ "本人学歴"),
             margin_text = "合計") %>%
-  modify_header(label ~ "") %>% 
   as_flex_table() %>% 
   save_as_docx(path = "results/tbl_cross.docx")
 ```
