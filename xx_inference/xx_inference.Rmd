@@ -101,3 +101,34 @@ df %>%
 ### 1つの係数の検定：t検定
 
 ### 複数の係数の同時検定：F検定
+
+## 削除した原稿
+
+この係数は絶対値が大きいため、きちんと$\exp(\beta_1) - 1$を計算してやる必要がある。いろいろな方法があるが、ここでは回帰分析の結果をデータフレームにして扱いやすくするためのパッケージである`broom`パッケージを利用する方法を紹介する。まずは、`broom`パッケージを読み込もう。
+
+```{r}
+library(broom)
+```
+
+`broom::tidy()`関数を実行することで、回帰分析などのモデルの主要な結果をデータフレーム形式へと変換することができる。それぞれ、1行目が切片の推定結果、2行目が男性ダミーの推定結果である。
+
+```{r}
+reg_res_tidy <- reg_res %>% 
+  tidy()
+reg_res_tidy
+```
+
+この推定結果に含まれる`estimate`という列に対して$(\exp(\beta_1) - 1)$という計算を施した新しい列を作成すればよい。
+
+```{r}
+reg_res_tidy %>% 
+  mutate(estimate_exp = (exp(estimate) - 1))
+```
+
+```{r, include=FALSE, echo=FALSE}
+reg_res_tidy_df <- reg_res_tidy %>% 
+  mutate(estimate_exp = (exp(estimate) - 1)) %>% 
+  mutate(estimate_exp = round(estimate_exp, 3))
+```
+
+新しく作成した列のgender男性の値は`r reg_res_tidy_df$estimate_exp[2]`である。つまり、男性は女性と比べて、`r reg_res_tidy_df$estimate_exp[2] * 100`%賃金が高いということである。
