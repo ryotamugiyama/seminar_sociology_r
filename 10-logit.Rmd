@@ -1,4 +1,4 @@
-# 【発展】ロジスティック回帰分析（作成中） {#logit}
+# ロジスティック回帰分析 {#logit}
 
 本章では、前章で学んだ回帰分析を発展させて、複数の独立変数を扱う方法について説明する。
 
@@ -11,7 +11,7 @@ library(tidyverse)
 library(gtsummary)
 library(flextable)
 library(modelsummary)
-library(ggeffects) #第9章（交互作用）で紹介
+library(ggeffects) #第9章（交互作用）で紹介済
 
 piaac <- read_rds("data/piaac_sample_analytic.rds")
 ```
@@ -43,13 +43,13 @@ theme_set(theme_bw(
 
 ### 線形確率モデル
 
-[従属変数が2値のカテゴリ変数（0/1）の場合](#regression_basic_binary)ですでにみたように、0/1の値をとる二値変数を従属変数として回帰分析を使うことができる。
+[Chapter 7 回帰分析の基礎](#regression_basic)の [従属変数が2値のカテゴリ変数（0/1）の場合](#regression_basic_binary)ですでにみたように、0/1の値をとる二値変数を従属変数として回帰分析を使うことができる。
 
 $$
 y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 $$
 
-このとき、係数$\beta_1$は他の変数$x_2, \cdots, x_k$を一定としたうえで、$x_1$が1単位増えると$y$（従属変数が1をとる割合）がどれだけ変化するのかを表す。
+このとき、係数$\beta_1$は他の変数$x_2, \cdots, x_k$を一定としたうえで、$x_1$が1単位増えると$y$（従属変数が1をとる割合 = 確率）がどれだけ変化するのかを表す。
 
 たとえば、この1年間に職場での訓練（OJTとよぶ）を受ける率が性別によってどの程度異なるのかを知りたいとする。このような場合には、次の式を推定する。
 
@@ -58,10 +58,23 @@ reg_res1 <- lm(data = piaac, ojt ~ gender)
 summary(reg_res1)
 ```
 
+```{r, include = FALSE}
+library(broom)
+tidy_reg_res1 <- reg_res1 %>% tidy()
+coef <- round(tidy_reg_res1$estimate[2], digit = 3)
+```
+
+この結果から、年齢および学歴が同程度であったとしても、男性がOJTを受ける確率は女性と比べて`r coef`（`r coef*100` %ポイント）高いといえる。
+
 また、年齢とOJT受講の関係が線形であると仮定して、年齢および学歴が同じであったとしてもなお、性別によってOJTを受ける割合が異なっているかどうかを知りたいとする。この場合には、次のような式を推定する。
 
 ```{r}
 reg_res2 <- lm(data = piaac, ojt ~ gender + age + educ)
+```
+
+結果は次のとおりである：
+
+```{r}
 summary(reg_res2)
 ```
 
@@ -70,19 +83,21 @@ tidy_reg_res2 <- reg_res2 %>% tidy()
 coef <- round(tidy_reg_res2$estimate[2], digit = 3)
 ```
 
-この結果から、年齢および学歴が同程度であったとしても、男性がOJTを受ける割合は女性と比べて`r coef`（`r coef*100` %ポイント）高いといえる。
+この結果から、年齢および学歴が同程度であったとしても、男性がOJTを受ける確率は女性と比べて`r coef`（`r coef*100` %ポイント）高いといえる。
 
-このように、0/1の値をとる二値変数を従属変数として回帰分析を推定するような場合を指して、線形確率モデル（linear probability model）と呼ぶ。
+このように、0/1の値をとる二値変数を従属変数として回帰分析を推定するような場合を指して、**線形確率モデル（linear probability model）**と呼ぶ。
 
-### 残差が正規分布しない問題への対処
+### ロバスト標準誤差：残差が正規分布しない問題への対処
 
 回帰分析で係数の標準誤差を求めるときには、残差が正規分布するという仮定が置かれている。しかしながら、線形確率モデルの場合はこの仮定は通常満たされない。このことを、**不均一分散 heteroskedasticity**という。不均一分散が生じている場合には、標準誤差にバイアスが生じる。そこで、不均一分散に対して頑健な標準誤差（**ロバスト標準誤差 robust standard error**）を用いることで、適切な標準誤差を計算することができる。
 
-ロバスト標準誤差を求める場合には、`estimatr`パッケージに含まれている`lm_robust()`関数を使うのが手っ取り早い。通常の`lm()`を、`lm_robust()`に変えるだけで、ロバスト標準誤差を計算してくれる。
+ここではロバスト標準誤差のことについてはくわしく説明しないが、推定の仕方だけ書いておく。ロバスト標準誤差を求める場合には、`estimatr`パッケージに含まれている`lm_robust()`関数を使うのが手っ取り早い。通常の`lm()`を、`lm_robust()`に変えるだけで、ロバスト標準誤差を計算してくれる。まずは`estimatr`パッケージを読み込もう。
 
 ```{r}
 library(estimatr)
 ```
+
+そのうえで、`estimatr::lm_robust()`関数を使って、ロバスト標準誤差つきの回帰分析を推定する。以下のように、ふつうの回帰分析と同じように実行すればよい。違うのは、関数が`lm()`ではなくて`lm_robust()`となっている点だけである。
 
 ```{r}
 reg_res2_robust <- lm_robust(data = piaac, ojt ~ gender + age + educ)
@@ -95,44 +110,26 @@ modelsummary(list("通常のSE" = reg_res2, "Robust SE" = reg_res2_robust),
              stars = TRUE,fmt = 4)
 ```
 
-通常の標準誤差を用いた場合と、ロバスト標準誤差を用いた場合とでは、わずかに標準誤差の値が異なっていることがわかる。このずれがどれくらい大きくなるかは、データや変数の性質によって変わってくる。ただし、係数の値には変化はないため、実質的な結論に違いが出ることはあまりない。線形確率モデルを使う場合には、基本的にはロバスト標準誤差を使うことが推奨されている。
+通常の標準誤差を用いた場合と、ロバスト標準誤差を用いた場合とでは、わずかに標準誤差の値が異なっていることがわかる。このずれがどれくらい大きくなるかは、データや変数の性質によって変わってくるため一概にいえない。ただし、係数の値には違いは生じない。
 
+線形確率モデルでは残差が正規分布に従わないことが明らかなので、**常にロバスト標準誤差を用いるべき**である。
 
 ## ロジスティック回帰分析とは
 
+### 線形確率モデルの問題点
 
-### ロジスティック回帰分析（ロジットモデル）
+線形確率モデルは、$x$1単位の増加に対して、従属変数$y$が1をとる確率が何ポイント変わるのか、という確率の「差」を推定するモデルである。そのため、次のような問題がある。
 
-$$
-\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
-$$
-または、式を変形して次のように書く。
+1.  予測値が確率の定義上あり得ない数値になることがある。確率は定義上0以上1以下になるはずであるので、予測値が負の値になったり、1より大きくなることはあり得ないはずである。こうしたリスクは、手持ちのデータにおいて従属変数が1を取る割合が1に近い、または0に近いほど大きくなる。
+2.  従属変数が1をとる確率が異なる個人間で、ある独立変数が1単位増えることによる確率の増加量が異なる（天井効果 ceiling effectないし床効果 flooring effect）場合には、変数の「効果」の推定として不適切である。
 
-$$
-\begin{align}
-\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &= \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k \\
-\frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &= e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k} \\
-\Pr(y = 1) &= (1 - \Pr(y = 1))e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k} \\
-(1 + e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k})\Pr(y = 1) &= e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k} \\
-\Pr(y = 1) &= \frac{e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k}}{1 + e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k}}
-\end{align}
-$$
+確率の増加量が異なるというのはどういうことだろうか。具体例を考えてみよう。たとえば、投票に行くよう促すハガキを送付することで、投票確率が増加するかどうかを知りたいとする。投票促進ハガキの効果は、いつも欠かさず投票に行っている人の投票確率を上げる効果はほとんどないに等しいだろう（普段から投票に行っているし、わざわざハガキが送られてこなくても投票に行っていただろう）。また、まったく投票に行ったことのない人にとっても、投票確率を上げる効果はやはりほとんどなさそうだ。しかし、投票に行くかどうか迷っている人にとっては、ハガキが最後の一押しとなって、投票確率を高めるかもしれない。つまり、投票促進ハガキがどの程度投票確率を上げるかは、もともとの投票確率に依存するかもしれない（極端に投票に行きやすい人と、極端に投票に行きにくい人では確率の増加はわずかで、投票に行くかもしれないし行かないかもしれない人にとっては確率の増加が大きい）。このような場合には、もともとの確率によらず確率の増加が一定だと考える線形確率モデルは、個人の行動のモデルとして不適切かもしれない。
 
-```{r}
-logit_res1 <- glm(data = piaac, ojt ~ gender, family = binomial)
-summary(logit_res1)
-```
+### （対数）オッズ比：効果を「比」で測定する
 
-```{r, include = FALSE}
-tidy_logit_res1 <- logit_res1 %>% tidy()
-coef <- round(tidy_logit_res1$estimate[2], 3)
-```
+そこで、変数の効果を確率の「差」ではなく「比」（正確にはオッズの比）で測定するのが、**オッズ比 odds ratio**である。
 
-「gender男性」の行は、女性と比べて男性であると**対数オッズ（log-odds）**が`coef`高いことを表している。
-
-### 対数オッズ比の解釈
-
-急に出てきた「対数オッズ比」とはなんだろうか？これを理解するために、クロス集計表を作ってみよう。性別ごとにOJTを受ける・受けない人数を集計したクロス集計表は次のようになる。ここでは説明を分かりやすくするために順序を変更している。
+以下には、性別ごとにOJTを受ける・受けない人数を集計したクロス集計表を示した。ここでは説明を分かりやすくするために順序を変更している。
 
 ```{r}
 piaac %>% 
@@ -173,7 +170,7 @@ $$
 \frac{`r m1` / `r m0`}{`r f1` / `r f0`} = `r round((m1/m0)/(f1/f0), digits = 3 )`
 $$
 
-この値は、「女性のオッズに対して男性のオッズが何倍であるか」を示しており、1をとるときには女性と男性のオッズが同じであることを意味する。1よりも大きいときには女性のオッズ（分母）よりも男性のオッズ（分子）のほうが大きいことを意味し、1よりも小さいときには男性のオッズ（分子）よりも女性のオッズ（分母）のほうが大きいことを意味する。
+オッズ比は、「女性のオッズに対して男性のオッズが何倍であるか」を示しており、1をとるときには女性と男性のオッズが同じであることを意味する。1よりも大きいときには女性のオッズ（分母）よりも男性のオッズ（分子）のほうが大きいことを意味し、1よりも小さいときには男性のオッズ（分子）よりも女性のオッズ（分母）のほうが大きいことを意味する。
 
 このオッズ比の自然対数をとったのが、**対数オッズ比 log-odds ratio**である。
 
@@ -181,9 +178,7 @@ $$
 \log \left( \frac{`r m1` / `r m0`}{`r f1` / `r f0`} \right) = `r round(log((m1/m0)/(f1/f0)), digits = 3 )`
 $$
 
-この値は、「女性の対数オッズに対して男性の対数オッズがどれくらい大きいか」を示しており、0をとるときには女性と男性の（対数）オッズが同じであることを意味し、0よりも大きいときには女性の（対数）オッズ（分母）よりも男性の（対数）オッズ（分子）のほうが大きいことを意味し、0よりも小さいときには男性の（対数）オッズ（分子）よりも女性の（対数）オッズ（分母）のほうが大きいことを意味する。
-
-この対数オッズ比の値が、先ほど推定したロジスティック回帰分析の「gender男性」の係数の値に一致していることを確認しよう。このことが、ロジスティック回帰分析の係数が対数オッズ比を表すという意味である。つまり、ロジスティック回帰分析の係数は、対数オッズを示している。
+対数オッズ比は、「女性の対数オッズに対して男性の対数オッズがどれくらい大きいか」を示しており、0をとるときには女性と男性の（対数）オッズが同じであることを意味し、0よりも大きいときには女性の（対数）オッズ（分母）よりも男性の（対数）オッズ（分子）のほうが大きいことを意味し、0よりも小さいときには男性の（対数）オッズ（分子）よりも女性の（対数）オッズ（分母）のほうが大きいことを意味する。
 
 ここまで説明した対数オッズの話を一般化しよう。次のような2×2のクロス集計表があるとする。
 
@@ -202,9 +197,99 @@ $$
 
 なお、対数の性質より、対数オッズ比は$\log((N_{11} / N_{10}) / (N_{01} / N_{00})) = \log(N_{11} / N_{10}) - (N_{01} / N_{00})$などと書くこともできる。
 
-### 連続変数を独立変数とする場合
+### ロジスティック回帰分析（ロジットモデル）
 
-連続変数を独立変数とする場合は先のような表をイメージするのは難しくなってくるが、解釈は類似している。たとえば次のように性別と年齢を独立変数とするロジスティック回帰分析を推定する。
+ロジスティック回帰分析の式は以下のように表される。
+
+$$
+\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
+$$ または、式を変形して次のように書く。
+
+$$
+\begin{align}
+\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &= \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k \\
+\frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &= e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k} \\
+\Pr(y = 1) &= (1 - \Pr(y = 1))e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k} \\
+(1 + e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k})\Pr(y = 1) &= e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k} \\
+\Pr(y = 1) &= \frac{e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k}}{1 + e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k}}
+\end{align}
+$$
+
+係数$\beta_k$は、他の$x$を一定としたうえで、$x_k$が1単位増加したときの従属変数の対数オッズ比の変化を表す。
+
+ロジスティック回帰分析でも、線形回帰分析のときと分析の際に気をつけることは同じである。たとえば、次のようなことはロジスティック回帰分析でも線形回帰分析と同様に検討する必要がある。
+- 知りたい問いに対して適切な統制変数を投入する（[第8章](#regression_advanced)）
+- 連続変数であれば、線形のみではなく非線形（2乗項）を含めることができる（[第7章](#regression_basic)）
+- 交互作用項を含めることで、調整効果を検証することができる（[第9章](#interaction)）
+
+なお、ロジスティック回帰分析では、線形確率モデルとは異なり、左辺が$\Pr(y = 1)$ではなく$\log \frac{\Pr(Y = 1)}{1 - \Pr(Y = 1)}$となっている。$\Pr(y = 1)$を$\log \frac{\Pr(Y = 1)}{1 - \Pr(Y = 1)}$に変換することをロジット変換するといい、ロジスティック回帰分析のことを**ロジットモデル（logit model）**ということもある。
+
+### 直線とロジスティック曲線
+
+ロジスティック回帰分析は、線形確率モデルとは異なり、独立変数がいくら大きくなったとしても、従属変数が1をとる確率が1を超えることも0を下回ることもないという性質をもつ。これを確認するために、以下の2つの式をグラフに描いてみたのが下の図である。
+
+-   線形確率モデル（Linear）：$\Pr(y = 1) = \beta_0 + \beta_1x$
+-   ロジットモデル（Logit）：$\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} = \beta_0 + \beta_1x \leftrightarrow \Pr(y = 1) = \frac{e^{\beta_0 + \beta_1x}}{1 + e^{\beta_0 + \beta_1x}}$
+
+```{r, echo = FALSE}
+x <- seq(-7, 7, 0.1)
+df_temp <- tibble(x) %>% 
+  mutate(linear = 0.5 + 0.1*x) %>% 
+  mutate(logit = exp(0 + 0.4*x) / (1 + exp(0 + 0.4*x))) %>% 
+  pivot_longer(cols = c("linear", "logit"), names_to = "model", values_to = "y") %>% 
+  mutate(model = factor(model,
+                        levels = c("linear", "logit"),
+                        labels = c("Linear: y = b0 + b1x",
+                                   "Logit: y = exp(b0 + b1x) / (1 + exp(b0 + b1x))")))
+
+df_temp %>% 
+  ggplot(aes(x = x, y = y, color = model)) +
+  geom_line() + 
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_hline(yintercept = 1, linetype = "dashed") +
+  theme_classic() + 
+  theme(axis.ticks.x = element_blank(),
+        axis.text.x = element_blank(),
+        legend.position = c(0.4, 0.95),
+        legend.background = element_blank()) + 
+  scale_y_continuous(breaks = seq(0, 1, 0.25)) + 
+  labs(x = "x", y = "Pr(y = 1)", color = "") + 
+  scale_color_brewer(palette = "Set1")
+  
+```
+
+線形確率モデル（Linear）では、$\Pr(y=1)$の値によらず、$x$が大きくなるにつれて一定に変化していき、$\Pr(y=1)$が1を超えることも0を下回ることもあり得る。一方、ロジットモデル（Logit）では、$\Pr(y=1)$が1（または0）に近づくにつれて変化は緩やかになっていき、1を超えたり0を下回らないことがわかる。
+
+### 推定
+
+ロジットモデルを推定する際には、`glm()`関数を使う。基本的な書き方は線形回帰分析とほとんど同じだが、`family`の引数として`binomial`を指定する。
+
+```{r}
+logit_res1 <- glm(data = piaac, ojt ~ gender, family = binomial)
+summary(logit_res1)
+```
+
+```{r, include = FALSE}
+tidy_logit_res1 <- logit_res1 %>% tidy()
+coef <- round(tidy_logit_res1$estimate[2], 3)
+```
+
+「gender男性」の行は、女性と比べて男性であると**対数オッズ（log-odds）**が`r coef`高いことを表している。
+
+この対数オッズ比の値が、先ほど推定したロジスティック回帰分析の「gender男性」の係数の値に一致していることを確認しよう。すでに確認した通り、ロジットモデルの係数は対数オッズ比に一致するということがわかる。
+
+結果を解釈する場合には、指数をとってオッズ比として読むことが多い。今回であれば、男性は女性と比べて$\exp(0.352) = 1.421$倍、OJTを受けるオッズが高いといえる。
+
+```{r}
+# 指数をとってオッズ比に変換する
+exp(0.352)
+# tidy関数を使うとすべての係数について指数をとった値を計算できる（第8章参照）
+logit_res1 %>% 
+  tidy() %>% 
+  mutate(estimate_exp = exp(estimate))
+```
+
+連続変数を独立変数とする場合も、解釈は類似している。たとえば次のように性別と年齢を独立変数とするロジスティック回帰分析を推定する。
 
 ```{r}
 logit_res2 <- glm(data = piaac, ojt ~ gender + age, family = binomial)
@@ -218,40 +303,253 @@ coef <- round(coef_logit_res2$estimate[3], digits = 3)
 
 このときの年齢の係数は年齢が1高いとOJTを受ける対数オッズが`r coef`だけ高い（`r -coef`だけ低い）ということを意味している。
 
-## 平均限界効果
+## 解釈を深める
 
-ロジスティック回帰分析では係数は対数オッズを表す。しかし、対数オッズ比は線形確率モデルと比べると直感的に解釈しにくい。そこで、ロジスティック回帰分析を使う場合には、**平均限界効果 Average marginal effect, AME**と合わせて結果を解釈することが強く推奨される。
+### 線形確率モデルとロジットモデルの比較
 
-平均限界効果とは、変数$x$が1高いときに、従属変数$y$が1を取る確率がどの程度変化するかを表す。
-
-$$
-\Pr(y = 1) = \frac{e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k}}{1 + e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k}}
-$$
-
+線形確率モデルとロジットモデルの結果を比較してみよう。
 
 ```{r}
-piaac %>% 
-  select(id, gender, age)
+lpm_res2 <- lm_robust(data = piaac, ojt ~ gender + age)
+logit_res2 <- glm(data = piaac, ojt ~ gender + age, family = binomial)
+
+modelsummary(list("LPM" = lpm_res2,
+                  "Logit" = logit_res2), 
+             stars = TRUE)
 ```
+
+```{r, include = FALSE}
+coef_lpm_res2 <- lpm_res2 %>% tidy()
+coef_logit_res2 <- logit_res2 %>% tidy()
+```
+
+それぞれ、解釈は次のようになる。
+
+-   線形確率モデル（LPM）：年齢を一定としたうえで、男性は女性と比べて`r round(coef_lpm_res2$estimate[2] * 100, 1)`%ポイントOJTを受ける確率が高い。また、性別を一定としたうえで、年齢が1歳高いと、OJTを受ける確率が`r -round(coef_lpm_res2$estimate[3] * 100, 1)`%ポイント低い。
+-   ロジットモデル（Logit）：年齢を一定としたうえで、男性は女性と比べてOJTを受ける対数オッズが`r round(coef_logit_res2$estimate[2], digits = 3)`高い（オッズが`r round(exp(coef_logit_res2$estimate[2]), digits = 3)`倍高い）。また、性別を一定としたうえで、年齢が1歳高いと、OJTを受ける対数オッズが`r round(coef_logit_res2$estimate[3], digits = 3)`だけ低い（オッズが`r round(exp(coef_logit_res2$estimate[3]), digits = 3)`倍になる）。
+
+どちらも、正負の向きには違いはない。基本的に、線形確率モデルとロジットモデルで係数の正負の向きが逆転することはなく、結論が真逆になることはほとんどないといってよい。
+
+係数の解釈については、（対数）オッズ比という複雑な指標を使っているロジットモデルよりも、確率の差を表す線形確率モデルのほうがより直感的にわかりやすいだろう。
+
+### 平均限界効果
+
+ロジットモデルの結果から確率の差を表す指標を計算できれば、解釈の手助けになるだろう。そのための方法の一つが、**平均限界効果 Average marginal effect, AME**である。
+
+平均限界効果とは、ロジットモデルの推定結果にもとづいて、変数$x_k$が1単位増加したときに従属変数$y$が1を取る確率$\Pr(y = 1)$が変化する量をすべての個人について求め、平均をとった値として定義される。具体的には次の式で定義される。
+
+$$
+AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_{2i}, \cdots, x_k = x_{ki})}{\Delta x_k}
+$$
+
+平均限界効果が具体的に何を意味しているのかを見てみよう。まずは、次のとおり、OJTを受けるかどうかを従属変数として、性別（男性ダミー：Male）と年齢（Age）を独立変数としたロジットモデルを推定する。
+
+$$
+\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} = \beta_0 + \beta_1\mathrm{Male} + \beta_2\mathrm{Age}
+$$
+
+```{r}
+piaac_temp <- piaac %>% 
+  mutate(male = if_else(gender == "男性", 1, 0)) %>% 
+  select(id, ojt, male, age)
+
+logit_res <- glm(data = piaac_temp,
+                 ojt ~ male + age,
+                 family = "binomial")
+logit_res
+```
+
+```{r, include = FALSE}
+logit_res_tidy <- logit_res %>% tidy()
+intercept <- logit_res_tidy$estimate[1]
+male_coef <- logit_res_tidy$estimate[2]
+age_coef <- logit_res_tidy$estimate[3]
+```
+
+係数の推定結果は次のようになる：
+
+$$
+\begin{align}
+\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &= 
+`r round(intercept, digit = 3)` + 
+`r round(male_coef, digit = 3)`\mathrm{Male}  
+`r round(age_coef, digit = 3)`\mathrm{Age} \\
+\Pr(y = 1) &=
+\frac{
+\exp(`r round(intercept, digit = 3)` + 
+`r round(male_coef, digit = 3)`\mathrm{Male}  
+`r round(age_coef, digit = 3)`\mathrm{Age})
+}
+{
+1 + \exp(`r round(intercept, digit = 3)` + 
+`r round(male_coef, digit = 3)`\mathrm{Male}  
+`r round(age_coef, digit = 3)`\mathrm{Age})
+}
+\end{align}
+$$
+この推定結果にもとづいて、たとえば男性ダミーの平均限界効果（つまり、女性と比べて男性の場合に、OJTを受ける確率がどの程度変化するのか）を求めたいとする。このとき、各個人について、男性の場合の予測確率と、女性の場合の予測確率とをそれぞれ求めた上で、その差を取った値を求める。
+
+$$
+\widehat{\Pr}(y_i = 1 | Male = 1) - \widehat{\Pr}(y_i = 1 | Male = 0) = 
+\frac{
+\exp(`r round(intercept, digit = 3)` + 
+`r round(male_coef, digit = 3)` 
+`r round(age_coef, digit = 3)`\mathrm{Age}_i)
+}
+{
+1 + \exp(`r round(intercept, digit = 3)` + 
+`r round(male_coef, digit = 3)`  
+`r round(age_coef, digit = 3)`\mathrm{Age}_i)
+}
+-
+\frac{
+\exp(`r round(intercept, digit = 3)` 
+`r round(age_coef, digit = 3)`\mathrm{Age}_i)
+}
+{
+1 + \exp(`r round(intercept, digit = 3)` 
+`r round(age_coef, digit = 3)`\mathrm{Age}_i)
+}
+$$
+そして、この値の平均を取った値が、男性ダミーの平均限界効果となる：
+
+$$
+\frac{1}{N}\sum_{i=1}^N\left(
+\widehat{\Pr}(y_i = 1 | Male = 1) - \widehat{\Pr}(y_i = 1 | Male = 0)
+\right)
+$$
+
+Rで具体的に計算する場合は、次のようになる。
+
+```{r}
+# 推定結果から係数を抽出
+logit_res_tidy <- logit_res %>% tidy()
+intercept <- logit_res_tidy$estimate[1]
+male_coef <- logit_res_tidy$estimate[2]
+age_coef <- logit_res_tidy$estimate[3]
+
+piaac_temp <- piaac_temp %>% 
+  mutate(pr_male = exp(intercept + male_coef * 1 + age_coef * age)/(1 + exp(intercept + male_coef * 1 + age_coef * age))) %>% # 男性（male = 1）の場合の予測確率
+  mutate(pr_female = exp(intercept + male_coef * 0 + age_coef * age)/(1 + exp(intercept + male_coef * 0 + age_coef * age))) %>% # 女性（male = 0）の場合の予測確率 
+  mutate(pr_diff = pr_male - pr_female) # 男性の場合の予測確率と女性の場合の予測確率の差
+
+# データを見てみる
+piaac_temp %>% head()
+
+# pr_diffの平均値を計算
+piaac_temp %>% with(mean(pr_diff))
+```
+
+男性ダミーの平均限界効果は`r round(mean(piaac_temp$pr_diff), 4)`となる。すなわち、女性と比べて男性の場合は、OJTを受ける確率が平均`r round(mean(piaac_temp$pr_diff), 4) * 100`%ポイント高いといえる。
+
+このように、平均限界効果を用いることで、線形確率モデルのときと同じように確率の「差」から結果を解釈することができる。
+
+なお、ロジットモデルの場合は、他の独立変数（今回の場合は年齢）がどの程度であるかによって、独立変数を1単位変化させたときに予測確率がどの程度変化するかが異なる。したがって、予測確率の差`pr_diff`も一つに定まらず、個人によって異なる値をとることになる。先に計算した予測確率の差`pr_diff`の分布を確認してみると、このことは明らかである。
+
+```{r}
+piaac_temp %>% 
+  ggplot(aes(x = pr_diff)) + 
+  geom_histogram() 
+```
+
+### margins()：平均限界効果を計算する
+
+`margins`パッケージに含まれている`margins`関数を使うことで、平均限界効果を簡単に求めることができる。まずは、`margins`パッケージをまだインストールしていない場合は、`install.packages()`関数を使ってインストールする。
 
 ```{r, eval = FALSE}
 install.packages(margins)
 ```
 
+`margins`パッケージを読み込む。
+
 ```{r}
 library(margins)
 ```
 
-```{r}
-reg_res3 <- lm(data = piaac, ojt ~ gender + age + educ)
-logit_res3 <- glm(data = piaac, ojt ~ gender + age + educ, family = binomial())
-margins_logit_res3 <- margins(logit_res3)
-```
+保存した推定結果に対して`margins()`を実行するだけで、すべての変数について平均限界効果を求めてくれる。
 
 ```{r}
-modelsummary(list("LPM" = reg_res3, "Logit" = logit_res3, "AME" = margins_logit_res3),
+# 保存した推定結果logit_resの平均限界効果を求めて、結果を保存
+margins_logit_res <- margins(logit_res)
+# 結果を表示
+summary(margins_logit_res)
+```
+
+```{r, include=FALSE}
+tidy_margins_logit_res <- margins_logit_res %>% tidy()
+```
+
+それぞれ、年齢が1単位増加したときの平均限界効果、男性ダミーが1単位増加したとき（女性と比べて男性の場合）の平均限界効果を計算できる。そのほか、標準誤差やp値なども計算される。これらは今まで見てきたものと同様に、推定された平均限界効果が統計的に有意に0と異なるかどうかの仮説検定を行う際に利用することができる。
+
+分析結果を解釈する際に、係数（対数オッズ）だけではなく、平均限界効果も併せて表示することで、より直感的な解釈をすることができ、望ましいだろう。
+
+### 線形確率モデルの結果と平均限界効果の比較
+
+線形確率モデルと平均限界効果とで、結果に違いは生じるのだろうか？両者の結果を比較してみよう。
+
+```{r}
+# 線形確率モデル（ロバスト標準誤差）の推定
+reg_res_compare <- lm_robust(data = piaac, ojt ~ gender + age + educ)
+
+# ロジットモデルの推定
+logit_res_compare <- glm(data = piaac, ojt ~ gender + age + educ, family = "binomial")
+
+# ロジットモデルの結果をもとに平均限界効果を計算
+margins_logit_res_compare <- margins(logit_res_compare)
+
+# 線形確率モデルと平均限界効果の結果を並べて表示
+modelsummary(list("LPM" = reg_res_compare, 
+                  "AME" = margins_logit_res_compare),
              stars = TRUE)
 ```
 
-## ロジスティック回帰分析の注意点
+比べてみると、線形確率モデルとロジットモデルの平均限界効果とでわずかに結果に違いがある。しかし、ほぼ同じ結果になる。
 
+一般的に、サンプル全体で従属変数が1を取る割合が0.3--0.7くらいの範囲であれば、線形確率モデルの推定結果とロジットモデルの平均限界効果の結果はかなり近い値になることが多い。従属変数が1を取る割合が0.3--0.7の範囲を外れて大きくなる（または小さくなる）ほど、両者の隔たりは大きくなることが多い。
+
+
+### ロジットモデルの注意点：モデル間比較
+
+ロジットモデルの注意点として、異なる独立変数を含んだモデル間で係数の大きさを直接比較することができないということが挙げられる[^10-logit-1]。たとえば、OJTを受けるかどうかを従属変数として、年齢および性別を独立変数としたモデル（Model 1とする）、年齢・性別・学歴を独立変数としたモデル（Model 2とする）の2つを推定したとしよう。
+
+[^10-logit-1]: この点についての説明はMood, Carina. 2010. “Logistic Regression: Why We Cannot Do What We Think We Can Do, and What We Can Do about It.” *European Sociological Review* 26(1):67–82.などに詳しい。
+
+```{r}
+logit_res1 <- glm(data = piaac,
+                  ojt ~ gender + age,
+                  family = "binomial")
+logit_res2 <- glm(data = piaac,
+                  ojt ~ gender + age + educ,
+                  family = "binomial")
+modelsummary(list("Model 1" = logit_res1, 
+                  "Model 2" = logit_res2),
+             stars = TRUE,
+             coef_map = c("gender男性" = "男性（vs. 女性）",
+                          "age" = "年齢",
+                          "educ高校" = "高校（vs. 中学）",
+                          "educ短大高専" = "短大高専（vs. 中学）",
+                          "educ大学" = "大学大学院（vs. 中学）"))
+```
+
+```{r, include=FALSE}
+coef_logit_res1 <- logit_res1 %>% tidy()
+coef_logit_res2 <- logit_res2 %>% tidy()
+```
+
+Model 1とModel 2を比べると、男性の係数が`r round(coef_logit_res1$estimate[2], 3)`から`r round(coef_logit_res2$estimate[2], 3)`に変化していることがわかる。しかしながら、両者の係数の差`r round(coef_logit_res1$estimate[2] - coef_logit_res2$estimate[2], 3)`を、そのまま、学歴を統制することによってModel 1の男性の係数が媒介された分を表すこととして読むことはできない。
+
+【なぜ？→説明については作成中】
+
+もし、対数オッズ比の大きさを異なるモデル間で比較したい場合には、KHB methodなどの方法が提案されている[^10-logit-2]。
+
+[^10-logit-2]: KHB methodの説明については、Karlson, Kristian Bernt, Anders Holm, and Richard Breen. 2012. “Comparing Regression Coefficients between Same-Sample Nested Models Using Logit and Probit: A New Method.” *Sociological Methodology* 42(1):286–313.またはBreen, Richard, Kristian Bernt Karlson, and Anders Holm. 2013. “Total, Direct, and Indirect Effects in Logit and Probit Models.” *Sociological Methods & Research* 42(2):164–91.を参照。
+
+    Stataでの実装方法についてはKohler, Ulrich, Kristian Bernt Karlson, and Anders Holm. 2011. “Comparing Coefficients of Nested Nonlinear Probability Models.” *The Stata Journal* 11(3):420–38.に記載がある。
+
+
+## まとめ
+
+- 従属変数が2値変数のときには、ロジスティック回帰分析（ロジットモデル）を使用するのが望ましいとされている。
+- ロジスティック回帰分析のときにも線形回帰分析と同様に、統制変数の選択、連続変数の関数型、交互作用項の追加などを検討できる。
+- ロジスティック回帰分析の係数は、対数オッズ比を表す。指数を取ることで、オッズ比に変換して解釈できる。
+- オッズ比は直感的な解釈が難しいが、平均限界効果を併せて計算することで、独立変数1単位の増加に対して従属変数が1を取る確率がどれくらい変化するのか、という確率の差として結果を解釈できる。

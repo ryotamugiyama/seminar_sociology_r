@@ -170,14 +170,18 @@ RStudioが作業場所だと認識している場所を指して、作業ディ�
 本資料では以下のパッケージを使用する。今のうちにまとめてインストールしておこう。
 
 ```{r, eval = FALSE}
-install.packages("tidyverse")
-install.packages("haven")
-install.packages("readxl")
-install.packages("gtsummary")
-install.packages("modelsummary")
-install.packages("flextable")
-install.packages("estimatr")
-install.packages("broom")
+install.packages("tidyverse",
+                 "haven",
+                 "readxl",
+                 "gtsummary",
+                 "modelsummary",
+                 "pandoc",
+                 "flextable",
+                 "estimatr",
+                 "broom",
+                 "ggeffects",
+                 "effects",
+                 "margins")
 ```
 
 とくに重要なのが`tidyverse`パッケージ。以下の8つのパッケージをまとめたパッケージ群であり、どれもよく使うものなので、何らかの分析をする際にはほとんど常に`library(tidyverse)`を実行しておくことになる。
@@ -193,6 +197,8 @@ install.packages("broom")
 
 ## その他の設定
 
+### RStudioを閉じる際のWorkspace保存の警告を削除
+
 画面上部のTools \> Global Options をクリックして、以下の画面を開く。
 
 ![](images/restore_check.png)
@@ -204,6 +210,16 @@ install.packages("broom")
 以上は、一度変更したらその後は変更する必要はない[^02-preparation-1]。
 
 [^02-preparation-1]: この設定をしない場合、RStudioを閉じるたびにworkspaceを保存するかどうか尋ねられることになる。これは一見便利に見えるが、以前に読み込んだパッケージなどの情報が保存されてしまうため、意図せずして異なるパッケージどうしで関数名がバッティングしてしまい、エラーの原因となる（参考：[関数名の衝突を避ける（R）](https://keachmurakami.github.io/page/2018/06/29/%E9%96%A2%E6%95%B0%E5%90%8D%E3%81%AE%E8%A1%9D%E7%AA%81%E3%82%92%E9%81%BF%E3%81%91%E3%82%8B-r/)）。またこれは再現可能性の点でも悪手である。アプリケーションを閉じようとするときに「保存せずに消しますか？」と言われると、なんとなく保存したくなってしまうのが人情なので、先手を打ってそのように聞かれないように対策をしておいたほうがよい。
+
+### グラフの日本語表示
+
+ついで、グラフの表示にかかわるオプションを変更しておこう。先ほどと同様、画面上部のTools \> Global Options をクリックして、General \> Graphicsを選択する。
+
+![](images/graphic_check.png)
+
+ここで、「Backend」を以下のように「(Default)」から「AGG」に変更する。PCの環境によって異なるが、Backendが(Default)のままだと、日本語が表示されないことがある。このような場合、「AGG」に設定すると、日本語が含まれるグラフが正しく表示されるようになる。
+
+![](images/graphic_check2.png)
 
 ## Rの基礎（準備中）
 
