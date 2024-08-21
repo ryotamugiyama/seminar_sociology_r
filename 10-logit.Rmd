@@ -189,11 +189,11 @@ $$
 
 このとき、オッズ比および対数オッズ比はそれぞれ次のように定義され、次のような特徴をもつ。
 
-|                                                     | オッズ比 $(N_{11} / N_{10}) / (N_{01} / N_{00})$ | 対数オッズ比 $\log((N_{11} / N_{10}) / (N_{01} / N_{00}))$ |
+| 関連の強さ                                                    | オッズ比 $(N_{11} / N_{10}) / (N_{01} / N_{00})$ | 対数オッズ比 $\log((N_{11} / N_{10}) / (N_{01} / N_{00}))$ |
 |----------------------|-----------------------|---------------------------|
-| X = 0と比べてX = 1のほうがよりY = 1をとりやすい場合 | 1よりも大きくなり、大きくなるほど∞に近づく       | 0よりも大きくなり、大きくなるほど+∞に近づく                |
-| Y = 1のとりやすさが等しい場合                       | 1をとる                                          | 0をとる                                                    |
-| X = 1と比べてX = 0のほうがよりY = 1をとりやすい場合 | 1よりも小さくなり、小さくなるほど0に近づく       | 0よりも小さくなり、小さくなるほど-∞に近づく                |
+| 正 | 1よりも大きくなり、大きくなるほど∞に近づく       | 0よりも大きくなり、大きくなるほど+∞に近づく                |
+| 無関連                       | 1をとる                                          | 0をとる                                                    |
+| 負 | 1よりも小さくなり、小さくなるほど0に近づく       | 0よりも小さくなり、小さくなるほど-∞に近づく                |
 
 なお、対数の性質より、対数オッズ比は$\log((N_{11} / N_{10}) / (N_{01} / N_{00})) = \log(N_{11} / N_{10}) - (N_{01} / N_{00})$などと書くこともできる。
 
@@ -217,7 +217,11 @@ $$
 
 係数$\beta_k$は、他の$x$を一定としたうえで、$x_k$が1単位増加したときの従属変数の対数オッズ比の変化を表す。
 
-ロジスティック回帰分析でも、線形回帰分析のときと分析の際に気をつけることは同じである。たとえば、次のようなことはロジスティック回帰分析でも線形回帰分析と同様に検討する必要がある。 - 知りたい問いに対して適切な統制変数を投入する（[Chapter 8 回帰分析の活用](#regression_advanced)） - 連続変数であれば、線形のみではなく非線形（2乗項）を含めることができる（[Chapter 7 回帰分析の基礎](#regression_basic)） - 交互作用項を含めることで、調整効果を検証することができる（[Chapter 9 交互作用](#interaction)）
+ロジスティック回帰分析でも、線形回帰分析のときと分析の際に気をつけることは同じである。たとえば、次のようなことはロジスティック回帰分析でも線形回帰分析と同様に検討する必要がある。
+
+- 知りたい問いに対して適切な統制変数を投入する（[Chapter 8 回帰分析の活用](#regression_advanced)）
+- 連続変数であれば、線形のみではなく非線形（2乗項）を含めることができる（[Chapter 7 回帰分析の基礎](#regression_basic)） 
+- 交互作用項を含めることで、調整効果を検証することができる（[Chapter 9 交互作用](#interaction)）
 
 なお、ロジスティック回帰分析では、線形確率モデルとは異なり、左辺が$\Pr(y = 1)$ではなく$\log \frac{\Pr(Y = 1)}{1 - \Pr(Y = 1)}$となっている。$\Pr(y = 1)$を$\log \frac{\Pr(Y = 1)}{1 - \Pr(Y = 1)}$に変換することをロジット変換するといい、$\mathrm{logit}(\Pr(Y = 1))$と書くこともある。また、ロジスティック回帰分析のことを**ロジットモデル（logit model）**ということもある[^10-logit-1]。
 
@@ -308,7 +312,7 @@ coef <- round(coef_logit_res2$estimate[3], digits = 3)
 
 ロジスティック回帰分析の係数は、**最尤推定（Maximum likelihood estimation）**という方法によって求める。
 
-（以下本節の内容は作成中）
+（残る本節の内容は作成中）
 
 ## 解釈を深める
 
@@ -490,7 +494,7 @@ tidy_margins_logit_res <- margins_logit_res %>% tidy()
 
 分析結果を解釈する際に、係数（対数オッズ）だけではなく、平均限界効果も併せて表示することで、より直感的な解釈をすることができ、望ましいだろう。
 
-### 線形確率モデルの結果と平均限界効果の比較
+### 線形確率モデルの結果との比較
 
 線形確率モデルと平均限界効果とで、結果に違いは生じるのだろうか？両者の結果を比較してみよう。
 
@@ -548,9 +552,7 @@ Model 1とModel 2を比べると、男性の係数が`r round(coef_logit_res1$es
 
 もし、対数オッズ比の大きさを異なるモデル間で比較したい場合には、KHB methodなどの方法が提案されている[^10-logit-3]。
 
-[^10-logit-3]: KHB methodの説明については、Karlson, Kristian Bernt, Anders Holm, and Richard Breen. 2012. “Comparing Regression Coefficients between Same-Sample Nested Models Using Logit and Probit: A New Method.” *Sociological Methodology* 42(1):286–313.またはBreen, Richard, Kristian Bernt Karlson, and Anders Holm. 2013. “Total, Direct, and Indirect Effects in Logit and Probit Models.” *Sociological Methods & Research* 42(2):164–91.を参照。
-
-    Stataでの実装方法についてはKohler, Ulrich, Kristian Bernt Karlson, and Anders Holm. 2011. “Comparing Coefficients of Nested Nonlinear Probability Models.” *The Stata Journal* 11(3):420–38.に記載がある。
+[^10-logit-3]: KHB methodの説明については、Karlson, Kristian Bernt, Anders Holm, and Richard Breen. 2012. “Comparing Regression Coefficients between Same-Sample Nested Models Using Logit and Probit: A New Method.” *Sociological Methodology* 42(1):286–313.またはBreen, Richard, Kristian Bernt Karlson, and Anders Holm. 2013. “Total, Direct, and Indirect Effects in Logit and Probit Models.” *Sociological Methods & Research* 42(2):164–91.を参照。なお、Stataでの実装方法についてはKohler, Ulrich, Kristian Bernt Karlson, and Anders Holm. 2011. “Comparing Coefficients of Nested Nonlinear Probability Models.” *The Stata Journal* 11(3):420–38.に記載がある。
 
 ## まとめ
 
