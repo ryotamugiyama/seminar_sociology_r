@@ -65,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -687,7 +687,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>また、読み込んだデータ形式によっては変数名が大文字のことがある（xxjobではなくXXJOBというように）。このような場合は<a href="https://stackoverflow.com/questions/29264028/dplyr-or-magrittr-tolower/44882926">手持ちのデータの変数名を小文字に変換する</a>か、以下のコードのxxjobなどを大文字に直すかどちらかを行う必要がある。</p>
 <div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="domain.html#cb385-1" tabindex="-1"></a>ssm_code <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/mugiyama/seminar_sociology_r/master/data/ssm_occupation_code.csv&quot;</span>) </span></code></pre></div>
 <pre><code>## Rows: 206 Columns: 3
-## ── Column specification ────────────────────────
+## ── Column specification ─────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (3): ssm1995, ssmocc, censusocc
 ## 
@@ -773,7 +773,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>次のようなコードを実行することで、現職、初職、前職、父職のそれぞれに対して2種類の職業大分類を付与することができる。前職に関する質問項目が含まれていない場合には、前職に関わる部分のコードを削除する必要がある。</p>
 <div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="domain.html#cb392-1" tabindex="-1"></a>ssm_code <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://github.com/mugiyama/seminar_sociology_r/raw/master/data/ssm_occupation_code.csv&quot;</span>) </span></code></pre></div>
 <pre><code>## Rows: 206 Columns: 3
-## ── Column specification ────────────────────────
+## ── Column specification ─────────────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## dbl (3): ssm1995, ssmocc, censusocc
 ## 
@@ -1129,7 +1129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="都道府県レベルの指標を外挿する" class="section level3 hasAnchor" number="11.4.2">
 <h3><span class="header-section-number">11.4.2</span> 都道府県レベルの指標を外挿する<a href="domain.html#都道府県レベルの指標を外挿する" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>たとえば、都道府県ごとの大学卒業者割合を用いて、大卒割合が高い都道府県ほど、大学進学率が高いという仮説を検証したいとする。このような場合には、都道府県番号ごとに大学進学率を記載したExcelファイルを別に作成して、そのファイルを読み込み、<code>left_join()</code>を使ってもとのデータにくっつけるとよい。たとえば、以下のような形式のExcelファイルを作るとする<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>。</p>
+<p>たとえば、都道府県ごとの大学卒業者割合を用いて、大卒割合が高い都道府県ほど、大学進学率が高いという仮説を検証したいとする。このような場合には、都道府県番号ごとに大学進学率を記載したExcelファイルを別に作成して、そのファイルを読み込み、<code>left_join()</code>を使ってもとのデータにくっつけるとよい。たとえば、以下のような形式のExcelファイルを作るとする<a href="#fn27" class="footnote-ref" id="fnref27"><sup>27</sup></a>。</p>
 <div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="domain.html#cb410-1" tabindex="-1"></a>df_indicator <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 2
 ##    pref univrate
@@ -1163,8 +1163,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="footnotes">
 <hr />
-<ol start="26">
-<li id="fn26"><p>なおここでの都道府県ごとの大学卒業者割合は2010年国勢調査より取得した。卒業者に占める大学・大学院卒割合を意味する。<a href="domain.html#fnref26" class="footnote-back">↩︎</a></p></li>
+<ol start="27">
+<li id="fn27"><p>なおここでの都道府県ごとの大学卒業者割合は2010年国勢調査より取得した。卒業者に占める大学・大学院卒割合を意味する。<a href="domain.html#fnref27" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

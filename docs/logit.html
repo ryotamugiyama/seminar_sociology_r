@@ -65,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -600,31 +600,31 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 </div>
 <div id="ロバスト標準誤差残差が正規分布しない問題への対処" class="section level3 hasAnchor" number="10.1.2">
 <h3><span class="header-section-number">10.1.2</span> ロバスト標準誤差：残差が正規分布しない問題への対処<a href="logit.html#ロバスト標準誤差残差が正規分布しない問題への対処" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>回帰分析で係数の標準誤差を求めるときには、残差が正規分布するという仮定が置かれている。しかしながら、線形確率モデルの場合はこの仮定は通常満たされない。このことを、<strong>不均一分散 heteroskedasticity</strong>という。不均一分散が生じている場合には、標準誤差にバイアスが生じる。そこで、不均一分散に対して頑健な標準誤差（<strong>ロバスト標準誤差 robust standard error</strong>）を用いることで、適切な標準誤差を計算することができる。</p>
-<p>ここではロバスト標準誤差のことについてはくわしく説明しないが、推定の仕方だけ書いておく。ロバスト標準誤差を求める場合には、<code>estimatr</code>パッケージに含まれている<code>lm_robust()</code>関数を使うのが手っ取り早い。通常の<code>lm()</code>を、<code>lm_robust()</code>に変えるだけで、ロバスト標準誤差を計算してくれる。まずは<code>estimatr</code>パッケージを読み込もう。</p>
+<p>回帰分析で係数の標準誤差を求めるときには、残差がxの値によらず一定の大きさの分散にしたがう（均一分散）という仮定が置かれている。しかしながら、線形確率モデルの場合はこの仮定は通常満たされない（もちろん、従属変数が1/0ではない回帰分析でもこの仮定が満たされないことはある）。このように残差がxの値に依存することを指して<strong>不均一分散 heteroskedasticity</strong>という。不均一分散が生じている場合には、標準誤差にバイアスが生じる。そこで、<strong>不均一分散に対して頑健な標準誤差</strong>（<strong>Heteroskedasticity-robust standard error</strong>、またはロバスト標準誤差）を用いることで、適切な標準誤差を計算することができる。</p>
+<p><a href="https://keita43a.hatenablog.com/entry/2019/04/17/232548">ロバスト標準誤差についてはいくつかのバリエーションがある</a>。ここではくわしく説明しないが、推定の仕方だけ書いておく。ロバスト標準誤差を求める場合には、<code>estimatr</code>パッケージに含まれている<code>lm_robust()</code>関数を使うのが手っ取り早い。通常の<code>lm()</code>を、<code>lm_robust()</code>に変えるだけで、ロバスト標準誤差を計算してくれる。まずは<code>estimatr</code>パッケージを読み込もう。</p>
 <div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="logit.html#cb355-1" tabindex="-1"></a><span class="fu">library</span>(estimatr)</span></code></pre></div>
 <p>そのうえで、<code>estimatr::lm_robust()</code>関数を使って、ロバスト標準誤差つきの回帰分析を推定する。以下のように、ふつうの回帰分析と同じように実行すればよい。違うのは、関数が<code>lm()</code>ではなくて<code>lm_robust()</code>となっている点だけである。</p>
 <div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="logit.html#cb356-1" tabindex="-1"></a>reg_res2_robust <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span></code></pre></div>
 <p><code>lm()</code>で求めた推定結果と、<code>lm_robust()</code>で求めた推定結果を比べてみよう：</p>
 <div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="logit.html#cb357-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;通常のSE&quot;</span> <span class="ot">=</span> reg_res2, <span class="st">&quot;Robust SE&quot;</span> <span class="ot">=</span> reg_res2_robust),</span>
 <span id="cb357-2"><a href="logit.html#cb357-2" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>,<span class="at">fmt =</span> <span class="dv">4</span>)</span></code></pre></div>
-<div id="unqubgogif" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#unqubgogif table {
+<div id="gakkupbzaz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#gakkupbzaz table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#unqubgogif thead, #unqubgogif tbody, #unqubgogif tfoot, #unqubgogif tr, #unqubgogif td, #unqubgogif th {
+#gakkupbzaz thead, #gakkupbzaz tbody, #gakkupbzaz tfoot, #gakkupbzaz tr, #gakkupbzaz td, #gakkupbzaz th {
   border-style: none;
 }
 
-#unqubgogif p {
+#gakkupbzaz p {
   margin: 0;
   padding: 0;
 }
 
-#unqubgogif .gt_table {
+#gakkupbzaz .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -650,12 +650,12 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-left-color: #D3D3D3;
 }
 
-#unqubgogif .gt_caption {
+#gakkupbzaz .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#unqubgogif .gt_title {
+#gakkupbzaz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -667,7 +667,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-width: 0;
 }
 
-#unqubgogif .gt_subtitle {
+#gakkupbzaz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -679,7 +679,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-top-width: 0;
 }
 
-#unqubgogif .gt_heading {
+#gakkupbzaz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -691,13 +691,13 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#unqubgogif .gt_bottom_border {
+#gakkupbzaz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#unqubgogif .gt_col_headings {
+#gakkupbzaz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -712,7 +712,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#unqubgogif .gt_col_heading {
+#gakkupbzaz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -732,7 +732,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#unqubgogif .gt_column_spanner_outer {
+#gakkupbzaz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -744,15 +744,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 4px;
 }
 
-#unqubgogif .gt_column_spanner_outer:first-child {
+#gakkupbzaz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#unqubgogif .gt_column_spanner_outer:last-child {
+#gakkupbzaz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#unqubgogif .gt_column_spanner {
+#gakkupbzaz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -764,11 +764,11 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   width: 100%;
 }
 
-#unqubgogif .gt_spanner_row {
+#gakkupbzaz .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#unqubgogif .gt_group_heading {
+#gakkupbzaz .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -794,7 +794,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   text-align: left;
 }
 
-#unqubgogif .gt_empty_group_heading {
+#gakkupbzaz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -809,15 +809,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   vertical-align: middle;
 }
 
-#unqubgogif .gt_from_md > :first-child {
+#gakkupbzaz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#unqubgogif .gt_from_md > :last-child {
+#gakkupbzaz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#unqubgogif .gt_row {
+#gakkupbzaz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -836,7 +836,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#unqubgogif .gt_stub {
+#gakkupbzaz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -849,7 +849,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#unqubgogif .gt_stub_row_group {
+#gakkupbzaz .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -863,15 +863,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   vertical-align: top;
 }
 
-#unqubgogif .gt_row_group_first td {
+#gakkupbzaz .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#unqubgogif .gt_row_group_first th {
+#gakkupbzaz .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#unqubgogif .gt_summary_row {
+#gakkupbzaz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -881,16 +881,16 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#unqubgogif .gt_first_summary_row {
+#gakkupbzaz .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#unqubgogif .gt_first_summary_row.thick {
+#gakkupbzaz .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#unqubgogif .gt_last_summary_row {
+#gakkupbzaz .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -900,7 +900,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#unqubgogif .gt_grand_summary_row {
+#gakkupbzaz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -910,7 +910,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#unqubgogif .gt_first_grand_summary_row {
+#gakkupbzaz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -920,7 +920,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-top-color: #D3D3D3;
 }
 
-#unqubgogif .gt_last_grand_summary_row_top {
+#gakkupbzaz .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -930,11 +930,11 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#unqubgogif .gt_striped {
+#gakkupbzaz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#unqubgogif .gt_table_body {
+#gakkupbzaz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -943,7 +943,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#unqubgogif .gt_footnotes {
+#gakkupbzaz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -957,7 +957,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#unqubgogif .gt_footnote {
+#gakkupbzaz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -966,7 +966,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#unqubgogif .gt_sourcenotes {
+#gakkupbzaz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -980,7 +980,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#unqubgogif .gt_sourcenote {
+#gakkupbzaz .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -988,63 +988,63 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#unqubgogif .gt_left {
+#gakkupbzaz .gt_left {
   text-align: left;
 }
 
-#unqubgogif .gt_center {
+#gakkupbzaz .gt_center {
   text-align: center;
 }
 
-#unqubgogif .gt_right {
+#gakkupbzaz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#unqubgogif .gt_font_normal {
+#gakkupbzaz .gt_font_normal {
   font-weight: normal;
 }
 
-#unqubgogif .gt_font_bold {
+#gakkupbzaz .gt_font_bold {
   font-weight: bold;
 }
 
-#unqubgogif .gt_font_italic {
+#gakkupbzaz .gt_font_italic {
   font-style: italic;
 }
 
-#unqubgogif .gt_super {
+#gakkupbzaz .gt_super {
   font-size: 65%;
 }
 
-#unqubgogif .gt_footnote_marks {
+#gakkupbzaz .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#unqubgogif .gt_asterisk {
+#gakkupbzaz .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#unqubgogif .gt_indent_1 {
+#gakkupbzaz .gt_indent_1 {
   text-indent: 5px;
 }
 
-#unqubgogif .gt_indent_2 {
+#gakkupbzaz .gt_indent_2 {
   text-indent: 10px;
 }
 
-#unqubgogif .gt_indent_3 {
+#gakkupbzaz .gt_indent_3 {
   text-indent: 15px;
 }
 
-#unqubgogif .gt_indent_4 {
+#gakkupbzaz .gt_indent_4 {
   text-indent: 20px;
 }
 
-#unqubgogif .gt_indent_5 {
+#gakkupbzaz .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1128,14 +1128,14 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 </table>
 </div>
 <p>通常の標準誤差を用いた場合と、ロバスト標準誤差を用いた場合とでは、わずかに標準誤差の値が異なっていることがわかる。このずれがどれくらい大きくなるかは、データや変数の性質によって変わってくるため一概にいえない。ただし、係数の値には違いは生じない。</p>
-<p>線形確率モデルでは残差が正規分布に従わないことが明らかなので、<strong>常にロバスト標準誤差を用いるべき</strong>である。</p>
+<p>線形確率モデルでは残差が正規分布に従わないことが明らかなので、<strong>ロバスト標準誤差を用いるべき</strong>とされている（西山ほか 2019: 335）。</p>
 </div>
 </div>
 <div id="ロジスティック回帰分析とは" class="section level2 hasAnchor" number="10.2">
 <h2><span class="header-section-number">10.2</span> ロジスティック回帰分析とは<a href="logit.html#ロジスティック回帰分析とは" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="線形確率モデルの問題点" class="section level3 hasAnchor" number="10.2.1">
 <h3><span class="header-section-number">10.2.1</span> 線形確率モデルの問題点<a href="logit.html#線形確率モデルの問題点" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>線形確率モデルは、$x<span class="math inline">\(1単位の増加に対して、従属変数\)</span>y$が1をとる確率が何ポイント変わるのか、という確率の「差」を推定したモデルである。このことは解釈の利点がある一方で、次のような問題がある。</p>
+<p>線形確率モデルは、x1単位の増加に対して、従属変数yが1をとる確率が何ポイント変わるのか、という確率の「差」を推定したモデルである。このことは解釈の利点がある一方で、次のような問題がある。</p>
 <ol style="list-style-type: decimal">
 <li>モデルから得られる予測値が確率の定義上あり得ない数値になることがある。確率は定義上0以上1以下になるはずであるので、予測値が負の値になったり、1より大きくなることはあり得ないはずである。しかしながら線形確率モデルの場合には、こうしたことが起こり得る。また、このようなリスクは、サンプルにおいて従属変数が1を取る割合が1に近い、または0に近いほど大きくなる。</li>
 <li>従属変数が1をとる確率が異なる個人間で、ある独立変数が1単位増えることによる確率の増加量が異なる（天井効果 ceiling effectないし床効果 flooring effect）場合には、変数の「効果」の推定として不適切である。</li>
@@ -1150,23 +1150,23 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 <span id="cb358-2"><a href="logit.html#cb358-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">fct_relevel</span>(gender, <span class="st">&quot;男性&quot;</span>, <span class="st">&quot;女性&quot;</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb358-3"><a href="logit.html#cb358-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ojt =</span> <span class="fu">factor</span>(ojt, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">0</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;1（受けた）&quot;</span>, <span class="st">&quot;0（受けなかった）&quot;</span>))) <span class="sc">%&gt;%</span> </span>
 <span id="cb358-4"><a href="logit.html#cb358-4" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(gender, ojt)</span></code></pre></div>
-<div id="hmcdfynigm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#hmcdfynigm table {
+<div id="ltgsjqztkl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ltgsjqztkl table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#hmcdfynigm thead, #hmcdfynigm tbody, #hmcdfynigm tfoot, #hmcdfynigm tr, #hmcdfynigm td, #hmcdfynigm th {
+#ltgsjqztkl thead, #ltgsjqztkl tbody, #ltgsjqztkl tfoot, #ltgsjqztkl tr, #ltgsjqztkl td, #ltgsjqztkl th {
   border-style: none;
 }
 
-#hmcdfynigm p {
+#ltgsjqztkl p {
   margin: 0;
   padding: 0;
 }
 
-#hmcdfynigm .gt_table {
+#ltgsjqztkl .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1192,12 +1192,12 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-left-color: #D3D3D3;
 }
 
-#hmcdfynigm .gt_caption {
+#ltgsjqztkl .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#hmcdfynigm .gt_title {
+#ltgsjqztkl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1209,7 +1209,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-width: 0;
 }
 
-#hmcdfynigm .gt_subtitle {
+#ltgsjqztkl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1221,7 +1221,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-top-width: 0;
 }
 
-#hmcdfynigm .gt_heading {
+#ltgsjqztkl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1233,13 +1233,13 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#hmcdfynigm .gt_bottom_border {
+#ltgsjqztkl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hmcdfynigm .gt_col_headings {
+#ltgsjqztkl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1254,7 +1254,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#hmcdfynigm .gt_col_heading {
+#ltgsjqztkl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1274,7 +1274,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#hmcdfynigm .gt_column_spanner_outer {
+#ltgsjqztkl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1286,15 +1286,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 4px;
 }
 
-#hmcdfynigm .gt_column_spanner_outer:first-child {
+#ltgsjqztkl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hmcdfynigm .gt_column_spanner_outer:last-child {
+#ltgsjqztkl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hmcdfynigm .gt_column_spanner {
+#ltgsjqztkl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1306,11 +1306,11 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   width: 100%;
 }
 
-#hmcdfynigm .gt_spanner_row {
+#ltgsjqztkl .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#hmcdfynigm .gt_group_heading {
+#ltgsjqztkl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1336,7 +1336,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   text-align: left;
 }
 
-#hmcdfynigm .gt_empty_group_heading {
+#ltgsjqztkl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1351,15 +1351,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   vertical-align: middle;
 }
 
-#hmcdfynigm .gt_from_md > :first-child {
+#ltgsjqztkl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hmcdfynigm .gt_from_md > :last-child {
+#ltgsjqztkl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hmcdfynigm .gt_row {
+#ltgsjqztkl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1378,7 +1378,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#hmcdfynigm .gt_stub {
+#ltgsjqztkl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1391,7 +1391,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#hmcdfynigm .gt_stub_row_group {
+#ltgsjqztkl .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1405,15 +1405,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   vertical-align: top;
 }
 
-#hmcdfynigm .gt_row_group_first td {
+#ltgsjqztkl .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#hmcdfynigm .gt_row_group_first th {
+#ltgsjqztkl .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#hmcdfynigm .gt_summary_row {
+#ltgsjqztkl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1423,16 +1423,16 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#hmcdfynigm .gt_first_summary_row {
+#ltgsjqztkl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#hmcdfynigm .gt_first_summary_row.thick {
+#ltgsjqztkl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#hmcdfynigm .gt_last_summary_row {
+#ltgsjqztkl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1442,7 +1442,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#hmcdfynigm .gt_grand_summary_row {
+#ltgsjqztkl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1452,7 +1452,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#hmcdfynigm .gt_first_grand_summary_row {
+#ltgsjqztkl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1462,7 +1462,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-top-color: #D3D3D3;
 }
 
-#hmcdfynigm .gt_last_grand_summary_row_top {
+#ltgsjqztkl .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1472,11 +1472,11 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#hmcdfynigm .gt_striped {
+#ltgsjqztkl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hmcdfynigm .gt_table_body {
+#ltgsjqztkl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1485,7 +1485,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#hmcdfynigm .gt_footnotes {
+#ltgsjqztkl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1499,7 +1499,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#hmcdfynigm .gt_footnote {
+#ltgsjqztkl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1508,7 +1508,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#hmcdfynigm .gt_sourcenotes {
+#ltgsjqztkl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1522,7 +1522,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#hmcdfynigm .gt_sourcenote {
+#ltgsjqztkl .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1530,63 +1530,63 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#hmcdfynigm .gt_left {
+#ltgsjqztkl .gt_left {
   text-align: left;
 }
 
-#hmcdfynigm .gt_center {
+#ltgsjqztkl .gt_center {
   text-align: center;
 }
 
-#hmcdfynigm .gt_right {
+#ltgsjqztkl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hmcdfynigm .gt_font_normal {
+#ltgsjqztkl .gt_font_normal {
   font-weight: normal;
 }
 
-#hmcdfynigm .gt_font_bold {
+#ltgsjqztkl .gt_font_bold {
   font-weight: bold;
 }
 
-#hmcdfynigm .gt_font_italic {
+#ltgsjqztkl .gt_font_italic {
   font-style: italic;
 }
 
-#hmcdfynigm .gt_super {
+#ltgsjqztkl .gt_super {
   font-size: 65%;
 }
 
-#hmcdfynigm .gt_footnote_marks {
+#ltgsjqztkl .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#hmcdfynigm .gt_asterisk {
+#ltgsjqztkl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#hmcdfynigm .gt_indent_1 {
+#ltgsjqztkl .gt_indent_1 {
   text-indent: 5px;
 }
 
-#hmcdfynigm .gt_indent_2 {
+#ltgsjqztkl .gt_indent_2 {
   text-indent: 10px;
 }
 
-#hmcdfynigm .gt_indent_3 {
+#ltgsjqztkl .gt_indent_3 {
   text-indent: 15px;
 }
 
-#hmcdfynigm .gt_indent_4 {
+#ltgsjqztkl .gt_indent_4 {
   text-indent: 20px;
 }
 
-#hmcdfynigm .gt_indent_5 {
+#ltgsjqztkl .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1817,23 +1817,23 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 <span id="cb367-4"><a href="logit.html#cb367-4" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;LPM&quot;</span> <span class="ot">=</span> lpm_res2,</span>
 <span id="cb367-5"><a href="logit.html#cb367-5" tabindex="-1"></a>                  <span class="st">&quot;Logit&quot;</span> <span class="ot">=</span> logit_res2), </span>
 <span id="cb367-6"><a href="logit.html#cb367-6" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div id="pxtkjsvvbo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#pxtkjsvvbo table {
+<div id="jvkdliethh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#jvkdliethh table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#pxtkjsvvbo thead, #pxtkjsvvbo tbody, #pxtkjsvvbo tfoot, #pxtkjsvvbo tr, #pxtkjsvvbo td, #pxtkjsvvbo th {
+#jvkdliethh thead, #jvkdliethh tbody, #jvkdliethh tfoot, #jvkdliethh tr, #jvkdliethh td, #jvkdliethh th {
   border-style: none;
 }
 
-#pxtkjsvvbo p {
+#jvkdliethh p {
   margin: 0;
   padding: 0;
 }
 
-#pxtkjsvvbo .gt_table {
+#jvkdliethh .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1859,12 +1859,12 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-left-color: #D3D3D3;
 }
 
-#pxtkjsvvbo .gt_caption {
+#jvkdliethh .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#pxtkjsvvbo .gt_title {
+#jvkdliethh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1876,7 +1876,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-width: 0;
 }
 
-#pxtkjsvvbo .gt_subtitle {
+#jvkdliethh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1888,7 +1888,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-top-width: 0;
 }
 
-#pxtkjsvvbo .gt_heading {
+#jvkdliethh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1900,13 +1900,13 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#pxtkjsvvbo .gt_bottom_border {
+#jvkdliethh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#pxtkjsvvbo .gt_col_headings {
+#jvkdliethh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1921,7 +1921,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#pxtkjsvvbo .gt_col_heading {
+#jvkdliethh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1941,7 +1941,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#pxtkjsvvbo .gt_column_spanner_outer {
+#jvkdliethh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1953,15 +1953,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 4px;
 }
 
-#pxtkjsvvbo .gt_column_spanner_outer:first-child {
+#jvkdliethh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pxtkjsvvbo .gt_column_spanner_outer:last-child {
+#jvkdliethh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pxtkjsvvbo .gt_column_spanner {
+#jvkdliethh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1973,11 +1973,11 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   width: 100%;
 }
 
-#pxtkjsvvbo .gt_spanner_row {
+#jvkdliethh .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#pxtkjsvvbo .gt_group_heading {
+#jvkdliethh .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2003,7 +2003,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   text-align: left;
 }
 
-#pxtkjsvvbo .gt_empty_group_heading {
+#jvkdliethh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2018,15 +2018,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   vertical-align: middle;
 }
 
-#pxtkjsvvbo .gt_from_md > :first-child {
+#jvkdliethh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pxtkjsvvbo .gt_from_md > :last-child {
+#jvkdliethh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pxtkjsvvbo .gt_row {
+#jvkdliethh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2045,7 +2045,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#pxtkjsvvbo .gt_stub {
+#jvkdliethh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2058,7 +2058,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#pxtkjsvvbo .gt_stub_row_group {
+#jvkdliethh .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2072,15 +2072,15 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   vertical-align: top;
 }
 
-#pxtkjsvvbo .gt_row_group_first td {
+#jvkdliethh .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#pxtkjsvvbo .gt_row_group_first th {
+#jvkdliethh .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#pxtkjsvvbo .gt_summary_row {
+#jvkdliethh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2090,16 +2090,16 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#pxtkjsvvbo .gt_first_summary_row {
+#jvkdliethh .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#pxtkjsvvbo .gt_first_summary_row.thick {
+#jvkdliethh .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#pxtkjsvvbo .gt_last_summary_row {
+#jvkdliethh .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2109,7 +2109,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#pxtkjsvvbo .gt_grand_summary_row {
+#jvkdliethh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2119,7 +2119,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#pxtkjsvvbo .gt_first_grand_summary_row {
+#jvkdliethh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2129,7 +2129,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-top-color: #D3D3D3;
 }
 
-#pxtkjsvvbo .gt_last_grand_summary_row_top {
+#jvkdliethh .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2139,11 +2139,11 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#pxtkjsvvbo .gt_striped {
+#jvkdliethh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#pxtkjsvvbo .gt_table_body {
+#jvkdliethh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2152,7 +2152,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#pxtkjsvvbo .gt_footnotes {
+#jvkdliethh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2166,7 +2166,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#pxtkjsvvbo .gt_footnote {
+#jvkdliethh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2175,7 +2175,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#pxtkjsvvbo .gt_sourcenotes {
+#jvkdliethh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2189,7 +2189,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#pxtkjsvvbo .gt_sourcenote {
+#jvkdliethh .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2197,63 +2197,63 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#pxtkjsvvbo .gt_left {
+#jvkdliethh .gt_left {
   text-align: left;
 }
 
-#pxtkjsvvbo .gt_center {
+#jvkdliethh .gt_center {
   text-align: center;
 }
 
-#pxtkjsvvbo .gt_right {
+#jvkdliethh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pxtkjsvvbo .gt_font_normal {
+#jvkdliethh .gt_font_normal {
   font-weight: normal;
 }
 
-#pxtkjsvvbo .gt_font_bold {
+#jvkdliethh .gt_font_bold {
   font-weight: bold;
 }
 
-#pxtkjsvvbo .gt_font_italic {
+#jvkdliethh .gt_font_italic {
   font-style: italic;
 }
 
-#pxtkjsvvbo .gt_super {
+#jvkdliethh .gt_super {
   font-size: 65%;
 }
 
-#pxtkjsvvbo .gt_footnote_marks {
+#jvkdliethh .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#pxtkjsvvbo .gt_asterisk {
+#jvkdliethh .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#pxtkjsvvbo .gt_indent_1 {
+#jvkdliethh .gt_indent_1 {
   text-indent: 5px;
 }
 
-#pxtkjsvvbo .gt_indent_2 {
+#jvkdliethh .gt_indent_2 {
   text-indent: 10px;
 }
 
-#pxtkjsvvbo .gt_indent_3 {
+#jvkdliethh .gt_indent_3 {
   text-indent: 15px;
 }
 
-#pxtkjsvvbo .gt_indent_4 {
+#jvkdliethh .gt_indent_4 {
   text-indent: 20px;
 }
 
-#pxtkjsvvbo .gt_indent_5 {
+#jvkdliethh .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -2323,7 +2323,7 @@ y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
 <li>線形確率モデル（LPM）：年齢を一定としたうえで、男性は女性と比べて8.1%ポイントOJTを受ける確率が高い。また、性別を一定としたうえで、年齢が1歳高いと、OJTを受ける確率が0.4%ポイント低い。</li>
 <li>ロジットモデル（Logit）：年齢を一定としたうえで、男性は女性と比べてOJTを受ける対数オッズが0.35高い（オッズが1.419倍高い）。また、性別を一定としたうえで、年齢が1歳高いと、OJTを受ける対数オッズが-0.016だけ低い（オッズが0.984倍になる）。</li>
 </ul>
-<p>どちらも、正負の向きには違いはない。基本的に、線形確率モデルとロジットモデルで係数の正負の向きが逆転することはなく、結論が真逆になることはほとんどないといってよい。</p>
+<p>どちらも、正負の向きには違いはない。基本的に、線形確率モデルとロジットモデルで係数の正負の向きが逆転することは少なく、結論が真逆になることはほとんどないといってよい<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>。</p>
 <p>係数の解釈については、（対数）オッズ比という複雑な指標を使っているロジットモデルよりも、確率の差を表す線形確率モデルのほうがより直感的にわかりやすいだろう。</p>
 </div>
 <div id="平均限界効果" class="section level3 hasAnchor" number="10.4.2">
@@ -2436,8 +2436,8 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
 <div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="logit.html#cb374-1" tabindex="-1"></a>piaac_temp <span class="sc">%&gt;%</span> </span>
 <span id="cb374-2"><a href="logit.html#cb374-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pr_diff)) <span class="sc">+</span> </span>
 <span id="cb374-3"><a href="logit.html#cb374-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() </span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better
-## value with `binwidth`.</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with
+## `binwidth`.</code></pre>
 <p><img src="seminar_doc_files/figure-html/unnamed-chunk-286-1.png" width="672" /></p>
 </div>
 <div id="margins平均限界効果を計算する" class="section level3 hasAnchor" number="10.4.3">
@@ -2473,23 +2473,23 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
 <span id="cb380-11"><a href="logit.html#cb380-11" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;LPM&quot;</span> <span class="ot">=</span> reg_res_compare, </span>
 <span id="cb380-12"><a href="logit.html#cb380-12" tabindex="-1"></a>                  <span class="st">&quot;AME&quot;</span> <span class="ot">=</span> margins_logit_res_compare),</span>
 <span id="cb380-13"><a href="logit.html#cb380-13" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div id="xtgwyxzbmi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xtgwyxzbmi table {
+<div id="xfurjojevy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xfurjojevy table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#xtgwyxzbmi thead, #xtgwyxzbmi tbody, #xtgwyxzbmi tfoot, #xtgwyxzbmi tr, #xtgwyxzbmi td, #xtgwyxzbmi th {
+#xfurjojevy thead, #xfurjojevy tbody, #xfurjojevy tfoot, #xfurjojevy tr, #xfurjojevy td, #xfurjojevy th {
   border-style: none;
 }
 
-#xtgwyxzbmi p {
+#xfurjojevy p {
   margin: 0;
   padding: 0;
 }
 
-#xtgwyxzbmi .gt_table {
+#xfurjojevy .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2515,12 +2515,12 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-left-color: #D3D3D3;
 }
 
-#xtgwyxzbmi .gt_caption {
+#xfurjojevy .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#xtgwyxzbmi .gt_title {
+#xfurjojevy .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2532,7 +2532,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-bottom-width: 0;
 }
 
-#xtgwyxzbmi .gt_subtitle {
+#xfurjojevy .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2544,7 +2544,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-top-width: 0;
 }
 
-#xtgwyxzbmi .gt_heading {
+#xfurjojevy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2556,13 +2556,13 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-right-color: #D3D3D3;
 }
 
-#xtgwyxzbmi .gt_bottom_border {
+#xfurjojevy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xtgwyxzbmi .gt_col_headings {
+#xfurjojevy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2577,7 +2577,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-right-color: #D3D3D3;
 }
 
-#xtgwyxzbmi .gt_col_heading {
+#xfurjojevy .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2597,7 +2597,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   overflow-x: hidden;
 }
 
-#xtgwyxzbmi .gt_column_spanner_outer {
+#xfurjojevy .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2609,15 +2609,15 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   padding-right: 4px;
 }
 
-#xtgwyxzbmi .gt_column_spanner_outer:first-child {
+#xfurjojevy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xtgwyxzbmi .gt_column_spanner_outer:last-child {
+#xfurjojevy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xtgwyxzbmi .gt_column_spanner {
+#xfurjojevy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2629,11 +2629,11 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   width: 100%;
 }
 
-#xtgwyxzbmi .gt_spanner_row {
+#xfurjojevy .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#xtgwyxzbmi .gt_group_heading {
+#xfurjojevy .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2659,7 +2659,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   text-align: left;
 }
 
-#xtgwyxzbmi .gt_empty_group_heading {
+#xfurjojevy .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2674,15 +2674,15 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   vertical-align: middle;
 }
 
-#xtgwyxzbmi .gt_from_md > :first-child {
+#xfurjojevy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xtgwyxzbmi .gt_from_md > :last-child {
+#xfurjojevy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xtgwyxzbmi .gt_row {
+#xfurjojevy .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2701,7 +2701,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   overflow-x: hidden;
 }
 
-#xtgwyxzbmi .gt_stub {
+#xfurjojevy .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2714,7 +2714,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   padding-right: 5px;
 }
 
-#xtgwyxzbmi .gt_stub_row_group {
+#xfurjojevy .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2728,15 +2728,15 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   vertical-align: top;
 }
 
-#xtgwyxzbmi .gt_row_group_first td {
+#xfurjojevy .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xtgwyxzbmi .gt_row_group_first th {
+#xfurjojevy .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#xtgwyxzbmi .gt_summary_row {
+#xfurjojevy .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2746,16 +2746,16 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   padding-right: 5px;
 }
 
-#xtgwyxzbmi .gt_first_summary_row {
+#xfurjojevy .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xtgwyxzbmi .gt_first_summary_row.thick {
+#xfurjojevy .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xtgwyxzbmi .gt_last_summary_row {
+#xfurjojevy .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2765,7 +2765,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-bottom-color: #D3D3D3;
 }
 
-#xtgwyxzbmi .gt_grand_summary_row {
+#xfurjojevy .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2775,7 +2775,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   padding-right: 5px;
 }
 
-#xtgwyxzbmi .gt_first_grand_summary_row {
+#xfurjojevy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2785,7 +2785,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-top-color: #D3D3D3;
 }
 
-#xtgwyxzbmi .gt_last_grand_summary_row_top {
+#xfurjojevy .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2795,11 +2795,11 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-bottom-color: #D3D3D3;
 }
 
-#xtgwyxzbmi .gt_striped {
+#xfurjojevy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xtgwyxzbmi .gt_table_body {
+#xfurjojevy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2808,7 +2808,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-bottom-color: #D3D3D3;
 }
 
-#xtgwyxzbmi .gt_footnotes {
+#xfurjojevy .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2822,7 +2822,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-right-color: #D3D3D3;
 }
 
-#xtgwyxzbmi .gt_footnote {
+#xfurjojevy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2831,7 +2831,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   padding-right: 5px;
 }
 
-#xtgwyxzbmi .gt_sourcenotes {
+#xfurjojevy .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2845,7 +2845,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-right-color: #D3D3D3;
 }
 
-#xtgwyxzbmi .gt_sourcenote {
+#xfurjojevy .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2853,63 +2853,63 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   padding-right: 5px;
 }
 
-#xtgwyxzbmi .gt_left {
+#xfurjojevy .gt_left {
   text-align: left;
 }
 
-#xtgwyxzbmi .gt_center {
+#xfurjojevy .gt_center {
   text-align: center;
 }
 
-#xtgwyxzbmi .gt_right {
+#xfurjojevy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xtgwyxzbmi .gt_font_normal {
+#xfurjojevy .gt_font_normal {
   font-weight: normal;
 }
 
-#xtgwyxzbmi .gt_font_bold {
+#xfurjojevy .gt_font_bold {
   font-weight: bold;
 }
 
-#xtgwyxzbmi .gt_font_italic {
+#xfurjojevy .gt_font_italic {
   font-style: italic;
 }
 
-#xtgwyxzbmi .gt_super {
+#xfurjojevy .gt_super {
   font-size: 65%;
 }
 
-#xtgwyxzbmi .gt_footnote_marks {
+#xfurjojevy .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#xtgwyxzbmi .gt_asterisk {
+#xfurjojevy .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xtgwyxzbmi .gt_indent_1 {
+#xfurjojevy .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xtgwyxzbmi .gt_indent_2 {
+#xfurjojevy .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xtgwyxzbmi .gt_indent_3 {
+#xfurjojevy .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xtgwyxzbmi .gt_indent_4 {
+#xfurjojevy .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xtgwyxzbmi .gt_indent_5 {
+#xfurjojevy .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -2991,7 +2991,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
 </div>
 <div id="ロジットモデルの注意点モデル間比較" class="section level3 hasAnchor" number="10.4.5">
 <h3><span class="header-section-number">10.4.5</span> ロジットモデルの注意点：モデル間比較<a href="logit.html#ロジットモデルの注意点モデル間比較" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>ロジットモデルの注意点として、異なる独立変数を含んだモデル間で係数の大きさを直接比較することができないということが挙げられる<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>。たとえば、OJTを受けるかどうかを従属変数として、年齢および性別を独立変数としたモデル（Model 1とする）、年齢・性別・学歴を独立変数としたモデル（Model 2とする）の2つを推定したとしよう。</p>
+<p>ロジットモデルの注意点として、異なる独立変数を含んだモデル間で係数の大きさを直接比較することができないということが挙げられる<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>。たとえば、OJTを受けるかどうかを従属変数として、年齢および性別を独立変数としたモデル（Model 1とする）、年齢・性別・学歴を独立変数としたモデル（Model 2とする）の2つを推定したとしよう。</p>
 <div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="logit.html#cb381-1" tabindex="-1"></a>logit_res1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac,</span>
 <span id="cb381-2"><a href="logit.html#cb381-2" tabindex="-1"></a>                  ojt <span class="sc">~</span> gender <span class="sc">+</span> age,</span>
 <span id="cb381-3"><a href="logit.html#cb381-3" tabindex="-1"></a>                  <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
@@ -3006,23 +3006,23 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
 <span id="cb381-12"><a href="logit.html#cb381-12" tabindex="-1"></a>                          <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
 <span id="cb381-13"><a href="logit.html#cb381-13" tabindex="-1"></a>                          <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
 <span id="cb381-14"><a href="logit.html#cb381-14" tabindex="-1"></a>                          <span class="st">&quot;educ大学&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>))</span></code></pre></div>
-<div id="dhuzhwffmw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dhuzhwffmw table {
+<div id="oebadzgezs" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#oebadzgezs table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#dhuzhwffmw thead, #dhuzhwffmw tbody, #dhuzhwffmw tfoot, #dhuzhwffmw tr, #dhuzhwffmw td, #dhuzhwffmw th {
+#oebadzgezs thead, #oebadzgezs tbody, #oebadzgezs tfoot, #oebadzgezs tr, #oebadzgezs td, #oebadzgezs th {
   border-style: none;
 }
 
-#dhuzhwffmw p {
+#oebadzgezs p {
   margin: 0;
   padding: 0;
 }
 
-#dhuzhwffmw .gt_table {
+#oebadzgezs .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3048,12 +3048,12 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-left-color: #D3D3D3;
 }
 
-#dhuzhwffmw .gt_caption {
+#oebadzgezs .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#dhuzhwffmw .gt_title {
+#oebadzgezs .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3065,7 +3065,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-bottom-width: 0;
 }
 
-#dhuzhwffmw .gt_subtitle {
+#oebadzgezs .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3077,7 +3077,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-top-width: 0;
 }
 
-#dhuzhwffmw .gt_heading {
+#oebadzgezs .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3089,13 +3089,13 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-right-color: #D3D3D3;
 }
 
-#dhuzhwffmw .gt_bottom_border {
+#oebadzgezs .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dhuzhwffmw .gt_col_headings {
+#oebadzgezs .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3110,7 +3110,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-right-color: #D3D3D3;
 }
 
-#dhuzhwffmw .gt_col_heading {
+#oebadzgezs .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3130,7 +3130,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   overflow-x: hidden;
 }
 
-#dhuzhwffmw .gt_column_spanner_outer {
+#oebadzgezs .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3142,15 +3142,15 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   padding-right: 4px;
 }
 
-#dhuzhwffmw .gt_column_spanner_outer:first-child {
+#oebadzgezs .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dhuzhwffmw .gt_column_spanner_outer:last-child {
+#oebadzgezs .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dhuzhwffmw .gt_column_spanner {
+#oebadzgezs .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3162,11 +3162,11 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   width: 100%;
 }
 
-#dhuzhwffmw .gt_spanner_row {
+#oebadzgezs .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#dhuzhwffmw .gt_group_heading {
+#oebadzgezs .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3192,7 +3192,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   text-align: left;
 }
 
-#dhuzhwffmw .gt_empty_group_heading {
+#oebadzgezs .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3207,15 +3207,15 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   vertical-align: middle;
 }
 
-#dhuzhwffmw .gt_from_md > :first-child {
+#oebadzgezs .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dhuzhwffmw .gt_from_md > :last-child {
+#oebadzgezs .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dhuzhwffmw .gt_row {
+#oebadzgezs .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3234,7 +3234,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   overflow-x: hidden;
 }
 
-#dhuzhwffmw .gt_stub {
+#oebadzgezs .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3247,7 +3247,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   padding-right: 5px;
 }
 
-#dhuzhwffmw .gt_stub_row_group {
+#oebadzgezs .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3261,15 +3261,15 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   vertical-align: top;
 }
 
-#dhuzhwffmw .gt_row_group_first td {
+#oebadzgezs .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dhuzhwffmw .gt_row_group_first th {
+#oebadzgezs .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#dhuzhwffmw .gt_summary_row {
+#oebadzgezs .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3279,16 +3279,16 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   padding-right: 5px;
 }
 
-#dhuzhwffmw .gt_first_summary_row {
+#oebadzgezs .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#dhuzhwffmw .gt_first_summary_row.thick {
+#oebadzgezs .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dhuzhwffmw .gt_last_summary_row {
+#oebadzgezs .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3298,7 +3298,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-bottom-color: #D3D3D3;
 }
 
-#dhuzhwffmw .gt_grand_summary_row {
+#oebadzgezs .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3308,7 +3308,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   padding-right: 5px;
 }
 
-#dhuzhwffmw .gt_first_grand_summary_row {
+#oebadzgezs .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3318,7 +3318,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-top-color: #D3D3D3;
 }
 
-#dhuzhwffmw .gt_last_grand_summary_row_top {
+#oebadzgezs .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3328,11 +3328,11 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-bottom-color: #D3D3D3;
 }
 
-#dhuzhwffmw .gt_striped {
+#oebadzgezs .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dhuzhwffmw .gt_table_body {
+#oebadzgezs .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3341,7 +3341,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-bottom-color: #D3D3D3;
 }
 
-#dhuzhwffmw .gt_footnotes {
+#oebadzgezs .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3355,7 +3355,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-right-color: #D3D3D3;
 }
 
-#dhuzhwffmw .gt_footnote {
+#oebadzgezs .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3364,7 +3364,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   padding-right: 5px;
 }
 
-#dhuzhwffmw .gt_sourcenotes {
+#oebadzgezs .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3378,7 +3378,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   border-right-color: #D3D3D3;
 }
 
-#dhuzhwffmw .gt_sourcenote {
+#oebadzgezs .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3386,63 +3386,63 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
   padding-right: 5px;
 }
 
-#dhuzhwffmw .gt_left {
+#oebadzgezs .gt_left {
   text-align: left;
 }
 
-#dhuzhwffmw .gt_center {
+#oebadzgezs .gt_center {
   text-align: center;
 }
 
-#dhuzhwffmw .gt_right {
+#oebadzgezs .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dhuzhwffmw .gt_font_normal {
+#oebadzgezs .gt_font_normal {
   font-weight: normal;
 }
 
-#dhuzhwffmw .gt_font_bold {
+#oebadzgezs .gt_font_bold {
   font-weight: bold;
 }
 
-#dhuzhwffmw .gt_font_italic {
+#oebadzgezs .gt_font_italic {
   font-style: italic;
 }
 
-#dhuzhwffmw .gt_super {
+#oebadzgezs .gt_super {
   font-size: 65%;
 }
 
-#dhuzhwffmw .gt_footnote_marks {
+#oebadzgezs .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#dhuzhwffmw .gt_asterisk {
+#oebadzgezs .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dhuzhwffmw .gt_indent_1 {
+#oebadzgezs .gt_indent_1 {
   text-indent: 5px;
 }
 
-#dhuzhwffmw .gt_indent_2 {
+#oebadzgezs .gt_indent_2 {
   text-indent: 10px;
 }
 
-#dhuzhwffmw .gt_indent_3 {
+#oebadzgezs .gt_indent_3 {
   text-indent: 15px;
 }
 
-#dhuzhwffmw .gt_indent_4 {
+#oebadzgezs .gt_indent_4 {
   text-indent: 20px;
 }
 
-#dhuzhwffmw .gt_indent_5 {
+#oebadzgezs .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -3509,7 +3509,7 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
 </div>
 <p>Model 1とModel 2を比べると、男性の係数が0.35から0.247に変化していることがわかる。しかしながら、両者の係数の差0.104を、そのまま、学歴を統制することによってModel 1の男性の係数が媒介された分を表すこととして読むことはできない。</p>
 <p>【なぜ？→説明については作成中】</p>
-<p>もし、対数オッズ比の大きさを異なるモデル間で比較したい場合には、KHB methodなどの方法が提案されている<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>。</p>
+<p>もし、対数オッズ比の大きさを異なるモデル間で比較したい場合には、KHB methodなどの方法が提案されている<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>。</p>
 </div>
 </div>
 <div id="まとめ" class="section level2 hasAnchor" number="10.5">
@@ -3527,8 +3527,9 @@ AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_
 <hr />
 <ol start="23">
 <li id="fn23"><p>なお、今回のように従属変数が2値の場合のロジスティック回帰分析を指して「二項ロジットモデル（binomial logit model）」ということもある。従属変数が順序変数（1, 2, 3, 4…と数値があるが、値の大小関係を表しているのみで、値の幅は均等ではないような性質を持つ変数）であるようなロジットモデルのことを「順序ロジットモデル（ordered logit model）」、従属変数が多値変数（3つ以上のカテゴリを持ち、それらの値の間にいずれも順序関係がないような性質を持つ変数）であるようなロジットモデルのことを「多項ロジットモデル（multinomial logit model）」とよぶ。<a href="logit.html#fnref23" class="footnote-back">↩︎</a></p></li>
-<li id="fn24"><p>この点についての説明はMood, Carina. 2010. “Logistic Regression: Why We Cannot Do What We Think We Can Do, and What We Can Do about It.” <em>European Sociological Review</em> 26(1):67–82.などに詳しい。<a href="logit.html#fnref24" class="footnote-back">↩︎</a></p></li>
-<li id="fn25"><p>KHB methodの説明については、Karlson, Kristian Bernt, Anders Holm, and Richard Breen. 2012. “Comparing Regression Coefficients between Same-Sample Nested Models Using Logit and Probit: A New Method.” <em>Sociological Methodology</em> 42(1):286–313.またはBreen, Richard, Kristian Bernt Karlson, and Anders Holm. 2013. “Total, Direct, and Indirect Effects in Logit and Probit Models.” <em>Sociological Methods &amp; Research</em> 42(2):164–91.を参照。なお、Stataでの実装方法についてはKohler, Ulrich, Kristian Bernt Karlson, and Anders Holm. 2011. “Comparing Coefficients of Nested Nonlinear Probability Models.” <em>The Stata Journal</em> 11(3):420–38.に記載がある。<a href="logit.html#fnref25" class="footnote-back">↩︎</a></p></li>
+<li id="fn24"><p>ただしこれは交互作用項の結果については当てはまらないことがある。くわしくはBloome, Deirdre, and Shannon Ang. 2022. “Is the Effect Larger in Group A or B? It Depends: Understanding Results from Nonlinear Probability Models.” <em>Demography</em> 59(4):1459–88.を参照。<a href="logit.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<li id="fn25"><p>この点についての説明はMood, Carina. 2010. “Logistic Regression: Why We Cannot Do What We Think We Can Do, and What We Can Do about It.” <em>European Sociological Review</em> 26(1):67–82.などに詳しい。<a href="logit.html#fnref25" class="footnote-back">↩︎</a></p></li>
+<li id="fn26"><p>KHB methodの説明については、Karlson, Kristian Bernt, Anders Holm, and Richard Breen. 2012. “Comparing Regression Coefficients between Same-Sample Nested Models Using Logit and Probit: A New Method.” <em>Sociological Methodology</em> 42(1):286–313.またはBreen, Richard, Kristian Bernt Karlson, and Anders Holm. 2013. “Total, Direct, and Indirect Effects in Logit and Probit Models.” <em>Sociological Methods &amp; Research</em> 42(2):164–91.を参照。なお、Stataでの実装方法についてはKohler, Ulrich, Kristian Bernt Karlson, and Anders Holm. 2011. “Comparing Coefficients of Nested Nonlinear Probability Models.” <em>The Stata Journal</em> 11(3):420–38.に記載がある。<a href="logit.html#fnref26" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

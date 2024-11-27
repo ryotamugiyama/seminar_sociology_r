@@ -186,10 +186,10 @@ modelsummary(list(reg_res1, reg_res2),
 ```
 
 ```{r, echo = FALSE}
-reg_res1_tidy <- tidy(reg_res1) %>% 
-  mutate(estimate = round(estimate, digits = 0))
-reg_res2_tidy <- tidy(reg_res2) %>% 
-  mutate(estimate = round(estimate, digits = 0))
+reg_res1_tidy <- broom::tidy(reg_res1) %>% 
+  mutate(estimate = round(estimate, digits = 3))
+reg_res2_tidy <- broom::tidy(reg_res2) %>% 
+  mutate(estimate = round(estimate, digits = 3))
 ```
 
 Model 1では、女性ダミーの係数は負であるので、女性は男性に比して賃金が低いということがわかる。
@@ -290,9 +290,11 @@ reg_res2_tidy <- reg_res2 %>%
 
 ## 結果をファイルに書き出す
 
-前章の[結果をファイルに書き出す](#regression_basic_export)を参照。念のため、再確認しておくと、 `flextable`パッケージを読みこんでおいた状態で（本章冒頭を参照）、上記の`modelsummary()`のコードに`output = "xxx.docx"`というようなオプションをつけることで、wordファイルに結果を書き出すことができる。
+前章の[結果をファイルに書き出す](#regression_basic_export)を参照。念のため再確認しておくと、 `flextable`パッケージを読みこんでおいた状態で（本章冒頭を参照）、上記の`modelsummary()`のコードに`output = "xxx.docx"`というようなオプションをつけることで、wordファイルに結果を書き出すことができる。
 
 ```{r}
+library(flextable) # もし読み込んでいない場合は実行
+
 modelsummary(list(reg_res1, reg_res2),
          stars = TRUE, 
          coef_map = c("gender男性" = "男性（vs. 女性）",
