@@ -121,14 +121,14 @@ meandata %>%
   labs(x = "学歴", y = "平均賃金", fill = "性別")
 ```
 
-また、グラフそのものを分割するという方法も考えられる。`facet_wrap()`を使うことで、指定した変数でグラフを分割することができる。
+また、グラフそのものを分割するという方法も考えられる。`facet_grid()`を使うことで、指定した変数でグラフを分割することができる。
 
 ```{r}
 meandata %>% 
   ggplot(aes(x = educ, y = mean)) + 
   geom_col() +
   labs(x = "学歴", y = "平均賃金") +
-  facet_wrap(~gender) # genderでグラフを分割
+  facet_grid(~gender) # genderでグラフを分割
 ```
 
 ## 分布の比較
@@ -144,7 +144,7 @@ piaac %>%
   labs(fill = "")
 ```
 
-グループ間で人数が異なると少し比較が難しいかもしれない。このような場合は縦軸を度数ではなく密度（density）にするとよい[^06-tabulate-1]。`aes()`の部分に`y = ..density..`という指定を加えることで、縦軸を密度にすることができる。
+グループ間で人数が異なると少し比較が難しいかもしれない。このような場合は縦軸を度数ではなく密度（density）にするとよい。`aes()`の部分に`y = ..density..`という指定を加えることで、縦軸を密度にすることができる。
 
 密度を使うと、ヒストグラムで囲まれた部分の面積がちょうど1になるように縦軸のスケール（高さ）が決定される。このときの縦軸のスケールのことを指して密度（density）という。
 
@@ -155,13 +155,13 @@ piaac %>%
   labs(fill = "")
 ```
 
-カテゴリの数が2つならいいが、たくさんの場合には見にくくなってしまう。そのような場合には先ほど紹介した`facet_wrap()`をつかって図を分けるのがよいだろう。たとえば、職業ごとに賃金のヒストグラムをつくる場合には、次のようにする。
+カテゴリの数が2つならいいが、たくさんの場合には見にくくなってしまう。そのような場合には先ほど紹介した`facet_grid()`をつかって図を分けるのがよいだろう。たとえば、職業ごとに賃金のヒストグラムをつくる場合には、次のようにする。
 
 ```{r}
 piaac %>% 
   ggplot(aes(x = wage, y = ..density..)) + 
   geom_histogram() + 
-  facet_wrap(~occupation)
+  facet_grid(~occupation)
 ```
 
 ## クロス表
@@ -376,14 +376,14 @@ piaac %>%
 
 ### カテゴリごとに散布図を分ける
 
-たとえば男性と女性で別々に散布図を書きたいということがあるだろう。このような場合には、`facet_wrap()`を使うか、`color =`を指定する。
+たとえば男性と女性で別々に散布図を書きたいということがあるだろう。このような場合には、`facet_grid()`を使うか、`color =`を指定する。
 
 ```{r}
 piaac %>% 
   ggplot(aes(x = age, y = wage)) + 
   geom_point(shape = 1) + 
   geom_smooth(method = "lm", se = FALSE) + 
-  facet_wrap(~gender)
+  facet_grid(~gender)
 ```
 
 ```{r}
@@ -477,13 +477,13 @@ table %>%
   labs(x = "", y = "", fill = "") 
 ```
 
-そこで、学歴ごとにグラフをわけて、職業の分布を書くという方法がある。`facet_wrap()`を使うことで、グラフを分割することができる。
+そこで、学歴ごとにグラフをわけて、職業の分布を書くという方法がある。`facet_grid()`を使うことで、グラフを分割することができる。
 
 ```{r}
 table %>% 
   ggplot(aes(y = prop, x = occupation)) + 
   geom_col() + 
-  facet_wrap(~educ) + 
+  facet_grid(~educ) + 
   labs(x = "", y = "割合") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
@@ -494,7 +494,7 @@ table %>%
 table %>% 
   ggplot(aes(y = prop, x = educ)) + 
   geom_col() + 
-  facet_wrap(~occupation) + 
+  facet_grid(~occupation) + 
   labs(x = "", y = "割合") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```

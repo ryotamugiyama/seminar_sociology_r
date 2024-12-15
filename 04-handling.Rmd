@@ -16,11 +16,16 @@ library(tidyverse)
 
 ## 本資料で用いるデータ
 
-本資料では基本的に、OECDが実施している国際成人力調査[Programme for the International Assessment of Adult Competencies, PIAAC](https://www.oecd.org/skills/piaac/)の日本版データをサンプルデータとして使用する。
+本資料では基本的に、OECDが実施している国際成人力調査[Programme for the International Assessment of Adult Competencies, PIAAC](https://www.oecd.org/skills/piaac/)の1st Cycle（2013年実施）の日本版データをサンプルデータとして使用する。
 
-ダウンロード手順は以下のとおり。まず、[Data](https://www.oecd.org/en/data/datasets/PIAAC-1st-Cycle-Database.html)のページの中ほどにある "Download the datasets (Public Use Files)"を選択 \> "csv" \> "prgjpnp1.csv" を選択して、ファイルをダウンロードできる。直接当該のページに行く場合は[こちらのリンク](https://webfs.oecd.org/piaac/puf-data/CSV/)から。
+ダウンロード手順は以下のとおり。
 
-ダウンロードファイルを「data」のフォルダに入れるのを忘れずに。
+1. [PIAAC 1st Cycle Database](https://www.oecd.org/en/data/datasets/piaac-1st-cycle-database.html)のページにアクセス
+2. 少し下にある"**Download the datasets (Public Use Files)**"をクリック
+3. 規約を読み、ページ下部の**Next**をクリック
+4. 「Name」「Institution/Organization」「Email Address」を入力し、「You acknowledge reading the Data Protection Notice and agreeing to comply with the Terms of Use」をクリック。
+5. 左列（"Cycle 1"）にあるJapanの"CSV"のリンクをクリックして、ファイルをダウンロードする
+6. ダウンロードしたファイルを自分のPCの「data」のフォルダに入れる
 
 「data」のフォルダに入っていることを確認して、データを読み込む。このデータは少し特殊で、数値のほかに文字列などが入っている。そのため、すこしだけ特殊な処理をほどこしてデータを読み込むことにする。
 
@@ -382,30 +387,33 @@ piaac <- piaac %>%
   )) %>% 
   mutate(workhour_fct = factor(workhour_fct,
                                levels = 1:4,
-                               labels = c("短時間（35時間未満）", "通常（35-49時間）", "長時間（50-59時間）", "過労死ライン（60時間以上）")))
+                               labels = c("35時間未満", "35-49時間", "50-59時間", "60時間以上")))
 
 piaac %>% with(table(workhour_fct)) # 確認
 ```
 
-#### fct_relevel()を使う
+#### fct_relevel()を使う {#fct_relevel}
 
-`fct_relevel()`は、文字列変数の値の順序を任意の順序に並び替えるコマンドである。これを使う場合には次のようなコマンドになる。
+`fct_relevel()`は、文字列変数の値の順序を任意の順序に並び替えるコマンドである。`fct_relevel(変数, "値", "値",...)`のようなコードとなる。
 
 ```{r}
 piaac <- piaac %>% 
   mutate(workhour_fct = case_when(
-    d_q10 < 35 ~ "短時間（35時間未満）",
-    d_q10 >= 35 & d_q10 <= 49 ~ "標準（35-49時間）",
-    d_q10 >= 50 & d_q10 <= 59 ~ "長時間（50-59時間）",
-    d_q10 >= 60 ~ "過労死ライン（60時間以上）"
-  )) %>% 
-  mutate(workhour_fct = fct_relevel(workhour_fct,
-                                    "短時間（35時間未満）",
-                                    "標準（35-49時間）",
-                                    "長時間（50-59時間）",
-                                    "過労死ライン（60時間以上）"))
+    d_q10 < 35 ~ "35時間未満",
+    d_q10 >= 35 & d_q10 <= 49 ~ "35-49時間",
+    d_q10 >= 50 & d_q10 <= 59 ~ "50-59時間",
+    d_q10 >= 60 ~ "60時間以上"
+  ))
+piaac %>% with(table(workhour_fct)) # 意図した順番とは違い、「35-49時間」が前に来てしまっている。。
 
-piaac %>% with(table(workhour_fct)) # 確認
+piaac <- piaac %>% 
+  mutate(workhour_fct = fct_relevel(workhour_fct,
+                                    "35時間未満",
+                                    "35-49時間",
+                                    "50-59時間",
+                                    "60時間以上"))
+
+piaac %>% with(table(workhour_fct)) # 確認。確かに並びがかわっている。
 ```
 
 ### 必要な列のみ抽出：select()
@@ -512,7 +520,7 @@ jgss #元のデータ（架空例）
 
 ```{r}
 jgss <- jgss %>% 
-  mutate(genderrole = if_else(Q4WWHHX == 9, NA_real_, Q4WWHHX))  # 9をNAに置換
+  mutate(genderrole = if_else(Q4WWHHX == 9, NA, Q4WWHHX))  # 9をNAに置換
 
 jgss #変換後のデータ
 ```
@@ -550,6 +558,7 @@ jgss #変換後のデータ
 上記で作成した変数も含めて、本資料で使う変数をまとめて作成するためのコードを以下に記した。
 
 ```{r}
+
 piaac <- piaac %>% 
   mutate(id = 1:n()) %>% 
   mutate(wage = earnhrbonus) %>% 
