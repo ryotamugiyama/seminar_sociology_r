@@ -340,9 +340,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.5" data-path="regression_basic.html"><a href="regression_basic.html#regression_modelsummary"><i class="fa fa-check"></i><b>7.5</b> 回帰分析の結果をきれいに表示する</a></li>
 <li class="chapter" data-level="7.6" data-path="regression_basic.html"><a href="regression_basic.html#regression_basic_export"><i class="fa fa-check"></i><b>7.6</b> 結果をファイルに書き出す</a>
 <ul>
-<li class="chapter" data-level="7.6.1" data-path="regression_basic.html"><a href="regression_basic.html#ordファイルに書き出す"><i class="fa fa-check"></i><b>7.6.1</b> !ordファイルに書き出す</a></li>
+<li class="chapter" data-level="7.6.1" data-path="regression_basic.html"><a href="regression_basic.html#wordファイルに書き出す"><i class="fa fa-check"></i><b>7.6.1</b> Wordファイルに書き出す</a></li>
 <li class="chapter" data-level="7.6.2" data-path="regression_basic.html"><a href="regression_basic.html#regression_output_excel"><i class="fa fa-check"></i><b>7.6.2</b> Excelファイルに書き出す</a></li>
 <li class="chapter" data-level="7.6.3" data-path="regression_basic.html"><a href="regression_basic.html#regression_output_pptx"><i class="fa fa-check"></i><b>7.6.3</b> PowerPointファイルに書き出す</a></li>
+<li class="chapter" data-level="7.6.4" data-path="regression_basic.html"><a href="regression_basic.html#regression_output_rtf"><i class="fa fa-check"></i><b>7.6.4</b> rtfファイルに書き出す</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="regression_advanced.html"><a href="regression_advanced.html"><i class="fa fa-check"></i><b>8</b> 回帰分析の活用</a>
@@ -523,25 +524,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>本章では、1変数の集計方法を説明する。</p>
 <p>内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project…」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。</p>
 <p>さらに、以下のパッケージを読み込んだ上で、<a href="handling.html#handling">第4章</a>で作成したデータを読み込んで<code>piaac</code>というデータフレームに入れていることを前提とする。具体的には、以下のコードを実行しておく必要がある。</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="descriptives.html#cb123-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb123-2"><a href="descriptives.html#cb123-2" tabindex="-1"></a></span>
-<span id="cb123-3"><a href="descriptives.html#cb123-3" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="descriptives.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="descriptives.html#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="descriptives.html#cb1-3" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
 <div id="連続変数を集計する" class="section level2 hasAnchor" number="5.1">
 <h2><span class="header-section-number">5.1</span> 連続変数を集計する<a href="descriptives.html#連続変数を集計する" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="descriptives_summarize" class="section level3 hasAnchor" number="5.1.1">
 <h3><span class="header-section-number">5.1.1</span> 要約統計量の計算<a href="descriptives.html#descriptives_summarize" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>さまざまな変数を集計するときに最も基本的なコードが、<code>summarize()</code>である。たとえば、piaacというデータフレームに含まれている変数wageの平均値を求めたいとする。このようなときには、次のように記述する。</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="descriptives.html#cb124-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb124-2"><a href="descriptives.html#cb124-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(wage))</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="descriptives.html#cb2-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="descriptives.html#cb2-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(wage))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##    mean
 ##   &lt;dbl&gt;
 ## 1 1792.</code></pre>
 <p>この命令は、「piaacというデータフレームのなかに入っている変数を集計してね、具体的には、平均値を求めてね、ちなみにその平均値にはmeanという名前をつけてね」ということを意味している。</p>
 <p>集計する変数（この場合はwage）にNAが含まれていると計算ができず、結果もNAとなってしまう。NAが含まれる変数の平均値を計算するときには、あらかじめwageがNAの行を除外しておくとよい。詳しくは前章の<a href="handling.html#handling_sample">サンプルの選択</a>を参照のこと。一時的にNAの行を除外して集計してみたい場合には、次のように書く。</p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="descriptives.html#cb126-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb126-2"><a href="descriptives.html#cb126-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(wage) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb126-3"><a href="descriptives.html#cb126-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(wage))</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="descriptives.html#cb4-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="descriptives.html#cb4-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(wage) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="descriptives.html#cb4-3" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(wage))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##    mean
 ##   &lt;dbl&gt;
@@ -586,23 +587,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>全部集計してみるとたとえば以下のような感じになる。</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="descriptives.html#cb128-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb128-2"><a href="descriptives.html#cb128-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(wage),</span>
-<span id="cb128-3"><a href="descriptives.html#cb128-3" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(wage),</span>
-<span id="cb128-4"><a href="descriptives.html#cb128-4" tabindex="-1"></a>            <span class="at">max =</span> <span class="fu">max</span>(wage),</span>
-<span id="cb128-5"><a href="descriptives.html#cb128-5" tabindex="-1"></a>            <span class="at">min =</span> <span class="fu">min</span>(wage),</span>
-<span id="cb128-6"><a href="descriptives.html#cb128-6" tabindex="-1"></a>            <span class="at">p25 =</span> <span class="fu">quantile</span>(wage, <span class="fl">0.25</span>),</span>
-<span id="cb128-7"><a href="descriptives.html#cb128-7" tabindex="-1"></a>            <span class="at">p50 =</span> <span class="fu">quantile</span>(wage, <span class="fl">0.5</span>),</span>
-<span id="cb128-8"><a href="descriptives.html#cb128-8" tabindex="-1"></a>            <span class="at">p75 =</span> <span class="fu">quantile</span>(wage, <span class="fl">0.75</span>),</span>
-<span id="cb128-9"><a href="descriptives.html#cb128-9" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="descriptives.html#cb6-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="descriptives.html#cb6-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(wage),</span>
+<span id="cb6-3"><a href="descriptives.html#cb6-3" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(wage),</span>
+<span id="cb6-4"><a href="descriptives.html#cb6-4" tabindex="-1"></a>            <span class="at">max =</span> <span class="fu">max</span>(wage),</span>
+<span id="cb6-5"><a href="descriptives.html#cb6-5" tabindex="-1"></a>            <span class="at">min =</span> <span class="fu">min</span>(wage),</span>
+<span id="cb6-6"><a href="descriptives.html#cb6-6" tabindex="-1"></a>            <span class="at">p25 =</span> <span class="fu">quantile</span>(wage, <span class="fl">0.25</span>),</span>
+<span id="cb6-7"><a href="descriptives.html#cb6-7" tabindex="-1"></a>            <span class="at">p50 =</span> <span class="fu">quantile</span>(wage, <span class="fl">0.5</span>),</span>
+<span id="cb6-8"><a href="descriptives.html#cb6-8" tabindex="-1"></a>            <span class="at">p75 =</span> <span class="fu">quantile</span>(wage, <span class="fl">0.75</span>),</span>
+<span id="cb6-9"><a href="descriptives.html#cb6-9" tabindex="-1"></a>            <span class="at">n =</span> <span class="fu">n</span>())</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 8
 ##    mean    sd   max   min   p25   p50   p75     n
 ##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
 ## 1 1792. 1191. 9634.  462.   950 1445. 2212.  2728</code></pre>
 <p>いくつかの変数について最小値、第1四分位点、中央値、平均値、第3四分位点、最大値をまとめて表示したい場合、これらを一つひとつやっていくのはとても煩雑である。このような場合には、統計量を計算したい変数だけを<code>select()</code>で抽出し、そのうえで、<code>summary()</code>関数を使うとできる。たとえば、wage, age, healthの3つの変数についての統計量をまとめて見てみたい場合に次のようにする。</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="descriptives.html#cb130-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb130-2"><a href="descriptives.html#cb130-2" tabindex="-1"></a>  <span class="fu">select</span>(wage, age, health) <span class="sc">%&gt;%</span> </span>
-<span id="cb130-3"><a href="descriptives.html#cb130-3" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="descriptives.html#cb8-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="descriptives.html#cb8-2" tabindex="-1"></a>  <span class="fu">select</span>(wage, age, health) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="descriptives.html#cb8-3" tabindex="-1"></a>  <span class="fu">summary</span>()</span></code></pre></div>
 <pre><code>##       wage             age            health     
 ##  Min.   : 461.5   Min.   :25.00   Min.   :1.000  
 ##  1st Qu.: 950.0   1st Qu.:35.00   1st Qu.:2.000  
@@ -617,113 +618,74 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ヒストグラムとggplotの導入" class="section level3 hasAnchor" number="5.2.1">
 <h3><span class="header-section-number">5.2.1</span> ヒストグラムとggplotの導入<a href="descriptives.html#ヒストグラムとggplotの導入" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>連続変数の場合にはたんに平均値や中央値だけを見るだけでなく、分布を見ることも重要である。連続変数の分布をみるときには、ヒストグラムを使うのが有効である。コードの説明はさておき、まずはヒストグラムをみてみよう。</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="descriptives.html#cb132-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb132-2"><a href="descriptives.html#cb132-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> </span>
-<span id="cb132-3"><a href="descriptives.html#cb132-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better
-## value with `binwidth`.</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-90-1.png" width="672" /></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="descriptives.html#cb10-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="descriptives.html#cb10-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> </span>
+<span id="cb10-3"><a href="descriptives.html#cb10-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>このように、Rでグラフを作成したいときに活躍するのが<code>ggplot2</code>である。<code>ggplot2</code>は<code>tidyverse</code>パッケージを読み込むと合わせて読み込まれるため、別途<code>library(ggplot2)</code>で読み込む必要はない。</p>
 <p><code>ggplot2</code>の基本的な発想は、キャンバスに絵の具を重ね塗りしていくかのように、一つひとつ層を重ねていってグラフを作るというものである。具体的にみてみよう。先ほどのコードから3行目を削除した次の結果を確認してみよう。</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="descriptives.html#cb134-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb134-2"><a href="descriptives.html#cb134-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="co"># wageをx軸として座標を描く</span></span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="descriptives.html#cb12-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="descriptives.html#cb12-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="co"># wageをx軸として座標を描く</span></span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p><code>ggplot()</code>という部分が、グラフを書くための準備をしている箇所である。<code>aes()</code>のなかでは、x軸やy軸にそれぞれ何の変数を取るのかであったり、どのような色で分けるのか（後述）などを指定する。今の場合であれば、x軸にwageをとる、ということを指している。上記の命令だけだと、このようにx軸のみが表示された空白の座標が準備される。</p>
 <p><code>geom_histogram()</code>というのが、ヒストグラムを書くためのコードである。先ほどのコードに、<code>+</code>でつないで<code>geom_histogram()</code>というコードを追加すると、空白の座標にヒストグラムが描かれる。縦軸（count）は、その区間に何人の人が属しているかを示している。</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="descriptives.html#cb135-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb135-2"><a href="descriptives.html#cb135-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> <span class="co"># wageをx軸として座標を描いて、</span></span>
-<span id="cb135-3"><a href="descriptives.html#cb135-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="co"># そこにヒストグラムを描く</span></span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better
-## value with `binwidth`.</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-92-1.png" width="672" /></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="descriptives.html#cb13-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="descriptives.html#cb13-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> <span class="co"># wageをx軸として座標を描いて、</span></span>
+<span id="cb13-3"><a href="descriptives.html#cb13-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="co"># そこにヒストグラムを描く</span></span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p><code>geom_histogram()</code>内でオプションを指定することで、ヒストグラムの見た目をさまざまに変更できる。たとえば、区間の区切りの個数（<code>bins</code>）を細かくしてみよう（デフォルトは<code>bins = 30</code>）。</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="descriptives.html#cb137-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb137-2"><a href="descriptives.html#cb137-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> </span>
-<span id="cb137-3"><a href="descriptives.html#cb137-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="co"># ヒストグラムの区切りの数を100に設定</span></span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-93-1.png" width="672" /></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="descriptives.html#cb15-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="descriptives.html#cb15-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> </span>
+<span id="cb15-3"><a href="descriptives.html#cb15-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="co"># ヒストグラムの区切りの数を100に設定</span></span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>以下、<code>+</code>でつないでいくことで、さらに層を重ねて、グラフの見た目をさまざまに変更できる。たとえば、x軸の範囲を指定する<code>xlim()</code>を使って、より見やすいグラフを作ってみよう。</p>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="descriptives.html#cb138-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb138-2"><a href="descriptives.html#cb138-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> </span>
-<span id="cb138-3"><a href="descriptives.html#cb138-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span> </span>
-<span id="cb138-4"><a href="descriptives.html#cb138-4" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">10000</span>) <span class="co"># x軸の最小値を0、最大値を10000に設定</span></span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-94-1.png" width="672" /></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="descriptives.html#cb16-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="descriptives.html#cb16-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> </span>
+<span id="cb16-3"><a href="descriptives.html#cb16-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span> </span>
+<span id="cb16-4"><a href="descriptives.html#cb16-4" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">10000</span>) <span class="co"># x軸の最小値を0、最大値を10000に設定</span></span></code></pre></div>
+<pre><code>## Warning: Removed 2 rows containing missing values (`geom_bar()`).</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
 <div id="ggplotの設定日本語関係" class="section level3 hasAnchor" number="5.2.2">
 <h3><span class="header-section-number">5.2.2</span> ggplotの設定（日本語関係）<a href="descriptives.html#ggplotの設定日本語関係" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>ところで、Macで<code>ggplot2</code>パッケージを使用し、グラフ中に日本語を使用する場合には、<code>library(tidyverse)</code>（または<code>library(ggplot2)</code>）を実行したうえで、たとえば以下のようなコードをあらかじめ実行しておく必要がある。</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="descriptives.html#cb139-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_grey</span>(<span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="descriptives.html#cb18-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_grey</span>(<span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>))</span></code></pre></div>
 <p><code>theme_set()</code>関数はフォントのほかにいくつかの追加的な設定を行うことができる。
 この資料で使用しているグラフについては以下のようにthemeを設定しています。</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="descriptives.html#cb140-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
-<span id="cb140-2"><a href="descriptives.html#cb140-2" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>,</span>
-<span id="cb140-3"><a href="descriptives.html#cb140-3" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>, <span class="co">#文字の大きさを設定。デフォルトは11</span></span>
-<span id="cb140-4"><a href="descriptives.html#cb140-4" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span>, <span class="co">#罫線の線の太さを設定。デフォルトはbase_size/22</span></span>
-<span id="cb140-5"><a href="descriptives.html#cb140-5" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span> <span class="co">#外枠の線の太さを設定。デフォルトはbase_size/22</span></span>
-<span id="cb140-6"><a href="descriptives.html#cb140-6" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="descriptives.html#cb19-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb19-2"><a href="descriptives.html#cb19-2" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>,</span>
+<span id="cb19-3"><a href="descriptives.html#cb19-3" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>, <span class="co">#文字の大きさを設定。デフォルトは11</span></span>
+<span id="cb19-4"><a href="descriptives.html#cb19-4" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span>, <span class="co">#罫線の線の太さを設定。デフォルトはbase_size/22</span></span>
+<span id="cb19-5"><a href="descriptives.html#cb19-5" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span> <span class="co">#外枠の線の太さを設定。デフォルトはbase_size/22</span></span>
+<span id="cb19-6"><a href="descriptives.html#cb19-6" tabindex="-1"></a>))</span></code></pre></div>
 <p>Windowsユーザの方は上記コードから<code>base_family =</code>の行を除いたこちらのコードで同じような雰囲気になります：</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="descriptives.html#cb141-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
-<span id="cb141-2"><a href="descriptives.html#cb141-2" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
-<span id="cb141-3"><a href="descriptives.html#cb141-3" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb141-4"><a href="descriptives.html#cb141-4" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span></span>
-<span id="cb141-5"><a href="descriptives.html#cb141-5" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="descriptives.html#cb20-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb20-2"><a href="descriptives.html#cb20-2" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb20-3"><a href="descriptives.html#cb20-3" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb20-4"><a href="descriptives.html#cb20-4" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span></span>
+<span id="cb20-5"><a href="descriptives.html#cb20-5" tabindex="-1"></a>))</span></code></pre></div>
 </div>
 <div id="軸に名前をつける" class="section level3 hasAnchor" number="5.2.3">
 <h3><span class="header-section-number">5.2.3</span> 軸に名前をつける<a href="descriptives.html#軸に名前をつける" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>上記の設定を終えて日本語問題をクリアしていれば（Windowsユーザならはじめからクリアしているのだけれども）、軸に名前をつけるコマンド<code>labs()</code>をさらに追加して、日本語の名前を付けてよりわかりやすいグラフを作ることができる。</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="descriptives.html#cb142-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb142-2"><a href="descriptives.html#cb142-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> </span>
-<span id="cb142-3"><a href="descriptives.html#cb142-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span> </span>
-<span id="cb142-4"><a href="descriptives.html#cb142-4" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">10000</span>) <span class="sc">+</span> </span>
-<span id="cb142-5"><a href="descriptives.html#cb142-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;賃金&quot;</span>, <span class="at">y =</span> <span class="st">&quot;度数&quot;</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-98-1.png" width="672" /></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="descriptives.html#cb21-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="descriptives.html#cb21-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> </span>
+<span id="cb21-3"><a href="descriptives.html#cb21-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span> </span>
+<span id="cb21-4"><a href="descriptives.html#cb21-4" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">10000</span>) <span class="sc">+</span> </span>
+<span id="cb21-5"><a href="descriptives.html#cb21-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;賃金&quot;</span>, <span class="at">y =</span> <span class="st">&quot;度数&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: Removed 2 rows containing missing values (`geom_bar()`).</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 </div>
 </div>
 <div id="カテゴリ変数を集計する" class="section level2 hasAnchor" number="5.3">
 <h2><span class="header-section-number">5.3</span> カテゴリ変数を集計する<a href="descriptives.html#カテゴリ変数を集計する" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="descriptives_table" class="section level3 hasAnchor" number="5.3.1">
 <h3><span class="header-section-number">5.3.1</span> 度数の確認<a href="descriptives.html#descriptives_table" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="withtable" class="section level4 hasAnchor" number="5.3.1.1">
-<h4><span class="header-section-number">5.3.1.1</span> with(table())<a href="descriptives.html#withtable" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>カテゴリ変数の場合は平均値や標準偏差のような要約統計量を計算することはできない（意味がない）。最も基本的な集計は、各カテゴリにそれぞれ何人いるのかを確認することである。<code>with(table())</code>を使うことで各カテゴリの人数（度数）をみることができる。</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="descriptives.html#cb143-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb143-2"><a href="descriptives.html#cb143-2" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(occupation))</span></code></pre></div>
-<pre><code>## occupation
-##               管理職               専門職     技術職・准専門職 
-##                  219                  419                  439 
-##             事務補助       サービス・販売             農林漁業 
-##                  439                  576                   25 
-##               技能工 設備・機械運転・組立             単純作業 
-##                  265                  207                  139</code></pre>
-<p>度数だけでなく、各職業にどれくらいの割合の人が含まれているのかも重要である。先ほどのコマンドに<code>prop.table()</code>を加えることで、各カテゴリに含まれる人が全体に占める割合を計算できる。</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="descriptives.html#cb145-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb145-2"><a href="descriptives.html#cb145-2" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(occupation)) <span class="sc">%&gt;%</span> </span>
-<span id="cb145-3"><a href="descriptives.html#cb145-3" tabindex="-1"></a>  <span class="fu">prop.table</span>()</span></code></pre></div>
-<pre><code>## occupation
-##               管理職               専門職     技術職・准専門職 
-##          0.080278592          0.153592375          0.160923754 
-##             事務補助       サービス・販売             農林漁業 
-##          0.160923754          0.211143695          0.009164223 
-##               技能工 設備・機械運転・組立             単純作業 
-##          0.097140762          0.075879765          0.050953079</code></pre>
-<p>小数点以下が多すぎて見にくいので、小数点第3位で丸めよう。先ほどのコマンドに<code>round(digits = 3)</code>を加えると、小数点第3位で丸めることができる。digitsのところの値が、小数点第○位の○の値に対応する。</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="descriptives.html#cb147-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb147-2"><a href="descriptives.html#cb147-2" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(occupation)) <span class="sc">%&gt;%</span> </span>
-<span id="cb147-3"><a href="descriptives.html#cb147-3" tabindex="-1"></a>  <span class="fu">prop.table</span>()  <span class="sc">%&gt;%</span> </span>
-<span id="cb147-4"><a href="descriptives.html#cb147-4" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">3</span>)</span></code></pre></div>
-<pre><code>## occupation
-##               管理職               専門職     技術職・准専門職 
-##                0.080                0.154                0.161 
-##             事務補助       サービス・販売             農林漁業 
-##                0.161                0.211                0.009 
-##               技能工 設備・機械運転・組立             単純作業 
-##                0.097                0.076                0.051</code></pre>
-<p>この値はすべて足すと1になる。なので、この値を100倍すると百分率（%）としてよむことができる。</p>
-</div>
-<div id="count" class="section level4 hasAnchor" number="5.3.1.2">
-<h4><span class="header-section-number">5.3.1.2</span> count()<a href="descriptives.html#count" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>このように度数を数える場合には、<code>count()</code>を使うのもよい。次のように集計したい変数を指定することで、各カテゴリの度数を数えることができる。</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="descriptives.html#cb149-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb149-2"><a href="descriptives.html#cb149-2" tabindex="-1"></a>  <span class="fu">count</span>(occupation)</span></code></pre></div>
+<p>カテゴリ変数の場合は平均値や標準偏差のような要約統計量を計算することはできない（意味がない）。最も基本的な集計は、各カテゴリにそれぞれ何人いるのかを確認することである。<code>count()</code>を使うことで各カテゴリの人数（度数）をみることができる。</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="descriptives.html#cb23-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="descriptives.html#cb23-2" tabindex="-1"></a>  <span class="fu">count</span>(occupation)</span></code></pre></div>
 <pre><code>## # A tibble: 9 × 2
 ##   occupation               n
 ##   &lt;fct&gt;                &lt;int&gt;
@@ -736,13 +698,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 7 技能工                 265
 ## 8 設備・機械運転・組立   207
 ## 9 単純作業               139</code></pre>
-<p>先ほどと同様に、度数を数えるだけではなく、割合を計算するとより見やすいだろう。</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="descriptives.html#cb151-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb151-2"><a href="descriptives.html#cb151-2" tabindex="-1"></a>  <span class="fu">count</span>(occupation) <span class="sc">%&gt;%</span> </span>
-<span id="cb151-3"><a href="descriptives.html#cb151-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sum =</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span> <span class="co"># すべての度数を合計した値を入れた列を作成する</span></span>
-<span id="cb151-4"><a href="descriptives.html#cb151-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> sum) <span class="co"># 各職業の度数を合計で割った値を求める</span></span></code></pre></div>
+<p>度数だけでなく、各職業にどれくらいの割合の人が含まれているのかも重要である。先ほどのコードに少し計算をすることで、各カテゴリに含まれる人が全体に占める割合を計算できる。</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="descriptives.html#cb25-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="descriptives.html#cb25-2" tabindex="-1"></a>  <span class="fu">count</span>(occupation) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="descriptives.html#cb25-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sumn =</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span> <span class="co"># すべての度数を合計した値を入れた列を作成する</span></span>
+<span id="cb25-4"><a href="descriptives.html#cb25-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> sumn) <span class="co"># 各職業の度数を合計で割った値を求める</span></span></code></pre></div>
 <pre><code>## # A tibble: 9 × 4
-##   occupation               n   sum    prop
+##   occupation               n  sumn    prop
 ##   &lt;fct&gt;                &lt;int&gt; &lt;int&gt;   &lt;dbl&gt;
 ## 1 管理職                 219  2728 0.0803 
 ## 2 専門職                 419  2728 0.154  
@@ -753,62 +715,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 7 技能工                 265  2728 0.0971 
 ## 8 設備・機械運転・組立   207  2728 0.0759 
 ## 9 単純作業               139  2728 0.0510</code></pre>
-</div>
+<p><code>prop</code>の列が、各職業の度数を合計で割った値を示している。この値はすべて足すと1になる。この値を100倍すれば、百分率（%）としてよむことができる。</p>
 </div>
 <div id="分布の可視化棒グラフ" class="section level3 hasAnchor" number="5.3.2">
 <h3><span class="header-section-number">5.3.2</span> 分布の可視化：棒グラフ<a href="descriptives.html#分布の可視化棒グラフ" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>こうして集計した値を棒グラフにしすると見やすいかもしれない。このようなときにはどうすればよいだろう？先ほど紹介した<code>with(table())</code>と<code>count()</code>、それぞれを使った場合の棒グラフを見てみよう。</p>
-<div id="withtableを使う場合" class="section level4 hasAnchor" number="5.3.2.1">
-<h4><span class="header-section-number">5.3.2.1</span> with(table())を使う場合<a href="descriptives.html#withtableを使う場合" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p><code>with(table())</code>を使う場合には、集計表を<code>as.data.frame()</code>コマンドを使ってデータフレーム形式に変換する必要がある。</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="descriptives.html#cb153-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb153-2"><a href="descriptives.html#cb153-2" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(occupation)) <span class="sc">%&gt;%</span> </span>
-<span id="cb153-3"><a href="descriptives.html#cb153-3" tabindex="-1"></a>  <span class="fu">prop.table</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb153-4"><a href="descriptives.html#cb153-4" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="co"># データフレーム形式に変換</span></span></code></pre></div>
-<pre><code>##             occupation        Freq
-## 1               管理職 0.080278592
-## 2               専門職 0.153592375
-## 3     技術職・准専門職 0.160923754
-## 4             事務補助 0.160923754
-## 5       サービス・販売 0.211143695
-## 6             農林漁業 0.009164223
-## 7               技能工 0.097140762
-## 8 設備・機械運転・組立 0.075879765
-## 9             単純作業 0.050953079</code></pre>
-<p>データフレーム形式に変換すると、このように、1行が1つの職業を表す形式へと変換できる。Freqという列には、先ほど計算した割合が入っている。これを<code>ggplot()</code>に渡してやることで、棒グラフをつくることができる。</p>
-<p>棒グラフを作るときのコマンドは、<code>geom_col()</code>である。</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="descriptives.html#cb155-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb155-2"><a href="descriptives.html#cb155-2" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(occupation)) <span class="sc">%&gt;%</span> </span>
-<span id="cb155-3"><a href="descriptives.html#cb155-3" tabindex="-1"></a>  <span class="fu">prop.table</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb155-4"><a href="descriptives.html#cb155-4" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb155-5"><a href="descriptives.html#cb155-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> occupation, <span class="at">y =</span> Freq)) <span class="sc">+</span> <span class="co"># x軸をoccupation, y軸をFreqとして指定</span></span>
-<span id="cb155-6"><a href="descriptives.html#cb155-6" tabindex="-1"></a>  <span class="fu">geom_col</span>()</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
-<p>悪くないけれど、横軸のラベルがかぶってしまって、何を指しているのかいまいちわからなくなってしまっている。また、縦軸や横軸の名前は必ずしもわかりやすいものではないだろう。そこで、以下のようにコマンドを追加しよう。</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="descriptives.html#cb156-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb156-2"><a href="descriptives.html#cb156-2" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(occupation)) <span class="sc">%&gt;%</span> </span>
-<span id="cb156-3"><a href="descriptives.html#cb156-3" tabindex="-1"></a>  <span class="fu">prop.table</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb156-4"><a href="descriptives.html#cb156-4" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb156-5"><a href="descriptives.html#cb156-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> occupation, <span class="at">y =</span> Freq)) <span class="sc">+</span> </span>
-<span id="cb156-6"><a href="descriptives.html#cb156-6" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> </span>
-<span id="cb156-7"><a href="descriptives.html#cb156-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span> <span class="co"># X軸を90度傾ける</span></span>
-<span id="cb156-8"><a href="descriptives.html#cb156-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;職業&quot;</span>, <span class="at">y =</span> <span class="st">&quot;割合&quot;</span>) <span class="co"># x軸とy軸に名前をつける</span></span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-106-1.png" width="672" /></p>
-</div>
-<div id="countを使う場合" class="section level4 hasAnchor" number="5.3.2.2">
-<h4><span class="header-section-number">5.3.2.2</span> count()を使う場合<a href="descriptives.html#countを使う場合" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p><code>count()</code>を使う場合には先ほどのようなデータフレーム形式への変換は必要なく、結果をそのまま<code>ggplot()</code>に渡してやるだけでよい。</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="descriptives.html#cb157-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb157-2"><a href="descriptives.html#cb157-2" tabindex="-1"></a>  <span class="fu">count</span>(occupation) <span class="sc">%&gt;%</span> </span>
-<span id="cb157-3"><a href="descriptives.html#cb157-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sum =</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span> </span>
-<span id="cb157-4"><a href="descriptives.html#cb157-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> sum) <span class="sc">%&gt;%</span> </span>
-<span id="cb157-5"><a href="descriptives.html#cb157-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> occupation, <span class="at">y =</span> prop)) <span class="sc">+</span> <span class="co"># x軸をoccupation, y軸をpropとして指定</span></span>
-<span id="cb157-6"><a href="descriptives.html#cb157-6" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> </span>
-<span id="cb157-7"><a href="descriptives.html#cb157-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span> <span class="co"># X軸を90度傾ける</span></span>
-<span id="cb157-8"><a href="descriptives.html#cb157-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;職業&quot;</span>, <span class="at">y =</span> <span class="st">&quot;割合&quot;</span>) <span class="co"># x軸とy軸に名前をつける</span></span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
-<p>図を作る場合には、どちらかというとこちらのほうがシンプルなやりかただろう。特に <a href="tabulate.html#tabulate">第6章</a>でクロス集計表の棒グラフを作る場合には、こちらのやりかたのほうがわかりやすくなる。</p>
-</div>
+<p>こうして集計した値を棒グラフにしすると見やすいかもしれない。このようなときにはどうすればよいだろうか？先ほど、<code>count()</code>を使って集計した結果をデータフレームに保管しよう。</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="descriptives.html#cb27-1" tabindex="-1"></a>countdata <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="descriptives.html#cb27-2" tabindex="-1"></a>  <span class="fu">count</span>(occupation) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-3"><a href="descriptives.html#cb27-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sumn =</span> <span class="fu">sum</span>(n)) <span class="sc">%&gt;%</span> <span class="co"># すべての度数を合計した値を入れた列を作成する</span></span>
+<span id="cb27-4"><a href="descriptives.html#cb27-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop =</span> n <span class="sc">/</span> sumn) <span class="co"># 各職業の度数を合計で割った値を求める</span></span></code></pre></div>
+<p>このデータフレームを使って、<code>ggplot()</code>を使って棒グラフを作成する。棒グラフを作るときのコマンドは、<code>geom_col()</code>である。</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="descriptives.html#cb28-1" tabindex="-1"></a>countdata <span class="sc">%&gt;%</span> </span>
+<span id="cb28-2"><a href="descriptives.html#cb28-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> occupation, <span class="at">y =</span> n)) <span class="sc">+</span> <span class="co"># x軸をoccupation, y軸を人数（n）として指定</span></span>
+<span id="cb28-3"><a href="descriptives.html#cb28-3" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="co"># 棒グラフを作成</span></span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>悪くないけれど、横軸のラベルがかぶってしまって、何を指しているのかいまいちわからなくなってしまっている。また、このままだと縦軸や横軸の名前は必ずしもわかりやすいものではない。そこで、以下のようにコマンドを追加しよう。</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="descriptives.html#cb29-1" tabindex="-1"></a>countdata <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href="descriptives.html#cb29-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> occupation, <span class="at">y =</span> n)) <span class="sc">+</span> </span>
+<span id="cb29-3"><a href="descriptives.html#cb29-3" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb29-4"><a href="descriptives.html#cb29-4" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span> <span class="co"># X軸を90度傾ける</span></span>
+<span id="cb29-5"><a href="descriptives.html#cb29-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;職業&quot;</span>, <span class="at">y =</span> <span class="st">&quot;割合&quot;</span>) <span class="co"># x軸とy軸に名前をつける</span></span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>縦軸を人数ではなく割合にした場合のグラフは次のようになる。</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="descriptives.html#cb30-1" tabindex="-1"></a>countdata <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a href="descriptives.html#cb30-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> occupation, <span class="at">y =</span> prop)) <span class="sc">+</span> <span class="co"># 縦軸を割合に</span></span>
+<span id="cb30-3"><a href="descriptives.html#cb30-3" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb30-4"><a href="descriptives.html#cb30-4" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span> </span>
+<span id="cb30-5"><a href="descriptives.html#cb30-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;職業&quot;</span>, <span class="at">y =</span> <span class="st">&quot;割合&quot;</span>) </span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
 </div>
 <div id="descriptives_gtsummary" class="section level2 hasAnchor" number="5.4">
@@ -816,7 +750,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="記述統計量の一覧表" class="section level3 hasAnchor" number="5.4.1">
 <h3><span class="header-section-number">5.4.1</span> 記述統計量の一覧表<a href="descriptives.html#記述統計量の一覧表" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>論文などで分析に使用する変数の記述統計量の一覧表を示していることがよくある。このような表を作ることで、読む側にとっては変数の分布を確認でき、その後の結果も読みやすくなる。こうした一覧表を作るために非常に便利なパッケージが<code>gtsummary</code>である。まずはこれを読み込もう。</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="descriptives.html#cb158-1" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="descriptives.html#cb31-1" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span></code></pre></div>
 <p>次の5つの変数の記述統計量の一覧表を作りたいとしよう。<code>select()</code>を使って、こららの変数だけを残したデータフレームを作成する。</p>
 <table>
 <thead>
@@ -854,28 +788,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="descriptives.html#cb159-1" tabindex="-1"></a>piaac_selected <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb159-2"><a href="descriptives.html#cb159-2" tabindex="-1"></a>  <span class="fu">select</span>(gender, age, educ, occupation, wage)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="descriptives.html#cb32-1" tabindex="-1"></a>piaac_selected <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="descriptives.html#cb32-2" tabindex="-1"></a>  <span class="fu">select</span>(gender, age, educ, occupation, wage)</span></code></pre></div>
 <p>この中には連続変数もカテゴリ変数もあり、またカテゴリの個数が2つのものもあればもっと多いものもあって複雑である。<code>gtsummary::tbl_summary()</code>は、変数の型がきちんとしていれば、それを読み取ってきれいな記述統計量の表を作ってくれる。</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="descriptives.html#cb160-1" tabindex="-1"></a>piaac_selected <span class="sc">%&gt;%</span> </span>
-<span id="cb160-2"><a href="descriptives.html#cb160-2" tabindex="-1"></a>  <span class="fu">tbl_summary</span>()</span></code></pre></div>
-<div id="wxvltnaexv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wxvltnaexv table {
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="descriptives.html#cb33-1" tabindex="-1"></a>piaac_selected <span class="sc">%&gt;%</span> </span>
+<span id="cb33-2"><a href="descriptives.html#cb33-2" tabindex="-1"></a>  <span class="fu">tbl_summary</span>()</span></code></pre></div>
+<div id="meafxrcymo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#meafxrcymo table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wxvltnaexv thead, #wxvltnaexv tbody, #wxvltnaexv tfoot, #wxvltnaexv tr, #wxvltnaexv td, #wxvltnaexv th {
+#meafxrcymo thead, #meafxrcymo tbody, #meafxrcymo tfoot, #meafxrcymo tr, #meafxrcymo td, #meafxrcymo th {
   border-style: none;
 }
 
-#wxvltnaexv p {
+#meafxrcymo p {
   margin: 0;
   padding: 0;
 }
 
-#wxvltnaexv .gt_table {
+#meafxrcymo .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -901,12 +835,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-#wxvltnaexv .gt_caption {
+#meafxrcymo .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wxvltnaexv .gt_title {
+#meafxrcymo .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -918,7 +852,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#wxvltnaexv .gt_subtitle {
+#meafxrcymo .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -930,7 +864,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#wxvltnaexv .gt_heading {
+#meafxrcymo .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -942,13 +876,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#wxvltnaexv .gt_bottom_border {
+#meafxrcymo .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wxvltnaexv .gt_col_headings {
+#meafxrcymo .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -963,7 +897,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#wxvltnaexv .gt_col_heading {
+#meafxrcymo .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -983,7 +917,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#wxvltnaexv .gt_column_spanner_outer {
+#meafxrcymo .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -995,15 +929,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-#wxvltnaexv .gt_column_spanner_outer:first-child {
+#meafxrcymo .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wxvltnaexv .gt_column_spanner_outer:last-child {
+#meafxrcymo .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wxvltnaexv .gt_column_spanner {
+#meafxrcymo .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1015,11 +949,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-#wxvltnaexv .gt_spanner_row {
+#meafxrcymo .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wxvltnaexv .gt_group_heading {
+#meafxrcymo .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1045,7 +979,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   text-align: left;
 }
 
-#wxvltnaexv .gt_empty_group_heading {
+#meafxrcymo .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1060,15 +994,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#wxvltnaexv .gt_from_md > :first-child {
+#meafxrcymo .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wxvltnaexv .gt_from_md > :last-child {
+#meafxrcymo .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wxvltnaexv .gt_row {
+#meafxrcymo .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1087,7 +1021,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#wxvltnaexv .gt_stub {
+#meafxrcymo .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1100,7 +1034,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#wxvltnaexv .gt_stub_row_group {
+#meafxrcymo .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1114,15 +1048,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-#wxvltnaexv .gt_row_group_first td {
+#meafxrcymo .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wxvltnaexv .gt_row_group_first th {
+#meafxrcymo .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wxvltnaexv .gt_summary_row {
+#meafxrcymo .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1132,16 +1066,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#wxvltnaexv .gt_first_summary_row {
+#meafxrcymo .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wxvltnaexv .gt_first_summary_row.thick {
+#meafxrcymo .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wxvltnaexv .gt_last_summary_row {
+#meafxrcymo .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1151,7 +1085,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#wxvltnaexv .gt_grand_summary_row {
+#meafxrcymo .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1161,7 +1095,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#wxvltnaexv .gt_first_grand_summary_row {
+#meafxrcymo .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1171,7 +1105,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-#wxvltnaexv .gt_last_grand_summary_row_top {
+#meafxrcymo .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1181,11 +1115,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#wxvltnaexv .gt_striped {
+#meafxrcymo .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wxvltnaexv .gt_table_body {
+#meafxrcymo .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1194,7 +1128,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#wxvltnaexv .gt_footnotes {
+#meafxrcymo .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1208,7 +1142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#wxvltnaexv .gt_footnote {
+#meafxrcymo .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1217,7 +1151,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#wxvltnaexv .gt_sourcenotes {
+#meafxrcymo .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1231,7 +1165,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#wxvltnaexv .gt_sourcenote {
+#meafxrcymo .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1239,63 +1173,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#wxvltnaexv .gt_left {
+#meafxrcymo .gt_left {
   text-align: left;
 }
 
-#wxvltnaexv .gt_center {
+#meafxrcymo .gt_center {
   text-align: center;
 }
 
-#wxvltnaexv .gt_right {
+#meafxrcymo .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wxvltnaexv .gt_font_normal {
+#meafxrcymo .gt_font_normal {
   font-weight: normal;
 }
 
-#wxvltnaexv .gt_font_bold {
+#meafxrcymo .gt_font_bold {
   font-weight: bold;
 }
 
-#wxvltnaexv .gt_font_italic {
+#meafxrcymo .gt_font_italic {
   font-style: italic;
 }
 
-#wxvltnaexv .gt_super {
+#meafxrcymo .gt_super {
   font-size: 65%;
 }
 
-#wxvltnaexv .gt_footnote_marks {
+#meafxrcymo .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wxvltnaexv .gt_asterisk {
+#meafxrcymo .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wxvltnaexv .gt_indent_1 {
+#meafxrcymo .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wxvltnaexv .gt_indent_2 {
+#meafxrcymo .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wxvltnaexv .gt_indent_3 {
+#meafxrcymo .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wxvltnaexv .gt_indent_4 {
+#meafxrcymo .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wxvltnaexv .gt_indent_5 {
+#meafxrcymo .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1364,32 +1298,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>同じく、連続変数については、小数点以下の桁数（小数点第1位に）揃えたい：<code>digits = all_continuous() ~ 1</code></li>
 <li>左上のCharacteristicsというのがなんだか気になるので削除したい：<code>tbl_cross</code>のコマンドの後ろに<code>%&gt;%</code>でつないで<code>modify_header(label ~ "")</code></li>
 </ol>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="descriptives.html#cb161-1" tabindex="-1"></a>piaac_selected <span class="sc">%&gt;%</span> </span>
-<span id="cb161-2"><a href="descriptives.html#cb161-2" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">label =</span> <span class="fu">list</span>(gender <span class="sc">~</span> <span class="st">&quot;性別&quot;</span>,</span>
-<span id="cb161-3"><a href="descriptives.html#cb161-3" tabindex="-1"></a>                           age <span class="sc">~</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb161-4"><a href="descriptives.html#cb161-4" tabindex="-1"></a>                           educ <span class="sc">~</span> <span class="st">&quot;最終学歴&quot;</span>,</span>
-<span id="cb161-5"><a href="descriptives.html#cb161-5" tabindex="-1"></a>                           occupation <span class="sc">~</span> <span class="st">&quot;職業&quot;</span>,</span>
-<span id="cb161-6"><a href="descriptives.html#cb161-6" tabindex="-1"></a>                           wage <span class="sc">~</span> <span class="st">&quot;賃金&quot;</span>), <span class="co">#~の前には列名、後ろにはつけたい名前を&quot;&quot;で囲んで入れ、,で一つずつ区切る</span></span>
-<span id="cb161-7"><a href="descriptives.html#cb161-7" tabindex="-1"></a>              <span class="at">statistic =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">&quot;{mean} ({sd})&quot;</span>), </span>
-<span id="cb161-8"><a href="descriptives.html#cb161-8" tabindex="-1"></a>              <span class="at">digits =</span> <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="co">#数値の部分が小数点第y位の部分の値</span></span>
-<span id="cb161-9"><a href="descriptives.html#cb161-9" tabindex="-1"></a>  <span class="fu">modify_header</span>(label <span class="sc">~</span> <span class="st">&quot;&quot;</span>) <span class="co"># &quot;&quot;の部分には好きな文字列を入れられる。何も入れなければ空欄になる</span></span></code></pre></div>
-<div id="eeyltejbom" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#eeyltejbom table {
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="descriptives.html#cb34-1" tabindex="-1"></a>piaac_selected <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href="descriptives.html#cb34-2" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">label =</span> <span class="fu">list</span>(gender <span class="sc">~</span> <span class="st">&quot;性別&quot;</span>,</span>
+<span id="cb34-3"><a href="descriptives.html#cb34-3" tabindex="-1"></a>                           age <span class="sc">~</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb34-4"><a href="descriptives.html#cb34-4" tabindex="-1"></a>                           educ <span class="sc">~</span> <span class="st">&quot;最終学歴&quot;</span>,</span>
+<span id="cb34-5"><a href="descriptives.html#cb34-5" tabindex="-1"></a>                           occupation <span class="sc">~</span> <span class="st">&quot;職業&quot;</span>,</span>
+<span id="cb34-6"><a href="descriptives.html#cb34-6" tabindex="-1"></a>                           wage <span class="sc">~</span> <span class="st">&quot;賃金&quot;</span>), <span class="co">#~の前には列名、後ろにはつけたい名前を&quot;&quot;で囲んで入れ、,で一つずつ区切る</span></span>
+<span id="cb34-7"><a href="descriptives.html#cb34-7" tabindex="-1"></a>              <span class="at">statistic =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">&quot;{mean} ({sd})&quot;</span>), </span>
+<span id="cb34-8"><a href="descriptives.html#cb34-8" tabindex="-1"></a>              <span class="at">digits =</span> <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="co">#数値の部分が小数点第y位の部分の値</span></span>
+<span id="cb34-9"><a href="descriptives.html#cb34-9" tabindex="-1"></a>  <span class="fu">modify_header</span>(label <span class="sc">~</span> <span class="st">&quot;&quot;</span>) <span class="co"># &quot;&quot;の部分には好きな文字列を入れられる。何も入れなければ空欄になる</span></span></code></pre></div>
+<div id="ltjislyafr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ltjislyafr table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#eeyltejbom thead, #eeyltejbom tbody, #eeyltejbom tfoot, #eeyltejbom tr, #eeyltejbom td, #eeyltejbom th {
+#ltjislyafr thead, #ltjislyafr tbody, #ltjislyafr tfoot, #ltjislyafr tr, #ltjislyafr td, #ltjislyafr th {
   border-style: none;
 }
 
-#eeyltejbom p {
+#ltjislyafr p {
   margin: 0;
   padding: 0;
 }
 
-#eeyltejbom .gt_table {
+#ltjislyafr .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1415,12 +1349,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-#eeyltejbom .gt_caption {
+#ltjislyafr .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#eeyltejbom .gt_title {
+#ltjislyafr .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1432,7 +1366,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#eeyltejbom .gt_subtitle {
+#ltjislyafr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1444,7 +1378,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#eeyltejbom .gt_heading {
+#ltjislyafr .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1456,13 +1390,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#eeyltejbom .gt_bottom_border {
+#ltjislyafr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#eeyltejbom .gt_col_headings {
+#ltjislyafr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1477,7 +1411,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#eeyltejbom .gt_col_heading {
+#ltjislyafr .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1497,7 +1431,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#eeyltejbom .gt_column_spanner_outer {
+#ltjislyafr .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1509,15 +1443,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-#eeyltejbom .gt_column_spanner_outer:first-child {
+#ltjislyafr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#eeyltejbom .gt_column_spanner_outer:last-child {
+#ltjislyafr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#eeyltejbom .gt_column_spanner {
+#ltjislyafr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1529,11 +1463,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-#eeyltejbom .gt_spanner_row {
+#ltjislyafr .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#eeyltejbom .gt_group_heading {
+#ltjislyafr .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1559,7 +1493,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   text-align: left;
 }
 
-#eeyltejbom .gt_empty_group_heading {
+#ltjislyafr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1574,15 +1508,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#eeyltejbom .gt_from_md > :first-child {
+#ltjislyafr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#eeyltejbom .gt_from_md > :last-child {
+#ltjislyafr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#eeyltejbom .gt_row {
+#ltjislyafr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1601,7 +1535,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#eeyltejbom .gt_stub {
+#ltjislyafr .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1614,7 +1548,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#eeyltejbom .gt_stub_row_group {
+#ltjislyafr .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1628,15 +1562,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-#eeyltejbom .gt_row_group_first td {
+#ltjislyafr .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#eeyltejbom .gt_row_group_first th {
+#ltjislyafr .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#eeyltejbom .gt_summary_row {
+#ltjislyafr .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1646,16 +1580,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#eeyltejbom .gt_first_summary_row {
+#ltjislyafr .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#eeyltejbom .gt_first_summary_row.thick {
+#ltjislyafr .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#eeyltejbom .gt_last_summary_row {
+#ltjislyafr .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1665,7 +1599,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#eeyltejbom .gt_grand_summary_row {
+#ltjislyafr .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1675,7 +1609,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#eeyltejbom .gt_first_grand_summary_row {
+#ltjislyafr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1685,7 +1619,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-#eeyltejbom .gt_last_grand_summary_row_top {
+#ltjislyafr .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1695,11 +1629,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#eeyltejbom .gt_striped {
+#ltjislyafr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#eeyltejbom .gt_table_body {
+#ltjislyafr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1708,7 +1642,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#eeyltejbom .gt_footnotes {
+#ltjislyafr .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1722,7 +1656,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#eeyltejbom .gt_footnote {
+#ltjislyafr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1731,7 +1665,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#eeyltejbom .gt_sourcenotes {
+#ltjislyafr .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1745,7 +1679,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#eeyltejbom .gt_sourcenote {
+#ltjislyafr .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1753,63 +1687,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#eeyltejbom .gt_left {
+#ltjislyafr .gt_left {
   text-align: left;
 }
 
-#eeyltejbom .gt_center {
+#ltjislyafr .gt_center {
   text-align: center;
 }
 
-#eeyltejbom .gt_right {
+#ltjislyafr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#eeyltejbom .gt_font_normal {
+#ltjislyafr .gt_font_normal {
   font-weight: normal;
 }
 
-#eeyltejbom .gt_font_bold {
+#ltjislyafr .gt_font_bold {
   font-weight: bold;
 }
 
-#eeyltejbom .gt_font_italic {
+#ltjislyafr .gt_font_italic {
   font-style: italic;
 }
 
-#eeyltejbom .gt_super {
+#ltjislyafr .gt_super {
   font-size: 65%;
 }
 
-#eeyltejbom .gt_footnote_marks {
+#ltjislyafr .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#eeyltejbom .gt_asterisk {
+#ltjislyafr .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#eeyltejbom .gt_indent_1 {
+#ltjislyafr .gt_indent_1 {
   text-indent: 5px;
 }
 
-#eeyltejbom .gt_indent_2 {
+#ltjislyafr .gt_indent_2 {
   text-indent: 10px;
 }
 
-#eeyltejbom .gt_indent_3 {
+#ltjislyafr .gt_indent_3 {
   text-indent: 15px;
 }
 
-#eeyltejbom .gt_indent_4 {
+#ltjislyafr .gt_indent_4 {
   text-indent: 20px;
 }
 
-#eeyltejbom .gt_indent_5 {
+#ltjislyafr .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1875,32 +1809,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="グループ別の記述統計量の一覧表" class="section level3 hasAnchor" number="5.4.2">
 <h3><span class="header-section-number">5.4.2</span> グループ別の記述統計量の一覧表<a href="descriptives.html#グループ別の記述統計量の一覧表" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>何らかの属性などでサンプルを分けて比較分析する場合には、属性ごとの記述統計量を示すとよい。これも、<code>tbl_summary()</code>のなかで<code>by =</code>というオプションを指定することで簡単に実行することができる。たとえば性別（gender）で分ける場合には、次のようにする。</p>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="descriptives.html#cb162-1" tabindex="-1"></a>piaac_selected <span class="sc">%&gt;%</span> </span>
-<span id="cb162-2"><a href="descriptives.html#cb162-2" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">label =</span> <span class="fu">list</span>(age <span class="sc">~</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb162-3"><a href="descriptives.html#cb162-3" tabindex="-1"></a>                           educ <span class="sc">~</span> <span class="st">&quot;最終学歴&quot;</span>,</span>
-<span id="cb162-4"><a href="descriptives.html#cb162-4" tabindex="-1"></a>                           occupation <span class="sc">~</span> <span class="st">&quot;職業&quot;</span>,</span>
-<span id="cb162-5"><a href="descriptives.html#cb162-5" tabindex="-1"></a>                           wage <span class="sc">~</span> <span class="st">&quot;賃金&quot;</span>), <span class="co">#~の前には列名、後ろにはつけたい名前を&quot;&quot;で囲んで入れ、,で一つずつ区切る</span></span>
-<span id="cb162-6"><a href="descriptives.html#cb162-6" tabindex="-1"></a>              <span class="at">by =</span> gender, <span class="co"># 性別（gender）で分割</span></span>
-<span id="cb162-7"><a href="descriptives.html#cb162-7" tabindex="-1"></a>              <span class="at">statistic =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">&quot;{mean} ({sd})&quot;</span>), </span>
-<span id="cb162-8"><a href="descriptives.html#cb162-8" tabindex="-1"></a>              <span class="at">digits =</span> <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb162-9"><a href="descriptives.html#cb162-9" tabindex="-1"></a>  <span class="fu">modify_header</span>(label <span class="sc">~</span> <span class="st">&quot;&quot;</span>) </span></code></pre></div>
-<div id="qnrihmodda" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qnrihmodda table {
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="descriptives.html#cb35-1" tabindex="-1"></a>piaac_selected <span class="sc">%&gt;%</span> </span>
+<span id="cb35-2"><a href="descriptives.html#cb35-2" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">label =</span> <span class="fu">list</span>(age <span class="sc">~</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb35-3"><a href="descriptives.html#cb35-3" tabindex="-1"></a>                           educ <span class="sc">~</span> <span class="st">&quot;最終学歴&quot;</span>,</span>
+<span id="cb35-4"><a href="descriptives.html#cb35-4" tabindex="-1"></a>                           occupation <span class="sc">~</span> <span class="st">&quot;職業&quot;</span>,</span>
+<span id="cb35-5"><a href="descriptives.html#cb35-5" tabindex="-1"></a>                           wage <span class="sc">~</span> <span class="st">&quot;賃金&quot;</span>), <span class="co">#~の前には列名、後ろにはつけたい名前を&quot;&quot;で囲んで入れ、,で一つずつ区切る</span></span>
+<span id="cb35-6"><a href="descriptives.html#cb35-6" tabindex="-1"></a>              <span class="at">by =</span> gender, <span class="co"># 性別（gender）で分割</span></span>
+<span id="cb35-7"><a href="descriptives.html#cb35-7" tabindex="-1"></a>              <span class="at">statistic =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">&quot;{mean} ({sd})&quot;</span>), </span>
+<span id="cb35-8"><a href="descriptives.html#cb35-8" tabindex="-1"></a>              <span class="at">digits =</span> <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-9"><a href="descriptives.html#cb35-9" tabindex="-1"></a>  <span class="fu">modify_header</span>(label <span class="sc">~</span> <span class="st">&quot;&quot;</span>) </span></code></pre></div>
+<div id="ngeiplbetv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ngeiplbetv table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qnrihmodda thead, #qnrihmodda tbody, #qnrihmodda tfoot, #qnrihmodda tr, #qnrihmodda td, #qnrihmodda th {
+#ngeiplbetv thead, #ngeiplbetv tbody, #ngeiplbetv tfoot, #ngeiplbetv tr, #ngeiplbetv td, #ngeiplbetv th {
   border-style: none;
 }
 
-#qnrihmodda p {
+#ngeiplbetv p {
   margin: 0;
   padding: 0;
 }
 
-#qnrihmodda .gt_table {
+#ngeiplbetv .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1926,12 +1860,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-#qnrihmodda .gt_caption {
+#ngeiplbetv .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qnrihmodda .gt_title {
+#ngeiplbetv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1943,7 +1877,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#qnrihmodda .gt_subtitle {
+#ngeiplbetv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1955,7 +1889,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#qnrihmodda .gt_heading {
+#ngeiplbetv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1967,13 +1901,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#qnrihmodda .gt_bottom_border {
+#ngeiplbetv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qnrihmodda .gt_col_headings {
+#ngeiplbetv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1988,7 +1922,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#qnrihmodda .gt_col_heading {
+#ngeiplbetv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2008,7 +1942,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#qnrihmodda .gt_column_spanner_outer {
+#ngeiplbetv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2020,15 +1954,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-#qnrihmodda .gt_column_spanner_outer:first-child {
+#ngeiplbetv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qnrihmodda .gt_column_spanner_outer:last-child {
+#ngeiplbetv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qnrihmodda .gt_column_spanner {
+#ngeiplbetv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2040,11 +1974,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-#qnrihmodda .gt_spanner_row {
+#ngeiplbetv .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qnrihmodda .gt_group_heading {
+#ngeiplbetv .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2070,7 +2004,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   text-align: left;
 }
 
-#qnrihmodda .gt_empty_group_heading {
+#ngeiplbetv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2085,15 +2019,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#qnrihmodda .gt_from_md > :first-child {
+#ngeiplbetv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qnrihmodda .gt_from_md > :last-child {
+#ngeiplbetv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qnrihmodda .gt_row {
+#ngeiplbetv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2112,7 +2046,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#qnrihmodda .gt_stub {
+#ngeiplbetv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2125,7 +2059,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#qnrihmodda .gt_stub_row_group {
+#ngeiplbetv .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2139,15 +2073,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-#qnrihmodda .gt_row_group_first td {
+#ngeiplbetv .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qnrihmodda .gt_row_group_first th {
+#ngeiplbetv .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qnrihmodda .gt_summary_row {
+#ngeiplbetv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2157,16 +2091,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#qnrihmodda .gt_first_summary_row {
+#ngeiplbetv .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qnrihmodda .gt_first_summary_row.thick {
+#ngeiplbetv .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qnrihmodda .gt_last_summary_row {
+#ngeiplbetv .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2176,7 +2110,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#qnrihmodda .gt_grand_summary_row {
+#ngeiplbetv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2186,7 +2120,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#qnrihmodda .gt_first_grand_summary_row {
+#ngeiplbetv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2196,7 +2130,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-#qnrihmodda .gt_last_grand_summary_row_top {
+#ngeiplbetv .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2206,11 +2140,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#qnrihmodda .gt_striped {
+#ngeiplbetv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qnrihmodda .gt_table_body {
+#ngeiplbetv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2219,7 +2153,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#qnrihmodda .gt_footnotes {
+#ngeiplbetv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2233,7 +2167,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#qnrihmodda .gt_footnote {
+#ngeiplbetv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2242,7 +2176,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#qnrihmodda .gt_sourcenotes {
+#ngeiplbetv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2256,7 +2190,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#qnrihmodda .gt_sourcenote {
+#ngeiplbetv .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2264,63 +2198,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#qnrihmodda .gt_left {
+#ngeiplbetv .gt_left {
   text-align: left;
 }
 
-#qnrihmodda .gt_center {
+#ngeiplbetv .gt_center {
   text-align: center;
 }
 
-#qnrihmodda .gt_right {
+#ngeiplbetv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qnrihmodda .gt_font_normal {
+#ngeiplbetv .gt_font_normal {
   font-weight: normal;
 }
 
-#qnrihmodda .gt_font_bold {
+#ngeiplbetv .gt_font_bold {
   font-weight: bold;
 }
 
-#qnrihmodda .gt_font_italic {
+#ngeiplbetv .gt_font_italic {
   font-style: italic;
 }
 
-#qnrihmodda .gt_super {
+#ngeiplbetv .gt_super {
   font-size: 65%;
 }
 
-#qnrihmodda .gt_footnote_marks {
+#ngeiplbetv .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qnrihmodda .gt_asterisk {
+#ngeiplbetv .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qnrihmodda .gt_indent_1 {
+#ngeiplbetv .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qnrihmodda .gt_indent_2 {
+#ngeiplbetv .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qnrihmodda .gt_indent_3 {
+#ngeiplbetv .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qnrihmodda .gt_indent_4 {
+#ngeiplbetv .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qnrihmodda .gt_indent_5 {
+#ngeiplbetv .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -2402,7 +2336,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">5.5.1</span> 結果を入れるためのフォルダを作る<a href="descriptives.html#結果を入れるためのフォルダを作る" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>上記ではいろいろなグラフを作ったり、要約統計量を計算するためのコマンドを紹介してきた。RStudio上で見る分にはこれで十分だが、実際にこれらを論文にまとめていく段階では、結果をwordに貼り付けたりする必要がある。ここではそうした方法を紹介する。</p>
 <p>3章で、<a href="import.html#import_dir">データを置くためのフォルダを作成</a>しておくとよいということを紹介した。分析結果を保存しておくためのフォルダというのも別途あると整理整頓ができて便利である。ここでは、「results」という分析結果を保存しておくためのフォルダを作ろう。右クリックで「新規フォルダを作成」するか、以下のコードを実行する。</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="descriptives.html#cb163-1" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;results&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="descriptives.html#cb36-1" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;results&quot;</span>)</span></code></pre></div>
 </div>
 <div id="descriptive_export_ggplot" class="section level3 hasAnchor" number="5.5.2">
 <h3><span class="header-section-number">5.5.2</span> ggplotで作成した図を書き出す<a href="descriptives.html#descriptive_export_ggplot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -2410,65 +2344,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="日本語フォントを含まない図の場合" class="section level4 hasAnchor" number="5.5.2.1">
 <h4><span class="header-section-number">5.5.2.1</span> 日本語フォントを含まない図の場合<a href="descriptives.html#日本語フォントを含まない図の場合" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>日本語フォントを含まない（あらかじめ<code>theme_set()</code>で設定していない）場合についてみてみよう。例として、先ほど出したヒストグラムを再度表示する。</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="descriptives.html#cb164-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb164-2"><a href="descriptives.html#cb164-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> </span>
-<span id="cb164-3"><a href="descriptives.html#cb164-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span> </span>
-<span id="cb164-4"><a href="descriptives.html#cb164-4" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">10000</span>)</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better
-## value with `binwidth`.</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="descriptives.html#cb37-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb37-2"><a href="descriptives.html#cb37-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> </span>
+<span id="cb37-3"><a href="descriptives.html#cb37-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span> </span>
+<span id="cb37-4"><a href="descriptives.html#cb37-4" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">10000</span>)</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values (`geom_bar()`).</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <p>図を保存するときの形式として、pdfファイルとpngファイルについて説明する。</p>
 <ul>
 <li><p>pdfはベクター形式といわれていて、拡大しても画質が荒くならない。どんなに大きくしたり小さくしたりしてもつねにきれいなグラフが保持されるというメリットがあるが、Wordファイルに貼り付けられなかったりすることもある（たしかWindowsだとWordにpdfを貼り付けられない気がする？）。</p></li>
 <li><p>pngはラスタ形式といわれていて、（写真みたいに）拡大すると画質が荒くなってしまう。ただ、よっぽど拡大しない限りはそれなりにきれいな図にすることができるので、これでも事足りる場面は多い。この方法は、WindowsでもMacでも実行できるはず。</p></li>
 </ul>
 <p>書き出したい図が右下のplotのウィンドウに表示された状態で、以下の<code>ggsave()</code>コマンドを使うと、保存することができる。</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="descriptives.html#cb166-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;results/histogram.pdf&quot;</span>) <span class="co"># pdf形式</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="descriptives.html#cb40-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;results/histogram.pdf&quot;</span>) <span class="co"># pdf形式</span></span></code></pre></div>
 <pre><code>## Saving 7 x 5 in image
-## `stat_bin()` using `bins = 30`. Pick better
-## value with `binwidth`.</code></pre>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="descriptives.html#cb168-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;results/histogram.png&quot;</span>) <span class="co"># png形式</span></span></code></pre></div>
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values (`geom_bar()`).</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="descriptives.html#cb43-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;results/histogram.png&quot;</span>) <span class="co"># png形式</span></span></code></pre></div>
 <pre><code>## Saving 7 x 5 in image
-## `stat_bin()` using `bins = 30`. Pick better
-## value with `binwidth`.</code></pre>
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values (`geom_bar()`).</code></pre>
 <p>サイズをとくに指定しない場合には、plotの画面に表示されている縮尺で結果が保存される。これだと、表示している窓の大きさを変えるたびに出力結果が変わってしまうので、次のように幅と高さを指定するとよい。</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="descriptives.html#cb170-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;results/histogram.pdf&quot;</span>, <span class="at">width =</span> <span class="dv">5</span>, <span class="at">height =</span> <span class="dv">4</span>)</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better
-## value with `binwidth`.</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="descriptives.html#cb46-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;results/histogram.pdf&quot;</span>, <span class="at">width =</span> <span class="dv">5</span>, <span class="at">height =</span> <span class="dv">4</span>)</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values (`geom_bar()`).</code></pre>
 <p>なお、widthやheightの数値が小さいほど、図内の文字や棒グラフの棒、散布図の点は相対的に大きくなる。より複雑な図で、文字などの被りがないようにするためには、適宜、サイズの変更が必要である。</p>
 </div>
 <div id="日本語フォントを含む図の場合" class="section level4 hasAnchor" number="5.5.2.2">
 <h4><span class="header-section-number">5.5.2.2</span> 日本語フォントを含む図の場合<a href="descriptives.html#日本語フォントを含む図の場合" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>日本語フォントを含む図の場合には、上記の方法で保存すると文字が消えてしまうという問題が生じる。この場合は、以下の手順で図を保存する。</p>
 <p>まず、次のように日本語フォントを含む図を作成してみよう。</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="descriptives.html#cb172-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb172-2"><a href="descriptives.html#cb172-2" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(occupation)) <span class="sc">%&gt;%</span> </span>
-<span id="cb172-3"><a href="descriptives.html#cb172-3" tabindex="-1"></a>  <span class="fu">prop.table</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb172-4"><a href="descriptives.html#cb172-4" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb172-5"><a href="descriptives.html#cb172-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> occupation, <span class="at">y =</span> Freq)) <span class="sc">+</span> </span>
-<span id="cb172-6"><a href="descriptives.html#cb172-6" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> </span>
-<span id="cb172-7"><a href="descriptives.html#cb172-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span> <span class="co"># X軸を45度傾ける</span></span>
-<span id="cb172-8"><a href="descriptives.html#cb172-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;職業&quot;</span>, <span class="at">y =</span> <span class="st">&quot;割合&quot;</span>) <span class="co"># x軸とy軸に名前をつける</span></span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="descriptives.html#cb49-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb49-2"><a href="descriptives.html#cb49-2" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(occupation)) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-3"><a href="descriptives.html#cb49-3" tabindex="-1"></a>  <span class="fu">prop.table</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb49-4"><a href="descriptives.html#cb49-4" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb49-5"><a href="descriptives.html#cb49-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> occupation, <span class="at">y =</span> Freq)) <span class="sc">+</span> </span>
+<span id="cb49-6"><a href="descriptives.html#cb49-6" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> </span>
+<span id="cb49-7"><a href="descriptives.html#cb49-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span> <span class="co"># X軸を45度傾ける</span></span>
+<span id="cb49-8"><a href="descriptives.html#cb49-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;職業&quot;</span>, <span class="at">y =</span> <span class="st">&quot;割合&quot;</span>) <span class="co"># x軸とy軸に名前をつける</span></span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 <p>png形式の場合は今までと同じ方法で文字化けせずに保存できる。</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="descriptives.html#cb173-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;results/bar_graph.png&quot;</span>, <span class="at">width =</span> <span class="dv">5</span>, <span class="at">height =</span> <span class="dv">4</span>) <span class="co"># png形式</span></span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="descriptives.html#cb50-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;results/bar_graph.png&quot;</span>, <span class="at">width =</span> <span class="dv">5</span>, <span class="at">height =</span> <span class="dv">4</span>) <span class="co"># png形式</span></span></code></pre></div>
 <p>一方で、pdfの場合にはひとくふう必要となる。まず、保存したいグラフをオブジェクト（ここでは<code>g</code>とする）に入れてやる。</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="descriptives.html#cb174-1" tabindex="-1"></a>g <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb174-2"><a href="descriptives.html#cb174-2" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(occupation)) <span class="sc">%&gt;%</span> </span>
-<span id="cb174-3"><a href="descriptives.html#cb174-3" tabindex="-1"></a>  <span class="fu">prop.table</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb174-4"><a href="descriptives.html#cb174-4" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb174-5"><a href="descriptives.html#cb174-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> occupation, <span class="at">y =</span> Freq)) <span class="sc">+</span> </span>
-<span id="cb174-6"><a href="descriptives.html#cb174-6" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> </span>
-<span id="cb174-7"><a href="descriptives.html#cb174-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span> <span class="co"># X軸を45度傾ける</span></span>
-<span id="cb174-8"><a href="descriptives.html#cb174-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;職業&quot;</span>, <span class="at">y =</span> <span class="st">&quot;割合&quot;</span>) <span class="co"># x軸とy軸に名前をつける</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="descriptives.html#cb51-1" tabindex="-1"></a>g <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb51-2"><a href="descriptives.html#cb51-2" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(occupation)) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-3"><a href="descriptives.html#cb51-3" tabindex="-1"></a>  <span class="fu">prop.table</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb51-4"><a href="descriptives.html#cb51-4" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb51-5"><a href="descriptives.html#cb51-5" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> occupation, <span class="at">y =</span> Freq)) <span class="sc">+</span> </span>
+<span id="cb51-6"><a href="descriptives.html#cb51-6" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> </span>
+<span id="cb51-7"><a href="descriptives.html#cb51-7" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span> <span class="co"># X軸を45度傾ける</span></span>
+<span id="cb51-8"><a href="descriptives.html#cb51-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;職業&quot;</span>, <span class="at">y =</span> <span class="st">&quot;割合&quot;</span>) <span class="co"># x軸とy軸に名前をつける</span></span></code></pre></div>
 <p>そのうえで、Windowsの場合は以下のコマンド：</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="descriptives.html#cb175-1" tabindex="-1"></a><span class="fu">pdf</span>(<span class="at">file =</span> <span class="st">&quot;results/bar_graph.pdf&quot;</span>, <span class="at">family =</span> <span class="st">&quot;Japan1GothicBBB&quot;</span>, <span class="at">width =</span> <span class="dv">5</span>, <span class="at">height =</span> <span class="dv">4</span>) </span>
-<span id="cb175-2"><a href="descriptives.html#cb175-2" tabindex="-1"></a>g</span>
-<span id="cb175-3"><a href="descriptives.html#cb175-3" tabindex="-1"></a><span class="fu">dev.off</span>() </span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="descriptives.html#cb52-1" tabindex="-1"></a><span class="fu">pdf</span>(<span class="at">file =</span> <span class="st">&quot;results/bar_graph.pdf&quot;</span>, <span class="at">family =</span> <span class="st">&quot;Japan1GothicBBB&quot;</span>, <span class="at">width =</span> <span class="dv">5</span>, <span class="at">height =</span> <span class="dv">4</span>) </span>
+<span id="cb52-2"><a href="descriptives.html#cb52-2" tabindex="-1"></a>g</span>
+<span id="cb52-3"><a href="descriptives.html#cb52-3" tabindex="-1"></a><span class="fu">dev.off</span>() </span></code></pre></div>
 <p>Macの場合は以下のコマンドで保存する：</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="descriptives.html#cb176-1" tabindex="-1"></a><span class="fu">quartz</span>(<span class="at">file =</span> <span class="st">&quot;results/bar_graph.pdf&quot;</span>, <span class="at">type =</span> <span class="st">&quot;pdf&quot;</span>, <span class="at">family =</span> <span class="st">&quot;sans&quot;</span>,  <span class="at">width =</span> <span class="dv">5</span>, <span class="at">height =</span> <span class="dv">4</span>) </span>
-<span id="cb176-2"><a href="descriptives.html#cb176-2" tabindex="-1"></a>g</span>
-<span id="cb176-3"><a href="descriptives.html#cb176-3" tabindex="-1"></a><span class="fu">dev.off</span>() </span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="descriptives.html#cb53-1" tabindex="-1"></a><span class="fu">quartz</span>(<span class="at">file =</span> <span class="st">&quot;results/bar_graph.pdf&quot;</span>, <span class="at">type =</span> <span class="st">&quot;pdf&quot;</span>, <span class="at">family =</span> <span class="st">&quot;sans&quot;</span>,  <span class="at">width =</span> <span class="dv">5</span>, <span class="at">height =</span> <span class="dv">4</span>) </span>
+<span id="cb53-2"><a href="descriptives.html#cb53-2" tabindex="-1"></a>g</span>
+<span id="cb53-3"><a href="descriptives.html#cb53-3" tabindex="-1"></a><span class="fu">dev.off</span>() </span></code></pre></div>
 <pre><code>## quartz_off_screen 
 ##                 2</code></pre>
 <p>これで無事、グラフが保存できた。</p>
@@ -2477,19 +2411,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="descriptive_export_tbl_summary" class="section level3 hasAnchor" number="5.5.3">
 <h3><span class="header-section-number">5.5.3</span> 記述統計の一覧表をwordに書き出す<a href="descriptives.html#descriptive_export_tbl_summary" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><code>gtsummary::tbl_summary()</code>で作成した記述統計の表はword形式で書き出すことができる。その際に用いるパッケージが<code>flextable</code>である。まずはこのパッケージを読み込んでおく。</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="descriptives.html#cb178-1" tabindex="-1"></a><span class="fu">library</span>(flextable)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="descriptives.html#cb55-1" tabindex="-1"></a><span class="fu">library</span>(flextable)</span></code></pre></div>
 <p>先ほど作成したグループ別の記述統計量の表をwordファイルに書き出したいときには、以下のように%&gt;%演算子でつないで、<code>as_flex_table() %&gt;% save_as_docs(path = "xxx.docx")</code>というコマンドを追加する。</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="descriptives.html#cb179-1" tabindex="-1"></a>piaac_selected <span class="sc">%&gt;%</span> </span>
-<span id="cb179-2"><a href="descriptives.html#cb179-2" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">label =</span> <span class="fu">list</span>(age <span class="sc">~</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb179-3"><a href="descriptives.html#cb179-3" tabindex="-1"></a>                           educ <span class="sc">~</span> <span class="st">&quot;最終学歴&quot;</span>,</span>
-<span id="cb179-4"><a href="descriptives.html#cb179-4" tabindex="-1"></a>                           occupation <span class="sc">~</span> <span class="st">&quot;職業&quot;</span>,</span>
-<span id="cb179-5"><a href="descriptives.html#cb179-5" tabindex="-1"></a>                           wage <span class="sc">~</span> <span class="st">&quot;賃金&quot;</span>),</span>
-<span id="cb179-6"><a href="descriptives.html#cb179-6" tabindex="-1"></a>              <span class="at">statistic =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">&quot;{mean} ({sd})&quot;</span>),</span>
-<span id="cb179-7"><a href="descriptives.html#cb179-7" tabindex="-1"></a>              <span class="at">by =</span> gender,</span>
-<span id="cb179-8"><a href="descriptives.html#cb179-8" tabindex="-1"></a>              <span class="at">digits =</span> <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb179-9"><a href="descriptives.html#cb179-9" tabindex="-1"></a>  <span class="fu">modify_header</span>(label <span class="sc">~</span> <span class="st">&quot;&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb179-10"><a href="descriptives.html#cb179-10" tabindex="-1"></a>  <span class="fu">as_flex_table</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb179-11"><a href="descriptives.html#cb179-11" tabindex="-1"></a>  <span class="fu">save_as_docx</span>(<span class="at">path =</span> <span class="st">&quot;results/summary.docx&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="descriptives.html#cb56-1" tabindex="-1"></a>piaac_selected <span class="sc">%&gt;%</span> </span>
+<span id="cb56-2"><a href="descriptives.html#cb56-2" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">label =</span> <span class="fu">list</span>(age <span class="sc">~</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb56-3"><a href="descriptives.html#cb56-3" tabindex="-1"></a>                           educ <span class="sc">~</span> <span class="st">&quot;最終学歴&quot;</span>,</span>
+<span id="cb56-4"><a href="descriptives.html#cb56-4" tabindex="-1"></a>                           occupation <span class="sc">~</span> <span class="st">&quot;職業&quot;</span>,</span>
+<span id="cb56-5"><a href="descriptives.html#cb56-5" tabindex="-1"></a>                           wage <span class="sc">~</span> <span class="st">&quot;賃金&quot;</span>),</span>
+<span id="cb56-6"><a href="descriptives.html#cb56-6" tabindex="-1"></a>              <span class="at">statistic =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">&quot;{mean} ({sd})&quot;</span>),</span>
+<span id="cb56-7"><a href="descriptives.html#cb56-7" tabindex="-1"></a>              <span class="at">by =</span> gender,</span>
+<span id="cb56-8"><a href="descriptives.html#cb56-8" tabindex="-1"></a>              <span class="at">digits =</span> <span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-9"><a href="descriptives.html#cb56-9" tabindex="-1"></a>  <span class="fu">modify_header</span>(label <span class="sc">~</span> <span class="st">&quot;&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb56-10"><a href="descriptives.html#cb56-10" tabindex="-1"></a>  <span class="fu">as_flex_table</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb56-11"><a href="descriptives.html#cb56-11" tabindex="-1"></a>  <span class="fu">save_as_docx</span>(<span class="at">path =</span> <span class="st">&quot;results/summary.docx&quot;</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="tbl_summaryの注意点" class="section level2 hasAnchor" number="5.6">
@@ -2498,31 +2432,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="値が少ない連続変数はカテゴリ変数とみなして集計される" class="section level3 hasAnchor" number="5.6.1">
 <h3><span class="header-section-number">5.6.1</span> 値が少ない連続変数はカテゴリ変数とみなして集計される<a href="descriptives.html#値が少ない連続変数はカテゴリ変数とみなして集計される" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>今回のデータには、1, 2, 3, 4, 5のいずれかの値をとり、値が大きいほど健康状態がよいことを示す変数<code>health</code>が含まれている。この変数の記述統計量<code>tbl_summary()</code>で表示すると、連続変数（numeric）のはずなのになぜかカテゴリ変数のように表記されてしまう。</p>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="descriptives.html#cb180-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(health))</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="descriptives.html#cb57-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(health))</span></code></pre></div>
 <pre><code>## health
 ##    1    2    3    4    5 
 ##  122  572 1274  579  181</code></pre>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="descriptives.html#cb182-1" tabindex="-1"></a>piaac_selected2 <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb182-2"><a href="descriptives.html#cb182-2" tabindex="-1"></a>  <span class="fu">select</span>(gender, age, wage, health)</span></code></pre></div>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="descriptives.html#cb183-1" tabindex="-1"></a>piaac_selected2 <span class="sc">%&gt;%</span> </span>
-<span id="cb183-2"><a href="descriptives.html#cb183-2" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">statistic =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">&quot;{mean} ({sd})&quot;</span>))</span></code></pre></div>
-<div id="aufjqrdbdn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#aufjqrdbdn table {
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="descriptives.html#cb59-1" tabindex="-1"></a>piaac_selected2 <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb59-2"><a href="descriptives.html#cb59-2" tabindex="-1"></a>  <span class="fu">select</span>(gender, age, wage, health)</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="descriptives.html#cb60-1" tabindex="-1"></a>piaac_selected2 <span class="sc">%&gt;%</span> </span>
+<span id="cb60-2"><a href="descriptives.html#cb60-2" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">statistic =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">&quot;{mean} ({sd})&quot;</span>))</span></code></pre></div>
+<div id="cmllqzamzq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#cmllqzamzq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#aufjqrdbdn thead, #aufjqrdbdn tbody, #aufjqrdbdn tfoot, #aufjqrdbdn tr, #aufjqrdbdn td, #aufjqrdbdn th {
+#cmllqzamzq thead, #cmllqzamzq tbody, #cmllqzamzq tfoot, #cmllqzamzq tr, #cmllqzamzq td, #cmllqzamzq th {
   border-style: none;
 }
 
-#aufjqrdbdn p {
+#cmllqzamzq p {
   margin: 0;
   padding: 0;
 }
 
-#aufjqrdbdn .gt_table {
+#cmllqzamzq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2548,12 +2482,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-#aufjqrdbdn .gt_caption {
+#cmllqzamzq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#aufjqrdbdn .gt_title {
+#cmllqzamzq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2565,7 +2499,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#aufjqrdbdn .gt_subtitle {
+#cmllqzamzq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2577,7 +2511,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#aufjqrdbdn .gt_heading {
+#cmllqzamzq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2589,13 +2523,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#aufjqrdbdn .gt_bottom_border {
+#cmllqzamzq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#aufjqrdbdn .gt_col_headings {
+#cmllqzamzq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2610,7 +2544,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#aufjqrdbdn .gt_col_heading {
+#cmllqzamzq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2630,7 +2564,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#aufjqrdbdn .gt_column_spanner_outer {
+#cmllqzamzq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2642,15 +2576,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-#aufjqrdbdn .gt_column_spanner_outer:first-child {
+#cmllqzamzq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#aufjqrdbdn .gt_column_spanner_outer:last-child {
+#cmllqzamzq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#aufjqrdbdn .gt_column_spanner {
+#cmllqzamzq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2662,11 +2596,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-#aufjqrdbdn .gt_spanner_row {
+#cmllqzamzq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#aufjqrdbdn .gt_group_heading {
+#cmllqzamzq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2692,7 +2626,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   text-align: left;
 }
 
-#aufjqrdbdn .gt_empty_group_heading {
+#cmllqzamzq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2707,15 +2641,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#aufjqrdbdn .gt_from_md > :first-child {
+#cmllqzamzq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#aufjqrdbdn .gt_from_md > :last-child {
+#cmllqzamzq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#aufjqrdbdn .gt_row {
+#cmllqzamzq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2734,7 +2668,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#aufjqrdbdn .gt_stub {
+#cmllqzamzq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2747,7 +2681,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#aufjqrdbdn .gt_stub_row_group {
+#cmllqzamzq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2761,15 +2695,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-#aufjqrdbdn .gt_row_group_first td {
+#cmllqzamzq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#aufjqrdbdn .gt_row_group_first th {
+#cmllqzamzq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#aufjqrdbdn .gt_summary_row {
+#cmllqzamzq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2779,16 +2713,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#aufjqrdbdn .gt_first_summary_row {
+#cmllqzamzq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#aufjqrdbdn .gt_first_summary_row.thick {
+#cmllqzamzq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#aufjqrdbdn .gt_last_summary_row {
+#cmllqzamzq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2798,7 +2732,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#aufjqrdbdn .gt_grand_summary_row {
+#cmllqzamzq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2808,7 +2742,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#aufjqrdbdn .gt_first_grand_summary_row {
+#cmllqzamzq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2818,7 +2752,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-#aufjqrdbdn .gt_last_grand_summary_row_top {
+#cmllqzamzq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2828,11 +2762,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#aufjqrdbdn .gt_striped {
+#cmllqzamzq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#aufjqrdbdn .gt_table_body {
+#cmllqzamzq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2841,7 +2775,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#aufjqrdbdn .gt_footnotes {
+#cmllqzamzq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2855,7 +2789,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#aufjqrdbdn .gt_footnote {
+#cmllqzamzq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2864,7 +2798,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#aufjqrdbdn .gt_sourcenotes {
+#cmllqzamzq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2878,7 +2812,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#aufjqrdbdn .gt_sourcenote {
+#cmllqzamzq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2886,63 +2820,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#aufjqrdbdn .gt_left {
+#cmllqzamzq .gt_left {
   text-align: left;
 }
 
-#aufjqrdbdn .gt_center {
+#cmllqzamzq .gt_center {
   text-align: center;
 }
 
-#aufjqrdbdn .gt_right {
+#cmllqzamzq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#aufjqrdbdn .gt_font_normal {
+#cmllqzamzq .gt_font_normal {
   font-weight: normal;
 }
 
-#aufjqrdbdn .gt_font_bold {
+#cmllqzamzq .gt_font_bold {
   font-weight: bold;
 }
 
-#aufjqrdbdn .gt_font_italic {
+#cmllqzamzq .gt_font_italic {
   font-style: italic;
 }
 
-#aufjqrdbdn .gt_super {
+#cmllqzamzq .gt_super {
   font-size: 65%;
 }
 
-#aufjqrdbdn .gt_footnote_marks {
+#cmllqzamzq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#aufjqrdbdn .gt_asterisk {
+#cmllqzamzq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#aufjqrdbdn .gt_indent_1 {
+#cmllqzamzq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#aufjqrdbdn .gt_indent_2 {
+#cmllqzamzq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#aufjqrdbdn .gt_indent_3 {
+#cmllqzamzq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#aufjqrdbdn .gt_indent_4 {
+#cmllqzamzq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#aufjqrdbdn .gt_indent_5 {
+#cmllqzamzq .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -2987,26 +2921,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 <p>どうやら<code>gtsummary::tbl_summary()</code>はカテゴリ変数の値の種類が少ないと、連続変数ではなくカテゴリ変数のように集計するという親切（？）な機能があるようである。オプションとして<code>type = list()</code>で連続変数であることを記載することで、この親切を抑制することができる。</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="descriptives.html#cb184-1" tabindex="-1"></a>piaac_selected2 <span class="sc">%&gt;%</span> </span>
-<span id="cb184-2"><a href="descriptives.html#cb184-2" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">statistic =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">&quot;{mean} ({sd})&quot;</span>),</span>
-<span id="cb184-3"><a href="descriptives.html#cb184-3" tabindex="-1"></a>              <span class="at">type =</span> <span class="fu">list</span>(health <span class="sc">~</span> <span class="st">&quot;continuous&quot;</span>)) <span class="co"># すべての連続変数を強制的に連続変数として表記)</span></span></code></pre></div>
-<div id="cvnylljfrz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#cvnylljfrz table {
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="descriptives.html#cb61-1" tabindex="-1"></a>piaac_selected2 <span class="sc">%&gt;%</span> </span>
+<span id="cb61-2"><a href="descriptives.html#cb61-2" tabindex="-1"></a>  <span class="fu">tbl_summary</span>(<span class="at">statistic =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">&quot;{mean} ({sd})&quot;</span>),</span>
+<span id="cb61-3"><a href="descriptives.html#cb61-3" tabindex="-1"></a>              <span class="at">type =</span> <span class="fu">list</span>(health <span class="sc">~</span> <span class="st">&quot;continuous&quot;</span>)) <span class="co"># すべての連続変数を強制的に連続変数として表記)</span></span></code></pre></div>
+<div id="hlakqxkari" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#hlakqxkari table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#cvnylljfrz thead, #cvnylljfrz tbody, #cvnylljfrz tfoot, #cvnylljfrz tr, #cvnylljfrz td, #cvnylljfrz th {
+#hlakqxkari thead, #hlakqxkari tbody, #hlakqxkari tfoot, #hlakqxkari tr, #hlakqxkari td, #hlakqxkari th {
   border-style: none;
 }
 
-#cvnylljfrz p {
+#hlakqxkari p {
   margin: 0;
   padding: 0;
 }
 
-#cvnylljfrz .gt_table {
+#hlakqxkari .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3032,12 +2966,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-left-color: #D3D3D3;
 }
 
-#cvnylljfrz .gt_caption {
+#hlakqxkari .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#cvnylljfrz .gt_title {
+#hlakqxkari .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3049,7 +2983,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#cvnylljfrz .gt_subtitle {
+#hlakqxkari .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3061,7 +2995,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#cvnylljfrz .gt_heading {
+#hlakqxkari .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3073,13 +3007,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#cvnylljfrz .gt_bottom_border {
+#hlakqxkari .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#cvnylljfrz .gt_col_headings {
+#hlakqxkari .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3094,7 +3028,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#cvnylljfrz .gt_col_heading {
+#hlakqxkari .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3114,7 +3048,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#cvnylljfrz .gt_column_spanner_outer {
+#hlakqxkari .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3126,15 +3060,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 4px;
 }
 
-#cvnylljfrz .gt_column_spanner_outer:first-child {
+#hlakqxkari .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#cvnylljfrz .gt_column_spanner_outer:last-child {
+#hlakqxkari .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#cvnylljfrz .gt_column_spanner {
+#hlakqxkari .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3146,11 +3080,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   width: 100%;
 }
 
-#cvnylljfrz .gt_spanner_row {
+#hlakqxkari .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#cvnylljfrz .gt_group_heading {
+#hlakqxkari .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3176,7 +3110,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   text-align: left;
 }
 
-#cvnylljfrz .gt_empty_group_heading {
+#hlakqxkari .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3191,15 +3125,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#cvnylljfrz .gt_from_md > :first-child {
+#hlakqxkari .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#cvnylljfrz .gt_from_md > :last-child {
+#hlakqxkari .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#cvnylljfrz .gt_row {
+#hlakqxkari .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3218,7 +3152,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   overflow-x: hidden;
 }
 
-#cvnylljfrz .gt_stub {
+#hlakqxkari .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3231,7 +3165,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#cvnylljfrz .gt_stub_row_group {
+#hlakqxkari .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3245,15 +3179,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: top;
 }
 
-#cvnylljfrz .gt_row_group_first td {
+#hlakqxkari .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#cvnylljfrz .gt_row_group_first th {
+#hlakqxkari .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#cvnylljfrz .gt_summary_row {
+#hlakqxkari .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3263,16 +3197,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#cvnylljfrz .gt_first_summary_row {
+#hlakqxkari .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#cvnylljfrz .gt_first_summary_row.thick {
+#hlakqxkari .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#cvnylljfrz .gt_last_summary_row {
+#hlakqxkari .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3282,7 +3216,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#cvnylljfrz .gt_grand_summary_row {
+#hlakqxkari .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3292,7 +3226,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#cvnylljfrz .gt_first_grand_summary_row {
+#hlakqxkari .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3302,7 +3236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-color: #D3D3D3;
 }
 
-#cvnylljfrz .gt_last_grand_summary_row_top {
+#hlakqxkari .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3312,11 +3246,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#cvnylljfrz .gt_striped {
+#hlakqxkari .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#cvnylljfrz .gt_table_body {
+#hlakqxkari .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3325,7 +3259,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-color: #D3D3D3;
 }
 
-#cvnylljfrz .gt_footnotes {
+#hlakqxkari .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3339,7 +3273,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#cvnylljfrz .gt_footnote {
+#hlakqxkari .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3348,7 +3282,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#cvnylljfrz .gt_sourcenotes {
+#hlakqxkari .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3362,7 +3296,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-right-color: #D3D3D3;
 }
 
-#cvnylljfrz .gt_sourcenote {
+#hlakqxkari .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3370,63 +3304,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-right: 5px;
 }
 
-#cvnylljfrz .gt_left {
+#hlakqxkari .gt_left {
   text-align: left;
 }
 
-#cvnylljfrz .gt_center {
+#hlakqxkari .gt_center {
   text-align: center;
 }
 
-#cvnylljfrz .gt_right {
+#hlakqxkari .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cvnylljfrz .gt_font_normal {
+#hlakqxkari .gt_font_normal {
   font-weight: normal;
 }
 
-#cvnylljfrz .gt_font_bold {
+#hlakqxkari .gt_font_bold {
   font-weight: bold;
 }
 
-#cvnylljfrz .gt_font_italic {
+#hlakqxkari .gt_font_italic {
   font-style: italic;
 }
 
-#cvnylljfrz .gt_super {
+#hlakqxkari .gt_super {
   font-size: 65%;
 }
 
-#cvnylljfrz .gt_footnote_marks {
+#hlakqxkari .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#cvnylljfrz .gt_asterisk {
+#hlakqxkari .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#cvnylljfrz .gt_indent_1 {
+#hlakqxkari .gt_indent_1 {
   text-indent: 5px;
 }
 
-#cvnylljfrz .gt_indent_2 {
+#hlakqxkari .gt_indent_2 {
   text-indent: 10px;
 }
 
-#cvnylljfrz .gt_indent_3 {
+#hlakqxkari .gt_indent_3 {
   text-indent: 15px;
 }
 
-#cvnylljfrz .gt_indent_4 {
+#hlakqxkari .gt_indent_4 {
   text-indent: 20px;
 }
 
-#cvnylljfrz .gt_indent_5 {
+#hlakqxkari .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -3524,20 +3458,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
