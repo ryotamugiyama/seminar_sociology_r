@@ -428,7 +428,6 @@ reg_res_tidy <- tidy(reg_res) %>%
 
 なお、従属変数が2値のカテゴリ変数の場合にはロジスティック回帰分析（ロジットモデル）やプロビットモデルといった方法がよく使われる。これについては[ロジスティック回帰分析](#logit)の章で解説する。ただし、今紹介した（ふつうの）回帰分析と比べるとやや解釈が難しい。また上記の（ふつうの）回帰分析を使っても、たいていの場合はそんなに結論が変わるわけではないので、学部レベルではこれで十分である。もちろん、関心のある人は積極的にチャレンジしてみるとよいだろう。
 
-
 ## 非線形の関連
 
 ### 対数変換 {#regression_basic_log}
@@ -681,7 +680,7 @@ modelsummary(list(reg_res),
 
 ## 結果をファイルに書き出す {#regression_basic_export}
 
-### !ordファイルに書き出す
+### Wordファイルに書き出す
 
 第5章、第6章と同様、回帰分析についても結果をWordに書き出すことができる。`flextable`パッケージを読み込んでおいた状態で（この章では冒頭ですでに読み込んでおいた）、上記の`modelsummary()`のコードに`output = "xxx.docx"`というようなオプションをつけることで、Wordファイルに結果を書き出すことができる。
 
@@ -698,9 +697,9 @@ modelsummary(list(reg_res),
 
 `as_flex_table() %>% save_as_docs(path = "xxx.docx")`を使っていた第5章、第6章とは少し違う点に注意。多少の手直しが必要かもしれないが、きれいな回帰分析の表をWordファイルに書き出すことができる。
 
-### Excelファイルに書き出す {#regression_output_excel}
+Wordファイルに書き出した場合、変数の値に日本語が含まれているときれいな表にならないことがあるという問題が報告されている（2024-11-27）。この原因が何に由来するのかよくわからないが、このような場合には、Wordファイルではなくて別の形式のファイルに書き出すとうまくいくことがある。以下では、3つのパターンについて説明する。
 
-Wordファイルに書き出した場合、変数の値に日本語が含まれているときれいな表にならないことがあるという問題が報告されている（2024-11-27）。この原因が何に由来するのかよくわからないが、このような場合には、WordファイルではなくてExcelファイルに書き出すとうまくいくことがあるかもしれない。
+### Excelファイルに書き出す {#regression_output_excel}
 
 Excelファイルに書き出したい場合は、末尾の「.docx」の部分を「.xlsx」に変えればよい。ただし、Excelファイルの場合は少し余分な列などが入ってしまうので、適宜手直しが必要となる。
 
@@ -718,7 +717,7 @@ modelsummary(list(reg_res),
          coef_map = c("(Intercept)" = "切片",
                          "age" = "年齢"), # 各変数に名前をつける
          gof_map = c("nobs", "r.squared"), # サンプルサイズと決定係数のみ記載する
-         output = "results/regression.xlsx") # 出力先のファイル名をつける
+         output = "results/regression.xlsx") # 出力先のファイル名をつける（xlsx）
 ```
 
 ### PowerPointファイルに書き出す {#regression_output_pptx}
@@ -733,5 +732,20 @@ modelsummary(list(reg_res),
          coef_map = c("(Intercept)" = "切片",
                          "age" = "年齢"), # 各変数に名前をつける
          gof_map = c("nobs", "r.squared"), # サンプルサイズと決定係数のみ記載する
-         output = "results/regression.xlsx") # 出力先のファイル名をつける
+         output = "results/regression.pptx") # 出力先のファイル名をつける（pptx）
+```
+
+### rtfファイルに書き出す {#regression_output_rtf}
+
+rtf（リッチテキスト）形式に書き出す。このファイルをWordで開くと、比較的きれいな形式の見た目になっていることが多い。末尾の拡張子を「.rtf」に変えるとできる。
+
+```{r}
+library(flextable) # もし読み込んでいない場合は実行
+
+modelsummary(list(reg_res),
+         stars = TRUE, # 有意水準を示す印をつける
+         coef_map = c("(Intercept)" = "切片",
+                         "age" = "年齢"), # 各変数に名前をつける
+         gof_map = c("nobs", "r.squared"), # サンプルサイズと決定係数のみ記載する
+         output = "results/regression.rtf") # 出力先のファイル名をつける（rtf）
 ```

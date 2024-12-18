@@ -316,11 +316,12 @@ summary(reg_res1)
 
 ### 単位の変更
 
-時給賃金wageが高いほど健康度（health, 1〜5までの値をとり、値が高いほど健康）が高いかどうかを調べたいとする。健康を従属変数、年齢と賃金を独立変数とする回帰分析を実行して、結果をみてみよう。
+時給賃金wageが高いほど健康度（health, 1〜5までの値をとり、値が高いほど健康であることをあらわす）が高いかどうかを調べたいとする。健康を従属変数、年齢と賃金を独立変数とする回帰分析を実行して、結果をみてみよう。
 
 ```{r}
 reg_res3 <- lm(data = piaac, health ~ wage + age)
-modelsummary(list(reg_res3), stars = TRUE)
+modelsummary(list(reg_res3), stars = TRUE,
+             gof_map = c("nobs", "r.squared"))
 ```
 
 賃金の係数は統計的に有意であるため、年齢を統制したうえで、賃金が高いほど健康であることがわかる。しかし、小数点第3位までが示された結果では係数が0.000となっており、これでは違いの大きさがどの程度なのか、よくわからない。
@@ -328,7 +329,8 @@ modelsummary(list(reg_res3), stars = TRUE)
 この場合の対処には2つある。第1に、小数点以下の表示を増やすことである。たとえば小数点第6位まで表示する場合は、`fmt = 6`というオプションを追加する。
 
 ```{r}
-modelsummary(list(reg_res3), stars = TRUE, fmt = 6)
+modelsummary(list(reg_res3), stars = TRUE, fmt = 6,
+             gof_map = c("nobs", "r.squared"))
 ```
 
 値が見えるようになった。つまり、賃金が1円高いと、健康度が0.000042高いということである。
@@ -340,7 +342,8 @@ piaac <- piaac %>%
   mutate(wage1000 = wage / 1000) # 1000円単位に変更した変数を作成
 
 reg_res3 <- lm(data = piaac, health ~ wage1000 + age)
-modelsummary(list(reg_res3), stars = TRUE)
+modelsummary(list(reg_res3), stars = TRUE,
+             gof_map = c("nobs", "r.squared"))
 ```
 
 この場合は、賃金が1単位（1000円）高いと、健康度が0.042高いということを表す。場合に応じて適切に単位を変更することで、係数の解釈もしやすくなるだろう。
