@@ -302,7 +302,7 @@ reg_res2_tidy <- reg_res2 %>%
 参照カテゴリを変更する場合には、カテゴリ変数の値の順序を変更するとよい。具体的には、[`fct_relevel()`関数を使う](#fct_relevel)ことで、カテゴリ変数の値の順序を変更することができる。方法は次のとおりである。
 
 ```{r}
-piaac <- piaac %>% 
+piaac_relevel <- piaac %>% 
   mutate(educ = fct_relevel(educ, "大学大学院", "中学", "高校", "短大高専")) %>% 
   mutate(gender = fct_relevel(gender, "男性", "女性"))
 ```
@@ -310,8 +310,8 @@ piaac <- piaac %>%
 順序を変更したデータを使って再度回帰分析を実行してみると、参照カテゴリがそれぞれ「大学大学院」、「男性」となっていることがわかる。
 
 ```{r}
-reg_res1 <- lm(data = piaac, logwage ~ educ + gender + age + I(age^2))
-summary(reg_res1)
+reg_res3 <- lm(data = piaac_relevel, logwage ~ educ + gender + age + I(age^2))
+summary(reg_res3)
 ```
 
 ### 単位の変更
@@ -319,8 +319,8 @@ summary(reg_res1)
 時給賃金wageが高いほど健康度（health, 1〜5までの値をとり、値が高いほど健康であることをあらわす）が高いかどうかを調べたいとする。健康を従属変数、年齢と賃金を独立変数とする回帰分析を実行して、結果をみてみよう。
 
 ```{r}
-reg_res3 <- lm(data = piaac, health ~ wage + age)
-modelsummary(list(reg_res3), stars = TRUE,
+reg_res4 <- lm(data = piaac, health ~ wage + age)
+modelsummary(list(reg_res4), stars = TRUE,
              gof_map = c("nobs", "r.squared"))
 ```
 
@@ -329,7 +329,7 @@ modelsummary(list(reg_res3), stars = TRUE,
 この場合の対処には2つある。第1に、小数点以下の表示を増やすことである。たとえば小数点第6位まで表示する場合は、`fmt = 6`というオプションを追加する。
 
 ```{r}
-modelsummary(list(reg_res3), stars = TRUE, fmt = 6,
+modelsummary(list(reg_res4), stars = TRUE, fmt = 6,
              gof_map = c("nobs", "r.squared"))
 ```
 
@@ -341,8 +341,8 @@ modelsummary(list(reg_res3), stars = TRUE, fmt = 6,
 piaac <- piaac %>% 
   mutate(wage1000 = wage / 1000) # 1000円単位に変更した変数を作成
 
-reg_res3 <- lm(data = piaac, health ~ wage1000 + age)
-modelsummary(list(reg_res3), stars = TRUE,
+reg_res4 <- lm(data = piaac, health ~ wage1000 + age)
+modelsummary(list(reg_res4), stars = TRUE,
              gof_map = c("nobs", "r.squared"))
 ```
 

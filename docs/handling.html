@@ -286,7 +286,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.3" data-path="tabulate.html"><a href="tabulate.html#クロス表"><i class="fa fa-check"></i><b>6.3</b> クロス表</a>
 <ul>
 <li class="chapter" data-level="6.3.1" data-path="tabulate.html"><a href="tabulate.html#基本-1"><i class="fa fa-check"></i><b>6.3.1</b> 基本</a></li>
-<li class="chapter" data-level="6.3.2" data-path="tabulate.html"><a href="tabulate.html#カイ2乗検定"><i class="fa fa-check"></i><b>6.3.2</b> カイ2乗検定</a></li>
+<li class="chapter" data-level="6.3.2" data-path="tabulate.html"><a href="tabulate.html#カイ2乗検定補足"><i class="fa fa-check"></i><b>6.3.2</b> カイ2乗検定（補足）</a></li>
 <li class="chapter" data-level="6.3.3" data-path="tabulate.html"><a href="tabulate.html#きれいなクロス表をつくる---gtsummarytbl_cross"><i class="fa fa-check"></i><b>6.3.3</b> きれいなクロス表をつくる - gtsummary::tbl_cross()</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="tabulate.html"><a href="tabulate.html#クロス表を図示する"><i class="fa fa-check"></i><b>6.4</b> クロス表を図示する</a>
@@ -340,9 +340,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.5" data-path="regression_basic.html"><a href="regression_basic.html#regression_modelsummary"><i class="fa fa-check"></i><b>7.5</b> 回帰分析の結果をきれいに表示する</a></li>
 <li class="chapter" data-level="7.6" data-path="regression_basic.html"><a href="regression_basic.html#regression_basic_export"><i class="fa fa-check"></i><b>7.6</b> 結果をファイルに書き出す</a>
 <ul>
-<li class="chapter" data-level="7.6.1" data-path="regression_basic.html"><a href="regression_basic.html#ordファイルに書き出す"><i class="fa fa-check"></i><b>7.6.1</b> !ordファイルに書き出す</a></li>
+<li class="chapter" data-level="7.6.1" data-path="regression_basic.html"><a href="regression_basic.html#wordファイルに書き出す"><i class="fa fa-check"></i><b>7.6.1</b> Wordファイルに書き出す</a></li>
 <li class="chapter" data-level="7.6.2" data-path="regression_basic.html"><a href="regression_basic.html#regression_output_excel"><i class="fa fa-check"></i><b>7.6.2</b> Excelファイルに書き出す</a></li>
 <li class="chapter" data-level="7.6.3" data-path="regression_basic.html"><a href="regression_basic.html#regression_output_pptx"><i class="fa fa-check"></i><b>7.6.3</b> PowerPointファイルに書き出す</a></li>
+<li class="chapter" data-level="7.6.4" data-path="regression_basic.html"><a href="regression_basic.html#regression_output_rtf"><i class="fa fa-check"></i><b>7.6.4</b> rtfファイルに書き出す</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="regression_advanced.html"><a href="regression_advanced.html"><i class="fa fa-check"></i><b>8</b> 回帰分析の活用</a>
@@ -1055,38 +1056,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
+<td>35時間より短い</td>
 <td>35時間未満</td>
-<td>短時間</td>
 </tr>
 <tr class="even">
 <td>35時間以上49時間以下</td>
-<td>標準</td>
+<td>35-49時間</td>
 </tr>
 <tr class="odd">
 <td>50時間以上59時間以下</td>
-<td>長時間</td>
+<td>50-59時間</td>
 </tr>
 <tr class="even">
 <td>60時間以上</td>
-<td>過労死ライン</td>
+<td>60時間以上</td>
 </tr>
 </tbody>
 </table>
 <p><code>case_when()</code> を使って作成すると、意図していた順序とは違ったバラバラの順番になってしまう。</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="handling.html#cb75-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb75-2"><a href="handling.html#cb75-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">case_when</span>(</span>
-<span id="cb75-3"><a href="handling.html#cb75-3" tabindex="-1"></a>    d_q10 <span class="sc">&lt;</span> <span class="dv">35</span> <span class="sc">~</span> <span class="st">&quot;短時間（35時間未満）&quot;</span>,</span>
-<span id="cb75-4"><a href="handling.html#cb75-4" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">49</span> <span class="sc">~</span> <span class="st">&quot;標準（35-49時間）&quot;</span>,</span>
-<span id="cb75-5"><a href="handling.html#cb75-5" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">59</span> <span class="sc">~</span> <span class="st">&quot;長時間（50-59時間）&quot;</span>,</span>
-<span id="cb75-6"><a href="handling.html#cb75-6" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">60</span> <span class="sc">~</span> <span class="st">&quot;過労死ライン（60時間以上）&quot;</span></span>
+<span id="cb75-3"><a href="handling.html#cb75-3" tabindex="-1"></a>    d_q10 <span class="sc">&lt;</span> <span class="dv">35</span> <span class="sc">~</span> <span class="st">&quot;35時間未満&quot;</span>,</span>
+<span id="cb75-4"><a href="handling.html#cb75-4" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">49</span> <span class="sc">~</span> <span class="st">&quot;35-49時間&quot;</span>,</span>
+<span id="cb75-5"><a href="handling.html#cb75-5" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">59</span> <span class="sc">~</span> <span class="st">&quot;50-59時間&quot;</span>,</span>
+<span id="cb75-6"><a href="handling.html#cb75-6" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">60</span> <span class="sc">~</span> <span class="st">&quot;60時間以上&quot;</span></span>
 <span id="cb75-7"><a href="handling.html#cb75-7" tabindex="-1"></a>  ))</span>
 <span id="cb75-8"><a href="handling.html#cb75-8" tabindex="-1"></a></span>
 <span id="cb75-9"><a href="handling.html#cb75-9" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(workhour_fct))</span></code></pre></div>
 <pre><code>## workhour_fct
-##          標準（35-49時間）       短時間（35時間未満） 
-##                       1848                        960 
-## 過労死ライン（60時間以上）        長時間（50-59時間） 
-##                        396                        648</code></pre>
+##  35-49時間 35時間未満  50-59時間 60時間以上 
+##       1848        960        648        396</code></pre>
 <p>このような場合には、以下の2つの方法で順序を制御することができる。どちらを使っても良い。</p>
 <div id="一度数値変数に変換し数値変数をカテゴリ変数に変換" class="section level4 hasAnchor" number="4.4.5.1">
 <h4><span class="header-section-number">4.4.5.1</span> 一度数値変数に変換し、数値変数をカテゴリ変数に変換<a href="handling.html#一度数値変数に変換し数値変数をカテゴリ変数に変換" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -1384,7 +1383,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb94-14"><a href="handling.html#cb94-14" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
 <span id="cb94-15"><a href="handling.html#cb94-15" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">factor</span>(workhour_fct,</span>
 <span id="cb94-16"><a href="handling.html#cb94-16" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
-<span id="cb94-17"><a href="handling.html#cb94-17" tabindex="-1"></a>                               <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;短時間（35時間未満）&quot;</span>, <span class="st">&quot;標準（35-49時間）&quot;</span>, <span class="st">&quot;長時間（50-59時間）&quot;</span>, <span class="st">&quot;過労死ライン（60時間以上）&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb94-17"><a href="handling.html#cb94-17" tabindex="-1"></a>                               <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;35時間未満&quot;</span>, <span class="st">&quot;35-49時間&quot;</span>, <span class="st">&quot;50-59時間&quot;</span>, <span class="st">&quot;60時間以上&quot;</span>))) <span class="sc">%&gt;%</span> </span>
 <span id="cb94-18"><a href="handling.html#cb94-18" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ =</span> <span class="fu">case_when</span>(</span>
 <span id="cb94-19"><a href="handling.html#cb94-19" tabindex="-1"></a>    edcat8 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> edcat8 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
 <span id="cb94-20"><a href="handling.html#cb94-20" tabindex="-1"></a>    edcat8 <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
@@ -1453,14 +1452,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  3rd Qu.:4008   3rd Qu.:  2224.38   3rd Qu.: 7.707              
 ##  Max.   :5278   Max.   :266666.67   Max.   :12.494              
 ##                 NA&#39;s   :464         NA&#39;s   :464                 
-##       age             work      workhour                          workhour_fct 
-##  Min.   :25.00   Min.   :1   Min.   : 0.200   短時間（35時間未満）      : 721  
-##  1st Qu.:36.00   1st Qu.:1   1st Qu.: 7.000   標準（35-49時間）         :1643  
-##  Median :44.00   Median :1   Median : 8.000   長時間（50-59時間）       : 590  
-##  Mean   :44.66   Mean   :1   Mean   : 8.272   過労死ライン（60時間以上）: 368  
-##  3rd Qu.:54.00   3rd Qu.:1   3rd Qu.:10.000   NA&#39;s                      :   8  
-##  Max.   :64.00   Max.   :1   Max.   :22.400                                    
-##                              NA&#39;s   :8                                         
+##       age             work      workhour          workhour_fct 
+##  Min.   :25.00   Min.   :1   Min.   : 0.200   35時間未満: 721  
+##  1st Qu.:36.00   1st Qu.:1   1st Qu.: 7.000   35-49時間 :1643  
+##  Median :44.00   Median :1   Median : 8.000   50-59時間 : 590  
+##  Mean   :44.66   Mean   :1   Mean   : 8.272   60時間以上: 368  
+##  3rd Qu.:54.00   3rd Qu.:1   3rd Qu.:10.000   NA&#39;s      :   8  
+##  Max.   :64.00   Max.   :1   Max.   :22.400                    
+##                              NA&#39;s   :8                         
 ##          educ         mothereduc      fathereduc      parenteduc  
 ##  中学      : 305   初等教育:1112   初等教育:1110   初等教育: 853  
 ##  高校      :1187   中等教育:1504   中等教育:1305   中等教育:1411  
@@ -1504,14 +1503,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  3rd Qu.:3987   3rd Qu.:  2240.80   3rd Qu.: 7.715              
 ##  Max.   :5278   Max.   :266666.67   Max.   :12.494              
 ##                                                                 
-##       age             work      workhour                          workhour_fct 
-##  Min.   :25.00   Min.   :1   Min.   : 0.200   短時間（35時間未満）      : 610  
-##  1st Qu.:35.00   1st Qu.:1   1st Qu.: 7.000   標準（35-49時間）         :1419  
-##  Median :43.00   Median :1   Median : 8.000   長時間（50-59時間）       : 490  
-##  Mean   :43.95   Mean   :1   Mean   : 8.189   過労死ライン（60時間以上）: 264  
-##  3rd Qu.:53.00   3rd Qu.:1   3rd Qu.:10.000                                    
-##  Max.   :64.00   Max.   :1   Max.   :21.600                                    
-##                                                                                
+##       age             work      workhour          workhour_fct 
+##  Min.   :25.00   Min.   :1   Min.   : 0.200   35時間未満: 610  
+##  1st Qu.:35.00   1st Qu.:1   1st Qu.: 7.000   35-49時間 :1419  
+##  Median :43.00   Median :1   Median : 8.000   50-59時間 : 490  
+##  Mean   :43.95   Mean   :1   Mean   : 8.189   60時間以上: 264  
+##  3rd Qu.:53.00   3rd Qu.:1   3rd Qu.:10.000                    
+##  Max.   :64.00   Max.   :1   Max.   :21.600                    
+##                                                                
 ##          educ        mothereduc      fathereduc      parenteduc  
 ##  中学      :230   初等教育: 931   初等教育: 931   初等教育: 711  
 ##  高校      :972   中等教育:1305   中等教育:1141   中等教育:1228  

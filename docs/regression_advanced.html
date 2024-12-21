@@ -286,7 +286,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.3" data-path="tabulate.html"><a href="tabulate.html#クロス表"><i class="fa fa-check"></i><b>6.3</b> クロス表</a>
 <ul>
 <li class="chapter" data-level="6.3.1" data-path="tabulate.html"><a href="tabulate.html#基本-1"><i class="fa fa-check"></i><b>6.3.1</b> 基本</a></li>
-<li class="chapter" data-level="6.3.2" data-path="tabulate.html"><a href="tabulate.html#カイ2乗検定"><i class="fa fa-check"></i><b>6.3.2</b> カイ2乗検定</a></li>
+<li class="chapter" data-level="6.3.2" data-path="tabulate.html"><a href="tabulate.html#カイ2乗検定補足"><i class="fa fa-check"></i><b>6.3.2</b> カイ2乗検定（補足）</a></li>
 <li class="chapter" data-level="6.3.3" data-path="tabulate.html"><a href="tabulate.html#きれいなクロス表をつくる---gtsummarytbl_cross"><i class="fa fa-check"></i><b>6.3.3</b> きれいなクロス表をつくる - gtsummary::tbl_cross()</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="tabulate.html"><a href="tabulate.html#クロス表を図示する"><i class="fa fa-check"></i><b>6.4</b> クロス表を図示する</a>
@@ -340,9 +340,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.5" data-path="regression_basic.html"><a href="regression_basic.html#regression_modelsummary"><i class="fa fa-check"></i><b>7.5</b> 回帰分析の結果をきれいに表示する</a></li>
 <li class="chapter" data-level="7.6" data-path="regression_basic.html"><a href="regression_basic.html#regression_basic_export"><i class="fa fa-check"></i><b>7.6</b> 結果をファイルに書き出す</a>
 <ul>
-<li class="chapter" data-level="7.6.1" data-path="regression_basic.html"><a href="regression_basic.html#ordファイルに書き出す"><i class="fa fa-check"></i><b>7.6.1</b> !ordファイルに書き出す</a></li>
+<li class="chapter" data-level="7.6.1" data-path="regression_basic.html"><a href="regression_basic.html#wordファイルに書き出す"><i class="fa fa-check"></i><b>7.6.1</b> Wordファイルに書き出す</a></li>
 <li class="chapter" data-level="7.6.2" data-path="regression_basic.html"><a href="regression_basic.html#regression_output_excel"><i class="fa fa-check"></i><b>7.6.2</b> Excelファイルに書き出す</a></li>
 <li class="chapter" data-level="7.6.3" data-path="regression_basic.html"><a href="regression_basic.html#regression_output_pptx"><i class="fa fa-check"></i><b>7.6.3</b> PowerPointファイルに書き出す</a></li>
+<li class="chapter" data-level="7.6.4" data-path="regression_basic.html"><a href="regression_basic.html#regression_output_rtf"><i class="fa fa-check"></i><b>7.6.4</b> rtfファイルに書き出す</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="regression_advanced.html"><a href="regression_advanced.html"><i class="fa fa-check"></i><b>8</b> 回帰分析の活用</a>
@@ -523,26 +524,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>本章では、前章で学んだ回帰分析を発展させて、複数の独立変数を扱う方法について説明する。</p>
 <p>内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project…」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。</p>
 <p>さらに、これまでの章で説明した以下のパッケージを読み込んだ上で、<a href="handling.html#handling">第4章</a>で作成したデータを読み込んで<code>piaac</code>というデータフレームに入れていることを前提とする。具体的には、以下のコードを実行しておく必要がある。</p>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="regression_advanced.html#cb317-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb317-2"><a href="regression_advanced.html#cb317-2" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb317-3"><a href="regression_advanced.html#cb317-3" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
-<span id="cb317-4"><a href="regression_advanced.html#cb317-4" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb317-5"><a href="regression_advanced.html#cb317-5" tabindex="-1"></a></span>
-<span id="cb317-6"><a href="regression_advanced.html#cb317-6" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="regression_advanced.html#cb311-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb311-2"><a href="regression_advanced.html#cb311-2" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb311-3"><a href="regression_advanced.html#cb311-3" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb311-4"><a href="regression_advanced.html#cb311-4" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb311-5"><a href="regression_advanced.html#cb311-5" tabindex="-1"></a></span>
+<span id="cb311-6"><a href="regression_advanced.html#cb311-6" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
 <p><a href="descriptives.html#descriptives_ggplot">第5章で確認したように</a>、ggplotの設定を変更しておくことで見やすいグラフを作ることができる。ここでは以下のコードを実行している。</p>
 <p>Macの場合：</p>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="regression_advanced.html#cb318-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
-<span id="cb318-2"><a href="regression_advanced.html#cb318-2" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>,</span>
-<span id="cb318-3"><a href="regression_advanced.html#cb318-3" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
-<span id="cb318-4"><a href="regression_advanced.html#cb318-4" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb318-5"><a href="regression_advanced.html#cb318-5" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
-<span id="cb318-6"><a href="regression_advanced.html#cb318-6" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="regression_advanced.html#cb312-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb312-2"><a href="regression_advanced.html#cb312-2" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>,</span>
+<span id="cb312-3"><a href="regression_advanced.html#cb312-3" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb312-4"><a href="regression_advanced.html#cb312-4" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb312-5"><a href="regression_advanced.html#cb312-5" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb312-6"><a href="regression_advanced.html#cb312-6" tabindex="-1"></a>))</span></code></pre></div>
 <p>Windowsの場合：</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="regression_advanced.html#cb319-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
-<span id="cb319-2"><a href="regression_advanced.html#cb319-2" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
-<span id="cb319-3"><a href="regression_advanced.html#cb319-3" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb319-4"><a href="regression_advanced.html#cb319-4" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
-<span id="cb319-5"><a href="regression_advanced.html#cb319-5" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="regression_advanced.html#cb313-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb313-2"><a href="regression_advanced.html#cb313-2" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb313-3"><a href="regression_advanced.html#cb313-3" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb313-4"><a href="regression_advanced.html#cb313-4" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb313-5"><a href="regression_advanced.html#cb313-5" tabindex="-1"></a>))</span></code></pre></div>
 <div id="重回帰分析" class="section level2 hasAnchor" number="8.1">
 <h2><span class="header-section-number">8.1</span> 重回帰分析<a href="regression_advanced.html#重回帰分析" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>先の単回帰分析では、年齢、性別、学歴、数的思考力スコアによって賃金が異なっていることをみた。これら4つの変数を同時に考慮することで、賃金の分散をよりよく説明できるモデルを作ることができないだろうか？このようなときに役に立つのが、<strong>重回帰分析</strong>である。</p>
@@ -552,8 +553,8 @@ y = \beta_0 + \beta_1年齢 + \beta_2女性 + \beta_3高校卒 + \beta_4短大�
 \]</span></p>
 <p><span class="math inline">\(\beta_1\)</span>が年齢の係数、<span class="math inline">\(\beta_2\)</span>が（男性と比較したときの）女性の係数、<span class="math inline">\(\beta_3, \beta_4, \beta_5\)</span>が（中学卒と比較したときの）高校卒、短大高専卒、大学大学院卒の係数を、<span class="math inline">\(\beta_6\)</span>が数的思考力スコアの係数を、それぞれ表す。各係数は、<strong>他の変数を一定として</strong>（<strong>統制 control</strong>して、ともいう）、当該変数の値が1単位増えると<span class="math inline">\(y\)</span>がどれだけ変化するのか、という独立の影響力を測っていることになる。</p>
 <p>単回帰分析のときと同じように、<code>lm()</code>関数を使って推定することができる。ここでは、賃金の測定の際により一般的に使われる、対数変換した賃金（logwage）を用いる。正負の解釈については通常と同じだが、係数の値についての解釈は少しだけ勉強が必要になる。くわしくは前章「<a href="regression_basic.html#regression_basic_log">対数変換</a>」を参照のこと。</p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="regression_advanced.html#cb320-1" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> age <span class="sc">+</span> gender <span class="sc">+</span> educ <span class="sc">+</span> numeracy)</span>
-<span id="cb320-2"><a href="regression_advanced.html#cb320-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="regression_advanced.html#cb314-1" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> age <span class="sc">+</span> gender <span class="sc">+</span> educ <span class="sc">+</span> numeracy)</span>
+<span id="cb314-2"><a href="regression_advanced.html#cb314-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = logwage ~ age + gender + educ + numeracy, data = piaac)
@@ -591,14 +592,14 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <h3><span class="header-section-number">8.2.1</span> 交絡とは何か<a href="regression_advanced.html#交絡とは何か" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>では実際、重回帰分析はどのようなことを知りたいときに使うのだろうか。たとえば、高い数的思考力スコアが高いとどれくらい対数賃金が高くなるのかを知りたいと思ったとする。もっともシンプルな方法が、前回みたように（単）回帰分析を使う方法である。</p>
 <p>しかしこの方法は、数的思考力スコアの<strong>因果的な効果</strong>を知るには不十分である。一つ例を考えよう。たとえば、女性はさまざまな理由から男性と比べて数的思考力スコアが低い傾向がある<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a>。また、女性はさまざまな理由から労働市場で男性と比べて高い賃金を得られていない。だとすれば、数的思考力スコアが高いと賃金が高いというのはたんに見かけ上の関係に過ぎず、実際には数的思考力スコアは何ら賃金を高める効果を持っていないのかもしれない。性別に色分けした以下の散布図を見てみよう。たしかに、数的思考力も高く対数賃金も高い右上には男性が、数的思考力スコアが低く対数賃金も低い左下には女性が、それぞれ集中しているようにみえる。</p>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="regression_advanced.html#cb322-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb322-2"><a href="regression_advanced.html#cb322-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> numeracy, <span class="at">y =</span> logwage, <span class="at">color =</span> gender)) <span class="sc">+</span> </span>
-<span id="cb322-3"><a href="regression_advanced.html#cb322-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb322-4"><a href="regression_advanced.html#cb322-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-230-1.png" width="672" /></p>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="regression_advanced.html#cb316-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb316-2"><a href="regression_advanced.html#cb316-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> numeracy, <span class="at">y =</span> logwage, <span class="at">color =</span> gender)) <span class="sc">+</span> </span>
+<span id="cb316-3"><a href="regression_advanced.html#cb316-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb316-4"><a href="regression_advanced.html#cb316-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-228-1.png" width="672" /></p>
 <p>性別を<strong>一定としたうえで</strong>、言い換えれば、性別が同じであったとしてもなお、数的思考力スコアと（対数）賃金の関係をみることができたなら、「数的思考力スコアはどの程度賃金を高める効果を持つのか」という問いの答えに近づくことができる。重回帰分析は、こうしたモチベーションに答えるための方法である。</p>
 <p>今の議論を図にすると、次のようなかたちになる。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-231-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-229-1.png" width="672" /></p>
 <p>Xを数的思考力スコア、Yを賃金、Zを性別と考えよう。知りたいのは数的思考力スコアが賃金に与える効果（X → Y）だが、その背後にはXにもYにも影響する要因Z（Z → X、Z → Y）が存在する。そのため、数的思考力スコアが賃金に与える効果をみたいのならば、Zを一定とする必要がある。このように、XとYの両者に影響する要因を<strong>交絡要因 confounder</strong>とよぶ。</p>
 <p>複数の変数を使うときの回帰分析では、関心のある変数xと、統制したい変数zというふうに別々の役割があるということが多い。</p>
 </div>
@@ -612,38 +613,38 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <li>性別に加えてさらに年齢と学歴を統制した回帰分析</li>
 </ol>
 <p>を比較しながら、それぞれ数的思考力スコアの係数がどのように変わるのかをみてみよう。</p>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="regression_advanced.html#cb323-1" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy)</span>
-<span id="cb323-2"><a href="regression_advanced.html#cb323-2" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender)</span>
-<span id="cb323-3"><a href="regression_advanced.html#cb323-3" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span>
-<span id="cb323-4"><a href="regression_advanced.html#cb323-4" tabindex="-1"></a></span>
-<span id="cb323-5"><a href="regression_advanced.html#cb323-5" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2, reg_res3),</span>
-<span id="cb323-6"><a href="regression_advanced.html#cb323-6" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb323-7"><a href="regression_advanced.html#cb323-7" tabindex="-1"></a>         <span class="at">fmt =</span> <span class="dv">4</span>,</span>
-<span id="cb323-8"><a href="regression_advanced.html#cb323-8" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;numeracy&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア&quot;</span>,</span>
-<span id="cb323-9"><a href="regression_advanced.html#cb323-9" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb323-10"><a href="regression_advanced.html#cb323-10" tabindex="-1"></a>                      <span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
-<span id="cb323-11"><a href="regression_advanced.html#cb323-11" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
-<span id="cb323-12"><a href="regression_advanced.html#cb323-12" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
-<span id="cb323-13"><a href="regression_advanced.html#cb323-13" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
-<span id="cb323-14"><a href="regression_advanced.html#cb323-14" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>), </span>
-<span id="cb323-15"><a href="regression_advanced.html#cb323-15" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
-<div id="wjkbszlqxn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wjkbszlqxn table {
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="regression_advanced.html#cb317-1" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy)</span>
+<span id="cb317-2"><a href="regression_advanced.html#cb317-2" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender)</span>
+<span id="cb317-3"><a href="regression_advanced.html#cb317-3" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span>
+<span id="cb317-4"><a href="regression_advanced.html#cb317-4" tabindex="-1"></a></span>
+<span id="cb317-5"><a href="regression_advanced.html#cb317-5" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2, reg_res3),</span>
+<span id="cb317-6"><a href="regression_advanced.html#cb317-6" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb317-7"><a href="regression_advanced.html#cb317-7" tabindex="-1"></a>         <span class="at">fmt =</span> <span class="dv">4</span>,</span>
+<span id="cb317-8"><a href="regression_advanced.html#cb317-8" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;numeracy&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア&quot;</span>,</span>
+<span id="cb317-9"><a href="regression_advanced.html#cb317-9" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb317-10"><a href="regression_advanced.html#cb317-10" tabindex="-1"></a>                      <span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
+<span id="cb317-11"><a href="regression_advanced.html#cb317-11" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
+<span id="cb317-12"><a href="regression_advanced.html#cb317-12" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
+<span id="cb317-13"><a href="regression_advanced.html#cb317-13" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
+<span id="cb317-14"><a href="regression_advanced.html#cb317-14" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>), </span>
+<span id="cb317-15"><a href="regression_advanced.html#cb317-15" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
+<div id="mzuqmymwva" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mzuqmymwva table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wjkbszlqxn thead, #wjkbszlqxn tbody, #wjkbszlqxn tfoot, #wjkbszlqxn tr, #wjkbszlqxn td, #wjkbszlqxn th {
+#mzuqmymwva thead, #mzuqmymwva tbody, #mzuqmymwva tfoot, #mzuqmymwva tr, #mzuqmymwva td, #mzuqmymwva th {
   border-style: none;
 }
 
-#wjkbszlqxn p {
+#mzuqmymwva p {
   margin: 0;
   padding: 0;
 }
 
-#wjkbszlqxn .gt_table {
+#mzuqmymwva .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -669,12 +670,12 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-left-color: #D3D3D3;
 }
 
-#wjkbszlqxn .gt_caption {
+#mzuqmymwva .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wjkbszlqxn .gt_title {
+#mzuqmymwva .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -686,7 +687,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-width: 0;
 }
 
-#wjkbszlqxn .gt_subtitle {
+#mzuqmymwva .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -698,7 +699,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-width: 0;
 }
 
-#wjkbszlqxn .gt_heading {
+#mzuqmymwva .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -710,13 +711,13 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#wjkbszlqxn .gt_bottom_border {
+#mzuqmymwva .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wjkbszlqxn .gt_col_headings {
+#mzuqmymwva .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -731,7 +732,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#wjkbszlqxn .gt_col_heading {
+#mzuqmymwva .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -751,7 +752,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#wjkbszlqxn .gt_column_spanner_outer {
+#mzuqmymwva .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -763,15 +764,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 4px;
 }
 
-#wjkbszlqxn .gt_column_spanner_outer:first-child {
+#mzuqmymwva .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wjkbszlqxn .gt_column_spanner_outer:last-child {
+#mzuqmymwva .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wjkbszlqxn .gt_column_spanner {
+#mzuqmymwva .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -783,11 +784,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   width: 100%;
 }
 
-#wjkbszlqxn .gt_spanner_row {
+#mzuqmymwva .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wjkbszlqxn .gt_group_heading {
+#mzuqmymwva .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -813,7 +814,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   text-align: left;
 }
 
-#wjkbszlqxn .gt_empty_group_heading {
+#mzuqmymwva .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -828,15 +829,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: middle;
 }
 
-#wjkbszlqxn .gt_from_md > :first-child {
+#mzuqmymwva .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wjkbszlqxn .gt_from_md > :last-child {
+#mzuqmymwva .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wjkbszlqxn .gt_row {
+#mzuqmymwva .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -855,7 +856,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#wjkbszlqxn .gt_stub {
+#mzuqmymwva .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -868,7 +869,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#wjkbszlqxn .gt_stub_row_group {
+#mzuqmymwva .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -882,15 +883,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: top;
 }
 
-#wjkbszlqxn .gt_row_group_first td {
+#mzuqmymwva .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wjkbszlqxn .gt_row_group_first th {
+#mzuqmymwva .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wjkbszlqxn .gt_summary_row {
+#mzuqmymwva .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -900,16 +901,16 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#wjkbszlqxn .gt_first_summary_row {
+#mzuqmymwva .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wjkbszlqxn .gt_first_summary_row.thick {
+#mzuqmymwva .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wjkbszlqxn .gt_last_summary_row {
+#mzuqmymwva .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -919,7 +920,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#wjkbszlqxn .gt_grand_summary_row {
+#mzuqmymwva .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -929,7 +930,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#wjkbszlqxn .gt_first_grand_summary_row {
+#mzuqmymwva .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -939,7 +940,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-color: #D3D3D3;
 }
 
-#wjkbszlqxn .gt_last_grand_summary_row_top {
+#mzuqmymwva .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -949,11 +950,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#wjkbszlqxn .gt_striped {
+#mzuqmymwva .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wjkbszlqxn .gt_table_body {
+#mzuqmymwva .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -962,7 +963,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#wjkbszlqxn .gt_footnotes {
+#mzuqmymwva .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -976,7 +977,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#wjkbszlqxn .gt_footnote {
+#mzuqmymwva .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -985,7 +986,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#wjkbszlqxn .gt_sourcenotes {
+#mzuqmymwva .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -999,7 +1000,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#wjkbszlqxn .gt_sourcenote {
+#mzuqmymwva .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1007,63 +1008,63 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#wjkbszlqxn .gt_left {
+#mzuqmymwva .gt_left {
   text-align: left;
 }
 
-#wjkbszlqxn .gt_center {
+#mzuqmymwva .gt_center {
   text-align: center;
 }
 
-#wjkbszlqxn .gt_right {
+#mzuqmymwva .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wjkbszlqxn .gt_font_normal {
+#mzuqmymwva .gt_font_normal {
   font-weight: normal;
 }
 
-#wjkbszlqxn .gt_font_bold {
+#mzuqmymwva .gt_font_bold {
   font-weight: bold;
 }
 
-#wjkbszlqxn .gt_font_italic {
+#mzuqmymwva .gt_font_italic {
   font-style: italic;
 }
 
-#wjkbszlqxn .gt_super {
+#mzuqmymwva .gt_super {
   font-size: 65%;
 }
 
-#wjkbszlqxn .gt_footnote_marks {
+#mzuqmymwva .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wjkbszlqxn .gt_asterisk {
+#mzuqmymwva .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wjkbszlqxn .gt_indent_1 {
+#mzuqmymwva .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wjkbszlqxn .gt_indent_2 {
+#mzuqmymwva .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wjkbszlqxn .gt_indent_3 {
+#mzuqmymwva .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wjkbszlqxn .gt_indent_4 {
+#mzuqmymwva .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wjkbszlqxn .gt_indent_5 {
+#mzuqmymwva .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1161,40 +1162,40 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <h2><span class="header-section-number">8.3</span> 媒介分析／要因分解<a href="regression_advanced.html#媒介分析要因分解" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>女性は男性と比べて賃金が低い（男女間賃金格差がある）のはなぜなのかを知りたいとする。たとえばその原因には、(1) 女性が男性よりも教育水準（学歴）が低い、(2) 女性が男性よりも数的思考力スコアが低い、ということがありえるだろう。このような原因を調べるというときにも、重回帰分析を活用することができる。</p>
 <p>性別をX、賃金をY、学歴および数的思考力スコアをMとすると、ここでのアイデアは次のような図に表すことができる。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-234-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-232-1.png" width="672" /></p>
 <p>性別が賃金に与える効果は、(1) 女性の学歴や数的思考力スコアが低く、したがって賃金も低い（X → M → Y）という部分と、(2) 学歴や数的思考力スコアを一定としてもなお女性のほうが賃金が低い（X → Y | M）という部分とに分けることができる。このようにして、XとYの中間にある要因（<strong>媒介要因 mediator</strong>）を考えることでグループ間の差や独立変数の効果を分けていくことを指して、<strong>媒介分析 mediation analysis</strong>や<strong>要因分解decomposition</strong>などという。</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="regression_advanced.html#cb324-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb324-2"><a href="regression_advanced.html#cb324-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">female_d =</span> <span class="fu">if_else</span>(gender <span class="sc">==</span> <span class="st">&quot;女性&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb324-3"><a href="regression_advanced.html#cb324-3" tabindex="-1"></a></span>
-<span id="cb324-4"><a href="regression_advanced.html#cb324-4" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> female_d)</span>
-<span id="cb324-5"><a href="regression_advanced.html#cb324-5" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> female_d <span class="sc">+</span> educ <span class="sc">+</span> numeracy)</span>
-<span id="cb324-6"><a href="regression_advanced.html#cb324-6" tabindex="-1"></a></span>
-<span id="cb324-7"><a href="regression_advanced.html#cb324-7" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
-<span id="cb324-8"><a href="regression_advanced.html#cb324-8" tabindex="-1"></a>                  <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb324-9"><a href="regression_advanced.html#cb324-9" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;female_d&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性（vs. 男性）&quot;</span>,</span>
-<span id="cb324-10"><a href="regression_advanced.html#cb324-10" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
-<span id="cb324-11"><a href="regression_advanced.html#cb324-11" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
-<span id="cb324-12"><a href="regression_advanced.html#cb324-12" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
-<span id="cb324-13"><a href="regression_advanced.html#cb324-13" tabindex="-1"></a>                      <span class="st">&quot;numeracy&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア&quot;</span>,</span>
-<span id="cb324-14"><a href="regression_advanced.html#cb324-14" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>), </span>
-<span id="cb324-15"><a href="regression_advanced.html#cb324-15" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
-<div id="kdzdyhpbca" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#kdzdyhpbca table {
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="regression_advanced.html#cb318-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb318-2"><a href="regression_advanced.html#cb318-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">female_d =</span> <span class="fu">if_else</span>(gender <span class="sc">==</span> <span class="st">&quot;女性&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb318-3"><a href="regression_advanced.html#cb318-3" tabindex="-1"></a></span>
+<span id="cb318-4"><a href="regression_advanced.html#cb318-4" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> female_d)</span>
+<span id="cb318-5"><a href="regression_advanced.html#cb318-5" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> female_d <span class="sc">+</span> educ <span class="sc">+</span> numeracy)</span>
+<span id="cb318-6"><a href="regression_advanced.html#cb318-6" tabindex="-1"></a></span>
+<span id="cb318-7"><a href="regression_advanced.html#cb318-7" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
+<span id="cb318-8"><a href="regression_advanced.html#cb318-8" tabindex="-1"></a>                  <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb318-9"><a href="regression_advanced.html#cb318-9" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;female_d&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性（vs. 男性）&quot;</span>,</span>
+<span id="cb318-10"><a href="regression_advanced.html#cb318-10" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
+<span id="cb318-11"><a href="regression_advanced.html#cb318-11" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
+<span id="cb318-12"><a href="regression_advanced.html#cb318-12" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
+<span id="cb318-13"><a href="regression_advanced.html#cb318-13" tabindex="-1"></a>                      <span class="st">&quot;numeracy&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア&quot;</span>,</span>
+<span id="cb318-14"><a href="regression_advanced.html#cb318-14" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>), </span>
+<span id="cb318-15"><a href="regression_advanced.html#cb318-15" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
+<div id="afosnxkgki" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#afosnxkgki table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#kdzdyhpbca thead, #kdzdyhpbca tbody, #kdzdyhpbca tfoot, #kdzdyhpbca tr, #kdzdyhpbca td, #kdzdyhpbca th {
+#afosnxkgki thead, #afosnxkgki tbody, #afosnxkgki tfoot, #afosnxkgki tr, #afosnxkgki td, #afosnxkgki th {
   border-style: none;
 }
 
-#kdzdyhpbca p {
+#afosnxkgki p {
   margin: 0;
   padding: 0;
 }
 
-#kdzdyhpbca .gt_table {
+#afosnxkgki .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1220,12 +1221,12 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-left-color: #D3D3D3;
 }
 
-#kdzdyhpbca .gt_caption {
+#afosnxkgki .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#kdzdyhpbca .gt_title {
+#afosnxkgki .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1237,7 +1238,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-width: 0;
 }
 
-#kdzdyhpbca .gt_subtitle {
+#afosnxkgki .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1249,7 +1250,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-width: 0;
 }
 
-#kdzdyhpbca .gt_heading {
+#afosnxkgki .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1261,13 +1262,13 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#kdzdyhpbca .gt_bottom_border {
+#afosnxkgki .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#kdzdyhpbca .gt_col_headings {
+#afosnxkgki .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1282,7 +1283,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#kdzdyhpbca .gt_col_heading {
+#afosnxkgki .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1302,7 +1303,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#kdzdyhpbca .gt_column_spanner_outer {
+#afosnxkgki .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1314,15 +1315,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 4px;
 }
 
-#kdzdyhpbca .gt_column_spanner_outer:first-child {
+#afosnxkgki .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#kdzdyhpbca .gt_column_spanner_outer:last-child {
+#afosnxkgki .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#kdzdyhpbca .gt_column_spanner {
+#afosnxkgki .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1334,11 +1335,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   width: 100%;
 }
 
-#kdzdyhpbca .gt_spanner_row {
+#afosnxkgki .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#kdzdyhpbca .gt_group_heading {
+#afosnxkgki .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1364,7 +1365,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   text-align: left;
 }
 
-#kdzdyhpbca .gt_empty_group_heading {
+#afosnxkgki .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1379,15 +1380,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: middle;
 }
 
-#kdzdyhpbca .gt_from_md > :first-child {
+#afosnxkgki .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#kdzdyhpbca .gt_from_md > :last-child {
+#afosnxkgki .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#kdzdyhpbca .gt_row {
+#afosnxkgki .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1406,7 +1407,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#kdzdyhpbca .gt_stub {
+#afosnxkgki .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1419,7 +1420,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#kdzdyhpbca .gt_stub_row_group {
+#afosnxkgki .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1433,15 +1434,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: top;
 }
 
-#kdzdyhpbca .gt_row_group_first td {
+#afosnxkgki .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#kdzdyhpbca .gt_row_group_first th {
+#afosnxkgki .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#kdzdyhpbca .gt_summary_row {
+#afosnxkgki .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1451,16 +1452,16 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#kdzdyhpbca .gt_first_summary_row {
+#afosnxkgki .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#kdzdyhpbca .gt_first_summary_row.thick {
+#afosnxkgki .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#kdzdyhpbca .gt_last_summary_row {
+#afosnxkgki .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1470,7 +1471,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#kdzdyhpbca .gt_grand_summary_row {
+#afosnxkgki .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1480,7 +1481,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#kdzdyhpbca .gt_first_grand_summary_row {
+#afosnxkgki .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1490,7 +1491,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-color: #D3D3D3;
 }
 
-#kdzdyhpbca .gt_last_grand_summary_row_top {
+#afosnxkgki .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1500,11 +1501,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#kdzdyhpbca .gt_striped {
+#afosnxkgki .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#kdzdyhpbca .gt_table_body {
+#afosnxkgki .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1513,7 +1514,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#kdzdyhpbca .gt_footnotes {
+#afosnxkgki .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1527,7 +1528,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#kdzdyhpbca .gt_footnote {
+#afosnxkgki .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1536,7 +1537,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#kdzdyhpbca .gt_sourcenotes {
+#afosnxkgki .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1550,7 +1551,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#kdzdyhpbca .gt_sourcenote {
+#afosnxkgki .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1558,63 +1559,63 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#kdzdyhpbca .gt_left {
+#afosnxkgki .gt_left {
   text-align: left;
 }
 
-#kdzdyhpbca .gt_center {
+#afosnxkgki .gt_center {
   text-align: center;
 }
 
-#kdzdyhpbca .gt_right {
+#afosnxkgki .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#kdzdyhpbca .gt_font_normal {
+#afosnxkgki .gt_font_normal {
   font-weight: normal;
 }
 
-#kdzdyhpbca .gt_font_bold {
+#afosnxkgki .gt_font_bold {
   font-weight: bold;
 }
 
-#kdzdyhpbca .gt_font_italic {
+#afosnxkgki .gt_font_italic {
   font-style: italic;
 }
 
-#kdzdyhpbca .gt_super {
+#afosnxkgki .gt_super {
   font-size: 65%;
 }
 
-#kdzdyhpbca .gt_footnote_marks {
+#afosnxkgki .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#kdzdyhpbca .gt_asterisk {
+#afosnxkgki .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#kdzdyhpbca .gt_indent_1 {
+#afosnxkgki .gt_indent_1 {
   text-indent: 5px;
 }
 
-#kdzdyhpbca .gt_indent_2 {
+#afosnxkgki .gt_indent_2 {
   text-indent: 10px;
 }
 
-#kdzdyhpbca .gt_indent_3 {
+#afosnxkgki .gt_indent_3 {
   text-indent: 15px;
 }
 
-#kdzdyhpbca .gt_indent_4 {
+#afosnxkgki .gt_indent_4 {
   text-indent: 20px;
 }
 
-#kdzdyhpbca .gt_indent_5 {
+#afosnxkgki .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1688,27 +1689,27 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <div id="交絡と媒介" class="section level3 hasAnchor" number="8.4.1">
 <h3><span class="header-section-number">8.4.1</span> 交絡と媒介<a href="regression_advanced.html#交絡と媒介" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>実際の論文では、交絡要因の統制と媒介分析の両方を考慮しながら分析されることが多い。すなわち、次のような図になる。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-237-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-235-1.png" width="672" /></p>
 <p>たとえば、学歴が高いと賃金が高い（X → Y）のはなぜなのか知りたいとする。その原因の1つとして、学歴が高いとよりスキルレベルが高い（賃金の高い）職業につくことができるから（X → M → Y）、ということが考えられる。実際、学歴別に職業の分布を比べてみると、学歴が高いほど管理職や専門職といったスキルレベルの高い職業に就いている傾向があることがわかる。</p>
-<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="regression_advanced.html#cb325-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb325-2"><a href="regression_advanced.html#cb325-2" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(educ, occupation, <span class="at">percent =</span> <span class="st">&quot;row&quot;</span>)</span></code></pre></div>
-<div id="fjvznxmmfu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fjvznxmmfu table {
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="regression_advanced.html#cb319-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb319-2"><a href="regression_advanced.html#cb319-2" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(educ, occupation, <span class="at">percent =</span> <span class="st">&quot;row&quot;</span>)</span></code></pre></div>
+<div id="wzqwohzimw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wzqwohzimw table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fjvznxmmfu thead, #fjvznxmmfu tbody, #fjvznxmmfu tfoot, #fjvznxmmfu tr, #fjvznxmmfu td, #fjvznxmmfu th {
+#wzqwohzimw thead, #wzqwohzimw tbody, #wzqwohzimw tfoot, #wzqwohzimw tr, #wzqwohzimw td, #wzqwohzimw th {
   border-style: none;
 }
 
-#fjvznxmmfu p {
+#wzqwohzimw p {
   margin: 0;
   padding: 0;
 }
 
-#fjvznxmmfu .gt_table {
+#wzqwohzimw .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1734,12 +1735,12 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-left-color: #D3D3D3;
 }
 
-#fjvznxmmfu .gt_caption {
+#wzqwohzimw .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fjvznxmmfu .gt_title {
+#wzqwohzimw .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1751,7 +1752,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-width: 0;
 }
 
-#fjvznxmmfu .gt_subtitle {
+#wzqwohzimw .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1763,7 +1764,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-width: 0;
 }
 
-#fjvznxmmfu .gt_heading {
+#wzqwohzimw .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1775,13 +1776,13 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#fjvznxmmfu .gt_bottom_border {
+#wzqwohzimw .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fjvznxmmfu .gt_col_headings {
+#wzqwohzimw .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1796,7 +1797,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#fjvznxmmfu .gt_col_heading {
+#wzqwohzimw .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1816,7 +1817,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#fjvznxmmfu .gt_column_spanner_outer {
+#wzqwohzimw .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1828,15 +1829,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 4px;
 }
 
-#fjvznxmmfu .gt_column_spanner_outer:first-child {
+#wzqwohzimw .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fjvznxmmfu .gt_column_spanner_outer:last-child {
+#wzqwohzimw .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fjvznxmmfu .gt_column_spanner {
+#wzqwohzimw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1848,11 +1849,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   width: 100%;
 }
 
-#fjvznxmmfu .gt_spanner_row {
+#wzqwohzimw .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fjvznxmmfu .gt_group_heading {
+#wzqwohzimw .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1878,7 +1879,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   text-align: left;
 }
 
-#fjvznxmmfu .gt_empty_group_heading {
+#wzqwohzimw .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1893,15 +1894,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: middle;
 }
 
-#fjvznxmmfu .gt_from_md > :first-child {
+#wzqwohzimw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fjvznxmmfu .gt_from_md > :last-child {
+#wzqwohzimw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fjvznxmmfu .gt_row {
+#wzqwohzimw .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1920,7 +1921,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#fjvznxmmfu .gt_stub {
+#wzqwohzimw .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1933,7 +1934,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#fjvznxmmfu .gt_stub_row_group {
+#wzqwohzimw .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1947,15 +1948,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: top;
 }
 
-#fjvznxmmfu .gt_row_group_first td {
+#wzqwohzimw .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fjvznxmmfu .gt_row_group_first th {
+#wzqwohzimw .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fjvznxmmfu .gt_summary_row {
+#wzqwohzimw .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1965,16 +1966,16 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#fjvznxmmfu .gt_first_summary_row {
+#wzqwohzimw .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fjvznxmmfu .gt_first_summary_row.thick {
+#wzqwohzimw .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fjvznxmmfu .gt_last_summary_row {
+#wzqwohzimw .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1984,7 +1985,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#fjvznxmmfu .gt_grand_summary_row {
+#wzqwohzimw .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1994,7 +1995,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#fjvznxmmfu .gt_first_grand_summary_row {
+#wzqwohzimw .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2004,7 +2005,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-color: #D3D3D3;
 }
 
-#fjvznxmmfu .gt_last_grand_summary_row_top {
+#wzqwohzimw .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2014,11 +2015,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#fjvznxmmfu .gt_striped {
+#wzqwohzimw .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fjvznxmmfu .gt_table_body {
+#wzqwohzimw .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2027,7 +2028,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#fjvznxmmfu .gt_footnotes {
+#wzqwohzimw .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2041,7 +2042,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#fjvznxmmfu .gt_footnote {
+#wzqwohzimw .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2050,7 +2051,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#fjvznxmmfu .gt_sourcenotes {
+#wzqwohzimw .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2064,7 +2065,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#fjvznxmmfu .gt_sourcenote {
+#wzqwohzimw .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2072,63 +2073,63 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#fjvznxmmfu .gt_left {
+#wzqwohzimw .gt_left {
   text-align: left;
 }
 
-#fjvznxmmfu .gt_center {
+#wzqwohzimw .gt_center {
   text-align: center;
 }
 
-#fjvznxmmfu .gt_right {
+#wzqwohzimw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fjvznxmmfu .gt_font_normal {
+#wzqwohzimw .gt_font_normal {
   font-weight: normal;
 }
 
-#fjvznxmmfu .gt_font_bold {
+#wzqwohzimw .gt_font_bold {
   font-weight: bold;
 }
 
-#fjvznxmmfu .gt_font_italic {
+#wzqwohzimw .gt_font_italic {
   font-style: italic;
 }
 
-#fjvznxmmfu .gt_super {
+#wzqwohzimw .gt_super {
   font-size: 65%;
 }
 
-#fjvznxmmfu .gt_footnote_marks {
+#wzqwohzimw .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fjvznxmmfu .gt_asterisk {
+#wzqwohzimw .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fjvznxmmfu .gt_indent_1 {
+#wzqwohzimw .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fjvznxmmfu .gt_indent_2 {
+#wzqwohzimw .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fjvznxmmfu .gt_indent_3 {
+#wzqwohzimw .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fjvznxmmfu .gt_indent_4 {
+#wzqwohzimw .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fjvznxmmfu .gt_indent_5 {
+#wzqwohzimw .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -2228,44 +2229,44 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 </div>
 <p>先に確認したように、学歴と賃金の間には性別や年齢といった交絡要因が存在する（Z → X, Z → Y）。なので、あらかじめこれらを統制しておいたうえで、学歴による賃金の差が職業の違いによってどの程度説明されるのかというのをみる必要がある。</p>
 <p>実際の分析結果は次のようになる。賃金については実額よりも対数を取った値のほうがよく使われるので、従属変数は対数賃金とする。また賃金を従属変数とする回帰分析の場合、年齢の2乗も考慮することが多いので、2乗項についても投入しよう。</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="regression_advanced.html#cb326-1" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb326-2"><a href="regression_advanced.html#cb326-2" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> occupation)</span>
-<span id="cb326-3"><a href="regression_advanced.html#cb326-3" tabindex="-1"></a></span>
-<span id="cb326-4"><a href="regression_advanced.html#cb326-4" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
-<span id="cb326-5"><a href="regression_advanced.html#cb326-5" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb326-6"><a href="regression_advanced.html#cb326-6" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
-<span id="cb326-7"><a href="regression_advanced.html#cb326-7" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
-<span id="cb326-8"><a href="regression_advanced.html#cb326-8" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
-<span id="cb326-9"><a href="regression_advanced.html#cb326-9" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
-<span id="cb326-10"><a href="regression_advanced.html#cb326-10" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb326-11"><a href="regression_advanced.html#cb326-11" tabindex="-1"></a>                      <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
-<span id="cb326-12"><a href="regression_advanced.html#cb326-12" tabindex="-1"></a>                      <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb326-13"><a href="regression_advanced.html#cb326-13" tabindex="-1"></a>                      <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb326-14"><a href="regression_advanced.html#cb326-14" tabindex="-1"></a>                      <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
-<span id="cb326-15"><a href="regression_advanced.html#cb326-15" tabindex="-1"></a>                      <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
-<span id="cb326-16"><a href="regression_advanced.html#cb326-16" tabindex="-1"></a>                      <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
-<span id="cb326-17"><a href="regression_advanced.html#cb326-17" tabindex="-1"></a>                      <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
-<span id="cb326-18"><a href="regression_advanced.html#cb326-18" tabindex="-1"></a>                      <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
-<span id="cb326-19"><a href="regression_advanced.html#cb326-19" tabindex="-1"></a>                      <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>,</span>
-<span id="cb326-20"><a href="regression_advanced.html#cb326-20" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>),</span>
-<span id="cb326-21"><a href="regression_advanced.html#cb326-21" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
-<div id="zdahkwjhfr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zdahkwjhfr table {
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="regression_advanced.html#cb320-1" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb320-2"><a href="regression_advanced.html#cb320-2" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> occupation)</span>
+<span id="cb320-3"><a href="regression_advanced.html#cb320-3" tabindex="-1"></a></span>
+<span id="cb320-4"><a href="regression_advanced.html#cb320-4" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
+<span id="cb320-5"><a href="regression_advanced.html#cb320-5" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb320-6"><a href="regression_advanced.html#cb320-6" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
+<span id="cb320-7"><a href="regression_advanced.html#cb320-7" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
+<span id="cb320-8"><a href="regression_advanced.html#cb320-8" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
+<span id="cb320-9"><a href="regression_advanced.html#cb320-9" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
+<span id="cb320-10"><a href="regression_advanced.html#cb320-10" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb320-11"><a href="regression_advanced.html#cb320-11" tabindex="-1"></a>                      <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
+<span id="cb320-12"><a href="regression_advanced.html#cb320-12" tabindex="-1"></a>                      <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb320-13"><a href="regression_advanced.html#cb320-13" tabindex="-1"></a>                      <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb320-14"><a href="regression_advanced.html#cb320-14" tabindex="-1"></a>                      <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
+<span id="cb320-15"><a href="regression_advanced.html#cb320-15" tabindex="-1"></a>                      <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
+<span id="cb320-16"><a href="regression_advanced.html#cb320-16" tabindex="-1"></a>                      <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
+<span id="cb320-17"><a href="regression_advanced.html#cb320-17" tabindex="-1"></a>                      <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
+<span id="cb320-18"><a href="regression_advanced.html#cb320-18" tabindex="-1"></a>                      <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
+<span id="cb320-19"><a href="regression_advanced.html#cb320-19" tabindex="-1"></a>                      <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>,</span>
+<span id="cb320-20"><a href="regression_advanced.html#cb320-20" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>),</span>
+<span id="cb320-21"><a href="regression_advanced.html#cb320-21" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
+<div id="nuqyzvrhgo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nuqyzvrhgo table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zdahkwjhfr thead, #zdahkwjhfr tbody, #zdahkwjhfr tfoot, #zdahkwjhfr tr, #zdahkwjhfr td, #zdahkwjhfr th {
+#nuqyzvrhgo thead, #nuqyzvrhgo tbody, #nuqyzvrhgo tfoot, #nuqyzvrhgo tr, #nuqyzvrhgo td, #nuqyzvrhgo th {
   border-style: none;
 }
 
-#zdahkwjhfr p {
+#nuqyzvrhgo p {
   margin: 0;
   padding: 0;
 }
 
-#zdahkwjhfr .gt_table {
+#nuqyzvrhgo .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2291,12 +2292,12 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-left-color: #D3D3D3;
 }
 
-#zdahkwjhfr .gt_caption {
+#nuqyzvrhgo .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zdahkwjhfr .gt_title {
+#nuqyzvrhgo .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2308,7 +2309,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-width: 0;
 }
 
-#zdahkwjhfr .gt_subtitle {
+#nuqyzvrhgo .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2320,7 +2321,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-width: 0;
 }
 
-#zdahkwjhfr .gt_heading {
+#nuqyzvrhgo .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2332,13 +2333,13 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#zdahkwjhfr .gt_bottom_border {
+#nuqyzvrhgo .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zdahkwjhfr .gt_col_headings {
+#nuqyzvrhgo .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2353,7 +2354,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#zdahkwjhfr .gt_col_heading {
+#nuqyzvrhgo .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2373,7 +2374,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#zdahkwjhfr .gt_column_spanner_outer {
+#nuqyzvrhgo .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2385,15 +2386,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 4px;
 }
 
-#zdahkwjhfr .gt_column_spanner_outer:first-child {
+#nuqyzvrhgo .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zdahkwjhfr .gt_column_spanner_outer:last-child {
+#nuqyzvrhgo .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zdahkwjhfr .gt_column_spanner {
+#nuqyzvrhgo .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2405,11 +2406,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   width: 100%;
 }
 
-#zdahkwjhfr .gt_spanner_row {
+#nuqyzvrhgo .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zdahkwjhfr .gt_group_heading {
+#nuqyzvrhgo .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2435,7 +2436,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   text-align: left;
 }
 
-#zdahkwjhfr .gt_empty_group_heading {
+#nuqyzvrhgo .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2450,15 +2451,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: middle;
 }
 
-#zdahkwjhfr .gt_from_md > :first-child {
+#nuqyzvrhgo .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zdahkwjhfr .gt_from_md > :last-child {
+#nuqyzvrhgo .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zdahkwjhfr .gt_row {
+#nuqyzvrhgo .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2477,7 +2478,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#zdahkwjhfr .gt_stub {
+#nuqyzvrhgo .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2490,7 +2491,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#zdahkwjhfr .gt_stub_row_group {
+#nuqyzvrhgo .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2504,15 +2505,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: top;
 }
 
-#zdahkwjhfr .gt_row_group_first td {
+#nuqyzvrhgo .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zdahkwjhfr .gt_row_group_first th {
+#nuqyzvrhgo .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zdahkwjhfr .gt_summary_row {
+#nuqyzvrhgo .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2522,16 +2523,16 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#zdahkwjhfr .gt_first_summary_row {
+#nuqyzvrhgo .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zdahkwjhfr .gt_first_summary_row.thick {
+#nuqyzvrhgo .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zdahkwjhfr .gt_last_summary_row {
+#nuqyzvrhgo .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2541,7 +2542,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#zdahkwjhfr .gt_grand_summary_row {
+#nuqyzvrhgo .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2551,7 +2552,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#zdahkwjhfr .gt_first_grand_summary_row {
+#nuqyzvrhgo .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2561,7 +2562,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-color: #D3D3D3;
 }
 
-#zdahkwjhfr .gt_last_grand_summary_row_top {
+#nuqyzvrhgo .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2571,11 +2572,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#zdahkwjhfr .gt_striped {
+#nuqyzvrhgo .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zdahkwjhfr .gt_table_body {
+#nuqyzvrhgo .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2584,7 +2585,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#zdahkwjhfr .gt_footnotes {
+#nuqyzvrhgo .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2598,7 +2599,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#zdahkwjhfr .gt_footnote {
+#nuqyzvrhgo .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2607,7 +2608,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#zdahkwjhfr .gt_sourcenotes {
+#nuqyzvrhgo .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2621,7 +2622,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#zdahkwjhfr .gt_sourcenote {
+#nuqyzvrhgo .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2629,63 +2630,63 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#zdahkwjhfr .gt_left {
+#nuqyzvrhgo .gt_left {
   text-align: left;
 }
 
-#zdahkwjhfr .gt_center {
+#nuqyzvrhgo .gt_center {
   text-align: center;
 }
 
-#zdahkwjhfr .gt_right {
+#nuqyzvrhgo .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zdahkwjhfr .gt_font_normal {
+#nuqyzvrhgo .gt_font_normal {
   font-weight: normal;
 }
 
-#zdahkwjhfr .gt_font_bold {
+#nuqyzvrhgo .gt_font_bold {
   font-weight: bold;
 }
 
-#zdahkwjhfr .gt_font_italic {
+#nuqyzvrhgo .gt_font_italic {
   font-style: italic;
 }
 
-#zdahkwjhfr .gt_super {
+#nuqyzvrhgo .gt_super {
   font-size: 65%;
 }
 
-#zdahkwjhfr .gt_footnote_marks {
+#nuqyzvrhgo .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zdahkwjhfr .gt_asterisk {
+#nuqyzvrhgo .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zdahkwjhfr .gt_indent_1 {
+#nuqyzvrhgo .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zdahkwjhfr .gt_indent_2 {
+#nuqyzvrhgo .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zdahkwjhfr .gt_indent_3 {
+#nuqyzvrhgo .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zdahkwjhfr .gt_indent_4 {
+#nuqyzvrhgo .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zdahkwjhfr .gt_indent_5 {
+#nuqyzvrhgo .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -2811,11 +2812,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <h3><span class="header-section-number">8.4.2</span> 従属変数を対数変換した場合の解釈：broomパッケージの活用<a href="regression_advanced.html#従属変数を対数変換した場合の解釈broomパッケージの活用" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>従属変数を対数変換した場合は、係数の大きさが実質的にどれくらいであるのかを<span class="math inline">\(\exp(\beta)\)</span>を計算して求めるとよい。くわしくは前章の<a href="regression_basic.html#regression_basic_log">対数変換</a>を参照のこと。</p>
 <p>いろいろな方法があるが、ここでは回帰分析の結果をデータフレームにして扱いやすくするためのパッケージである<code>broom</code>パッケージを利用する方法を紹介する。まずは、<code>broom</code>パッケージを読み込もう。</p>
-<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="regression_advanced.html#cb327-1" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="regression_advanced.html#cb321-1" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
 <p><code>broom::tidy()</code>関数を実行することで、回帰分析などのモデルの主要な結果をデータフレーム形式へと変換することができる。先ほどの結果<code>reg_res2_tidy</code>をtidy形式に変換してみよう。</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="regression_advanced.html#cb328-1" tabindex="-1"></a>reg_res2_tidy <span class="ot">&lt;-</span> reg_res2 <span class="sc">%&gt;%</span> </span>
-<span id="cb328-2"><a href="regression_advanced.html#cb328-2" tabindex="-1"></a>  <span class="fu">tidy</span>()</span>
-<span id="cb328-3"><a href="regression_advanced.html#cb328-3" tabindex="-1"></a>reg_res2_tidy</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="regression_advanced.html#cb322-1" tabindex="-1"></a>reg_res2_tidy <span class="ot">&lt;-</span> reg_res2 <span class="sc">%&gt;%</span> </span>
+<span id="cb322-2"><a href="regression_advanced.html#cb322-2" tabindex="-1"></a>  <span class="fu">tidy</span>()</span>
+<span id="cb322-3"><a href="regression_advanced.html#cb322-3" tabindex="-1"></a>reg_res2_tidy</span></code></pre></div>
 <pre><code>## # A tibble: 15 × 5
 ##    term                            estimate std.error statistic   p.value
 ##    &lt;chr&gt;                              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
@@ -2835,8 +2836,8 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 ## 14 occupation設備・機械運転・組立 -0.609    0.0430       -14.2  6.46e- 44
 ## 15 occupation単純作業             -0.745    0.0489       -15.2  2.25e- 50</code></pre>
 <p>それぞれ、<code>estimate</code>が推定された係数、<code>std.error</code>が標準誤差、<code>statistic</code>がt値、<code>p.value</code>がp値を表す。この推定結果に含まれる<code>estimate</code>という列に対して<span class="math inline">\(\exp(\beta)\)</span>を計算した新しい列を作成して、結果を表示してみよう。</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="regression_advanced.html#cb330-1" tabindex="-1"></a>reg_res2_tidy <span class="sc">%&gt;%</span> </span>
-<span id="cb330-2"><a href="regression_advanced.html#cb330-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimate_exp =</span> <span class="fu">exp</span>(estimate))</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="regression_advanced.html#cb324-1" tabindex="-1"></a>reg_res2_tidy <span class="sc">%&gt;%</span> </span>
+<span id="cb324-2"><a href="regression_advanced.html#cb324-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimate_exp =</span> <span class="fu">exp</span>(estimate))</span></code></pre></div>
 <pre><code>## # A tibble: 15 × 6
 ##    term                      estimate std.error statistic   p.value estimate_exp
 ##    &lt;chr&gt;                        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
@@ -2869,15 +2870,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <li>「男性と比較してどの程度女性の賃金が低い」と主張したい。この場合、女性が参照カテゴリになっていると、結果は「女性と比較してどの程度男性の賃金が高いか」を表すことになる。そのため、女性ではなく男性を参照カテゴリにするほうが望ましい。</li>
 </ul>
 <p>参照カテゴリを変更する場合には、カテゴリ変数の値の順序を変更するとよい。具体的には、<a href="handling.html#fct_relevel"><code>fct_relevel()</code>関数を使う</a>ことで、カテゴリ変数の値の順序を変更することができる。方法は次のとおりである。</p>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="regression_advanced.html#cb332-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb332-2"><a href="regression_advanced.html#cb332-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ =</span> <span class="fu">fct_relevel</span>(educ, <span class="st">&quot;大学大学院&quot;</span>, <span class="st">&quot;中学&quot;</span>, <span class="st">&quot;高校&quot;</span>, <span class="st">&quot;短大高専&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb332-3"><a href="regression_advanced.html#cb332-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">fct_relevel</span>(gender, <span class="st">&quot;男性&quot;</span>, <span class="st">&quot;女性&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="regression_advanced.html#cb326-1" tabindex="-1"></a>piaac_relevel <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb326-2"><a href="regression_advanced.html#cb326-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ =</span> <span class="fu">fct_relevel</span>(educ, <span class="st">&quot;大学大学院&quot;</span>, <span class="st">&quot;中学&quot;</span>, <span class="st">&quot;高校&quot;</span>, <span class="st">&quot;短大高専&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb326-3"><a href="regression_advanced.html#cb326-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">fct_relevel</span>(gender, <span class="st">&quot;男性&quot;</span>, <span class="st">&quot;女性&quot;</span>))</span></code></pre></div>
 <p>順序を変更したデータを使って再度回帰分析を実行してみると、参照カテゴリがそれぞれ「大学大学院」、「男性」となっていることがわかる。</p>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="regression_advanced.html#cb333-1" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb333-2"><a href="regression_advanced.html#cb333-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res1)</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="regression_advanced.html#cb327-1" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac_relevel, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb327-2"><a href="regression_advanced.html#cb327-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res3)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## lm(formula = logwage ~ educ + gender + age + I(age^2), data = piaac)
+## lm(formula = logwage ~ educ + gender + age + I(age^2), data = piaac_relevel)
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
@@ -2901,26 +2902,27 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 </div>
 <div id="単位の変更" class="section level3 hasAnchor" number="8.5.2">
 <h3><span class="header-section-number">8.5.2</span> 単位の変更<a href="regression_advanced.html#単位の変更" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>時給賃金wageが高いほど健康度（health, 1〜5までの値をとり、値が高いほど健康）が高いかどうかを調べたいとする。健康を従属変数、年齢と賃金を独立変数とする回帰分析を実行して、結果をみてみよう。</p>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="regression_advanced.html#cb335-1" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, health <span class="sc">~</span> wage <span class="sc">+</span> age)</span>
-<span id="cb335-2"><a href="regression_advanced.html#cb335-2" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res3), <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div id="lxtzvvwulz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#lxtzvvwulz table {
+<p>時給賃金wageが高いほど健康度（health, 1〜5までの値をとり、値が高いほど健康であることをあらわす）が高いかどうかを調べたいとする。健康を従属変数、年齢と賃金を独立変数とする回帰分析を実行して、結果をみてみよう。</p>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="regression_advanced.html#cb329-1" tabindex="-1"></a>reg_res4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, health <span class="sc">~</span> wage <span class="sc">+</span> age)</span>
+<span id="cb329-2"><a href="regression_advanced.html#cb329-2" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res4), <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb329-3"><a href="regression_advanced.html#cb329-3" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
+<div id="rvpucswoke" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#rvpucswoke table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#lxtzvvwulz thead, #lxtzvvwulz tbody, #lxtzvvwulz tfoot, #lxtzvvwulz tr, #lxtzvvwulz td, #lxtzvvwulz th {
+#rvpucswoke thead, #rvpucswoke tbody, #rvpucswoke tfoot, #rvpucswoke tr, #rvpucswoke td, #rvpucswoke th {
   border-style: none;
 }
 
-#lxtzvvwulz p {
+#rvpucswoke p {
   margin: 0;
   padding: 0;
 }
 
-#lxtzvvwulz .gt_table {
+#rvpucswoke .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2946,12 +2948,12 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-left-color: #D3D3D3;
 }
 
-#lxtzvvwulz .gt_caption {
+#rvpucswoke .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#lxtzvvwulz .gt_title {
+#rvpucswoke .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2963,7 +2965,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-width: 0;
 }
 
-#lxtzvvwulz .gt_subtitle {
+#rvpucswoke .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2975,7 +2977,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-width: 0;
 }
 
-#lxtzvvwulz .gt_heading {
+#rvpucswoke .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2987,13 +2989,13 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#lxtzvvwulz .gt_bottom_border {
+#rvpucswoke .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#lxtzvvwulz .gt_col_headings {
+#rvpucswoke .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3008,7 +3010,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#lxtzvvwulz .gt_col_heading {
+#rvpucswoke .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3028,7 +3030,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#lxtzvvwulz .gt_column_spanner_outer {
+#rvpucswoke .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3040,15 +3042,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 4px;
 }
 
-#lxtzvvwulz .gt_column_spanner_outer:first-child {
+#rvpucswoke .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#lxtzvvwulz .gt_column_spanner_outer:last-child {
+#rvpucswoke .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#lxtzvvwulz .gt_column_spanner {
+#rvpucswoke .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3060,11 +3062,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   width: 100%;
 }
 
-#lxtzvvwulz .gt_spanner_row {
+#rvpucswoke .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#lxtzvvwulz .gt_group_heading {
+#rvpucswoke .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3090,7 +3092,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   text-align: left;
 }
 
-#lxtzvvwulz .gt_empty_group_heading {
+#rvpucswoke .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3105,15 +3107,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: middle;
 }
 
-#lxtzvvwulz .gt_from_md > :first-child {
+#rvpucswoke .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#lxtzvvwulz .gt_from_md > :last-child {
+#rvpucswoke .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#lxtzvvwulz .gt_row {
+#rvpucswoke .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3132,7 +3134,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#lxtzvvwulz .gt_stub {
+#rvpucswoke .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3145,7 +3147,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#lxtzvvwulz .gt_stub_row_group {
+#rvpucswoke .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3159,15 +3161,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: top;
 }
 
-#lxtzvvwulz .gt_row_group_first td {
+#rvpucswoke .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#lxtzvvwulz .gt_row_group_first th {
+#rvpucswoke .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#lxtzvvwulz .gt_summary_row {
+#rvpucswoke .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3177,16 +3179,16 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#lxtzvvwulz .gt_first_summary_row {
+#rvpucswoke .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#lxtzvvwulz .gt_first_summary_row.thick {
+#rvpucswoke .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#lxtzvvwulz .gt_last_summary_row {
+#rvpucswoke .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3196,7 +3198,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#lxtzvvwulz .gt_grand_summary_row {
+#rvpucswoke .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3206,7 +3208,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#lxtzvvwulz .gt_first_grand_summary_row {
+#rvpucswoke .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3216,7 +3218,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-color: #D3D3D3;
 }
 
-#lxtzvvwulz .gt_last_grand_summary_row_top {
+#rvpucswoke .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3226,11 +3228,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#lxtzvvwulz .gt_striped {
+#rvpucswoke .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#lxtzvvwulz .gt_table_body {
+#rvpucswoke .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3239,7 +3241,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#lxtzvvwulz .gt_footnotes {
+#rvpucswoke .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3253,7 +3255,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#lxtzvvwulz .gt_footnote {
+#rvpucswoke .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3262,7 +3264,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#lxtzvvwulz .gt_sourcenotes {
+#rvpucswoke .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3276,7 +3278,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#lxtzvvwulz .gt_sourcenote {
+#rvpucswoke .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3284,63 +3286,63 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#lxtzvvwulz .gt_left {
+#rvpucswoke .gt_left {
   text-align: left;
 }
 
-#lxtzvvwulz .gt_center {
+#rvpucswoke .gt_center {
   text-align: center;
 }
 
-#lxtzvvwulz .gt_right {
+#rvpucswoke .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#lxtzvvwulz .gt_font_normal {
+#rvpucswoke .gt_font_normal {
   font-weight: normal;
 }
 
-#lxtzvvwulz .gt_font_bold {
+#rvpucswoke .gt_font_bold {
   font-weight: bold;
 }
 
-#lxtzvvwulz .gt_font_italic {
+#rvpucswoke .gt_font_italic {
   font-style: italic;
 }
 
-#lxtzvvwulz .gt_super {
+#rvpucswoke .gt_super {
   font-size: 65%;
 }
 
-#lxtzvvwulz .gt_footnote_marks {
+#rvpucswoke .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#lxtzvvwulz .gt_asterisk {
+#rvpucswoke .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#lxtzvvwulz .gt_indent_1 {
+#rvpucswoke .gt_indent_1 {
   text-indent: 5px;
 }
 
-#lxtzvvwulz .gt_indent_2 {
+#rvpucswoke .gt_indent_2 {
   text-indent: 10px;
 }
 
-#lxtzvvwulz .gt_indent_3 {
+#rvpucswoke .gt_indent_3 {
   text-indent: 15px;
 }
 
-#lxtzvvwulz .gt_indent_4 {
+#rvpucswoke .gt_indent_4 {
   text-indent: 20px;
 }
 
-#lxtzvvwulz .gt_indent_5 {
+#rvpucswoke .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -3369,18 +3371,6 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <td headers="(1)" class="gt_row gt_center">2728</td></tr>
     <tr><td headers="" class="gt_row gt_left">R2</td>
 <td headers="(1)" class="gt_row gt_center">0.040</td></tr>
-    <tr><td headers="" class="gt_row gt_left">R2 Adj.</td>
-<td headers="(1)" class="gt_row gt_center">0.039</td></tr>
-    <tr><td headers="" class="gt_row gt_left">AIC</td>
-<td headers="(1)" class="gt_row gt_center">7240.7</td></tr>
-    <tr><td headers="" class="gt_row gt_left">BIC</td>
-<td headers="(1)" class="gt_row gt_center">7264.4</td></tr>
-    <tr><td headers="" class="gt_row gt_left">Log.Lik.</td>
-<td headers="(1)" class="gt_row gt_center">-3616.361</td></tr>
-    <tr><td headers="" class="gt_row gt_left">F</td>
-<td headers="(1)" class="gt_row gt_center">56.346</td></tr>
-    <tr><td headers="" class="gt_row gt_left">RMSE</td>
-<td headers="(1)" class="gt_row gt_center">0.91</td></tr>
   </tbody>
   <tfoot class="gt_sourcenotes">
     <tr>
@@ -3392,24 +3382,25 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 </div>
 <p>賃金の係数は統計的に有意であるため、年齢を統制したうえで、賃金が高いほど健康であることがわかる。しかし、小数点第3位までが示された結果では係数が0.000となっており、これでは違いの大きさがどの程度なのか、よくわからない。</p>
 <p>この場合の対処には2つある。第1に、小数点以下の表示を増やすことである。たとえば小数点第6位まで表示する場合は、<code>fmt = 6</code>というオプションを追加する。</p>
-<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="regression_advanced.html#cb336-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res3), <span class="at">stars =</span> <span class="cn">TRUE</span>, <span class="at">fmt =</span> <span class="dv">6</span>)</span></code></pre></div>
-<div id="fguvsqhrvp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fguvsqhrvp table {
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="regression_advanced.html#cb330-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res4), <span class="at">stars =</span> <span class="cn">TRUE</span>, <span class="at">fmt =</span> <span class="dv">6</span>,</span>
+<span id="cb330-2"><a href="regression_advanced.html#cb330-2" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
+<div id="nmyjfdiwuz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nmyjfdiwuz table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fguvsqhrvp thead, #fguvsqhrvp tbody, #fguvsqhrvp tfoot, #fguvsqhrvp tr, #fguvsqhrvp td, #fguvsqhrvp th {
+#nmyjfdiwuz thead, #nmyjfdiwuz tbody, #nmyjfdiwuz tfoot, #nmyjfdiwuz tr, #nmyjfdiwuz td, #nmyjfdiwuz th {
   border-style: none;
 }
 
-#fguvsqhrvp p {
+#nmyjfdiwuz p {
   margin: 0;
   padding: 0;
 }
 
-#fguvsqhrvp .gt_table {
+#nmyjfdiwuz .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3435,12 +3426,12 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-left-color: #D3D3D3;
 }
 
-#fguvsqhrvp .gt_caption {
+#nmyjfdiwuz .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fguvsqhrvp .gt_title {
+#nmyjfdiwuz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3452,7 +3443,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-width: 0;
 }
 
-#fguvsqhrvp .gt_subtitle {
+#nmyjfdiwuz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3464,7 +3455,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-width: 0;
 }
 
-#fguvsqhrvp .gt_heading {
+#nmyjfdiwuz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3476,13 +3467,13 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#fguvsqhrvp .gt_bottom_border {
+#nmyjfdiwuz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fguvsqhrvp .gt_col_headings {
+#nmyjfdiwuz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3497,7 +3488,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#fguvsqhrvp .gt_col_heading {
+#nmyjfdiwuz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3517,7 +3508,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#fguvsqhrvp .gt_column_spanner_outer {
+#nmyjfdiwuz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3529,15 +3520,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 4px;
 }
 
-#fguvsqhrvp .gt_column_spanner_outer:first-child {
+#nmyjfdiwuz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fguvsqhrvp .gt_column_spanner_outer:last-child {
+#nmyjfdiwuz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fguvsqhrvp .gt_column_spanner {
+#nmyjfdiwuz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3549,11 +3540,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   width: 100%;
 }
 
-#fguvsqhrvp .gt_spanner_row {
+#nmyjfdiwuz .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fguvsqhrvp .gt_group_heading {
+#nmyjfdiwuz .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3579,7 +3570,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   text-align: left;
 }
 
-#fguvsqhrvp .gt_empty_group_heading {
+#nmyjfdiwuz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3594,15 +3585,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: middle;
 }
 
-#fguvsqhrvp .gt_from_md > :first-child {
+#nmyjfdiwuz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fguvsqhrvp .gt_from_md > :last-child {
+#nmyjfdiwuz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fguvsqhrvp .gt_row {
+#nmyjfdiwuz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3621,7 +3612,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#fguvsqhrvp .gt_stub {
+#nmyjfdiwuz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3634,7 +3625,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#fguvsqhrvp .gt_stub_row_group {
+#nmyjfdiwuz .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3648,15 +3639,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: top;
 }
 
-#fguvsqhrvp .gt_row_group_first td {
+#nmyjfdiwuz .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fguvsqhrvp .gt_row_group_first th {
+#nmyjfdiwuz .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fguvsqhrvp .gt_summary_row {
+#nmyjfdiwuz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3666,16 +3657,16 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#fguvsqhrvp .gt_first_summary_row {
+#nmyjfdiwuz .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fguvsqhrvp .gt_first_summary_row.thick {
+#nmyjfdiwuz .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fguvsqhrvp .gt_last_summary_row {
+#nmyjfdiwuz .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3685,7 +3676,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#fguvsqhrvp .gt_grand_summary_row {
+#nmyjfdiwuz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3695,7 +3686,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#fguvsqhrvp .gt_first_grand_summary_row {
+#nmyjfdiwuz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3705,7 +3696,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-color: #D3D3D3;
 }
 
-#fguvsqhrvp .gt_last_grand_summary_row_top {
+#nmyjfdiwuz .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3715,11 +3706,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#fguvsqhrvp .gt_striped {
+#nmyjfdiwuz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fguvsqhrvp .gt_table_body {
+#nmyjfdiwuz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3728,7 +3719,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#fguvsqhrvp .gt_footnotes {
+#nmyjfdiwuz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3742,7 +3733,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#fguvsqhrvp .gt_footnote {
+#nmyjfdiwuz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3751,7 +3742,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#fguvsqhrvp .gt_sourcenotes {
+#nmyjfdiwuz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3765,7 +3756,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#fguvsqhrvp .gt_sourcenote {
+#nmyjfdiwuz .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3773,63 +3764,63 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#fguvsqhrvp .gt_left {
+#nmyjfdiwuz .gt_left {
   text-align: left;
 }
 
-#fguvsqhrvp .gt_center {
+#nmyjfdiwuz .gt_center {
   text-align: center;
 }
 
-#fguvsqhrvp .gt_right {
+#nmyjfdiwuz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fguvsqhrvp .gt_font_normal {
+#nmyjfdiwuz .gt_font_normal {
   font-weight: normal;
 }
 
-#fguvsqhrvp .gt_font_bold {
+#nmyjfdiwuz .gt_font_bold {
   font-weight: bold;
 }
 
-#fguvsqhrvp .gt_font_italic {
+#nmyjfdiwuz .gt_font_italic {
   font-style: italic;
 }
 
-#fguvsqhrvp .gt_super {
+#nmyjfdiwuz .gt_super {
   font-size: 65%;
 }
 
-#fguvsqhrvp .gt_footnote_marks {
+#nmyjfdiwuz .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fguvsqhrvp .gt_asterisk {
+#nmyjfdiwuz .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fguvsqhrvp .gt_indent_1 {
+#nmyjfdiwuz .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fguvsqhrvp .gt_indent_2 {
+#nmyjfdiwuz .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fguvsqhrvp .gt_indent_3 {
+#nmyjfdiwuz .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fguvsqhrvp .gt_indent_4 {
+#nmyjfdiwuz .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fguvsqhrvp .gt_indent_5 {
+#nmyjfdiwuz .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -3858,18 +3849,6 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <td headers="(1)" class="gt_row gt_center">2728</td></tr>
     <tr><td headers="" class="gt_row gt_left">R2</td>
 <td headers="(1)" class="gt_row gt_center">0.040</td></tr>
-    <tr><td headers="" class="gt_row gt_left">R2 Adj.</td>
-<td headers="(1)" class="gt_row gt_center">0.039</td></tr>
-    <tr><td headers="" class="gt_row gt_left">AIC</td>
-<td headers="(1)" class="gt_row gt_center">7240.7</td></tr>
-    <tr><td headers="" class="gt_row gt_left">BIC</td>
-<td headers="(1)" class="gt_row gt_center">7264.4</td></tr>
-    <tr><td headers="" class="gt_row gt_left">Log.Lik.</td>
-<td headers="(1)" class="gt_row gt_center">-3616.361</td></tr>
-    <tr><td headers="" class="gt_row gt_left">F</td>
-<td headers="(1)" class="gt_row gt_center">56.346</td></tr>
-    <tr><td headers="" class="gt_row gt_left">RMSE</td>
-<td headers="(1)" class="gt_row gt_center">0.91</td></tr>
   </tbody>
   <tfoot class="gt_sourcenotes">
     <tr>
@@ -3881,28 +3860,29 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 </div>
 <p>値が見えるようになった。つまり、賃金が1円高いと、健康度が0.000042高いということである。</p>
 <p>しかし、桁がたくさん並んでいると結果が読みにくいし、実際上も1円単位の小さな変化にはほとんど関心がないことが多い。そこで、賃金の単位を千円に変更してみるとどうだろうか。</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="regression_advanced.html#cb337-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb337-2"><a href="regression_advanced.html#cb337-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage1000 =</span> wage <span class="sc">/</span> <span class="dv">1000</span>) <span class="co"># 1000円単位に変更した変数を作成</span></span>
-<span id="cb337-3"><a href="regression_advanced.html#cb337-3" tabindex="-1"></a></span>
-<span id="cb337-4"><a href="regression_advanced.html#cb337-4" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, health <span class="sc">~</span> wage1000 <span class="sc">+</span> age)</span>
-<span id="cb337-5"><a href="regression_advanced.html#cb337-5" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res3), <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div id="fuuybcbszl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fuuybcbszl table {
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="regression_advanced.html#cb331-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb331-2"><a href="regression_advanced.html#cb331-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage1000 =</span> wage <span class="sc">/</span> <span class="dv">1000</span>) <span class="co"># 1000円単位に変更した変数を作成</span></span>
+<span id="cb331-3"><a href="regression_advanced.html#cb331-3" tabindex="-1"></a></span>
+<span id="cb331-4"><a href="regression_advanced.html#cb331-4" tabindex="-1"></a>reg_res4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, health <span class="sc">~</span> wage1000 <span class="sc">+</span> age)</span>
+<span id="cb331-5"><a href="regression_advanced.html#cb331-5" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res4), <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb331-6"><a href="regression_advanced.html#cb331-6" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
+<div id="oyypaqqrhu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#oyypaqqrhu table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fuuybcbszl thead, #fuuybcbszl tbody, #fuuybcbszl tfoot, #fuuybcbszl tr, #fuuybcbszl td, #fuuybcbszl th {
+#oyypaqqrhu thead, #oyypaqqrhu tbody, #oyypaqqrhu tfoot, #oyypaqqrhu tr, #oyypaqqrhu td, #oyypaqqrhu th {
   border-style: none;
 }
 
-#fuuybcbszl p {
+#oyypaqqrhu p {
   margin: 0;
   padding: 0;
 }
 
-#fuuybcbszl .gt_table {
+#oyypaqqrhu .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3928,12 +3908,12 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-left-color: #D3D3D3;
 }
 
-#fuuybcbszl .gt_caption {
+#oyypaqqrhu .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fuuybcbszl .gt_title {
+#oyypaqqrhu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3945,7 +3925,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-width: 0;
 }
 
-#fuuybcbszl .gt_subtitle {
+#oyypaqqrhu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3957,7 +3937,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-width: 0;
 }
 
-#fuuybcbszl .gt_heading {
+#oyypaqqrhu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3969,13 +3949,13 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#fuuybcbszl .gt_bottom_border {
+#oyypaqqrhu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fuuybcbszl .gt_col_headings {
+#oyypaqqrhu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3990,7 +3970,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#fuuybcbszl .gt_col_heading {
+#oyypaqqrhu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4010,7 +3990,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#fuuybcbszl .gt_column_spanner_outer {
+#oyypaqqrhu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4022,15 +4002,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 4px;
 }
 
-#fuuybcbszl .gt_column_spanner_outer:first-child {
+#oyypaqqrhu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fuuybcbszl .gt_column_spanner_outer:last-child {
+#oyypaqqrhu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fuuybcbszl .gt_column_spanner {
+#oyypaqqrhu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4042,11 +4022,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   width: 100%;
 }
 
-#fuuybcbszl .gt_spanner_row {
+#oyypaqqrhu .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fuuybcbszl .gt_group_heading {
+#oyypaqqrhu .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4072,7 +4052,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   text-align: left;
 }
 
-#fuuybcbszl .gt_empty_group_heading {
+#oyypaqqrhu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4087,15 +4067,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: middle;
 }
 
-#fuuybcbszl .gt_from_md > :first-child {
+#oyypaqqrhu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fuuybcbszl .gt_from_md > :last-child {
+#oyypaqqrhu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fuuybcbszl .gt_row {
+#oyypaqqrhu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4114,7 +4094,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#fuuybcbszl .gt_stub {
+#oyypaqqrhu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4127,7 +4107,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#fuuybcbszl .gt_stub_row_group {
+#oyypaqqrhu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4141,15 +4121,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: top;
 }
 
-#fuuybcbszl .gt_row_group_first td {
+#oyypaqqrhu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fuuybcbszl .gt_row_group_first th {
+#oyypaqqrhu .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fuuybcbszl .gt_summary_row {
+#oyypaqqrhu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4159,16 +4139,16 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#fuuybcbszl .gt_first_summary_row {
+#oyypaqqrhu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fuuybcbszl .gt_first_summary_row.thick {
+#oyypaqqrhu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fuuybcbszl .gt_last_summary_row {
+#oyypaqqrhu .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4178,7 +4158,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#fuuybcbszl .gt_grand_summary_row {
+#oyypaqqrhu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4188,7 +4168,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#fuuybcbszl .gt_first_grand_summary_row {
+#oyypaqqrhu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4198,7 +4178,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-color: #D3D3D3;
 }
 
-#fuuybcbszl .gt_last_grand_summary_row_top {
+#oyypaqqrhu .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4208,11 +4188,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#fuuybcbszl .gt_striped {
+#oyypaqqrhu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fuuybcbszl .gt_table_body {
+#oyypaqqrhu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4221,7 +4201,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#fuuybcbszl .gt_footnotes {
+#oyypaqqrhu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4235,7 +4215,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#fuuybcbszl .gt_footnote {
+#oyypaqqrhu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -4244,7 +4224,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#fuuybcbszl .gt_sourcenotes {
+#oyypaqqrhu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4258,7 +4238,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#fuuybcbszl .gt_sourcenote {
+#oyypaqqrhu .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -4266,63 +4246,63 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#fuuybcbszl .gt_left {
+#oyypaqqrhu .gt_left {
   text-align: left;
 }
 
-#fuuybcbszl .gt_center {
+#oyypaqqrhu .gt_center {
   text-align: center;
 }
 
-#fuuybcbszl .gt_right {
+#oyypaqqrhu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fuuybcbszl .gt_font_normal {
+#oyypaqqrhu .gt_font_normal {
   font-weight: normal;
 }
 
-#fuuybcbszl .gt_font_bold {
+#oyypaqqrhu .gt_font_bold {
   font-weight: bold;
 }
 
-#fuuybcbszl .gt_font_italic {
+#oyypaqqrhu .gt_font_italic {
   font-style: italic;
 }
 
-#fuuybcbszl .gt_super {
+#oyypaqqrhu .gt_super {
   font-size: 65%;
 }
 
-#fuuybcbszl .gt_footnote_marks {
+#oyypaqqrhu .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fuuybcbszl .gt_asterisk {
+#oyypaqqrhu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fuuybcbszl .gt_indent_1 {
+#oyypaqqrhu .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fuuybcbszl .gt_indent_2 {
+#oyypaqqrhu .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fuuybcbszl .gt_indent_3 {
+#oyypaqqrhu .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fuuybcbszl .gt_indent_4 {
+#oyypaqqrhu .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fuuybcbszl .gt_indent_5 {
+#oyypaqqrhu .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -4351,18 +4331,6 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <td headers="(1)" class="gt_row gt_center">2728</td></tr>
     <tr><td headers="" class="gt_row gt_left">R2</td>
 <td headers="(1)" class="gt_row gt_center">0.040</td></tr>
-    <tr><td headers="" class="gt_row gt_left">R2 Adj.</td>
-<td headers="(1)" class="gt_row gt_center">0.039</td></tr>
-    <tr><td headers="" class="gt_row gt_left">AIC</td>
-<td headers="(1)" class="gt_row gt_center">7240.7</td></tr>
-    <tr><td headers="" class="gt_row gt_left">BIC</td>
-<td headers="(1)" class="gt_row gt_center">7264.4</td></tr>
-    <tr><td headers="" class="gt_row gt_left">Log.Lik.</td>
-<td headers="(1)" class="gt_row gt_center">-3616.361</td></tr>
-    <tr><td headers="" class="gt_row gt_left">F</td>
-<td headers="(1)" class="gt_row gt_center">56.346</td></tr>
-    <tr><td headers="" class="gt_row gt_left">RMSE</td>
-<td headers="(1)" class="gt_row gt_center">0.91</td></tr>
   </tbody>
   <tfoot class="gt_sourcenotes">
     <tr>
@@ -4378,66 +4346,66 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <div id="結果をファイルに書き出す-2" class="section level2 hasAnchor" number="8.6">
 <h2><span class="header-section-number">8.6</span> 結果をファイルに書き出す<a href="regression_advanced.html#結果をファイルに書き出す-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>前章の<a href="regression_basic.html#regression_basic_export">結果をファイルに書き出す</a>を参照。念のため再確認しておくと、 <code>flextable</code>パッケージを読みこんでおいた状態で（本章冒頭を参照）、上記の<code>modelsummary()</code>のコードに<code>output = "xxx.docx"</code>というようなオプションをつけることで、wordファイルに結果を書き出すことができる。</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="regression_advanced.html#cb338-1" tabindex="-1"></a><span class="fu">library</span>(flextable) <span class="co"># もし読み込んでいない場合は実行</span></span>
-<span id="cb338-2"><a href="regression_advanced.html#cb338-2" tabindex="-1"></a></span>
-<span id="cb338-3"><a href="regression_advanced.html#cb338-3" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Model 1&quot;</span> <span class="ot">=</span> reg_res1, </span>
-<span id="cb338-4"><a href="regression_advanced.html#cb338-4" tabindex="-1"></a>                  <span class="st">&quot;Model 2&quot;</span> <span class="ot">=</span> reg_res2), <span class="co"># このようにするとモデルに名前をつけることができる</span></span>
-<span id="cb338-5"><a href="regression_advanced.html#cb338-5" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb338-6"><a href="regression_advanced.html#cb338-6" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
-<span id="cb338-7"><a href="regression_advanced.html#cb338-7" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
-<span id="cb338-8"><a href="regression_advanced.html#cb338-8" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
-<span id="cb338-9"><a href="regression_advanced.html#cb338-9" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
-<span id="cb338-10"><a href="regression_advanced.html#cb338-10" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb338-11"><a href="regression_advanced.html#cb338-11" tabindex="-1"></a>                      <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
-<span id="cb338-12"><a href="regression_advanced.html#cb338-12" tabindex="-1"></a>                      <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb338-13"><a href="regression_advanced.html#cb338-13" tabindex="-1"></a>                      <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb338-14"><a href="regression_advanced.html#cb338-14" tabindex="-1"></a>                      <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
-<span id="cb338-15"><a href="regression_advanced.html#cb338-15" tabindex="-1"></a>                      <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
-<span id="cb338-16"><a href="regression_advanced.html#cb338-16" tabindex="-1"></a>                      <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
-<span id="cb338-17"><a href="regression_advanced.html#cb338-17" tabindex="-1"></a>                      <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
-<span id="cb338-18"><a href="regression_advanced.html#cb338-18" tabindex="-1"></a>                      <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
-<span id="cb338-19"><a href="regression_advanced.html#cb338-19" tabindex="-1"></a>                      <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>,</span>
-<span id="cb338-20"><a href="regression_advanced.html#cb338-20" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>),</span>
-<span id="cb338-21"><a href="regression_advanced.html#cb338-21" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>),</span>
-<span id="cb338-22"><a href="regression_advanced.html#cb338-22" tabindex="-1"></a>         <span class="at">output =</span> <span class="st">&quot;results/regression_multiple.docx&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="regression_advanced.html#cb332-1" tabindex="-1"></a><span class="fu">library</span>(flextable) <span class="co"># もし読み込んでいない場合は実行</span></span>
+<span id="cb332-2"><a href="regression_advanced.html#cb332-2" tabindex="-1"></a></span>
+<span id="cb332-3"><a href="regression_advanced.html#cb332-3" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Model 1&quot;</span> <span class="ot">=</span> reg_res1, </span>
+<span id="cb332-4"><a href="regression_advanced.html#cb332-4" tabindex="-1"></a>                  <span class="st">&quot;Model 2&quot;</span> <span class="ot">=</span> reg_res2), <span class="co"># このようにするとモデルに名前をつけることができる</span></span>
+<span id="cb332-5"><a href="regression_advanced.html#cb332-5" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb332-6"><a href="regression_advanced.html#cb332-6" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
+<span id="cb332-7"><a href="regression_advanced.html#cb332-7" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
+<span id="cb332-8"><a href="regression_advanced.html#cb332-8" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
+<span id="cb332-9"><a href="regression_advanced.html#cb332-9" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
+<span id="cb332-10"><a href="regression_advanced.html#cb332-10" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb332-11"><a href="regression_advanced.html#cb332-11" tabindex="-1"></a>                      <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
+<span id="cb332-12"><a href="regression_advanced.html#cb332-12" tabindex="-1"></a>                      <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb332-13"><a href="regression_advanced.html#cb332-13" tabindex="-1"></a>                      <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb332-14"><a href="regression_advanced.html#cb332-14" tabindex="-1"></a>                      <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
+<span id="cb332-15"><a href="regression_advanced.html#cb332-15" tabindex="-1"></a>                      <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
+<span id="cb332-16"><a href="regression_advanced.html#cb332-16" tabindex="-1"></a>                      <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
+<span id="cb332-17"><a href="regression_advanced.html#cb332-17" tabindex="-1"></a>                      <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
+<span id="cb332-18"><a href="regression_advanced.html#cb332-18" tabindex="-1"></a>                      <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
+<span id="cb332-19"><a href="regression_advanced.html#cb332-19" tabindex="-1"></a>                      <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>,</span>
+<span id="cb332-20"><a href="regression_advanced.html#cb332-20" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>),</span>
+<span id="cb332-21"><a href="regression_advanced.html#cb332-21" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>),</span>
+<span id="cb332-22"><a href="regression_advanced.html#cb332-22" tabindex="-1"></a>         <span class="at">output =</span> <span class="st">&quot;results/regression_multiple.docx&quot;</span>)</span></code></pre></div>
 <p>ところで、上記の表のように独立変数が増えてくると、なんだか表が縦に長くて見にくいなあと思うかもしれない。そうした場には、次のように書くことで、標準誤差の値を係数の右側に並べて表記でき、表の縦の長さを短くできる。</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="regression_advanced.html#cb339-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Model 1&quot;</span> <span class="ot">=</span> reg_res1, </span>
-<span id="cb339-2"><a href="regression_advanced.html#cb339-2" tabindex="-1"></a>                  <span class="st">&quot;Model 2&quot;</span> <span class="ot">=</span> reg_res2),</span>
-<span id="cb339-3"><a href="regression_advanced.html#cb339-3" tabindex="-1"></a>         <span class="at">estimate =</span> <span class="st">&quot;{estimate} ({std.error}){stars}&quot;</span>, <span class="co"># 係数（半角スペース）(標準誤差)星印、となるように表記するオプション</span></span>
-<span id="cb339-4"><a href="regression_advanced.html#cb339-4" tabindex="-1"></a>         <span class="at">statistic =</span> <span class="cn">NULL</span>, <span class="co">#「2行目」の表記を省略するオプション。</span></span>
-<span id="cb339-5"><a href="regression_advanced.html#cb339-5" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
-<span id="cb339-6"><a href="regression_advanced.html#cb339-6" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
-<span id="cb339-7"><a href="regression_advanced.html#cb339-7" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
-<span id="cb339-8"><a href="regression_advanced.html#cb339-8" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
-<span id="cb339-9"><a href="regression_advanced.html#cb339-9" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb339-10"><a href="regression_advanced.html#cb339-10" tabindex="-1"></a>                      <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
-<span id="cb339-11"><a href="regression_advanced.html#cb339-11" tabindex="-1"></a>                      <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb339-12"><a href="regression_advanced.html#cb339-12" tabindex="-1"></a>                      <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb339-13"><a href="regression_advanced.html#cb339-13" tabindex="-1"></a>                      <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
-<span id="cb339-14"><a href="regression_advanced.html#cb339-14" tabindex="-1"></a>                      <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
-<span id="cb339-15"><a href="regression_advanced.html#cb339-15" tabindex="-1"></a>                      <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
-<span id="cb339-16"><a href="regression_advanced.html#cb339-16" tabindex="-1"></a>                      <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
-<span id="cb339-17"><a href="regression_advanced.html#cb339-17" tabindex="-1"></a>                      <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
-<span id="cb339-18"><a href="regression_advanced.html#cb339-18" tabindex="-1"></a>                      <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>,</span>
-<span id="cb339-19"><a href="regression_advanced.html#cb339-19" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>),  </span>
-<span id="cb339-20"><a href="regression_advanced.html#cb339-20" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>) )</span></code></pre></div>
-<div id="zrmfjlayvg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zrmfjlayvg table {
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="regression_advanced.html#cb333-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Model 1&quot;</span> <span class="ot">=</span> reg_res1, </span>
+<span id="cb333-2"><a href="regression_advanced.html#cb333-2" tabindex="-1"></a>                  <span class="st">&quot;Model 2&quot;</span> <span class="ot">=</span> reg_res2),</span>
+<span id="cb333-3"><a href="regression_advanced.html#cb333-3" tabindex="-1"></a>         <span class="at">estimate =</span> <span class="st">&quot;{estimate} ({std.error}){stars}&quot;</span>, <span class="co"># 係数（半角スペース）(標準誤差)星印、となるように表記するオプション</span></span>
+<span id="cb333-4"><a href="regression_advanced.html#cb333-4" tabindex="-1"></a>         <span class="at">statistic =</span> <span class="cn">NULL</span>, <span class="co">#「2行目」の表記を省略するオプション。</span></span>
+<span id="cb333-5"><a href="regression_advanced.html#cb333-5" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
+<span id="cb333-6"><a href="regression_advanced.html#cb333-6" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
+<span id="cb333-7"><a href="regression_advanced.html#cb333-7" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
+<span id="cb333-8"><a href="regression_advanced.html#cb333-8" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
+<span id="cb333-9"><a href="regression_advanced.html#cb333-9" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb333-10"><a href="regression_advanced.html#cb333-10" tabindex="-1"></a>                      <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
+<span id="cb333-11"><a href="regression_advanced.html#cb333-11" tabindex="-1"></a>                      <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb333-12"><a href="regression_advanced.html#cb333-12" tabindex="-1"></a>                      <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb333-13"><a href="regression_advanced.html#cb333-13" tabindex="-1"></a>                      <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
+<span id="cb333-14"><a href="regression_advanced.html#cb333-14" tabindex="-1"></a>                      <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
+<span id="cb333-15"><a href="regression_advanced.html#cb333-15" tabindex="-1"></a>                      <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
+<span id="cb333-16"><a href="regression_advanced.html#cb333-16" tabindex="-1"></a>                      <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
+<span id="cb333-17"><a href="regression_advanced.html#cb333-17" tabindex="-1"></a>                      <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
+<span id="cb333-18"><a href="regression_advanced.html#cb333-18" tabindex="-1"></a>                      <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>,</span>
+<span id="cb333-19"><a href="regression_advanced.html#cb333-19" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>),  </span>
+<span id="cb333-20"><a href="regression_advanced.html#cb333-20" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>) )</span></code></pre></div>
+<div id="alcstmafee" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#alcstmafee table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zrmfjlayvg thead, #zrmfjlayvg tbody, #zrmfjlayvg tfoot, #zrmfjlayvg tr, #zrmfjlayvg td, #zrmfjlayvg th {
+#alcstmafee thead, #alcstmafee tbody, #alcstmafee tfoot, #alcstmafee tr, #alcstmafee td, #alcstmafee th {
   border-style: none;
 }
 
-#zrmfjlayvg p {
+#alcstmafee p {
   margin: 0;
   padding: 0;
 }
 
-#zrmfjlayvg .gt_table {
+#alcstmafee .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -4463,12 +4431,12 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-left-color: #D3D3D3;
 }
 
-#zrmfjlayvg .gt_caption {
+#alcstmafee .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zrmfjlayvg .gt_title {
+#alcstmafee .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -4480,7 +4448,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-width: 0;
 }
 
-#zrmfjlayvg .gt_subtitle {
+#alcstmafee .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4492,7 +4460,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-width: 0;
 }
 
-#zrmfjlayvg .gt_heading {
+#alcstmafee .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -4504,13 +4472,13 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#zrmfjlayvg .gt_bottom_border {
+#alcstmafee .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zrmfjlayvg .gt_col_headings {
+#alcstmafee .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4525,7 +4493,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#zrmfjlayvg .gt_col_heading {
+#alcstmafee .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4545,7 +4513,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#zrmfjlayvg .gt_column_spanner_outer {
+#alcstmafee .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4557,15 +4525,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 4px;
 }
 
-#zrmfjlayvg .gt_column_spanner_outer:first-child {
+#alcstmafee .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zrmfjlayvg .gt_column_spanner_outer:last-child {
+#alcstmafee .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zrmfjlayvg .gt_column_spanner {
+#alcstmafee .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4577,11 +4545,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   width: 100%;
 }
 
-#zrmfjlayvg .gt_spanner_row {
+#alcstmafee .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zrmfjlayvg .gt_group_heading {
+#alcstmafee .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4607,7 +4575,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   text-align: left;
 }
 
-#zrmfjlayvg .gt_empty_group_heading {
+#alcstmafee .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4622,15 +4590,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: middle;
 }
 
-#zrmfjlayvg .gt_from_md > :first-child {
+#alcstmafee .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zrmfjlayvg .gt_from_md > :last-child {
+#alcstmafee .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zrmfjlayvg .gt_row {
+#alcstmafee .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4649,7 +4617,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#zrmfjlayvg .gt_stub {
+#alcstmafee .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4662,7 +4630,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#zrmfjlayvg .gt_stub_row_group {
+#alcstmafee .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4676,15 +4644,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: top;
 }
 
-#zrmfjlayvg .gt_row_group_first td {
+#alcstmafee .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zrmfjlayvg .gt_row_group_first th {
+#alcstmafee .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zrmfjlayvg .gt_summary_row {
+#alcstmafee .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4694,16 +4662,16 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#zrmfjlayvg .gt_first_summary_row {
+#alcstmafee .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zrmfjlayvg .gt_first_summary_row.thick {
+#alcstmafee .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zrmfjlayvg .gt_last_summary_row {
+#alcstmafee .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4713,7 +4681,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#zrmfjlayvg .gt_grand_summary_row {
+#alcstmafee .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4723,7 +4691,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#zrmfjlayvg .gt_first_grand_summary_row {
+#alcstmafee .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4733,7 +4701,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-color: #D3D3D3;
 }
 
-#zrmfjlayvg .gt_last_grand_summary_row_top {
+#alcstmafee .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4743,11 +4711,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#zrmfjlayvg .gt_striped {
+#alcstmafee .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zrmfjlayvg .gt_table_body {
+#alcstmafee .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4756,7 +4724,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#zrmfjlayvg .gt_footnotes {
+#alcstmafee .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4770,7 +4738,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#zrmfjlayvg .gt_footnote {
+#alcstmafee .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -4779,7 +4747,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#zrmfjlayvg .gt_sourcenotes {
+#alcstmafee .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4793,7 +4761,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#zrmfjlayvg .gt_sourcenote {
+#alcstmafee .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -4801,63 +4769,63 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#zrmfjlayvg .gt_left {
+#alcstmafee .gt_left {
   text-align: left;
 }
 
-#zrmfjlayvg .gt_center {
+#alcstmafee .gt_center {
   text-align: center;
 }
 
-#zrmfjlayvg .gt_right {
+#alcstmafee .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zrmfjlayvg .gt_font_normal {
+#alcstmafee .gt_font_normal {
   font-weight: normal;
 }
 
-#zrmfjlayvg .gt_font_bold {
+#alcstmafee .gt_font_bold {
   font-weight: bold;
 }
 
-#zrmfjlayvg .gt_font_italic {
+#alcstmafee .gt_font_italic {
   font-style: italic;
 }
 
-#zrmfjlayvg .gt_super {
+#alcstmafee .gt_super {
   font-size: 65%;
 }
 
-#zrmfjlayvg .gt_footnote_marks {
+#alcstmafee .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zrmfjlayvg .gt_asterisk {
+#alcstmafee .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zrmfjlayvg .gt_indent_1 {
+#alcstmafee .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zrmfjlayvg .gt_indent_2 {
+#alcstmafee .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zrmfjlayvg .gt_indent_3 {
+#alcstmafee .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zrmfjlayvg .gt_indent_4 {
+#alcstmafee .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zrmfjlayvg .gt_indent_5 {
+#alcstmafee .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -4872,16 +4840,16 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   </thead>
   <tbody class="gt_table_body">
     <tr><td headers="" class="gt_row gt_left">男性（vs. 女性）</td>
-<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 1" class="gt_row gt_center">0.416 (0.018)***</td>
 <td headers="Model 2" class="gt_row gt_center">0.345 (0.019)***</td></tr>
     <tr><td headers="" class="gt_row gt_left">高校（vs. 中学）</td>
-<td headers="Model 1" class="gt_row gt_center">-0.361 (0.022)***</td>
+<td headers="Model 1" class="gt_row gt_center">0.116 (0.034)***</td>
 <td headers="Model 2" class="gt_row gt_center">0.048 (0.032)</td></tr>
     <tr><td headers="" class="gt_row gt_left">短大高専（vs. 中学）</td>
-<td headers="Model 1" class="gt_row gt_center">-0.256 (0.025)***</td>
+<td headers="Model 1" class="gt_row gt_center">0.221 (0.037)***</td>
 <td headers="Model 2" class="gt_row gt_center">0.059 (0.035)+</td></tr>
     <tr><td headers="" class="gt_row gt_left">大学大学院（vs. 中学）</td>
-<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 1" class="gt_row gt_center">0.477 (0.035)***</td>
 <td headers="Model 2" class="gt_row gt_center">0.203 (0.035)***</td></tr>
     <tr><td headers="" class="gt_row gt_left">年齢</td>
 <td headers="Model 1" class="gt_row gt_center">0.079 (0.007)***</td>
@@ -4914,7 +4882,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <td headers="Model 1" class="gt_row gt_center"></td>
 <td headers="Model 2" class="gt_row gt_center">-0.745 (0.049)***</td></tr>
     <tr><td headers="" class="gt_row gt_left" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">切片</td>
-<td headers="Model 1" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">5.942 (0.151)***</td>
+<td headers="Model 1" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">5.049 (0.151)***</td>
 <td headers="Model 2" class="gt_row gt_center" style="border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #000000;">6.153 (0.150)***</td></tr>
     <tr><td headers="" class="gt_row gt_left">Num.Obs.</td>
 <td headers="Model 1" class="gt_row gt_center">2728</td>
