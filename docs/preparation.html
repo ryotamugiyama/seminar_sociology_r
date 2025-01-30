@@ -269,10 +269,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.5.2" data-path="descriptives.html"><a href="descriptives.html#descriptive_export_ggplot"><i class="fa fa-check"></i><b>5.5.2</b> ggplotで作成した図を書き出す</a></li>
 <li class="chapter" data-level="5.5.3" data-path="descriptives.html"><a href="descriptives.html#descriptive_export_tbl_summary"><i class="fa fa-check"></i><b>5.5.3</b> 記述統計の一覧表をwordに書き出す</a></li>
 </ul></li>
-<li class="chapter" data-level="5.6" data-path="descriptives.html"><a href="descriptives.html#tbl_summaryの注意点"><i class="fa fa-check"></i><b>5.6</b> tbl_summary()の注意点</a>
-<ul>
-<li class="chapter" data-level="5.6.1" data-path="descriptives.html"><a href="descriptives.html#値が少ない連続変数はカテゴリ変数とみなして集計される"><i class="fa fa-check"></i><b>5.6.1</b> 値が少ない連続変数はカテゴリ変数とみなして集計される</a></li>
-</ul></li>
+<li class="chapter" data-level="5.6" data-path="descriptives.html"><a href="descriptives.html#tbl_summaryで値の少ない連続変数がカテゴリ変数として集計される問題について"><i class="fa fa-check"></i><b>5.6</b> tbl_summary()で値の少ない連続変数がカテゴリ変数として集計される問題について</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="tabulate.html"><a href="tabulate.html"><i class="fa fa-check"></i><b>6</b> 2変数の集計</a>
 <ul>
@@ -672,18 +669,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">2.4.3</span> パッケージのインストール<a href="preparation.html#パッケージのインストール" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><code>install.packages()</code>はゲームソフトを購入（無料ですが）するようなもの。実際にそのソフトに入っているコンテンツを使うためには、毎回RStudioを立ち上げるために、ゲームソフトをセットしないといけない。その際には、<code>library()</code>を用いる。</p>
 <p>本資料では以下のパッケージを使用する。今のうちにまとめてインストールしておこう。</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="preparation.html#cb11-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>,</span>
-<span id="cb11-2"><a href="preparation.html#cb11-2" tabindex="-1"></a>                 <span class="st">&quot;haven&quot;</span>,</span>
-<span id="cb11-3"><a href="preparation.html#cb11-3" tabindex="-1"></a>                 <span class="st">&quot;readxl&quot;</span>,</span>
-<span id="cb11-4"><a href="preparation.html#cb11-4" tabindex="-1"></a>                 <span class="st">&quot;gtsummary&quot;</span>,</span>
-<span id="cb11-5"><a href="preparation.html#cb11-5" tabindex="-1"></a>                 <span class="st">&quot;modelsummary&quot;</span>,</span>
-<span id="cb11-6"><a href="preparation.html#cb11-6" tabindex="-1"></a>                 <span class="st">&quot;pandoc&quot;</span>,</span>
-<span id="cb11-7"><a href="preparation.html#cb11-7" tabindex="-1"></a>                 <span class="st">&quot;flextable&quot;</span>,</span>
-<span id="cb11-8"><a href="preparation.html#cb11-8" tabindex="-1"></a>                 <span class="st">&quot;estimatr&quot;</span>,</span>
-<span id="cb11-9"><a href="preparation.html#cb11-9" tabindex="-1"></a>                 <span class="st">&quot;broom&quot;</span>,</span>
-<span id="cb11-10"><a href="preparation.html#cb11-10" tabindex="-1"></a>                 <span class="st">&quot;ggeffects&quot;</span>,</span>
-<span id="cb11-11"><a href="preparation.html#cb11-11" tabindex="-1"></a>                 <span class="st">&quot;effects&quot;</span>,</span>
-<span id="cb11-12"><a href="preparation.html#cb11-12" tabindex="-1"></a>                 <span class="st">&quot;margins&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="preparation.html#cb11-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
+<span id="cb11-2"><a href="preparation.html#cb11-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;haven&quot;</span>)</span>
+<span id="cb11-3"><a href="preparation.html#cb11-3" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;readxl&quot;</span>)</span>
+<span id="cb11-4"><a href="preparation.html#cb11-4" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;gtsummary&quot;</span>)</span>
+<span id="cb11-5"><a href="preparation.html#cb11-5" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;modelsummary&quot;</span>)</span>
+<span id="cb11-6"><a href="preparation.html#cb11-6" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;pandoc&quot;</span>)</span>
+<span id="cb11-7"><a href="preparation.html#cb11-7" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;flextable&quot;</span>)</span>
+<span id="cb11-8"><a href="preparation.html#cb11-8" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;estimatr&quot;</span>)</span>
+<span id="cb11-9"><a href="preparation.html#cb11-9" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;broom&quot;</span>)</span>
+<span id="cb11-10"><a href="preparation.html#cb11-10" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggeffects&quot;</span>)</span>
+<span id="cb11-11"><a href="preparation.html#cb11-11" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;effects&quot;</span>)</span>
+<span id="cb11-12"><a href="preparation.html#cb11-12" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;margins&quot;</span>)</span></code></pre></div>
 <p>とくに重要なのが<code>tidyverse</code>パッケージ。以下の8つのパッケージをまとめたパッケージ群であり、どれもよく使うものなので、何らかの分析をする際にはほとんど常に<code>library(tidyverse)</code>を実行しておくことになる。</p>
 <ul>
 <li>ggplot2</li>

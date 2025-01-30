@@ -433,11 +433,9 @@ piaac_selected %>%
   save_as_docx(path = "results/summary.docx")
 ```
 
-## tbl_summary()の注意点
+## tbl_summary()で値の少ない連続変数がカテゴリ変数として集計される問題について
 
 この節では、`gtsummary::tbl_summary()`を使っていて起こりがちな問題への対処法について記す。
-
-### 値が少ない連続変数はカテゴリ変数とみなして集計される
 
 今回のデータには、1, 2, 3, 4, 5のいずれかの値をとり、値が大きいほど健康状態がよいことを示す変数`health`が含まれている。この変数の記述統計量`tbl_summary()`で表示すると、連続変数（numeric）のはずなのになぜかカテゴリ変数のように表記されてしまう。
 
@@ -453,10 +451,11 @@ piaac_selected2 %>%
   tbl_summary(statistic = list(all_continuous() ~ "{mean} ({sd})"))
 ```
 
-どうやら`gtsummary::tbl_summary()`はカテゴリ変数の値の種類が少ないと、連続変数ではなくカテゴリ変数のように集計するという親切（？）な機能があるようである。オプションとして`type = list()`で連続変数であることを記載することで、この親切を抑制することができる。
+どうやら`gtsummary::tbl_summary()`はカテゴリ変数の値の種類が少ないと、連続変数ではなくカテゴリ変数のように集計するというありがた迷惑（？）な機能があるようである。ここでオプションとして`type = list()`で連続変数であることを記載することで、この親切を抑制することができる。
 
 ```{r}
 piaac_selected2 %>% 
   tbl_summary(statistic = list(all_continuous() ~ "{mean} ({sd})"),
-              type = list(health ~ "continuous")) # すべての連続変数を強制的に連続変数として表記)
+              type = list(health ~ "continuous")
+              )# health変数を連続変数として表示
 ```
