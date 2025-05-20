@@ -120,6 +120,8 @@ piaac %>%
   xlim(0, 10000) # x軸の最小値を0、最大値を10000に設定
 ```
 
+なお、y軸の範囲を指定する場合には、`ylim()`を用いる。範囲を外れる値およびNAについては表示されず、代わりに、いくつの値が表示されていないのかを示す警告メッセージが表示される（**Warning message:**と表示される）。このメッセージはとくにエラーというわけではないが、意図せずにたくさんの値が非表示になっていないかどうかを確認しておくとよい。
+
 ### ggplotの設定（日本語関係）
 
 ところで、Macで`ggplot2`パッケージを使用し、グラフ中に日本語を使用する場合には、`library(tidyverse)`（または`library(ggplot2)`）を実行したうえで、たとえば以下のようなコードをあらかじめ実行しておく必要がある。
@@ -457,5 +459,16 @@ piaac_selected2 %>%
 piaac_selected2 %>% 
   tbl_summary(statistic = list(all_continuous() ~ "{mean} ({sd})"),
               type = list(health ~ "continuous")
-              )# health変数を連続変数として表示
+              ) # health変数を連続変数として表示
 ```
+
+なお、複数の変数を連続変数として表示　する場合には、次のように書く。
+
+```{r, eval = FALSE}
+piaac_selected2 %>% 
+  tbl_summary(statistic = list(all_continuous() ~ "{mean} ({sd})"),
+              type = list(c(health, wage, age) ~ "continuous") # health, wage, ageを連続変数として表示
+              )
+```
+
+
