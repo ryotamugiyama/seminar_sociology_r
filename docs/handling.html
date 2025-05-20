@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 データの加工 | Rによる社会調査データ分析の手引き</title>
   <meta name="description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
-  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 データの加工 | Rによる社会調査データ分析の手引き" />
   <meta property="og:type" content="book" />
@@ -51,8 +51,6 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -539,7 +537,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb33-2"><a href="handling.html#cb33-2" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.character, as.numeric) <span class="sc">%&gt;%</span> <span class="co">#すべての文字列変数を小文字に変換</span></span>
 <span id="cb33-3"><a href="handling.html#cb33-3" tabindex="-1"></a>  <span class="fu">rename_all</span>(<span class="at">.funs =</span> tolower) <span class="co">#すべての大文字を小文字に変換</span></span></code></pre></div>
 <pre><code>## Rows: 5278 Columns: 1328
-## ── Column specification ────────────────────────────────────
+## ── Column specification ──────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (470): DISP_MAIN, B_Q01a3, B_Q01a3_C, B_Q01b, B_Q01c1, B_Q01c1_C, B_Q01c...
 ## dbl (656): CNTRYID, CNTRYID_E, SEQID, AGE_R, GENDER_R, DISP_CIBQ, A_N01_T, B...
@@ -674,19 +672,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>変数は、その種類によって（大きく）<strong>カテゴリ変数（categorical variable）</strong>と<strong>連続変数（continuous variable）</strong>に分けることができる<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th></th>
 <th>カテゴリ変数の例</th>
 <th>Rで扱うときの型</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>カテゴリ変数</td>
 <td>性別、居住地域、職業など</td>
 <td>factor</td>
 </tr>
-<tr>
+<tr class="even">
 <td>連続変数</td>
 <td>所得、幸福度など</td>
 <td>numeric</td>
@@ -815,7 +813,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <col width="33%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>条件記号</th>
 <th>意味</th>
 <th>コード例</th>
@@ -823,49 +821,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>==</code></td>
 <td>等しい</td>
 <td><code>age == 25</code></td>
 <td>年齢が25に等しい</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>!=</code></td>
 <td>ではない</td>
 <td><code>age != 25</code></td>
 <td>年齢が25ではない</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>&gt;</code></td>
 <td>より大きい</td>
 <td><code>age &gt; 25</code></td>
 <td>年齢が25より大きい</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>&lt;</code></td>
 <td>より小さい</td>
 <td><code>age &lt; 25</code></td>
 <td>年齢が25より小さい</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>&gt;=</code></td>
 <td>以上</td>
 <td><code>age &gt;= 25</code></td>
 <td>年齢が25以上（25を含む）</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>&lt;=</code></td>
 <td>以下</td>
 <td><code>age &lt;= 25</code></td>
 <td>年齢が25以下（25を含む）</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>&amp;</code></td>
 <td>かつ</td>
 <td><code>age &gt;= 25 &amp; age &lt;= 54</code></td>
 <td>年齢が25以上54以下</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>|</code></td>
 <td>または</td>
 <td><code>age &lt; 35 | age &gt; 54</code></td>
@@ -1004,21 +1002,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>PIAACには次のように、母親の最終学歴を尋ねた質問項目（j_q06b）がある。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>選択肢</th>
 <th>調査票の番号</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>小学校・中学校</td>
 <td>1</td>
 </tr>
-<tr>
+<tr class="even">
 <td>高校（旧制の中学校、高校を含む）</td>
 <td>2</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>専門学校、高等専門学校、短大、大学以上</td>
 <td>3</td>
 </tr>
@@ -1044,25 +1042,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>たとえば、1週間の労働時間（<code>d_q10</code>）に関する変数をもとに、次のように労働時間の長さ別に分けたカテゴリ変数を作成したいと思ったとする。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>d_q10</th>
 <th>workhour_fct</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>35時間より短い</td>
 <td>35時間未満</td>
 </tr>
-<tr>
+<tr class="even">
 <td>35時間以上49時間以下</td>
 <td>35-49時間</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>50時間以上59時間以下</td>
 <td>50-59時間</td>
 </tr>
-<tr>
+<tr class="even">
 <td>60時間以上</td>
 <td>60時間以上</td>
 </tr>
@@ -1159,7 +1157,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <col width="14%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th></th>
 <th>母親学歴</th>
 <th></th>
@@ -1168,35 +1166,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><strong>父親学歴</strong></td>
 <td>1（初等教育）</td>
 <td>2（中等教育）</td>
 <td>3（高等教育）</td>
 <td>NA</td>
 </tr>
-<tr>
+<tr class="even">
 <td>1（初等教育）</td>
 <td>初等教育</td>
 <td>中等教育</td>
 <td>高等教育</td>
 <td>初等教育</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>2（中等教育）</td>
 <td>中等教育</td>
 <td>中等教育</td>
 <td>高等教育</td>
 <td>中等教育</td>
 </tr>
-<tr>
+<tr class="even">
 <td>3（高等教育）</td>
 <td>高等教育</td>
 <td>高等教育</td>
 <td>高等教育</td>
 <td>高等教育</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>NA</td>
 <td>初等教育</td>
 <td>中等教育</td>
@@ -1222,34 +1220,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>ある程度均等な順序があると仮定できるならば、数値として扱うことを考えてみるとよい。JGSSでは、「現在の仕事にどの程度満足していますか」という質問（ST5JOB）で、仕事への満足度が尋ねられている。選択肢は「満足している」「どちらかといえば満足している」「どちらともいえない」「どちらかといえば不満である」「不満である」という5つから1つを選択する形式である（わからないや無回答もあるが（後述）、ここでは省略する）。このようなときには、以下のように数値を割り当てることで、値が高いほど満足していることを表す連続変数に見立てることができる。もちろん、選択肢間の間隔がどれも同じ1であるというのはあくまで仮定であり本当は違うかもしれないということには注意が必要だが、解釈はわかりやすくなるというメリットがある。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>選択肢</th>
 <th>調査票上の番号</th>
 <th>数値化例</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>満足している</td>
 <td>1</td>
 <td>5</td>
 </tr>
-<tr>
+<tr class="even">
 <td>どちらかといえば満足している</td>
 <td>2</td>
 <td>4</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>どちらでもない</td>
 <td>3</td>
 <td>3</td>
 </tr>
-<tr>
+<tr class="even">
 <td>どちらかといえば不満である</td>
 <td>4</td>
 <td>2</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>不満である</td>
 <td>5</td>
 <td>1</td>
@@ -1318,34 +1316,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>なんらかの区間をとって尋ねられている場合、その区間の中点をとって、連続変数とみなす。たとえば、日本家族社会学会が行っている2008年全国家族調査（NFRJ08）では、「あなたご自身…は、次にあげる…家事を現在どのくらいの頻度で行っていますか」という質問項目で、たとえば「食事の用意」について、以下のような選択肢で家事頻度を尋ねている。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>選択肢</th>
 <th>調査票上の番号</th>
 <th>数値化例</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>ほぼ毎日（週6〜7回）</td>
 <td>1</td>
 <td>6.5</td>
 </tr>
-<tr>
+<tr class="even">
 <td>1週間に4〜5回</td>
 <td>2</td>
 <td>4.5</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>1週間に2〜3回</td>
 <td>3</td>
 <td>2.5</td>
 </tr>
-<tr>
+<tr class="even">
 <td>1週間に1回くらい</td>
 <td>4</td>
 <td>1</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>ほとんど行わない</td>
 <td>5</td>
 <td>0</td>
@@ -1650,42 +1648,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": null,
-"text": null
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": null,
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
