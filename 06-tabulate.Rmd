@@ -121,17 +121,19 @@ meandata %>%
   labs(x = "学歴", y = "平均賃金", fill = "性別")
 ```
 
-また、グラフそのものを分割するという方法も考えられる。`facet_grid()`を使うことで、指定した変数でグラフを分割することができる。
+また、グラフそのものを分割するという方法も考えられる。`facet_wrap()`を使うことで、指定した変数でグラフを分割することができる。
 
 ```{r}
 meandata %>% 
   ggplot(aes(x = educ, y = mean)) + 
   geom_col() +
   labs(x = "学歴", y = "平均賃金") +
-  facet_grid(~gender) # genderでグラフを分割
+  facet_wrap(~gender) # genderでグラフを分割
 ```
 
-なお、2つの変数でグラフを分割する（たとえば、性別・学歴別にグラフを分割する）場合には、`facet_grid(gender~educ)`とすることで、行に性別、列に学歴というふうに分割することができる。逆に、`facet_grid(educ~gender)`とすると、行に学歴、列に性別というふうに分割することができる。
+なお、2つの変数でグラフを分割する（たとえば、性別・学歴別にグラフを分割する）場合には、`facet_grid()`というコードを用いる。`(gender~educ)`とすることで、行に性別、列に学歴というふうに分割することができる。逆に、`facet_grid(educ~gender)`とすると、行に学歴、列に性別というふうに分割することができる。
+
+先ほど、性別・学歴別に平均賃金を示した3種類の図を示した。このなかで、どの図が最も良いのだろうか？それは、その図を通じて何を伝えたいかに依存する。棒グラフの場合、隣り合った棒はより比べやすく、離れているほど比べにくくなる。したがって、「同じ学歴であっても、男女間で平均賃金に差がある」ということを伝えたい場合には、性別が隣り合うようにして、性別で色分けしたグラフがよいだろう。一方で、「同じ性別であっても、学歴によって平均賃金に差がある」ということを伝えたい場合には、学歴どうしが隣り合うようにして、性別を離したグラフがよいだろう。
 
 ## 分布の比較
 
@@ -157,13 +159,13 @@ piaac %>%
   labs(fill = "")
 ```
 
-カテゴリの数が2つならいいが、たくさんの場合には見にくくなってしまう。そのような場合には先ほど紹介した`facet_grid()`をつかって図を分けるのがよいだろう。たとえば、職業ごとに賃金のヒストグラムをつくる場合には、次のようにする。
+カテゴリの数が2つならいいが、たくさんの場合には見にくくなってしまう。そのような場合には先ほど紹介した`facet_wrap()`をつかって図を分けるのがよいだろう。たとえば、職業ごとに賃金のヒストグラムをつくる場合には、次のようにする。
 
 ```{r}
 piaac %>% 
   ggplot(aes(x = wage, y = ..density..)) + 
   geom_histogram() + 
-  facet_grid(~occupation)
+  facet_wrap(~occupation)
 ```
 
 ## クロス表
@@ -378,14 +380,14 @@ piaac %>%
 
 ### カテゴリごとに散布図を分ける
 
-たとえば男性と女性で別々に散布図を書きたいということがあるだろう。このような場合には、`facet_grid()`を使うか、`color =`を指定する。
+たとえば男性と女性で別々に散布図を書きたいということがあるだろう。このような場合には、`facet_wrap()`を使うか、`color =`を指定する。
 
 ```{r}
 piaac %>% 
   ggplot(aes(x = age, y = wage)) + 
   geom_point(shape = 1) + 
   geom_smooth(method = "lm", se = FALSE) + 
-  facet_grid(~gender)
+  facet_wrap(~gender)
 ```
 
 ```{r}
@@ -441,10 +443,11 @@ piaac %>%
   group_by(age) %>% 
   summarize(mean = mean(health)) %>%  
   ggplot(aes(x = age, y = mean)) + 
-  geom_point()
+  geom_point() + 
+  ylim(1, 5) # y軸の取りうる範囲は健康状態の最小値（1）と最大値（5）とする
 ```
 
-ただ、この図では人数が少ない年齢層も多い年齢層も同じ大きさの点で描かれてしまっていることが少し不満かもしれない。点の大きさを考慮したい場合には、バブル・プロットを使う。aestheticsのところで`size =`を指定することで、点の大きさを変えることができる。ただしその際、`scale_size_area(max_size = 5)`などというふうに円の面積に関するコマンドを含めないと円の大きさと人数が対応しなくなってしまうため、注意が必要。
+ただ、この図では人数が少ない年齢層も多い年齢層も同じ大きさの点で描かれてしまっていることが少し不満かもしれない。点の大きさを考慮したい場合には、バブル・プロットを使う。aestheticsのところで`size =`を指定することで、点の大きさを変えることができる。ただしその際には、`scale_size_area(max_size = 5)`（max_size = の数字を変えることで円の大きさを変更できる）などというふうに円の面積に関するコマンドを含めないと円の大きさと人数が対応しなくなってしまうため、注意が必要。
 
 ```{r}
 piaac %>% 
@@ -453,7 +456,8 @@ piaac %>%
             n = n()) %>%  
   ggplot(aes(x = age, y = mean, size = n)) + 
   geom_point(shape = 1) + 
-  scale_size_area(max_size = 5)
+  scale_size_area(max_size = 5) + 
+  ylim(1, 5)
 ```
 
 ### カテゴリが多いクロス表を扱う
@@ -479,15 +483,15 @@ table %>%
   labs(x = "", y = "", fill = "") 
 ```
 
-そこで、学歴ごとにグラフをわけて、職業の分布を書くという方法がある。`facet_grid()`を使うことで、グラフを分割することができる。
+そこで、学歴ごとにグラフをわけて、職業の分布を書くという方法がある。`facet_wrap()`を使ってグラフを分割しよう。
 
 ```{r}
 table %>% 
   ggplot(aes(y = prop, x = occupation)) + 
   geom_col() + 
-  facet_grid(~educ) + 
+  facet_wrap(~educ) + 
   labs(x = "", y = "割合") + 
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) 
 ```
 
 もう一つの方法は、職業ごとにグラフをわけて、各学歴において当該職業に就いている人の割合を示すという方法である。
@@ -496,9 +500,9 @@ table %>%
 table %>% 
   ggplot(aes(y = prop, x = educ)) + 
   geom_col() + 
-  facet_grid(~occupation) + 
+  facet_wrap(~occupation) + 
   labs(x = "", y = "割合") + 
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
 ```
 
 どのように図示するかは、自分がどれだと文章を書きやすいか（何を伝えたいのか）によって決める。

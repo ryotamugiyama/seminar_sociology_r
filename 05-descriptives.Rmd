@@ -130,8 +130,7 @@ piaac %>%
 theme_set(theme_grey(base_family = "HiraginoSans-W3"))
 ```
 
-`theme_set()`関数はフォントのほかにいくつかの追加的な設定を行うことができる。
-この資料で使用しているグラフについては以下のようにthemeを設定しています。
+`theme_set()`関数はフォントのほかにいくつかの追加的な設定を行うことができる。この資料で使用しているグラフについては以下のようにthemeを設定している。
 
 ```{r}
 theme_set(theme_bw(
@@ -142,7 +141,7 @@ theme_set(theme_bw(
 ))
 ```
 
-Windowsユーザの方は上記コードから`base_family =`の行を除いたこちらのコードで同じような雰囲気になります：
+Windowsユーザの方は上記コードから`base_family =`の行を除いたこちらのコードを用いる。
 
 ```{r, eval = FALSE}
 theme_set(theme_bw(
@@ -205,13 +204,18 @@ countdata %>%
   geom_col() # 棒グラフを作成
 ```
 
-悪くないけれど、横軸のラベルがかぶってしまって、何を指しているのかいまいちわからなくなってしまっている。また、このままだと縦軸や横軸の名前は必ずしもわかりやすいものではない。そこで、以下のようにコマンドを追加しよう。
+悪くないけれど、横軸のラベルがかぶってしまって、何を指しているのかいまいちわからなくなってしまっている。また、このままだと縦軸や横軸の名前は必ずしもわかりやすいものではない。そこで、`theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))`を追加しよう。これはそれぞれ次のようなことを意味する。
+
+- axis.text.x：x軸の値ラベルに関する設定を行う。
+- angle = 90：x軸の値ラベルを90度傾ける。数字を45とすれば、45度傾けることができる。
+- hjust = 1：x軸の値ラベルの水平方向の位置を調整する。0は左寄せ、0.5は中央寄せ、1は右寄せ。90度に傾ける場合には、右寄せがわかりやすい。
+- vjust = 0.5：x軸の値ラベルの垂直方向の位置を調整する。0は下寄せ、0.5は中央寄せ、1は上寄せ。90度に傾ける場合には、0.5で中央寄せにするのがわかりやすい。
 
 ```{r}
 countdata %>% 
   ggplot(aes(x = occupation, y = n)) + 
   geom_col() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) + # X軸を90度傾ける
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
   labs(x = "職業", y = "割合") # x軸とy軸に名前をつける
 ```
 
@@ -221,7 +225,7 @@ countdata %>%
 countdata %>% 
   ggplot(aes(x = occupation, y = prop)) + # 縦軸を割合に
   geom_col() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) + 
   labs(x = "職業", y = "割合") 
 ```
 
@@ -370,7 +374,7 @@ piaac %>%
   as.data.frame() %>% 
   ggplot(aes(x = occupation, y = Freq)) + 
   geom_col() + 
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + # X軸を45度傾ける
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) + # X軸を45度傾ける
   labs(x = "職業", y = "割合") # x軸とy軸に名前をつける
 ```
 
@@ -389,7 +393,7 @@ g <- piaac %>%
   as.data.frame() %>% 
   ggplot(aes(x = occupation, y = Freq)) + 
   geom_col() + 
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + # X軸を45度傾ける
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
   labs(x = "職業", y = "割合") # x軸とy軸に名前をつける
 ```
 
