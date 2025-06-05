@@ -1,0 +1,2299 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 10 ロジスティック回帰分析 | Rによる社会調査データ分析の手引き</title>
+  <meta name="description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 10 ロジスティック回帰分析 | Rによる社会調査データ分析の手引き" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 10 ロジスティック回帰分析 | Rによる社会調査データ分析の手引き" />
+  
+  <meta name="twitter:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  
+
+<meta name="author" content="麦山 亮太（学習院大学法学部政治学科）/ Ryota Mugiyama (Department of Political Studies, Gakushuin University)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="regression_interaction.html"/>
+<link rel="next" href="domain.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Rによる社会調査データ分析の手引き</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path=""><a href="#%E3%81%BE%E3%81%88%E3%81%8C%E3%81%8D"><i class="fa fa-check"></i>まえがき</a></li>
+<li class="chapter" data-level="1" data-path="plan.html"><a href="plan.html"><i class="fa fa-check"></i><b>1</b> 研究計画を立てる</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="10-logit.html"><a href="#%E7%A0%94%E7%A9%B6%E8%A8%88%E7%94%BB%E3%81%A8%E3%81%AF"><i class="fa fa-check"></i><b>1.1</b> 研究計画とは</a></li>
+<li class="chapter" data-level="1.2" data-path="10-logit.html"><a href="#%E7%A0%94%E7%A9%B6%E8%A8%88%E7%94%BB%E3%81%AE%E6%A7%8B%E6%88%90"><i class="fa fa-check"></i><b>1.2</b> 研究計画の構成</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="plan.html"><a href="plan.html#plan_background"><i class="fa fa-check"></i><b>1.2.1</b> 研究背景</a></li>
+<li class="chapter" data-level="1.2.2" data-path="plan.html"><a href="plan.html#plan_question"><i class="fa fa-check"></i><b>1.2.2</b> 研究目的・問い</a></li>
+<li class="chapter" data-level="1.2.3" data-path="plan.html"><a href="plan.html#plan_method"><i class="fa fa-check"></i><b>1.2.3</b> 方法</a></li>
+<li class="chapter" data-level="1.2.4" data-path="plan.html"><a href="plan.html#plan_reference"><i class="fa fa-check"></i><b>1.2.4</b> 参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="10-logit.html"><a href="#%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B%E8%AA%BF%E6%9F%BB%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E9%81%B8%E5%AE%9A"><i class="fa fa-check"></i><b>1.3</b> 使用する調査データの選定</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="10-logit.html"><a href="#%E5%80%8B%E7%A5%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"><i class="fa fa-check"></i><b>1.3.1</b> 個票データとは何か</a></li>
+<li class="chapter" data-level="1.3.2" data-path="plan.html"><a href="plan.html#jgss"><i class="fa fa-check"></i><b>1.3.2</b> JGSS</a></li>
+<li class="chapter" data-level="1.3.3" data-path="10-logit.html"><a href="#jgss%E4%BB%A5%E5%A4%96%E3%81%AE%E6%97%A5%E6%9C%AC%E3%81%AE%E7%A4%BE%E4%BC%9A%E8%AA%BF%E6%9F%BB"><i class="fa fa-check"></i><b>1.3.3</b> JGSS以外の日本の社会調査</a></li>
+<li class="chapter" data-level="1.3.4" data-path="10-logit.html"><a href="#%E6%97%A5%E6%9C%AC%E4%BB%A5%E5%A4%96%E3%81%AE%E7%A4%BE%E4%BC%9A%E8%AA%BF%E6%9F%BB%E3%83%87%E3%83%BC%E3%82%BF"><i class="fa fa-check"></i><b>1.3.4</b> 日本以外の社会調査データ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="plan.html"><a href="plan.html#literature"><i class="fa fa-check"></i><b>1.4</b> 先行研究を探す</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="10-logit.html"><a href="#%E8%AB%96%E6%96%87"><i class="fa fa-check"></i><b>1.4.1</b> 論文</a></li>
+<li class="chapter" data-level="1.4.2" data-path="10-logit.html"><a href="#%E6%9B%B8%E7%B1%8D"><i class="fa fa-check"></i><b>1.4.2</b> 書籍</a></li>
+<li class="chapter" data-level="1.4.3" data-path="10-logit.html"><a href="#%E5%A0%B1%E5%91%8A%E6%9B%B8"><i class="fa fa-check"></i><b>1.4.3</b> 報告書</a></li>
+<li class="chapter" data-level="1.4.4" data-path="10-logit.html"><a href="#%E7%A0%94%E7%A9%B6%E3%81%AE%E6%B5%81%E3%82%8C%E3%82%92%E3%81%A4%E3%81%8B%E3%82%80"><i class="fa fa-check"></i><b>1.4.4</b> 研究の流れをつかむ</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="preparation.html"><a href="preparation.html"><i class="fa fa-check"></i><b>2</b> RとRStudioの下準備</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="10-logit.html"><a href="#r%E3%81%A8rstudio%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%96%B9%E6%B3%95"><i class="fa fa-check"></i><b>2.1</b> RとRStudioのインストール方法</a></li>
+<li class="chapter" data-level="2.2" data-path="10-logit.html"><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E5%88%86%E6%9E%90%E3%81%AE%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%95%E3%83%AD%E3%83%BC"><i class="fa fa-check"></i><b>2.2</b> データ分析のワークフロー</a></li>
+<li class="chapter" data-level="2.3" data-path="preparation.html"><a href="preparation.html#preparation_project"><i class="fa fa-check"></i><b>2.3</b> プロジェクトの作成</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="10-logit.html"><a href="#rstudio%E3%82%92%E9%96%8B%E3%81%84%E3%81%A6%E3%81%BF%E3%82%88%E3%81%86"><i class="fa fa-check"></i><b>2.3.1</b> RStudioを開いてみよう</a></li>
+<li class="chapter" data-level="2.3.2" data-path="10-logit.html"><a href="#%E6%8E%88%E6%A5%AD%E7%94%A8%E3%81%AE%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%82%92%E4%BD%9C%E3%82%8D%E3%81%86"><i class="fa fa-check"></i><b>2.3.2</b> 授業用のフォルダを作ろう</a></li>
+<li class="chapter" data-level="2.3.3" data-path="10-logit.html"><a href="#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%91%E3%82%B9%E3%81%A8%E4%BD%9C%E6%A5%AD%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA"><i class="fa fa-check"></i><b>2.3.3</b> ファイルパスと作業ディレクトリ</a></li>
+<li class="chapter" data-level="2.3.4" data-path="10-logit.html"><a href="#%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E4%BD%9C%E6%88%90%E3%81%AE%E6%89%8B%E9%A0%86"><i class="fa fa-check"></i><b>2.3.4</b> プロジェクト作成の手順</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="10-logit.html"><a href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E6%93%8D%E4%BD%9C"><i class="fa fa-check"></i><b>2.4</b> 基本的な操作</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="10-logit.html"><a href="#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"><i class="fa fa-check"></i><b>2.4.1</b> スクリプトファイル</a></li>
+<li class="chapter" data-level="2.4.2" data-path="10-logit.html"><a href="#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E4%BF%9D%E5%AD%98%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>2.4.2</b> スクリプトファイルを保存する</a></li>
+<li class="chapter" data-level="2.4.3" data-path="10-logit.html"><a href="#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB"><i class="fa fa-check"></i><b>2.4.3</b> パッケージのインストール</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="10-logit.html"><a href="#%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E8%A8%AD%E5%AE%9A"><i class="fa fa-check"></i><b>2.5</b> その他の設定</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="10-logit.html"><a href="#rstudio%E3%82%92%E9%96%89%E3%81%98%E3%82%8B%E9%9A%9B%E3%81%AEworkspace%E4%BF%9D%E5%AD%98%E3%81%AE%E8%AD%A6%E5%91%8A%E3%82%92%E5%89%8A%E9%99%A4"><i class="fa fa-check"></i><b>2.5.1</b> RStudioを閉じる際のWorkspace保存の警告を削除</a></li>
+<li class="chapter" data-level="2.5.2" data-path="10-logit.html"><a href="#%E3%82%B0%E3%83%A9%E3%83%95%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E%E8%A1%A8%E7%A4%BA"><i class="fa fa-check"></i><b>2.5.2</b> グラフの日本語表示</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="10-logit.html"><a href="#r%E3%81%AE%E5%9F%BA%E7%A4%8E"><i class="fa fa-check"></i><b>2.6</b> Rの基礎</a></li>
+<li class="chapter" data-level="2.7" data-path="10-logit.html"><a href="#%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E5%87%BA%E3%81%9F%E3%81%A8%E3%81%8D%E3%81%AB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E7%AE%87%E6%89%80"><i class="fa fa-check"></i><b>2.7</b> エラーが出たときに確認する箇所</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="import.html"><a href="import.html"><i class="fa fa-check"></i><b>3</b> データの読み込み</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="10-logit.html"><a href="#r%E3%81%AE%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF"><i class="fa fa-check"></i><b>3.1</b> Rのサンプルデータの読み込み</a></li>
+<li class="chapter" data-level="3.2" data-path="10-logit.html"><a href="#%E4%BD%9C%E6%A5%AD%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E4%B8%8A%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF"><i class="fa fa-check"></i><b>3.2</b> 作業ディレクトリ上のデータの読み込み</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="import.html"><a href="import.html#import_dir"><i class="fa fa-check"></i><b>3.2.1</b> データを置く場所を作る</a></li>
+<li class="chapter" data-level="3.2.2" data-path="10-logit.html"><a href="#csv%E5%BD%A2%E5%BC%8F%E3%81%AE%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"><i class="fa fa-check"></i><b>3.2.2</b> csv形式のファイル</a></li>
+<li class="chapter" data-level="3.2.3" data-path="10-logit.html"><a href="#xlsx%E5%BD%A2%E5%BC%8F%E3%81%AE%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"><i class="fa fa-check"></i><b>3.2.3</b> xlsx形式のファイル</a></li>
+<li class="chapter" data-level="3.2.4" data-path="import.html"><a href="import.html#import_rds"><i class="fa fa-check"></i><b>3.2.4</b> rds形式のファイル</a></li>
+<li class="chapter" data-level="3.2.5" data-path="10-logit.html"><a href="#sav%E5%BD%A2%E5%BC%8F%E3%81%AE%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"><i class="fa fa-check"></i><b>3.2.5</b> sav形式のファイル</a></li>
+<li class="chapter" data-level="3.2.6" data-path="10-logit.html"><a href="#dta%E5%BD%A2%E5%BC%8F%E3%81%AE%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"><i class="fa fa-check"></i><b>3.2.6</b> dta形式のファイル</a></li>
+<li class="chapter" data-level="3.2.7" data-path="10-logit.html"><a href="#%E6%96%87%E5%AD%97%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E9%96%A2%E3%82%8F%E3%82%8B%E5%95%8F%E9%A1%8C"><i class="fa fa-check"></i><b>3.2.7</b> 文字コードに関わる問題</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="10-logit.html"><a href="#%E3%82%A6%E3%82%A7%E3%83%96%E4%B8%8A%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF"><i class="fa fa-check"></i><b>3.3</b> ウェブ上のデータの読み込み</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="handling.html"><a href="handling.html"><i class="fa fa-check"></i><b>4</b> データの加工</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="10-logit.html"><a href="#%E6%9C%AC%E8%B3%87%E6%96%99%E3%81%A7%E7%94%A8%E3%81%84%E3%82%8B%E3%83%87%E3%83%BC%E3%82%BF"><i class="fa fa-check"></i><b>4.1</b> 本資料で用いるデータ</a></li>
+<li class="chapter" data-level="4.2" data-path="10-logit.html"><a href="#%E3%83%91%E3%82%A4%E3%83%97%E6%BC%94%E7%AE%97%E5%AD%90%E3%81%BE%E3%81%9F%E3%81%AF"><i class="fa fa-check"></i><b>4.2</b> パイプ演算子：%&gt;%または|&gt;</a></li>
+<li class="chapter" data-level="4.3" data-path="10-logit.html"><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E5%8A%A0%E5%B7%A5%E3%81%AE%E3%82%B9%E3%83%86%E3%83%83%E3%83%97"><i class="fa fa-check"></i><b>4.3</b> データ加工のステップ</a></li>
+<li class="chapter" data-level="4.4" data-path="10-logit.html"><a href="#%E5%A4%89%E6%95%B0%E3%81%AE%E4%BD%9C%E6%88%90"><i class="fa fa-check"></i><b>4.4</b> 変数の作成</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="10-logit.html"><a href="#%E5%A4%89%E6%95%B0%E3%81%AE%E5%9E%8B%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%A8%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0"><i class="fa fa-check"></i><b>4.4.1</b> 変数の型（カテゴリ変数と連続変数）</a></li>
+<li class="chapter" data-level="4.4.2" data-path="10-logit.html"><a href="#%E6%96%B0%E3%81%9F%E3%81%AA%E5%A4%89%E6%95%B0%E3%82%92%E3%81%A4%E3%81%8F%E3%82%8Bmutate"><i class="fa fa-check"></i><b>4.4.2</b> 新たな変数をつくる：mutate()</a></li>
+<li class="chapter" data-level="4.4.3" data-path="10-logit.html"><a href="#%E6%9D%A1%E4%BB%B6%E3%81%AE%E6%8C%87%E5%AE%9Aif_else"><i class="fa fa-check"></i><b>4.4.3</b> 条件の指定：if_else()</a></li>
+<li class="chapter" data-level="4.4.4" data-path="10-logit.html"><a href="#%E8%A4%87%E6%95%B0%E6%9D%A1%E4%BB%B6%E3%81%AE%E6%8C%87%E5%AE%9Acase_when"><i class="fa fa-check"></i><b>4.4.4</b> 複数条件の指定：case_when()</a></li>
+<li class="chapter" data-level="4.4.5" data-path="10-logit.html"><a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%B8%E5%A4%89%E6%8F%9Bfactor"><i class="fa fa-check"></i><b>4.4.5</b> カテゴリ変数へ変換：factor()</a></li>
+<li class="chapter" data-level="4.4.6" data-path="10-logit.html"><a href="#%E5%BF%85%E8%A6%81%E3%81%AA%E5%88%97%E3%81%AE%E3%81%BF%E6%8A%BD%E5%87%BAselect"><i class="fa fa-check"></i><b>4.4.6</b> 必要な列のみ抽出：select()</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="handling.html"><a href="handling.html#handling-tips"><i class="fa fa-check"></i><b>4.5</b> 変数の作成についてのtips</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="10-logit.html"><a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%82%92%E3%81%BE%E3%81%A8%E3%82%81%E3%82%8B"><i class="fa fa-check"></i><b>4.5.1</b> カテゴリをまとめる</a></li>
+<li class="chapter" data-level="4.5.2" data-path="10-logit.html"><a href="#%E8%A4%87%E6%95%B0%E3%81%AE%E5%A4%89%E6%95%B0%E3%82%92%E7%B5%84%E3%81%BF%E5%90%88%E3%82%8F%E3%81%9B%E3%81%9F%E5%A4%89%E6%95%B0%E3%82%92%E4%BD%9C%E3%82%8B"><i class="fa fa-check"></i><b>4.5.2</b> 複数の変数を組み合わせた変数を作る</a></li>
+<li class="chapter" data-level="4.5.3" data-path="10-logit.html"><a href="#%E5%9D%87%E7%AD%89%E3%81%AA%E9%A0%86%E5%BA%8F%E3%82%92%E4%BB%AE%E5%AE%9A%E3%81%97%E3%81%A6%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%A8%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>4.5.3</b> 均等な順序を仮定して連続変数とする</a></li>
+<li class="chapter" data-level="4.5.4" data-path="10-logit.html"><a href="#%E7%84%A1%E5%9B%9E%E7%AD%94%E9%9D%9E%E8%A9%B2%E5%BD%93%E3%82%8F%E3%81%8B%E3%82%89%E3%81%AA%E3%81%84%E3%81%AA%E3%81%A9%E3%82%92na%E3%81%AB"><i class="fa fa-check"></i><b>4.5.4</b> 無回答、非該当、「わからない」などをNAに</a></li>
+<li class="chapter" data-level="4.5.5" data-path="10-logit.html"><a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%AE%E5%8C%BA%E9%96%93%E3%81%AE%E4%B8%AD%E7%82%B9%E3%82%92%E3%81%A8%E3%81%A3%E3%81%A6%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%A8%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>4.5.5</b> カテゴリ変数の区間の中点をとって連続変数とする</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="10-logit.html"><a href="#%E3%82%92%E3%81%A4%E3%81%AA%E3%81%92%E3%81%A6%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%82%92%E3%81%BE%E3%81%A8%E3%82%81%E3%82%8B"><i class="fa fa-check"></i><b>4.6</b> %&gt;%をつなげてコマンドをまとめる</a></li>
+<li class="chapter" data-level="4.7" data-path="handling.html"><a href="handling.html#handling_sample"><i class="fa fa-check"></i><b>4.7</b> サンプルの限定</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="10-logit.html"><a href="#%E8%A9%B2%E5%BD%93%E3%81%99%E3%82%8B%E3%82%B1%E3%83%BC%E3%82%B9%E3%81%A0%E3%81%91%E3%82%92%E6%AE%8B%E3%81%99filter"><i class="fa fa-check"></i><b>4.7.1</b> 該当するケースだけを残す：filter()</a></li>
+<li class="chapter" data-level="4.7.2" data-path="10-logit.html"><a href="#%E6%AC%A0%E6%90%8D%E5%80%A4%E3%81%AE%E6%89%B1%E3%81%84"><i class="fa fa-check"></i><b>4.7.2</b> 欠損値の扱い</a></li>
+<li class="chapter" data-level="4.7.3" data-path="10-logit.html"><a href="#%E5%A4%96%E3%82%8C%E5%80%A4%E3%81%AE%E6%89%B1%E3%81%84"><i class="fa fa-check"></i><b>4.7.3</b> 外れ値の扱い</a></li>
+<li class="chapter" data-level="4.7.4" data-path="10-logit.html"><a href="#%E5%88%86%E6%9E%90%E7%94%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99"><i class="fa fa-check"></i><b>4.7.4</b> 分析用データを書き出す</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="10-logit.html"><a href="#%E7%99%BA%E5%B1%95%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%BF%BD%E5%8A%A0"><i class="fa fa-check"></i><b>4.8</b> 【発展】データの追加</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="descriptives.html"><a href="descriptives.html"><i class="fa fa-check"></i><b>5</b> 1変数の集計</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="10-logit.html"><a href="#%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%82%92%E9%9B%86%E8%A8%88%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>5.1</b> 連続変数を集計する</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="descriptives.html"><a href="descriptives.html#descriptives_summarize"><i class="fa fa-check"></i><b>5.1.1</b> 要約統計量の計算</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="descriptives.html"><a href="descriptives.html#descriptives_ggplot"><i class="fa fa-check"></i><b>5.2</b> 分布をみる</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="10-logit.html"><a href="#%E3%83%92%E3%82%B9%E3%83%88%E3%82%B0%E3%83%A9%E3%83%A0%E3%81%A8ggplot%E3%81%AE%E5%B0%8E%E5%85%A5"><i class="fa fa-check"></i><b>5.2.1</b> ヒストグラムとggplotの導入</a></li>
+<li class="chapter" data-level="5.2.2" data-path="10-logit.html"><a href="#ggplot%E3%81%AE%E8%A8%AD%E5%AE%9A%E6%97%A5%E6%9C%AC%E8%AA%9E%E9%96%A2%E4%BF%82"><i class="fa fa-check"></i><b>5.2.2</b> ggplotの設定（日本語関係）</a></li>
+<li class="chapter" data-level="5.2.3" data-path="10-logit.html"><a href="#%E8%BB%B8%E3%81%AB%E5%90%8D%E5%89%8D%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B"><i class="fa fa-check"></i><b>5.2.3</b> 軸に名前をつける</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="10-logit.html"><a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%82%92%E9%9B%86%E8%A8%88%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>5.3</b> カテゴリ変数を集計する</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="descriptives.html"><a href="descriptives.html#descriptives_table"><i class="fa fa-check"></i><b>5.3.1</b> 度数の確認</a></li>
+<li class="chapter" data-level="5.3.2" data-path="10-logit.html"><a href="#%E5%88%86%E5%B8%83%E3%81%AE%E5%8F%AF%E8%A6%96%E5%8C%96%E6%A3%92%E3%82%B0%E3%83%A9%E3%83%95"><i class="fa fa-check"></i><b>5.3.2</b> 分布の可視化：棒グラフ</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="descriptives.html"><a href="descriptives.html#descriptives_gtsummary"><i class="fa fa-check"></i><b>5.4</b> 記述統計量の一覧表を作る</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="10-logit.html"><a href="#%E8%A8%98%E8%BF%B0%E7%B5%B1%E8%A8%88%E9%87%8F%E3%81%AE%E4%B8%80%E8%A6%A7%E8%A1%A8"><i class="fa fa-check"></i><b>5.4.1</b> 記述統計量の一覧表</a></li>
+<li class="chapter" data-level="5.4.2" data-path="10-logit.html"><a href="#%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E5%88%A5%E3%81%AE%E8%A8%98%E8%BF%B0%E7%B5%B1%E8%A8%88%E9%87%8F%E3%81%AE%E4%B8%80%E8%A6%A7%E8%A1%A8"><i class="fa fa-check"></i><b>5.4.2</b> グループ別の記述統計量の一覧表</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="10-logit.html"><a href="#%E7%B5%90%E6%9E%9C%E3%82%92%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99"><i class="fa fa-check"></i><b>5.5</b> 結果をファイルに書き出す</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="10-logit.html"><a href="#%E7%B5%90%E6%9E%9C%E3%82%92%E5%85%A5%E3%82%8C%E3%82%8B%E3%81%9F%E3%82%81%E3%81%AE%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%82%92%E4%BD%9C%E3%82%8B"><i class="fa fa-check"></i><b>5.5.1</b> 結果を入れるためのフォルダを作る</a></li>
+<li class="chapter" data-level="5.5.2" data-path="descriptives.html"><a href="descriptives.html#descriptive_export_ggplot"><i class="fa fa-check"></i><b>5.5.2</b> ggplotで作成した図を書き出す</a></li>
+<li class="chapter" data-level="5.5.3" data-path="descriptives.html"><a href="descriptives.html#descriptive_export_tbl_summary"><i class="fa fa-check"></i><b>5.5.3</b> 記述統計の一覧表をwordに書き出す</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="10-logit.html"><a href="#tbl_summary%E3%81%A7%E5%80%A4%E3%81%AE%E5%B0%91%E3%81%AA%E3%81%84%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%A8%E3%81%97%E3%81%A6%E9%9B%86%E8%A8%88%E3%81%95%E3%82%8C%E3%82%8B%E5%95%8F%E9%A1%8C%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6"><i class="fa fa-check"></i><b>5.6</b> tbl_summary()で値の少ない連続変数がカテゴリ変数として集計される問題について</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="tabulate.html"><a href="tabulate.html"><i class="fa fa-check"></i><b>6</b> 2変数の集計</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="tabulate.html"><a href="tabulate.html#tabulate_summarize"><i class="fa fa-check"></i><b>6.1</b> 平均値の比較</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="10-logit.html"><a href="#%E5%9F%BA%E6%9C%AC"><i class="fa fa-check"></i><b>6.1.1</b> 基本</a></li>
+<li class="chapter" data-level="6.1.2" data-path="10-logit.html"><a href="#%E6%A3%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%AB%E3%82%88%E3%82%8B%E5%8F%AF%E8%A6%96%E5%8C%96"><i class="fa fa-check"></i><b>6.1.2</b> 棒グラフによる可視化</a></li>
+<li class="chapter" data-level="6.1.3" data-path="10-logit.html"><a href="#%E8%A4%87%E6%95%B0%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%81%AE%E7%B5%84%E3%81%BF%E5%90%88%E3%82%8F%E3%81%9B"><i class="fa fa-check"></i><b>6.1.3</b> 複数カテゴリの組み合わせ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="10-logit.html"><a href="#%E5%88%86%E5%B8%83%E3%81%AE%E6%AF%94%E8%BC%83"><i class="fa fa-check"></i><b>6.2</b> 分布の比較</a></li>
+<li class="chapter" data-level="6.3" data-path="10-logit.html"><a href="#%E3%82%AF%E3%83%AD%E3%82%B9%E8%A1%A8"><i class="fa fa-check"></i><b>6.3</b> クロス表</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="10-logit.html"><a href="#%E5%9F%BA%E6%9C%AC-1"><i class="fa fa-check"></i><b>6.3.1</b> 基本</a></li>
+<li class="chapter" data-level="6.3.2" data-path="10-logit.html"><a href="#%E3%82%AB%E3%82%A42%E4%B9%97%E6%A4%9C%E5%AE%9A%E8%A3%9C%E8%B6%B3"><i class="fa fa-check"></i><b>6.3.2</b> カイ2乗検定（補足）</a></li>
+<li class="chapter" data-level="6.3.3" data-path="10-logit.html"><a href="#%E3%81%8D%E3%82%8C%E3%81%84%E3%81%AA%E3%82%AF%E3%83%AD%E3%82%B9%E8%A1%A8%E3%82%92%E3%81%A4%E3%81%8F%E3%82%8B---gtsummarytbl_cross"><i class="fa fa-check"></i><b>6.3.3</b> きれいなクロス表をつくる - gtsummary::tbl_cross()</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="10-logit.html"><a href="#%E3%82%AF%E3%83%AD%E3%82%B9%E8%A1%A8%E3%82%92%E5%9B%B3%E7%A4%BA%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>6.4</b> クロス表を図示する</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="10-logit.html"><a href="#count%E3%82%92%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>6.4.1</b> count()を利用する</a></li>
+<li class="chapter" data-level="6.4.2" data-path="10-logit.html"><a href="#count%E3%81%AE%E6%B3%A8%E6%84%8F%E7%82%B9"><i class="fa fa-check"></i><b>6.4.2</b> count()の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="10-logit.html"><a href="#%E6%95%A3%E5%B8%83%E5%9B%B3"><i class="fa fa-check"></i><b>6.5</b> 散布図</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="10-logit.html"><a href="#%E6%95%A3%E5%B8%83%E5%9B%B3%E3%82%92%E3%81%BF%E3%82%8B"><i class="fa fa-check"></i><b>6.5.1</b> 散布図をみる</a></li>
+<li class="chapter" data-level="6.5.2" data-path="10-logit.html"><a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%81%94%E3%81%A8%E3%81%AB%E6%95%A3%E5%B8%83%E5%9B%B3%E3%82%92%E5%88%86%E3%81%91%E3%82%8B"><i class="fa fa-check"></i><b>6.5.2</b> カテゴリごとに散布図を分ける</a></li>
+<li class="chapter" data-level="6.5.3" data-path="10-logit.html"><a href="#%E7%9B%B8%E9%96%A2%E4%BF%82%E6%95%B0"><i class="fa fa-check"></i><b>6.5.3</b> 相関係数</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="10-logit.html"><a href="#%E5%A4%89%E6%95%B0%E9%9B%86%E8%A8%88%E3%81%AE%E3%81%A8%E3%81%8D%E3%81%AE%E3%81%8F%E3%81%B5%E3%81%86"><i class="fa fa-check"></i><b>6.6</b> 2変数集計のときのくふう</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="10-logit.html"><a href="#%E5%80%A4%E3%81%8C%E7%B2%97%E3%81%84%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%82%92%E6%89%B1%E3%81%86"><i class="fa fa-check"></i><b>6.6.1</b> 値が粗い連続変数を扱う</a></li>
+<li class="chapter" data-level="6.6.2" data-path="10-logit.html"><a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%81%8C%E5%A4%9A%E3%81%84%E3%82%AF%E3%83%AD%E3%82%B9%E8%A1%A8%E3%82%92%E6%89%B1%E3%81%86"><i class="fa fa-check"></i><b>6.6.2</b> カテゴリが多いクロス表を扱う</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="10-logit.html"><a href="#%E7%B5%90%E6%9E%9C%E3%82%92%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99-1"><i class="fa fa-check"></i><b>6.7</b> 結果をファイルに書き出す</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="10-logit.html"><a href="#ggplot%E3%81%A7%E4%BD%9C%E6%88%90%E3%81%97%E3%81%9F%E5%9B%B3%E3%82%92%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99"><i class="fa fa-check"></i><b>6.7.1</b> ggplotで作成した図を書き出す</a></li>
+<li class="chapter" data-level="6.7.2" data-path="10-logit.html"><a href="#%E3%82%AF%E3%83%AD%E3%82%B9%E8%A1%A8%E3%82%92word%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99"><i class="fa fa-check"></i><b>6.7.2</b> クロス表をwordファイルに書き出す</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="regression_basic.html"><a href="regression_basic.html"><i class="fa fa-check"></i><b>7</b> 回帰分析の基礎</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="10-logit.html"><a href="#%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"><i class="fa fa-check"></i><b>7.1</b> 回帰分析とは何か</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="10-logit.html"><a href="#%E6%95%A3%E5%B8%83%E5%9B%B3%E3%82%92%E7%9C%BA%E3%82%81%E3%82%8B"><i class="fa fa-check"></i><b>7.1.1</b> 散布図を眺める</a></li>
+<li class="chapter" data-level="7.1.2" data-path="10-logit.html"><a href="#%E5%9B%9E%E5%B8%B0%E5%BC%8F%E3%81%AE%E8%AA%AD%E3%81%BF%E6%96%B9"><i class="fa fa-check"></i><b>7.1.2</b> 回帰式の読み方</a></li>
+<li class="chapter" data-level="7.1.3" data-path="10-logit.html"><a href="#%E5%9B%9E%E5%B8%B0%E5%BC%8F%E3%81%AE%E6%B1%BA%E3%82%81%E6%96%B9%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%97%E6%B3%95"><i class="fa fa-check"></i><b>7.1.3</b> 回帰式の決め方：最小二乗法</a></li>
+<li class="chapter" data-level="7.1.4" data-path="10-logit.html"><a href="#%E6%AF%8D%E9%9B%86%E5%9B%A3%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E9%96%A2%E4%BF%82%E3%81%AE%E6%8E%A8%E6%B8%AC"><i class="fa fa-check"></i><b>7.1.4</b> 母集団における関係の推測</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="10-logit.html"><a href="#%E7%8B%AC%E7%AB%8B%E5%A4%89%E6%95%B0%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88"><i class="fa fa-check"></i><b>7.2</b> 独立変数がカテゴリ変数の場合</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="10-logit.html"><a href="#%E5%80%A4%E3%81%AE%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA"><i class="fa fa-check"></i><b>7.2.1</b> 2値のカテゴリ</a></li>
+<li class="chapter" data-level="7.2.2" data-path="10-logit.html"><a href="#%E5%80%A4%E4%BB%A5%E4%B8%8A%E3%81%AE%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA"><i class="fa fa-check"></i><b>7.2.2</b> 3値以上のカテゴリ</a></li>
+<li class="chapter" data-level="7.2.3" data-path="10-logit.html"><a href="#%E5%A4%89%E6%95%B0%E3%81%8Cfactor%E3%81%A7%E3%81%82%E3%82%8C%E3%81%B0%E8%87%AA%E5%8B%95%E3%81%A7%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%81%A8%E3%81%97%E3%81%A6%E6%8A%95%E5%85%A5%E3%81%95%E3%82%8C%E3%82%8B"><i class="fa fa-check"></i><b>7.2.3</b> 変数がfactorであれば自動でカテゴリとして投入される</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="regression_basic.html"><a href="regression_basic.html#regression_basic_binary"><i class="fa fa-check"></i><b>7.3</b> 従属変数が2値のカテゴリ変数（0/1）の場合</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="10-logit.html"><a href="#%E3%82%AF%E3%83%AD%E3%82%B9%E9%9B%86%E8%A8%88%E3%81%A8%E6%AF%94%E8%BC%83%E3%81%97%E3%81%AA%E3%81%8C%E3%82%89%E7%B5%90%E6%9E%9C%E3%82%92%E3%81%BF%E3%82%8B"><i class="fa fa-check"></i><b>7.3.1</b> クロス集計と比較しながら結果をみる</a></li>
+<li class="chapter" data-level="7.3.2" data-path="10-logit.html"><a href="#%E6%95%A3%E5%B8%83%E5%9B%B3%E3%81%A8%E6%AF%94%E8%BC%83%E3%81%97%E3%81%AA%E3%81%8C%E3%82%89%E7%B5%90%E6%9E%9C%E3%82%92%E3%81%BF%E3%82%8B"><i class="fa fa-check"></i><b>7.3.2</b> 散布図と比較しながら結果をみる</a></li>
+<li class="chapter" data-level="7.3.3" data-path="10-logit.html"><a href="#%E6%B3%A8%E6%84%8F%E7%82%B9"><i class="fa fa-check"></i><b>7.3.3</b> 注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="10-logit.html"><a href="#%E9%9D%9E%E7%B7%9A%E5%BD%A2%E3%81%AE%E9%96%A2%E9%80%A3"><i class="fa fa-check"></i><b>7.4</b> 非線形の関連</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="regression_basic.html"><a href="regression_basic.html#regression_basic_log"><i class="fa fa-check"></i><b>7.4.1</b> 対数変換</a></li>
+<li class="chapter" data-level="7.4.2" data-path="10-logit.html"><a href="#%E6%AC%A1%E9%96%A2%E6%95%B0%E5%9E%8B"><i class="fa fa-check"></i><b>7.4.2</b> 2次関数型</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="regression_basic.html"><a href="regression_basic.html#regression_modelsummary"><i class="fa fa-check"></i><b>7.5</b> 回帰分析の結果をきれいに表示する</a></li>
+<li class="chapter" data-level="7.6" data-path="regression_basic.html"><a href="regression_basic.html#regression_basic_export"><i class="fa fa-check"></i><b>7.6</b> 結果をファイルに書き出す</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="10-logit.html"><a href="#word%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99"><i class="fa fa-check"></i><b>7.6.1</b> Wordファイルに書き出す</a></li>
+<li class="chapter" data-level="7.6.2" data-path="regression_basic.html"><a href="regression_basic.html#regression_output_excel"><i class="fa fa-check"></i><b>7.6.2</b> Excelファイルに書き出す</a></li>
+<li class="chapter" data-level="7.6.3" data-path="regression_basic.html"><a href="regression_basic.html#regression_output_pptx"><i class="fa fa-check"></i><b>7.6.3</b> PowerPointファイルに書き出す</a></li>
+<li class="chapter" data-level="7.6.4" data-path="regression_basic.html"><a href="regression_basic.html#regression_output_rtf"><i class="fa fa-check"></i><b>7.6.4</b> rtfファイルに書き出す</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="regression_advanced.html"><a href="regression_advanced.html"><i class="fa fa-check"></i><b>8</b> 回帰分析の活用</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="10-logit.html"><a href="#%E9%87%8D%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90"><i class="fa fa-check"></i><b>8.1</b> 重回帰分析</a></li>
+<li class="chapter" data-level="8.2" data-path="10-logit.html"><a href="#%E4%BA%A4%E7%B5%A1%E8%A6%81%E5%9B%A0%E3%81%AE%E7%B5%B1%E5%88%B6"><i class="fa fa-check"></i><b>8.2</b> 交絡要因の統制</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="10-logit.html"><a href="#%E4%BA%A4%E7%B5%A1%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"><i class="fa fa-check"></i><b>8.2.1</b> 交絡とは何か</a></li>
+<li class="chapter" data-level="8.2.2" data-path="10-logit.html"><a href="#%E7%B5%90%E6%9E%9C%E3%81%AE%E6%AF%94%E8%BC%83%E3%81%A8%E8%A7%A3%E9%87%88"><i class="fa fa-check"></i><b>8.2.2</b> 結果の比較と解釈</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="10-logit.html"><a href="#%E5%AA%92%E4%BB%8B%E5%88%86%E6%9E%90%E8%A6%81%E5%9B%A0%E5%88%86%E8%A7%A3"><i class="fa fa-check"></i><b>8.3</b> 媒介分析／要因分解</a></li>
+<li class="chapter" data-level="8.4" data-path="10-logit.html"><a href="#%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%81%AE%E5%AE%9F%E9%9A%9B"><i class="fa fa-check"></i><b>8.4</b> 回帰分析の実際</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="10-logit.html"><a href="#%E4%BA%A4%E7%B5%A1%E3%81%A8%E5%AA%92%E4%BB%8B"><i class="fa fa-check"></i><b>8.4.1</b> 交絡と媒介</a></li>
+<li class="chapter" data-level="8.4.2" data-path="10-logit.html"><a href="#%E5%BE%93%E5%B1%9E%E5%A4%89%E6%95%B0%E3%82%92%E5%AF%BE%E6%95%B0%E5%A4%89%E6%8F%9B%E3%81%97%E3%81%9F%E5%A0%B4%E5%90%88%E3%81%AE%E8%A7%A3%E9%87%88broom%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E6%B4%BB%E7%94%A8"><i class="fa fa-check"></i><b>8.4.2</b> 従属変数を対数変換した場合の解釈：broomパッケージの活用</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="10-logit.html"><a href="#%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%81%A7%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A1%E3%81%AA%E5%9B%B0%E3%82%8A%E3%81%94%E3%81%A8%E3%81%B8%E3%81%AE%E5%AF%BE%E5%87%A6"><i class="fa fa-check"></i><b>8.5</b> 回帰分析でありがちな困りごとへの対処</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="10-logit.html"><a href="#%E5%8F%82%E7%85%A7%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%81%AE%E5%85%A5%E3%82%8C%E6%9B%BF%E3%81%88"><i class="fa fa-check"></i><b>8.5.1</b> 参照カテゴリの入れ替え</a></li>
+<li class="chapter" data-level="8.5.2" data-path="10-logit.html"><a href="#%E5%8D%98%E4%BD%8D%E3%81%AE%E5%A4%89%E6%9B%B4"><i class="fa fa-check"></i><b>8.5.2</b> 単位の変更</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="10-logit.html"><a href="#%E7%B5%90%E6%9E%9C%E3%82%92%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99-2"><i class="fa fa-check"></i><b>8.6</b> 結果をファイルに書き出す</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regression_interaction.html"><a href="regression_interaction.html"><i class="fa fa-check"></i><b>9</b> 交互作用</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="10-logit.html"><a href="#%E4%BA%A4%E4%BA%92%E4%BD%9C%E7%94%A8%E3%81%A8%E3%81%AF%E3%81%AA%E3%81%AB%E3%81%8B"><i class="fa fa-check"></i><b>9.1</b> 交互作用とはなにか</a></li>
+<li class="chapter" data-level="9.2" data-path="10-logit.html"><a href="#x%E3%81%8C%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0z%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%BE%E3%81%9F%E3%81%AF%E3%81%9D%E3%81%AE%E9%80%86%E3%81%AE%E5%A0%B4%E5%90%88"><i class="fa fa-check"></i><b>9.2</b> xが連続変数、zがカテゴリ変数（またはその逆）の場合</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="10-logit.html"><a href="#%E5%AE%9F%E4%BE%8B%E6%95%B0%E7%9A%84%E6%80%9D%E8%80%83%E5%8A%9B%E3%81%8C%E8%B3%83%E9%87%91%E3%82%92%E9%AB%98%E3%82%81%E3%82%8B%E5%8A%B9%E6%9E%9C%E3%81%AF%E6%80%A7%E5%88%A5%E3%81%AB%E3%82%88%E3%81%A3%E3%81%A6%E7%95%B0%E3%81%AA%E3%82%8B%E3%81%8B"><i class="fa fa-check"></i><b>9.2.1</b> 実例：数的思考力が賃金を高める効果は性別によって異なるか？</a></li>
+<li class="chapter" data-level="9.2.2" data-path="10-logit.html"><a href="#%E7%B5%90%E6%9E%9C%E3%82%92%E5%9B%B3%E7%A4%BA%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>9.2.2</b> 結果を図示する</a></li>
+<li class="chapter" data-level="9.2.3" data-path="10-logit.html"><a href="#x%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0z%E3%81%8C%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88"><i class="fa fa-check"></i><b>9.2.3</b> xがカテゴリ変数、zが連続変数の場合</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="10-logit.html"><a href="#x%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0z%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88"><i class="fa fa-check"></i><b>9.3</b> xがカテゴリ変数、zがカテゴリ変数の場合</a></li>
+<li class="chapter" data-level="9.4" data-path="10-logit.html"><a href="#x%E3%81%8C%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0z%E3%81%8C%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88%E4%BD%9C%E6%88%90%E4%B8%AD"><i class="fa fa-check"></i><b>9.4</b> xが連続変数、zが連続変数の場合（作成中）</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="logit.html"><a href="logit.html"><i class="fa fa-check"></i><b>10</b> ロジスティック回帰分析</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="10-logit.html"><a href="#%E4%BA%8C%E5%80%A4%E5%A4%89%E6%95%B0%E3%82%92%E5%BE%93%E5%B1%9E%E5%A4%89%E6%95%B0%E3%81%AB%E3%81%99%E3%82%8B%E7%B7%9A%E5%BD%A2%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%81%AB%E3%82%88%E3%82%8B%E6%96%B9%E6%B3%95"><i class="fa fa-check"></i><b>10.1</b> 二値変数を従属変数にする：線形回帰分析による方法</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="10-logit.html"><a href="#%E7%B7%9A%E5%BD%A2%E7%A2%BA%E7%8E%87%E3%83%A2%E3%83%87%E3%83%AB"><i class="fa fa-check"></i><b>10.1.1</b> 線形確率モデル</a></li>
+<li class="chapter" data-level="10.1.2" data-path="10-logit.html"><a href="#%E3%83%AD%E3%83%90%E3%82%B9%E3%83%88%E6%A8%99%E6%BA%96%E8%AA%A4%E5%B7%AE%E6%AE%8B%E5%B7%AE%E3%81%8C%E6%AD%A3%E8%A6%8F%E5%88%86%E5%B8%83%E3%81%97%E3%81%AA%E3%81%84%E5%95%8F%E9%A1%8C%E3%81%B8%E3%81%AE%E5%AF%BE%E5%87%A6"><i class="fa fa-check"></i><b>10.1.2</b> ロバスト標準誤差：残差が正規分布しない問題への対処</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="10-logit.html"><a href="#%E3%83%AD%E3%82%B8%E3%82%B9%E3%83%86%E3%82%A3%E3%83%83%E3%82%AF%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%81%A8%E3%81%AF"><i class="fa fa-check"></i><b>10.2</b> ロジスティック回帰分析とは</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="10-logit.html"><a href="#%E7%B7%9A%E5%BD%A2%E7%A2%BA%E7%8E%87%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E5%95%8F%E9%A1%8C%E7%82%B9"><i class="fa fa-check"></i><b>10.2.1</b> 線形確率モデルの問題点</a></li>
+<li class="chapter" data-level="10.2.2" data-path="10-logit.html"><a href="#%E5%AF%BE%E6%95%B0%E3%82%AA%E3%83%83%E3%82%BA%E6%AF%94%E5%8A%B9%E6%9E%9C%E3%82%92%E6%AF%94%E3%81%A7%E6%B8%AC%E5%AE%9A%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>10.2.2</b> （対数）オッズ比：効果を「比」で測定する</a></li>
+<li class="chapter" data-level="10.2.3" data-path="10-logit.html"><a href="#%E3%83%AD%E3%82%B8%E3%82%B9%E3%83%86%E3%82%A3%E3%83%83%E3%82%AF%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%83%AD%E3%82%B8%E3%83%83%E3%83%88%E3%83%A2%E3%83%87%E3%83%AB"><i class="fa fa-check"></i><b>10.2.3</b> ロジスティック回帰分析（ロジットモデル）</a></li>
+<li class="chapter" data-level="10.2.4" data-path="10-logit.html"><a href="#%E7%9B%B4%E7%B7%9A%E3%81%A8%E3%83%AD%E3%82%B8%E3%82%B9%E3%83%86%E3%82%A3%E3%83%83%E3%82%AF%E6%9B%B2%E7%B7%9A"><i class="fa fa-check"></i><b>10.2.4</b> 直線とロジスティック曲線</a></li>
+<li class="chapter" data-level="10.2.5" data-path="10-logit.html"><a href="#%E6%8E%A8%E5%AE%9A"><i class="fa fa-check"></i><b>10.2.5</b> 推定</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="10-logit.html"><a href="#%E6%9C%80%E5%B0%A4%E6%8E%A8%E5%AE%9A%E4%BD%9C%E6%88%90%E4%B8%AD"><i class="fa fa-check"></i><b>10.3</b> 最尤推定（作成中）</a></li>
+<li class="chapter" data-level="10.4" data-path="10-logit.html"><a href="#%E8%A7%A3%E9%87%88%E3%82%92%E6%B7%B1%E3%82%81%E3%82%8B"><i class="fa fa-check"></i><b>10.4</b> 解釈を深める</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="10-logit.html"><a href="#%E7%B7%9A%E5%BD%A2%E7%A2%BA%E7%8E%87%E3%83%A2%E3%83%87%E3%83%AB%E3%81%A8%E3%83%AD%E3%82%B8%E3%83%83%E3%83%88%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%AF%94%E8%BC%83"><i class="fa fa-check"></i><b>10.4.1</b> 線形確率モデルとロジットモデルの比較</a></li>
+<li class="chapter" data-level="10.4.2" data-path="10-logit.html"><a href="#%E5%B9%B3%E5%9D%87%E9%99%90%E7%95%8C%E5%8A%B9%E6%9E%9C"><i class="fa fa-check"></i><b>10.4.2</b> 平均限界効果</a></li>
+<li class="chapter" data-level="10.4.3" data-path="10-logit.html"><a href="#margins%E5%B9%B3%E5%9D%87%E9%99%90%E7%95%8C%E5%8A%B9%E6%9E%9C%E3%82%92%E8%A8%88%E7%AE%97%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>10.4.3</b> margins()：平均限界効果を計算する</a></li>
+<li class="chapter" data-level="10.4.4" data-path="10-logit.html"><a href="#%E7%B7%9A%E5%BD%A2%E7%A2%BA%E7%8E%87%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E7%B5%90%E6%9E%9C%E3%81%A8%E3%81%AE%E6%AF%94%E8%BC%83"><i class="fa fa-check"></i><b>10.4.4</b> 線形確率モデルの結果との比較</a></li>
+<li class="chapter" data-level="10.4.5" data-path="10-logit.html"><a href="#%E3%83%AD%E3%82%B8%E3%83%83%E3%83%88%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%B3%A8%E6%84%8F%E7%82%B9%E3%83%A2%E3%83%87%E3%83%AB%E9%96%93%E6%AF%94%E8%BC%83"><i class="fa fa-check"></i><b>10.4.5</b> ロジットモデルの注意点：モデル間比較</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="10-logit.html"><a href="#%E3%81%BE%E3%81%A8%E3%82%81"><i class="fa fa-check"></i><b>10.5</b> まとめ</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="domain.html"><a href="domain.html"><i class="fa fa-check"></i><b>11</b> 社会学のデータ分析でよくある処理</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="10-logit.html"><a href="#ssm%E8%81%B7%E6%A5%AD%E5%B0%8F%E5%88%86%E9%A1%9E%E3%82%92%E5%A4%A7%E5%88%86%E9%A1%9E%E3%81%AB%E3%81%BE%E3%81%A8%E3%82%81%E3%82%8B"><i class="fa fa-check"></i><b>11.1</b> SSM職業小分類を大分類にまとめる</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="10-logit.html"><a href="#jgss%E3%81%AE%E5%A0%B4%E5%90%88"><i class="fa fa-check"></i><b>11.1.1</b> JGSSの場合</a></li>
+<li class="chapter" data-level="11.1.2" data-path="10-logit.html"><a href="#ssm%E3%81%AE%E5%A0%B4%E5%90%88"><i class="fa fa-check"></i><b>11.1.2</b> SSMの場合</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="10-logit.html"><a href="#%E6%97%A7%E5%88%B6%E5%AD%A6%E6%AD%B4%E3%81%A8%E6%96%B0%E5%88%B6%E5%AD%A6%E6%AD%B4%E3%81%AE%E5%AF%BE%E5%BF%9C"><i class="fa fa-check"></i><b>11.2</b> 旧制学歴と新制学歴の対応</a></li>
+<li class="chapter" data-level="11.3" data-path="domain.html"><a href="domain.html#domain_income"><i class="fa fa-check"></i><b>11.3</b> 年収カテゴリを連続変数にする</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="10-logit.html"><a href="#%E5%B9%B4%E5%8F%8E%E3%82%92%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%AB%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>11.3.1</b> 年収を連続変数にする</a></li>
+<li class="chapter" data-level="11.3.2" data-path="10-logit.html"><a href="#%E6%99%82%E9%96%93%E3%81%82%E3%81%9F%E3%82%8A%E8%B3%83%E9%87%91%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>11.3.2</b> 時間あたり賃金を作成する</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="10-logit.html"><a href="#%E9%83%BD%E9%81%93%E5%BA%9C%E7%9C%8C%E5%A4%89%E6%95%B0%E3%81%AE%E5%8A%A0%E5%B7%A5"><i class="fa fa-check"></i><b>11.4</b> 都道府県変数の加工</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="10-logit.html"><a href="#%E9%83%BD%E9%81%93%E5%BA%9C%E7%9C%8C%E3%81%AB%E3%83%A9%E3%83%99%E3%83%AB%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B"><i class="fa fa-check"></i><b>11.4.1</b> 都道府県にラベルをつける</a></li>
+<li class="chapter" data-level="11.4.2" data-path="10-logit.html"><a href="#%E9%83%BD%E9%81%93%E5%BA%9C%E7%9C%8C%E3%83%AC%E3%83%99%E3%83%AB%E3%81%AE%E6%8C%87%E6%A8%99%E3%82%92%E5%A4%96%E6%8C%BF%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>11.4.2</b> 都道府県レベルの指標を外挿する</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="writepaper.html"><a href="writepaper.html"><i class="fa fa-check"></i><b>12</b> 論文のまとめ方</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="10-logit.html"><a href="#%E5%85%A8%E4%BD%93%E3%81%AE%E6%A7%8B%E6%88%90"><i class="fa fa-check"></i><b>12.1</b> 全体の構成</a></li>
+<li class="chapter" data-level="12.2" data-path="10-logit.html"><a href="#%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB"><i class="fa fa-check"></i><b>12.2</b> タイトル</a></li>
+<li class="chapter" data-level="12.3" data-path="10-logit.html"><a href="#%E8%A6%81%E7%B4%84"><i class="fa fa-check"></i><b>12.3</b> 要約</a></li>
+<li class="chapter" data-level="12.4" data-path="10-logit.html"><a href="#%E5%BA%8F%E8%AB%96"><i class="fa fa-check"></i><b>12.4</b> 序論</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="10-logit.html"><a href="#%E5%95%8F%E9%A1%8C%E8%83%8C%E6%99%AF1%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>12.4.1</b> 問題背景（1段落）</a></li>
+<li class="chapter" data-level="12.4.2" data-path="10-logit.html"><a href="#%E5%85%88%E8%A1%8C%E7%A0%94%E7%A9%B6%E3%81%AE%E6%A4%9C%E8%A8%8E12%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>12.4.2</b> 先行研究の検討（1–2段落）</a></li>
+<li class="chapter" data-level="12.4.3" data-path="10-logit.html"><a href="#%E7%A0%94%E7%A9%B6%E7%9B%AE%E7%9A%84%E3%81%A8%E6%96%B9%E6%B3%9512%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>12.4.3</b> 研究目的と方法（1–2段落）</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="10-logit.html"><a href="#%E5%85%88%E8%A1%8C%E7%A0%94%E7%A9%B6%E7%90%86%E8%AB%96%E6%9E%A0%E7%B5%84%E3%81%BF%E4%BB%AE%E8%AA%AC"><i class="fa fa-check"></i><b>12.5</b> 先行研究・理論枠組み・仮説</a></li>
+<li class="chapter" data-level="12.6" data-path="10-logit.html"><a href="#%E6%96%B9%E6%B3%95"><i class="fa fa-check"></i><b>12.6</b> 方法</a>
+<ul>
+<li class="chapter" data-level="12.6.1" data-path="10-logit.html"><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%A8%E5%88%86%E6%9E%90%E5%AF%BE%E8%B1%A1"><i class="fa fa-check"></i><b>12.6.1</b> データと分析対象</a></li>
+<li class="chapter" data-level="12.6.2" data-path="10-logit.html"><a href="#%E5%A4%89%E6%95%B0"><i class="fa fa-check"></i><b>12.6.2</b> 変数</a></li>
+<li class="chapter" data-level="12.6.3" data-path="10-logit.html"><a href="#%E5%88%86%E6%9E%90%E6%89%8B%E6%B3%95"><i class="fa fa-check"></i><b>12.6.3</b> 分析手法</a></li>
+</ul></li>
+<li class="chapter" data-level="12.7" data-path="10-logit.html"><a href="#%E7%B5%90%E6%9E%9C"><i class="fa fa-check"></i><b>12.7</b> 結果</a>
+<ul>
+<li class="chapter" data-level="12.7.1" data-path="10-logit.html"><a href="#%E8%A8%98%E8%BF%B0%E7%9A%84%E5%88%86%E6%9E%90"><i class="fa fa-check"></i><b>12.7.1</b> 記述的分析</a></li>
+<li class="chapter" data-level="12.7.2" data-path="10-logit.html"><a href="#%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90"><i class="fa fa-check"></i><b>12.7.2</b> 回帰分析</a></li>
+</ul></li>
+<li class="chapter" data-level="12.8" data-path="10-logit.html"><a href="#%E7%B5%90%E8%AB%96"><i class="fa fa-check"></i><b>12.8</b> 結論</a>
+<ul>
+<li class="chapter" data-level="12.8.1" data-path="10-logit.html"><a href="#%E8%83%8C%E6%99%AF%E3%81%A8%E7%9B%AE%E7%9A%84%E3%81%AE%E5%86%8D%E7%A2%BA%E8%AA%8D1%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>12.8.1</b> 背景と目的の再確認（1段落）</a></li>
+<li class="chapter" data-level="12.8.2" data-path="10-logit.html"><a href="#%E5%88%86%E6%9E%90%E7%B5%90%E6%9E%9C%E3%81%AE%E8%A6%81%E7%B4%84%E3%81%A8%E8%A7%A3%E9%87%8824%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>12.8.2</b> 分析結果の要約と解釈（2–4段落）</a></li>
+<li class="chapter" data-level="12.8.3" data-path="10-logit.html"><a href="#%E8%AA%B2%E9%A1%8C%E9%99%90%E7%95%8C1%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>12.8.3</b> 課題・限界（1段落）</a></li>
+<li class="chapter" data-level="12.8.4" data-path="10-logit.html"><a href="#%E3%81%BE%E3%81%A8%E3%82%811%E6%AE%B5%E8%90%BD%E4%BB%BB%E6%84%8F"><i class="fa fa-check"></i><b>12.8.4</b> まとめ（1段落、任意）</a></li>
+</ul></li>
+<li class="chapter" data-level="12.9" data-path="10-logit.html"><a href="#%E8%AC%9D%E8%BE%9E"><i class="fa fa-check"></i><b>12.9</b> 謝辞</a></li>
+<li class="chapter" data-level="12.10" data-path="10-logit.html"><a href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><i class="fa fa-check"></i><b>12.10</b> 参考文献</a>
+<ul>
+<li class="chapter" data-level="12.10.1" data-path="10-logit.html"><a href="#%E6%9B%B8%E7%B1%8D%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>12.10.1</b> 書籍の場合の書き方</a></li>
+<li class="chapter" data-level="12.10.2" data-path="10-logit.html"><a href="#%E7%B7%A8%E8%91%97%E6%9B%B8%E7%B1%8D%E4%B8%AD%E3%81%AE%E8%AB%96%E6%96%87%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>12.10.2</b> 編著書籍中の論文の場合の書き方</a></li>
+<li class="chapter" data-level="12.10.3" data-path="10-logit.html"><a href="#%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%81%AE%E9%9B%91%E8%AA%8C%E8%AB%96%E6%96%87%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>12.10.3</b> 日本語の雑誌論文の場合の書き方</a></li>
+<li class="chapter" data-level="12.10.4" data-path="10-logit.html"><a href="#%E8%8B%B1%E8%AA%9E%E3%81%AE%E9%9B%91%E8%AA%8C%E8%AB%96%E6%96%87%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>12.10.4</b> 英語の雑誌論文の場合の書き方</a></li>
+<li class="chapter" data-level="12.10.5" data-path="10-logit.html"><a href="#%E8%8B%B1%E8%AA%9E%E3%81%AE%E6%9B%B8%E7%B1%8D%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>12.10.5</b> 英語の書籍の場合の書き方</a></li>
+<li class="chapter" data-level="12.10.6" data-path="10-logit.html"><a href="#%E7%BF%BB%E8%A8%B3%E6%9B%B8%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>12.10.6</b> 翻訳書の場合の書き方</a></li>
+<li class="chapter" data-level="12.10.7" data-path="10-logit.html"><a href="#%E3%82%A6%E3%82%A7%E3%83%96%E3%82%B5%E3%82%A4%E3%83%88%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>12.10.7</b> ウェブサイトの場合の書き方</a></li>
+</ul></li>
+<li class="chapter" data-level="12.11" data-path="10-logit.html"><a href="#%E3%81%9D%E3%81%AE%E3%81%BB%E3%81%8B%E3%81%AE%E5%BD%A2%E5%BC%8F%E4%B8%8A%E3%81%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85"><i class="fa fa-check"></i><b>12.11</b> そのほかの形式上の注意事項</a>
+<ul>
+<li class="chapter" data-level="12.11.1" data-path="10-logit.html"><a href="#%E6%8E%A8%E5%A5%A8%E3%81%99%E3%82%8Bword%E3%81%AE%E8%A8%AD%E5%AE%9A"><i class="fa fa-check"></i><b>12.11.1</b> 推奨するWordの設定</a></li>
+<li class="chapter" data-level="12.11.2" data-path="10-logit.html"><a href="#%E5%BC%95%E7%94%A8%E3%81%AE%E5%BD%A2%E5%BC%8F"><i class="fa fa-check"></i><b>12.11.2</b> 引用の形式</a></li>
+<li class="chapter" data-level="12.11.3" data-path="10-logit.html"><a href="#%E5%9B%B3%E8%A1%A8%E3%81%AE%E5%BD%A2%E5%BC%8F"><i class="fa fa-check"></i><b>12.11.3</b> 図表の形式</a></li>
+<li class="chapter" data-level="12.11.4" data-path="10-logit.html"><a href="#%E8%84%9A%E6%B3%A8"><i class="fa fa-check"></i><b>12.11.4</b> 脚注</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="presentation.html"><a href="presentation.html"><i class="fa fa-check"></i><b>13</b> 研究発表をする</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="10-logit.html"><a href="#%E7%99%BA%E8%A1%A8%E3%81%AE%E6%A7%8B%E6%88%90"><i class="fa fa-check"></i><b>13.1</b> 発表の構成</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="10-logit.html"><a href="#%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB-1"><i class="fa fa-check"></i><b>13.1.1</b> タイトル</a></li>
+<li class="chapter" data-level="13.1.2" data-path="10-logit.html"><a href="#%E5%BA%8F%E8%AB%96-1"><i class="fa fa-check"></i><b>13.1.2</b> 序論</a></li>
+<li class="chapter" data-level="13.1.3" data-path="10-logit.html"><a href="#%E6%96%B9%E6%B3%95-1"><i class="fa fa-check"></i><b>13.1.3</b> 方法</a></li>
+<li class="chapter" data-level="13.1.4" data-path="10-logit.html"><a href="#%E5%88%86%E6%9E%90%E7%B5%90%E6%9E%9C"><i class="fa fa-check"></i><b>13.1.4</b> 分析結果</a></li>
+<li class="chapter" data-level="13.1.5" data-path="10-logit.html"><a href="#%E7%B5%90%E8%AB%96-1"><i class="fa fa-check"></i><b>13.1.5</b> 結論</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="10-logit.html"><a href="#%E3%81%9D%E3%81%AE%E4%BB%96%E7%99%BA%E8%A1%A8%E3%81%AB%E9%9A%9B%E3%81%97%E3%81%A6%E6%B0%97%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B%E3%81%A8%E3%82%88%E3%81%84%E3%81%93%E3%81%A8"><i class="fa fa-check"></i><b>13.2</b> その他発表に際して気をつけるとよいこと</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="10-logit.html"><a href="#%E4%BA%8B%E5%89%8D%E3%81%AB%E7%99%BA%E8%A1%A8%E7%B7%B4%E7%BF%92%E3%82%92%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>13.2.1</b> 事前に発表練習をする</a></li>
+<li class="chapter" data-level="13.2.2" data-path="10-logit.html"><a href="#%E6%96%87%E5%AD%97%E3%81%AF%E5%A4%A7%E3%81%8D%E3%81%8F%E5%B0%91%E3%81%AA%E3%81%8F"><i class="fa fa-check"></i><b>13.2.2</b> 文字は大きく少なく</a></li>
+<li class="chapter" data-level="13.2.3" data-path="10-logit.html"><a href="#%E3%82%B9%E3%83%A9%E3%82%A4%E3%83%89%E3%81%AB%E3%81%AF%E3%83%9A%E3%83%BC%E3%82%B8%E6%95%B0%E3%82%92%E6%9B%B8%E3%81%8F"><i class="fa fa-check"></i><b>13.2.3</b> スライドにはページ数を書く</a></li>
+<li class="chapter" data-level="13.2.4" data-path="10-logit.html"><a href="#%E3%82%B9%E3%83%A9%E3%82%A4%E3%83%89%E3%81%A4%E3%81%8F%E3%82%8A%E3%81%AE%E5%8F%82%E8%80%83%E8%B3%87%E6%96%99"><i class="fa fa-check"></i><b>13.2.4</b> スライドつくりの参考資料</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>14</b> さらなる学習のための参考文献等</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="10-logit.html"><a href="#%E5%AE%9F%E8%A8%BC%E7%A0%94%E7%A9%B6%E3%81%AE%E5%9F%BA%E7%A4%8E%E3%82%B9%E3%82%AD%E3%83%AB"><i class="fa fa-check"></i><b>14.1</b> 実証研究の基礎スキル</a></li>
+<li class="chapter" data-level="14.2" data-path="10-logit.html"><a href="#r%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9"><i class="fa fa-check"></i><b>14.2</b> Rの使い方</a></li>
+<li class="chapter" data-level="14.3" data-path="10-logit.html"><a href="#ggplot%E3%81%AE%E8%A7%A3%E8%AA%AC"><i class="fa fa-check"></i><b>14.3</b> ggplotの解説</a></li>
+<li class="chapter" data-level="14.4" data-path="10-logit.html"><a href="#%E7%B5%B1%E8%A8%88%E5%AD%A6%E8%A8%88%E9%87%8F%E5%88%86%E6%9E%90%E3%82%92%E5%AD%A6%E3%81%B6"><i class="fa fa-check"></i><b>14.4</b> 統計学・計量分析を学ぶ</a></li>
+<li class="chapter" data-level="14.5" data-path="10-logit.html"><a href="#%E7%B0%A1%E5%8D%98%E3%81%AB%E5%88%A9%E7%94%A8%E3%81%A7%E3%81%8D%E3%82%8B%E5%80%8B%E7%A5%A8%E3%83%87%E3%83%BC%E3%82%BF"><i class="fa fa-check"></i><b>14.5</b> 簡単に利用できる個票データ</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rによる社会調査データ分析の手引き</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="logit" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Chapter 10</span> ロジスティック回帰分析<a href="logit.html#logit" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>本章では、従属変数が2値変数の際に用いる分析手法である、ロジスティック回帰分析について説明する。</p>
+<p>内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project…」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。</p>
+<p>さらに、これまでの章で説明した以下のパッケージを読み込んだ上で、<a href="handling.html#handling">第4章</a>で作成したデータを読み込んで<code>piaac</code>というデータフレームに入れていることを前提とする。具体的には、以下のコードを実行しておく必要がある。</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="logit.html#cb350-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb350-2"><a href="logit.html#cb350-2" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb350-3"><a href="logit.html#cb350-3" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb350-4"><a href="logit.html#cb350-4" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb350-5"><a href="logit.html#cb350-5" tabindex="-1"></a><span class="fu">library</span>(ggeffects) <span class="co">#第9章（交互作用）で紹介済</span></span>
+<span id="cb350-6"><a href="logit.html#cb350-6" tabindex="-1"></a></span>
+<span id="cb350-7"><a href="logit.html#cb350-7" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
+<p><a href="descriptives.html#descriptives_ggplot">第5章で確認したように</a>、ggplotの設定を変更しておくことで見やすいグラフを作ることができる。ここでは以下のコードを実行している。</p>
+<p>Macの場合：</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="logit.html#cb351-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb351-2"><a href="logit.html#cb351-2" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>,</span>
+<span id="cb351-3"><a href="logit.html#cb351-3" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb351-4"><a href="logit.html#cb351-4" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb351-5"><a href="logit.html#cb351-5" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb351-6"><a href="logit.html#cb351-6" tabindex="-1"></a>))</span></code></pre></div>
+<p>Windowsの場合：</p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="logit.html#cb352-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb352-2"><a href="logit.html#cb352-2" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb352-3"><a href="logit.html#cb352-3" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb352-4"><a href="logit.html#cb352-4" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb352-5"><a href="logit.html#cb352-5" tabindex="-1"></a>))</span></code></pre></div>
+<div id="二値変数を従属変数にする線形回帰分析による方法" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> 二値変数を従属変数にする：線形回帰分析による方法<a href="#%E4%BA%8C%E5%80%A4%E5%A4%89%E6%95%B0%E3%82%92%E5%BE%93%E5%B1%9E%E5%A4%89%E6%95%B0%E3%81%AB%E3%81%99%E3%82%8B%E7%B7%9A%E5%BD%A2%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%81%AB%E3%82%88%E3%82%8B%E6%96%B9%E6%B3%95" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="線形確率モデル" class="section level3 hasAnchor" number="10.1.1">
+<h3><span class="header-section-number">10.1.1</span> 線形確率モデル<a href="#%E7%B7%9A%E5%BD%A2%E7%A2%BA%E7%8E%87%E3%83%A2%E3%83%87%E3%83%AB" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>すでに<a href="regression_basic.html#regression_basic">Chapter 7 回帰分析の基礎</a>の <a href="regression_basic.html#regression_basic_binary">従属変数が2値のカテゴリ変数（0/1）の場合</a>ですでにみたように、0/1の値をとる二値変数を従属変数として回帰分析を使うことができる。</p>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
+\]</span></p>
+<p>このとき、係数<span class="math inline">\(\beta_1\)</span>は他の変数<span class="math inline">\(x_2, \cdots, x_k\)</span>を一定としたうえで、<span class="math inline">\(x_1\)</span>が1単位増えると<span class="math inline">\(y\)</span>（従属変数が1をとる割合 = 確率）がどれだけ変化するのかを表す。</p>
+<p>たとえば、この1年間に職場での訓練（OJTとよぶ）を受ける率が性別によってどの程度異なるのかを知りたいとする。このような場合には、次の式を推定する。</p>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="logit.html#cb353-1" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender)</span>
+<span id="cb353-2"><a href="logit.html#cb353-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = ojt ~ gender, data = piaac)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.4079 -0.4079 -0.3263  0.5921  0.6737 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.32632    0.01343   24.30  &lt; 2e-16 ***
+## gender男性   0.08157    0.01846    4.42 1.03e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4811 on 2726 degrees of freedom
+## Multiple R-squared:  0.007116,   Adjusted R-squared:  0.006751 
+## F-statistic: 19.54 on 1 and 2726 DF,  p-value: 1.026e-05</code></pre>
+<p>この結果から、年齢および学歴が同程度であったとしても、男性がOJTを受ける確率は女性と比べて0.082（8.2 %ポイント）高いといえる。</p>
+<p>また、年齢とOJT受講の関係が線形であると仮定して、年齢および学歴が同じであったとしてもなお、性別によってOJTを受ける割合が異なっているかどうかを知りたいとする。この場合には、次のような式を推定する。</p>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="logit.html#cb355-1" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span></code></pre></div>
+<p>結果は次のとおりである：</p>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="logit.html#cb356-1" tabindex="-1"></a><span class="fu">summary</span>(reg_res2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = ojt ~ gender + age + educ, data = piaac)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.5679 -0.3590 -0.2487  0.4981  0.8575 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     0.2790638  0.0539055   5.177 2.42e-07 ***
+## gender男性      0.0532179  0.0188275   2.827  0.00474 ** 
+## age            -0.0021335  0.0008478  -2.516  0.01192 *  
+## educ高校        0.0635070  0.0349841   1.815  0.06959 .  
+## educ短大高専    0.1652651  0.0369943   4.467 8.24e-06 ***
+## educ大学大学院  0.2890064  0.0356772   8.101 8.17e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.469 on 2722 degrees of freedom
+## Multiple R-squared:  0.05794,    Adjusted R-squared:  0.05621 
+## F-statistic: 33.48 on 5 and 2722 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>この結果から、年齢および学歴が同程度であったとしても、男性がOJTを受ける確率は女性と比べて0.053（5.3 %ポイント）高いといえる。</p>
+<p>このように、0/1の値をとる二値変数を従属変数として回帰分析を推定するような場合を指して、<strong>線形確率モデル（linear probability model）</strong>と呼ぶ。線形確率モデルは、これまでに学んだ線形回帰分析をそのまま使い、同じように解釈できるという点で優れている。</p>
+</div>
+<div id="ロバスト標準誤差残差が正規分布しない問題への対処" class="section level3 hasAnchor" number="10.1.2">
+<h3><span class="header-section-number">10.1.2</span> ロバスト標準誤差：残差が正規分布しない問題への対処<a href="#%E3%83%AD%E3%83%90%E3%82%B9%E3%83%88%E6%A8%99%E6%BA%96%E8%AA%A4%E5%B7%AE%E6%AE%8B%E5%B7%AE%E3%81%8C%E6%AD%A3%E8%A6%8F%E5%88%86%E5%B8%83%E3%81%97%E3%81%AA%E3%81%84%E5%95%8F%E9%A1%8C%E3%81%B8%E3%81%AE%E5%AF%BE%E5%87%A6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>回帰分析で係数の標準誤差を求めるときには、残差がxの値によらず一定の大きさの分散にしたがう（均一分散）という仮定が置かれている。しかしながら、線形確率モデルの場合はこの仮定は通常満たされない（もちろん、従属変数が1/0ではない回帰分析でもこの仮定が満たされないことはある）。このように残差がxの値に依存することを指して<strong>不均一分散 heteroskedasticity</strong>という。不均一分散が生じている場合には、標準誤差にバイアスが生じる。そこで、<strong>不均一分散に対して頑健な標準誤差</strong>（<strong>Heteroskedasticity-robust standard error</strong>、またはロバスト標準誤差）を用いることで、適切な標準誤差を計算することができる。</p>
+<p><a href="https://keita43a.hatenablog.com/entry/2019/04/17/232548">ロバスト標準誤差についてはいくつかのバリエーションがある</a>。ここではくわしく説明しないが、推定の仕方だけ書いておく。ロバスト標準誤差を求める場合には、<code>estimatr</code>パッケージに含まれている<code>lm_robust()</code>関数を使うのが手っ取り早い。通常の<code>lm()</code>を、<code>lm_robust()</code>に変えるだけで、ロバスト標準誤差を計算してくれる。まずは<code>estimatr</code>パッケージを読み込もう。</p>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="logit.html#cb358-1" tabindex="-1"></a><span class="fu">library</span>(estimatr)</span></code></pre></div>
+<p>そのうえで、<code>estimatr::lm_robust()</code>関数を使って、ロバスト標準誤差つきの回帰分析を推定する。以下のように、ふつうの回帰分析と同じように実行すればよい。違うのは、関数が<code>lm()</code>ではなくて<code>lm_robust()</code>となっている点だけである。</p>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="logit.html#cb359-1" tabindex="-1"></a>reg_res2_robust <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span></code></pre></div>
+<p><code>lm()</code>で求めた推定結果と、<code>lm_robust()</code>で求めた推定結果を比べてみよう：</p>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="logit.html#cb360-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;通常のSE&quot;</span> <span class="ot">=</span> reg_res2, <span class="st">&quot;Robust SE&quot;</span> <span class="ot">=</span> reg_res2_robust),</span>
+<span id="cb360-2"><a href="logit.html#cb360-2" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>,<span class="at">fmt =</span> <span class="dv">4</span>)</span></code></pre></div>
+<!-- preamble start -->
+
+    <script>
+
+      function styleCell_dp97evb475ewwtc3ehrm(i, j, css_id) {
+          var table = document.getElementById("tinytable_dp97evb475ewwtc3ehrm");
+          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
+          if (cell) {
+              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
+              cell.classList.add(css_id);
+          } else {
+              console.warn(`Cell at (${i}, ${j}) not found.`);
+          }
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_dp97evb475ewwtc3ehrm');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_dp97evb475ewwtc3ehrm(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_dp97evb475ewwtc3ehrm");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: 19, j: 1 }, { i: 19, j: 2 },  ], css_id: 'tinytable_css_wgz1wy8rroox7067wn3w',}, 
+          { positions: [ { i: 12, j: 2 }, { i: 12, j: 1 },  ], css_id: 'tinytable_css_08kykqc6ddr8inhpgwgl',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 3, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 5, j: 2 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 16, j: 1 }, { i: 17, j: 1 }, { i: 18, j: 1 }, { i: 3, j: 2 }, { i: 7, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 7, j: 2 }, { i: 4, j: 2 }, { i: 18, j: 2 }, { i: 6, j: 2 }, { i: 11, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 10, j: 2 }, { i: 15, j: 2 }, { i: 16, j: 2 }, { i: 13, j: 2 }, { i: 14, j: 2 }, { i: 17, j: 2 },  ], css_id: 'tinytable_css_4z797k1hse3nyuwfejrr',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_9xakutft6afyia1rr4hy',}, 
+          { positions: [ { i: 19, j: 0 },  ], css_id: 'tinytable_css_5gme0q0j17vs4tlu01ut',}, 
+          { positions: [ { i: 12, j: 0 },  ], css_id: 'tinytable_css_6q8uhs2t3yxuvpezrod4',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 16, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 17, j: 0 }, { i: 18, j: 0 },  ], css_id: 'tinytable_css_f5ny1wluzum6ad3emsm5',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_1m9cao859sln8ae2h7ts',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  styleCell_dp97evb475ewwtc3ehrm(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <style>
+      /* tinytable css entries after */
+      .table td.tinytable_css_wgz1wy8rroox7067wn3w, .table th.tinytable_css_wgz1wy8rroox7067wn3w { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_08kykqc6ddr8inhpgwgl, .table th.tinytable_css_08kykqc6ddr8inhpgwgl { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_4z797k1hse3nyuwfejrr, .table th.tinytable_css_4z797k1hse3nyuwfejrr { text-align: center; }
+      .table td.tinytable_css_9xakutft6afyia1rr4hy, .table th.tinytable_css_9xakutft6afyia1rr4hy { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_5gme0q0j17vs4tlu01ut, .table th.tinytable_css_5gme0q0j17vs4tlu01ut { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_6q8uhs2t3yxuvpezrod4, .table th.tinytable_css_6q8uhs2t3yxuvpezrod4 { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_f5ny1wluzum6ad3emsm5, .table th.tinytable_css_f5ny1wluzum6ad3emsm5 { text-align: left; }
+      .table td.tinytable_css_1m9cao859sln8ae2h7ts, .table th.tinytable_css_1m9cao859sln8ae2h7ts { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_dp97evb475ewwtc3ehrm" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+        <thead>
+        
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">通常のSE</th>
+                <th scope="col">Robust SE</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan='3'>+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td>(Intercept)</td>
+                  <td>0.2791***</td>
+                  <td>0.2791***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.0539)</td>
+                  <td>(0.0518)</td>
+                </tr>
+                <tr>
+                  <td>gender男性</td>
+                  <td>0.0532**</td>
+                  <td>0.0532**</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.0188)</td>
+                  <td>(0.0188)</td>
+                </tr>
+                <tr>
+                  <td>age</td>
+                  <td>-0.0021*</td>
+                  <td>-0.0021*</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.0008)</td>
+                  <td>(0.0008)</td>
+                </tr>
+                <tr>
+                  <td>educ高校</td>
+                  <td>0.0635+</td>
+                  <td>0.0635*</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.0350)</td>
+                  <td>(0.0308)</td>
+                </tr>
+                <tr>
+                  <td>educ短大高専</td>
+                  <td>0.1653***</td>
+                  <td>0.1653***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.0370)</td>
+                  <td>(0.0338)</td>
+                </tr>
+                <tr>
+                  <td>educ大学大学院</td>
+                  <td>0.2890***</td>
+                  <td>0.2890***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.0357)</td>
+                  <td>(0.0326)</td>
+                </tr>
+                <tr>
+                  <td>Num.Obs.</td>
+                  <td>2728</td>
+                  <td>2728</td>
+                </tr>
+                <tr>
+                  <td>R2</td>
+                  <td>0.058</td>
+                  <td>0.058</td>
+                </tr>
+                <tr>
+                  <td>R2 Adj.</td>
+                  <td>0.056</td>
+                  <td>0.056</td>
+                </tr>
+                <tr>
+                  <td>AIC</td>
+                  <td>3618.6</td>
+                  <td>3618.6</td>
+                </tr>
+                <tr>
+                  <td>BIC</td>
+                  <td>3660.0</td>
+                  <td>3660.0</td>
+                </tr>
+                <tr>
+                  <td>Log.Lik.</td>
+                  <td>-1802.312</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>RMSE</td>
+                  <td>0.47</td>
+                  <td>0.47</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+<p>通常の標準誤差を用いた場合と、ロバスト標準誤差を用いた場合とでは、わずかに標準誤差の値が異なっていることがわかる。このずれがどれくらい大きくなるかは、データや変数の性質によって変わってくるため一概にいえない。ただし、係数の値には違いは生じない。</p>
+<p>線形確率モデルでは残差が正規分布に従わないことが明らかなので、<strong>ロバスト標準誤差を用いるべき</strong>とされている（西山ほか 2019: 335）。</p>
+</div>
+</div>
+<div id="ロジスティック回帰分析とは" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> ロジスティック回帰分析とは<a href="#%E3%83%AD%E3%82%B8%E3%82%B9%E3%83%86%E3%82%A3%E3%83%83%E3%82%AF%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%81%A8%E3%81%AF" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="線形確率モデルの問題点" class="section level3 hasAnchor" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span> 線形確率モデルの問題点<a href="#%E7%B7%9A%E5%BD%A2%E7%A2%BA%E7%8E%87%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E5%95%8F%E9%A1%8C%E7%82%B9" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>線形確率モデルは、x1単位の増加に対して、従属変数yが1をとる確率が何ポイント変わるのか、という確率の「差」を推定したモデルである。このことは解釈の利点がある一方で、次のような問題がある。</p>
+<ol style="list-style-type: decimal">
+<li>モデルから得られる予測値が確率の定義上あり得ない数値になることがある。確率は定義上0以上1以下になるはずであるので、予測値が負の値になったり、1より大きくなることはあり得ないはずである。しかしながら線形確率モデルの場合には、こうしたことが起こり得る。また、このようなリスクは、サンプルにおいて従属変数が1を取る割合が1に近い、または0に近いほど大きくなる。</li>
+<li>従属変数が1をとる確率が異なる個人間で、ある独立変数が1単位増えることによる確率の増加量が異なる（天井効果 ceiling effectないし床効果 flooring effect）場合には、変数の「効果」の推定として不適切である。</li>
+</ol>
+<p>確率の増加量が異なるというのはどういうことだろうか。具体例を考えてみよう。たとえば、投票に行くよう促すハガキを送付することで、投票確率が増加するかどうかを知りたいとする。投票促進ハガキの効果は、いつも欠かさず投票に行っている人の投票確率を上げる効果はほとんどないに等しいだろう（普段から投票に行っているし、わざわざハガキが送られてこなくても投票に行っていただろう）。また、まったく投票に行ったことのない人にとっても、投票確率を上げる効果はやはりほとんどなさそうだ。しかし、投票に行くかどうか迷っている人にとっては、ハガキが最後の一押しとなって、投票確率を高めるかもしれない。つまり、投票促進ハガキがどの程度投票確率を上げるかは、もともとの投票確率に依存するかもしれない（極端に投票に行きやすい人と、極端に投票に行きにくい人では確率の増加はわずかで、投票に行くかもしれないし行かないかもしれない人にとっては確率の増加が大きい）。このような場合には、もともとの確率によらず確率の増加が一定だと考える線形確率モデルは、個人の行動のモデルとして不適切かもしれない。</p>
+</div>
+<div id="対数オッズ比効果を比で測定する" class="section level3 hasAnchor" number="10.2.2">
+<h3><span class="header-section-number">10.2.2</span> （対数）オッズ比：効果を「比」で測定する<a href="#%E5%AF%BE%E6%95%B0%E3%82%AA%E3%83%83%E3%82%BA%E6%AF%94%E5%8A%B9%E6%9E%9C%E3%82%92%E6%AF%94%E3%81%A7%E6%B8%AC%E5%AE%9A%E3%81%99%E3%82%8B" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>そこで、変数の効果を確率の「差」ではなく「比」（正確にはオッズの比）で測定するのが、<strong>オッズ比 odds ratio</strong>である。</p>
+<p>以下には、性別ごとにOJTを受ける・受けない人数を集計したクロス集計表を示した。ここでは説明を分かりやすくするために順序を変更している。</p>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="logit.html#cb361-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb361-2"><a href="logit.html#cb361-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">fct_relevel</span>(gender, <span class="st">&quot;男性&quot;</span>, <span class="st">&quot;女性&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb361-3"><a href="logit.html#cb361-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ojt =</span> <span class="fu">factor</span>(ojt, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">0</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;1（受けた）&quot;</span>, <span class="st">&quot;0（受けなかった）&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb361-4"><a href="logit.html#cb361-4" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(gender, ojt)</span></code></pre></div>
+<div id="wkgjnctuds" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#wkgjnctuds table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#wkgjnctuds thead, #wkgjnctuds tbody, #wkgjnctuds tfoot, #wkgjnctuds tr, #wkgjnctuds td, #wkgjnctuds th {
+  border-style: none;
+}
+
+#wkgjnctuds p {
+  margin: 0;
+  padding: 0;
+}
+
+#wkgjnctuds .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#wkgjnctuds .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#wkgjnctuds .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#wkgjnctuds .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#wkgjnctuds .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wkgjnctuds .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wkgjnctuds .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wkgjnctuds .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#wkgjnctuds .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#wkgjnctuds .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#wkgjnctuds .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#wkgjnctuds .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#wkgjnctuds .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#wkgjnctuds .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#wkgjnctuds .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#wkgjnctuds .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#wkgjnctuds .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#wkgjnctuds .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#wkgjnctuds .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wkgjnctuds .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#wkgjnctuds .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#wkgjnctuds .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#wkgjnctuds .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wkgjnctuds .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#wkgjnctuds .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#wkgjnctuds .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wkgjnctuds .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wkgjnctuds .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#wkgjnctuds .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wkgjnctuds .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#wkgjnctuds .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wkgjnctuds .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wkgjnctuds .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wkgjnctuds .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wkgjnctuds .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wkgjnctuds .gt_left {
+  text-align: left;
+}
+
+#wkgjnctuds .gt_center {
+  text-align: center;
+}
+
+#wkgjnctuds .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#wkgjnctuds .gt_font_normal {
+  font-weight: normal;
+}
+
+#wkgjnctuds .gt_font_bold {
+  font-weight: bold;
+}
+
+#wkgjnctuds .gt_font_italic {
+  font-style: italic;
+}
+
+#wkgjnctuds .gt_super {
+  font-size: 65%;
+}
+
+#wkgjnctuds .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#wkgjnctuds .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#wkgjnctuds .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#wkgjnctuds .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#wkgjnctuds .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#wkgjnctuds .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#wkgjnctuds .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#wkgjnctuds .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#wkgjnctuds div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings gt_spanner_row">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="label"></th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="level 1; stat_1">
+        <div class="gt_column_spanner"><span class='gt_from_md'>ojt</span></div>
+      </th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="2" colspan="1" scope="col" id="stat_0"><span class='gt_from_md'>Total</span></th>
+    </tr>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_1"><span class='gt_from_md'>1（受けた）</span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="stat_2"><span class='gt_from_md'>0（受けなかった）</span></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left">gender</td>
+<td headers="stat_1" class="gt_row gt_center"><br /></td>
+<td headers="stat_2" class="gt_row gt_center"><br /></td>
+<td headers="stat_0" class="gt_row gt_center"><br /></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    男性</td>
+<td headers="stat_1" class="gt_row gt_center">589</td>
+<td headers="stat_2" class="gt_row gt_center">855</td>
+<td headers="stat_0" class="gt_row gt_center">1,444</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">    女性</td>
+<td headers="stat_1" class="gt_row gt_center">419</td>
+<td headers="stat_2" class="gt_row gt_center">865</td>
+<td headers="stat_0" class="gt_row gt_center">1,284</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Total</td>
+<td headers="stat_1" class="gt_row gt_center">1,008</td>
+<td headers="stat_2" class="gt_row gt_center">1,720</td>
+<td headers="stat_0" class="gt_row gt_center">2,728</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+<p>この表から、「OJTを受けなかった人数に対する受けた人数の比」を計算してみる。</p>
+<p>男性の場合はこのように：</p>
+<p><span class="math display">\[
+589 / 855 = 0.689
+\]</span></p>
+<p>女性の場合はこのように：</p>
+<p><span class="math display">\[
+419 / 865 = 0.484
+\]</span></p>
+<p>それぞれ計算できる。このように、0をとる人数（確率）に対する1をとる人数（確率）の比を取った値のことを指して、<strong>オッズ（odds）</strong>という。オッズは1をとる人数と0をとる人数がちょうど同じときに1となり、1をとる人数（分子）が0をとる人数（分母）に対して少ないほど0に近づいていき、逆に1をとる人数（分子）が0をとる人数（分母）に対して多いほど無限大に近づいていく。</p>
+<p>つぎに、こうして計算したオッズどうしの比（<strong>オッズ比 odds ratio</strong>）をとった値を計算してみよう。</p>
+<p><span class="math display">\[
+\frac{589 / 855}{419 / 865} = 1.422
+\]</span></p>
+<p>オッズ比は、「女性のオッズに対して男性のオッズが何倍であるか」を示しており、1をとるときには女性と男性のオッズが同じであることを意味する。1よりも大きいときには女性のオッズ（分母）よりも男性のオッズ（分子）のほうが大きいことを意味し、1よりも小さいときには男性のオッズ（分子）よりも女性のオッズ（分母）のほうが大きいことを意味する。</p>
+<p>このオッズ比の自然対数をとったのが、<strong>対数オッズ比 log-odds ratio</strong>である。</p>
+<p><span class="math display">\[
+\log \left( \frac{589 / 855}{419 / 865} \right) = 0.352
+\]</span></p>
+<p>対数オッズ比は、「女性の対数オッズに対して男性の対数オッズがどれくらい大きいか」を示しており、0をとるときには女性と男性の（対数）オッズが同じであることを意味し、0よりも大きいときには女性の（対数）オッズ（分母）よりも男性の（対数）オッズ（分子）のほうが大きいことを意味し、0よりも小さいときには男性の（対数）オッズ（分子）よりも女性の（対数）オッズ（分母）のほうが大きいことを意味する。</p>
+<p>ここまで説明した対数オッズの話を一般化しよう。次のような2×2のクロス集計表があるとする。</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Y = 1</th>
+<th>Y = 0</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>X = 1</td>
+<td><span class="math inline">\(N_{11}\)</span></td>
+<td><span class="math inline">\(N_{10}\)</span></td>
+</tr>
+<tr class="even">
+<td>X = 0</td>
+<td><span class="math inline">\(N_{01}\)</span></td>
+<td><span class="math inline">\(N_{00}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>このとき、オッズ比および対数オッズ比はそれぞれ次のように定義され、次のような特徴をもつ。</p>
+<table>
+<colgroup>
+<col width="30%" />
+<col width="31%" />
+<col width="37%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>関連の強さ</th>
+<th>オッズ比 <span class="math inline">\((N_{11} / N_{10}) / (N_{01} / N_{00})\)</span></th>
+<th>対数オッズ比 <span class="math inline">\(\log((N_{11} / N_{10}) / (N_{01} / N_{00}))\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>正</td>
+<td>1よりも大きくなり、大きくなるほど∞に近づく</td>
+<td>0よりも大きくなり、大きくなるほど+∞に近づく</td>
+</tr>
+<tr class="even">
+<td>無関連</td>
+<td>1をとる</td>
+<td>0をとる</td>
+</tr>
+<tr class="odd">
+<td>負</td>
+<td>1よりも小さくなり、小さくなるほど0に近づく</td>
+<td>0よりも小さくなり、小さくなるほど-∞に近づく</td>
+</tr>
+</tbody>
+</table>
+<p>なお、対数の性質より、対数オッズ比は<span class="math inline">\(\log((N_{11} / N_{10}) / (N_{01} / N_{00})) = \log(N_{11} / N_{10}) - (N_{01} / N_{00})\)</span>などと書くこともできる。</p>
+</div>
+<div id="ロジスティック回帰分析ロジットモデル" class="section level3 hasAnchor" number="10.2.3">
+<h3><span class="header-section-number">10.2.3</span> ロジスティック回帰分析（ロジットモデル）<a href="#%E3%83%AD%E3%82%B8%E3%82%B9%E3%83%86%E3%82%A3%E3%83%83%E3%82%AF%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%83%AD%E3%82%B8%E3%83%83%E3%83%88%E3%83%A2%E3%83%87%E3%83%AB" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>ロジスティック回帰分析の式は以下のように表される。</p>
+<p><span class="math display">\[
+\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} = \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k
+\]</span> または、式を変形して次のように書く。</p>
+<p><span class="math display">\[
+\begin{align}
+\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &amp;= \beta_0 + \beta_1x_1 + \cdots + \beta_kx_k \\
+\frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &amp;= e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k} \\
+\Pr(y = 1) &amp;= (1 - \Pr(y = 1))e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k} \\
+(1 + e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k})\Pr(y = 1) &amp;= e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k} \\
+\Pr(y = 1) &amp;= \frac{e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k}}{1 + e^{\beta_0 + \beta_1x_1 + \cdots + \beta_kx_k}}
+\end{align}
+\]</span></p>
+<p>係数<span class="math inline">\(\beta_k\)</span>は、他の<span class="math inline">\(x\)</span>を一定としたうえで、<span class="math inline">\(x_k\)</span>が1単位増加したときの従属変数の対数オッズ比の変化を表す。</p>
+<p>ロジスティック回帰分析でも、線形回帰分析のときと分析の際に気をつけることは同じである。たとえば、次のようなことはロジスティック回帰分析でも線形回帰分析と同様に検討する必要がある。</p>
+<ul>
+<li>知りたい問いに対して適切な統制変数を投入する（<a href="regression_advanced.html#regression_advanced">Chapter 8 回帰分析の活用</a>）</li>
+<li>連続変数であれば、線形のみではなく非線形（2乗項）を含めることができる（<a href="regression_basic.html#regression_basic">Chapter 7 回帰分析の基礎</a>）</li>
+<li>交互作用項を含めることで、調整効果を検証することができる（<a href="#interaction">Chapter 9 交互作用</a>）</li>
+</ul>
+<p>なお、ロジスティック回帰分析では、線形確率モデルとは異なり、左辺が<span class="math inline">\(\Pr(y = 1)\)</span>ではなく<span class="math inline">\(\log \frac{\Pr(Y = 1)}{1 - \Pr(Y = 1)}\)</span>となっている。<span class="math inline">\(\Pr(y = 1)\)</span>を<span class="math inline">\(\log \frac{\Pr(Y = 1)}{1 - \Pr(Y = 1)}\)</span>に変換することをロジット変換するといい、<span class="math inline">\(\mathrm{logit}(\Pr(Y = 1))\)</span>と書くこともある。また、ロジスティック回帰分析のことを<strong>ロジットモデル（logit model）</strong>ということもある<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a>。</p>
+<p>なお、同じように2値変数を従属変数とするモデルとして、プロビットモデル（probit model）が存在する。経済学系では主にプロビットモデルが用いられ、それ以外のほとんどの領域ではロジットモデルが用いられる傾向がある。両者にはわずかに違いがあるが、プロビットモデルは係数が対数オッズ比のような何らかの指標に対応していないという特徴がある。しかし、プロビットモデルとロジットモデルで係数の正負が逆転することはなく、またプロビットモデルは後述するように平均限界効果を計算して解釈することがほとんどであり、結果を解釈するうえで両者にほとんど違いはない。したがってここではロジットモデルのみ解説する。</p>
+</div>
+<div id="直線とロジスティック曲線" class="section level3 hasAnchor" number="10.2.4">
+<h3><span class="header-section-number">10.2.4</span> 直線とロジスティック曲線<a href="#%E7%9B%B4%E7%B7%9A%E3%81%A8%E3%83%AD%E3%82%B8%E3%82%B9%E3%83%86%E3%82%A3%E3%83%83%E3%82%AF%E6%9B%B2%E7%B7%9A" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>ロジスティック回帰分析は、線形確率モデルとは異なり、独立変数がいくら大きくなったとしても、従属変数が1をとる確率が1を超えることも0を下回ることもないという性質をもつ。これを確認するために、以下の2つの式をグラフに描いてみたのが下の図である。</p>
+<ul>
+<li>線形確率モデル（Linear）：<span class="math inline">\(\Pr(y = 1) = \beta_0 + \beta_1x\)</span></li>
+<li>ロジットモデル（Logit）：<span class="math inline">\(\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} = \beta_0 + \beta_1x \leftrightarrow \Pr(y = 1) = \frac{e^{\beta_0 + \beta_1x}}{1 + e^{\beta_0 + \beta_1x}}\)</span></li>
+</ul>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-280-1.png" width="672" /></p>
+<p>線形確率モデル（Linear）では、<span class="math inline">\(\Pr(y=1)\)</span>の値によらず、<span class="math inline">\(x\)</span>が大きくなるにつれて一定に変化していき、<span class="math inline">\(\Pr(y=1)\)</span>が1を超えることも0を下回ることもあり得る。一方、ロジットモデル（Logit）では、<span class="math inline">\(\Pr(y=1)\)</span>が1（または0）に近づくにつれて変化は緩やかになっていき、1を超えたり0を下回らないことがわかる。</p>
+</div>
+<div id="推定" class="section level3 hasAnchor" number="10.2.5">
+<h3><span class="header-section-number">10.2.5</span> 推定<a href="#%E6%8E%A8%E5%AE%9A" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>ロジットモデルを推定する際には、<code>glm()</code>関数を使う。基本的な書き方は線形回帰分析とほとんど同じだが、<code>family</code>の引数として<code>binomial</code>を指定する。</p>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="logit.html#cb362-1" tabindex="-1"></a>logit_res1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender, <span class="at">family =</span> binomial)</span>
+<span id="cb362-2"><a href="logit.html#cb362-2" tabindex="-1"></a><span class="fu">summary</span>(logit_res1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = ojt ~ gender, family = binomial, data = piaac)
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -0.72486    0.05952 -12.178  &lt; 2e-16 ***
+## gender男性   0.35218    0.08006   4.399 1.09e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 3593.8  on 2727  degrees of freedom
+## Residual deviance: 3574.3  on 2726  degrees of freedom
+## AIC: 3578.3
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<p>「gender男性」の行は、女性と比べて男性であると<strong>対数オッズ（log-odds）</strong>が0.352高いことを表している。</p>
+<p>この対数オッズ比の値が、先ほど推定したロジスティック回帰分析の「gender男性」の係数の値に一致していることを確認しよう。すでに確認した通り、ロジットモデルの係数は対数オッズ比に一致するということがわかる。</p>
+<p>結果を解釈する場合には、指数をとってオッズ比として読むことが多い。今回であれば、男性は女性と比べて<span class="math inline">\(\exp(0.352) = 1.421\)</span>倍、OJTを受けるオッズが高いといえる。</p>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="logit.html#cb364-1" tabindex="-1"></a><span class="co"># 指数をとってオッズ比に変換する</span></span>
+<span id="cb364-2"><a href="logit.html#cb364-2" tabindex="-1"></a><span class="fu">exp</span>(<span class="fl">0.352</span>)</span></code></pre></div>
+<pre><code>## [1] 1.421909</code></pre>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="logit.html#cb366-1" tabindex="-1"></a><span class="co"># tidy関数を使うとすべての係数について指数をとった値を計算できる（第8章参照）</span></span>
+<span id="cb366-2"><a href="logit.html#cb366-2" tabindex="-1"></a>logit_res1 <span class="sc">%&gt;%</span> </span>
+<span id="cb366-3"><a href="logit.html#cb366-3" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb366-4"><a href="logit.html#cb366-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimate_exp =</span> <span class="fu">exp</span>(estimate))</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 6
+##   term        estimate std.error statistic  p.value estimate_exp
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;
+## 1 (Intercept)   -0.725    0.0595    -12.2  4.06e-34        0.484
+## 2 gender男性     0.352    0.0801      4.40 1.09e- 5        1.42</code></pre>
+<p>連続変数を独立変数とする場合も、解釈は類似している。たとえば次のように性別と年齢を独立変数とするロジスティック回帰分析を推定する。</p>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="logit.html#cb368-1" tabindex="-1"></a>logit_res2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age, <span class="at">family =</span> binomial)</span>
+<span id="cb368-2"><a href="logit.html#cb368-2" tabindex="-1"></a><span class="fu">summary</span>(logit_res2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = ojt ~ gender + age, family = binomial, data = piaac)
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -0.006992   0.171320  -0.041    0.967    
+## gender男性   0.350124   0.080351   4.357 1.32e-05 ***
+## age         -0.016442   0.003705  -4.437 9.10e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 3593.8  on 2727  degrees of freedom
+## Residual deviance: 3554.5  on 2725  degrees of freedom
+## AIC: 3560.5
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<p>このときの年齢の係数は年齢が1高いとOJTを受ける対数オッズが-0.016だけ高い（0.016だけ低い）ということを意味している。</p>
+</div>
+</div>
+<div id="最尤推定作成中" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> 最尤推定（作成中）<a href="#%E6%9C%80%E5%B0%A4%E6%8E%A8%E5%AE%9A%E4%BD%9C%E6%88%90%E4%B8%AD" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>ロジスティック回帰分析の係数は、<strong>最尤推定（Maximum likelihood estimation）</strong>という方法によって求める。</p>
+<p>（残る本節の内容は作成中）</p>
+</div>
+<div id="解釈を深める" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> 解釈を深める<a href="#%E8%A7%A3%E9%87%88%E3%82%92%E6%B7%B1%E3%82%81%E3%82%8B" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="線形確率モデルとロジットモデルの比較" class="section level3 hasAnchor" number="10.4.1">
+<h3><span class="header-section-number">10.4.1</span> 線形確率モデルとロジットモデルの比較<a href="#%E7%B7%9A%E5%BD%A2%E7%A2%BA%E7%8E%87%E3%83%A2%E3%83%87%E3%83%AB%E3%81%A8%E3%83%AD%E3%82%B8%E3%83%83%E3%83%88%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%AF%94%E8%BC%83" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>線形確率モデルとロジットモデルの結果を比較してみよう。</p>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="logit.html#cb370-1" tabindex="-1"></a>lpm_res2 <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age)</span>
+<span id="cb370-2"><a href="logit.html#cb370-2" tabindex="-1"></a>logit_res2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age, <span class="at">family =</span> binomial)</span>
+<span id="cb370-3"><a href="logit.html#cb370-3" tabindex="-1"></a></span>
+<span id="cb370-4"><a href="logit.html#cb370-4" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;LPM&quot;</span> <span class="ot">=</span> lpm_res2,</span>
+<span id="cb370-5"><a href="logit.html#cb370-5" tabindex="-1"></a>                  <span class="st">&quot;Logit&quot;</span> <span class="ot">=</span> logit_res2), </span>
+<span id="cb370-6"><a href="logit.html#cb370-6" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<!-- preamble start -->
+
+    <script>
+
+      function styleCell_h9d0fdt5oelfxul7jq3s(i, j, css_id) {
+          var table = document.getElementById("tinytable_h9d0fdt5oelfxul7jq3s");
+          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
+          if (cell) {
+              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
+              cell.classList.add(css_id);
+          } else {
+              console.warn(`Cell at (${i}, ${j}) not found.`);
+          }
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_h9d0fdt5oelfxul7jq3s');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_h9d0fdt5oelfxul7jq3s(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_h9d0fdt5oelfxul7jq3s");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: 13, j: 1 }, { i: 13, j: 2 },  ], css_id: 'tinytable_css_2wtaa0jg26noic6t0il7',}, 
+          { positions: [ { i: 6, j: 1 }, { i: 6, j: 2 },  ], css_id: 'tinytable_css_dus3r5zkxchqdg3hcoq3',}, 
+          { positions: [ { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 5, j: 2 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 12, j: 2 }, { i: 1, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 9, j: 2 }, { i: 10, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 11, j: 2 },  ], css_id: 'tinytable_css_r14248iowjldorqklykx',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_p9njbc4xpq9i2k63m1mn',}, 
+          { positions: [ { i: 13, j: 0 },  ], css_id: 'tinytable_css_kqg4ef5j2j0g7hjmvkm4',}, 
+          { positions: [ { i: 6, j: 0 },  ], css_id: 'tinytable_css_ryspprhh1kvgfbpr2ahk',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 10, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 },  ], css_id: 'tinytable_css_9gtv3y7rvjw6tv8v0udy',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_jqy78iin4nkzsijxcl4r',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  styleCell_h9d0fdt5oelfxul7jq3s(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <style>
+      /* tinytable css entries after */
+      .table td.tinytable_css_2wtaa0jg26noic6t0il7, .table th.tinytable_css_2wtaa0jg26noic6t0il7 { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_dus3r5zkxchqdg3hcoq3, .table th.tinytable_css_dus3r5zkxchqdg3hcoq3 { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_r14248iowjldorqklykx, .table th.tinytable_css_r14248iowjldorqklykx { text-align: center; }
+      .table td.tinytable_css_p9njbc4xpq9i2k63m1mn, .table th.tinytable_css_p9njbc4xpq9i2k63m1mn { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_kqg4ef5j2j0g7hjmvkm4, .table th.tinytable_css_kqg4ef5j2j0g7hjmvkm4 { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_ryspprhh1kvgfbpr2ahk, .table th.tinytable_css_ryspprhh1kvgfbpr2ahk { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_9gtv3y7rvjw6tv8v0udy, .table th.tinytable_css_9gtv3y7rvjw6tv8v0udy { text-align: left; }
+      .table td.tinytable_css_jqy78iin4nkzsijxcl4r, .table th.tinytable_css_jqy78iin4nkzsijxcl4r { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_h9d0fdt5oelfxul7jq3s" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+        <thead>
+        
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">LPM</th>
+                <th scope="col">Logit</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan='3'>+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td>(Intercept)</td>
+                  <td>0.493***</td>
+                  <td>-0.007</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.039)</td>
+                  <td>(0.171)</td>
+                </tr>
+                <tr>
+                  <td>gender男性</td>
+                  <td>0.081***</td>
+                  <td>0.350***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.018)</td>
+                  <td>(0.080)</td>
+                </tr>
+                <tr>
+                  <td>age</td>
+                  <td>-0.004***</td>
+                  <td>-0.016***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.001)</td>
+                  <td>(0.004)</td>
+                </tr>
+                <tr>
+                  <td>Num.Obs.</td>
+                  <td>2728</td>
+                  <td>2728</td>
+                </tr>
+                <tr>
+                  <td>R2</td>
+                  <td>0.014</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>R2 Adj.</td>
+                  <td>0.014</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>AIC</td>
+                  <td>3736.1</td>
+                  <td>3560.5</td>
+                </tr>
+                <tr>
+                  <td>BIC</td>
+                  <td>3759.7</td>
+                  <td>3578.2</td>
+                </tr>
+                <tr>
+                  <td>Log.Lik.</td>
+                  <td></td>
+                  <td>-1777.230</td>
+                </tr>
+                <tr>
+                  <td>RMSE</td>
+                  <td>0.48</td>
+                  <td>0.48</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+<p>それぞれ、解釈は次のようになる。</p>
+<ul>
+<li>線形確率モデル（LPM）：年齢を一定としたうえで、男性は女性と比べて8.1%ポイントOJTを受ける確率が高い。また、性別を一定としたうえで、年齢が1歳高いと、OJTを受ける確率が0.4%ポイント低い。</li>
+<li>ロジットモデル（Logit）：年齢を一定としたうえで、男性は女性と比べてOJTを受ける対数オッズが0.35高い（オッズが1.419倍高い）。また、性別を一定としたうえで、年齢が1歳高いと、OJTを受ける対数オッズが-0.016だけ低い（オッズが0.984倍になる）。</li>
+</ul>
+<p>どちらも、正負の向きには違いはない。基本的に、線形確率モデルとロジットモデルで係数の正負の向きが逆転することは少なく、結論が真逆になることはほとんどないといってよい<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>。</p>
+<p>係数の解釈については、（対数）オッズ比という複雑な指標を使っているロジットモデルよりも、確率の差を表す線形確率モデルのほうがより直感的にわかりやすいだろう。</p>
+</div>
+<div id="平均限界効果" class="section level3 hasAnchor" number="10.4.2">
+<h3><span class="header-section-number">10.4.2</span> 平均限界効果<a href="#%E5%B9%B3%E5%9D%87%E9%99%90%E7%95%8C%E5%8A%B9%E6%9E%9C" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>ロジットモデルの結果から確率の差を表す指標を計算できれば、解釈の手助けになるだろう。そのための方法の一つが、<strong>平均限界効果 Average marginal effect, AME</strong>である。</p>
+<p>平均限界効果とは、ロジットモデルの推定結果にもとづいて、変数<span class="math inline">\(x_k\)</span>が1単位増加したときに従属変数<span class="math inline">\(y\)</span>が1を取る確率<span class="math inline">\(\Pr(y = 1)\)</span>が変化する量をすべての個人について求め、平均をとった値として定義される。具体的には次の式で定義される。</p>
+<p><span class="math display">\[
+AME = \frac{1}{N} \sum_{i=1}^{N} \frac{\Delta \Pr(y = 1 | x_1 = x_{1i}, x_2 = x_{2i}, \cdots, x_k = x_{ki})}{\Delta x_k}
+\]</span></p>
+<p>平均限界効果が具体的に何を意味しているのかを見てみよう。まずは、次のとおり、OJTを受けるかどうかを従属変数として、性別（男性ダミー：Male）と年齢（Age）を独立変数としたロジットモデルを推定する。</p>
+<p><span class="math display">\[
+\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} = \beta_0 + \beta_1\mathrm{Male} + \beta_2\mathrm{Age}
+\]</span></p>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="logit.html#cb371-1" tabindex="-1"></a>piaac_temp <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb371-2"><a href="logit.html#cb371-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">male =</span> <span class="fu">if_else</span>(gender <span class="sc">==</span> <span class="st">&quot;男性&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb371-3"><a href="logit.html#cb371-3" tabindex="-1"></a>  <span class="fu">select</span>(id, ojt, male, age)</span>
+<span id="cb371-4"><a href="logit.html#cb371-4" tabindex="-1"></a></span>
+<span id="cb371-5"><a href="logit.html#cb371-5" tabindex="-1"></a>logit_res <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac_temp,</span>
+<span id="cb371-6"><a href="logit.html#cb371-6" tabindex="-1"></a>                 ojt <span class="sc">~</span> male <span class="sc">+</span> age,</span>
+<span id="cb371-7"><a href="logit.html#cb371-7" tabindex="-1"></a>                 <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb371-8"><a href="logit.html#cb371-8" tabindex="-1"></a>logit_res</span></code></pre></div>
+<pre><code>## 
+## Call:  glm(formula = ojt ~ male + age, family = &quot;binomial&quot;, data = piaac_temp)
+## 
+## Coefficients:
+## (Intercept)         male          age  
+##   -0.006992     0.350124    -0.016442  
+## 
+## Degrees of Freedom: 2727 Total (i.e. Null);  2725 Residual
+## Null Deviance:       3594 
+## Residual Deviance: 3554  AIC: 3560</code></pre>
+<p>係数の推定結果は次のようになる：</p>
+<p><span class="math display">\[
+\begin{align}
+\log \frac{\Pr(y = 1)}{1 - \Pr(y = 1)} &amp;=
+-0.007 +
+0.35\mathrm{Male}  
+-0.016\mathrm{Age} \\
+\Pr(y = 1) &amp;=
+\frac{
+\exp(-0.007 +
+0.35\mathrm{Male}  
+-0.016\mathrm{Age})
+}
+{
+1 + \exp(-0.007 +
+0.35\mathrm{Male}  
+-0.016\mathrm{Age})
+}
+\end{align}
+\]</span> この推定結果にもとづいて、たとえば男性ダミーの平均限界効果（つまり、女性と比べて男性の場合に、OJTを受ける確率がどの程度変化するのか）を求めたいとする。このとき、各個人について、男性の場合の予測確率と、女性の場合の予測確率とをそれぞれ求めた上で、その差を取った値を求める。</p>
+<p><span class="math display">\[
+\begin{align}
+&amp;\widehat{\Pr}(y_i = 1 | Male = 1) - \widehat{\Pr}(y_i = 1 | Male = 0)  \\
+&amp;= \frac{
+\exp(-0.007 +
+0.35
+-0.016\mathrm{Age}_i)
+}
+{
+1 + \exp(-0.007 +
+0.35  
+-0.016\mathrm{Age}_i)
+}
+-
+\frac{
+\exp(-0.007
+-0.016\mathrm{Age}_i)
+}
+{
+1 + \exp(-0.007
+-0.016\mathrm{Age}_i)
+}
+\end{align}
+\]</span> そして、この値の平均を取った値が、男性ダミーの平均限界効果となる：</p>
+<p><span class="math display">\[
+\frac{1}{N}\sum_{i=1}^N\left(
+\widehat{\Pr}(y_i = 1 | Male = 1) - \widehat{\Pr}(y_i = 1 | Male = 0)
+\right)
+\]</span></p>
+<p>Rで具体的に計算する場合は、次のようになる。</p>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="logit.html#cb373-1" tabindex="-1"></a><span class="co"># 推定結果から係数を抽出</span></span>
+<span id="cb373-2"><a href="logit.html#cb373-2" tabindex="-1"></a>logit_res_tidy <span class="ot">&lt;-</span> logit_res <span class="sc">%&gt;%</span> <span class="fu">tidy</span>()</span>
+<span id="cb373-3"><a href="logit.html#cb373-3" tabindex="-1"></a>intercept <span class="ot">&lt;-</span> logit_res_tidy<span class="sc">$</span>estimate[<span class="dv">1</span>]</span>
+<span id="cb373-4"><a href="logit.html#cb373-4" tabindex="-1"></a>male_coef <span class="ot">&lt;-</span> logit_res_tidy<span class="sc">$</span>estimate[<span class="dv">2</span>]</span>
+<span id="cb373-5"><a href="logit.html#cb373-5" tabindex="-1"></a>age_coef <span class="ot">&lt;-</span> logit_res_tidy<span class="sc">$</span>estimate[<span class="dv">3</span>]</span>
+<span id="cb373-6"><a href="logit.html#cb373-6" tabindex="-1"></a></span>
+<span id="cb373-7"><a href="logit.html#cb373-7" tabindex="-1"></a>piaac_temp <span class="ot">&lt;-</span> piaac_temp <span class="sc">%&gt;%</span> </span>
+<span id="cb373-8"><a href="logit.html#cb373-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pr_male =</span> <span class="fu">exp</span>(intercept <span class="sc">+</span> male_coef <span class="sc">*</span> <span class="dv">1</span> <span class="sc">+</span> age_coef <span class="sc">*</span> age)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(intercept <span class="sc">+</span> male_coef <span class="sc">*</span> <span class="dv">1</span> <span class="sc">+</span> age_coef <span class="sc">*</span> age))) <span class="sc">%&gt;%</span> <span class="co"># 男性（male = 1）の場合の予測確率</span></span>
+<span id="cb373-9"><a href="logit.html#cb373-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pr_female =</span> <span class="fu">exp</span>(intercept <span class="sc">+</span> male_coef <span class="sc">*</span> <span class="dv">0</span> <span class="sc">+</span> age_coef <span class="sc">*</span> age)<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(intercept <span class="sc">+</span> male_coef <span class="sc">*</span> <span class="dv">0</span> <span class="sc">+</span> age_coef <span class="sc">*</span> age))) <span class="sc">%&gt;%</span> <span class="co"># 女性（male = 0）の場合の予測確率 </span></span>
+<span id="cb373-10"><a href="logit.html#cb373-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pr_diff =</span> pr_male <span class="sc">-</span> pr_female) <span class="co"># 男性の場合の予測確率と女性の場合の予測確率の差</span></span>
+<span id="cb373-11"><a href="logit.html#cb373-11" tabindex="-1"></a></span>
+<span id="cb373-12"><a href="logit.html#cb373-12" tabindex="-1"></a><span class="co"># データを見てみる</span></span>
+<span id="cb373-13"><a href="logit.html#cb373-13" tabindex="-1"></a>piaac_temp <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 7
+##      id   ojt  male   age pr_male pr_female pr_diff
+##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1     1     1     0    45   0.402     0.321  0.0806
+## 2     2     1     1    48   0.390     0.311  0.0795
+## 3     3     1     1    47   0.394     0.314  0.0798
+## 4     4     0     1    58   0.352     0.277  0.0752
+## 5     6     1     0    35   0.442     0.358  0.0838
+## 6     9     0     1    56   0.359     0.283  0.0761</code></pre>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="logit.html#cb375-1" tabindex="-1"></a><span class="co"># pr_diffの平均値を計算</span></span>
+<span id="cb375-2"><a href="logit.html#cb375-2" tabindex="-1"></a>piaac_temp <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">mean</span>(pr_diff))</span></code></pre></div>
+<pre><code>## [1] 0.08051347</code></pre>
+<p>男性ダミーの平均限界効果は0.0805となる。すなわち、女性と比べて男性の場合は、OJTを受ける確率が平均8.05%ポイント高いといえる。</p>
+<p>このように、平均限界効果を用いることで、線形確率モデルのときと同じように確率の「差」から結果を解釈することができる。</p>
+<p>なお、ロジットモデルの場合は、他の独立変数（今回の場合は年齢）がどの程度であるかによって、独立変数を1単位変化させたときに予測確率がどの程度変化するかが異なる。したがって、予測確率の差<code>pr_diff</code>も一つに定まらず、個人によって異なる値をとることになる。先に計算した予測確率の差<code>pr_diff</code>の分布を確認してみると、このことは明らかである。</p>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="logit.html#cb377-1" tabindex="-1"></a>piaac_temp <span class="sc">%&gt;%</span> </span>
+<span id="cb377-2"><a href="logit.html#cb377-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pr_diff)) <span class="sc">+</span> </span>
+<span id="cb377-3"><a href="logit.html#cb377-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() </span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-291-1.png" width="672" /></p>
+</div>
+<div id="margins平均限界効果を計算する" class="section level3 hasAnchor" number="10.4.3">
+<h3><span class="header-section-number">10.4.3</span> margins()：平均限界効果を計算する<a href="#margins%E5%B9%B3%E5%9D%87%E9%99%90%E7%95%8C%E5%8A%B9%E6%9E%9C%E3%82%92%E8%A8%88%E7%AE%97%E3%81%99%E3%82%8B" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>margins</code>パッケージに含まれている<code>margins</code>関数を使うことで、平均限界効果を簡単に求めることができる。まずは、<code>margins</code>パッケージをまだインストールしていない場合は、<code>install.packages()</code>関数を使ってインストールする。</p>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="logit.html#cb379-1" tabindex="-1"></a><span class="fu">install.packages</span>(margins)</span></code></pre></div>
+<p><code>margins</code>パッケージを読み込む。</p>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="logit.html#cb380-1" tabindex="-1"></a><span class="fu">library</span>(margins)</span></code></pre></div>
+<p>保存した推定結果に対して<code>margins()</code>を実行するだけで、すべての変数について平均限界効果を求めてくれる。</p>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="logit.html#cb381-1" tabindex="-1"></a><span class="co"># 保存した推定結果logit_resの平均限界効果を求めて、結果を保存</span></span>
+<span id="cb381-2"><a href="logit.html#cb381-2" tabindex="-1"></a>margins_logit_res <span class="ot">&lt;-</span> <span class="fu">margins</span>(logit_res)</span>
+<span id="cb381-3"><a href="logit.html#cb381-3" tabindex="-1"></a><span class="co"># 結果を表示</span></span>
+<span id="cb381-4"><a href="logit.html#cb381-4" tabindex="-1"></a><span class="fu">summary</span>(margins_logit_res)</span></code></pre></div>
+<pre><code>##  factor     AME     SE       z      p   lower   upper
+##     age -0.0038 0.0008 -4.4976 0.0000 -0.0054 -0.0021
+##    male  0.0804 0.0182  4.4143 0.0000  0.0447  0.1161</code></pre>
+<p>それぞれ、年齢が1単位増加したときの平均限界効果、男性ダミーが1単位増加したとき（女性と比べて男性の場合）の平均限界効果を計算できる。そのほか、標準誤差やp値なども計算される。これらは今まで見てきたものと同様に、推定された平均限界効果が統計的に有意に0と異なるかどうかの仮説検定を行う際に利用することができる。</p>
+<p>分析結果を解釈する際に、係数（対数オッズ）だけではなく、平均限界効果も併せて表示することで、より直感的な解釈をすることができ、望ましいだろう。</p>
+</div>
+<div id="線形確率モデルの結果との比較" class="section level3 hasAnchor" number="10.4.4">
+<h3><span class="header-section-number">10.4.4</span> 線形確率モデルの結果との比較<a href="#%E7%B7%9A%E5%BD%A2%E7%A2%BA%E7%8E%87%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E7%B5%90%E6%9E%9C%E3%81%A8%E3%81%AE%E6%AF%94%E8%BC%83" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>線形確率モデルと平均限界効果とで、結果に違いは生じるのだろうか？両者の結果を比較してみよう。</p>
+<div class="sourceCode" id="cb383"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb383-1"><a href="logit.html#cb383-1" tabindex="-1"></a><span class="co"># 線形確率モデル（ロバスト標準誤差）の推定</span></span>
+<span id="cb383-2"><a href="logit.html#cb383-2" tabindex="-1"></a>reg_res_compare <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span>
+<span id="cb383-3"><a href="logit.html#cb383-3" tabindex="-1"></a></span>
+<span id="cb383-4"><a href="logit.html#cb383-4" tabindex="-1"></a><span class="co"># ロジットモデルの推定</span></span>
+<span id="cb383-5"><a href="logit.html#cb383-5" tabindex="-1"></a>logit_res_compare <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ, <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb383-6"><a href="logit.html#cb383-6" tabindex="-1"></a></span>
+<span id="cb383-7"><a href="logit.html#cb383-7" tabindex="-1"></a><span class="co"># ロジットモデルの結果をもとに平均限界効果を計算</span></span>
+<span id="cb383-8"><a href="logit.html#cb383-8" tabindex="-1"></a>margins_logit_res_compare <span class="ot">&lt;-</span> <span class="fu">margins</span>(logit_res_compare)</span>
+<span id="cb383-9"><a href="logit.html#cb383-9" tabindex="-1"></a></span>
+<span id="cb383-10"><a href="logit.html#cb383-10" tabindex="-1"></a><span class="co"># 線形確率モデルと平均限界効果の結果を並べて表示</span></span>
+<span id="cb383-11"><a href="logit.html#cb383-11" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;LPM&quot;</span> <span class="ot">=</span> reg_res_compare, </span>
+<span id="cb383-12"><a href="logit.html#cb383-12" tabindex="-1"></a>                  <span class="st">&quot;AME&quot;</span> <span class="ot">=</span> margins_logit_res_compare),</span>
+<span id="cb383-13"><a href="logit.html#cb383-13" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<!-- preamble start -->
+
+    <script>
+
+      function styleCell_46ywqj5aifgwaekywwo3(i, j, css_id) {
+          var table = document.getElementById("tinytable_46ywqj5aifgwaekywwo3");
+          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
+          if (cell) {
+              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
+              cell.classList.add(css_id);
+          } else {
+              console.warn(`Cell at (${i}, ${j}) not found.`);
+          }
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_46ywqj5aifgwaekywwo3');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_46ywqj5aifgwaekywwo3(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_46ywqj5aifgwaekywwo3");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: 18, j: 1 }, { i: 18, j: 2 },  ], css_id: 'tinytable_css_8ar1pk9toe3852c82cr0',}, 
+          { positions: [ { i: 12, j: 1 }, { i: 12, j: 2 },  ], css_id: 'tinytable_css_d65v4j99uljrm3wc5m9c',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 2, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 6, j: 2 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 16, j: 1 }, { i: 17, j: 1 }, { i: 3, j: 2 }, { i: 6, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 7, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 10, j: 2 }, { i: 11, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 14, j: 2 }, { i: 15, j: 2 }, { i: 16, j: 2 }, { i: 13, j: 2 }, { i: 17, j: 2 },  ], css_id: 'tinytable_css_952vg8nh9bz4zotduprk',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_dk95w4a04oe6yz0rt6yi',}, 
+          { positions: [ { i: 18, j: 0 },  ], css_id: 'tinytable_css_ojz876cg1sehxq68iz9b',}, 
+          { positions: [ { i: 12, j: 0 },  ], css_id: 'tinytable_css_7gnsjpdr2in5k2qlkdys',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 16, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 17, j: 0 },  ], css_id: 'tinytable_css_y2osmgloat2snghqc2d4',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_l52n6fnn3ucrgbcbwad6',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  styleCell_46ywqj5aifgwaekywwo3(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <style>
+      /* tinytable css entries after */
+      .table td.tinytable_css_8ar1pk9toe3852c82cr0, .table th.tinytable_css_8ar1pk9toe3852c82cr0 { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_d65v4j99uljrm3wc5m9c, .table th.tinytable_css_d65v4j99uljrm3wc5m9c { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_952vg8nh9bz4zotduprk, .table th.tinytable_css_952vg8nh9bz4zotduprk { text-align: center; }
+      .table td.tinytable_css_dk95w4a04oe6yz0rt6yi, .table th.tinytable_css_dk95w4a04oe6yz0rt6yi { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_ojz876cg1sehxq68iz9b, .table th.tinytable_css_ojz876cg1sehxq68iz9b { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_7gnsjpdr2in5k2qlkdys, .table th.tinytable_css_7gnsjpdr2in5k2qlkdys { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_y2osmgloat2snghqc2d4, .table th.tinytable_css_y2osmgloat2snghqc2d4 { text-align: left; }
+      .table td.tinytable_css_l52n6fnn3ucrgbcbwad6, .table th.tinytable_css_l52n6fnn3ucrgbcbwad6 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_46ywqj5aifgwaekywwo3" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+        <thead>
+        
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">LPM</th>
+                <th scope="col">AME</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan='3'>+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td>(Intercept)</td>
+                  <td>0.279***</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.052)</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>gender男性</td>
+                  <td>0.053**</td>
+                  <td>0.054**</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.019)</td>
+                  <td>(0.019)</td>
+                </tr>
+                <tr>
+                  <td>age</td>
+                  <td>-0.002*</td>
+                  <td>-0.002*</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.001)</td>
+                  <td>(0.001)</td>
+                </tr>
+                <tr>
+                  <td>educ高校</td>
+                  <td>0.064*</td>
+                  <td>0.066*</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.031)</td>
+                  <td>(0.031)</td>
+                </tr>
+                <tr>
+                  <td>educ短大高専</td>
+                  <td>0.165***</td>
+                  <td>0.169***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.034)</td>
+                  <td>(0.034)</td>
+                </tr>
+                <tr>
+                  <td>educ大学大学院</td>
+                  <td>0.289***</td>
+                  <td>0.290***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.033)</td>
+                  <td>(0.033)</td>
+                </tr>
+                <tr>
+                  <td>Num.Obs.</td>
+                  <td>2728</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>R2</td>
+                  <td>0.058</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>R2 Adj.</td>
+                  <td>0.056</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>AIC</td>
+                  <td>3618.6</td>
+                  <td>3445.4</td>
+                </tr>
+                <tr>
+                  <td>BIC</td>
+                  <td>3660.0</td>
+                  <td>3480.8</td>
+                </tr>
+                <tr>
+                  <td>RMSE</td>
+                  <td>0.47</td>
+                  <td>0.47</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+<p>比べてみると、線形確率モデルとロジットモデルの平均限界効果とでわずかに結果に違いがある。しかし、ほぼ同じ結果になる。</p>
+<p>一般的に、サンプル全体で従属変数が1を取る割合が0.3–0.7くらいの範囲であれば、線形確率モデルの推定結果とロジットモデルの平均限界効果の結果はかなり近い値になることが多い。従属変数が1を取る割合が0.3–0.7の範囲を外れて大きくなる（または小さくなる）ほど、両者の隔たりは大きくなることが多い。</p>
+</div>
+<div id="ロジットモデルの注意点モデル間比較" class="section level3 hasAnchor" number="10.4.5">
+<h3><span class="header-section-number">10.4.5</span> ロジットモデルの注意点：モデル間比較<a href="#%E3%83%AD%E3%82%B8%E3%83%83%E3%83%88%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%B3%A8%E6%84%8F%E7%82%B9%E3%83%A2%E3%83%87%E3%83%AB%E9%96%93%E6%AF%94%E8%BC%83" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>ロジットモデルの注意点として、異なる独立変数を含んだモデル間で係数の大きさを直接比較することができないということが挙げられる<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>。たとえば、OJTを受けるかどうかを従属変数として、年齢および性別を独立変数としたモデル（Model 1とする）、年齢・性別・学歴を独立変数としたモデル（Model 2とする）の2つを推定したとしよう。</p>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="logit.html#cb384-1" tabindex="-1"></a>logit_res1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac,</span>
+<span id="cb384-2"><a href="logit.html#cb384-2" tabindex="-1"></a>                  ojt <span class="sc">~</span> gender <span class="sc">+</span> age,</span>
+<span id="cb384-3"><a href="logit.html#cb384-3" tabindex="-1"></a>                  <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb384-4"><a href="logit.html#cb384-4" tabindex="-1"></a>logit_res2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">data =</span> piaac,</span>
+<span id="cb384-5"><a href="logit.html#cb384-5" tabindex="-1"></a>                  ojt <span class="sc">~</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ,</span>
+<span id="cb384-6"><a href="logit.html#cb384-6" tabindex="-1"></a>                  <span class="at">family =</span> <span class="st">&quot;binomial&quot;</span>)</span>
+<span id="cb384-7"><a href="logit.html#cb384-7" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Model 1&quot;</span> <span class="ot">=</span> logit_res1, </span>
+<span id="cb384-8"><a href="logit.html#cb384-8" tabindex="-1"></a>                  <span class="st">&quot;Model 2&quot;</span> <span class="ot">=</span> logit_res2),</span>
+<span id="cb384-9"><a href="logit.html#cb384-9" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb384-10"><a href="logit.html#cb384-10" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
+<span id="cb384-11"><a href="logit.html#cb384-11" tabindex="-1"></a>                          <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb384-12"><a href="logit.html#cb384-12" tabindex="-1"></a>                          <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
+<span id="cb384-13"><a href="logit.html#cb384-13" tabindex="-1"></a>                          <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
+<span id="cb384-14"><a href="logit.html#cb384-14" tabindex="-1"></a>                          <span class="st">&quot;educ大学&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>))</span></code></pre></div>
+<!-- preamble start -->
+
+    <script>
+
+      function styleCell_odzmeajz79vr5evsvhgh(i, j, css_id) {
+          var table = document.getElementById("tinytable_odzmeajz79vr5evsvhgh");
+          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
+          if (cell) {
+              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
+              cell.classList.add(css_id);
+          } else {
+              console.warn(`Cell at (${i}, ${j}) not found.`);
+          }
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_odzmeajz79vr5evsvhgh');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_odzmeajz79vr5evsvhgh(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_odzmeajz79vr5evsvhgh");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: 13, j: 1 }, { i: 13, j: 2 },  ], css_id: 'tinytable_css_0asl500rep6z83gx0ree',}, 
+          { positions: [ { i: 8, j: 2 }, { i: 8, j: 1 },  ], css_id: 'tinytable_css_5p8jj9u3m3rc3jmjczeg',}, 
+          { positions: [ { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 7, j: 2 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 12, j: 2 }, { i: 1, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 11, j: 2 }, { i: 9, j: 2 }, { i: 10, j: 2 },  ], css_id: 'tinytable_css_7zafierfk7c0xx3bjd95',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_nz75bt02jjdedvwxtbce',}, 
+          { positions: [ { i: 13, j: 0 },  ], css_id: 'tinytable_css_g8ingps0404tdjnncoag',}, 
+          { positions: [ { i: 8, j: 0 },  ], css_id: 'tinytable_css_ek2xkk4gck9lwvvjk8x1',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 12, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 },  ], css_id: 'tinytable_css_oxqjd9bjorbgb1gpwbs9',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_6k353mkco380xur7ly7k',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  styleCell_odzmeajz79vr5evsvhgh(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <style>
+      /* tinytable css entries after */
+      .table td.tinytable_css_0asl500rep6z83gx0ree, .table th.tinytable_css_0asl500rep6z83gx0ree { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_5p8jj9u3m3rc3jmjczeg, .table th.tinytable_css_5p8jj9u3m3rc3jmjczeg { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_7zafierfk7c0xx3bjd95, .table th.tinytable_css_7zafierfk7c0xx3bjd95 { text-align: center; }
+      .table td.tinytable_css_nz75bt02jjdedvwxtbce, .table th.tinytable_css_nz75bt02jjdedvwxtbce { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_g8ingps0404tdjnncoag, .table th.tinytable_css_g8ingps0404tdjnncoag { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_ek2xkk4gck9lwvvjk8x1, .table th.tinytable_css_ek2xkk4gck9lwvvjk8x1 { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_oxqjd9bjorbgb1gpwbs9, .table th.tinytable_css_oxqjd9bjorbgb1gpwbs9 { text-align: left; }
+      .table td.tinytable_css_6k353mkco380xur7ly7k, .table th.tinytable_css_6k353mkco380xur7ly7k { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_odzmeajz79vr5evsvhgh" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+        <thead>
+        
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">Model 1</th>
+                <th scope="col">Model 2</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan='3'>+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td>男性（vs. 女性）</td>
+                  <td>0.350***</td>
+                  <td>0.247**</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.080)</td>
+                  <td>(0.086)</td>
+                </tr>
+                <tr>
+                  <td>年齢</td>
+                  <td>-0.016***</td>
+                  <td>-0.010*</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.004)</td>
+                  <td>(0.004)</td>
+                </tr>
+                <tr>
+                  <td>高校（vs. 中学）</td>
+                  <td></td>
+                  <td>0.360*</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>(0.182)</td>
+                </tr>
+                <tr>
+                  <td>短大高専（vs. 中学）</td>
+                  <td></td>
+                  <td>0.832***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>(0.188)</td>
+                </tr>
+                <tr>
+                  <td>Num.Obs.</td>
+                  <td>2728</td>
+                  <td>2728</td>
+                </tr>
+                <tr>
+                  <td>AIC</td>
+                  <td>3560.5</td>
+                  <td>3445.4</td>
+                </tr>
+                <tr>
+                  <td>BIC</td>
+                  <td>3578.2</td>
+                  <td>3480.8</td>
+                </tr>
+                <tr>
+                  <td>Log.Lik.</td>
+                  <td>-1777.230</td>
+                  <td>-1716.687</td>
+                </tr>
+                <tr>
+                  <td>RMSE</td>
+                  <td>0.48</td>
+                  <td>0.47</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+<p>Model 1とModel 2を比べると、男性の係数が0.35から0.247に変化していることがわかる。しかしながら、両者の係数の差0.104を、そのまま、学歴を統制することによってModel 1の男性の係数が媒介された分を表すこととして読むことはできない。</p>
+<p>【なぜ？→説明については作成中】</p>
+<p>もし、対数オッズ比の大きさを異なるモデル間で比較したい場合には、KHB methodなどの方法が提案されている<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>。</p>
+</div>
+</div>
+<div id="まとめ" class="section level2 hasAnchor" number="10.5">
+<h2><span class="header-section-number">10.5</span> まとめ<a href="#%E3%81%BE%E3%81%A8%E3%82%81" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>従属変数が2値変数のときには、ロジスティック回帰分析（ロジットモデル）を使用するのが望ましいとされている。</li>
+<li>ロジスティック回帰分析のときにも線形回帰分析と同様に、統制変数の選択、連続変数の関数型、交互作用項の追加などを検討できる。</li>
+<li>ロジスティック回帰分析の係数は、対数オッズ比を表す。指数を取ることで、オッズ比に変換して解釈できる。</li>
+<li>オッズ比は直感的な解釈が難しいが、平均限界効果を併せて計算することで、独立変数1単位の増加に対して従属変数が1を取る確率がどれくらい変化するのか、という確率の差として結果を解釈できる。</li>
+</ul>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="23">
+<li id="fn23"><p>なお、今回のように従属変数が2値の場合のロジスティック回帰分析を指して「二項ロジットモデル（binomial logit model）」ということもある。従属変数が順序変数（1, 2, 3, 4…と数値があるが、値の大小関係を表しているのみで、値の幅は均等ではないような性質を持つ変数）であるようなロジットモデルのことを「順序ロジットモデル（ordered logit model）」、従属変数が多値変数（3つ以上のカテゴリを持ち、それらの値の間にいずれも順序関係がないような性質を持つ変数）であるようなロジットモデルのことを「多項ロジットモデル（multinomial logit model）」とよぶ。<a href="logit.html#fnref23" class="footnote-back">↩︎</a></p></li>
+<li id="fn24"><p>ただしこれは交互作用項の結果については当てはまらないことがある。くわしくはBloome, Deirdre, and Shannon Ang. 2022. “Is the Effect Larger in Group A or B? It Depends: Understanding Results from Nonlinear Probability Models.” <em>Demography</em> 59(4):1459–88.を参照。<a href="logit.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<li id="fn25"><p>この点についての説明はMood, Carina. 2010. “Logistic Regression: Why We Cannot Do What We Think We Can Do, and What We Can Do about It.” <em>European Sociological Review</em> 26(1):67–82.などに詳しい。<a href="logit.html#fnref25" class="footnote-back">↩︎</a></p></li>
+<li id="fn26"><p>KHB methodの説明については、Karlson, Kristian Bernt, Anders Holm, and Richard Breen. 2012. “Comparing Regression Coefficients between Same-Sample Nested Models Using Logit and Probit: A New Method.” <em>Sociological Methodology</em> 42(1):286–313.またはBreen, Richard, Kristian Bernt Karlson, and Anders Holm. 2013. “Total, Direct, and Indirect Effects in Logit and Probit Models.” <em>Sociological Methods &amp; Research</em> 42(2):164–91.を参照。なお、Stataでの実装方法についてはKohler, Ulrich, Kristian Bernt Karlson, and Anders Holm. 2011. “Comparing Coefficients of Nested Nonlinear Probability Models.” <em>The Stata Journal</em> 11(3):420–38.に記載がある。<a href="logit.html#fnref26" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="regression_interaction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="domain.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

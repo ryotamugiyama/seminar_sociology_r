@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 RとRStudioの下準備 | Rによる社会調査データ分析の手引き</title>
+  <meta name="description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 RとRStudioの下準備 | Rによる社会調査データ分析の手引き" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 RとRStudioの下準備 | Rによる社会調査データ分析の手引き" />
+  
+  <meta name="twitter:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  
+
+<meta name="author" content="麦山 亮太（学習院大学法学部政治学科）/ Ryota Mugiyama (Department of Political Studies, Gakushuin University)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="plan.html"/>
+<link rel="next" href="import.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Rによる社会調査データ分析の手引き</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path=""><a href="#%E3%81%BE%E3%81%88%E3%81%8C%E3%81%8D"><i class="fa fa-check"></i>まえがき</a></li>
+<li class="chapter" data-level="1" data-path="plan.html"><a href="plan.html"><i class="fa fa-check"></i><b>1</b> 研究計画を立てる</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="02-preparation.html"><a href="#%E7%A0%94%E7%A9%B6%E8%A8%88%E7%94%BB%E3%81%A8%E3%81%AF"><i class="fa fa-check"></i><b>1.1</b> 研究計画とは</a></li>
+<li class="chapter" data-level="1.2" data-path="02-preparation.html"><a href="#%E7%A0%94%E7%A9%B6%E8%A8%88%E7%94%BB%E3%81%AE%E6%A7%8B%E6%88%90"><i class="fa fa-check"></i><b>1.2</b> 研究計画の構成</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="plan.html"><a href="plan.html#plan_background"><i class="fa fa-check"></i><b>1.2.1</b> 研究背景</a></li>
+<li class="chapter" data-level="1.2.2" data-path="plan.html"><a href="plan.html#plan_question"><i class="fa fa-check"></i><b>1.2.2</b> 研究目的・問い</a></li>
+<li class="chapter" data-level="1.2.3" data-path="plan.html"><a href="plan.html#plan_method"><i class="fa fa-check"></i><b>1.2.3</b> 方法</a></li>
+<li class="chapter" data-level="1.2.4" data-path="plan.html"><a href="plan.html#plan_reference"><i class="fa fa-check"></i><b>1.2.4</b> 参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="02-preparation.html"><a href="#%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B%E8%AA%BF%E6%9F%BB%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E9%81%B8%E5%AE%9A"><i class="fa fa-check"></i><b>1.3</b> 使用する調査データの選定</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="02-preparation.html"><a href="#%E5%80%8B%E7%A5%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"><i class="fa fa-check"></i><b>1.3.1</b> 個票データとは何か</a></li>
+<li class="chapter" data-level="1.3.2" data-path="plan.html"><a href="plan.html#jgss"><i class="fa fa-check"></i><b>1.3.2</b> JGSS</a></li>
+<li class="chapter" data-level="1.3.3" data-path="02-preparation.html"><a href="#jgss%E4%BB%A5%E5%A4%96%E3%81%AE%E6%97%A5%E6%9C%AC%E3%81%AE%E7%A4%BE%E4%BC%9A%E8%AA%BF%E6%9F%BB"><i class="fa fa-check"></i><b>1.3.3</b> JGSS以外の日本の社会調査</a></li>
+<li class="chapter" data-level="1.3.4" data-path="02-preparation.html"><a href="#%E6%97%A5%E6%9C%AC%E4%BB%A5%E5%A4%96%E3%81%AE%E7%A4%BE%E4%BC%9A%E8%AA%BF%E6%9F%BB%E3%83%87%E3%83%BC%E3%82%BF"><i class="fa fa-check"></i><b>1.3.4</b> 日本以外の社会調査データ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="plan.html"><a href="plan.html#literature"><i class="fa fa-check"></i><b>1.4</b> 先行研究を探す</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="02-preparation.html"><a href="#%E8%AB%96%E6%96%87"><i class="fa fa-check"></i><b>1.4.1</b> 論文</a></li>
+<li class="chapter" data-level="1.4.2" data-path="02-preparation.html"><a href="#%E6%9B%B8%E7%B1%8D"><i class="fa fa-check"></i><b>1.4.2</b> 書籍</a></li>
+<li class="chapter" data-level="1.4.3" data-path="02-preparation.html"><a href="#%E5%A0%B1%E5%91%8A%E6%9B%B8"><i class="fa fa-check"></i><b>1.4.3</b> 報告書</a></li>
+<li class="chapter" data-level="1.4.4" data-path="02-preparation.html"><a href="#%E7%A0%94%E7%A9%B6%E3%81%AE%E6%B5%81%E3%82%8C%E3%82%92%E3%81%A4%E3%81%8B%E3%82%80"><i class="fa fa-check"></i><b>1.4.4</b> 研究の流れをつかむ</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="preparation.html"><a href="preparation.html"><i class="fa fa-check"></i><b>2</b> RとRStudioの下準備</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="02-preparation.html"><a href="#r%E3%81%A8rstudio%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%96%B9%E6%B3%95"><i class="fa fa-check"></i><b>2.1</b> RとRStudioのインストール方法</a></li>
+<li class="chapter" data-level="2.2" data-path="02-preparation.html"><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E5%88%86%E6%9E%90%E3%81%AE%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%95%E3%83%AD%E3%83%BC"><i class="fa fa-check"></i><b>2.2</b> データ分析のワークフロー</a></li>
+<li class="chapter" data-level="2.3" data-path="preparation.html"><a href="preparation.html#preparation_project"><i class="fa fa-check"></i><b>2.3</b> プロジェクトの作成</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="02-preparation.html"><a href="#rstudio%E3%82%92%E9%96%8B%E3%81%84%E3%81%A6%E3%81%BF%E3%82%88%E3%81%86"><i class="fa fa-check"></i><b>2.3.1</b> RStudioを開いてみよう</a></li>
+<li class="chapter" data-level="2.3.2" data-path="02-preparation.html"><a href="#%E6%8E%88%E6%A5%AD%E7%94%A8%E3%81%AE%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%82%92%E4%BD%9C%E3%82%8D%E3%81%86"><i class="fa fa-check"></i><b>2.3.2</b> 授業用のフォルダを作ろう</a></li>
+<li class="chapter" data-level="2.3.3" data-path="02-preparation.html"><a href="#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%91%E3%82%B9%E3%81%A8%E4%BD%9C%E6%A5%AD%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA"><i class="fa fa-check"></i><b>2.3.3</b> ファイルパスと作業ディレクトリ</a></li>
+<li class="chapter" data-level="2.3.4" data-path="02-preparation.html"><a href="#%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E4%BD%9C%E6%88%90%E3%81%AE%E6%89%8B%E9%A0%86"><i class="fa fa-check"></i><b>2.3.4</b> プロジェクト作成の手順</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="02-preparation.html"><a href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E6%93%8D%E4%BD%9C"><i class="fa fa-check"></i><b>2.4</b> 基本的な操作</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="02-preparation.html"><a href="#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"><i class="fa fa-check"></i><b>2.4.1</b> スクリプトファイル</a></li>
+<li class="chapter" data-level="2.4.2" data-path="02-preparation.html"><a href="#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E4%BF%9D%E5%AD%98%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>2.4.2</b> スクリプトファイルを保存する</a></li>
+<li class="chapter" data-level="2.4.3" data-path="02-preparation.html"><a href="#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB"><i class="fa fa-check"></i><b>2.4.3</b> パッケージのインストール</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="02-preparation.html"><a href="#%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E8%A8%AD%E5%AE%9A"><i class="fa fa-check"></i><b>2.5</b> その他の設定</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="02-preparation.html"><a href="#rstudio%E3%82%92%E9%96%89%E3%81%98%E3%82%8B%E9%9A%9B%E3%81%AEworkspace%E4%BF%9D%E5%AD%98%E3%81%AE%E8%AD%A6%E5%91%8A%E3%82%92%E5%89%8A%E9%99%A4"><i class="fa fa-check"></i><b>2.5.1</b> RStudioを閉じる際のWorkspace保存の警告を削除</a></li>
+<li class="chapter" data-level="2.5.2" data-path="02-preparation.html"><a href="#%E3%82%B0%E3%83%A9%E3%83%95%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E%E8%A1%A8%E7%A4%BA"><i class="fa fa-check"></i><b>2.5.2</b> グラフの日本語表示</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="02-preparation.html"><a href="#r%E3%81%AE%E5%9F%BA%E7%A4%8E"><i class="fa fa-check"></i><b>2.6</b> Rの基礎</a></li>
+<li class="chapter" data-level="2.7" data-path="02-preparation.html"><a href="#%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E5%87%BA%E3%81%9F%E3%81%A8%E3%81%8D%E3%81%AB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E7%AE%87%E6%89%80"><i class="fa fa-check"></i><b>2.7</b> エラーが出たときに確認する箇所</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="import.html"><a href="import.html"><i class="fa fa-check"></i><b>3</b> データの読み込み</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="02-preparation.html"><a href="#r%E3%81%AE%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF"><i class="fa fa-check"></i><b>3.1</b> Rのサンプルデータの読み込み</a></li>
+<li class="chapter" data-level="3.2" data-path="02-preparation.html"><a href="#%E4%BD%9C%E6%A5%AD%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E4%B8%8A%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF"><i class="fa fa-check"></i><b>3.2</b> 作業ディレクトリ上のデータの読み込み</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="import.html"><a href="import.html#import_dir"><i class="fa fa-check"></i><b>3.2.1</b> データを置く場所を作る</a></li>
+<li class="chapter" data-level="3.2.2" data-path="02-preparation.html"><a href="#csv%E5%BD%A2%E5%BC%8F%E3%81%AE%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"><i class="fa fa-check"></i><b>3.2.2</b> csv形式のファイル</a></li>
+<li class="chapter" data-level="3.2.3" data-path="02-preparation.html"><a href="#xlsx%E5%BD%A2%E5%BC%8F%E3%81%AE%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"><i class="fa fa-check"></i><b>3.2.3</b> xlsx形式のファイル</a></li>
+<li class="chapter" data-level="3.2.4" data-path="import.html"><a href="import.html#import_rds"><i class="fa fa-check"></i><b>3.2.4</b> rds形式のファイル</a></li>
+<li class="chapter" data-level="3.2.5" data-path="02-preparation.html"><a href="#sav%E5%BD%A2%E5%BC%8F%E3%81%AE%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"><i class="fa fa-check"></i><b>3.2.5</b> sav形式のファイル</a></li>
+<li class="chapter" data-level="3.2.6" data-path="02-preparation.html"><a href="#dta%E5%BD%A2%E5%BC%8F%E3%81%AE%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"><i class="fa fa-check"></i><b>3.2.6</b> dta形式のファイル</a></li>
+<li class="chapter" data-level="3.2.7" data-path="02-preparation.html"><a href="#%E6%96%87%E5%AD%97%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E9%96%A2%E3%82%8F%E3%82%8B%E5%95%8F%E9%A1%8C"><i class="fa fa-check"></i><b>3.2.7</b> 文字コードに関わる問題</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="02-preparation.html"><a href="#%E3%82%A6%E3%82%A7%E3%83%96%E4%B8%8A%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%AA%AD%E3%81%BF%E8%BE%BC%E3%81%BF"><i class="fa fa-check"></i><b>3.3</b> ウェブ上のデータの読み込み</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="handling.html"><a href="handling.html"><i class="fa fa-check"></i><b>4</b> データの加工</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="02-preparation.html"><a href="#%E6%9C%AC%E8%B3%87%E6%96%99%E3%81%A7%E7%94%A8%E3%81%84%E3%82%8B%E3%83%87%E3%83%BC%E3%82%BF"><i class="fa fa-check"></i><b>4.1</b> 本資料で用いるデータ</a></li>
+<li class="chapter" data-level="4.2" data-path="02-preparation.html"><a href="#%E3%83%91%E3%82%A4%E3%83%97%E6%BC%94%E7%AE%97%E5%AD%90%E3%81%BE%E3%81%9F%E3%81%AF"><i class="fa fa-check"></i><b>4.2</b> パイプ演算子：%&gt;%または|&gt;</a></li>
+<li class="chapter" data-level="4.3" data-path="02-preparation.html"><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E5%8A%A0%E5%B7%A5%E3%81%AE%E3%82%B9%E3%83%86%E3%83%83%E3%83%97"><i class="fa fa-check"></i><b>4.3</b> データ加工のステップ</a></li>
+<li class="chapter" data-level="4.4" data-path="02-preparation.html"><a href="#%E5%A4%89%E6%95%B0%E3%81%AE%E4%BD%9C%E6%88%90"><i class="fa fa-check"></i><b>4.4</b> 変数の作成</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="02-preparation.html"><a href="#%E5%A4%89%E6%95%B0%E3%81%AE%E5%9E%8B%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%A8%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0"><i class="fa fa-check"></i><b>4.4.1</b> 変数の型（カテゴリ変数と連続変数）</a></li>
+<li class="chapter" data-level="4.4.2" data-path="02-preparation.html"><a href="#%E6%96%B0%E3%81%9F%E3%81%AA%E5%A4%89%E6%95%B0%E3%82%92%E3%81%A4%E3%81%8F%E3%82%8Bmutate"><i class="fa fa-check"></i><b>4.4.2</b> 新たな変数をつくる：mutate()</a></li>
+<li class="chapter" data-level="4.4.3" data-path="02-preparation.html"><a href="#%E6%9D%A1%E4%BB%B6%E3%81%AE%E6%8C%87%E5%AE%9Aif_else"><i class="fa fa-check"></i><b>4.4.3</b> 条件の指定：if_else()</a></li>
+<li class="chapter" data-level="4.4.4" data-path="02-preparation.html"><a href="#%E8%A4%87%E6%95%B0%E6%9D%A1%E4%BB%B6%E3%81%AE%E6%8C%87%E5%AE%9Acase_when"><i class="fa fa-check"></i><b>4.4.4</b> 複数条件の指定：case_when()</a></li>
+<li class="chapter" data-level="4.4.5" data-path="02-preparation.html"><a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%B8%E5%A4%89%E6%8F%9Bfactor"><i class="fa fa-check"></i><b>4.4.5</b> カテゴリ変数へ変換：factor()</a></li>
+<li class="chapter" data-level="4.4.6" data-path="02-preparation.html"><a href="#%E5%BF%85%E8%A6%81%E3%81%AA%E5%88%97%E3%81%AE%E3%81%BF%E6%8A%BD%E5%87%BAselect"><i class="fa fa-check"></i><b>4.4.6</b> 必要な列のみ抽出：select()</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="handling.html"><a href="handling.html#handling-tips"><i class="fa fa-check"></i><b>4.5</b> 変数の作成についてのtips</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="02-preparation.html"><a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%82%92%E3%81%BE%E3%81%A8%E3%82%81%E3%82%8B"><i class="fa fa-check"></i><b>4.5.1</b> カテゴリをまとめる</a></li>
+<li class="chapter" data-level="4.5.2" data-path="02-preparation.html"><a href="#%E8%A4%87%E6%95%B0%E3%81%AE%E5%A4%89%E6%95%B0%E3%82%92%E7%B5%84%E3%81%BF%E5%90%88%E3%82%8F%E3%81%9B%E3%81%9F%E5%A4%89%E6%95%B0%E3%82%92%E4%BD%9C%E3%82%8B"><i class="fa fa-check"></i><b>4.5.2</b> 複数の変数を組み合わせた変数を作る</a></li>
+<li class="chapter" data-level="4.5.3" data-path="02-preparation.html"><a href="#%E5%9D%87%E7%AD%89%E3%81%AA%E9%A0%86%E5%BA%8F%E3%82%92%E4%BB%AE%E5%AE%9A%E3%81%97%E3%81%A6%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%A8%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>4.5.3</b> 均等な順序を仮定して連続変数とする</a></li>
+<li class="chapter" data-level="4.5.4" data-path="02-preparation.html"><a href="#%E7%84%A1%E5%9B%9E%E7%AD%94%E9%9D%9E%E8%A9%B2%E5%BD%93%E3%82%8F%E3%81%8B%E3%82%89%E3%81%AA%E3%81%84%E3%81%AA%E3%81%A9%E3%82%92na%E3%81%AB"><i class="fa fa-check"></i><b>4.5.4</b> 無回答、非該当、「わからない」などをNAに</a></li>
+<li class="chapter" data-level="4.5.5" data-path="02-preparation.html"><a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%AE%E5%8C%BA%E9%96%93%E3%81%AE%E4%B8%AD%E7%82%B9%E3%82%92%E3%81%A8%E3%81%A3%E3%81%A6%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%A8%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>4.5.5</b> カテゴリ変数の区間の中点をとって連続変数とする</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="02-preparation.html"><a href="#%E3%82%92%E3%81%A4%E3%81%AA%E3%81%92%E3%81%A6%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%82%92%E3%81%BE%E3%81%A8%E3%82%81%E3%82%8B"><i class="fa fa-check"></i><b>4.6</b> %&gt;%をつなげてコマンドをまとめる</a></li>
+<li class="chapter" data-level="4.7" data-path="handling.html"><a href="handling.html#handling_sample"><i class="fa fa-check"></i><b>4.7</b> サンプルの限定</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="02-preparation.html"><a href="#%E8%A9%B2%E5%BD%93%E3%81%99%E3%82%8B%E3%82%B1%E3%83%BC%E3%82%B9%E3%81%A0%E3%81%91%E3%82%92%E6%AE%8B%E3%81%99filter"><i class="fa fa-check"></i><b>4.7.1</b> 該当するケースだけを残す：filter()</a></li>
+<li class="chapter" data-level="4.7.2" data-path="02-preparation.html"><a href="#%E6%AC%A0%E6%90%8D%E5%80%A4%E3%81%AE%E6%89%B1%E3%81%84"><i class="fa fa-check"></i><b>4.7.2</b> 欠損値の扱い</a></li>
+<li class="chapter" data-level="4.7.3" data-path="02-preparation.html"><a href="#%E5%A4%96%E3%82%8C%E5%80%A4%E3%81%AE%E6%89%B1%E3%81%84"><i class="fa fa-check"></i><b>4.7.3</b> 外れ値の扱い</a></li>
+<li class="chapter" data-level="4.7.4" data-path="02-preparation.html"><a href="#%E5%88%86%E6%9E%90%E7%94%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99"><i class="fa fa-check"></i><b>4.7.4</b> 分析用データを書き出す</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="02-preparation.html"><a href="#%E7%99%BA%E5%B1%95%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%BF%BD%E5%8A%A0"><i class="fa fa-check"></i><b>4.8</b> 【発展】データの追加</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="descriptives.html"><a href="descriptives.html"><i class="fa fa-check"></i><b>5</b> 1変数の集計</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="02-preparation.html"><a href="#%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%82%92%E9%9B%86%E8%A8%88%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>5.1</b> 連続変数を集計する</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="descriptives.html"><a href="descriptives.html#descriptives_summarize"><i class="fa fa-check"></i><b>5.1.1</b> 要約統計量の計算</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="descriptives.html"><a href="descriptives.html#descriptives_ggplot"><i class="fa fa-check"></i><b>5.2</b> 分布をみる</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="02-preparation.html"><a href="#%E3%83%92%E3%82%B9%E3%83%88%E3%82%B0%E3%83%A9%E3%83%A0%E3%81%A8ggplot%E3%81%AE%E5%B0%8E%E5%85%A5"><i class="fa fa-check"></i><b>5.2.1</b> ヒストグラムとggplotの導入</a></li>
+<li class="chapter" data-level="5.2.2" data-path="02-preparation.html"><a href="#ggplot%E3%81%AE%E8%A8%AD%E5%AE%9A%E6%97%A5%E6%9C%AC%E8%AA%9E%E9%96%A2%E4%BF%82"><i class="fa fa-check"></i><b>5.2.2</b> ggplotの設定（日本語関係）</a></li>
+<li class="chapter" data-level="5.2.3" data-path="02-preparation.html"><a href="#%E8%BB%B8%E3%81%AB%E5%90%8D%E5%89%8D%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B"><i class="fa fa-check"></i><b>5.2.3</b> 軸に名前をつける</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="02-preparation.html"><a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%82%92%E9%9B%86%E8%A8%88%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>5.3</b> カテゴリ変数を集計する</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="descriptives.html"><a href="descriptives.html#descriptives_table"><i class="fa fa-check"></i><b>5.3.1</b> 度数の確認</a></li>
+<li class="chapter" data-level="5.3.2" data-path="02-preparation.html"><a href="#%E5%88%86%E5%B8%83%E3%81%AE%E5%8F%AF%E8%A6%96%E5%8C%96%E6%A3%92%E3%82%B0%E3%83%A9%E3%83%95"><i class="fa fa-check"></i><b>5.3.2</b> 分布の可視化：棒グラフ</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="descriptives.html"><a href="descriptives.html#descriptives_gtsummary"><i class="fa fa-check"></i><b>5.4</b> 記述統計量の一覧表を作る</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="02-preparation.html"><a href="#%E8%A8%98%E8%BF%B0%E7%B5%B1%E8%A8%88%E9%87%8F%E3%81%AE%E4%B8%80%E8%A6%A7%E8%A1%A8"><i class="fa fa-check"></i><b>5.4.1</b> 記述統計量の一覧表</a></li>
+<li class="chapter" data-level="5.4.2" data-path="02-preparation.html"><a href="#%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E5%88%A5%E3%81%AE%E8%A8%98%E8%BF%B0%E7%B5%B1%E8%A8%88%E9%87%8F%E3%81%AE%E4%B8%80%E8%A6%A7%E8%A1%A8"><i class="fa fa-check"></i><b>5.4.2</b> グループ別の記述統計量の一覧表</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="02-preparation.html"><a href="#%E7%B5%90%E6%9E%9C%E3%82%92%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99"><i class="fa fa-check"></i><b>5.5</b> 結果をファイルに書き出す</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="02-preparation.html"><a href="#%E7%B5%90%E6%9E%9C%E3%82%92%E5%85%A5%E3%82%8C%E3%82%8B%E3%81%9F%E3%82%81%E3%81%AE%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%82%92%E4%BD%9C%E3%82%8B"><i class="fa fa-check"></i><b>5.5.1</b> 結果を入れるためのフォルダを作る</a></li>
+<li class="chapter" data-level="5.5.2" data-path="descriptives.html"><a href="descriptives.html#descriptive_export_ggplot"><i class="fa fa-check"></i><b>5.5.2</b> ggplotで作成した図を書き出す</a></li>
+<li class="chapter" data-level="5.5.3" data-path="descriptives.html"><a href="descriptives.html#descriptive_export_tbl_summary"><i class="fa fa-check"></i><b>5.5.3</b> 記述統計の一覧表をwordに書き出す</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="02-preparation.html"><a href="#tbl_summary%E3%81%A7%E5%80%A4%E3%81%AE%E5%B0%91%E3%81%AA%E3%81%84%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%A8%E3%81%97%E3%81%A6%E9%9B%86%E8%A8%88%E3%81%95%E3%82%8C%E3%82%8B%E5%95%8F%E9%A1%8C%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6"><i class="fa fa-check"></i><b>5.6</b> tbl_summary()で値の少ない連続変数がカテゴリ変数として集計される問題について</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="tabulate.html"><a href="tabulate.html"><i class="fa fa-check"></i><b>6</b> 2変数の集計</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="tabulate.html"><a href="tabulate.html#tabulate_summarize"><i class="fa fa-check"></i><b>6.1</b> 平均値の比較</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="02-preparation.html"><a href="#%E5%9F%BA%E6%9C%AC"><i class="fa fa-check"></i><b>6.1.1</b> 基本</a></li>
+<li class="chapter" data-level="6.1.2" data-path="02-preparation.html"><a href="#%E6%A3%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%AB%E3%82%88%E3%82%8B%E5%8F%AF%E8%A6%96%E5%8C%96"><i class="fa fa-check"></i><b>6.1.2</b> 棒グラフによる可視化</a></li>
+<li class="chapter" data-level="6.1.3" data-path="02-preparation.html"><a href="#%E8%A4%87%E6%95%B0%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%81%AE%E7%B5%84%E3%81%BF%E5%90%88%E3%82%8F%E3%81%9B"><i class="fa fa-check"></i><b>6.1.3</b> 複数カテゴリの組み合わせ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="02-preparation.html"><a href="#%E5%88%86%E5%B8%83%E3%81%AE%E6%AF%94%E8%BC%83"><i class="fa fa-check"></i><b>6.2</b> 分布の比較</a></li>
+<li class="chapter" data-level="6.3" data-path="02-preparation.html"><a href="#%E3%82%AF%E3%83%AD%E3%82%B9%E8%A1%A8"><i class="fa fa-check"></i><b>6.3</b> クロス表</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="02-preparation.html"><a href="#%E5%9F%BA%E6%9C%AC-1"><i class="fa fa-check"></i><b>6.3.1</b> 基本</a></li>
+<li class="chapter" data-level="6.3.2" data-path="02-preparation.html"><a href="#%E3%82%AB%E3%82%A42%E4%B9%97%E6%A4%9C%E5%AE%9A%E8%A3%9C%E8%B6%B3"><i class="fa fa-check"></i><b>6.3.2</b> カイ2乗検定（補足）</a></li>
+<li class="chapter" data-level="6.3.3" data-path="02-preparation.html"><a href="#%E3%81%8D%E3%82%8C%E3%81%84%E3%81%AA%E3%82%AF%E3%83%AD%E3%82%B9%E8%A1%A8%E3%82%92%E3%81%A4%E3%81%8F%E3%82%8B---gtsummarytbl_cross"><i class="fa fa-check"></i><b>6.3.3</b> きれいなクロス表をつくる - gtsummary::tbl_cross()</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="02-preparation.html"><a href="#%E3%82%AF%E3%83%AD%E3%82%B9%E8%A1%A8%E3%82%92%E5%9B%B3%E7%A4%BA%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>6.4</b> クロス表を図示する</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="02-preparation.html"><a href="#count%E3%82%92%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>6.4.1</b> count()を利用する</a></li>
+<li class="chapter" data-level="6.4.2" data-path="02-preparation.html"><a href="#count%E3%81%AE%E6%B3%A8%E6%84%8F%E7%82%B9"><i class="fa fa-check"></i><b>6.4.2</b> count()の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="02-preparation.html"><a href="#%E6%95%A3%E5%B8%83%E5%9B%B3"><i class="fa fa-check"></i><b>6.5</b> 散布図</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="02-preparation.html"><a href="#%E6%95%A3%E5%B8%83%E5%9B%B3%E3%82%92%E3%81%BF%E3%82%8B"><i class="fa fa-check"></i><b>6.5.1</b> 散布図をみる</a></li>
+<li class="chapter" data-level="6.5.2" data-path="02-preparation.html"><a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%81%94%E3%81%A8%E3%81%AB%E6%95%A3%E5%B8%83%E5%9B%B3%E3%82%92%E5%88%86%E3%81%91%E3%82%8B"><i class="fa fa-check"></i><b>6.5.2</b> カテゴリごとに散布図を分ける</a></li>
+<li class="chapter" data-level="6.5.3" data-path="02-preparation.html"><a href="#%E7%9B%B8%E9%96%A2%E4%BF%82%E6%95%B0"><i class="fa fa-check"></i><b>6.5.3</b> 相関係数</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="02-preparation.html"><a href="#%E5%A4%89%E6%95%B0%E9%9B%86%E8%A8%88%E3%81%AE%E3%81%A8%E3%81%8D%E3%81%AE%E3%81%8F%E3%81%B5%E3%81%86"><i class="fa fa-check"></i><b>6.6</b> 2変数集計のときのくふう</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="02-preparation.html"><a href="#%E5%80%A4%E3%81%8C%E7%B2%97%E3%81%84%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%82%92%E6%89%B1%E3%81%86"><i class="fa fa-check"></i><b>6.6.1</b> 値が粗い連続変数を扱う</a></li>
+<li class="chapter" data-level="6.6.2" data-path="02-preparation.html"><a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%81%8C%E5%A4%9A%E3%81%84%E3%82%AF%E3%83%AD%E3%82%B9%E8%A1%A8%E3%82%92%E6%89%B1%E3%81%86"><i class="fa fa-check"></i><b>6.6.2</b> カテゴリが多いクロス表を扱う</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="02-preparation.html"><a href="#%E7%B5%90%E6%9E%9C%E3%82%92%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99-1"><i class="fa fa-check"></i><b>6.7</b> 結果をファイルに書き出す</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="02-preparation.html"><a href="#ggplot%E3%81%A7%E4%BD%9C%E6%88%90%E3%81%97%E3%81%9F%E5%9B%B3%E3%82%92%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99"><i class="fa fa-check"></i><b>6.7.1</b> ggplotで作成した図を書き出す</a></li>
+<li class="chapter" data-level="6.7.2" data-path="02-preparation.html"><a href="#%E3%82%AF%E3%83%AD%E3%82%B9%E8%A1%A8%E3%82%92word%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99"><i class="fa fa-check"></i><b>6.7.2</b> クロス表をwordファイルに書き出す</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="regression_basic.html"><a href="regression_basic.html"><i class="fa fa-check"></i><b>7</b> 回帰分析の基礎</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="02-preparation.html"><a href="#%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"><i class="fa fa-check"></i><b>7.1</b> 回帰分析とは何か</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="02-preparation.html"><a href="#%E6%95%A3%E5%B8%83%E5%9B%B3%E3%82%92%E7%9C%BA%E3%82%81%E3%82%8B"><i class="fa fa-check"></i><b>7.1.1</b> 散布図を眺める</a></li>
+<li class="chapter" data-level="7.1.2" data-path="02-preparation.html"><a href="#%E5%9B%9E%E5%B8%B0%E5%BC%8F%E3%81%AE%E8%AA%AD%E3%81%BF%E6%96%B9"><i class="fa fa-check"></i><b>7.1.2</b> 回帰式の読み方</a></li>
+<li class="chapter" data-level="7.1.3" data-path="02-preparation.html"><a href="#%E5%9B%9E%E5%B8%B0%E5%BC%8F%E3%81%AE%E6%B1%BA%E3%82%81%E6%96%B9%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%97%E6%B3%95"><i class="fa fa-check"></i><b>7.1.3</b> 回帰式の決め方：最小二乗法</a></li>
+<li class="chapter" data-level="7.1.4" data-path="02-preparation.html"><a href="#%E6%AF%8D%E9%9B%86%E5%9B%A3%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E9%96%A2%E4%BF%82%E3%81%AE%E6%8E%A8%E6%B8%AC"><i class="fa fa-check"></i><b>7.1.4</b> 母集団における関係の推測</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="02-preparation.html"><a href="#%E7%8B%AC%E7%AB%8B%E5%A4%89%E6%95%B0%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88"><i class="fa fa-check"></i><b>7.2</b> 独立変数がカテゴリ変数の場合</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="02-preparation.html"><a href="#%E5%80%A4%E3%81%AE%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA"><i class="fa fa-check"></i><b>7.2.1</b> 2値のカテゴリ</a></li>
+<li class="chapter" data-level="7.2.2" data-path="02-preparation.html"><a href="#%E5%80%A4%E4%BB%A5%E4%B8%8A%E3%81%AE%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA"><i class="fa fa-check"></i><b>7.2.2</b> 3値以上のカテゴリ</a></li>
+<li class="chapter" data-level="7.2.3" data-path="02-preparation.html"><a href="#%E5%A4%89%E6%95%B0%E3%81%8Cfactor%E3%81%A7%E3%81%82%E3%82%8C%E3%81%B0%E8%87%AA%E5%8B%95%E3%81%A7%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%81%A8%E3%81%97%E3%81%A6%E6%8A%95%E5%85%A5%E3%81%95%E3%82%8C%E3%82%8B"><i class="fa fa-check"></i><b>7.2.3</b> 変数がfactorであれば自動でカテゴリとして投入される</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="regression_basic.html"><a href="regression_basic.html#regression_basic_binary"><i class="fa fa-check"></i><b>7.3</b> 従属変数が2値のカテゴリ変数（0/1）の場合</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="02-preparation.html"><a href="#%E3%82%AF%E3%83%AD%E3%82%B9%E9%9B%86%E8%A8%88%E3%81%A8%E6%AF%94%E8%BC%83%E3%81%97%E3%81%AA%E3%81%8C%E3%82%89%E7%B5%90%E6%9E%9C%E3%82%92%E3%81%BF%E3%82%8B"><i class="fa fa-check"></i><b>7.3.1</b> クロス集計と比較しながら結果をみる</a></li>
+<li class="chapter" data-level="7.3.2" data-path="02-preparation.html"><a href="#%E6%95%A3%E5%B8%83%E5%9B%B3%E3%81%A8%E6%AF%94%E8%BC%83%E3%81%97%E3%81%AA%E3%81%8C%E3%82%89%E7%B5%90%E6%9E%9C%E3%82%92%E3%81%BF%E3%82%8B"><i class="fa fa-check"></i><b>7.3.2</b> 散布図と比較しながら結果をみる</a></li>
+<li class="chapter" data-level="7.3.3" data-path="02-preparation.html"><a href="#%E6%B3%A8%E6%84%8F%E7%82%B9"><i class="fa fa-check"></i><b>7.3.3</b> 注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="02-preparation.html"><a href="#%E9%9D%9E%E7%B7%9A%E5%BD%A2%E3%81%AE%E9%96%A2%E9%80%A3"><i class="fa fa-check"></i><b>7.4</b> 非線形の関連</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="regression_basic.html"><a href="regression_basic.html#regression_basic_log"><i class="fa fa-check"></i><b>7.4.1</b> 対数変換</a></li>
+<li class="chapter" data-level="7.4.2" data-path="02-preparation.html"><a href="#%E6%AC%A1%E9%96%A2%E6%95%B0%E5%9E%8B"><i class="fa fa-check"></i><b>7.4.2</b> 2次関数型</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="regression_basic.html"><a href="regression_basic.html#regression_modelsummary"><i class="fa fa-check"></i><b>7.5</b> 回帰分析の結果をきれいに表示する</a></li>
+<li class="chapter" data-level="7.6" data-path="regression_basic.html"><a href="regression_basic.html#regression_basic_export"><i class="fa fa-check"></i><b>7.6</b> 結果をファイルに書き出す</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="02-preparation.html"><a href="#word%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99"><i class="fa fa-check"></i><b>7.6.1</b> Wordファイルに書き出す</a></li>
+<li class="chapter" data-level="7.6.2" data-path="regression_basic.html"><a href="regression_basic.html#regression_output_excel"><i class="fa fa-check"></i><b>7.6.2</b> Excelファイルに書き出す</a></li>
+<li class="chapter" data-level="7.6.3" data-path="regression_basic.html"><a href="regression_basic.html#regression_output_pptx"><i class="fa fa-check"></i><b>7.6.3</b> PowerPointファイルに書き出す</a></li>
+<li class="chapter" data-level="7.6.4" data-path="regression_basic.html"><a href="regression_basic.html#regression_output_rtf"><i class="fa fa-check"></i><b>7.6.4</b> rtfファイルに書き出す</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="regression_advanced.html"><a href="regression_advanced.html"><i class="fa fa-check"></i><b>8</b> 回帰分析の活用</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="02-preparation.html"><a href="#%E9%87%8D%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90"><i class="fa fa-check"></i><b>8.1</b> 重回帰分析</a></li>
+<li class="chapter" data-level="8.2" data-path="02-preparation.html"><a href="#%E4%BA%A4%E7%B5%A1%E8%A6%81%E5%9B%A0%E3%81%AE%E7%B5%B1%E5%88%B6"><i class="fa fa-check"></i><b>8.2</b> 交絡要因の統制</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="02-preparation.html"><a href="#%E4%BA%A4%E7%B5%A1%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"><i class="fa fa-check"></i><b>8.2.1</b> 交絡とは何か</a></li>
+<li class="chapter" data-level="8.2.2" data-path="02-preparation.html"><a href="#%E7%B5%90%E6%9E%9C%E3%81%AE%E6%AF%94%E8%BC%83%E3%81%A8%E8%A7%A3%E9%87%88"><i class="fa fa-check"></i><b>8.2.2</b> 結果の比較と解釈</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="02-preparation.html"><a href="#%E5%AA%92%E4%BB%8B%E5%88%86%E6%9E%90%E8%A6%81%E5%9B%A0%E5%88%86%E8%A7%A3"><i class="fa fa-check"></i><b>8.3</b> 媒介分析／要因分解</a></li>
+<li class="chapter" data-level="8.4" data-path="02-preparation.html"><a href="#%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%81%AE%E5%AE%9F%E9%9A%9B"><i class="fa fa-check"></i><b>8.4</b> 回帰分析の実際</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="02-preparation.html"><a href="#%E4%BA%A4%E7%B5%A1%E3%81%A8%E5%AA%92%E4%BB%8B"><i class="fa fa-check"></i><b>8.4.1</b> 交絡と媒介</a></li>
+<li class="chapter" data-level="8.4.2" data-path="02-preparation.html"><a href="#%E5%BE%93%E5%B1%9E%E5%A4%89%E6%95%B0%E3%82%92%E5%AF%BE%E6%95%B0%E5%A4%89%E6%8F%9B%E3%81%97%E3%81%9F%E5%A0%B4%E5%90%88%E3%81%AE%E8%A7%A3%E9%87%88broom%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E6%B4%BB%E7%94%A8"><i class="fa fa-check"></i><b>8.4.2</b> 従属変数を対数変換した場合の解釈：broomパッケージの活用</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="02-preparation.html"><a href="#%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%81%A7%E3%81%82%E3%82%8A%E3%81%8C%E3%81%A1%E3%81%AA%E5%9B%B0%E3%82%8A%E3%81%94%E3%81%A8%E3%81%B8%E3%81%AE%E5%AF%BE%E5%87%A6"><i class="fa fa-check"></i><b>8.5</b> 回帰分析でありがちな困りごとへの対処</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="02-preparation.html"><a href="#%E5%8F%82%E7%85%A7%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%81%AE%E5%85%A5%E3%82%8C%E6%9B%BF%E3%81%88"><i class="fa fa-check"></i><b>8.5.1</b> 参照カテゴリの入れ替え</a></li>
+<li class="chapter" data-level="8.5.2" data-path="02-preparation.html"><a href="#%E5%8D%98%E4%BD%8D%E3%81%AE%E5%A4%89%E6%9B%B4"><i class="fa fa-check"></i><b>8.5.2</b> 単位の変更</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="02-preparation.html"><a href="#%E7%B5%90%E6%9E%9C%E3%82%92%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99-2"><i class="fa fa-check"></i><b>8.6</b> 結果をファイルに書き出す</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regression_interaction.html"><a href="regression_interaction.html"><i class="fa fa-check"></i><b>9</b> 交互作用</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="02-preparation.html"><a href="#%E4%BA%A4%E4%BA%92%E4%BD%9C%E7%94%A8%E3%81%A8%E3%81%AF%E3%81%AA%E3%81%AB%E3%81%8B"><i class="fa fa-check"></i><b>9.1</b> 交互作用とはなにか</a></li>
+<li class="chapter" data-level="9.2" data-path="02-preparation.html"><a href="#x%E3%81%8C%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0z%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%BE%E3%81%9F%E3%81%AF%E3%81%9D%E3%81%AE%E9%80%86%E3%81%AE%E5%A0%B4%E5%90%88"><i class="fa fa-check"></i><b>9.2</b> xが連続変数、zがカテゴリ変数（またはその逆）の場合</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="02-preparation.html"><a href="#%E5%AE%9F%E4%BE%8B%E6%95%B0%E7%9A%84%E6%80%9D%E8%80%83%E5%8A%9B%E3%81%8C%E8%B3%83%E9%87%91%E3%82%92%E9%AB%98%E3%82%81%E3%82%8B%E5%8A%B9%E6%9E%9C%E3%81%AF%E6%80%A7%E5%88%A5%E3%81%AB%E3%82%88%E3%81%A3%E3%81%A6%E7%95%B0%E3%81%AA%E3%82%8B%E3%81%8B"><i class="fa fa-check"></i><b>9.2.1</b> 実例：数的思考力が賃金を高める効果は性別によって異なるか？</a></li>
+<li class="chapter" data-level="9.2.2" data-path="02-preparation.html"><a href="#%E7%B5%90%E6%9E%9C%E3%82%92%E5%9B%B3%E7%A4%BA%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>9.2.2</b> 結果を図示する</a></li>
+<li class="chapter" data-level="9.2.3" data-path="02-preparation.html"><a href="#x%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0z%E3%81%8C%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88"><i class="fa fa-check"></i><b>9.2.3</b> xがカテゴリ変数、zが連続変数の場合</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="02-preparation.html"><a href="#x%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0z%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88"><i class="fa fa-check"></i><b>9.3</b> xがカテゴリ変数、zがカテゴリ変数の場合</a></li>
+<li class="chapter" data-level="9.4" data-path="02-preparation.html"><a href="#x%E3%81%8C%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0z%E3%81%8C%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88%E4%BD%9C%E6%88%90%E4%B8%AD"><i class="fa fa-check"></i><b>9.4</b> xが連続変数、zが連続変数の場合（作成中）</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="logit.html"><a href="logit.html"><i class="fa fa-check"></i><b>10</b> ロジスティック回帰分析</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="02-preparation.html"><a href="#%E4%BA%8C%E5%80%A4%E5%A4%89%E6%95%B0%E3%82%92%E5%BE%93%E5%B1%9E%E5%A4%89%E6%95%B0%E3%81%AB%E3%81%99%E3%82%8B%E7%B7%9A%E5%BD%A2%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%81%AB%E3%82%88%E3%82%8B%E6%96%B9%E6%B3%95"><i class="fa fa-check"></i><b>10.1</b> 二値変数を従属変数にする：線形回帰分析による方法</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="02-preparation.html"><a href="#%E7%B7%9A%E5%BD%A2%E7%A2%BA%E7%8E%87%E3%83%A2%E3%83%87%E3%83%AB"><i class="fa fa-check"></i><b>10.1.1</b> 線形確率モデル</a></li>
+<li class="chapter" data-level="10.1.2" data-path="02-preparation.html"><a href="#%E3%83%AD%E3%83%90%E3%82%B9%E3%83%88%E6%A8%99%E6%BA%96%E8%AA%A4%E5%B7%AE%E6%AE%8B%E5%B7%AE%E3%81%8C%E6%AD%A3%E8%A6%8F%E5%88%86%E5%B8%83%E3%81%97%E3%81%AA%E3%81%84%E5%95%8F%E9%A1%8C%E3%81%B8%E3%81%AE%E5%AF%BE%E5%87%A6"><i class="fa fa-check"></i><b>10.1.2</b> ロバスト標準誤差：残差が正規分布しない問題への対処</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="02-preparation.html"><a href="#%E3%83%AD%E3%82%B8%E3%82%B9%E3%83%86%E3%82%A3%E3%83%83%E3%82%AF%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%81%A8%E3%81%AF"><i class="fa fa-check"></i><b>10.2</b> ロジスティック回帰分析とは</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="02-preparation.html"><a href="#%E7%B7%9A%E5%BD%A2%E7%A2%BA%E7%8E%87%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E5%95%8F%E9%A1%8C%E7%82%B9"><i class="fa fa-check"></i><b>10.2.1</b> 線形確率モデルの問題点</a></li>
+<li class="chapter" data-level="10.2.2" data-path="02-preparation.html"><a href="#%E5%AF%BE%E6%95%B0%E3%82%AA%E3%83%83%E3%82%BA%E6%AF%94%E5%8A%B9%E6%9E%9C%E3%82%92%E6%AF%94%E3%81%A7%E6%B8%AC%E5%AE%9A%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>10.2.2</b> （対数）オッズ比：効果を「比」で測定する</a></li>
+<li class="chapter" data-level="10.2.3" data-path="02-preparation.html"><a href="#%E3%83%AD%E3%82%B8%E3%82%B9%E3%83%86%E3%82%A3%E3%83%83%E3%82%AF%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%83%AD%E3%82%B8%E3%83%83%E3%83%88%E3%83%A2%E3%83%87%E3%83%AB"><i class="fa fa-check"></i><b>10.2.3</b> ロジスティック回帰分析（ロジットモデル）</a></li>
+<li class="chapter" data-level="10.2.4" data-path="02-preparation.html"><a href="#%E7%9B%B4%E7%B7%9A%E3%81%A8%E3%83%AD%E3%82%B8%E3%82%B9%E3%83%86%E3%82%A3%E3%83%83%E3%82%AF%E6%9B%B2%E7%B7%9A"><i class="fa fa-check"></i><b>10.2.4</b> 直線とロジスティック曲線</a></li>
+<li class="chapter" data-level="10.2.5" data-path="02-preparation.html"><a href="#%E6%8E%A8%E5%AE%9A"><i class="fa fa-check"></i><b>10.2.5</b> 推定</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="02-preparation.html"><a href="#%E6%9C%80%E5%B0%A4%E6%8E%A8%E5%AE%9A%E4%BD%9C%E6%88%90%E4%B8%AD"><i class="fa fa-check"></i><b>10.3</b> 最尤推定（作成中）</a></li>
+<li class="chapter" data-level="10.4" data-path="02-preparation.html"><a href="#%E8%A7%A3%E9%87%88%E3%82%92%E6%B7%B1%E3%82%81%E3%82%8B"><i class="fa fa-check"></i><b>10.4</b> 解釈を深める</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="02-preparation.html"><a href="#%E7%B7%9A%E5%BD%A2%E7%A2%BA%E7%8E%87%E3%83%A2%E3%83%87%E3%83%AB%E3%81%A8%E3%83%AD%E3%82%B8%E3%83%83%E3%83%88%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%AF%94%E8%BC%83"><i class="fa fa-check"></i><b>10.4.1</b> 線形確率モデルとロジットモデルの比較</a></li>
+<li class="chapter" data-level="10.4.2" data-path="02-preparation.html"><a href="#%E5%B9%B3%E5%9D%87%E9%99%90%E7%95%8C%E5%8A%B9%E6%9E%9C"><i class="fa fa-check"></i><b>10.4.2</b> 平均限界効果</a></li>
+<li class="chapter" data-level="10.4.3" data-path="02-preparation.html"><a href="#margins%E5%B9%B3%E5%9D%87%E9%99%90%E7%95%8C%E5%8A%B9%E6%9E%9C%E3%82%92%E8%A8%88%E7%AE%97%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>10.4.3</b> margins()：平均限界効果を計算する</a></li>
+<li class="chapter" data-level="10.4.4" data-path="02-preparation.html"><a href="#%E7%B7%9A%E5%BD%A2%E7%A2%BA%E7%8E%87%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E7%B5%90%E6%9E%9C%E3%81%A8%E3%81%AE%E6%AF%94%E8%BC%83"><i class="fa fa-check"></i><b>10.4.4</b> 線形確率モデルの結果との比較</a></li>
+<li class="chapter" data-level="10.4.5" data-path="02-preparation.html"><a href="#%E3%83%AD%E3%82%B8%E3%83%83%E3%83%88%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%B3%A8%E6%84%8F%E7%82%B9%E3%83%A2%E3%83%87%E3%83%AB%E9%96%93%E6%AF%94%E8%BC%83"><i class="fa fa-check"></i><b>10.4.5</b> ロジットモデルの注意点：モデル間比較</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="02-preparation.html"><a href="#%E3%81%BE%E3%81%A8%E3%82%81"><i class="fa fa-check"></i><b>10.5</b> まとめ</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="domain.html"><a href="domain.html"><i class="fa fa-check"></i><b>11</b> 社会学のデータ分析でよくある処理</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="02-preparation.html"><a href="#ssm%E8%81%B7%E6%A5%AD%E5%B0%8F%E5%88%86%E9%A1%9E%E3%82%92%E5%A4%A7%E5%88%86%E9%A1%9E%E3%81%AB%E3%81%BE%E3%81%A8%E3%82%81%E3%82%8B"><i class="fa fa-check"></i><b>11.1</b> SSM職業小分類を大分類にまとめる</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="02-preparation.html"><a href="#jgss%E3%81%AE%E5%A0%B4%E5%90%88"><i class="fa fa-check"></i><b>11.1.1</b> JGSSの場合</a></li>
+<li class="chapter" data-level="11.1.2" data-path="02-preparation.html"><a href="#ssm%E3%81%AE%E5%A0%B4%E5%90%88"><i class="fa fa-check"></i><b>11.1.2</b> SSMの場合</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="02-preparation.html"><a href="#%E6%97%A7%E5%88%B6%E5%AD%A6%E6%AD%B4%E3%81%A8%E6%96%B0%E5%88%B6%E5%AD%A6%E6%AD%B4%E3%81%AE%E5%AF%BE%E5%BF%9C"><i class="fa fa-check"></i><b>11.2</b> 旧制学歴と新制学歴の対応</a></li>
+<li class="chapter" data-level="11.3" data-path="domain.html"><a href="domain.html#domain_income"><i class="fa fa-check"></i><b>11.3</b> 年収カテゴリを連続変数にする</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="02-preparation.html"><a href="#%E5%B9%B4%E5%8F%8E%E3%82%92%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%AB%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>11.3.1</b> 年収を連続変数にする</a></li>
+<li class="chapter" data-level="11.3.2" data-path="02-preparation.html"><a href="#%E6%99%82%E9%96%93%E3%81%82%E3%81%9F%E3%82%8A%E8%B3%83%E9%87%91%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>11.3.2</b> 時間あたり賃金を作成する</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="02-preparation.html"><a href="#%E9%83%BD%E9%81%93%E5%BA%9C%E7%9C%8C%E5%A4%89%E6%95%B0%E3%81%AE%E5%8A%A0%E5%B7%A5"><i class="fa fa-check"></i><b>11.4</b> 都道府県変数の加工</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="02-preparation.html"><a href="#%E9%83%BD%E9%81%93%E5%BA%9C%E7%9C%8C%E3%81%AB%E3%83%A9%E3%83%99%E3%83%AB%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B"><i class="fa fa-check"></i><b>11.4.1</b> 都道府県にラベルをつける</a></li>
+<li class="chapter" data-level="11.4.2" data-path="02-preparation.html"><a href="#%E9%83%BD%E9%81%93%E5%BA%9C%E7%9C%8C%E3%83%AC%E3%83%99%E3%83%AB%E3%81%AE%E6%8C%87%E6%A8%99%E3%82%92%E5%A4%96%E6%8C%BF%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>11.4.2</b> 都道府県レベルの指標を外挿する</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="writepaper.html"><a href="writepaper.html"><i class="fa fa-check"></i><b>12</b> 論文のまとめ方</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="02-preparation.html"><a href="#%E5%85%A8%E4%BD%93%E3%81%AE%E6%A7%8B%E6%88%90"><i class="fa fa-check"></i><b>12.1</b> 全体の構成</a></li>
+<li class="chapter" data-level="12.2" data-path="02-preparation.html"><a href="#%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB"><i class="fa fa-check"></i><b>12.2</b> タイトル</a></li>
+<li class="chapter" data-level="12.3" data-path="02-preparation.html"><a href="#%E8%A6%81%E7%B4%84"><i class="fa fa-check"></i><b>12.3</b> 要約</a></li>
+<li class="chapter" data-level="12.4" data-path="02-preparation.html"><a href="#%E5%BA%8F%E8%AB%96"><i class="fa fa-check"></i><b>12.4</b> 序論</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="02-preparation.html"><a href="#%E5%95%8F%E9%A1%8C%E8%83%8C%E6%99%AF1%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>12.4.1</b> 問題背景（1段落）</a></li>
+<li class="chapter" data-level="12.4.2" data-path="02-preparation.html"><a href="#%E5%85%88%E8%A1%8C%E7%A0%94%E7%A9%B6%E3%81%AE%E6%A4%9C%E8%A8%8E12%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>12.4.2</b> 先行研究の検討（1–2段落）</a></li>
+<li class="chapter" data-level="12.4.3" data-path="02-preparation.html"><a href="#%E7%A0%94%E7%A9%B6%E7%9B%AE%E7%9A%84%E3%81%A8%E6%96%B9%E6%B3%9512%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>12.4.3</b> 研究目的と方法（1–2段落）</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="02-preparation.html"><a href="#%E5%85%88%E8%A1%8C%E7%A0%94%E7%A9%B6%E7%90%86%E8%AB%96%E6%9E%A0%E7%B5%84%E3%81%BF%E4%BB%AE%E8%AA%AC"><i class="fa fa-check"></i><b>12.5</b> 先行研究・理論枠組み・仮説</a></li>
+<li class="chapter" data-level="12.6" data-path="02-preparation.html"><a href="#%E6%96%B9%E6%B3%95"><i class="fa fa-check"></i><b>12.6</b> 方法</a>
+<ul>
+<li class="chapter" data-level="12.6.1" data-path="02-preparation.html"><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%A8%E5%88%86%E6%9E%90%E5%AF%BE%E8%B1%A1"><i class="fa fa-check"></i><b>12.6.1</b> データと分析対象</a></li>
+<li class="chapter" data-level="12.6.2" data-path="02-preparation.html"><a href="#%E5%A4%89%E6%95%B0"><i class="fa fa-check"></i><b>12.6.2</b> 変数</a></li>
+<li class="chapter" data-level="12.6.3" data-path="02-preparation.html"><a href="#%E5%88%86%E6%9E%90%E6%89%8B%E6%B3%95"><i class="fa fa-check"></i><b>12.6.3</b> 分析手法</a></li>
+</ul></li>
+<li class="chapter" data-level="12.7" data-path="02-preparation.html"><a href="#%E7%B5%90%E6%9E%9C"><i class="fa fa-check"></i><b>12.7</b> 結果</a>
+<ul>
+<li class="chapter" data-level="12.7.1" data-path="02-preparation.html"><a href="#%E8%A8%98%E8%BF%B0%E7%9A%84%E5%88%86%E6%9E%90"><i class="fa fa-check"></i><b>12.7.1</b> 記述的分析</a></li>
+<li class="chapter" data-level="12.7.2" data-path="02-preparation.html"><a href="#%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90"><i class="fa fa-check"></i><b>12.7.2</b> 回帰分析</a></li>
+</ul></li>
+<li class="chapter" data-level="12.8" data-path="02-preparation.html"><a href="#%E7%B5%90%E8%AB%96"><i class="fa fa-check"></i><b>12.8</b> 結論</a>
+<ul>
+<li class="chapter" data-level="12.8.1" data-path="02-preparation.html"><a href="#%E8%83%8C%E6%99%AF%E3%81%A8%E7%9B%AE%E7%9A%84%E3%81%AE%E5%86%8D%E7%A2%BA%E8%AA%8D1%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>12.8.1</b> 背景と目的の再確認（1段落）</a></li>
+<li class="chapter" data-level="12.8.2" data-path="02-preparation.html"><a href="#%E5%88%86%E6%9E%90%E7%B5%90%E6%9E%9C%E3%81%AE%E8%A6%81%E7%B4%84%E3%81%A8%E8%A7%A3%E9%87%8824%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>12.8.2</b> 分析結果の要約と解釈（2–4段落）</a></li>
+<li class="chapter" data-level="12.8.3" data-path="02-preparation.html"><a href="#%E8%AA%B2%E9%A1%8C%E9%99%90%E7%95%8C1%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>12.8.3</b> 課題・限界（1段落）</a></li>
+<li class="chapter" data-level="12.8.4" data-path="02-preparation.html"><a href="#%E3%81%BE%E3%81%A8%E3%82%811%E6%AE%B5%E8%90%BD%E4%BB%BB%E6%84%8F"><i class="fa fa-check"></i><b>12.8.4</b> まとめ（1段落、任意）</a></li>
+</ul></li>
+<li class="chapter" data-level="12.9" data-path="02-preparation.html"><a href="#%E8%AC%9D%E8%BE%9E"><i class="fa fa-check"></i><b>12.9</b> 謝辞</a></li>
+<li class="chapter" data-level="12.10" data-path="02-preparation.html"><a href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><i class="fa fa-check"></i><b>12.10</b> 参考文献</a>
+<ul>
+<li class="chapter" data-level="12.10.1" data-path="02-preparation.html"><a href="#%E6%9B%B8%E7%B1%8D%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>12.10.1</b> 書籍の場合の書き方</a></li>
+<li class="chapter" data-level="12.10.2" data-path="02-preparation.html"><a href="#%E7%B7%A8%E8%91%97%E6%9B%B8%E7%B1%8D%E4%B8%AD%E3%81%AE%E8%AB%96%E6%96%87%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>12.10.2</b> 編著書籍中の論文の場合の書き方</a></li>
+<li class="chapter" data-level="12.10.3" data-path="02-preparation.html"><a href="#%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%81%AE%E9%9B%91%E8%AA%8C%E8%AB%96%E6%96%87%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>12.10.3</b> 日本語の雑誌論文の場合の書き方</a></li>
+<li class="chapter" data-level="12.10.4" data-path="02-preparation.html"><a href="#%E8%8B%B1%E8%AA%9E%E3%81%AE%E9%9B%91%E8%AA%8C%E8%AB%96%E6%96%87%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>12.10.4</b> 英語の雑誌論文の場合の書き方</a></li>
+<li class="chapter" data-level="12.10.5" data-path="02-preparation.html"><a href="#%E8%8B%B1%E8%AA%9E%E3%81%AE%E6%9B%B8%E7%B1%8D%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>12.10.5</b> 英語の書籍の場合の書き方</a></li>
+<li class="chapter" data-level="12.10.6" data-path="02-preparation.html"><a href="#%E7%BF%BB%E8%A8%B3%E6%9B%B8%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>12.10.6</b> 翻訳書の場合の書き方</a></li>
+<li class="chapter" data-level="12.10.7" data-path="02-preparation.html"><a href="#%E3%82%A6%E3%82%A7%E3%83%96%E3%82%B5%E3%82%A4%E3%83%88%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>12.10.7</b> ウェブサイトの場合の書き方</a></li>
+</ul></li>
+<li class="chapter" data-level="12.11" data-path="02-preparation.html"><a href="#%E3%81%9D%E3%81%AE%E3%81%BB%E3%81%8B%E3%81%AE%E5%BD%A2%E5%BC%8F%E4%B8%8A%E3%81%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85"><i class="fa fa-check"></i><b>12.11</b> そのほかの形式上の注意事項</a>
+<ul>
+<li class="chapter" data-level="12.11.1" data-path="02-preparation.html"><a href="#%E6%8E%A8%E5%A5%A8%E3%81%99%E3%82%8Bword%E3%81%AE%E8%A8%AD%E5%AE%9A"><i class="fa fa-check"></i><b>12.11.1</b> 推奨するWordの設定</a></li>
+<li class="chapter" data-level="12.11.2" data-path="02-preparation.html"><a href="#%E5%BC%95%E7%94%A8%E3%81%AE%E5%BD%A2%E5%BC%8F"><i class="fa fa-check"></i><b>12.11.2</b> 引用の形式</a></li>
+<li class="chapter" data-level="12.11.3" data-path="02-preparation.html"><a href="#%E5%9B%B3%E8%A1%A8%E3%81%AE%E5%BD%A2%E5%BC%8F"><i class="fa fa-check"></i><b>12.11.3</b> 図表の形式</a></li>
+<li class="chapter" data-level="12.11.4" data-path="02-preparation.html"><a href="#%E8%84%9A%E6%B3%A8"><i class="fa fa-check"></i><b>12.11.4</b> 脚注</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="presentation.html"><a href="presentation.html"><i class="fa fa-check"></i><b>13</b> 研究発表をする</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="02-preparation.html"><a href="#%E7%99%BA%E8%A1%A8%E3%81%AE%E6%A7%8B%E6%88%90"><i class="fa fa-check"></i><b>13.1</b> 発表の構成</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="02-preparation.html"><a href="#%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB-1"><i class="fa fa-check"></i><b>13.1.1</b> タイトル</a></li>
+<li class="chapter" data-level="13.1.2" data-path="02-preparation.html"><a href="#%E5%BA%8F%E8%AB%96-1"><i class="fa fa-check"></i><b>13.1.2</b> 序論</a></li>
+<li class="chapter" data-level="13.1.3" data-path="02-preparation.html"><a href="#%E6%96%B9%E6%B3%95-1"><i class="fa fa-check"></i><b>13.1.3</b> 方法</a></li>
+<li class="chapter" data-level="13.1.4" data-path="02-preparation.html"><a href="#%E5%88%86%E6%9E%90%E7%B5%90%E6%9E%9C"><i class="fa fa-check"></i><b>13.1.4</b> 分析結果</a></li>
+<li class="chapter" data-level="13.1.5" data-path="02-preparation.html"><a href="#%E7%B5%90%E8%AB%96-1"><i class="fa fa-check"></i><b>13.1.5</b> 結論</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="02-preparation.html"><a href="#%E3%81%9D%E3%81%AE%E4%BB%96%E7%99%BA%E8%A1%A8%E3%81%AB%E9%9A%9B%E3%81%97%E3%81%A6%E6%B0%97%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B%E3%81%A8%E3%82%88%E3%81%84%E3%81%93%E3%81%A8"><i class="fa fa-check"></i><b>13.2</b> その他発表に際して気をつけるとよいこと</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="02-preparation.html"><a href="#%E4%BA%8B%E5%89%8D%E3%81%AB%E7%99%BA%E8%A1%A8%E7%B7%B4%E7%BF%92%E3%82%92%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>13.2.1</b> 事前に発表練習をする</a></li>
+<li class="chapter" data-level="13.2.2" data-path="02-preparation.html"><a href="#%E6%96%87%E5%AD%97%E3%81%AF%E5%A4%A7%E3%81%8D%E3%81%8F%E5%B0%91%E3%81%AA%E3%81%8F"><i class="fa fa-check"></i><b>13.2.2</b> 文字は大きく少なく</a></li>
+<li class="chapter" data-level="13.2.3" data-path="02-preparation.html"><a href="#%E3%82%B9%E3%83%A9%E3%82%A4%E3%83%89%E3%81%AB%E3%81%AF%E3%83%9A%E3%83%BC%E3%82%B8%E6%95%B0%E3%82%92%E6%9B%B8%E3%81%8F"><i class="fa fa-check"></i><b>13.2.3</b> スライドにはページ数を書く</a></li>
+<li class="chapter" data-level="13.2.4" data-path="02-preparation.html"><a href="#%E3%82%B9%E3%83%A9%E3%82%A4%E3%83%89%E3%81%A4%E3%81%8F%E3%82%8A%E3%81%AE%E5%8F%82%E8%80%83%E8%B3%87%E6%96%99"><i class="fa fa-check"></i><b>13.2.4</b> スライドつくりの参考資料</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>14</b> さらなる学習のための参考文献等</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="02-preparation.html"><a href="#%E5%AE%9F%E8%A8%BC%E7%A0%94%E7%A9%B6%E3%81%AE%E5%9F%BA%E7%A4%8E%E3%82%B9%E3%82%AD%E3%83%AB"><i class="fa fa-check"></i><b>14.1</b> 実証研究の基礎スキル</a></li>
+<li class="chapter" data-level="14.2" data-path="02-preparation.html"><a href="#r%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9"><i class="fa fa-check"></i><b>14.2</b> Rの使い方</a></li>
+<li class="chapter" data-level="14.3" data-path="02-preparation.html"><a href="#ggplot%E3%81%AE%E8%A7%A3%E8%AA%AC"><i class="fa fa-check"></i><b>14.3</b> ggplotの解説</a></li>
+<li class="chapter" data-level="14.4" data-path="02-preparation.html"><a href="#%E7%B5%B1%E8%A8%88%E5%AD%A6%E8%A8%88%E9%87%8F%E5%88%86%E6%9E%90%E3%82%92%E5%AD%A6%E3%81%B6"><i class="fa fa-check"></i><b>14.4</b> 統計学・計量分析を学ぶ</a></li>
+<li class="chapter" data-level="14.5" data-path="02-preparation.html"><a href="#%E7%B0%A1%E5%8D%98%E3%81%AB%E5%88%A9%E7%94%A8%E3%81%A7%E3%81%8D%E3%82%8B%E5%80%8B%E7%A5%A8%E3%83%87%E3%83%BC%E3%82%BF"><i class="fa fa-check"></i><b>14.5</b> 簡単に利用できる個票データ</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rによる社会調査データ分析の手引き</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="preparation" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> RとRStudioの下準備<a href="preparation.html#preparation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="rとrstudioのインストール方法" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> RとRStudioのインストール方法<a href="#r%E3%81%A8rstudio%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%96%B9%E6%B3%95" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><a href="https://yukiyanai.github.io/jp/resources/">矢内勇生先生のページ</a>を参照して、RおよびRStudioをインストールしてください。体感では、お使いのPCの環境的な問題によりインストールでつまづく人が10人に1–2人くらいの割合でいるので、つまづくのはよくあることです。なので、つまづいたら教員に質問しましょう。</p>
+<ul>
+<li>Macの人は38ページまで、Windowsの人は102ページまでやれば準備完了です。
+<ul>
+<li>MacとWindowsの人どちらも：「RStudioのカスタマイズ」（Macの人は39ページ以降、Windowsの人は103ページ以降）は、やらなくても問題ありません。</li>
+<li>Windowsの人向け：p.27–35の「対処法その3」は（よっぽどパソコンに詳しい人でない限り）危険な操作なのでおすすめしません。</li>
+<li>Windowsの人向け：p.58–66の「プログラミング用フォントのインストール」は飛ばしても問題ありません。</li>
+</ul></li>
+<li>基本的には上記の資料のとおりにやればうまくいくと思いますが、何やらエラーが出る場合には<a href="https://ryotamugiyama.com/blog/2020-08-03-Rinstall.html">2020年の別の授業経験をもとに書いた以下の記事</a>が参考になるかもしれません。</li>
+</ul>
+</div>
+<div id="データ分析のワークフロー" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> データ分析のワークフロー<a href="#%E3%83%87%E3%83%BC%E3%82%BF%E5%88%86%E6%9E%90%E3%81%AE%E3%83%AF%E3%83%BC%E3%82%AF%E3%83%95%E3%83%AD%E3%83%BC" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>データ分析のワークフローをおおまかに示すと、次のようなものになる。</p>
+<ol style="list-style-type: decimal">
+<li><p>プロジェクトフォルダを作成する（この章で解説）</p></li>
+<li><p>データを取得する（→<a href="import.html#import">データの読み込み</a>）</p></li>
+<li><p>データを開く（→<a href="import.html#import">データの読み込み</a>）</p></li>
+<li><p>データを加工する（→<a href="handling.html#handling">データの加工</a>）</p>
+<ol style="list-style-type: decimal">
+<li><p>変数の作成</p></li>
+<li><p>サンプルの限定</p></li>
+<li><p>加工したデータの保存</p></li>
+</ol></li>
+<li><p>データを分析する</p>
+<ol style="list-style-type: decimal">
+<li><p>基礎集計（→<a href="descriptives.html#descriptives">1変量の集計</a>）</p></li>
+<li><p>2変量の関連分析（→<a href="tabulate.html#tabulate">2変量の集計</a>、<a href="regression_basic.html#regression_basic">回帰分析の基礎</a>）</p></li>
+<li><p>他の要因を統制した分析（→<a href="regression_advanced.html#regression_advanced">回帰分析の活用</a>）</p></li>
+</ol></li>
+<li><p>分析結果を出力する</p></li>
+<li><p>誤りや改善点、アイデアを見つけ、再度データを加工する（4に戻る、4から7をn回繰り返す）</p></li>
+<li><p>最終的な分析結果を論文にまとめる</p></li>
+</ol>
+<p>出版された論文を読むと、エレガントな分析結果がはじめからスムーズに提示されているような印象を受けるかもしれない。しかしながら、実際はそのようにスムーズに分析が進むことはない。舞台裏では（必ずしもきれいとはいえない）データを加工し、分析し、間違いをみつけては再度データを加工して分析し、他の人からコメントをもらったりして再度データを加工したり分析して……といったふうに何度もPDCAが行われている。なので、データ分析の過程で行きつ戻りつすることはむしろふつうのことだと思ったほうがよい。</p>
+<p>PDCAの過程では、「<a href="plan.html#plan">研究計画を立てる</a>」で作成したような研究計画を修正したりすることがある。それ自体は必ずしも悪いことではない。しかし、計画なしに手当たり次第に分析してしまっては、自分が何をやっているのかわからなくなってしまう。自分が何をしたいのか、自分が今何をしているのか（上記のどの段階にいるのか）を意識しながら、データを加工したり分析したりすることが重要になる。</p>
+</div>
+<div id="preparation_project" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> プロジェクトの作成<a href="preparation.html#preparation_project" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="rstudioを開いてみよう" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> RStudioを開いてみよう<a href="#rstudio%E3%82%92%E9%96%8B%E3%81%84%E3%81%A6%E3%81%BF%E3%82%88%E3%81%86" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="float">
+<img src="images/Rstudio_capture.png" alt="RStudioを開いたときの見た目" />
+<div class="figcaption">RStudioを開いたときの見た目</div>
+</div>
+<p>特に設定を変えていないならば、はじめてRStudioを開くと次のような画面になっている。それぞれ以下のように対応している。</p>
+<ul>
+<li><p>左のウインドウ：コマンドを入力して、結果が出力されるウインドウ</p></li>
+<li><p>右上のウインドウ：読み込まれているオブジェクトを表示するウインドウ</p></li>
+<li><p>右下のウインドウ：ファイルの一覧をみたり、グラフが表示されたり、ヘルプファイルを表示されたりするウインドウ</p></li>
+</ul>
+</div>
+<div id="授業用のフォルダを作ろう" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> 授業用のフォルダを作ろう<a href="#%E6%8E%88%E6%A5%AD%E7%94%A8%E3%81%AE%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%82%92%E4%BD%9C%E3%82%8D%E3%81%86" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>この授業のために使う資料やコードなどをまとめておくためのフォルダを作っておくとよい。適宜、自分のわかりやすい箇所を選ぶとよい。</p>
+<ul>
+<li><p>Windowsの場合：「OneDrive」→「ドキュメント」の下などに作成すると、自動でバックアップを取ってくれるのでおすすめ。</p></li>
+<li><p>Macの場合：「iCloud Drive」→「書類」の下などがおすすめ。</p></li>
+</ul>
+<p>いずれも、Cloudの容量の上限に達しているとエラーが出るので注意。写真や動画ファイルなどは容量が大きいのでCloudの容量を拡張したり別のサービスを使って、そちらに移しておくとよい。</p>
+</div>
+<div id="ファイルパスと作業ディレクトリ" class="section level3 hasAnchor" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> ファイルパスと作業ディレクトリ<a href="#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%91%E3%82%B9%E3%81%A8%E4%BD%9C%E6%A5%AD%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>コンピュータ上のさまざまなファイルを置いた場所を指してフォルダ、あるいはディレクトリという。コンピュータ上のファイルは基本的にフォルダの中に入れて管理する。</p>
+<p>このフォルダにはそれぞれ住所がついている。この住所を指して、ファイルパス、またはたんにパスという。たとえば自分がこの資料を作成しているフォルダのファイルパスは、“User/mugi/…（中略）…/seminar_sociology_r”である。</p>
+<p>ファイルパスというのが何かをつかむため、現実世界の住所について考えてみよう。たとえば、学習院大学目白キャンパスの住所は「東京都豊島区目白1-5-1」である。この住所は、前から順番に読んでいって、より小さい単位を指す（東京都のなかにある豊島区、豊島区のなかにある目白、目白のなかにある1丁目……というふうに）。ファイルパスはまさにこの「東京都豊島区目白1-5-1」のような住所であり、フォルダのありかを示す役割を果たす。</p>
+<p>RStudioが作業場所だと認識している場所を指して、作業ディレクトリという。この作業ディレクトリのファイルパスは、左下の画面の上部に記載されている。分析などを行う際には、このファイルパスが自分の意図している場所と一致しているかどうかを確認する必要がある。</p>
+</div>
+<div id="プロジェクト作成の手順" class="section level3 hasAnchor" number="2.3.4">
+<h3><span class="header-section-number">2.3.4</span> プロジェクト作成の手順<a href="#%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E4%BD%9C%E6%88%90%E3%81%AE%E6%89%8B%E9%A0%86" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>先ほど作成した授業用フォルダのなかに、データを置いたりコードを置いたりするためのフォルダを作って、そこが作業ディレクトリだとRStudioに教えてあげたい。このようなときに便利な機能が、「プロジェクト」である。この機能を利用することで、プロジェクトを作成した場所が作業ディレクトリであることをRに教えることができる。新たな研究をはじめるときには、必ずプロジェクトを作成するようにする。</p>
+<p>プロジェクトの新規作成手順は次のとおり。</p>
+<ol style="list-style-type: decimal">
+<li>“File” &gt; “New Project”、または右上の”Project”の箱を選択 &gt; “New Project”</li>
+<li>“New Directory”を選択</li>
+<li>“New Project”を選択</li>
+<li>Directory nameに作業ディレクトリの名前をつけて（ここでは「seminar_sociology_r」とする）、“Browse”から新しいフォルダを作る場所（先ほどの授業用フォルダ）を選択</li>
+<li>指定した場所に、“seminar_sociology_r.Rproj”というファイルが入ったフォルダができる</li>
+<li>右上の表示が（まだ何もプロジェクトを開いていない場合には）「Project: None」から「seminar_sociology_r」に変わっていることを確認する。</li>
+</ol>
+<p>すでに作成済みのフォルダを作業用フォルダとして指定したい場合には、次のような手順で行う。</p>
+<ol style="list-style-type: decimal">
+<li>“File” &gt; “New Project”、または右上の”Project” &gt; “New Project”</li>
+<li>“Existing Directory”を選択</li>
+<li>“New Project”を選択</li>
+<li>“Browse”から作業用フォルダとして指定したいフォルダを選択</li>
+<li>右上の表示が（まだ何もプロジェクトを開いていない場合には）「Project: None」から作業用フォルダとして指定したフォルダの名前に変わっていることを確認する。</li>
+</ol>
+<div class="float">
+<img src="images/project_1.png" alt="Project: (None)の状態" />
+<div class="figcaption">Project: (None)の状態</div>
+</div>
+<div class="float">
+<img src="images/project_2.png" alt="Projectを開いた状態" />
+<div class="figcaption">Projectを開いた状態</div>
+</div>
+<div class="float">
+<img src="images/project_3.png" alt="フォルダ内に作成されるRprojファイル" />
+<div class="figcaption">フォルダ内に作成されるRprojファイル</div>
+</div>
+</div>
+</div>
+<div id="基本的な操作" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> 基本的な操作<a href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E6%93%8D%E4%BD%9C" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="float">
+<img src="images/Rstudio_capture.png" alt="RStudioを開いたときの見た目（再掲）" />
+<div class="figcaption">RStudioを開いたときの見た目（再掲）</div>
+</div>
+<p>プロジェクトが作成できたら、ためしに左のウインドウに以下のコードを書いて、Enterを押してみよう。計算結果が表示される。</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="preparation.html#cb1-1" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span></span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<div id="スクリプトファイル" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> スクリプトファイル<a href="#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>実際には上記のような1行ですむコードを書くわけではもちろんなく、色々とコードを書いて、データを加工したり分析をしたりしていく。そうなってくると、コードはコードとしてまとめて書くことのできる場所があると嬉しいだろう。このような用途で使うのが、スクリプトファイルである。以下の手順で新規のスクリプトファイルを開くことができる。</p>
+<ol style="list-style-type: decimal">
+<li>左上の白い四角にプラス（+）マークのついたアイコンをクリック</li>
+<li>「R script」を選択</li>
+</ol>
+<p>すると、RStudioの左上に次のような場所が現れる：</p>
+<p><img src="images/Rstudio_capture2.png" /></p>
+<p>この左上のスクリプトファイルにコードを書き、実行したい行にカーソルを合わせて、スクリプト右上の「Run」をクリックすると、命令が実行され、結果が左下のConsoleに出力される。実行したい箇所をドラッグした状態で実行すれば、複数の命令をまとめて実行することもできる。</p>
+<p>「Run」は頻繁に使う。毎回クリックするのは面倒なので、ショートカットキーを覚えよう。実行には以下のショートカットキーを使う。</p>
+<ul>
+<li><p>Windows: ctrl + enter</p></li>
+<li><p>Mac: command + enter</p></li>
+</ul>
+<p>以下のコードを実行してみよう：</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="preparation.html#cb3-1" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span></span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="preparation.html#cb5-1" tabindex="-1"></a><span class="dv">8</span> <span class="sc">-</span> <span class="dv">3</span></span></code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="preparation.html#cb7-1" tabindex="-1"></a><span class="dv">10</span> <span class="sc">*</span> <span class="dv">8</span></span></code></pre></div>
+<pre><code>## [1] 80</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="preparation.html#cb9-1" tabindex="-1"></a><span class="dv">4</span> <span class="sc">/</span> <span class="dv">15</span></span></code></pre></div>
+<pre><code>## [1] 0.2666667</code></pre>
+</div>
+<div id="スクリプトファイルを保存する" class="section level3 hasAnchor" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> スクリプトファイルを保存する<a href="#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E4%BF%9D%E5%AD%98%E3%81%99%E3%82%8B" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>上記のようにスクリプトを書いて実行していくわけだが、スクリプトを書いた変更が保存されていない状態だと、スクリプトの上部が赤く表示される。</p>
+<p><img src="images/unsaved.png" /></p>
+<p>このスクリプトを保存する場合には、上記のフロッピーディスク（今どきの大学生は見たことも聞いたこともないと思いますが……）のアイコンをクリックすると、変更を保存することができる。フロッピーディスクが1枚のアイコンは「上書き保存」、2枚重なったアイコンは「現在開いているスクリプトファイルをまとめてすべて保存」を表している。</p>
+<p>スクリプトを保存すると、赤い文字列は黒い表示になり、無事保存されたことがわかる。保存したファイルは「xxxxx.R」というファイルとして、現在開いているプロジェクトフォルダに保存される。後日作業を再開するときには、再度当該ファイルを開けばよい。</p>
+<p>データ分析を行う場合には、分析結果を保存すること以上に、スクリプトファイルを保存することが重要になる。というのも、スクリプトファイルを保存しておけば、同じ命令を実行すれば、再び同じ分析結果を出力することが可能だからである。一方、分析結果だけを保存しておいたとしても、元のスクリプトファイルがなければ、その結果を改めて出力することはできなくなってしまう。</p>
+<p>上記から分かるように、スクリプトファイルは日を改めたりして何度も開いて実行していって少しずつ変更したりしていくものである。そのため、毎回忘れずに保存し、かつ、コードを書く際には、後から見直して何をやっていたのかが分かるようにきれいにまとめておくことが望ましい。</p>
+</div>
+<div id="パッケージのインストール" class="section level3 hasAnchor" number="2.4.3">
+<h3><span class="header-section-number">2.4.3</span> パッケージのインストール<a href="#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>install.packages()</code>はゲームソフトを購入（無料ですが）するようなもの。実際にそのソフトに入っているコンテンツを使うためには、毎回RStudioを立ち上げるために、ゲームソフトをセットしないといけない。その際には、<code>library()</code>を用いる。</p>
+<p>本資料では以下のパッケージを使用する。今のうちにまとめてインストールしておこう。</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="preparation.html#cb11-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
+<span id="cb11-2"><a href="preparation.html#cb11-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;haven&quot;</span>)</span>
+<span id="cb11-3"><a href="preparation.html#cb11-3" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;readxl&quot;</span>)</span>
+<span id="cb11-4"><a href="preparation.html#cb11-4" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;gtsummary&quot;</span>)</span>
+<span id="cb11-5"><a href="preparation.html#cb11-5" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;modelsummary&quot;</span>)</span>
+<span id="cb11-6"><a href="preparation.html#cb11-6" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;pandoc&quot;</span>)</span>
+<span id="cb11-7"><a href="preparation.html#cb11-7" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;flextable&quot;</span>)</span>
+<span id="cb11-8"><a href="preparation.html#cb11-8" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;estimatr&quot;</span>)</span>
+<span id="cb11-9"><a href="preparation.html#cb11-9" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;broom&quot;</span>)</span>
+<span id="cb11-10"><a href="preparation.html#cb11-10" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggeffects&quot;</span>)</span>
+<span id="cb11-11"><a href="preparation.html#cb11-11" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;effects&quot;</span>)</span>
+<span id="cb11-12"><a href="preparation.html#cb11-12" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;margins&quot;</span>)</span></code></pre></div>
+<p>とくに重要なのが<code>tidyverse</code>パッケージ。以下の8つのパッケージをまとめたパッケージ群であり、どれもよく使うものなので、何らかの分析をする際にはほとんど常に<code>library(tidyverse)</code>を実行しておくことになる。</p>
+<ul>
+<li>ggplot2</li>
+<li>tibble</li>
+<li>tidyr</li>
+<li>readr</li>
+<li>purrr</li>
+<li>dplyr</li>
+<li>stringr</li>
+<li>forcats</li>
+</ul>
+</div>
+</div>
+<div id="その他の設定" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> その他の設定<a href="#%E3%81%9D%E3%81%AE%E4%BB%96%E3%81%AE%E8%A8%AD%E5%AE%9A" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="rstudioを閉じる際のworkspace保存の警告を削除" class="section level3 hasAnchor" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> RStudioを閉じる際のWorkspace保存の警告を削除<a href="#rstudio%E3%82%92%E9%96%89%E3%81%98%E3%82%8B%E9%9A%9B%E3%81%AEworkspace%E4%BF%9D%E5%AD%98%E3%81%AE%E8%AD%A6%E5%91%8A%E3%82%92%E5%89%8A%E9%99%A4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>画面上部のTools &gt; Global Options をクリックして、以下の画面を開く。</p>
+<p><img src="images/restore_check.png" /></p>
+<p>真ん中あたりにある「Workspace」の下、「Restore .RData into workspace at startup」のチェックを外し（デフォルトではチェックが入っている）、「Save workspace to .RData on exit:」を「Never」に変更する（デフォルトではAskになっている）。</p>
+<p><img src="images/restore_check2.png" /></p>
+<p>以上は、一度変更したらその後は変更する必要はない<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>。</p>
+</div>
+<div id="グラフの日本語表示" class="section level3 hasAnchor" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> グラフの日本語表示<a href="#%E3%82%B0%E3%83%A9%E3%83%95%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E%E8%A1%A8%E7%A4%BA" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>ついで、グラフの表示にかかわるオプションを変更しておこう。先ほどと同様、画面上部のTools &gt; Global Options をクリックして、General &gt; Graphicsを選択する。</p>
+<p><img src="images/graphic_check.png" /></p>
+<p>ここで、「Backend」を以下のように「(Default)」から「AGG」に変更する。PCの環境によって異なるが、Backendが(Default)のままだと、日本語が表示されないことがある。このような場合、「AGG」に設定すると、日本語が含まれるグラフが正しく表示されるようになる。</p>
+<p><img src="images/graphic_check2.png" /></p>
+</div>
+</div>
+<div id="rの基礎" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Rの基礎<a href="#r%E3%81%AE%E5%9F%BA%E7%A4%8E" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>これについてはたくさんの素晴らしい解説が世の中にあふれているのでここでは扱わない。一例として以下の箇所などを参照のこと。以下の箇所で扱われている程度の基礎的な知識を次章以降では前提とする。</p>
+<ul>
+<li><p>Llaudet, Elene and Kosuke Imai. 2022. <em>Data Analysis for Social Science: A Friendly and Practical Introduction.</em> Princeton University Press.（原田勝孝訳，2025，『新・社会科学のためのデータ分析入門：導入編』岩波書店）より第1章「イントロダクション」</p></li>
+<li><p>浅野正彦・矢内勇生，2018，『Rによる計量政治学』オーム社より「4.2　Rの基本操作」.</p></li>
+<li><p>安井翔太・株式会社ホクソエム，2020，『効果検証入門：正しい比較のための因果推論／計量経済学の基礎』技術評論社より「付録 RとRStudioの基礎」</p></li>
+<li><p>Imai, Kosuke. 2018. Quantitative Social Science: An Introduction.Princeton University Press. （粕谷祐子・原田勝孝・久保浩樹訳，『社会科学のためのデータ分析入門』岩波書店．）より”1.3 Introduction to R”（「1.3　Rの基礎」）</p></li>
+<li><p>太郎丸博，2021，「<a href="http://tarohmaru.web.fc2.com/R/R_Introduction/RBasics.html">データを読み込む前に知っておきたいRの基礎</a>」（<a href="http://tarohmaru.web.fc2.com/class.html">太郎丸博先生の授業関連ページ</a>→「R入門（2021年社会学実習 G科目）」にアップロードされている資料です）</p></li>
+</ul>
+</div>
+<div id="エラーが出たときに確認する箇所" class="section level2 hasAnchor" number="2.7">
+<h2><span class="header-section-number">2.7</span> エラーが出たときに確認する箇所<a href="#%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E5%87%BA%E3%81%9F%E3%81%A8%E3%81%8D%E3%81%AB%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E7%AE%87%E6%89%80" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>エラーが出たときは、以下の点を確認してみよう。</p>
+<ul>
+<li>Projectフォルダ（RStudio右上の箱のマーク）が正しく設定されているか？</li>
+<li>関数のつづりが間違っていないか（たとえば、meanがmaenになっていないだろうか）？</li>
+<li>変数のつづりが間違っていないか（たとえば、educationがeduactionになっていないだろうか）？</li>
+<li>半角文字とすべきところを全角文字にしていないか？</li>
+<li>全角スペースが入っていないか？（入っているとエラーが生じることが多い）</li>
+<li>正しいデータフレームを参照しているか？</li>
+<li>長いコードの場合は、一つひとつの作業に分割して、どこまではエラーなく実行でき、どこでエラーになるのかを確認したか？</li>
+<li>エラーメッセージを読んだか？</li>
+<li>何らかのパッケージを使用する際、そのパッケージはすでに<code>install.packages()</code>でインストール済か？そのうえで、あらかじめ<code>library()</code>で読み込んでいるか？</li>
+</ul>
+<p>自分ですぐに解決できない場合は、経験豊富な教員や先輩に聞くと、あっという間に解決することも多い。</p>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="9">
+<li id="fn9"><p>この設定をしない場合、RStudioを閉じるたびにworkspaceを保存するかどうか尋ねられることになる。これは一見便利に見えるが、以前に読み込んだパッケージなどの情報が保存されてしまうため、意図せずして異なるパッケージどうしで関数名がバッティングしてしまい、エラーの原因となる（参考：<a href="https://keachmurakami.github.io/page/2018/06/29/%E9%96%A2%E6%95%B0%E5%90%8D%E3%81%AE%E8%A1%9D%E7%AA%81%E3%82%92%E9%81%BF%E3%81%91%E3%82%8B-r/">関数名の衝突を避ける（R）</a>）。またこれは再現可能性の点でも悪手である。アプリケーションを閉じようとするときに「保存せずに消しますか？」と言われると、なんとなく保存したくなってしまうのが人情なので、先手を打ってそのように聞かれないように対策をしておいたほうがよい。<a href="preparation.html#fnref9" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="plan.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="import.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
