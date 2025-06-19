@@ -236,6 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.7.4" data-path="04-handling.html"><a href="#%E5%88%86%E6%9E%90%E7%94%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99"><i class="fa fa-check"></i><b>4.7.4</b> 分析用データを書き出す</a></li>
 </ul></li>
 <li class="chapter" data-level="4.8" data-path="04-handling.html"><a href="#%E7%99%BA%E5%B1%95%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%BF%BD%E5%8A%A0"><i class="fa fa-check"></i><b>4.8</b> 【発展】データの追加</a></li>
+<li class="chapter" data-level="4.9" data-path="04-handling.html"><a href="#%E6%BC%94%E7%BF%92%E5%95%8F%E9%A1%8C"><i class="fa fa-check"></i><b>4.9</b> 演習問題</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="descriptives.html"><a href="descriptives.html"><i class="fa fa-check"></i><b>5</b> 1変数の集計</a>
 <ul>
@@ -371,6 +372,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.5.2" data-path="04-handling.html"><a href="#%E5%8D%98%E4%BD%8D%E3%81%AE%E5%A4%89%E6%9B%B4"><i class="fa fa-check"></i><b>8.5.2</b> 単位の変更</a></li>
 </ul></li>
 <li class="chapter" data-level="8.6" data-path="04-handling.html"><a href="#%E7%B5%90%E6%9E%9C%E3%82%92%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99-2"><i class="fa fa-check"></i><b>8.6</b> 結果をファイルに書き出す</a></li>
+<li class="chapter" data-level="8.7" data-path="04-handling.html"><a href="#%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C-3"><i class="fa fa-check"></i><b>8.7</b> 練習問題</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="regression_interaction.html"><a href="regression_interaction.html"><i class="fa fa-check"></i><b>9</b> 交互作用</a>
 <ul>
@@ -549,7 +551,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb33-2"><a href="handling.html#cb33-2" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.character, as.numeric) <span class="sc">%&gt;%</span> <span class="co">#すべての文字列変数を小文字に変換</span></span>
 <span id="cb33-3"><a href="handling.html#cb33-3" tabindex="-1"></a>  <span class="fu">rename_all</span>(<span class="at">.funs =</span> tolower) <span class="co">#すべての大文字を小文字に変換</span></span></code></pre></div>
 <pre><code>## Rows: 5278 Columns: 1328
-## ── Column specification ───────────────
+## ── Column specification ───────────────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (470): DISP_MAIN, B_Q01a3, B_Q01a3_C, B_Q01b, B_Q01c1, B_Q01c1_C, B_Q01c...
 ## dbl (656): CNTRYID, CNTRYID_E, SEQID, AGE_R, GENDER_R, DISP_CIBQ, A_N01_T, B...
@@ -1266,6 +1268,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
+<p>以下のように架空のデータがあるとする（例なので実行する必要はない）。</p>
 <div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="handling.html#cb86-1" tabindex="-1"></a>jgss <span class="co">#元のデータ（架空例）</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 1
 ##   ST5JOB
@@ -1276,7 +1279,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4      2
 ## 5      1
 ## 6      3</code></pre>
-<p>以下のようにして値を変えた変数を作成する。</p>
+<p>このデータの場合は、以下のようにして値を変えた変数を作成することができる（例なので実行する必要はない）。</p>
 <div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="handling.html#cb88-1" tabindex="-1"></a>jgss <span class="ot">&lt;-</span> jgss <span class="sc">%&gt;%</span> </span>
 <span id="cb88-2"><a href="handling.html#cb88-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">jobsatis =</span> <span class="dv">6</span> <span class="sc">-</span> ST5JOB)</span>
 <span id="cb88-3"><a href="handling.html#cb88-3" tabindex="-1"></a></span>
@@ -1296,6 +1299,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">4.5.4</span> 無回答、非該当、「わからない」などをNAに<a href="#%E7%84%A1%E5%9B%9E%E7%AD%94%E9%9D%9E%E8%A9%B2%E5%BD%93%E3%82%8F%E3%81%8B%E3%82%89%E3%81%AA%E3%81%84%E3%81%AA%E3%81%A9%E3%82%92na%E3%81%AB" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>JGSSでは「夫は外で働き、妻は家庭を守るべきだ」という意見に対して賛成か反対かを4つの選択肢を設けて尋ねている。ただし、この質問に（何らかの理由で）回答していない者もおり、そのような場合には9という値が便宜的に振られている。</p>
 <p>この質問に対する回答を連続値とみなして集計したりしたいとする。このような場合、無回答の9という値は計算から除外したいので、9という値ではなくNAとしたい。</p>
+<p>以下のように架空のデータがあるとする（例なので実行する必要はない）。</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="handling.html#cb90-1" tabindex="-1"></a>jgss <span class="co">#元のデータ（架空例）</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 1
 ##   Q4WWHHX
@@ -1306,7 +1310,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4       3
 ## 5       2
 ## 6       1</code></pre>
-<p>以下のようにして9をNAに置き換えた変数を作成する。</p>
+<p>以下のようにして9をNAに置き換えた変数を作成することができる（例なので実行する必要はない）。</p>
 <div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="handling.html#cb92-1" tabindex="-1"></a>jgss <span class="ot">&lt;-</span> jgss <span class="sc">%&gt;%</span> </span>
 <span id="cb92-2"><a href="handling.html#cb92-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">genderrole =</span> <span class="fu">if_else</span>(Q4WWHHX <span class="sc">==</span> <span class="dv">9</span>, <span class="cn">NA</span>, Q4WWHHX))  <span class="co"># 9をNAに置換</span></span>
 <span id="cb92-3"><a href="handling.html#cb92-3" tabindex="-1"></a></span>
@@ -1629,6 +1633,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  8     8     4     1 data 2
 ##  9     9     0     2 data 2
 ## 10    10     2     1 data 2</code></pre>
+</div>
+<div id="演習問題" class="section level2 hasAnchor" number="4.9">
+<h2><span class="header-section-number">4.9</span> 演習問題<a href="#%E6%BC%94%E7%BF%92%E5%95%8F%E9%A1%8C" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>上記コードをすべて実行して、<code>piaac_sample_analytic.rds</code>ファイルを作成したものとする。一度RStudioを閉じたうえで再度開き、以下のコードを実行してデータを読み込んで下さい。</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="handling.html#cb123-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb123-2"><a href="handling.html#cb123-2" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
+<p>そのうえで、以下の問題に答えてください。</p>
+<ol style="list-style-type: decimal">
+<li>一週間の労働時間（<code>workhour</code>）に50をかけて、1年間の労働時間を表す変数（<code>yearlyworkhour</code>という名前をつけてください）を作成してください。</li>
+<li>年齢（<code>age</code>）を25–44歳、45–64歳の2つのカテゴリに分けた変数（<code>agecat</code>という名前をつけてください）を作成してください。</li>
+<li>主観的健康度（<code>health</code>）に対して、1ならば「とても悪い」、2ならば「悪い」、3ならば「どちらでもない」、4ならば「良い」、5ならば「とても良い」という値を割り当てたカテゴリ変数（<code>health_factor</code>という名前をつけてください）を作成してください。</li>
+<li>学歴（<code>educ</code>）が「大学・大学院卒」のケースだけを抽出して、<code>piaac_univ</code>というデータフレームに格納してください。</li>
+</ol>
 
 </div>
 </div>

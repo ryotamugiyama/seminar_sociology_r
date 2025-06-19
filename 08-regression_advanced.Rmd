@@ -278,7 +278,6 @@ reg_res2_tidy %>%
   mutate(estimate_exp = exp(estimate))
 ```
 
-
 ```{r, include=FALSE, echo=FALSE}
 reg_res2_tidy <- reg_res2 %>% 
   tidy() %>% 
@@ -296,8 +295,8 @@ reg_res2_tidy <- reg_res2 %>%
 
 参照カテゴリに当てはまる人数が小さかったり、議論の方向性によっては、参照カテゴリを別のものに設定するほうがよい場合がある。たとえば：
 
-- 学歴が中学卒の回答者が非常に少なく、解釈が難しい。この場合には、中学ではなくその他の学歴（たとえば高校や大学）を参照カテゴリにすることが望ましい。
-- 「男性と比較してどの程度女性の賃金が低い」と主張したい。この場合、女性が参照カテゴリになっていると、結果は「女性と比較してどの程度男性の賃金が高いか」を表すことになる。そのため、女性ではなく男性を参照カテゴリにするほうが望ましい。
+-   学歴が中学卒の回答者が非常に少なく、解釈が難しい。この場合には、中学ではなくその他の学歴（たとえば高校や大学）を参照カテゴリにすることが望ましい。
+-   「男性と比較してどの程度女性の賃金が低い」と主張したい。この場合、女性が参照カテゴリになっていると、結果は「女性と比較してどの程度男性の賃金が高いか」を表すことになる。そのため、女性ではなく男性を参照カテゴリにするほうが望ましい。
 
 参照カテゴリを変更する場合には、カテゴリ変数の値の順序を変更するとよい。具体的には、[`fct_relevel()`関数を使う](#fct_relevel)ことで、カテゴリ変数の値の順序を変更することができる。方法は次のとおりである。
 
@@ -406,5 +405,18 @@ modelsummary(list("Model 1" = reg_res1,
 
 [Excelに結果を書き出したり](#regression_output_excel)、[PowerPointに結果を書き出す](#regression_output_pptx)こともできる。いずれも前章の末尾を参照のこと。
 
+## 練習問題
 
+1.  学歴や年齢を一定としたうえでも、女性のほうが主観的健康度（`health`）が高いといえるかどうかを検証したい。この問いを検証するうえで適切な回帰分析を推定し、結果を示したうえで、その結果について説明してください。
+2.  Laurison & Friedman (2016)[^08-regression_advanced-2]は、イギリスにおいて、学歴や職業が同じであったとしても、より高い階級の出身である（親の階級がより高い）ほどより高い賃金を得ていることを明らかにした。いま、PIAACのデータを用いてこうした傾向が日本においても確認されるかどうかを検証したいとする。対数賃金（`logwage`）を従属変数、性別（`gender`）、年齢、年齢2乗、親学歴（`parenteduc`）を独立変数とする重回帰分析を推定し、親学歴の結果について説明してください。
 
+[^08-regression_advanced-2]: [Laurison, Daniel, and Sam Friedman. 2016. "The Class Pay Gap in Higher Professional and Managerial Occupations.” *American Sociological Review* 81(4):668–95.](https://doi.org/10.1177/0003122416653602)
+
+3. 練習問題2について、さらに職業（`occupation`）を統制したうえでもなお、親学歴が高いほうが賃金が高いという傾向があるかどうかを検証したい。適切な回帰分析を推定し、結果について説明してください。
+
+```{r, eval = FALSE, include = FALSE}
+piaac %>% glimpse()
+reg <- lm(data = piaac, health ~ age + I(age^2) + educ + gender)
+reg <- lm(data = piaac, logwage ~ parenteduc + age + I(age^2) + educ + gender + occupation)
+summary(reg)
+```

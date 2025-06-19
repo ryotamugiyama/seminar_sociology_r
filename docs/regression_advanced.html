@@ -236,6 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.7.4" data-path="08-regression_advanced.html"><a href="#%E5%88%86%E6%9E%90%E7%94%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99"><i class="fa fa-check"></i><b>4.7.4</b> 分析用データを書き出す</a></li>
 </ul></li>
 <li class="chapter" data-level="4.8" data-path="08-regression_advanced.html"><a href="#%E7%99%BA%E5%B1%95%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E8%BF%BD%E5%8A%A0"><i class="fa fa-check"></i><b>4.8</b> 【発展】データの追加</a></li>
+<li class="chapter" data-level="4.9" data-path="08-regression_advanced.html"><a href="#%E6%BC%94%E7%BF%92%E5%95%8F%E9%A1%8C"><i class="fa fa-check"></i><b>4.9</b> 演習問題</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="descriptives.html"><a href="descriptives.html"><i class="fa fa-check"></i><b>5</b> 1変数の集計</a>
 <ul>
@@ -371,6 +372,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.5.2" data-path="08-regression_advanced.html"><a href="#%E5%8D%98%E4%BD%8D%E3%81%AE%E5%A4%89%E6%9B%B4"><i class="fa fa-check"></i><b>8.5.2</b> 単位の変更</a></li>
 </ul></li>
 <li class="chapter" data-level="8.6" data-path="08-regression_advanced.html"><a href="#%E7%B5%90%E6%9E%9C%E3%82%92%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99-2"><i class="fa fa-check"></i><b>8.6</b> 結果をファイルに書き出す</a></li>
+<li class="chapter" data-level="8.7" data-path="08-regression_advanced.html"><a href="#%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C-3"><i class="fa fa-check"></i><b>8.7</b> 練習問題</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="regression_interaction.html"><a href="regression_interaction.html"><i class="fa fa-check"></i><b>9</b> 交互作用</a>
 <ul>
@@ -529,26 +531,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>本章では、前章で学んだ回帰分析を発展させて、複数の独立変数を扱う方法について説明する。</p>
 <p>内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project…」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。</p>
 <p>さらに、これまでの章で説明した以下のパッケージを読み込んだ上で、<a href="handling.html#handling">第4章</a>で作成したデータを読み込んで<code>piaac</code>というデータフレームに入れていることを前提とする。具体的には、以下のコードを実行しておく必要がある。</p>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="regression_advanced.html#cb310-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb310-2"><a href="regression_advanced.html#cb310-2" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb310-3"><a href="regression_advanced.html#cb310-3" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
-<span id="cb310-4"><a href="regression_advanced.html#cb310-4" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb310-5"><a href="regression_advanced.html#cb310-5" tabindex="-1"></a></span>
-<span id="cb310-6"><a href="regression_advanced.html#cb310-6" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="regression_advanced.html#cb311-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb311-2"><a href="regression_advanced.html#cb311-2" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb311-3"><a href="regression_advanced.html#cb311-3" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb311-4"><a href="regression_advanced.html#cb311-4" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb311-5"><a href="regression_advanced.html#cb311-5" tabindex="-1"></a></span>
+<span id="cb311-6"><a href="regression_advanced.html#cb311-6" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
 <p><a href="descriptives.html#descriptives_ggplot">第5章で確認したように</a>、ggplotの設定を変更しておくことで見やすいグラフを作ることができる。ここでは以下のコードを実行している。</p>
 <p>Macの場合：</p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="regression_advanced.html#cb311-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
-<span id="cb311-2"><a href="regression_advanced.html#cb311-2" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>,</span>
-<span id="cb311-3"><a href="regression_advanced.html#cb311-3" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
-<span id="cb311-4"><a href="regression_advanced.html#cb311-4" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb311-5"><a href="regression_advanced.html#cb311-5" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
-<span id="cb311-6"><a href="regression_advanced.html#cb311-6" tabindex="-1"></a>))</span></code></pre></div>
-<p>Windowsの場合：</p>
 <div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="regression_advanced.html#cb312-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
-<span id="cb312-2"><a href="regression_advanced.html#cb312-2" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
-<span id="cb312-3"><a href="regression_advanced.html#cb312-3" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb312-4"><a href="regression_advanced.html#cb312-4" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
-<span id="cb312-5"><a href="regression_advanced.html#cb312-5" tabindex="-1"></a>))</span></code></pre></div>
+<span id="cb312-2"><a href="regression_advanced.html#cb312-2" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>,</span>
+<span id="cb312-3"><a href="regression_advanced.html#cb312-3" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb312-4"><a href="regression_advanced.html#cb312-4" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb312-5"><a href="regression_advanced.html#cb312-5" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb312-6"><a href="regression_advanced.html#cb312-6" tabindex="-1"></a>))</span></code></pre></div>
+<p>Windowsの場合：</p>
+<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="regression_advanced.html#cb313-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb313-2"><a href="regression_advanced.html#cb313-2" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb313-3"><a href="regression_advanced.html#cb313-3" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb313-4"><a href="regression_advanced.html#cb313-4" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb313-5"><a href="regression_advanced.html#cb313-5" tabindex="-1"></a>))</span></code></pre></div>
 <div id="重回帰分析" class="section level2 hasAnchor" number="8.1">
 <h2><span class="header-section-number">8.1</span> 重回帰分析<a href="#%E9%87%8D%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>先の単回帰分析では、年齢、性別、学歴、数的思考力スコアによって賃金が異なっていることをみた。これら4つの変数を同時に考慮することで、賃金の分散をよりよく説明できるモデルを作ることができないだろうか？このようなときに役に立つのが、<strong>重回帰分析</strong>である。</p>
@@ -558,8 +560,8 @@ y = \beta_0 + \beta_1年齢 + \beta_2女性 + \beta_3高校卒 + \beta_4短大�
 \]</span></p>
 <p><span class="math inline">\(\beta_1\)</span>が年齢の係数、<span class="math inline">\(\beta_2\)</span>が（男性と比較したときの）女性の係数、<span class="math inline">\(\beta_3, \beta_4, \beta_5\)</span>が（中学卒と比較したときの）高校卒、短大高専卒、大学大学院卒の係数を、<span class="math inline">\(\beta_6\)</span>が数的思考力スコアの係数を、それぞれ表す。各係数は、<strong>他の変数を一定として</strong>（<strong>統制 control</strong>して、ともいう）、当該変数の値が1単位増えると<span class="math inline">\(y\)</span>がどれだけ変化するのか、という独立の影響力を測っていることになる。</p>
 <p>前章と同じように、<code>lm()</code>関数を使って推定することができる。ここでは、賃金の測定の際により一般的に使われる、対数変換した賃金（logwage）を用いる。正負の解釈については通常と同じだが、係数の値についての解釈は少しだけ勉強が必要になる。くわしくは前章「<a href="regression_basic.html#regression_basic_log">対数変換</a>」を参照のこと。</p>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="regression_advanced.html#cb313-1" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> age <span class="sc">+</span> gender <span class="sc">+</span> educ <span class="sc">+</span> numeracy)</span>
-<span id="cb313-2"><a href="regression_advanced.html#cb313-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="regression_advanced.html#cb314-1" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> age <span class="sc">+</span> gender <span class="sc">+</span> educ <span class="sc">+</span> numeracy)</span>
+<span id="cb314-2"><a href="regression_advanced.html#cb314-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = logwage ~ age + gender + educ + numeracy, data = piaac)
@@ -597,14 +599,14 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <h3><span class="header-section-number">8.2.1</span> 交絡とは何か<a href="#%E4%BA%A4%E7%B5%A1%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>では実際、重回帰分析はどのようなことを知りたいときに使うのだろうか。たとえば、高い数的思考力スコアが高いとどれくらい対数賃金が高くなるのかを知りたいと思ったとする。もっともシンプルな方法が、前回みたように（単）回帰分析を使う方法である。</p>
 <p>しかしこの方法は、数的思考力スコアの<strong>因果効果 causal effect</strong>を知るには不十分である。一つ例を考えよう。たとえば、女性はさまざまな理由から男性と比べて数的思考力スコアが低い傾向がある<a href="#fn20" class="footnote-ref" id="fnref20"><sup>20</sup></a>。また、女性はさまざまな理由から労働市場で男性と比べて高い賃金を得られていない。だとすれば、数的思考力スコアが高いと賃金が高いというのはたんに見かけ上の関係に過ぎず、実際には数的思考力スコアは何ら賃金を高める効果を持っていないのかもしれない。性別に色分けした以下の散布図を見てみよう。たしかに、数的思考力も高く対数賃金も高い右上には男性が、数的思考力スコアが低く対数賃金も低い左下には女性が、それぞれ集中しているようにみえる。</p>
-<div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="regression_advanced.html#cb315-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb315-2"><a href="regression_advanced.html#cb315-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> numeracy, <span class="at">y =</span> logwage, <span class="at">color =</span> gender)) <span class="sc">+</span> </span>
-<span id="cb315-3"><a href="regression_advanced.html#cb315-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb315-4"><a href="regression_advanced.html#cb315-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-233-1.png" width="672" /></p>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="regression_advanced.html#cb316-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb316-2"><a href="regression_advanced.html#cb316-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> numeracy, <span class="at">y =</span> logwage, <span class="at">color =</span> gender)) <span class="sc">+</span> </span>
+<span id="cb316-3"><a href="regression_advanced.html#cb316-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb316-4"><a href="regression_advanced.html#cb316-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-234-1.png" width="672" /></p>
 <p>性別を<strong>一定としたうえで</strong>、言い換えれば、性別が同じであったとしてもなお、数的思考力スコアと（対数）賃金の関係をみることができたなら、「数的思考力スコアはどの程度賃金を高める効果を持つのか」という問いの答えに近づくことができる。重回帰分析は、こうしたモチベーションに答えるための方法である。</p>
 <p>今の議論を図にすると、次のようなかたちになる。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-234-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-235-1.png" width="672" /></p>
 <p>Xを数的思考力スコア、Yを賃金、Zを性別と考えよう。知りたいのは数的思考力スコアが賃金に与える効果（X → Y）だが、その背後にはXにもYにも影響する要因Z（Z → X、Z → Y）が存在する。そのため、数的思考力スコアが賃金に与える効果をみたいのならば、Zを一定とする必要がある。このように、XとYの両者に影響する要因を<strong>交絡要因 confounder</strong>とよぶ。</p>
 <p>複数の変数を使うときの回帰分析では、関心のある変数xと、統制したい変数zというふうに別々の役割があるということが多い。</p>
 </div>
@@ -618,27 +620,27 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <li>性別に加えてさらに年齢と学歴を統制した回帰分析</li>
 </ol>
 <p>を比較しながら、それぞれ数的思考力スコアの係数がどのように変わるのかをみてみよう。</p>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="regression_advanced.html#cb316-1" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy)</span>
-<span id="cb316-2"><a href="regression_advanced.html#cb316-2" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender)</span>
-<span id="cb316-3"><a href="regression_advanced.html#cb316-3" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span>
-<span id="cb316-4"><a href="regression_advanced.html#cb316-4" tabindex="-1"></a></span>
-<span id="cb316-5"><a href="regression_advanced.html#cb316-5" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2, reg_res3),</span>
-<span id="cb316-6"><a href="regression_advanced.html#cb316-6" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb316-7"><a href="regression_advanced.html#cb316-7" tabindex="-1"></a>         <span class="at">fmt =</span> <span class="dv">4</span>,</span>
-<span id="cb316-8"><a href="regression_advanced.html#cb316-8" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;numeracy&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア&quot;</span>,</span>
-<span id="cb316-9"><a href="regression_advanced.html#cb316-9" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb316-10"><a href="regression_advanced.html#cb316-10" tabindex="-1"></a>                      <span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
-<span id="cb316-11"><a href="regression_advanced.html#cb316-11" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
-<span id="cb316-12"><a href="regression_advanced.html#cb316-12" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
-<span id="cb316-13"><a href="regression_advanced.html#cb316-13" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
-<span id="cb316-14"><a href="regression_advanced.html#cb316-14" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>), </span>
-<span id="cb316-15"><a href="regression_advanced.html#cb316-15" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="regression_advanced.html#cb317-1" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy)</span>
+<span id="cb317-2"><a href="regression_advanced.html#cb317-2" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender)</span>
+<span id="cb317-3"><a href="regression_advanced.html#cb317-3" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> educ)</span>
+<span id="cb317-4"><a href="regression_advanced.html#cb317-4" tabindex="-1"></a></span>
+<span id="cb317-5"><a href="regression_advanced.html#cb317-5" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2, reg_res3),</span>
+<span id="cb317-6"><a href="regression_advanced.html#cb317-6" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb317-7"><a href="regression_advanced.html#cb317-7" tabindex="-1"></a>         <span class="at">fmt =</span> <span class="dv">4</span>,</span>
+<span id="cb317-8"><a href="regression_advanced.html#cb317-8" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;numeracy&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア&quot;</span>,</span>
+<span id="cb317-9"><a href="regression_advanced.html#cb317-9" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb317-10"><a href="regression_advanced.html#cb317-10" tabindex="-1"></a>                      <span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
+<span id="cb317-11"><a href="regression_advanced.html#cb317-11" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
+<span id="cb317-12"><a href="regression_advanced.html#cb317-12" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
+<span id="cb317-13"><a href="regression_advanced.html#cb317-13" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
+<span id="cb317-14"><a href="regression_advanced.html#cb317-14" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>), </span>
+<span id="cb317-15"><a href="regression_advanced.html#cb317-15" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
 
-      function styleCell_qyeie0c2vk7j69rbjild(i, j, css_id) {
-          var table = document.getElementById("tinytable_qyeie0c2vk7j69rbjild");
+      function styleCell_t5i4et4fww8d9xqu5oej(i, j, css_id) {
+          var table = document.getElementById("tinytable_t5i4et4fww8d9xqu5oej");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -648,7 +650,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_qyeie0c2vk7j69rbjild');
+        var table = document.getElementById('tinytable_t5i4et4fww8d9xqu5oej');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -656,8 +658,8 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_qyeie0c2vk7j69rbjild(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_qyeie0c2vk7j69rbjild");
+      function spanCell_t5i4et4fww8d9xqu5oej(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_t5i4et4fww8d9xqu5oej");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -687,20 +689,20 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 16, j: 1 }, { i: 16, j: 2 }, { i: 16, j: 3 },  ], css_id: 'tinytable_css_ey471iunpmmsi1clrv62',}, 
-          { positions: [ { i: 14, j: 1 }, { i: 14, j: 2 }, { i: 14, j: 3 },  ], css_id: 'tinytable_css_00qx1ojqkfbon3kba1vy',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 10, j: 2 }, { i: 15, j: 1 }, { i: 12, j: 2 }, { i: 4, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 8, j: 1 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 6, j: 3 }, { i: 11, j: 2 }, { i: 8, j: 3 }, { i: 13, j: 2 }, { i: 10, j: 3 }, { i: 15, j: 2 }, { i: 12, j: 3 }, { i: 4, j: 2 }, { i: 1, j: 3 }, { i: 2, j: 3 }, { i: 3, j: 3 }, { i: 4, j: 3 }, { i: 5, j: 3 }, { i: 7, j: 3 }, { i: 9, j: 3 }, { i: 11, j: 3 }, { i: 13, j: 3 }, { i: 15, j: 3 },  ], css_id: 'tinytable_css_csnni37g40qv2ycjr35x',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 },  ], css_id: 'tinytable_css_jw7t2n2mc6gmagjkrd30',}, 
-          { positions: [ { i: 16, j: 0 },  ], css_id: 'tinytable_css_9yud63bwco3pfop7xy4f',}, 
-          { positions: [ { i: 14, j: 0 },  ], css_id: 'tinytable_css_nfdmvrqkt8sbg1xejdkt',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 15, j: 0 },  ], css_id: 'tinytable_css_omugkc6fdsfvvxbogsrv',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_tihak7ge2xu3b4zsa8lj',}, 
+          { positions: [ { i: 16, j: 1 }, { i: 16, j: 2 }, { i: 16, j: 3 },  ], css_id: 'tinytable_css_bx16oc7buj62zv9cdd3m',}, 
+          { positions: [ { i: 14, j: 1 }, { i: 14, j: 2 }, { i: 14, j: 3 },  ], css_id: 'tinytable_css_kksbswfeb8vivab45fg0',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 10, j: 2 }, { i: 15, j: 1 }, { i: 12, j: 2 }, { i: 4, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 8, j: 1 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 6, j: 3 }, { i: 11, j: 2 }, { i: 8, j: 3 }, { i: 13, j: 2 }, { i: 10, j: 3 }, { i: 15, j: 2 }, { i: 12, j: 3 }, { i: 4, j: 2 }, { i: 1, j: 3 }, { i: 2, j: 3 }, { i: 3, j: 3 }, { i: 4, j: 3 }, { i: 5, j: 3 }, { i: 7, j: 3 }, { i: 9, j: 3 }, { i: 11, j: 3 }, { i: 13, j: 3 }, { i: 15, j: 3 },  ], css_id: 'tinytable_css_camjvqt488bvnycaphu6',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 }, { i: 0, j: 3 },  ], css_id: 'tinytable_css_uwc15jiewn1efg5ot2an',}, 
+          { positions: [ { i: 16, j: 0 },  ], css_id: 'tinytable_css_4vaumgcjmw9yeatin223',}, 
+          { positions: [ { i: 14, j: 0 },  ], css_id: 'tinytable_css_kifi5n6wc8aev6tt1qnt',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 15, j: 0 },  ], css_id: 'tinytable_css_hl24pw1jgqzux30j572g',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_gt6vtoiqz2p5pm9ehtii',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_qyeie0c2vk7j69rbjild(cell.i, cell.j, group.css_id);
+                  styleCell_t5i4et4fww8d9xqu5oej(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -708,17 +710,17 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_ey471iunpmmsi1clrv62, .table th.tinytable_css_ey471iunpmmsi1clrv62 { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_00qx1ojqkfbon3kba1vy, .table th.tinytable_css_00qx1ojqkfbon3kba1vy { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_csnni37g40qv2ycjr35x, .table th.tinytable_css_csnni37g40qv2ycjr35x { text-align: center; }
-      .table td.tinytable_css_jw7t2n2mc6gmagjkrd30, .table th.tinytable_css_jw7t2n2mc6gmagjkrd30 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_9yud63bwco3pfop7xy4f, .table th.tinytable_css_9yud63bwco3pfop7xy4f { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_nfdmvrqkt8sbg1xejdkt, .table th.tinytable_css_nfdmvrqkt8sbg1xejdkt { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_omugkc6fdsfvvxbogsrv, .table th.tinytable_css_omugkc6fdsfvvxbogsrv { text-align: left; }
-      .table td.tinytable_css_tihak7ge2xu3b4zsa8lj, .table th.tinytable_css_tihak7ge2xu3b4zsa8lj { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_bx16oc7buj62zv9cdd3m, .table th.tinytable_css_bx16oc7buj62zv9cdd3m { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_kksbswfeb8vivab45fg0, .table th.tinytable_css_kksbswfeb8vivab45fg0 { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_camjvqt488bvnycaphu6, .table th.tinytable_css_camjvqt488bvnycaphu6 { text-align: center; }
+      .table td.tinytable_css_uwc15jiewn1efg5ot2an, .table th.tinytable_css_uwc15jiewn1efg5ot2an { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_4vaumgcjmw9yeatin223, .table th.tinytable_css_4vaumgcjmw9yeatin223 { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_kifi5n6wc8aev6tt1qnt, .table th.tinytable_css_kifi5n6wc8aev6tt1qnt { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_hl24pw1jgqzux30j572g, .table th.tinytable_css_hl24pw1jgqzux30j572g { text-align: left; }
+      .table td.tinytable_css_gt6vtoiqz2p5pm9ehtii, .table th.tinytable_css_gt6vtoiqz2p5pm9ehtii { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_qyeie0c2vk7j69rbjild" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="table table-borderless" id="tinytable_t5i4et4fww8d9xqu5oej" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         <thead>
         
               <tr>
@@ -840,29 +842,29 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <h2><span class="header-section-number">8.3</span> 媒介分析／要因分解<a href="#%E5%AA%92%E4%BB%8B%E5%88%86%E6%9E%90%E8%A6%81%E5%9B%A0%E5%88%86%E8%A7%A3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>女性は男性と比べて賃金が低い（男女間賃金格差がある）のはなぜなのかを知りたいとする。たとえばその原因には、(1) 女性が男性よりも教育水準（学歴）が低い、(2) 女性が男性よりも数的思考力スコアが低い、ということがありえるだろう。このような原因を調べるというときにも、重回帰分析を活用することができる。</p>
 <p>性別をX、賃金をY、学歴および数的思考力スコアをMとすると、ここでのアイデアは次のような図に表すことができる。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-237-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-238-1.png" width="672" /></p>
 <p>性別が賃金に与える効果は、(1) 女性の学歴や数的思考力スコアが低く、したがって賃金も低い（X → M → Y）という部分と、(2) 学歴や数的思考力スコアを一定としてもなお女性のほうが賃金が低い（X → Y | M）という部分とに分けることができる。このようにして、XとYの中間にある要因（<strong>媒介要因 mediator</strong>）を考えることでグループ間の差や独立変数の効果を分けていくことを指して、<strong>媒介分析 mediation analysis</strong>や<strong>要因分解 decomposition</strong>などという。</p>
-<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="regression_advanced.html#cb317-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb317-2"><a href="regression_advanced.html#cb317-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">female_d =</span> <span class="fu">if_else</span>(gender <span class="sc">==</span> <span class="st">&quot;女性&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb317-3"><a href="regression_advanced.html#cb317-3" tabindex="-1"></a></span>
-<span id="cb317-4"><a href="regression_advanced.html#cb317-4" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> female_d)</span>
-<span id="cb317-5"><a href="regression_advanced.html#cb317-5" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> female_d <span class="sc">+</span> educ <span class="sc">+</span> numeracy)</span>
-<span id="cb317-6"><a href="regression_advanced.html#cb317-6" tabindex="-1"></a></span>
-<span id="cb317-7"><a href="regression_advanced.html#cb317-7" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
-<span id="cb317-8"><a href="regression_advanced.html#cb317-8" tabindex="-1"></a>                  <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb317-9"><a href="regression_advanced.html#cb317-9" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;female_d&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性（vs. 男性）&quot;</span>,</span>
-<span id="cb317-10"><a href="regression_advanced.html#cb317-10" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
-<span id="cb317-11"><a href="regression_advanced.html#cb317-11" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
-<span id="cb317-12"><a href="regression_advanced.html#cb317-12" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
-<span id="cb317-13"><a href="regression_advanced.html#cb317-13" tabindex="-1"></a>                      <span class="st">&quot;numeracy&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア&quot;</span>,</span>
-<span id="cb317-14"><a href="regression_advanced.html#cb317-14" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>), </span>
-<span id="cb317-15"><a href="regression_advanced.html#cb317-15" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="regression_advanced.html#cb318-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb318-2"><a href="regression_advanced.html#cb318-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">female_d =</span> <span class="fu">if_else</span>(gender <span class="sc">==</span> <span class="st">&quot;女性&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb318-3"><a href="regression_advanced.html#cb318-3" tabindex="-1"></a></span>
+<span id="cb318-4"><a href="regression_advanced.html#cb318-4" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> female_d)</span>
+<span id="cb318-5"><a href="regression_advanced.html#cb318-5" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> female_d <span class="sc">+</span> educ <span class="sc">+</span> numeracy)</span>
+<span id="cb318-6"><a href="regression_advanced.html#cb318-6" tabindex="-1"></a></span>
+<span id="cb318-7"><a href="regression_advanced.html#cb318-7" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
+<span id="cb318-8"><a href="regression_advanced.html#cb318-8" tabindex="-1"></a>                  <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb318-9"><a href="regression_advanced.html#cb318-9" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;female_d&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性（vs. 男性）&quot;</span>,</span>
+<span id="cb318-10"><a href="regression_advanced.html#cb318-10" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
+<span id="cb318-11"><a href="regression_advanced.html#cb318-11" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
+<span id="cb318-12"><a href="regression_advanced.html#cb318-12" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
+<span id="cb318-13"><a href="regression_advanced.html#cb318-13" tabindex="-1"></a>                      <span class="st">&quot;numeracy&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア&quot;</span>,</span>
+<span id="cb318-14"><a href="regression_advanced.html#cb318-14" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>), </span>
+<span id="cb318-15"><a href="regression_advanced.html#cb318-15" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
 
-      function styleCell_7itfhg18runb6mlb8476(i, j, css_id) {
-          var table = document.getElementById("tinytable_7itfhg18runb6mlb8476");
+      function styleCell_mo189g4m2ind0bw5of7a(i, j, css_id) {
+          var table = document.getElementById("tinytable_mo189g4m2ind0bw5of7a");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -872,7 +874,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_7itfhg18runb6mlb8476');
+        var table = document.getElementById('tinytable_mo189g4m2ind0bw5of7a');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -880,8 +882,8 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_7itfhg18runb6mlb8476(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_7itfhg18runb6mlb8476");
+      function spanCell_mo189g4m2ind0bw5of7a(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_mo189g4m2ind0bw5of7a");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -911,20 +913,20 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 14, j: 1 }, { i: 14, j: 2 },  ], css_id: 'tinytable_css_a9p0vb48xllyzqhbd698',}, 
-          { positions: [ { i: 12, j: 1 }, { i: 12, j: 2 },  ], css_id: 'tinytable_css_76thqhr8j6otoxdygs8l',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 10, j: 2 }, { i: 13, j: 1 }, { i: 3, j: 2 }, { i: 2, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 7, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 11, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 13, j: 2 },  ], css_id: 'tinytable_css_rny92p9idyfdf40sboya',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_3qyo6xjvmzrkk2zehkbq',}, 
-          { positions: [ { i: 14, j: 0 },  ], css_id: 'tinytable_css_eqta8b0z8uf1mmg42hrq',}, 
-          { positions: [ { i: 12, j: 0 },  ], css_id: 'tinytable_css_w2e4nybk0q542h21kd8y',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 13, j: 0 },  ], css_id: 'tinytable_css_80bgb4vewgf13fkfn8v5',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_z1kg5ud4z6uhsym1v0ga',}, 
+          { positions: [ { i: 14, j: 1 }, { i: 14, j: 2 },  ], css_id: 'tinytable_css_jyae871tl2pseglnwjmt',}, 
+          { positions: [ { i: 12, j: 1 }, { i: 12, j: 2 },  ], css_id: 'tinytable_css_zerwoiloitxjtda8mycs',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 10, j: 2 }, { i: 13, j: 1 }, { i: 3, j: 2 }, { i: 2, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 7, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 11, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 13, j: 2 },  ], css_id: 'tinytable_css_oktnevbn9da2dnvdt10b',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_nwoy89n8ap81u7g833g0',}, 
+          { positions: [ { i: 14, j: 0 },  ], css_id: 'tinytable_css_mb94gmpd0z4oloybvvwh',}, 
+          { positions: [ { i: 12, j: 0 },  ], css_id: 'tinytable_css_ltfeg8tpsnnuj9wyslp1',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 13, j: 0 },  ], css_id: 'tinytable_css_61gpbzi045xc3aab9lpw',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_y25gbacxblg28zvyem65',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_7itfhg18runb6mlb8476(cell.i, cell.j, group.css_id);
+                  styleCell_mo189g4m2ind0bw5of7a(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -932,17 +934,17 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_a9p0vb48xllyzqhbd698, .table th.tinytable_css_a9p0vb48xllyzqhbd698 { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_76thqhr8j6otoxdygs8l, .table th.tinytable_css_76thqhr8j6otoxdygs8l { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_rny92p9idyfdf40sboya, .table th.tinytable_css_rny92p9idyfdf40sboya { text-align: center; }
-      .table td.tinytable_css_3qyo6xjvmzrkk2zehkbq, .table th.tinytable_css_3qyo6xjvmzrkk2zehkbq { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_eqta8b0z8uf1mmg42hrq, .table th.tinytable_css_eqta8b0z8uf1mmg42hrq { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_w2e4nybk0q542h21kd8y, .table th.tinytable_css_w2e4nybk0q542h21kd8y { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_80bgb4vewgf13fkfn8v5, .table th.tinytable_css_80bgb4vewgf13fkfn8v5 { text-align: left; }
-      .table td.tinytable_css_z1kg5ud4z6uhsym1v0ga, .table th.tinytable_css_z1kg5ud4z6uhsym1v0ga { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_jyae871tl2pseglnwjmt, .table th.tinytable_css_jyae871tl2pseglnwjmt { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_zerwoiloitxjtda8mycs, .table th.tinytable_css_zerwoiloitxjtda8mycs { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_oktnevbn9da2dnvdt10b, .table th.tinytable_css_oktnevbn9da2dnvdt10b { text-align: center; }
+      .table td.tinytable_css_nwoy89n8ap81u7g833g0, .table th.tinytable_css_nwoy89n8ap81u7g833g0 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_mb94gmpd0z4oloybvvwh, .table th.tinytable_css_mb94gmpd0z4oloybvvwh { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_ltfeg8tpsnnuj9wyslp1, .table th.tinytable_css_ltfeg8tpsnnuj9wyslp1 { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_61gpbzi045xc3aab9lpw, .table th.tinytable_css_61gpbzi045xc3aab9lpw { text-align: left; }
+      .table td.tinytable_css_y25gbacxblg28zvyem65, .table th.tinytable_css_y25gbacxblg28zvyem65 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_7itfhg18runb6mlb8476" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="table table-borderless" id="tinytable_mo189g4m2ind0bw5of7a" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         <thead>
         
               <tr>
@@ -1036,27 +1038,27 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <div id="交絡と媒介" class="section level3 hasAnchor" number="8.4.1">
 <h3><span class="header-section-number">8.4.1</span> 交絡と媒介<a href="#%E4%BA%A4%E7%B5%A1%E3%81%A8%E5%AA%92%E4%BB%8B" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>実際の論文では、交絡要因の統制と媒介分析の両方を考慮しながら分析されることが多い。すなわち、次のような図になる。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-240-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-241-1.png" width="672" /></p>
 <p>たとえば、学歴が高いと賃金が高い（X → Y）のはなぜなのか知りたいとする。その原因の1つとして、学歴が高いとよりスキルレベルが高い（賃金の高い）職業につくことができるから（X → M → Y）、ということが考えられる。実際、学歴別に職業の分布を比べてみると、学歴が高いほど管理職や専門職といったスキルレベルの高い職業に就いている傾向があることがわかる。</p>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="regression_advanced.html#cb318-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb318-2"><a href="regression_advanced.html#cb318-2" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(educ, occupation, <span class="at">percent =</span> <span class="st">&quot;row&quot;</span>)</span></code></pre></div>
-<div id="ymyzssdies" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ymyzssdies table {
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="regression_advanced.html#cb319-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb319-2"><a href="regression_advanced.html#cb319-2" tabindex="-1"></a>  <span class="fu">tbl_cross</span>(educ, occupation, <span class="at">percent =</span> <span class="st">&quot;row&quot;</span>)</span></code></pre></div>
+<div id="afyyppeeba" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#afyyppeeba table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ymyzssdies thead, #ymyzssdies tbody, #ymyzssdies tfoot, #ymyzssdies tr, #ymyzssdies td, #ymyzssdies th {
+#afyyppeeba thead, #afyyppeeba tbody, #afyyppeeba tfoot, #afyyppeeba tr, #afyyppeeba td, #afyyppeeba th {
   border-style: none;
 }
 
-#ymyzssdies p {
+#afyyppeeba p {
   margin: 0;
   padding: 0;
 }
 
-#ymyzssdies .gt_table {
+#afyyppeeba .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1082,12 +1084,12 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-left-color: #D3D3D3;
 }
 
-#ymyzssdies .gt_caption {
+#afyyppeeba .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ymyzssdies .gt_title {
+#afyyppeeba .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1099,7 +1101,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-width: 0;
 }
 
-#ymyzssdies .gt_subtitle {
+#afyyppeeba .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1111,7 +1113,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-width: 0;
 }
 
-#ymyzssdies .gt_heading {
+#afyyppeeba .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1123,13 +1125,13 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#ymyzssdies .gt_bottom_border {
+#afyyppeeba .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ymyzssdies .gt_col_headings {
+#afyyppeeba .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1144,7 +1146,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#ymyzssdies .gt_col_heading {
+#afyyppeeba .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1164,7 +1166,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#ymyzssdies .gt_column_spanner_outer {
+#afyyppeeba .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1176,15 +1178,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 4px;
 }
 
-#ymyzssdies .gt_column_spanner_outer:first-child {
+#afyyppeeba .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ymyzssdies .gt_column_spanner_outer:last-child {
+#afyyppeeba .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ymyzssdies .gt_column_spanner {
+#afyyppeeba .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1196,11 +1198,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   width: 100%;
 }
 
-#ymyzssdies .gt_spanner_row {
+#afyyppeeba .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ymyzssdies .gt_group_heading {
+#afyyppeeba .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1226,7 +1228,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   text-align: left;
 }
 
-#ymyzssdies .gt_empty_group_heading {
+#afyyppeeba .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1241,15 +1243,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: middle;
 }
 
-#ymyzssdies .gt_from_md > :first-child {
+#afyyppeeba .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ymyzssdies .gt_from_md > :last-child {
+#afyyppeeba .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ymyzssdies .gt_row {
+#afyyppeeba .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1268,7 +1270,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   overflow-x: hidden;
 }
 
-#ymyzssdies .gt_stub {
+#afyyppeeba .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1281,7 +1283,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#ymyzssdies .gt_stub_row_group {
+#afyyppeeba .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1295,15 +1297,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   vertical-align: top;
 }
 
-#ymyzssdies .gt_row_group_first td {
+#afyyppeeba .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ymyzssdies .gt_row_group_first th {
+#afyyppeeba .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ymyzssdies .gt_summary_row {
+#afyyppeeba .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1313,16 +1315,16 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#ymyzssdies .gt_first_summary_row {
+#afyyppeeba .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ymyzssdies .gt_first_summary_row.thick {
+#afyyppeeba .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ymyzssdies .gt_last_summary_row {
+#afyyppeeba .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1332,7 +1334,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#ymyzssdies .gt_grand_summary_row {
+#afyyppeeba .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1342,7 +1344,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#ymyzssdies .gt_first_grand_summary_row {
+#afyyppeeba .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1352,7 +1354,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-top-color: #D3D3D3;
 }
 
-#ymyzssdies .gt_last_grand_summary_row_top {
+#afyyppeeba .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1362,11 +1364,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#ymyzssdies .gt_striped {
+#afyyppeeba .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ymyzssdies .gt_table_body {
+#afyyppeeba .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1375,7 +1377,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-bottom-color: #D3D3D3;
 }
 
-#ymyzssdies .gt_footnotes {
+#afyyppeeba .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1389,7 +1391,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#ymyzssdies .gt_footnote {
+#afyyppeeba .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1398,7 +1400,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#ymyzssdies .gt_sourcenotes {
+#afyyppeeba .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1412,7 +1414,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   border-right-color: #D3D3D3;
 }
 
-#ymyzssdies .gt_sourcenote {
+#afyyppeeba .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1420,72 +1422,72 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
   padding-right: 5px;
 }
 
-#ymyzssdies .gt_left {
+#afyyppeeba .gt_left {
   text-align: left;
 }
 
-#ymyzssdies .gt_center {
+#afyyppeeba .gt_center {
   text-align: center;
 }
 
-#ymyzssdies .gt_right {
+#afyyppeeba .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ymyzssdies .gt_font_normal {
+#afyyppeeba .gt_font_normal {
   font-weight: normal;
 }
 
-#ymyzssdies .gt_font_bold {
+#afyyppeeba .gt_font_bold {
   font-weight: bold;
 }
 
-#ymyzssdies .gt_font_italic {
+#afyyppeeba .gt_font_italic {
   font-style: italic;
 }
 
-#ymyzssdies .gt_super {
+#afyyppeeba .gt_super {
   font-size: 65%;
 }
 
-#ymyzssdies .gt_footnote_marks {
+#afyyppeeba .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ymyzssdies .gt_asterisk {
+#afyyppeeba .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ymyzssdies .gt_indent_1 {
+#afyyppeeba .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ymyzssdies .gt_indent_2 {
+#afyyppeeba .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ymyzssdies .gt_indent_3 {
+#afyyppeeba .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ymyzssdies .gt_indent_4 {
+#afyyppeeba .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ymyzssdies .gt_indent_5 {
+#afyyppeeba .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ymyzssdies .katex-display {
+#afyyppeeba .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ymyzssdies div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#afyyppeeba div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1584,33 +1586,33 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 </div>
 <p>先に確認したように、学歴と賃金の間には性別や年齢といった交絡要因が存在する（Z → X, Z → Y）。なので、あらかじめこれらを統制しておいたうえで、学歴による賃金の差が職業の違いによってどの程度説明されるのかというのをみる必要がある。</p>
 <p>実際の分析結果は次のようになる。賃金については実額よりも対数を取った値のほうがよく使われるので、従属変数は対数賃金とする。また賃金を従属変数とする回帰分析の場合、年齢の2乗も考慮することが多いので、2乗項についても投入しよう。</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="regression_advanced.html#cb319-1" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb319-2"><a href="regression_advanced.html#cb319-2" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> occupation)</span>
-<span id="cb319-3"><a href="regression_advanced.html#cb319-3" tabindex="-1"></a></span>
-<span id="cb319-4"><a href="regression_advanced.html#cb319-4" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
-<span id="cb319-5"><a href="regression_advanced.html#cb319-5" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb319-6"><a href="regression_advanced.html#cb319-6" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
-<span id="cb319-7"><a href="regression_advanced.html#cb319-7" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
-<span id="cb319-8"><a href="regression_advanced.html#cb319-8" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
-<span id="cb319-9"><a href="regression_advanced.html#cb319-9" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
-<span id="cb319-10"><a href="regression_advanced.html#cb319-10" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb319-11"><a href="regression_advanced.html#cb319-11" tabindex="-1"></a>                      <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
-<span id="cb319-12"><a href="regression_advanced.html#cb319-12" tabindex="-1"></a>                      <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb319-13"><a href="regression_advanced.html#cb319-13" tabindex="-1"></a>                      <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb319-14"><a href="regression_advanced.html#cb319-14" tabindex="-1"></a>                      <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
-<span id="cb319-15"><a href="regression_advanced.html#cb319-15" tabindex="-1"></a>                      <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
-<span id="cb319-16"><a href="regression_advanced.html#cb319-16" tabindex="-1"></a>                      <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
-<span id="cb319-17"><a href="regression_advanced.html#cb319-17" tabindex="-1"></a>                      <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
-<span id="cb319-18"><a href="regression_advanced.html#cb319-18" tabindex="-1"></a>                      <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
-<span id="cb319-19"><a href="regression_advanced.html#cb319-19" tabindex="-1"></a>                      <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>,</span>
-<span id="cb319-20"><a href="regression_advanced.html#cb319-20" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>),</span>
-<span id="cb319-21"><a href="regression_advanced.html#cb319-21" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="regression_advanced.html#cb320-1" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb320-2"><a href="regression_advanced.html#cb320-2" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> occupation)</span>
+<span id="cb320-3"><a href="regression_advanced.html#cb320-3" tabindex="-1"></a></span>
+<span id="cb320-4"><a href="regression_advanced.html#cb320-4" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
+<span id="cb320-5"><a href="regression_advanced.html#cb320-5" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb320-6"><a href="regression_advanced.html#cb320-6" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
+<span id="cb320-7"><a href="regression_advanced.html#cb320-7" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
+<span id="cb320-8"><a href="regression_advanced.html#cb320-8" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
+<span id="cb320-9"><a href="regression_advanced.html#cb320-9" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
+<span id="cb320-10"><a href="regression_advanced.html#cb320-10" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb320-11"><a href="regression_advanced.html#cb320-11" tabindex="-1"></a>                      <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
+<span id="cb320-12"><a href="regression_advanced.html#cb320-12" tabindex="-1"></a>                      <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb320-13"><a href="regression_advanced.html#cb320-13" tabindex="-1"></a>                      <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb320-14"><a href="regression_advanced.html#cb320-14" tabindex="-1"></a>                      <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
+<span id="cb320-15"><a href="regression_advanced.html#cb320-15" tabindex="-1"></a>                      <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
+<span id="cb320-16"><a href="regression_advanced.html#cb320-16" tabindex="-1"></a>                      <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
+<span id="cb320-17"><a href="regression_advanced.html#cb320-17" tabindex="-1"></a>                      <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
+<span id="cb320-18"><a href="regression_advanced.html#cb320-18" tabindex="-1"></a>                      <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
+<span id="cb320-19"><a href="regression_advanced.html#cb320-19" tabindex="-1"></a>                      <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>,</span>
+<span id="cb320-20"><a href="regression_advanced.html#cb320-20" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>),</span>
+<span id="cb320-21"><a href="regression_advanced.html#cb320-21" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
 
-      function styleCell_x00tc9xiyb3ip292484j(i, j, css_id) {
-          var table = document.getElementById("tinytable_x00tc9xiyb3ip292484j");
+      function styleCell_uydex5ur56jj7tbtpyun(i, j, css_id) {
+          var table = document.getElementById("tinytable_uydex5ur56jj7tbtpyun");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -1620,7 +1622,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_x00tc9xiyb3ip292484j');
+        var table = document.getElementById('tinytable_uydex5ur56jj7tbtpyun');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -1628,8 +1630,8 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_x00tc9xiyb3ip292484j(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_x00tc9xiyb3ip292484j");
+      function spanCell_uydex5ur56jj7tbtpyun(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_uydex5ur56jj7tbtpyun");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -1659,20 +1661,20 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 32, j: 1 }, { i: 32, j: 2 },  ], css_id: 'tinytable_css_5bun7us60u75rd57vphb',}, 
-          { positions: [ { i: 30, j: 2 }, { i: 30, j: 1 },  ], css_id: 'tinytable_css_ctbj8okkmnv7ndkh5r67',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 3, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 16, j: 1 }, { i: 17, j: 1 }, { i: 18, j: 1 }, { i: 19, j: 1 }, { i: 7, j: 1 }, { i: 21, j: 1 }, { i: 22, j: 1 }, { i: 23, j: 1 }, { i: 24, j: 1 }, { i: 25, j: 1 }, { i: 26, j: 1 }, { i: 27, j: 1 }, { i: 28, j: 1 }, { i: 29, j: 1 }, { i: 10, j: 2 }, { i: 31, j: 1 }, { i: 12, j: 2 }, { i: 20, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 23, j: 2 }, { i: 11, j: 2 }, { i: 25, j: 2 }, { i: 13, j: 2 }, { i: 14, j: 2 }, { i: 15, j: 2 }, { i: 16, j: 2 }, { i: 17, j: 2 }, { i: 18, j: 2 }, { i: 19, j: 2 }, { i: 20, j: 2 }, { i: 21, j: 2 }, { i: 22, j: 2 }, { i: 27, j: 2 }, { i: 24, j: 2 }, { i: 29, j: 2 }, { i: 26, j: 2 }, { i: 31, j: 2 }, { i: 28, j: 2 },  ], css_id: 'tinytable_css_dyhsub34q0fwd1wrb2mu',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_zma3pj5c1ag8z9mlg7a4',}, 
-          { positions: [ { i: 32, j: 0 },  ], css_id: 'tinytable_css_u7kymtsuns8dve2rm3wo',}, 
-          { positions: [ { i: 30, j: 0 },  ], css_id: 'tinytable_css_cenok500cif2cok6z4yk',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 16, j: 0 }, { i: 17, j: 0 }, { i: 18, j: 0 }, { i: 19, j: 0 }, { i: 20, j: 0 }, { i: 21, j: 0 }, { i: 22, j: 0 }, { i: 23, j: 0 }, { i: 24, j: 0 }, { i: 25, j: 0 }, { i: 26, j: 0 }, { i: 27, j: 0 }, { i: 28, j: 0 }, { i: 29, j: 0 }, { i: 31, j: 0 },  ], css_id: 'tinytable_css_nbatnclj5sj3osdfhbsd',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_8k75t75qb239l5yg5y5n',}, 
+          { positions: [ { i: 32, j: 1 }, { i: 32, j: 2 },  ], css_id: 'tinytable_css_58d4gz27eyia1szpa2gf',}, 
+          { positions: [ { i: 30, j: 2 }, { i: 30, j: 1 },  ], css_id: 'tinytable_css_p3wzh1afun4wcjkb6oc5',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 3, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 16, j: 1 }, { i: 17, j: 1 }, { i: 18, j: 1 }, { i: 19, j: 1 }, { i: 7, j: 1 }, { i: 21, j: 1 }, { i: 22, j: 1 }, { i: 23, j: 1 }, { i: 24, j: 1 }, { i: 25, j: 1 }, { i: 26, j: 1 }, { i: 27, j: 1 }, { i: 28, j: 1 }, { i: 29, j: 1 }, { i: 10, j: 2 }, { i: 31, j: 1 }, { i: 12, j: 2 }, { i: 20, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 23, j: 2 }, { i: 11, j: 2 }, { i: 25, j: 2 }, { i: 13, j: 2 }, { i: 14, j: 2 }, { i: 15, j: 2 }, { i: 16, j: 2 }, { i: 17, j: 2 }, { i: 18, j: 2 }, { i: 19, j: 2 }, { i: 20, j: 2 }, { i: 21, j: 2 }, { i: 22, j: 2 }, { i: 27, j: 2 }, { i: 24, j: 2 }, { i: 29, j: 2 }, { i: 26, j: 2 }, { i: 31, j: 2 }, { i: 28, j: 2 },  ], css_id: 'tinytable_css_f1hle3t3bmn9b9osrj51',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_fm9y1jgkmkx5kg4qk2mu',}, 
+          { positions: [ { i: 32, j: 0 },  ], css_id: 'tinytable_css_li56h183xk7n2tcspybw',}, 
+          { positions: [ { i: 30, j: 0 },  ], css_id: 'tinytable_css_tp7paurba3b5kw7ba74p',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 16, j: 0 }, { i: 17, j: 0 }, { i: 18, j: 0 }, { i: 19, j: 0 }, { i: 20, j: 0 }, { i: 21, j: 0 }, { i: 22, j: 0 }, { i: 23, j: 0 }, { i: 24, j: 0 }, { i: 25, j: 0 }, { i: 26, j: 0 }, { i: 27, j: 0 }, { i: 28, j: 0 }, { i: 29, j: 0 }, { i: 31, j: 0 },  ], css_id: 'tinytable_css_fjmgurrhaymdyarbkwfa',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_6jx0iqwz4o1mgf43payw',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_x00tc9xiyb3ip292484j(cell.i, cell.j, group.css_id);
+                  styleCell_uydex5ur56jj7tbtpyun(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -1680,17 +1682,17 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_5bun7us60u75rd57vphb, .table th.tinytable_css_5bun7us60u75rd57vphb { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_ctbj8okkmnv7ndkh5r67, .table th.tinytable_css_ctbj8okkmnv7ndkh5r67 { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_dyhsub34q0fwd1wrb2mu, .table th.tinytable_css_dyhsub34q0fwd1wrb2mu { text-align: center; }
-      .table td.tinytable_css_zma3pj5c1ag8z9mlg7a4, .table th.tinytable_css_zma3pj5c1ag8z9mlg7a4 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_u7kymtsuns8dve2rm3wo, .table th.tinytable_css_u7kymtsuns8dve2rm3wo { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_cenok500cif2cok6z4yk, .table th.tinytable_css_cenok500cif2cok6z4yk { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_nbatnclj5sj3osdfhbsd, .table th.tinytable_css_nbatnclj5sj3osdfhbsd { text-align: left; }
-      .table td.tinytable_css_8k75t75qb239l5yg5y5n, .table th.tinytable_css_8k75t75qb239l5yg5y5n { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_58d4gz27eyia1szpa2gf, .table th.tinytable_css_58d4gz27eyia1szpa2gf { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_p3wzh1afun4wcjkb6oc5, .table th.tinytable_css_p3wzh1afun4wcjkb6oc5 { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_f1hle3t3bmn9b9osrj51, .table th.tinytable_css_f1hle3t3bmn9b9osrj51 { text-align: center; }
+      .table td.tinytable_css_fm9y1jgkmkx5kg4qk2mu, .table th.tinytable_css_fm9y1jgkmkx5kg4qk2mu { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_li56h183xk7n2tcspybw, .table th.tinytable_css_li56h183xk7n2tcspybw { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_tp7paurba3b5kw7ba74p, .table th.tinytable_css_tp7paurba3b5kw7ba74p { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_fjmgurrhaymdyarbkwfa, .table th.tinytable_css_fjmgurrhaymdyarbkwfa { text-align: left; }
+      .table td.tinytable_css_6jx0iqwz4o1mgf43payw, .table th.tinytable_css_6jx0iqwz4o1mgf43payw { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_x00tc9xiyb3ip292484j" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="table table-borderless" id="tinytable_uydex5ur56jj7tbtpyun" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         <thead>
         
               <tr>
@@ -1872,11 +1874,11 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <h3><span class="header-section-number">8.4.2</span> 従属変数を対数変換した場合の解釈：broomパッケージの活用<a href="#%E5%BE%93%E5%B1%9E%E5%A4%89%E6%95%B0%E3%82%92%E5%AF%BE%E6%95%B0%E5%A4%89%E6%8F%9B%E3%81%97%E3%81%9F%E5%A0%B4%E5%90%88%E3%81%AE%E8%A7%A3%E9%87%88broom%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E6%B4%BB%E7%94%A8" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>従属変数を対数変換した場合は、係数の大きさが実質的にどれくらいであるのかを<span class="math inline">\(\exp(\beta)\)</span>を計算して求めるとよい。くわしくは前章の<a href="regression_basic.html#regression_basic_log">対数変換</a>を参照のこと。</p>
 <p>いろいろな方法があるが、ここでは回帰分析の結果をデータフレームにして扱いやすくするためのパッケージである<code>broom</code>パッケージを利用する方法を紹介する。まずは、<code>broom</code>パッケージを読み込もう。</p>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="regression_advanced.html#cb320-1" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="regression_advanced.html#cb321-1" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
 <p><code>broom::tidy()</code>関数を実行することで、回帰分析などのモデルの主要な結果をデータフレーム形式へと変換することができる。先ほどの結果<code>reg_res2_tidy</code>をtidy形式に変換してみよう。</p>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="regression_advanced.html#cb321-1" tabindex="-1"></a>reg_res2_tidy <span class="ot">&lt;-</span> reg_res2 <span class="sc">%&gt;%</span> </span>
-<span id="cb321-2"><a href="regression_advanced.html#cb321-2" tabindex="-1"></a>  <span class="fu">tidy</span>()</span>
-<span id="cb321-3"><a href="regression_advanced.html#cb321-3" tabindex="-1"></a>reg_res2_tidy</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="regression_advanced.html#cb322-1" tabindex="-1"></a>reg_res2_tidy <span class="ot">&lt;-</span> reg_res2 <span class="sc">%&gt;%</span> </span>
+<span id="cb322-2"><a href="regression_advanced.html#cb322-2" tabindex="-1"></a>  <span class="fu">tidy</span>()</span>
+<span id="cb322-3"><a href="regression_advanced.html#cb322-3" tabindex="-1"></a>reg_res2_tidy</span></code></pre></div>
 <pre><code>## # A tibble: 15 × 5
 ##    term                            estimate std.error statistic   p.value
 ##    &lt;chr&gt;                              &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
@@ -1896,8 +1898,8 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 ## 14 occupation設備・機械運転・組立 -0.609    0.0430       -14.2  6.46e- 44
 ## 15 occupation単純作業             -0.745    0.0489       -15.2  2.25e- 50</code></pre>
 <p>それぞれ、<code>estimate</code>が推定された係数、<code>std.error</code>が標準誤差、<code>statistic</code>がt値、<code>p.value</code>がp値を表す。この推定結果に含まれる<code>estimate</code>という列に対して<span class="math inline">\(\exp(\beta)\)</span>を計算した新しい列を作成して、結果を表示してみよう。</p>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="regression_advanced.html#cb323-1" tabindex="-1"></a>reg_res2_tidy <span class="sc">%&gt;%</span> </span>
-<span id="cb323-2"><a href="regression_advanced.html#cb323-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimate_exp =</span> <span class="fu">exp</span>(estimate))</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="regression_advanced.html#cb324-1" tabindex="-1"></a>reg_res2_tidy <span class="sc">%&gt;%</span> </span>
+<span id="cb324-2"><a href="regression_advanced.html#cb324-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">estimate_exp =</span> <span class="fu">exp</span>(estimate))</span></code></pre></div>
 <pre><code>## # A tibble: 15 × 6
 ##    term                      estimate std.error statistic   p.value estimate_exp
 ##    &lt;chr&gt;                        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
@@ -1930,12 +1932,12 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <li>「男性と比較してどの程度女性の賃金が低い」と主張したい。この場合、女性が参照カテゴリになっていると、結果は「女性と比較してどの程度男性の賃金が高いか」を表すことになる。そのため、女性ではなく男性を参照カテゴリにするほうが望ましい。</li>
 </ul>
 <p>参照カテゴリを変更する場合には、カテゴリ変数の値の順序を変更するとよい。具体的には、<a href="handling.html#fct_relevel"><code>fct_relevel()</code>関数を使う</a>ことで、カテゴリ変数の値の順序を変更することができる。方法は次のとおりである。</p>
-<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="regression_advanced.html#cb325-1" tabindex="-1"></a>piaac_relevel <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb325-2"><a href="regression_advanced.html#cb325-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ =</span> <span class="fu">fct_relevel</span>(educ, <span class="st">&quot;大学大学院&quot;</span>, <span class="st">&quot;中学&quot;</span>, <span class="st">&quot;高校&quot;</span>, <span class="st">&quot;短大高専&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb325-3"><a href="regression_advanced.html#cb325-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">fct_relevel</span>(gender, <span class="st">&quot;男性&quot;</span>, <span class="st">&quot;女性&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="regression_advanced.html#cb326-1" tabindex="-1"></a>piaac_relevel <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb326-2"><a href="regression_advanced.html#cb326-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ =</span> <span class="fu">fct_relevel</span>(educ, <span class="st">&quot;大学大学院&quot;</span>, <span class="st">&quot;中学&quot;</span>, <span class="st">&quot;高校&quot;</span>, <span class="st">&quot;短大高専&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb326-3"><a href="regression_advanced.html#cb326-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">fct_relevel</span>(gender, <span class="st">&quot;男性&quot;</span>, <span class="st">&quot;女性&quot;</span>))</span></code></pre></div>
 <p>順序を変更したデータを使って再度回帰分析を実行してみると、参照カテゴリがそれぞれ「大学大学院」、「男性」となっていることがわかる。</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="regression_advanced.html#cb326-1" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac_relevel, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb326-2"><a href="regression_advanced.html#cb326-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res3)</span></code></pre></div>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="regression_advanced.html#cb327-1" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac_relevel, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb327-2"><a href="regression_advanced.html#cb327-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res3)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = logwage ~ educ + gender + age + I(age^2), data = piaac_relevel)
@@ -1963,15 +1965,15 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <div id="単位の変更" class="section level3 hasAnchor" number="8.5.2">
 <h3><span class="header-section-number">8.5.2</span> 単位の変更<a href="#%E5%8D%98%E4%BD%8D%E3%81%AE%E5%A4%89%E6%9B%B4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>時給賃金wageが高いほど健康度（health, 1〜5までの値をとり、値が高いほど健康であることをあらわす）が高いかどうかを調べたいとする。健康を従属変数、年齢と賃金を独立変数とする回帰分析を実行して、結果をみてみよう。</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="regression_advanced.html#cb328-1" tabindex="-1"></a>reg_res4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, health <span class="sc">~</span> wage <span class="sc">+</span> age)</span>
-<span id="cb328-2"><a href="regression_advanced.html#cb328-2" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res4), <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb328-3"><a href="regression_advanced.html#cb328-3" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="regression_advanced.html#cb329-1" tabindex="-1"></a>reg_res4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, health <span class="sc">~</span> wage <span class="sc">+</span> age)</span>
+<span id="cb329-2"><a href="regression_advanced.html#cb329-2" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res4), <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb329-3"><a href="regression_advanced.html#cb329-3" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
 
-      function styleCell_a52dzvswv3l5lz18c36g(i, j, css_id) {
-          var table = document.getElementById("tinytable_a52dzvswv3l5lz18c36g");
+      function styleCell_qujau72ohj39vu60d6t0(i, j, css_id) {
+          var table = document.getElementById("tinytable_qujau72ohj39vu60d6t0");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -1981,7 +1983,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_a52dzvswv3l5lz18c36g');
+        var table = document.getElementById('tinytable_qujau72ohj39vu60d6t0');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -1989,8 +1991,8 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_a52dzvswv3l5lz18c36g(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_a52dzvswv3l5lz18c36g");
+      function spanCell_qujau72ohj39vu60d6t0(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_qujau72ohj39vu60d6t0");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2020,20 +2022,20 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 8, j: 1 },  ], css_id: 'tinytable_css_wvx7k8iyulvfkz6sgqel',}, 
-          { positions: [ { i: 6, j: 1 },  ], css_id: 'tinytable_css_k1lo4wv8qibkinf6jtv9',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 7, j: 1 },  ], css_id: 'tinytable_css_jid2snp65sasya16pnx5',}, 
-          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_ap9smycpteseicrjbrco',}, 
-          { positions: [ { i: 8, j: 0 },  ], css_id: 'tinytable_css_zsgsaxmhwlk4an86d62c',}, 
-          { positions: [ { i: 6, j: 0 },  ], css_id: 'tinytable_css_netys10pgufm5hm03l6q',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 7, j: 0 },  ], css_id: 'tinytable_css_crlms92edlkh3fr15bdo',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_po55zv22p3n2u2rhpckf',}, 
+          { positions: [ { i: 8, j: 1 },  ], css_id: 'tinytable_css_z0dfgbl2xpooivdv0xfk',}, 
+          { positions: [ { i: 6, j: 1 },  ], css_id: 'tinytable_css_1kky6cth0shiiskzlx9x',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 7, j: 1 },  ], css_id: 'tinytable_css_a7s0zvsgwuxl98xdhlqz',}, 
+          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_ht6jrbjgyev5lhw9y2s0',}, 
+          { positions: [ { i: 8, j: 0 },  ], css_id: 'tinytable_css_nbivoc2vaxccy187brk6',}, 
+          { positions: [ { i: 6, j: 0 },  ], css_id: 'tinytable_css_mecn7zrsnezgh657juq1',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 7, j: 0 },  ], css_id: 'tinytable_css_ey7j2z60wx89jv0oxa8o',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_74oo0tjnshr5uotjjfk2',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_a52dzvswv3l5lz18c36g(cell.i, cell.j, group.css_id);
+                  styleCell_qujau72ohj39vu60d6t0(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2041,17 +2043,17 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_wvx7k8iyulvfkz6sgqel, .table th.tinytable_css_wvx7k8iyulvfkz6sgqel { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_k1lo4wv8qibkinf6jtv9, .table th.tinytable_css_k1lo4wv8qibkinf6jtv9 { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_jid2snp65sasya16pnx5, .table th.tinytable_css_jid2snp65sasya16pnx5 { text-align: center; }
-      .table td.tinytable_css_ap9smycpteseicrjbrco, .table th.tinytable_css_ap9smycpteseicrjbrco { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_zsgsaxmhwlk4an86d62c, .table th.tinytable_css_zsgsaxmhwlk4an86d62c { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_netys10pgufm5hm03l6q, .table th.tinytable_css_netys10pgufm5hm03l6q { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_crlms92edlkh3fr15bdo, .table th.tinytable_css_crlms92edlkh3fr15bdo { text-align: left; }
-      .table td.tinytable_css_po55zv22p3n2u2rhpckf, .table th.tinytable_css_po55zv22p3n2u2rhpckf { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_z0dfgbl2xpooivdv0xfk, .table th.tinytable_css_z0dfgbl2xpooivdv0xfk { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_1kky6cth0shiiskzlx9x, .table th.tinytable_css_1kky6cth0shiiskzlx9x { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_a7s0zvsgwuxl98xdhlqz, .table th.tinytable_css_a7s0zvsgwuxl98xdhlqz { text-align: center; }
+      .table td.tinytable_css_ht6jrbjgyev5lhw9y2s0, .table th.tinytable_css_ht6jrbjgyev5lhw9y2s0 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_nbivoc2vaxccy187brk6, .table th.tinytable_css_nbivoc2vaxccy187brk6 { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_mecn7zrsnezgh657juq1, .table th.tinytable_css_mecn7zrsnezgh657juq1 { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_ey7j2z60wx89jv0oxa8o, .table th.tinytable_css_ey7j2z60wx89jv0oxa8o { text-align: left; }
+      .table td.tinytable_css_74oo0tjnshr5uotjjfk2, .table th.tinytable_css_74oo0tjnshr5uotjjfk2 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_a52dzvswv3l5lz18c36g" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="table table-borderless" id="tinytable_qujau72ohj39vu60d6t0" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         <thead>
         
               <tr>
@@ -2099,14 +2101,14 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <!-- hack to avoid NA insertion in last line -->
 <p>賃金の係数は統計的に有意であるため、年齢を統制したうえで、賃金が高いほど健康であることがわかる。しかし、小数点第3位までが示された結果では係数が0.000となっており、これでは違いの大きさがどの程度なのか、よくわからない。</p>
 <p>この場合の対処には2つある。第1に、小数点以下の表示を増やすことである。たとえば小数点第6位まで表示する場合は、<code>fmt = 6</code>というオプションを追加する。</p>
-<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="regression_advanced.html#cb329-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res4), <span class="at">stars =</span> <span class="cn">TRUE</span>, <span class="at">fmt =</span> <span class="dv">6</span>,</span>
-<span id="cb329-2"><a href="regression_advanced.html#cb329-2" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="regression_advanced.html#cb330-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res4), <span class="at">stars =</span> <span class="cn">TRUE</span>, <span class="at">fmt =</span> <span class="dv">6</span>,</span>
+<span id="cb330-2"><a href="regression_advanced.html#cb330-2" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
 
-      function styleCell_xzcz04kbpj65yphh42hg(i, j, css_id) {
-          var table = document.getElementById("tinytable_xzcz04kbpj65yphh42hg");
+      function styleCell_j8ux4g54gj6v9axbjss0(i, j, css_id) {
+          var table = document.getElementById("tinytable_j8ux4g54gj6v9axbjss0");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -2116,7 +2118,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_xzcz04kbpj65yphh42hg');
+        var table = document.getElementById('tinytable_j8ux4g54gj6v9axbjss0');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -2124,8 +2126,8 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_xzcz04kbpj65yphh42hg(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_xzcz04kbpj65yphh42hg");
+      function spanCell_j8ux4g54gj6v9axbjss0(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_j8ux4g54gj6v9axbjss0");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2155,20 +2157,20 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 8, j: 1 },  ], css_id: 'tinytable_css_ozvcpw42l2yzfhbe0fmg',}, 
-          { positions: [ { i: 6, j: 1 },  ], css_id: 'tinytable_css_fu249qjo7vgkazjgmwue',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 7, j: 1 },  ], css_id: 'tinytable_css_h8aoyzqdipjmk3wznvi5',}, 
-          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_8ji1ny3bjv9vl5elwd8a',}, 
-          { positions: [ { i: 8, j: 0 },  ], css_id: 'tinytable_css_t3ob9jbe8k7rd81xipvp',}, 
-          { positions: [ { i: 6, j: 0 },  ], css_id: 'tinytable_css_aj7kqx1nvtrg7j5fgyci',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 7, j: 0 },  ], css_id: 'tinytable_css_9sfep0nxcwp58p8b5pty',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_q5eg8wnu40e5jek6ztpo',}, 
+          { positions: [ { i: 8, j: 1 },  ], css_id: 'tinytable_css_qx1aeuwnlh6dw9tjm4pq',}, 
+          { positions: [ { i: 6, j: 1 },  ], css_id: 'tinytable_css_0z0ckytfw25acva3jpfh',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 7, j: 1 },  ], css_id: 'tinytable_css_cad6ykqv34a8wlcer1pc',}, 
+          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_xkco1jqlic8ye9ge5qy4',}, 
+          { positions: [ { i: 8, j: 0 },  ], css_id: 'tinytable_css_9edixcy483c9at4ia6yf',}, 
+          { positions: [ { i: 6, j: 0 },  ], css_id: 'tinytable_css_upu0ophk7v5prle50uvn',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 7, j: 0 },  ], css_id: 'tinytable_css_nsozpmmiay5l0pxh75gx',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_d7ou4io2245wo2iljmt6',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_xzcz04kbpj65yphh42hg(cell.i, cell.j, group.css_id);
+                  styleCell_j8ux4g54gj6v9axbjss0(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2176,17 +2178,17 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_ozvcpw42l2yzfhbe0fmg, .table th.tinytable_css_ozvcpw42l2yzfhbe0fmg { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_fu249qjo7vgkazjgmwue, .table th.tinytable_css_fu249qjo7vgkazjgmwue { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_h8aoyzqdipjmk3wznvi5, .table th.tinytable_css_h8aoyzqdipjmk3wznvi5 { text-align: center; }
-      .table td.tinytable_css_8ji1ny3bjv9vl5elwd8a, .table th.tinytable_css_8ji1ny3bjv9vl5elwd8a { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_t3ob9jbe8k7rd81xipvp, .table th.tinytable_css_t3ob9jbe8k7rd81xipvp { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_aj7kqx1nvtrg7j5fgyci, .table th.tinytable_css_aj7kqx1nvtrg7j5fgyci { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_9sfep0nxcwp58p8b5pty, .table th.tinytable_css_9sfep0nxcwp58p8b5pty { text-align: left; }
-      .table td.tinytable_css_q5eg8wnu40e5jek6ztpo, .table th.tinytable_css_q5eg8wnu40e5jek6ztpo { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_qx1aeuwnlh6dw9tjm4pq, .table th.tinytable_css_qx1aeuwnlh6dw9tjm4pq { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_0z0ckytfw25acva3jpfh, .table th.tinytable_css_0z0ckytfw25acva3jpfh { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_cad6ykqv34a8wlcer1pc, .table th.tinytable_css_cad6ykqv34a8wlcer1pc { text-align: center; }
+      .table td.tinytable_css_xkco1jqlic8ye9ge5qy4, .table th.tinytable_css_xkco1jqlic8ye9ge5qy4 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_9edixcy483c9at4ia6yf, .table th.tinytable_css_9edixcy483c9at4ia6yf { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_upu0ophk7v5prle50uvn, .table th.tinytable_css_upu0ophk7v5prle50uvn { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_nsozpmmiay5l0pxh75gx, .table th.tinytable_css_nsozpmmiay5l0pxh75gx { text-align: left; }
+      .table td.tinytable_css_d7ou4io2245wo2iljmt6, .table th.tinytable_css_d7ou4io2245wo2iljmt6 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_xzcz04kbpj65yphh42hg" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="table table-borderless" id="tinytable_j8ux4g54gj6v9axbjss0" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         <thead>
         
               <tr>
@@ -2234,18 +2236,18 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <!-- hack to avoid NA insertion in last line -->
 <p>値が見えるようになった。つまり、賃金が1円高いと、健康度が0.000042高いということである。</p>
 <p>しかし、桁がたくさん並んでいると結果が読みにくいし、実際上も1円単位の小さな変化にはほとんど関心がないことが多い。そこで、賃金の単位を千円に変更してみるとどうだろうか。</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="regression_advanced.html#cb330-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb330-2"><a href="regression_advanced.html#cb330-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage1000 =</span> wage <span class="sc">/</span> <span class="dv">1000</span>) <span class="co"># 1000円単位に変更した変数を作成</span></span>
-<span id="cb330-3"><a href="regression_advanced.html#cb330-3" tabindex="-1"></a></span>
-<span id="cb330-4"><a href="regression_advanced.html#cb330-4" tabindex="-1"></a>reg_res4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, health <span class="sc">~</span> wage1000 <span class="sc">+</span> age)</span>
-<span id="cb330-5"><a href="regression_advanced.html#cb330-5" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res4), <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb330-6"><a href="regression_advanced.html#cb330-6" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="regression_advanced.html#cb331-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb331-2"><a href="regression_advanced.html#cb331-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage1000 =</span> wage <span class="sc">/</span> <span class="dv">1000</span>) <span class="co"># 1000円単位に変更した変数を作成</span></span>
+<span id="cb331-3"><a href="regression_advanced.html#cb331-3" tabindex="-1"></a></span>
+<span id="cb331-4"><a href="regression_advanced.html#cb331-4" tabindex="-1"></a>reg_res4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, health <span class="sc">~</span> wage1000 <span class="sc">+</span> age)</span>
+<span id="cb331-5"><a href="regression_advanced.html#cb331-5" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res4), <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb331-6"><a href="regression_advanced.html#cb331-6" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
 
-      function styleCell_hja85qirupzjmayz5c4t(i, j, css_id) {
-          var table = document.getElementById("tinytable_hja85qirupzjmayz5c4t");
+      function styleCell_v6e8yaqg77nc8fz8bjhn(i, j, css_id) {
+          var table = document.getElementById("tinytable_v6e8yaqg77nc8fz8bjhn");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -2255,7 +2257,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_hja85qirupzjmayz5c4t');
+        var table = document.getElementById('tinytable_v6e8yaqg77nc8fz8bjhn');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -2263,8 +2265,8 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_hja85qirupzjmayz5c4t(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_hja85qirupzjmayz5c4t");
+      function spanCell_v6e8yaqg77nc8fz8bjhn(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_v6e8yaqg77nc8fz8bjhn");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2294,20 +2296,20 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 8, j: 1 },  ], css_id: 'tinytable_css_2m40ojrr7i9as67loo4v',}, 
-          { positions: [ { i: 6, j: 1 },  ], css_id: 'tinytable_css_26h8mh783glqwix8ectc',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 7, j: 1 },  ], css_id: 'tinytable_css_jdxzzg6c8wq8kmjlvvon',}, 
-          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_1kyj374n1iwpebsh1zbg',}, 
-          { positions: [ { i: 8, j: 0 },  ], css_id: 'tinytable_css_lbqe6iyrhr6ep8tkfgej',}, 
-          { positions: [ { i: 6, j: 0 },  ], css_id: 'tinytable_css_sit86ouw93drxlfetave',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 7, j: 0 },  ], css_id: 'tinytable_css_swdf3pjq9wsbv2g42u8h',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_zppjribd522dzkr0zae1',}, 
+          { positions: [ { i: 8, j: 1 },  ], css_id: 'tinytable_css_u3p1gpwdt4948520hzgw',}, 
+          { positions: [ { i: 6, j: 1 },  ], css_id: 'tinytable_css_ip3f4z2kc80vi6shpqr0',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 7, j: 1 },  ], css_id: 'tinytable_css_00l0uw0rjp9aowwugmih',}, 
+          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_aomp28gnzy5zagt7tpz1',}, 
+          { positions: [ { i: 8, j: 0 },  ], css_id: 'tinytable_css_a9lidhqt4wq5s0g3ffi2',}, 
+          { positions: [ { i: 6, j: 0 },  ], css_id: 'tinytable_css_kcqftw244syg7ldhbbe8',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 7, j: 0 },  ], css_id: 'tinytable_css_m4sewb88cebklw73t51l',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_zm55q9vp7qbn76f9gsnc',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_hja85qirupzjmayz5c4t(cell.i, cell.j, group.css_id);
+                  styleCell_v6e8yaqg77nc8fz8bjhn(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2315,17 +2317,17 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_2m40ojrr7i9as67loo4v, .table th.tinytable_css_2m40ojrr7i9as67loo4v { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_26h8mh783glqwix8ectc, .table th.tinytable_css_26h8mh783glqwix8ectc { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_jdxzzg6c8wq8kmjlvvon, .table th.tinytable_css_jdxzzg6c8wq8kmjlvvon { text-align: center; }
-      .table td.tinytable_css_1kyj374n1iwpebsh1zbg, .table th.tinytable_css_1kyj374n1iwpebsh1zbg { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_lbqe6iyrhr6ep8tkfgej, .table th.tinytable_css_lbqe6iyrhr6ep8tkfgej { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_sit86ouw93drxlfetave, .table th.tinytable_css_sit86ouw93drxlfetave { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_swdf3pjq9wsbv2g42u8h, .table th.tinytable_css_swdf3pjq9wsbv2g42u8h { text-align: left; }
-      .table td.tinytable_css_zppjribd522dzkr0zae1, .table th.tinytable_css_zppjribd522dzkr0zae1 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_u3p1gpwdt4948520hzgw, .table th.tinytable_css_u3p1gpwdt4948520hzgw { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_ip3f4z2kc80vi6shpqr0, .table th.tinytable_css_ip3f4z2kc80vi6shpqr0 { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_00l0uw0rjp9aowwugmih, .table th.tinytable_css_00l0uw0rjp9aowwugmih { text-align: center; }
+      .table td.tinytable_css_aomp28gnzy5zagt7tpz1, .table th.tinytable_css_aomp28gnzy5zagt7tpz1 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_a9lidhqt4wq5s0g3ffi2, .table th.tinytable_css_a9lidhqt4wq5s0g3ffi2 { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_kcqftw244syg7ldhbbe8, .table th.tinytable_css_kcqftw244syg7ldhbbe8 { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_m4sewb88cebklw73t51l, .table th.tinytable_css_m4sewb88cebklw73t51l { text-align: left; }
+      .table td.tinytable_css_zm55q9vp7qbn76f9gsnc, .table th.tinytable_css_zm55q9vp7qbn76f9gsnc { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_hja85qirupzjmayz5c4t" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="table table-borderless" id="tinytable_v6e8yaqg77nc8fz8bjhn" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         <thead>
         
               <tr>
@@ -2377,55 +2379,55 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <div id="結果をファイルに書き出す-2" class="section level2 hasAnchor" number="8.6">
 <h2><span class="header-section-number">8.6</span> 結果をファイルに書き出す<a href="#%E7%B5%90%E6%9E%9C%E3%82%92%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>前章の<a href="regression_basic.html#regression_basic_export">結果をファイルに書き出す</a>を参照。念のため再確認しておくと、 <code>flextable</code>パッケージを読みこんでおいた状態で（本章冒頭を参照）、上記の<code>modelsummary()</code>のコードに<code>output = "xxx.docx"</code>というようなオプションをつけることで、wordファイルに結果を書き出すことができる。</p>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="regression_advanced.html#cb331-1" tabindex="-1"></a><span class="fu">library</span>(flextable) <span class="co"># もし読み込んでいない場合は実行</span></span>
-<span id="cb331-2"><a href="regression_advanced.html#cb331-2" tabindex="-1"></a></span>
-<span id="cb331-3"><a href="regression_advanced.html#cb331-3" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Model 1&quot;</span> <span class="ot">=</span> reg_res1, </span>
-<span id="cb331-4"><a href="regression_advanced.html#cb331-4" tabindex="-1"></a>                  <span class="st">&quot;Model 2&quot;</span> <span class="ot">=</span> reg_res2), <span class="co"># このようにするとモデルに名前をつけることができる</span></span>
-<span id="cb331-5"><a href="regression_advanced.html#cb331-5" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb331-6"><a href="regression_advanced.html#cb331-6" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
-<span id="cb331-7"><a href="regression_advanced.html#cb331-7" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
-<span id="cb331-8"><a href="regression_advanced.html#cb331-8" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
-<span id="cb331-9"><a href="regression_advanced.html#cb331-9" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
-<span id="cb331-10"><a href="regression_advanced.html#cb331-10" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb331-11"><a href="regression_advanced.html#cb331-11" tabindex="-1"></a>                      <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
-<span id="cb331-12"><a href="regression_advanced.html#cb331-12" tabindex="-1"></a>                      <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb331-13"><a href="regression_advanced.html#cb331-13" tabindex="-1"></a>                      <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb331-14"><a href="regression_advanced.html#cb331-14" tabindex="-1"></a>                      <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
-<span id="cb331-15"><a href="regression_advanced.html#cb331-15" tabindex="-1"></a>                      <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
-<span id="cb331-16"><a href="regression_advanced.html#cb331-16" tabindex="-1"></a>                      <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
-<span id="cb331-17"><a href="regression_advanced.html#cb331-17" tabindex="-1"></a>                      <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
-<span id="cb331-18"><a href="regression_advanced.html#cb331-18" tabindex="-1"></a>                      <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
-<span id="cb331-19"><a href="regression_advanced.html#cb331-19" tabindex="-1"></a>                      <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>,</span>
-<span id="cb331-20"><a href="regression_advanced.html#cb331-20" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>),</span>
-<span id="cb331-21"><a href="regression_advanced.html#cb331-21" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>),</span>
-<span id="cb331-22"><a href="regression_advanced.html#cb331-22" tabindex="-1"></a>         <span class="at">output =</span> <span class="st">&quot;results/regression_multiple.docx&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="regression_advanced.html#cb332-1" tabindex="-1"></a><span class="fu">library</span>(flextable) <span class="co"># もし読み込んでいない場合は実行</span></span>
+<span id="cb332-2"><a href="regression_advanced.html#cb332-2" tabindex="-1"></a></span>
+<span id="cb332-3"><a href="regression_advanced.html#cb332-3" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Model 1&quot;</span> <span class="ot">=</span> reg_res1, </span>
+<span id="cb332-4"><a href="regression_advanced.html#cb332-4" tabindex="-1"></a>                  <span class="st">&quot;Model 2&quot;</span> <span class="ot">=</span> reg_res2), <span class="co"># このようにするとモデルに名前をつけることができる</span></span>
+<span id="cb332-5"><a href="regression_advanced.html#cb332-5" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb332-6"><a href="regression_advanced.html#cb332-6" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
+<span id="cb332-7"><a href="regression_advanced.html#cb332-7" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
+<span id="cb332-8"><a href="regression_advanced.html#cb332-8" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
+<span id="cb332-9"><a href="regression_advanced.html#cb332-9" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
+<span id="cb332-10"><a href="regression_advanced.html#cb332-10" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb332-11"><a href="regression_advanced.html#cb332-11" tabindex="-1"></a>                      <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
+<span id="cb332-12"><a href="regression_advanced.html#cb332-12" tabindex="-1"></a>                      <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb332-13"><a href="regression_advanced.html#cb332-13" tabindex="-1"></a>                      <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb332-14"><a href="regression_advanced.html#cb332-14" tabindex="-1"></a>                      <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
+<span id="cb332-15"><a href="regression_advanced.html#cb332-15" tabindex="-1"></a>                      <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
+<span id="cb332-16"><a href="regression_advanced.html#cb332-16" tabindex="-1"></a>                      <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
+<span id="cb332-17"><a href="regression_advanced.html#cb332-17" tabindex="-1"></a>                      <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
+<span id="cb332-18"><a href="regression_advanced.html#cb332-18" tabindex="-1"></a>                      <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
+<span id="cb332-19"><a href="regression_advanced.html#cb332-19" tabindex="-1"></a>                      <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>,</span>
+<span id="cb332-20"><a href="regression_advanced.html#cb332-20" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>),</span>
+<span id="cb332-21"><a href="regression_advanced.html#cb332-21" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>),</span>
+<span id="cb332-22"><a href="regression_advanced.html#cb332-22" tabindex="-1"></a>         <span class="at">output =</span> <span class="st">&quot;results/regression_multiple.docx&quot;</span>)</span></code></pre></div>
 <p>ところで、上記の表のように独立変数が増えてくると、なんだか表が縦に長くて見にくいなあと思うかもしれない。そうした場には、次のように書くことで、標準誤差の値を係数の右側に並べて表記でき、表の縦の長さを短くできる。</p>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="regression_advanced.html#cb332-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Model 1&quot;</span> <span class="ot">=</span> reg_res1, </span>
-<span id="cb332-2"><a href="regression_advanced.html#cb332-2" tabindex="-1"></a>                  <span class="st">&quot;Model 2&quot;</span> <span class="ot">=</span> reg_res2),</span>
-<span id="cb332-3"><a href="regression_advanced.html#cb332-3" tabindex="-1"></a>         <span class="at">estimate =</span> <span class="st">&quot;{estimate} ({std.error}){stars}&quot;</span>, <span class="co"># 係数（半角スペース）(標準誤差)星印、となるように表記するオプション</span></span>
-<span id="cb332-4"><a href="regression_advanced.html#cb332-4" tabindex="-1"></a>         <span class="at">statistic =</span> <span class="cn">NULL</span>, <span class="co">#「2行目」の表記を省略するオプション。</span></span>
-<span id="cb332-5"><a href="regression_advanced.html#cb332-5" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
-<span id="cb332-6"><a href="regression_advanced.html#cb332-6" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
-<span id="cb332-7"><a href="regression_advanced.html#cb332-7" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
-<span id="cb332-8"><a href="regression_advanced.html#cb332-8" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
-<span id="cb332-9"><a href="regression_advanced.html#cb332-9" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb332-10"><a href="regression_advanced.html#cb332-10" tabindex="-1"></a>                      <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
-<span id="cb332-11"><a href="regression_advanced.html#cb332-11" tabindex="-1"></a>                      <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb332-12"><a href="regression_advanced.html#cb332-12" tabindex="-1"></a>                      <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
-<span id="cb332-13"><a href="regression_advanced.html#cb332-13" tabindex="-1"></a>                      <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
-<span id="cb332-14"><a href="regression_advanced.html#cb332-14" tabindex="-1"></a>                      <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
-<span id="cb332-15"><a href="regression_advanced.html#cb332-15" tabindex="-1"></a>                      <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
-<span id="cb332-16"><a href="regression_advanced.html#cb332-16" tabindex="-1"></a>                      <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
-<span id="cb332-17"><a href="regression_advanced.html#cb332-17" tabindex="-1"></a>                      <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
-<span id="cb332-18"><a href="regression_advanced.html#cb332-18" tabindex="-1"></a>                      <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>,</span>
-<span id="cb332-19"><a href="regression_advanced.html#cb332-19" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>),  </span>
-<span id="cb332-20"><a href="regression_advanced.html#cb332-20" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>) )</span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="regression_advanced.html#cb333-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Model 1&quot;</span> <span class="ot">=</span> reg_res1, </span>
+<span id="cb333-2"><a href="regression_advanced.html#cb333-2" tabindex="-1"></a>                  <span class="st">&quot;Model 2&quot;</span> <span class="ot">=</span> reg_res2),</span>
+<span id="cb333-3"><a href="regression_advanced.html#cb333-3" tabindex="-1"></a>         <span class="at">estimate =</span> <span class="st">&quot;{estimate} ({std.error}){stars}&quot;</span>, <span class="co"># 係数（半角スペース）(標準誤差)星印、となるように表記するオプション</span></span>
+<span id="cb333-4"><a href="regression_advanced.html#cb333-4" tabindex="-1"></a>         <span class="at">statistic =</span> <span class="cn">NULL</span>, <span class="co">#「2行目」の表記を省略するオプション。</span></span>
+<span id="cb333-5"><a href="regression_advanced.html#cb333-5" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性（vs. 女性）&quot;</span>,</span>
+<span id="cb333-6"><a href="regression_advanced.html#cb333-6" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（vs. 中学）&quot;</span>,</span>
+<span id="cb333-7"><a href="regression_advanced.html#cb333-7" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（vs. 中学）&quot;</span>,</span>
+<span id="cb333-8"><a href="regression_advanced.html#cb333-8" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（vs. 中学）&quot;</span>,</span>
+<span id="cb333-9"><a href="regression_advanced.html#cb333-9" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb333-10"><a href="regression_advanced.html#cb333-10" tabindex="-1"></a>                      <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
+<span id="cb333-11"><a href="regression_advanced.html#cb333-11" tabindex="-1"></a>                      <span class="st">&quot;occupation専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb333-12"><a href="regression_advanced.html#cb333-12" tabindex="-1"></a>                      <span class="st">&quot;occupation技術職・准専門職&quot;</span> <span class="ot">=</span> <span class="st">&quot;技術職・准専門職（vs. 管理職）&quot;</span>,</span>
+<span id="cb333-13"><a href="regression_advanced.html#cb333-13" tabindex="-1"></a>                      <span class="st">&quot;occupation事務補助&quot;</span> <span class="ot">=</span> <span class="st">&quot;事務補助（vs. 管理職）&quot;</span>,</span>
+<span id="cb333-14"><a href="regression_advanced.html#cb333-14" tabindex="-1"></a>                      <span class="st">&quot;occupationサービス・販売&quot;</span> <span class="ot">=</span> <span class="st">&quot;サービス・販売（vs. 管理職）&quot;</span>,</span>
+<span id="cb333-15"><a href="regression_advanced.html#cb333-15" tabindex="-1"></a>                      <span class="st">&quot;occupation農林漁業&quot;</span> <span class="ot">=</span> <span class="st">&quot;農林漁業（vs. 管理職）&quot;</span>,</span>
+<span id="cb333-16"><a href="regression_advanced.html#cb333-16" tabindex="-1"></a>                      <span class="st">&quot;occupation技能工&quot;</span> <span class="ot">=</span> <span class="st">&quot;技能工（vs. 管理職）&quot;</span>,</span>
+<span id="cb333-17"><a href="regression_advanced.html#cb333-17" tabindex="-1"></a>                      <span class="st">&quot;occupation設備・機械運転・組立&quot;</span> <span class="ot">=</span> <span class="st">&quot;設備・機械運転・組立（vs. 管理職）&quot;</span>,</span>
+<span id="cb333-18"><a href="regression_advanced.html#cb333-18" tabindex="-1"></a>                      <span class="st">&quot;occupation単純作業&quot;</span> <span class="ot">=</span> <span class="st">&quot;単純作業（vs. 管理職）&quot;</span>,</span>
+<span id="cb333-19"><a href="regression_advanced.html#cb333-19" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>),  </span>
+<span id="cb333-20"><a href="regression_advanced.html#cb333-20" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>) )</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
 
-      function styleCell_qaqwv003pgvooha6r8vb(i, j, css_id) {
-          var table = document.getElementById("tinytable_qaqwv003pgvooha6r8vb");
+      function styleCell_2r6g75ppbd9u4kqb2p6t(i, j, css_id) {
+          var table = document.getElementById("tinytable_2r6g75ppbd9u4kqb2p6t");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -2435,7 +2437,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_qaqwv003pgvooha6r8vb');
+        var table = document.getElementById('tinytable_2r6g75ppbd9u4kqb2p6t');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -2443,8 +2445,8 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_qaqwv003pgvooha6r8vb(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_qaqwv003pgvooha6r8vb");
+      function spanCell_2r6g75ppbd9u4kqb2p6t(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_2r6g75ppbd9u4kqb2p6t");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2474,20 +2476,20 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 17, j: 1 }, { i: 17, j: 2 },  ], css_id: 'tinytable_css_fnvp4ac9u0fiqg1miwil',}, 
-          { positions: [ { i: 15, j: 1 }, { i: 15, j: 2 },  ], css_id: 'tinytable_css_fb2u562uwgpbxumft4nd',}, 
-          { positions: [ { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 1, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 10, j: 2 }, { i: 16, j: 1 }, { i: 12, j: 2 }, { i: 5, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 14, j: 2 }, { i: 11, j: 2 }, { i: 16, j: 2 }, { i: 13, j: 2 },  ], css_id: 'tinytable_css_dyi1246ayeowq2e7ih0b',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_wh88o7xyhyfya7wzzhvl',}, 
-          { positions: [ { i: 17, j: 0 },  ], css_id: 'tinytable_css_nnemo7sngk4s30tr7ghx',}, 
-          { positions: [ { i: 15, j: 0 },  ], css_id: 'tinytable_css_ad0lk4pxbvbnig1puugt',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 16, j: 0 },  ], css_id: 'tinytable_css_5ef66hjgkzkqhjc1mpg3',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_qz5uvpe4dp8rfbfoxd0s',}, 
+          { positions: [ { i: 17, j: 1 }, { i: 17, j: 2 },  ], css_id: 'tinytable_css_x75xczo21zlqi88tfq33',}, 
+          { positions: [ { i: 15, j: 1 }, { i: 15, j: 2 },  ], css_id: 'tinytable_css_o0j1hmhdhgv9m5hl399c',}, 
+          { positions: [ { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 1, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 10, j: 2 }, { i: 16, j: 1 }, { i: 12, j: 2 }, { i: 5, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 14, j: 2 }, { i: 11, j: 2 }, { i: 16, j: 2 }, { i: 13, j: 2 },  ], css_id: 'tinytable_css_njm0cbn4nf03vgwt4y2f',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_z1g2nzu75wci3b48gasl',}, 
+          { positions: [ { i: 17, j: 0 },  ], css_id: 'tinytable_css_loodohg4k3yf6huo5e5k',}, 
+          { positions: [ { i: 15, j: 0 },  ], css_id: 'tinytable_css_swjb6d8qioz6me1sqlwf',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 16, j: 0 },  ], css_id: 'tinytable_css_r6vnkbwvrlfl6iwcc95m',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_b8xsc7a3kqm8ro0cbq63',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_qaqwv003pgvooha6r8vb(cell.i, cell.j, group.css_id);
+                  styleCell_2r6g75ppbd9u4kqb2p6t(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2495,17 +2497,17 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_fnvp4ac9u0fiqg1miwil, .table th.tinytable_css_fnvp4ac9u0fiqg1miwil { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_fb2u562uwgpbxumft4nd, .table th.tinytable_css_fb2u562uwgpbxumft4nd { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_dyi1246ayeowq2e7ih0b, .table th.tinytable_css_dyi1246ayeowq2e7ih0b { text-align: center; }
-      .table td.tinytable_css_wh88o7xyhyfya7wzzhvl, .table th.tinytable_css_wh88o7xyhyfya7wzzhvl { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_nnemo7sngk4s30tr7ghx, .table th.tinytable_css_nnemo7sngk4s30tr7ghx { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_ad0lk4pxbvbnig1puugt, .table th.tinytable_css_ad0lk4pxbvbnig1puugt { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_5ef66hjgkzkqhjc1mpg3, .table th.tinytable_css_5ef66hjgkzkqhjc1mpg3 { text-align: left; }
-      .table td.tinytable_css_qz5uvpe4dp8rfbfoxd0s, .table th.tinytable_css_qz5uvpe4dp8rfbfoxd0s { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_x75xczo21zlqi88tfq33, .table th.tinytable_css_x75xczo21zlqi88tfq33 { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_o0j1hmhdhgv9m5hl399c, .table th.tinytable_css_o0j1hmhdhgv9m5hl399c { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_njm0cbn4nf03vgwt4y2f, .table th.tinytable_css_njm0cbn4nf03vgwt4y2f { text-align: center; }
+      .table td.tinytable_css_z1g2nzu75wci3b48gasl, .table th.tinytable_css_z1g2nzu75wci3b48gasl { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_loodohg4k3yf6huo5e5k, .table th.tinytable_css_loodohg4k3yf6huo5e5k { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_swjb6d8qioz6me1sqlwf, .table th.tinytable_css_swjb6d8qioz6me1sqlwf { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_r6vnkbwvrlfl6iwcc95m, .table th.tinytable_css_r6vnkbwvrlfl6iwcc95m { text-align: left; }
+      .table td.tinytable_css_b8xsc7a3kqm8ro0cbq63, .table th.tinytable_css_b8xsc7a3kqm8ro0cbq63 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_qaqwv003pgvooha6r8vb" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="table table-borderless" id="tinytable_2r6g75ppbd9u4kqb2p6t" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         <thead>
         
               <tr>
@@ -2607,6 +2609,16 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <!-- hack to avoid NA insertion in last line -->
 <p>結果をWordファイルに出力するときには、今までと同様、outputオプションをつける。</p>
 <p><a href="regression_basic.html#regression_output_excel">Excelに結果を書き出したり</a>、<a href="regression_basic.html#regression_output_pptx">PowerPointに結果を書き出す</a>こともできる。いずれも前章の末尾を参照のこと。</p>
+</div>
+<div id="練習問題-3" class="section level2 hasAnchor" number="8.7">
+<h2><span class="header-section-number">8.7</span> 練習問題<a href="#%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>学歴や年齢を一定としたうえでも、女性のほうが主観的健康度（<code>health</code>）が高いといえるかどうかを検証したい。この問いを検証するうえで適切な回帰分析を推定し、結果を示したうえで、その結果について説明してください。</li>
+<li>Laurison &amp; Friedman (2016)<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a>は、イギリスにおいて、学歴や職業が同じであったとしても、より高い階級の出身である（親の階級がより高い）ほどより高い賃金を得ていることを明らかにした。いま、PIAACのデータを用いてこうした傾向が日本においても確認されるかどうかを検証したいとする。対数賃金（<code>logwage</code>）を従属変数、性別（<code>gender</code>）、年齢、年齢2乗、親学歴（<code>parenteduc</code>）を独立変数とする重回帰分析を推定し、親学歴の結果について説明してください。</li>
+</ol>
+<ol start="3" style="list-style-type: decimal">
+<li>練習問題2について、さらに職業（<code>occupation</code>）を統制したうえでもなお、親学歴が高いほうが賃金が高いという傾向があるかどうかを検証したい。適切な回帰分析を推定し、結果について説明してください。</li>
+</ol>
 
 </div>
 </div>
@@ -2614,6 +2626,7 @@ y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_kx_k
 <hr />
 <ol start="20">
 <li id="fn20"><p>たとえば女性は男性と同等の数学能力を持っていたとしても、男性と比べて数学を使う分野（理系など）に進みにくい傾向がある。このような傾向があると、小中学校の間は男女で数的思考力に違いがなかったとしても、高校、大学と段階が進むにつれて数学に触れる時間に差が生じ、結果、男女の数的思考力に差が生じる。こうした傾向については数多くの研究がある（たとえば、Xie, Yu and Kimberlee A. Shauman. 2005. <em>Women in Science: Career Processes and Outcomes.</em> Harvard University Press.など）。<a href="regression_advanced.html#fnref20" class="footnote-back">↩︎</a></p></li>
+<li id="fn21"><p><a href="https://doi.org/10.1177/0003122416653602">Laurison, Daniel, and Sam Friedman. 2016. “The Class Pay Gap in Higher Professional and Managerial Occupations.” <em>American Sociological Review</em> 81(4):668–95.</a><a href="regression_advanced.html#fnref21" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
