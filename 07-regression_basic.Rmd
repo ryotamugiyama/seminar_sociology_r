@@ -45,7 +45,7 @@ theme_set(theme_bw(
 
 ### 散布図を眺める
 
-数的思考力スコアが高いほど賃金（時給換算）が高いという傾向があるかどうかを知りたいとする。このとき、年齢を横軸、賃金を縦軸とする散布図を書いてみる。
+数的思考力スコア（`numeracy`）が高いほど賃金（時給換算）が高いという傾向があるかどうかを知りたいとする。このとき、年齢を横軸、賃金を縦軸とする散布図を書いてみる。
 
 ```{r}
 piaac %>% 
@@ -312,7 +312,6 @@ summary(reg_res)
 並び替えた結果、基準カテゴリが「大学大学院」となり、推定結果に表示されていないことがわかる。
 
 ## 従属変数が2値のカテゴリ変数（0/1）の場合 {#regression_basic_binary}
-
 ### クロス表と比較しながら結果をみる
 
 たとえば、性別によってこの1年間に職場での訓練（OJTとよぶ）を受ける率が異なっているかどうかを知りたいとする。これも今までと同じように回帰分析の枠組みで扱うことができる。
@@ -769,3 +768,26 @@ modelsummary(list(reg_res),
          gof_map = c("nobs", "r.squared"), # サンプルサイズと決定係数のみ記載する
          output = "results/regression.rtf") # 出力先のファイル名をつける（rtf）
 ```
+
+## 練習問題
+
+1. 賃金（`wage`）を従属変数、両親の学歴（`parenteduc`）を独立変数とする回帰分析を推定し、結果を表示してください。
+2. 主観的健康度（`health`）を従属変数、年齢と年齢2乗を独立変数とする回帰分析を推定し、結果を表示してください。
+3. 職業（`occupation`）が「管理職」であれば1、それ以外であれば0となるダミー変数（`manager`という名前をつけてください）を作成してください。また、性別（`gender`）が「女性」であれば1、「男性」であれば0となるダミー変数（`female_d`という名前をつけてください）を作成してください。
+4. 管理職か否か（`manager`）を従属変数、女性ダミー（`female_d`）を独立変数とする回帰分析を推定し、結果を表示してください。
+
+```{r, eval = FALSE, include = FALSE}
+piaac %>% glimpse()
+reg <- lm(data = piaac, wage ~ parenteduc)
+summary(reg)
+
+reg <- lm(data = piaac, health ~ age + I(age^2))
+summary(reg)
+
+piaac <- piaac %>% 
+  mutate(female_d = if_else(gender == "女性", 1, 0),
+         manager = if_else(occupation == "管理職", 1, 0))
+reg <- lm(data = piaac, manager ~ female_d)
+summary(reg)
+```
+

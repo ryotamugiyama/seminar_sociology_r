@@ -543,3 +543,30 @@ piaac %>%
   as_flex_table() %>% 
   save_as_docx(path = "results/tbl_cross.docx")
 ```
+
+## 練習問題
+
+1. 性別（`gender`）に、一週間の労働時間（`workhour`）の分布をヒストグラムを使って可視化してください。
+2. 親の学歴（`parenteduc`）によって数滴思考力スコア（`numaracy`）の平均値がどの程度異なるかを示す棒グラフを作成してください。
+3. 性別（`gender`）と職業（`occupation`）のクロス表を作成してください。また、適切な割合（行%または列%）を計算して、男性の職業分布と女性の職業分布のがどのように異なるのかについて説明してください。
+4. 仕事で読み書きを使っている頻度をスコア化した変数（`readwork`）と、仕事で計算を使っている頻度をスコア化した変数（`numwork`）がある。これらの2つの変数の関係を散布図で可視化してください。また、2つの変数の関係を示す直線を引いてください。
+
+```{r, eval = FALSE, include = FALSE}
+piaac %>% glimpse()
+
+piaac %>% 
+  group_by(parenteduc) %>% 
+  summarize(mean = mean(numeracy)) %>% 
+  ggplot(aes(x = parenteduc, y = mean)) + 
+  geom_col()
+  
+piaac %>% 
+  ggplot(aes(x = workhour, fill = gender)) + 
+  geom_histogram(position = "identity", alpha = 0.5) + 
+  labs(fill = "")
+
+piaac %>% 
+  ggplot(aes(x = readwork, y = numwork)) + 
+  geom_point(shape = 1) + 
+  geom_smooth(method = "lm", se = FALSE)
+```

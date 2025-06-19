@@ -200,18 +200,18 @@ piaac %>%
 
 #### 例2: もとの変数に何らかの計算を施す
 
-たとえば、1週間の労働時間を尋ねた変数`d_q10`を5で割って、平日1日あたりの労働時間に変換した列を作りたいというときがあるだろう。このような場合には次のように計算する。
+たとえば、時間あたり賃金を尋ねた変数`earnhrbonus`を1000で割って、単位を円ではなく千円としたいとする。このような場合には次のように計算する。
 
 ```{r}
 piaac <- piaac %>% 
-  mutate(workhour = d_q10 / 5)
+  mutate(wage1000 = earnhrbonus / 1000)
 ```
 
 新しく作った列`workhour`は、たしかにもともとの変数を5で割った値になっていることがわかる。
 
 ```{r}
 piaac %>% 
-  select(d_q10, workhour) %>% 
+  select(earnhrbonus, wage1000) %>% 
   head()
 ```
 
@@ -243,7 +243,7 @@ piaac <- piaac %>%
 
 ```{r}
 piaac %>% 
-  select(id, wage, workhour) %>% 
+  select(id, wage, work) %>% 
   head()
 ```
 
@@ -564,7 +564,7 @@ piaac <- piaac %>%
   mutate(gender = factor(gender_r, level = 2:1, label = c("女性","男性"))) %>% 
   mutate(age = age_r) %>% 
   mutate(work = 2 - c_q01a) %>% 
-  mutate(workhour = d_q10 / 5) %>% 
+  mutate(workhour = d_q10) %>% 
   mutate(workhour_fct = case_when(
     d_q10 < 35 ~ 1,
     d_q10 >= 35 & d_q10 <= 49 ~ 2,

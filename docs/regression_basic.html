@@ -266,6 +266,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.5.3" data-path="descriptives.html"><a href="descriptives.html#descriptive_export_tbl_summary"><i class="fa fa-check"></i><b>5.5.3</b> 記述統計の一覧表をwordに書き出す</a></li>
 </ul></li>
 <li class="chapter" data-level="5.6" data-path="07-regression_basic.html"><a href="#tbl_summary%E3%81%A7%E5%80%A4%E3%81%AE%E5%B0%91%E3%81%AA%E3%81%84%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%A8%E3%81%97%E3%81%A6%E9%9B%86%E8%A8%88%E3%81%95%E3%82%8C%E3%82%8B%E5%95%8F%E9%A1%8C%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6"><i class="fa fa-check"></i><b>5.6</b> tbl_summary()で値の少ない連続変数がカテゴリ変数として集計される問題について</a></li>
+<li class="chapter" data-level="5.7" data-path="07-regression_basic.html"><a href="#%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C"><i class="fa fa-check"></i><b>5.7</b> 練習問題</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="tabulate.html"><a href="tabulate.html"><i class="fa fa-check"></i><b>6</b> 2変数の集計</a>
 <ul>
@@ -303,6 +304,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.7.1" data-path="07-regression_basic.html"><a href="#ggplot%E3%81%A7%E4%BD%9C%E6%88%90%E3%81%97%E3%81%9F%E5%9B%B3%E3%82%92%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99"><i class="fa fa-check"></i><b>6.7.1</b> ggplotで作成した図を書き出す</a></li>
 <li class="chapter" data-level="6.7.2" data-path="07-regression_basic.html"><a href="#%E3%82%AF%E3%83%AD%E3%82%B9%E8%A1%A8%E3%82%92word%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99"><i class="fa fa-check"></i><b>6.7.2</b> クロス表をwordファイルに書き出す</a></li>
 </ul></li>
+<li class="chapter" data-level="6.8" data-path="07-regression_basic.html"><a href="#%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C-1"><i class="fa fa-check"></i><b>6.8</b> 練習問題</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="regression_basic.html"><a href="regression_basic.html"><i class="fa fa-check"></i><b>7</b> 回帰分析の基礎</a>
 <ul>
@@ -347,6 +349,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.7.3" data-path="regression_basic.html"><a href="regression_basic.html#regression_output_pptx"><i class="fa fa-check"></i><b>7.7.3</b> PowerPointファイルに書き出す</a></li>
 <li class="chapter" data-level="7.7.4" data-path="regression_basic.html"><a href="regression_basic.html#regression_output_rtf"><i class="fa fa-check"></i><b>7.7.4</b> rtfファイルに書き出す</a></li>
 </ul></li>
+<li class="chapter" data-level="7.8" data-path="07-regression_basic.html"><a href="#%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C-2"><i class="fa fa-check"></i><b>7.8</b> 練習問題</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="regression_advanced.html"><a href="regression_advanced.html"><i class="fa fa-check"></i><b>8</b> 回帰分析の活用</a>
 <ul>
@@ -549,18 +552,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">7.1</span> 回帰分析とは何か<a href="#%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="散布図を眺める" class="section level3 hasAnchor" number="7.1.1">
 <h3><span class="header-section-number">7.1.1</span> 散布図を眺める<a href="#%E6%95%A3%E5%B8%83%E5%9B%B3%E3%82%92%E7%9C%BA%E3%82%81%E3%82%8B" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>数的思考力スコアが高いほど賃金（時給換算）が高いという傾向があるかどうかを知りたいとする。このとき、年齢を横軸、賃金を縦軸とする散布図を書いてみる。</p>
+<p>数的思考力スコア（<code>numeracy</code>）が高いほど賃金（時給換算）が高いという傾向があるかどうかを知りたいとする。このとき、年齢を横軸、賃金を縦軸とする散布図を書いてみる。</p>
 <div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="regression_basic.html#cb252-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb252-2"><a href="regression_basic.html#cb252-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> numeracy, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
 <span id="cb252-3"><a href="regression_basic.html#cb252-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-176-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-178-1.png" width="672" /></p>
 <p>なんとなく、数的思考力スコアが高いほど賃金が高い傾向があるようにみえる。この関係を1つの直線で要約するとしたらどのようになるだろう？この直線を示したのが次の図になる。</p>
 <div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="regression_basic.html#cb253-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb253-2"><a href="regression_basic.html#cb253-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> numeracy, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
 <span id="cb253-3"><a href="regression_basic.html#cb253-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb253-4"><a href="regression_basic.html#cb253-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-177-1.png" width="672" /></p>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~
+## x&#39;</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-179-1.png" width="672" /></p>
 </div>
 <div id="回帰式の読み方" class="section level3 hasAnchor" number="7.1.2">
 <h3><span class="header-section-number">7.1.2</span> 回帰式の読み方<a href="#%E5%9B%9E%E5%B8%B0%E5%BC%8F%E3%81%AE%E8%AA%AD%E3%81%BF%E6%96%B9" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -589,13 +593,13 @@ y = -521.1 + 7.8x
 <h3><span class="header-section-number">7.1.3</span> 回帰式の決め方：最小二乗法<a href="#%E5%9B%9E%E5%B8%B0%E5%BC%8F%E3%81%AE%E6%B1%BA%E3%82%81%E6%96%B9%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%97%E6%B3%95" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>もちろん、上記の回帰式は散布図をみて直観でえいやっと式の値を決めたのではなく、全体の傾向をもっともよく要約するような係数を推定している。その係数の推定方法を<strong>最小二乗法 ordinary least square, OLS</strong>という。</p>
 <p>最小二乗法の意味は図にするとわかりやすい。例えば、次のような散布図と、そこに引いた直線を考えよう。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-180-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-182-1.png" width="672" /></p>
 <p>このとき、散布図の各点の座標を<span class="math inline">\((x_i, y_i)\)</span>と表すことにしよう。すると、各点のy座標の位置<span class="math inline">\(y_i\)</span>は、（1）回帰直線の式に<span class="math inline">\(x_i\)</span>を当てはめた値と、（2）そこからのずれ（<span class="math inline">\(r_i\)</span>とする）の和として表すことができる。すなわち：</p>
 <p><span class="math display">\[
 y_i = \beta_0 + \beta_1x_{i} + r_i
 \]</span></p>
 <p>この<span class="math inline">\(r_i\)</span>というのは、散布図の点からx軸に垂線を下ろしたときの、回帰直線との交点までの距離を表している。図で考えると次のようになる。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-181-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-183-1.png" width="672" /></p>
 <p>ずれ<span class="math inline">\(r_i\)</span>のことを、<strong>残差（residuals）</strong>という。散布図に直線を引く方法はたくさんあるのだが、最小二乗法では、上記の残差の二乗和を最も小さくするような直線が散布図全体の傾向をもっともよく反映する直線だとみなして、切片と傾きのパラメータを推定する。式で書くとつぎのようになる。</p>
 <p><span class="math display">\[
 \sum_{i = 1}^N r_i^2 = \sum_{i = 1}^N(y_i - (\beta_0 + \beta_1x_{i}))^2
@@ -649,9 +653,9 @@ y_i = \beta_0 + \beta_1x_{i} + r_i
 <div id="値のカテゴリ" class="section level3 hasAnchor" number="7.2.1">
 <h3><span class="header-section-number">7.2.1</span> 2値のカテゴリ<a href="#%E5%80%A4%E3%81%AE%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>線形回帰分析では、連続変数だけではなく、カテゴリ変数も扱うことができる。その例としてまず、性別によって賃金がどの程度異なるのかを知りたいとする。このとき、（無理やり）散布図を書くと、次のようになる。分布がわかりやすいように点は水平方向に少し散らして表示している。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-184-1.png" width="672" /></p>
-<p>ここで得られた男性の平均値と女性の平均値をそれぞれ散布図に書き入れてみたのが次の図である。実線が男性の平均値、点線が女性の平均値を表している。</p>
 <p><img src="seminar_doc_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
+<p>ここで得られた男性の平均値と女性の平均値をそれぞれ散布図に書き入れてみたのが次の図である。実線が男性の平均値、点線が女性の平均値を表している。</p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-188-1.png" width="672" /></p>
 <p>いま、男性であれば1、女性であれば0をとる変数<span class="math inline">\(x\)</span>を考えよう。このように、カテゴリ変数のカテゴリを区別するために便宜的に0/1の値を振った変数のことを、<strong>ダミー変数 dummy variable</strong>という。このとき、性別による賃金の違いを表す回帰式は次のようになる：</p>
 <p><span class="math display">\[
 y = \beta_0 + \beta_1x
@@ -692,7 +696,7 @@ y = 1339 + 856x
 <div id="値以上のカテゴリ" class="section level3 hasAnchor" number="7.2.2">
 <h3><span class="header-section-number">7.2.2</span> 3値以上のカテゴリ<a href="#%E5%80%A4%E4%BB%A5%E4%B8%8A%E3%81%AE%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>カテゴリが3値以上の場合はどうだろう？これも、基本的には同じふうに考えることができる。たとえば、最終学歴が中学、高校、短大高専、大学大学院の4つのグループにおいて、賃金の平均がどの程度異なるのかを知りたいとする。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-190-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-192-1.png" width="672" /></p>
 <p>中学卒を基準として、高校卒（高校卒 - 中学卒）、短大高専卒（短大高専卒 - 中学卒）、大学大学院卒（大学大学院卒 - 中学卒）だとどれくらい賃金が高いのかを推定することになる。</p>
 <div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="regression_basic.html#cb263-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb263-2"><a href="regression_basic.html#cb263-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ_d2 =</span> <span class="fu">if_else</span>(educ <span class="sc">==</span> <span class="st">&quot;高校&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
@@ -817,7 +821,7 @@ y = 1339 + 856x
 <span id="cb274-6"><a href="regression_basic.html#cb274-6" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(mean_ojt, <span class="at">digit =</span> <span class="dv">3</span>)), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb274-7"><a href="regression_basic.html#cb274-7" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb274-8"><a href="regression_basic.html#cb274-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-198-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-200-1.png" width="672" /></p>
 <p>棒グラフの高さが異なることから分かる通り、男性は女性とくらべてOJTを受けた割合が0.082（8.2%ポイント）<a href="#fn19" class="footnote-ref" id="fnref19"><sup>19</sup></a>高い。</p>
 <p>では、ojtを従属変数、性別を独立変数とする回帰式を推定してみよう。</p>
 <div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="regression_basic.html#cb275-1" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> gender)</span>
@@ -854,10 +858,12 @@ y = 1339 + 856x
 <span id="cb277-6"><a href="regression_basic.html#cb277-6" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">10</span>)) <span class="sc">+</span> </span>
 <span id="cb277-7"><a href="regression_basic.html#cb277-7" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">weight =</span> n), <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
 <span id="cb277-8"><a href="regression_basic.html#cb277-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;age&#39;. You
-## can override using the `.groups` argument.
-## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-201-1.png" width="672" /></p>
+<pre><code>## `summarise()` has grouped output by
+## &#39;age&#39;. You can override using the
+## `.groups` argument.
+## `geom_smooth()` using formula = &#39;y ~
+## x&#39;</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-203-1.png" width="672" /></p>
 <p>縦軸のOJTは0または1しかとらないので、点はy = 1またはy = 0の位置のどちらかに描かれる。推定される回帰式は、この散布図全体の傾向を要約するような線として表される。実際に、回帰式を推定してみよう。</p>
 <div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="regression_basic.html#cb279-1" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> age)</span>
 <span id="cb279-2"><a href="regression_basic.html#cb279-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
@@ -903,15 +909,15 @@ y = 1339 + 856x
 <div class="sourceCode" id="cb282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb282-1"><a href="regression_basic.html#cb282-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb282-2"><a href="regression_basic.html#cb282-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> </span>
 <span id="cb282-3"><a href="regression_basic.html#cb282-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better
-## value with `binwidth`.</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-205-1.png" width="672" /></p>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick
+## better value with `binwidth`.</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-207-1.png" width="672" /></p>
 <div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="regression_basic.html#cb284-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb284-2"><a href="regression_basic.html#cb284-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> logwage)) <span class="sc">+</span> </span>
 <span id="cb284-3"><a href="regression_basic.html#cb284-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better
-## value with `binwidth`.</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-205-2.png" width="672" /></p>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick
+## better value with `binwidth`.</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-207-2.png" width="672" /></p>
 <p>対数変換した後の変数は、対数変換する前の変数よりも正規分布に近づいていることがわかる。</p>
 </div>
 <div id="自然対数と対数関数について" class="section level3 hasAnchor" number="7.4.2">
@@ -932,8 +938,9 @@ a^y = x \leftrightarrow y = \log_a x
 <span id="cb286-2"><a href="regression_basic.html#cb286-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> numeracy, <span class="at">y =</span> logwage)) <span class="sc">+</span> </span>
 <span id="cb286-3"><a href="regression_basic.html#cb286-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb286-4"><a href="regression_basic.html#cb286-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-206-1.png" width="672" /></p>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~
+## x&#39;</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-208-1.png" width="672" /></p>
 <p>対数変換した後の賃金を従属変数として、回帰分析を推定してみよう。</p>
 <div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="regression_basic.html#cb288-1" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy)</span>
 <span id="cb288-2"><a href="regression_basic.html#cb288-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
@@ -1135,7 +1142,7 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
 <span id="cb298-2"><a href="regression_basic.html#cb298-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> logwage)) <span class="sc">+</span> </span>
 <span id="cb298-3"><a href="regression_basic.html#cb298-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb298-4"><a href="regression_basic.html#cb298-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">2</span>), <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="co"># 2次曲線を描く場合にはformula = y ~ poly(x, 2)というオプションを追加。</span></span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-215-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-217-1.png" width="672" /></p>
 <p>このように、若いときには年齢による賃金の上昇は大きいけれども、その上昇幅は年齢が高くなるほど小さくなり、高い年齢ではむしろ負に転ずることがわかる。年齢についてはこのように二次曲線をつかうことはしばしば有効である。</p>
 <p>なお2乗した変数を別に作らなくても、回帰分析のコード中で2乗した変数を作成することができる。（結果は省略）次のように<code>I()</code>という表記を用いて、<code>()</code>内で行いたい計算方法を指定する。</p>
 <div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="regression_basic.html#cb299-1" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> piaac, <span class="fu">log</span>(wage) <span class="sc">~</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
@@ -1176,8 +1183,8 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
 
     <script>
 
-      function styleCell_4t93wm2vsw2hseo9fdci(i, j, css_id) {
-          var table = document.getElementById("tinytable_4t93wm2vsw2hseo9fdci");
+      function styleCell_ms4q29jj4i56y6cjc68e(i, j, css_id) {
+          var table = document.getElementById("tinytable_ms4q29jj4i56y6cjc68e");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -1187,7 +1194,7 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_4t93wm2vsw2hseo9fdci');
+        var table = document.getElementById('tinytable_ms4q29jj4i56y6cjc68e');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -1195,8 +1202,8 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_4t93wm2vsw2hseo9fdci(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_4t93wm2vsw2hseo9fdci");
+      function spanCell_ms4q29jj4i56y6cjc68e(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_ms4q29jj4i56y6cjc68e");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -1226,20 +1233,20 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 11, j: 1 },  ], css_id: 'tinytable_css_bbu99iv82gnnuvz5sf2q',}, 
-          { positions: [ { i: 4, j: 1 },  ], css_id: 'tinytable_css_ymfjk449mpg29hrt8516',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 8, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 },  ], css_id: 'tinytable_css_4ce7xpsao2cvt8chqpmo',}, 
-          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_fvdeqhrwhhxty5epu25c',}, 
-          { positions: [ { i: 11, j: 0 },  ], css_id: 'tinytable_css_dw14bf2gg5w5h71s8tl6',}, 
-          { positions: [ { i: 4, j: 0 },  ], css_id: 'tinytable_css_yz2lu9ywpj8eiwbpjkgy',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 8, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 },  ], css_id: 'tinytable_css_qsz1mues1aexqw6s0pg2',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_7spm8630ge73xe5xb978',}, 
+          { positions: [ { i: 11, j: 1 },  ], css_id: 'tinytable_css_2wswzzid28hl84ftg3ru',}, 
+          { positions: [ { i: 4, j: 1 },  ], css_id: 'tinytable_css_mgfqlbn23ih0vwfjhk2o',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 8, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 },  ], css_id: 'tinytable_css_b15vrdvxy3z2ampjsa6c',}, 
+          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_67xopygzak9xrtrm62o7',}, 
+          { positions: [ { i: 11, j: 0 },  ], css_id: 'tinytable_css_a20bh8i18sgvjz4qyh0d',}, 
+          { positions: [ { i: 4, j: 0 },  ], css_id: 'tinytable_css_s1y96cegl9s5e0cou9r9',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 8, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 },  ], css_id: 'tinytable_css_gf9atzbb85sugg1k027n',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_zioio6yeufk5i6uvhm8y',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_4t93wm2vsw2hseo9fdci(cell.i, cell.j, group.css_id);
+                  styleCell_ms4q29jj4i56y6cjc68e(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -1247,17 +1254,17 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_bbu99iv82gnnuvz5sf2q, .table th.tinytable_css_bbu99iv82gnnuvz5sf2q { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_ymfjk449mpg29hrt8516, .table th.tinytable_css_ymfjk449mpg29hrt8516 { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_4ce7xpsao2cvt8chqpmo, .table th.tinytable_css_4ce7xpsao2cvt8chqpmo { text-align: center; }
-      .table td.tinytable_css_fvdeqhrwhhxty5epu25c, .table th.tinytable_css_fvdeqhrwhhxty5epu25c { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_dw14bf2gg5w5h71s8tl6, .table th.tinytable_css_dw14bf2gg5w5h71s8tl6 { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_yz2lu9ywpj8eiwbpjkgy, .table th.tinytable_css_yz2lu9ywpj8eiwbpjkgy { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_qsz1mues1aexqw6s0pg2, .table th.tinytable_css_qsz1mues1aexqw6s0pg2 { text-align: left; }
-      .table td.tinytable_css_7spm8630ge73xe5xb978, .table th.tinytable_css_7spm8630ge73xe5xb978 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_2wswzzid28hl84ftg3ru, .table th.tinytable_css_2wswzzid28hl84ftg3ru { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_mgfqlbn23ih0vwfjhk2o, .table th.tinytable_css_mgfqlbn23ih0vwfjhk2o { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_b15vrdvxy3z2ampjsa6c, .table th.tinytable_css_b15vrdvxy3z2ampjsa6c { text-align: center; }
+      .table td.tinytable_css_67xopygzak9xrtrm62o7, .table th.tinytable_css_67xopygzak9xrtrm62o7 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_a20bh8i18sgvjz4qyh0d, .table th.tinytable_css_a20bh8i18sgvjz4qyh0d { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_s1y96cegl9s5e0cou9r9, .table th.tinytable_css_s1y96cegl9s5e0cou9r9 { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_gf9atzbb85sugg1k027n, .table th.tinytable_css_gf9atzbb85sugg1k027n { text-align: left; }
+      .table td.tinytable_css_zioio6yeufk5i6uvhm8y, .table th.tinytable_css_zioio6yeufk5i6uvhm8y { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_4t93wm2vsw2hseo9fdci" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="table table-borderless" id="tinytable_ms4q29jj4i56y6cjc68e" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         <thead>
         
               <tr>
@@ -1326,8 +1333,8 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
 
     <script>
 
-      function styleCell_yjau1xxv78eg9yvve6sz(i, j, css_id) {
-          var table = document.getElementById("tinytable_yjau1xxv78eg9yvve6sz");
+      function styleCell_54wa46yy5i9dwicuxh06(i, j, css_id) {
+          var table = document.getElementById("tinytable_54wa46yy5i9dwicuxh06");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -1337,7 +1344,7 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_yjau1xxv78eg9yvve6sz');
+        var table = document.getElementById('tinytable_54wa46yy5i9dwicuxh06');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -1345,8 +1352,8 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_yjau1xxv78eg9yvve6sz(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_yjau1xxv78eg9yvve6sz");
+      function spanCell_54wa46yy5i9dwicuxh06(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_54wa46yy5i9dwicuxh06");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -1376,20 +1383,20 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 6, j: 1 },  ], css_id: 'tinytable_css_n8pb1uiq7f3ivt3tpx7j',}, 
-          { positions: [ { i: 4, j: 1 },  ], css_id: 'tinytable_css_qzd18suyycaf4jd8md6w',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 5, j: 1 },  ], css_id: 'tinytable_css_5wjc0c5nkgecoenk8aaz',}, 
-          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_cv27sbl7iwlsi93fh3pg',}, 
-          { positions: [ { i: 6, j: 0 },  ], css_id: 'tinytable_css_tho0o60le133ucxd2ui7',}, 
-          { positions: [ { i: 4, j: 0 },  ], css_id: 'tinytable_css_x9h3sjt8m05cw9eboj26',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 5, j: 0 },  ], css_id: 'tinytable_css_7o0anzx2cufd1omasobs',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_c8w3kgryqhzcu2gi7v5f',}, 
+          { positions: [ { i: 6, j: 1 },  ], css_id: 'tinytable_css_ouo3rpvt8uva4owv7yzc',}, 
+          { positions: [ { i: 4, j: 1 },  ], css_id: 'tinytable_css_cw9jyqeq3ox3v7xj6fv1',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 5, j: 1 },  ], css_id: 'tinytable_css_lrpsswg16qm7128kcw26',}, 
+          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_sv03bwiid198gukbx56t',}, 
+          { positions: [ { i: 6, j: 0 },  ], css_id: 'tinytable_css_tmqimpnvdtv82i7s4d9b',}, 
+          { positions: [ { i: 4, j: 0 },  ], css_id: 'tinytable_css_0a5ljkjed7b5wp8r00gc',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 5, j: 0 },  ], css_id: 'tinytable_css_t48u2zo2l97zml2vxfc8',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_lu84t1kqhak8pvceh0ak',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_yjau1xxv78eg9yvve6sz(cell.i, cell.j, group.css_id);
+                  styleCell_54wa46yy5i9dwicuxh06(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -1397,17 +1404,17 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_n8pb1uiq7f3ivt3tpx7j, .table th.tinytable_css_n8pb1uiq7f3ivt3tpx7j { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_qzd18suyycaf4jd8md6w, .table th.tinytable_css_qzd18suyycaf4jd8md6w { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_5wjc0c5nkgecoenk8aaz, .table th.tinytable_css_5wjc0c5nkgecoenk8aaz { text-align: center; }
-      .table td.tinytable_css_cv27sbl7iwlsi93fh3pg, .table th.tinytable_css_cv27sbl7iwlsi93fh3pg { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_tho0o60le133ucxd2ui7, .table th.tinytable_css_tho0o60le133ucxd2ui7 { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_x9h3sjt8m05cw9eboj26, .table th.tinytable_css_x9h3sjt8m05cw9eboj26 { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_7o0anzx2cufd1omasobs, .table th.tinytable_css_7o0anzx2cufd1omasobs { text-align: left; }
-      .table td.tinytable_css_c8w3kgryqhzcu2gi7v5f, .table th.tinytable_css_c8w3kgryqhzcu2gi7v5f { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_ouo3rpvt8uva4owv7yzc, .table th.tinytable_css_ouo3rpvt8uva4owv7yzc { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_cw9jyqeq3ox3v7xj6fv1, .table th.tinytable_css_cw9jyqeq3ox3v7xj6fv1 { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_lrpsswg16qm7128kcw26, .table th.tinytable_css_lrpsswg16qm7128kcw26 { text-align: center; }
+      .table td.tinytable_css_sv03bwiid198gukbx56t, .table th.tinytable_css_sv03bwiid198gukbx56t { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_tmqimpnvdtv82i7s4d9b, .table th.tinytable_css_tmqimpnvdtv82i7s4d9b { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_0a5ljkjed7b5wp8r00gc, .table th.tinytable_css_0a5ljkjed7b5wp8r00gc { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_t48u2zo2l97zml2vxfc8, .table th.tinytable_css_t48u2zo2l97zml2vxfc8 { text-align: left; }
+      .table td.tinytable_css_lu84t1kqhak8pvceh0ak, .table th.tinytable_css_lu84t1kqhak8pvceh0ak { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_yjau1xxv78eg9yvve6sz" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="table table-borderless" id="tinytable_54wa46yy5i9dwicuxh06" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         <thead>
         
               <tr>
@@ -1499,8 +1506,17 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
 <span id="cb309-6"><a href="regression_basic.html#cb309-6" tabindex="-1"></a>                         <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>), <span class="co"># 各変数に名前をつける</span></span>
 <span id="cb309-7"><a href="regression_basic.html#cb309-7" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>), <span class="co"># サンプルサイズと決定係数のみ記載する</span></span>
 <span id="cb309-8"><a href="regression_basic.html#cb309-8" tabindex="-1"></a>         <span class="at">output =</span> <span class="st">&quot;results/regression.rtf&quot;</span>) <span class="co"># 出力先のファイル名をつける（rtf）</span></span></code></pre></div>
-
 </div>
+</div>
+<div id="練習問題-2" class="section level2 hasAnchor" number="7.8">
+<h2><span class="header-section-number">7.8</span> 練習問題<a href="#%E7%B7%B4%E7%BF%92%E5%95%8F%E9%A1%8C-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li>賃金（<code>wage</code>）を従属変数、両親の学歴（<code>parenteduc</code>）を独立変数とする回帰分析を推定し、結果を表示してください。</li>
+<li>主観的健康度（<code>health</code>）を従属変数、年齢と年齢2乗を独立変数とする回帰分析を推定し、結果を表示してください。</li>
+<li>職業（<code>occupation</code>）が「管理職」であれば1、それ以外であれば0となるダミー変数（<code>manager</code>という名前をつけてください）を作成してください。また、性別（<code>gender</code>）が「女性」であれば1、「男性」であれば0となるダミー変数（<code>female_d</code>という名前をつけてください）を作成してください。</li>
+<li>管理職か否か（<code>manager</code>）を従属変数、女性ダミー（<code>female_d</code>）を独立変数とする回帰分析を推定し、結果を表示してください。</li>
+</ol>
+
 </div>
 </div>
 <div class="footnotes">

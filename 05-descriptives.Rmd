@@ -214,7 +214,7 @@ countdata %>%
   ggplot(aes(x = occupation, y = n)) + 
   geom_col() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
-  labs(x = "職業", y = "割合") # x軸とy軸に名前をつける
+  labs(x = "職業", y = "度数") # x軸とy軸に名前をつける
 ```
 
 縦軸を人数ではなく割合にした場合のグラフは次のようになる。
@@ -472,3 +472,35 @@ piaac_selected2 %>%
               type = list(c(health, wage, age) ~ "continuous") # health, wage, ageを連続変数として表示
               )
 ```
+
+## 練習問題
+
+1. 一週間の労働時間（`workhour`）のヒストグラムを作成し、x軸に「一週間の労働時間」、y軸に「度数」と名前をつけてください。
+2. 親の学歴（父親と母親のうちどちらか高いほうの学歴。`parenteduc`）の分布に関する棒グラフを作成してください。y軸は割合となるようにしてください。
+3. 学歴（`educ`）別に、一週間の労働時間の平均値および標準偏差を計算して、表にまとめてください。
+
+```{r, eval = FALSE, include = FALSE}
+piaac %>% glimpse()
+
+piaac %>% 
+  ggplot(aes(x = workhour)) + 
+  geom_histogram() + 
+  labs(x = "一週間の労働時間", y = "度数") 
+
+piaac %>% 
+  count(parenteduc) %>%
+  mutate(sumn = sum(n)) %>%
+  mutate(prop = n / sumn) %>%
+  ggplot(aes(x = parenteduc, y = prop)) +
+  geom_col() +
+  labs(x = "親の学歴", y = "割合")
+
+piaac %>% 
+  select(educ, workhour) %>%
+  tbl_summary(by = educ, 
+              statistic = list(all_continuous() ~ "{mean} ({sd})"),
+              digits = all_continuous() ~ 1,
+              label = list(workhour ~ "一週間の労働時間")) %>% 
+  modify_header(label ~ "")
+```
+
