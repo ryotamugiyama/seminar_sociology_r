@@ -531,26 +531,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>本章では、前章で学んだ回帰分析において、独立変数の効果が他の独立変数によって異なるかどうか（<strong>交互作用</strong>）を検証するための方法について説明する。</p>
 <p>内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project…」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。</p>
 <p>さらに、これまでの章で説明した以下のパッケージを読み込んだ上で、<a href="handling.html#handling">第4章</a>で作成したデータを読み込んで<code>piaac</code>というデータフレームに入れていることを前提とする。具体的には、以下のコードを実行しておく必要がある。</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="regression_interaction.html#cb334-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb334-2"><a href="regression_interaction.html#cb334-2" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb334-3"><a href="regression_interaction.html#cb334-3" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
-<span id="cb334-4"><a href="regression_interaction.html#cb334-4" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb334-5"><a href="regression_interaction.html#cb334-5" tabindex="-1"></a></span>
-<span id="cb334-6"><a href="regression_interaction.html#cb334-6" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="regression_interaction.html#cb335-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb335-2"><a href="regression_interaction.html#cb335-2" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb335-3"><a href="regression_interaction.html#cb335-3" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb335-4"><a href="regression_interaction.html#cb335-4" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb335-5"><a href="regression_interaction.html#cb335-5" tabindex="-1"></a></span>
+<span id="cb335-6"><a href="regression_interaction.html#cb335-6" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
 <p><a href="descriptives.html#descriptives_ggplot">第5章で確認したように</a>、ggplotの設定を変更しておくことで見やすいグラフを作ることができる。ここでは以下のコードを実行している。</p>
 <p>Macの場合：</p>
-<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="regression_interaction.html#cb335-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
-<span id="cb335-2"><a href="regression_interaction.html#cb335-2" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>,</span>
-<span id="cb335-3"><a href="regression_interaction.html#cb335-3" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
-<span id="cb335-4"><a href="regression_interaction.html#cb335-4" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb335-5"><a href="regression_interaction.html#cb335-5" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
-<span id="cb335-6"><a href="regression_interaction.html#cb335-6" tabindex="-1"></a>))</span></code></pre></div>
-<p>Windowsの場合：</p>
 <div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="regression_interaction.html#cb336-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
-<span id="cb336-2"><a href="regression_interaction.html#cb336-2" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
-<span id="cb336-3"><a href="regression_interaction.html#cb336-3" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
-<span id="cb336-4"><a href="regression_interaction.html#cb336-4" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
-<span id="cb336-5"><a href="regression_interaction.html#cb336-5" tabindex="-1"></a>))</span></code></pre></div>
+<span id="cb336-2"><a href="regression_interaction.html#cb336-2" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>,</span>
+<span id="cb336-3"><a href="regression_interaction.html#cb336-3" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb336-4"><a href="regression_interaction.html#cb336-4" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb336-5"><a href="regression_interaction.html#cb336-5" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb336-6"><a href="regression_interaction.html#cb336-6" tabindex="-1"></a>))</span></code></pre></div>
+<p>Windowsの場合：</p>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="regression_interaction.html#cb337-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb337-2"><a href="regression_interaction.html#cb337-2" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb337-3"><a href="regression_interaction.html#cb337-3" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb337-4"><a href="regression_interaction.html#cb337-4" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb337-5"><a href="regression_interaction.html#cb337-5" tabindex="-1"></a>))</span></code></pre></div>
 <div id="交互作用とはなにか" class="section level2 hasAnchor" number="9.1">
 <h2><span class="header-section-number">9.1</span> 交互作用とはなにか<a href="#%E4%BA%A4%E4%BA%92%E4%BD%9C%E7%94%A8%E3%81%A8%E3%81%AF%E3%81%AA%E3%81%AB%E3%81%8B" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>ある独立変数が従属変数に与える効果が別の変数によって異なることを指して、<strong>交互作用（interaction）</strong>がある、または<strong>調整効果（moderation effect）</strong>があるという。例えば以下のような例がある。</p>
@@ -630,8 +630,8 @@ y
 \]</span></p>
 <p>先の仮説が正しければ、数的思考力と性別の交互作用項の係数<span class="math inline">\(\beta_3\)</span>は正の値になるはずである。</p>
 <p>Rでは、交互作用を含めたい変数どうしを<code>*</code>でつなぐことで、かけ算をした項を独立変数に含める事ができる。例えば次のように。</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="regression_interaction.html#cb337-1" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> numeracy <span class="sc">*</span> gender) <span class="co"># *で変数どうしのかけ算を表す</span></span>
-<span id="cb337-2"><a href="regression_interaction.html#cb337-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="regression_interaction.html#cb338-1" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> numeracy <span class="sc">*</span> gender) <span class="co"># *で変数どうしのかけ算を表す</span></span>
+<span id="cb338-2"><a href="regression_interaction.html#cb338-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = logwage ~ numeracy + gender + numeracy * gender, 
@@ -656,28 +656,28 @@ y
 <p><code>numeracy:gender男性</code>と表示されている箇所が交互作用項<span class="math inline">\(xz\)</span>の係数である。確かに係数は正であり、男性であると、数的思考力が高くなると賃金が高くなるという傾向がより強いことがわかる（男性であると、数的思考力が1単位高い場合に、6.6^{-4}だけ女性よりも大きく賃金が上昇する）。しかしながら<code>Pr(&gt;|t|)</code>の列をみると0.05を上回っており、係数は統計的に有意であるとはいえない。したがって、先の仮説は成り立つとはいえない。</p>
 <p>先に述べた通り、交互作用項を含めた場合には<span class="math inline">\(x\)</span>と<span class="math inline">\(z\)</span>の係数そのものを解釈することはできなくなる。そこで、交互作用を検討したい場合には、まず交互作用を含まないモデルを提示し、そのあと交互作用を含むモデルを提示するとわかりやすいだろう。</p>
 <p>もちろん、これまでの重回帰分析に関する説明同様、統制変数を含めることもできる。統制変数を含めたモデルを推定して、結果を提示する場合の例は次のとおりである。</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="regression_interaction.html#cb339-1" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> educ)</span>
-<span id="cb339-2"><a href="regression_interaction.html#cb339-2" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> numeracy <span class="sc">*</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> educ)</span>
-<span id="cb339-3"><a href="regression_interaction.html#cb339-3" tabindex="-1"></a></span>
-<span id="cb339-4"><a href="regression_interaction.html#cb339-4" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
-<span id="cb339-5"><a href="regression_interaction.html#cb339-5" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
-<span id="cb339-6"><a href="regression_interaction.html#cb339-6" tabindex="-1"></a>         <span class="at">fmt =</span> <span class="dv">4</span>,</span>
-<span id="cb339-7"><a href="regression_interaction.html#cb339-7" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;numeracy&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア&quot;</span>,</span>
-<span id="cb339-8"><a href="regression_interaction.html#cb339-8" tabindex="-1"></a>                      <span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性&quot;</span>,</span>
-<span id="cb339-9"><a href="regression_interaction.html#cb339-9" tabindex="-1"></a>                      <span class="st">&quot;numeracy:gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア x 男性&quot;</span>,</span>
-<span id="cb339-10"><a href="regression_interaction.html#cb339-10" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb339-11"><a href="regression_interaction.html#cb339-11" tabindex="-1"></a>                      <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
-<span id="cb339-12"><a href="regression_interaction.html#cb339-12" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（ref: 中学）&quot;</span>,</span>
-<span id="cb339-13"><a href="regression_interaction.html#cb339-13" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（ref: 中学）&quot;</span>,</span>
-<span id="cb339-14"><a href="regression_interaction.html#cb339-14" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（ref: 中学）&quot;</span>,</span>
-<span id="cb339-15"><a href="regression_interaction.html#cb339-15" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>), </span>
-<span id="cb339-16"><a href="regression_interaction.html#cb339-16" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="regression_interaction.html#cb340-1" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> educ)</span>
+<span id="cb340-2"><a href="regression_interaction.html#cb340-2" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> numeracy <span class="sc">*</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> educ)</span>
+<span id="cb340-3"><a href="regression_interaction.html#cb340-3" tabindex="-1"></a></span>
+<span id="cb340-4"><a href="regression_interaction.html#cb340-4" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
+<span id="cb340-5"><a href="regression_interaction.html#cb340-5" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb340-6"><a href="regression_interaction.html#cb340-6" tabindex="-1"></a>         <span class="at">fmt =</span> <span class="dv">4</span>,</span>
+<span id="cb340-7"><a href="regression_interaction.html#cb340-7" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;numeracy&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア&quot;</span>,</span>
+<span id="cb340-8"><a href="regression_interaction.html#cb340-8" tabindex="-1"></a>                      <span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性&quot;</span>,</span>
+<span id="cb340-9"><a href="regression_interaction.html#cb340-9" tabindex="-1"></a>                      <span class="st">&quot;numeracy:gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア x 男性&quot;</span>,</span>
+<span id="cb340-10"><a href="regression_interaction.html#cb340-10" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb340-11"><a href="regression_interaction.html#cb340-11" tabindex="-1"></a>                      <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
+<span id="cb340-12"><a href="regression_interaction.html#cb340-12" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（ref: 中学）&quot;</span>,</span>
+<span id="cb340-13"><a href="regression_interaction.html#cb340-13" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（ref: 中学）&quot;</span>,</span>
+<span id="cb340-14"><a href="regression_interaction.html#cb340-14" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（ref: 中学）&quot;</span>,</span>
+<span id="cb340-15"><a href="regression_interaction.html#cb340-15" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>), </span>
+<span id="cb340-16"><a href="regression_interaction.html#cb340-16" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
 
-      function styleCell_tlbn8zarm6g37orcc4ge(i, j, css_id) {
-          var table = document.getElementById("tinytable_tlbn8zarm6g37orcc4ge");
+      function styleCell_4g2kk5h6796z1oabc5nv(i, j, css_id) {
+          var table = document.getElementById("tinytable_4g2kk5h6796z1oabc5nv");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -687,7 +687,7 @@ y
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_tlbn8zarm6g37orcc4ge');
+        var table = document.getElementById('tinytable_4g2kk5h6796z1oabc5nv');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -695,8 +695,8 @@ y
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_tlbn8zarm6g37orcc4ge(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_tlbn8zarm6g37orcc4ge");
+      function spanCell_4g2kk5h6796z1oabc5nv(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_4g2kk5h6796z1oabc5nv");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -726,20 +726,20 @@ y
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 20, j: 1 }, { i: 20, j: 2 },  ], css_id: 'tinytable_css_wl324e2j0hu0p8inis8y',}, 
-          { positions: [ { i: 18, j: 1 }, { i: 18, j: 2 },  ], css_id: 'tinytable_css_a2jdklgtk1wzwfwx7yvd',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 4, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 16, j: 1 }, { i: 17, j: 1 }, { i: 10, j: 2 }, { i: 19, j: 1 }, { i: 12, j: 2 }, { i: 8, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 14, j: 2 }, { i: 11, j: 2 }, { i: 16, j: 2 }, { i: 13, j: 2 }, { i: 15, j: 2 }, { i: 17, j: 2 }, { i: 19, j: 2 },  ], css_id: 'tinytable_css_0wxtq46orv8bc9aua192',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_7d7d0uxy2wlmb2h4vqe7',}, 
-          { positions: [ { i: 20, j: 0 },  ], css_id: 'tinytable_css_xh75w91vj3b68g9ifs3u',}, 
-          { positions: [ { i: 18, j: 0 },  ], css_id: 'tinytable_css_an4s8j7yuqlnzcgu0f2k',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 16, j: 0 }, { i: 17, j: 0 }, { i: 19, j: 0 },  ], css_id: 'tinytable_css_tjv0cqr0jti9eecr3hbh',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_fxpujrrk0a8w9kqn0mrf',}, 
+          { positions: [ { i: 20, j: 1 }, { i: 20, j: 2 },  ], css_id: 'tinytable_css_giiph341pt3g8b37og2p',}, 
+          { positions: [ { i: 18, j: 1 }, { i: 18, j: 2 },  ], css_id: 'tinytable_css_xtzw4f65jabqvk3w18ck',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 4, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 16, j: 1 }, { i: 17, j: 1 }, { i: 10, j: 2 }, { i: 19, j: 1 }, { i: 12, j: 2 }, { i: 8, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 14, j: 2 }, { i: 11, j: 2 }, { i: 16, j: 2 }, { i: 13, j: 2 }, { i: 15, j: 2 }, { i: 17, j: 2 }, { i: 19, j: 2 },  ], css_id: 'tinytable_css_72weuv3qnp68qdiefzvq',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_ekle9zt35r319boz02mn',}, 
+          { positions: [ { i: 20, j: 0 },  ], css_id: 'tinytable_css_twaorwpqfir53ggv1a3d',}, 
+          { positions: [ { i: 18, j: 0 },  ], css_id: 'tinytable_css_rwhrz7xcj9or3t4dl7h1',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 16, j: 0 }, { i: 17, j: 0 }, { i: 19, j: 0 },  ], css_id: 'tinytable_css_uc7sy0a8v98r5x234ynj',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_p1w4ktckwtevjfhhn245',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_tlbn8zarm6g37orcc4ge(cell.i, cell.j, group.css_id);
+                  styleCell_4g2kk5h6796z1oabc5nv(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -747,17 +747,17 @@ y
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_wl324e2j0hu0p8inis8y, .table th.tinytable_css_wl324e2j0hu0p8inis8y { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_a2jdklgtk1wzwfwx7yvd, .table th.tinytable_css_a2jdklgtk1wzwfwx7yvd { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_0wxtq46orv8bc9aua192, .table th.tinytable_css_0wxtq46orv8bc9aua192 { text-align: center; }
-      .table td.tinytable_css_7d7d0uxy2wlmb2h4vqe7, .table th.tinytable_css_7d7d0uxy2wlmb2h4vqe7 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_xh75w91vj3b68g9ifs3u, .table th.tinytable_css_xh75w91vj3b68g9ifs3u { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_an4s8j7yuqlnzcgu0f2k, .table th.tinytable_css_an4s8j7yuqlnzcgu0f2k { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_tjv0cqr0jti9eecr3hbh, .table th.tinytable_css_tjv0cqr0jti9eecr3hbh { text-align: left; }
-      .table td.tinytable_css_fxpujrrk0a8w9kqn0mrf, .table th.tinytable_css_fxpujrrk0a8w9kqn0mrf { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_giiph341pt3g8b37og2p, .table th.tinytable_css_giiph341pt3g8b37og2p { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_xtzw4f65jabqvk3w18ck, .table th.tinytable_css_xtzw4f65jabqvk3w18ck { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_72weuv3qnp68qdiefzvq, .table th.tinytable_css_72weuv3qnp68qdiefzvq { text-align: center; }
+      .table td.tinytable_css_ekle9zt35r319boz02mn, .table th.tinytable_css_ekle9zt35r319boz02mn { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_twaorwpqfir53ggv1a3d, .table th.tinytable_css_twaorwpqfir53ggv1a3d { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_rwhrz7xcj9or3t4dl7h1, .table th.tinytable_css_rwhrz7xcj9or3t4dl7h1 { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_uc7sy0a8v98r5x234ynj, .table th.tinytable_css_uc7sy0a8v98r5x234ynj { text-align: left; }
+      .table td.tinytable_css_p1w4ktckwtevjfhhn245, .table th.tinytable_css_p1w4ktckwtevjfhhn245 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_tlbn8zarm6g37orcc4ge" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="table table-borderless" id="tinytable_4g2kk5h6796z1oabc5nv" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         <thead>
         
               <tr>
@@ -877,22 +877,22 @@ y
 <div id="結果を図示する" class="section level3 hasAnchor" number="9.2.2">
 <h3><span class="header-section-number">9.2.2</span> 結果を図示する<a href="#%E7%B5%90%E6%9E%9C%E3%82%92%E5%9B%B3%E7%A4%BA%E3%81%99%E3%82%8B" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>たんに表の数式だけではなく、実際にどの程度の効果の大きさなのかを視覚的に調べることが重要である。このような用途の最適なのが、<code>ggeffects</code>パッケージ（→<a href="https://strengejacke.github.io/ggeffects/">説明</a>）である。また、<code>ggeffects</code>パッケージに含まれている関数の一つで別の<code>effects</code>というパッケージも必要となるので、併せてインストールしておく。まずはパッケージをインストールしよう。</p>
-<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="regression_interaction.html#cb340-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggeffects&quot;</span>)</span>
-<span id="cb340-2"><a href="regression_interaction.html#cb340-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;effects&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="regression_interaction.html#cb341-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggeffects&quot;</span>)</span>
+<span id="cb341-2"><a href="regression_interaction.html#cb341-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;effects&quot;</span>)</span></code></pre></div>
 <p><code>library()</code>で読み込んでおく。これは、<code>ggeffects</code>だけでよい。</p>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="regression_interaction.html#cb341-1" tabindex="-1"></a><span class="fu">library</span>(ggeffects)</span></code></pre></div>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="regression_interaction.html#cb342-1" tabindex="-1"></a><span class="fu">library</span>(ggeffects)</span></code></pre></div>
 <p>使い方はつぎのとおり。交互作用効果を図示したい回帰式を指定し、<code>ggpredict(結果が入った回帰式, c("xになる変数", "zになる変数"）</code>とすることで、予測値や95%信頼区間を求めることができる。このデータフレームを何らかの名前をつけたオブジェクトに入れる。保存したオブジェクトに対して<code>plot()</code>を実行することで、先に見たような交互作用の図を出力することができる。</p>
-<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="regression_interaction.html#cb342-1" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">ggeffect</span>(reg_res2, <span class="fu">c</span>(<span class="st">&quot;numeracy&quot;</span>, <span class="st">&quot;gender&quot;</span>)) <span class="co"># 予測値を求めて結果を保存</span></span>
-<span id="cb342-2"><a href="regression_interaction.html#cb342-2" tabindex="-1"></a></span>
-<span id="cb342-3"><a href="regression_interaction.html#cb342-3" tabindex="-1"></a>predicted <span class="sc">%&gt;%</span> <span class="fu">plot</span>() <span class="co"># 結果をプロット</span></span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-265-1.png" width="672" /></p>
-<p>また、<code>ggpredict()</code>で保存したデータフレームは<code>ggplot()</code>で図を作成するときと同じようにオプションを付けてより見やすい図を作ることもできる。編集の一例を以下に示す。</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="regression_interaction.html#cb343-1" tabindex="-1"></a>predicted <span class="sc">%&gt;%</span> </span>
-<span id="cb343-2"><a href="regression_interaction.html#cb343-2" tabindex="-1"></a>  <span class="fu">plot</span>() <span class="sc">+</span> </span>
-<span id="cb343-3"><a href="regression_interaction.html#cb343-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;数的思考力スコア&quot;</span>, <span class="at">y =</span> <span class="st">&quot;対数賃金&quot;</span>, <span class="at">color =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
-<span id="cb343-4"><a href="regression_interaction.html#cb343-4" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span> </span>
-<span id="cb343-5"><a href="regression_interaction.html#cb343-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>) <span class="co"># Macの場合はこれをつけないと文字化けするかもしれない</span></span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="regression_interaction.html#cb343-1" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">ggeffect</span>(reg_res2, <span class="fu">c</span>(<span class="st">&quot;numeracy&quot;</span>, <span class="st">&quot;gender&quot;</span>)) <span class="co"># 予測値を求めて結果を保存</span></span>
+<span id="cb343-2"><a href="regression_interaction.html#cb343-2" tabindex="-1"></a></span>
+<span id="cb343-3"><a href="regression_interaction.html#cb343-3" tabindex="-1"></a>predicted <span class="sc">%&gt;%</span> <span class="fu">plot</span>() <span class="co"># 結果をプロット</span></span></code></pre></div>
 <p><img src="seminar_doc_files/figure-html/unnamed-chunk-266-1.png" width="672" /></p>
+<p>また、<code>ggpredict()</code>で保存したデータフレームは<code>ggplot()</code>で図を作成するときと同じようにオプションを付けてより見やすい図を作ることもできる。編集の一例を以下に示す。</p>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="regression_interaction.html#cb344-1" tabindex="-1"></a>predicted <span class="sc">%&gt;%</span> </span>
+<span id="cb344-2"><a href="regression_interaction.html#cb344-2" tabindex="-1"></a>  <span class="fu">plot</span>() <span class="sc">+</span> </span>
+<span id="cb344-3"><a href="regression_interaction.html#cb344-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;数的思考力スコア&quot;</span>, <span class="at">y =</span> <span class="st">&quot;対数賃金&quot;</span>, <span class="at">color =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb344-4"><a href="regression_interaction.html#cb344-4" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span> </span>
+<span id="cb344-5"><a href="regression_interaction.html#cb344-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>) <span class="co"># Macの場合はこれをつけないと文字化けするかもしれない</span></span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-267-1.png" width="672" /></p>
 </div>
 <div id="xがカテゴリ変数zが連続変数の場合" class="section level3 hasAnchor" number="9.2.3">
 <h3><span class="header-section-number">9.2.3</span> xがカテゴリ変数、zが連続変数の場合<a href="#x%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0z%E3%81%8C%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -907,7 +907,7 @@ y
 \end{align}
 \]</span></p>
 <p>数的思考力が1ポイント高いと、男性であることが賃金を高める効果は<span class="math inline">\(\beta_3\)</span>だけ大きくなるということを意味する。式がまったく同じなので、Rのコードもまったくおなじで構わない。</p>
-<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="regression_interaction.html#cb344-1" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> numeracy <span class="sc">*</span> gender) <span class="co"># *で変数どうしのかけ算を表す</span></span></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="regression_interaction.html#cb345-1" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> numeracy <span class="sc">*</span> gender) <span class="co"># *で変数どうしのかけ算を表す</span></span></code></pre></div>
 <p>結果は省略する。</p>
 </div>
 </div>
@@ -931,31 +931,31 @@ y =&amp; \beta_0 + \beta_{1,1}高校 + \beta_{1,2}高専短大 + \beta_{1,3}大�
 <li><span class="math inline">\(\beta_{3,3}\)</span>は、男性が中学卒→大学大学院卒になったときに上昇する賃金と比べて、女性が中卒→大学大学院卒となったときに上昇する賃金は<span class="math inline">\(\beta_{3,3}\)</span>だけ高いということを表す。</li>
 </ul>
 <p>交互作用を含める場合のコードは先ほどと同じである。</p>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="regression_interaction.html#cb345-1" tabindex="-1"></a><span class="co"># 男性が先、女性が後の順になる変数を作成する</span></span>
-<span id="cb345-2"><a href="regression_interaction.html#cb345-2" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb345-3"><a href="regression_interaction.html#cb345-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender_rev =</span> <span class="fu">fct_relevel</span>(gender, <span class="st">&quot;男性&quot;</span>, <span class="st">&quot;女性&quot;</span>))</span>
-<span id="cb345-4"><a href="regression_interaction.html#cb345-4" tabindex="-1"></a></span>
-<span id="cb345-5"><a href="regression_interaction.html#cb345-5" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender_rev <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb345-6"><a href="regression_interaction.html#cb345-6" tabindex="-1"></a>reg_res4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender_rev <span class="sc">+</span> educ<span class="sc">*</span>gender_rev <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="regression_interaction.html#cb346-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res3, reg_res4),</span>
-<span id="cb346-2"><a href="regression_interaction.html#cb346-2" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb346-3"><a href="regression_interaction.html#cb346-3" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（ref: 中学）&quot;</span>,</span>
-<span id="cb346-4"><a href="regression_interaction.html#cb346-4" tabindex="-1"></a>                          <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（ref: 中学）&quot;</span>,</span>
-<span id="cb346-5"><a href="regression_interaction.html#cb346-5" tabindex="-1"></a>                          <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（ref: 中学）&quot;</span>,</span>
-<span id="cb346-6"><a href="regression_interaction.html#cb346-6" tabindex="-1"></a>                          <span class="st">&quot;gender_rev女性&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性&quot;</span>,</span>
-<span id="cb346-7"><a href="regression_interaction.html#cb346-7" tabindex="-1"></a>                          <span class="st">&quot;educ高校:gender_rev女性&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性 x 高校&quot;</span>,</span>
-<span id="cb346-8"><a href="regression_interaction.html#cb346-8" tabindex="-1"></a>                          <span class="st">&quot;educ短大高専:gender_rev女性&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性 x 短大高専&quot;</span>,</span>
-<span id="cb346-9"><a href="regression_interaction.html#cb346-9" tabindex="-1"></a>                          <span class="st">&quot;educ大学大学院:gender_rev女性&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性 x 大学大学院&quot;</span>,</span>
-<span id="cb346-10"><a href="regression_interaction.html#cb346-10" tabindex="-1"></a>                          <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
-<span id="cb346-11"><a href="regression_interaction.html#cb346-11" tabindex="-1"></a>                          <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
-<span id="cb346-12"><a href="regression_interaction.html#cb346-12" tabindex="-1"></a>                          <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>),</span>
-<span id="cb346-13"><a href="regression_interaction.html#cb346-13" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="regression_interaction.html#cb346-1" tabindex="-1"></a><span class="co"># 男性が先、女性が後の順になる変数を作成する</span></span>
+<span id="cb346-2"><a href="regression_interaction.html#cb346-2" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb346-3"><a href="regression_interaction.html#cb346-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender_rev =</span> <span class="fu">fct_relevel</span>(gender, <span class="st">&quot;男性&quot;</span>, <span class="st">&quot;女性&quot;</span>))</span>
+<span id="cb346-4"><a href="regression_interaction.html#cb346-4" tabindex="-1"></a></span>
+<span id="cb346-5"><a href="regression_interaction.html#cb346-5" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender_rev <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb346-6"><a href="regression_interaction.html#cb346-6" tabindex="-1"></a>reg_res4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender_rev <span class="sc">+</span> educ<span class="sc">*</span>gender_rev <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="regression_interaction.html#cb347-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res3, reg_res4),</span>
+<span id="cb347-2"><a href="regression_interaction.html#cb347-2" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb347-3"><a href="regression_interaction.html#cb347-3" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（ref: 中学）&quot;</span>,</span>
+<span id="cb347-4"><a href="regression_interaction.html#cb347-4" tabindex="-1"></a>                          <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（ref: 中学）&quot;</span>,</span>
+<span id="cb347-5"><a href="regression_interaction.html#cb347-5" tabindex="-1"></a>                          <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（ref: 中学）&quot;</span>,</span>
+<span id="cb347-6"><a href="regression_interaction.html#cb347-6" tabindex="-1"></a>                          <span class="st">&quot;gender_rev女性&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性&quot;</span>,</span>
+<span id="cb347-7"><a href="regression_interaction.html#cb347-7" tabindex="-1"></a>                          <span class="st">&quot;educ高校:gender_rev女性&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性 x 高校&quot;</span>,</span>
+<span id="cb347-8"><a href="regression_interaction.html#cb347-8" tabindex="-1"></a>                          <span class="st">&quot;educ短大高専:gender_rev女性&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性 x 短大高専&quot;</span>,</span>
+<span id="cb347-9"><a href="regression_interaction.html#cb347-9" tabindex="-1"></a>                          <span class="st">&quot;educ大学大学院:gender_rev女性&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性 x 大学大学院&quot;</span>,</span>
+<span id="cb347-10"><a href="regression_interaction.html#cb347-10" tabindex="-1"></a>                          <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb347-11"><a href="regression_interaction.html#cb347-11" tabindex="-1"></a>                          <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
+<span id="cb347-12"><a href="regression_interaction.html#cb347-12" tabindex="-1"></a>                          <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>),</span>
+<span id="cb347-13"><a href="regression_interaction.html#cb347-13" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
 
-      function styleCell_w30yy6406zk9p9ipnsu3(i, j, css_id) {
-          var table = document.getElementById("tinytable_w30yy6406zk9p9ipnsu3");
+      function styleCell_fl4v2xuy9dun5icr4w0q(i, j, css_id) {
+          var table = document.getElementById("tinytable_fl4v2xuy9dun5icr4w0q");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -965,7 +965,7 @@ y =&amp; \beta_0 + \beta_{1,1}高校 + \beta_{1,2}高専短大 + \beta_{1,3}大�
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_w30yy6406zk9p9ipnsu3');
+        var table = document.getElementById('tinytable_fl4v2xuy9dun5icr4w0q');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -973,8 +973,8 @@ y =&amp; \beta_0 + \beta_{1,1}高校 + \beta_{1,2}高専短大 + \beta_{1,3}大�
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_w30yy6406zk9p9ipnsu3(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_w30yy6406zk9p9ipnsu3");
+      function spanCell_fl4v2xuy9dun5icr4w0q(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_fl4v2xuy9dun5icr4w0q");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -1004,20 +1004,20 @@ y =&amp; \beta_0 + \beta_{1,1}高校 + \beta_{1,2}高専短大 + \beta_{1,3}大�
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 22, j: 1 }, { i: 22, j: 2 },  ], css_id: 'tinytable_css_zd8zbpvmb8ohrfcnq63t',}, 
-          { positions: [ { i: 20, j: 2 }, { i: 20, j: 1 },  ], css_id: 'tinytable_css_g70871bhwid58c8fximi',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 2, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 6, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 16, j: 1 }, { i: 17, j: 1 }, { i: 18, j: 1 }, { i: 19, j: 1 }, { i: 10, j: 2 }, { i: 21, j: 1 }, { i: 12, j: 2 }, { i: 10, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 14, j: 2 }, { i: 11, j: 2 }, { i: 16, j: 2 }, { i: 13, j: 2 }, { i: 18, j: 2 }, { i: 15, j: 2 }, { i: 17, j: 2 }, { i: 19, j: 2 }, { i: 21, j: 2 },  ], css_id: 'tinytable_css_utx1vrsuroyf9a71ejwx',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_j4vrig66nyn36871s4z2',}, 
-          { positions: [ { i: 22, j: 0 },  ], css_id: 'tinytable_css_wf3k7psv3i2jqg6vwt5b',}, 
-          { positions: [ { i: 20, j: 0 },  ], css_id: 'tinytable_css_2wts8b3qrbznfsj66ygc',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 16, j: 0 }, { i: 17, j: 0 }, { i: 18, j: 0 }, { i: 19, j: 0 }, { i: 21, j: 0 },  ], css_id: 'tinytable_css_ekjyf0gaovh18luvjgh2',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_65rf0jygjxh1w9i62gce',}, 
+          { positions: [ { i: 22, j: 1 }, { i: 22, j: 2 },  ], css_id: 'tinytable_css_zy8hguh65v6nrmpdrn0l',}, 
+          { positions: [ { i: 20, j: 2 }, { i: 20, j: 1 },  ], css_id: 'tinytable_css_ybjro0c5yz3eaqhweotv',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 2, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 6, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 16, j: 1 }, { i: 17, j: 1 }, { i: 18, j: 1 }, { i: 19, j: 1 }, { i: 10, j: 2 }, { i: 21, j: 1 }, { i: 12, j: 2 }, { i: 10, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 14, j: 2 }, { i: 11, j: 2 }, { i: 16, j: 2 }, { i: 13, j: 2 }, { i: 18, j: 2 }, { i: 15, j: 2 }, { i: 17, j: 2 }, { i: 19, j: 2 }, { i: 21, j: 2 },  ], css_id: 'tinytable_css_dn72hev98333ksele31f',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_qugv1pywz28hpgxktegj',}, 
+          { positions: [ { i: 22, j: 0 },  ], css_id: 'tinytable_css_zuvggjq9oern6k92qeju',}, 
+          { positions: [ { i: 20, j: 0 },  ], css_id: 'tinytable_css_tr3y4u36nmj0rymhwr6d',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 16, j: 0 }, { i: 17, j: 0 }, { i: 18, j: 0 }, { i: 19, j: 0 }, { i: 21, j: 0 },  ], css_id: 'tinytable_css_yj30shuagk2g33fk8rtk',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_41eavhsnd8763b1dbenc',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_w30yy6406zk9p9ipnsu3(cell.i, cell.j, group.css_id);
+                  styleCell_fl4v2xuy9dun5icr4w0q(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -1025,17 +1025,17 @@ y =&amp; \beta_0 + \beta_{1,1}高校 + \beta_{1,2}高専短大 + \beta_{1,3}大�
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_zd8zbpvmb8ohrfcnq63t, .table th.tinytable_css_zd8zbpvmb8ohrfcnq63t { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_g70871bhwid58c8fximi, .table th.tinytable_css_g70871bhwid58c8fximi { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_utx1vrsuroyf9a71ejwx, .table th.tinytable_css_utx1vrsuroyf9a71ejwx { text-align: center; }
-      .table td.tinytable_css_j4vrig66nyn36871s4z2, .table th.tinytable_css_j4vrig66nyn36871s4z2 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_wf3k7psv3i2jqg6vwt5b, .table th.tinytable_css_wf3k7psv3i2jqg6vwt5b { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_2wts8b3qrbznfsj66ygc, .table th.tinytable_css_2wts8b3qrbznfsj66ygc { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_ekjyf0gaovh18luvjgh2, .table th.tinytable_css_ekjyf0gaovh18luvjgh2 { text-align: left; }
-      .table td.tinytable_css_65rf0jygjxh1w9i62gce, .table th.tinytable_css_65rf0jygjxh1w9i62gce { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_zy8hguh65v6nrmpdrn0l, .table th.tinytable_css_zy8hguh65v6nrmpdrn0l { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_ybjro0c5yz3eaqhweotv, .table th.tinytable_css_ybjro0c5yz3eaqhweotv { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_dn72hev98333ksele31f, .table th.tinytable_css_dn72hev98333ksele31f { text-align: center; }
+      .table td.tinytable_css_qugv1pywz28hpgxktegj, .table th.tinytable_css_qugv1pywz28hpgxktegj { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_zuvggjq9oern6k92qeju, .table th.tinytable_css_zuvggjq9oern6k92qeju { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_tr3y4u36nmj0rymhwr6d, .table th.tinytable_css_tr3y4u36nmj0rymhwr6d { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_yj30shuagk2g33fk8rtk, .table th.tinytable_css_yj30shuagk2g33fk8rtk { text-align: left; }
+      .table td.tinytable_css_41eavhsnd8763b1dbenc, .table th.tinytable_css_41eavhsnd8763b1dbenc { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_w30yy6406zk9p9ipnsu3" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="table table-borderless" id="tinytable_fl4v2xuy9dun5icr4w0q" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         <thead>
         
               <tr>
@@ -1162,20 +1162,20 @@ y =&amp; \beta_0 + \beta_{1,1}高校 + \beta_{1,2}高専短大 + \beta_{1,3}大�
 <!-- hack to avoid NA insertion in last line -->
 <p>女性×短大高専、女性×大学大学院の係数は正の値であり、10%水準ではあるものの、正の値である。すなわち、女性が高い学歴を持っている場合の賃金の上昇は、男性が高い学歴を持っている場合の賃金の上昇と比べて大きいといえる。</p>
 <p>視覚的にはどのように表現できるだろうか。先に用いた<code>ggeffects::ggeffect()</code>を使って結果を図示してみよう。</p>
-<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="regression_interaction.html#cb347-1" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">ggeffect</span>(reg_res4, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">&quot;educ&quot;</span>, <span class="st">&quot;gender_rev&quot;</span>)) <span class="co"># 予測値を求めて結果を保存</span></span></code></pre></div>
-<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="regression_interaction.html#cb348-1" tabindex="-1"></a><span class="co"># Windowsユーザーはこちらを実行</span></span>
-<span id="cb348-2"><a href="regression_interaction.html#cb348-2" tabindex="-1"></a>predicted <span class="sc">%&gt;%</span> </span>
-<span id="cb348-3"><a href="regression_interaction.html#cb348-3" tabindex="-1"></a>  <span class="fu">plot</span>() <span class="sc">+</span></span>
-<span id="cb348-4"><a href="regression_interaction.html#cb348-4" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span>  </span>
-<span id="cb348-5"><a href="regression_interaction.html#cb348-5" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span> </span>
-<span id="cb348-6"><a href="regression_interaction.html#cb348-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;学歴&quot;</span>, <span class="at">y =</span> <span class="st">&quot;対数賃金&quot;</span>, <span class="at">color =</span> <span class="st">&quot;&quot;</span>) </span></code></pre></div>
-<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="regression_interaction.html#cb349-1" tabindex="-1"></a><span class="co"># Macユーザーはこちらを実行（文字化け防止策あり）</span></span>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="regression_interaction.html#cb348-1" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">ggeffect</span>(reg_res4, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">&quot;educ&quot;</span>, <span class="st">&quot;gender_rev&quot;</span>)) <span class="co"># 予測値を求めて結果を保存</span></span></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="regression_interaction.html#cb349-1" tabindex="-1"></a><span class="co"># Windowsユーザーはこちらを実行</span></span>
 <span id="cb349-2"><a href="regression_interaction.html#cb349-2" tabindex="-1"></a>predicted <span class="sc">%&gt;%</span> </span>
 <span id="cb349-3"><a href="regression_interaction.html#cb349-3" tabindex="-1"></a>  <span class="fu">plot</span>() <span class="sc">+</span></span>
-<span id="cb349-4"><a href="regression_interaction.html#cb349-4" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb349-4"><a href="regression_interaction.html#cb349-4" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span>  </span>
 <span id="cb349-5"><a href="regression_interaction.html#cb349-5" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span> </span>
 <span id="cb349-6"><a href="regression_interaction.html#cb349-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;学歴&quot;</span>, <span class="at">y =</span> <span class="st">&quot;対数賃金&quot;</span>, <span class="at">color =</span> <span class="st">&quot;&quot;</span>) </span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-272-1.png" width="672" /></p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="regression_interaction.html#cb350-1" tabindex="-1"></a><span class="co"># Macユーザーはこちらを実行（文字化け防止策あり）</span></span>
+<span id="cb350-2"><a href="regression_interaction.html#cb350-2" tabindex="-1"></a>predicted <span class="sc">%&gt;%</span> </span>
+<span id="cb350-3"><a href="regression_interaction.html#cb350-3" tabindex="-1"></a>  <span class="fu">plot</span>() <span class="sc">+</span></span>
+<span id="cb350-4"><a href="regression_interaction.html#cb350-4" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb350-5"><a href="regression_interaction.html#cb350-5" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span> </span>
+<span id="cb350-6"><a href="regression_interaction.html#cb350-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;学歴&quot;</span>, <span class="at">y =</span> <span class="st">&quot;対数賃金&quot;</span>, <span class="at">color =</span> <span class="st">&quot;&quot;</span>) </span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-273-1.png" width="672" /></p>
 <p>学歴が高いと賃金が高くなる傾向は男女とも共通であるが、女性は男性と比べて学歴が高くなるとより大きく賃金が高くなることが視覚的にわかりやすい。</p>
 </div>
 <div id="xが連続変数zが連続変数の場合作成中" class="section level2 hasAnchor" number="9.4">
