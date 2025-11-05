@@ -1,0 +1,67 @@
+# パネルデータ分析（作成中） {#paneldata}
+
+本章では、パネルデータ分析の基礎について説明する。
+
+内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project...」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。
+
+さらに、これまでの章で説明した以下のパッケージを読み込んだ上で、[第4章](#handling)で作成したデータを読み込んで`piaac`というデータフレームに入れていることを前提とする。具体的には、以下のコードを実行しておく必要がある。
+
+```{r}
+library(tidyverse)
+library(gtsummary)
+library(flextable)
+library(haven)
+```
+
+本章では新たに以下のパッケージを利用する。あらかじめインストールしておくこと。
+
+```{r, eval = FALSE}
+install.packages("fixest") # 固定効果モデルを推定するためのパッケージ
+```
+
+パッケージを読み込んでおく。
+
+```{r}
+library(fixest)
+```
+
+
+## パネルデータとは
+
+### 
+
+アメリカ労働統計局が実施しているNational Longitudinal Survey of Youth（NLSY）のデモデータを利用する。このデータには、1969年時点で14歳から26歳の女性が含まれている。
+
+```{r}
+nls <- read_dta("https://www.stata-press.com/data/r9/nlswork.dta")
+```
+
+```{r}
+nls %>% glimpse()
+```
+
+### パネルデータの特徴
+
+```{r}
+nls %>% 
+  select(idcode, age, ln_wage) %>% 
+  head(n = 20)
+```
+
+
+```{r}
+model_ols <- lm(data = nls, ln_wage ~ age + race + collgrad + union)
+model_fe <- feols(data = nls, ln_wage ~ age + race + collgrad + union | idcode)
+modelsummary(list(model_ols, model_fe), stars = TRUE)
+```
+
+
+```{r}
+model1 <- lm(data = nls, ln_wage ~ age + race + collgrad + union)
+model2 <- feols(data = nls, ln_wage ~ age + race + collgrad + union,
+                panel.id = "idcode", vcov = "cluster")
+model3 <- feols(data = nls, ln_wage ~ age + race + collgrad + union | idcode,
+                panel.id = "idcode", vcov = "cluster")
+modelsummary(list(model1, model2, model3), stars = TRUE)
+```
+

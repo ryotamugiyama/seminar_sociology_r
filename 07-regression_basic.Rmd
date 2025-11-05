@@ -584,7 +584,9 @@ tibble(x, expx, linearx) %>%
   geom_line() + 
   labs(x = "βの値",
        y = "", color = "") +
-  scale_y_continuous(breaks = seq(-0.4, 0.4, 0.2))
+  scale_y_continuous(breaks = seq(-0.4, 0.4, 0.2)) + 
+  theme(legend.position = c(0.2, 0.8),
+        legend.background = element_blank())
 
 ```
 
@@ -736,7 +738,7 @@ modelsummary(list(reg_res),
 
 ### Wordファイルに書き出す
 
-第5章、第6章と同様、回帰分析についても結果をWordに書き出すことができる。`flextable`パッケージを読み込んでおいた状態で（この章では冒頭ですでに読み込んでおいた）、上記の`modelsummary()`のコードに`output = "xxx.docx"`というようなオプションをつけることで、Wordファイルに結果を書き出すことができる。
+第5章、第6章と同様、回帰分析についても結果をWordに書き出すことができる。`flextable`パッケージを読み込んでおいた状態で（この章では冒頭ですでに読み込んでおいた）、上記の`modelsummary()`のコードに`output = "flextable"`というオプションをつけて、`save_as_docx()`を実行することで、Wordファイルに結果を書き出すことができる。
 
 ```{r}
 library(flextable) # もし読み込んでいない場合は実行
@@ -745,38 +747,16 @@ modelsummary(list(reg_res),
          stars = TRUE, # 有意水準を示す印をつける
          coef_map = c("(Intercept)" = "切片",
                          "age" = "年齢"), # 各変数に名前をつける
-         gof_map = c("nobs", "r.squared"), # サンプルサイズと決定係数のみ記載する
-         output = "results/regression.docx") # 出力先のファイル名をつける
+         gof_map = c("nobs", "r.squared"),
+         output = "flextable") %>% 
+  save_as_docx(path = "results/regression.docx") # 出力先のファイル名をつける
 ```
 
 `as_flex_table() %>% save_as_docs(path = "xxx.docx")`を使っていた第5章、第6章とは少し違う点に注意。多少の手直しが必要かもしれないが、きれいな回帰分析の表をWordファイルに書き出すことができる。
 
-Wordファイルに書き出した場合、変数の値に日本語が含まれているときれいな表にならないことがあるという問題が報告されている（2024-11-27）。この原因が何に由来するのかよくわからないが、このような場合には、Wordファイルではなくて別の形式のファイルに書き出すとうまくいくことがある。以下では、3つのパターンについて説明する。
-
-### Excelファイルに書き出す {#regression_output_excel}
-
-Excelファイルに書き出したい場合は、末尾の「.docx」の部分を「.xlsx」に変えればよい。ただし、Excelファイルの場合は少し余分な列などが入ってしまうので、適宜手直しが必要となる。
-
-Excelファイルに書き出す場合には、事前に`openxlsx`パッケージをインストールしておく必要がある。一度インストールしたら、以降は上記パッケージをインストールする必要はない。
-
-```{r, eval = FALSE}
-install.packages("openxlsx")
-```
-
-あとは、次の通り実行する。
-
-```{r}
-modelsummary(list(reg_res),
-         stars = TRUE, # 有意水準を示す印をつける
-         coef_map = c("(Intercept)" = "切片",
-                         "age" = "年齢"), # 各変数に名前をつける
-         gof_map = c("nobs", "r.squared"), # サンプルサイズと決定係数のみ記載する
-         output = "results/regression.xlsx") # 出力先のファイル名をつける（xlsx）
-```
-
 ### PowerPointファイルに書き出す {#regression_output_pptx}
 
-結果をPowerPointに書き出すこともできるようだ。この場合は、末尾の拡張子を「.pptx」に変えるとよい。
+結果をPowerPointに書き出すこともできる。この場合は、末尾の拡張子を「.pptx」に変えるとよい。
 
 ```{r}
 library(flextable) # もし読み込んでいない場合は実行
@@ -786,22 +766,8 @@ modelsummary(list(reg_res),
          coef_map = c("(Intercept)" = "切片",
                          "age" = "年齢"), # 各変数に名前をつける
          gof_map = c("nobs", "r.squared"), # サンプルサイズと決定係数のみ記載する
-         output = "results/regression.pptx") # 出力先のファイル名をつける（pptx）
-```
-
-### rtfファイルに書き出す {#regression_output_rtf}
-
-rtf（リッチテキスト）形式に書き出す。このファイルをWordで開くと、比較的きれいな形式の見た目になっていることが多い。末尾の拡張子を「.rtf」に変えるとできる。
-
-```{r}
-library(flextable) # もし読み込んでいない場合は実行
-
-modelsummary(list(reg_res),
-         stars = TRUE, # 有意水準を示す印をつける
-         coef_map = c("(Intercept)" = "切片",
-                         "age" = "年齢"), # 各変数に名前をつける
-         gof_map = c("nobs", "r.squared"), # サンプルサイズと決定係数のみ記載する
-         output = "results/regression.rtf") # 出力先のファイル名をつける（rtf）
+         output = "flextable") %>%  # 出力先のファイル名をつける（pptx）
+  save_as_pptx(path = "results/regression.pptx")
 ```
 
 ## 練習問題
