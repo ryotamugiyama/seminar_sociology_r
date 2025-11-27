@@ -369,3 +369,133 @@ df <- df %>%
 ```{r}
 df %>% head()
 ```
+
+## SSM職歴データから現職の勤続年数を作成する
+
+勤続年数はよく使用される変数であるが、SSM調査では初職から現職に至るまでの職歴を細かく聞いているため、そこから勤続年数の変数を作るのはかなり大変である。
+
+そこで、下記のとおり勤続年数を作成するためのコードを記載する。手元に、2015年SSM調査のデータ（SSM2015とする）があるとする。以下のコードで、勤続年数の変数を作成することができる。
+
+```{r, eval = FALSE}
+ssm2015 <- ssm2015 %>% 
+  rename(
+    q9_1_c_1 = q8_2, # 従業先番号
+    q9_1_c_7 = q8_h_1, # 職歴頁開始年齢
+  ) %>% 
+  rename_with(\(x) str_replace(x, "q9_", "nfirm"), ends_with("_c_1")) %>% # 従業先番号
+  rename_with(\(x) str_replace(x, "_c_1", ""), starts_with("nfirm")) %>%   
+  rename_with(\(x) str_replace(x, "q9_", "jobst"), ends_with("_c_7")) %>% # 職歴頁開始年齢
+  rename_with(\(x) str_replace(x, "_c_7", ""), starts_with("jobst")) %>%
+  mutate(jobst1 = if_else(jobst1 < 99, jobst1, NA),
+         jobst2 = if_else(jobst2 < 99, jobst2, NA),
+         jobst3 = if_else(jobst3 < 99, jobst3, NA),
+         jobst4 = if_else(jobst4 < 99, jobst4, NA),
+         jobst5 = if_else(jobst5 < 99, jobst5, NA),
+         jobst6 = if_else(jobst6 < 99, jobst6, NA),
+         jobst7 = if_else(jobst7 < 99, jobst7, NA),
+         jobst8 = if_else(jobst8 < 99, jobst8, NA),
+         jobst9 = if_else(jobst9 < 99, jobst9, NA),
+         jobst10 = if_else(jobst10 < 99, jobst10, NA),
+         jobst11 = if_else(jobst11 < 99, jobst11, NA),
+         jobst12 = if_else(jobst12 < 99, jobst12, NA),
+         jobst13 = if_else(jobst13 < 99, jobst13, NA),
+         jobst14 = if_else(jobst14 < 99, jobst14, NA),
+         jobst15 = if_else(jobst15 < 99, jobst15, NA),
+         jobst16 = if_else(jobst16 < 99, jobst16, NA),
+         jobst17 = if_else(jobst17 < 99, jobst17, NA),
+         jobst18 = if_else(jobst18 < 99, jobst18, NA),
+         jobst19 = if_else(jobst19 < 99, jobst19, NA),
+         jobst20 = if_else(jobst20 < 99, jobst20, NA),
+         jobst21 = if_else(jobst21 < 99, jobst21, NA),
+         jobst22 = if_else(jobst22 < 99, jobst22, NA)) %>%
+  mutate(work1 = case_when(
+    1 <= nfirm1 & nfirm1 < 88 ~ 1,
+    nfirm1 == 0 ~ 0)) %>%
+  mutate(work2 = case_when(
+    1 <= nfirm2 & nfirm2 < 88 ~ 1,
+    nfirm2 == 0 ~ 0)) %>%
+  mutate(work3 = case_when(
+    1 <= nfirm3 & nfirm3 < 88 ~ 1,
+    nfirm3 == 0 ~ 0)) %>%
+  mutate(work4 = case_when(
+    1 <= nfirm4 & nfirm4 < 88 ~ 1,
+    nfirm4 == 0 ~ 0)) %>%
+  mutate(work5 = case_when(
+    1 <= nfirm5 & nfirm5 < 88 ~ 1,
+    nfirm5 == 0 ~ 0)) %>%
+  mutate(work6 = case_when(
+    1 <= nfirm6 & nfirm6 < 88 ~ 1,
+    nfirm6 == 0 ~ 0)) %>%
+  mutate(work7 = case_when(
+    1 <= nfirm7 & nfirm7 < 88 ~ 1,
+    nfirm7 == 0 ~ 0)) %>%
+  mutate(work8 = case_when(
+    1 <= nfirm8 & nfirm8 < 88 ~ 1,
+    nfirm8 == 0 ~ 0)) %>%
+  mutate(work9 = case_when(
+    1 <= nfirm9 & nfirm9 < 88 ~ 1,
+    nfirm9 == 0 ~ 0)) %>%
+  mutate(work10 = case_when(
+    1 <= nfirm10 & nfirm10 < 88 ~ 1,
+    nfirm10 == 0 ~ 0)) %>%
+  mutate(work11 = case_when(
+    1 <= nfirm11 & nfirm11 < 88 ~ 1,
+    nfirm11 == 0 ~ 0)) %>%
+  mutate(work12 = case_when(
+    1 <= nfirm12 & nfirm12 < 88 ~ 1,
+    nfirm12 == 0 ~ 0)) %>%
+  mutate(work13 = case_when(
+    1 <= nfirm13 & nfirm13 < 88 ~ 1,
+    nfirm13 == 0 ~ 0)) %>%
+  mutate(work14 = case_when(
+    1 <= nfirm14 & nfirm14 < 88 ~ 1,
+    nfirm14 == 0 ~ 0)) %>%
+  mutate(work15 = case_when(
+    1 <= nfirm15 & nfirm15 < 88 ~ 1,
+    nfirm15 == 0 ~ 0)) %>%
+  mutate(work16 = case_when(
+    1 <= nfirm16 & nfirm16 < 88 ~ 1,
+    nfirm16 == 0 ~ 0)) %>%
+  mutate(work17 = case_when(
+    1 <= nfirm17 & nfirm17 < 88 ~ 1,
+    nfirm17 == 0 ~ 0)) %>%
+  mutate(work18 = case_when(
+    1 <= nfirm18 & nfirm18 < 88 ~ 1,
+    nfirm18 == 0 ~ 0)) %>%
+  mutate(work19 = case_when(
+    1 <= nfirm19 & nfirm19 < 88 ~ 1,
+    nfirm19 == 0 ~ 0)) %>%
+  mutate(work20 = case_when(
+    1 <= nfirm20 & nfirm20 < 88 ~ 1,
+    nfirm20 == 0 ~ 0)) %>%
+  mutate(work21 = case_when(
+    1 <= nfirm21 & nfirm21 < 88 ~ 1,
+    nfirm21 == 0 ~ 0)) %>%
+  mutate(work22 = case_when(
+    1 <= nfirm22 & nfirm22 < 88 ~ 1,
+    nfirm22 == 0 ~ 0)) %>% 
+  mutate(tenure = NA) %>% 
+  mutate(tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm22 != nfirm21 & work22 == 1, q1_2_5 - jobst22, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm21 != nfirm20 & work21 == 1, q1_2_5 - jobst21, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm20 != nfirm19 & work20 == 1, q1_2_5 - jobst20, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm19 != nfirm18 & work19 == 1, q1_2_5 - jobst19, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm18 != nfirm17 & work18 == 1, q1_2_5 - jobst18, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm17 != nfirm16 & work17 == 1, q1_2_5 - jobst17, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm16 != nfirm15 & work16 == 1, q1_2_5 - jobst16, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm15 != nfirm14 & work15 == 1, q1_2_5 - jobst15, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm14 != nfirm13 & work14 == 1, q1_2_5 - jobst14, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm13 != nfirm12 & work13 == 1, q1_2_5 - jobst13, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm12 != nfirm11 & work12 == 1, q1_2_5 - jobst12, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm11 != nfirm10 & work11 == 1, q1_2_5 - jobst11, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm10 != nfirm9 & work10 == 1, q1_2_5 - jobst10, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm9 != nfirm8 & work9 == 1, q1_2_5 - jobst9, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm8 != nfirm7 & work8 == 1, q1_2_5 - jobst8, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm7 != nfirm6 & work7 == 1, q1_2_5 - jobst7, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm6 != nfirm5 & work6 == 1, q1_2_5 - jobst6, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm5 != nfirm4 & work5 == 1, q1_2_5 - jobst5, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm4 != nfirm3 & work4 == 1, q1_2_5 - jobst4, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm3 != nfirm2 & work3 == 1, q1_2_5 - jobst3, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE & nfirm2 != nfirm1 & work2 == 1, q1_2_5 - jobst2, tenure),
+         tenure = if_else(q2_a <= 10 & is.na(tenure) == TRUE, q1_2_5 - jobst1, tenure))
+```
+
