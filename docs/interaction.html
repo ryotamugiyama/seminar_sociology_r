@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 9 交互作用 | Rによる社会調査データ分析の手引き</title>
+  <meta name="description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 9 交互作用 | Rによる社会調査データ分析の手引き" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 9 交互作用 | Rによる社会調査データ分析の手引き" />
+  
+  <meta name="twitter:description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
+  
+
+<meta name="author" content="麦山 亮太（学習院大学法学部政治学科）/ Ryota Mugiyama (Department of Political Studies, Gakushuin University)" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="regression_advanced.html"/>
+<link rel="next" href="logit.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Rによる社会調査データ分析の手引き</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path=""><a href="#%E3%81%BE%E3%81%88%E3%81%8C%E3%81%8D"><i class="fa fa-check"></i>まえがき</a></li>
+<li class="chapter" data-level="1" data-path="plan.html"><a href="plan.html"><i class="fa fa-check"></i><b>1</b> 研究計画を立てる</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="plan.html"><a href="plan.html#plan_intro"><i class="fa fa-check"></i><b>1.1</b> 研究計画とは</a></li>
+<li class="chapter" data-level="1.2" data-path="plan.html"><a href="plan.html#plan_structure"><i class="fa fa-check"></i><b>1.2</b> 研究計画の構成</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="plan.html"><a href="plan.html#plan_background"><i class="fa fa-check"></i><b>1.2.1</b> 研究背景</a></li>
+<li class="chapter" data-level="1.2.2" data-path="plan.html"><a href="plan.html#plan_question"><i class="fa fa-check"></i><b>1.2.2</b> 研究目的・問い</a></li>
+<li class="chapter" data-level="1.2.3" data-path="plan.html"><a href="plan.html#plan_method"><i class="fa fa-check"></i><b>1.2.3</b> 方法</a></li>
+<li class="chapter" data-level="1.2.4" data-path="plan.html"><a href="plan.html#plan_reference"><i class="fa fa-check"></i><b>1.2.4</b> 参考文献</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="plan.html"><a href="plan.html#plan_data"><i class="fa fa-check"></i><b>1.3</b> 使用する調査データの選定</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="09-interaction.html"><a href="#%E5%80%8B%E7%A5%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"><i class="fa fa-check"></i><b>1.3.1</b> 個票データとは何か</a></li>
+<li class="chapter" data-level="1.3.2" data-path="plan.html"><a href="plan.html#jgss"><i class="fa fa-check"></i><b>1.3.2</b> JGSS</a></li>
+<li class="chapter" data-level="1.3.3" data-path="09-interaction.html"><a href="#jgss%E4%BB%A5%E5%A4%96%E3%81%AE%E6%97%A5%E6%9C%AC%E3%81%AE%E7%A4%BE%E4%BC%9A%E8%AA%BF%E6%9F%BB"><i class="fa fa-check"></i><b>1.3.3</b> JGSS以外の日本の社会調査</a></li>
+<li class="chapter" data-level="1.3.4" data-path="09-interaction.html"><a href="#%E6%97%A5%E6%9C%AC%E4%BB%A5%E5%A4%96%E3%81%AE%E7%A4%BE%E4%BC%9A%E8%AA%BF%E6%9F%BB%E3%83%87%E3%83%BC%E3%82%BF"><i class="fa fa-check"></i><b>1.3.4</b> 日本以外の社会調査データ</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="plan.html"><a href="plan.html#plan_literature"><i class="fa fa-check"></i><b>1.4</b> 先行研究を探す</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="09-interaction.html"><a href="#%E8%AB%96%E6%96%87"><i class="fa fa-check"></i><b>1.4.1</b> 論文</a></li>
+<li class="chapter" data-level="1.4.2" data-path="09-interaction.html"><a href="#%E6%9B%B8%E7%B1%8D"><i class="fa fa-check"></i><b>1.4.2</b> 書籍</a></li>
+<li class="chapter" data-level="1.4.3" data-path="09-interaction.html"><a href="#%E5%A0%B1%E5%91%8A%E6%9B%B8"><i class="fa fa-check"></i><b>1.4.3</b> 報告書</a></li>
+<li class="chapter" data-level="1.4.4" data-path="09-interaction.html"><a href="#%E7%A0%94%E7%A9%B6%E3%81%AE%E6%B5%81%E3%82%8C%E3%82%92%E3%81%A4%E3%81%8B%E3%82%80"><i class="fa fa-check"></i><b>1.4.4</b> 研究の流れをつかむ</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="preparation.html"><a href="preparation.html"><i class="fa fa-check"></i><b>2</b> RとRStudioの下準備</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="preparation.html"><a href="preparation.html#preparation_install"><i class="fa fa-check"></i><b>2.1</b> RとRStudioのインストール方法</a></li>
+<li class="chapter" data-level="2.2" data-path="preparation.html"><a href="preparation.html#preparation_workflow"><i class="fa fa-check"></i><b>2.2</b> データ分析のワークフロー</a></li>
+<li class="chapter" data-level="2.3" data-path="preparation.html"><a href="preparation.html#preparation_project"><i class="fa fa-check"></i><b>2.3</b> プロジェクトの作成</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="09-interaction.html"><a href="#rstudio%E3%82%92%E9%96%8B%E3%81%84%E3%81%A6%E3%81%BF%E3%82%88%E3%81%86"><i class="fa fa-check"></i><b>2.3.1</b> RStudioを開いてみよう</a></li>
+<li class="chapter" data-level="2.3.2" data-path="09-interaction.html"><a href="#%E6%8E%88%E6%A5%AD%E7%94%A8%E3%81%AE%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%82%92%E4%BD%9C%E3%82%8D%E3%81%86"><i class="fa fa-check"></i><b>2.3.2</b> 授業用のフォルダを作ろう</a></li>
+<li class="chapter" data-level="2.3.3" data-path="09-interaction.html"><a href="#%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%83%91%E3%82%B9%E3%81%A8%E4%BD%9C%E6%A5%AD%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA"><i class="fa fa-check"></i><b>2.3.3</b> ファイルパスと作業ディレクトリ</a></li>
+<li class="chapter" data-level="2.3.4" data-path="09-interaction.html"><a href="#%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E4%BD%9C%E6%88%90%E3%81%AE%E6%89%8B%E9%A0%86"><i class="fa fa-check"></i><b>2.3.4</b> プロジェクト作成の手順</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="preparation.html"><a href="preparation.html#preparation_basic"><i class="fa fa-check"></i><b>2.4</b> 基本的な操作</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="09-interaction.html"><a href="#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"><i class="fa fa-check"></i><b>2.4.1</b> スクリプトファイル</a></li>
+<li class="chapter" data-level="2.4.2" data-path="09-interaction.html"><a href="#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E4%BF%9D%E5%AD%98%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>2.4.2</b> スクリプトファイルを保存する</a></li>
+<li class="chapter" data-level="2.4.3" data-path="09-interaction.html"><a href="#%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB"><i class="fa fa-check"></i><b>2.4.3</b> パッケージのインストール</a></li>
+<li class="chapter" data-level="2.4.4" data-path="09-interaction.html"><a href="#%E3%81%9D%E3%81%AE%E3%81%BB%E3%81%8B%E3%81%AEr%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E3%81%AE%E5%9F%BA%E7%A4%8E"><i class="fa fa-check"></i><b>2.4.4</b> そのほかのRプログラミングの基礎</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="preparation.html"><a href="preparation.html#preparation_settings"><i class="fa fa-check"></i><b>2.5</b> その他の設定</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="09-interaction.html"><a href="#rstudio%E3%82%92%E9%96%89%E3%81%98%E3%82%8B%E9%9A%9B%E3%81%AEworkspace%E4%BF%9D%E5%AD%98%E3%81%AE%E8%AD%A6%E5%91%8A%E3%82%92%E5%89%8A%E9%99%A4"><i class="fa fa-check"></i><b>2.5.1</b> RStudioを閉じる際のWorkspace保存の警告を削除</a></li>
+<li class="chapter" data-level="2.5.2" data-path="09-interaction.html"><a href="#%E3%82%B0%E3%83%A9%E3%83%95%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E%E8%A1%A8%E7%A4%BA"><i class="fa fa-check"></i><b>2.5.2</b> グラフの日本語表示</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="preparation.html"><a href="preparation.html#preparation_error"><i class="fa fa-check"></i><b>2.6</b> エラーが出たときに確認する箇所</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="import.html"><a href="import.html"><i class="fa fa-check"></i><b>3</b> データの読み込み</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="import.html"><a href="import.html#import_sampledata"><i class="fa fa-check"></i><b>3.1</b> Rのサンプルデータの読み込み</a></li>
+<li class="chapter" data-level="3.2" data-path="import.html"><a href="import.html#import_readdata"><i class="fa fa-check"></i><b>3.2</b> 作業ディレクトリ上のデータの読み込み</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="import.html"><a href="import.html#import_dir"><i class="fa fa-check"></i><b>3.2.1</b> データを置く場所を作る</a></li>
+<li class="chapter" data-level="3.2.2" data-path="09-interaction.html"><a href="#csv%E5%BD%A2%E5%BC%8F%E3%81%AE%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"><i class="fa fa-check"></i><b>3.2.2</b> csv形式のファイル</a></li>
+<li class="chapter" data-level="3.2.3" data-path="09-interaction.html"><a href="#xlsx%E5%BD%A2%E5%BC%8F%E3%81%AE%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"><i class="fa fa-check"></i><b>3.2.3</b> xlsx形式のファイル</a></li>
+<li class="chapter" data-level="3.2.4" data-path="import.html"><a href="import.html#import_rds"><i class="fa fa-check"></i><b>3.2.4</b> rds形式のファイル</a></li>
+<li class="chapter" data-level="3.2.5" data-path="09-interaction.html"><a href="#sav%E5%BD%A2%E5%BC%8F%E3%81%AE%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"><i class="fa fa-check"></i><b>3.2.5</b> sav形式のファイル</a></li>
+<li class="chapter" data-level="3.2.6" data-path="09-interaction.html"><a href="#dta%E5%BD%A2%E5%BC%8F%E3%81%AE%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB"><i class="fa fa-check"></i><b>3.2.6</b> dta形式のファイル</a></li>
+<li class="chapter" data-level="3.2.7" data-path="09-interaction.html"><a href="#%E6%96%87%E5%AD%97%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AB%E9%96%A2%E3%82%8F%E3%82%8B%E5%95%8F%E9%A1%8C"><i class="fa fa-check"></i><b>3.2.7</b> 文字コードに関わる問題</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="import.html"><a href="import.html#import_webdata"><i class="fa fa-check"></i><b>3.3</b> ウェブ上のデータの読み込み</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="handling.html"><a href="handling.html"><i class="fa fa-check"></i><b>4</b> データの加工</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="handling.html"><a href="handling.html#handling_data"><i class="fa fa-check"></i><b>4.1</b> 本資料で用いるデータ</a></li>
+<li class="chapter" data-level="4.2" data-path="handling.html"><a href="handling.html#handling_pipe"><i class="fa fa-check"></i><b>4.2</b> パイプ演算子：%&gt;%または|&gt;</a></li>
+<li class="chapter" data-level="4.3" data-path="handling.html"><a href="handling.html#handling_step"><i class="fa fa-check"></i><b>4.3</b> データ加工のステップ</a></li>
+<li class="chapter" data-level="4.4" data-path="handling.html"><a href="handling.html#handling_variable"><i class="fa fa-check"></i><b>4.4</b> 変数の作成</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="09-interaction.html"><a href="#%E5%A4%89%E6%95%B0%E3%81%AE%E5%9E%8B%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%A8%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0"><i class="fa fa-check"></i><b>4.4.1</b> 変数の型（カテゴリ変数と連続変数）</a></li>
+<li class="chapter" data-level="4.4.2" data-path="09-interaction.html"><a href="#%E6%96%B0%E3%81%9F%E3%81%AA%E5%A4%89%E6%95%B0%E3%82%92%E3%81%A4%E3%81%8F%E3%82%8Bmutate"><i class="fa fa-check"></i><b>4.4.2</b> 新たな変数をつくる：mutate()</a></li>
+<li class="chapter" data-level="4.4.3" data-path="09-interaction.html"><a href="#%E6%9D%A1%E4%BB%B6%E3%81%AE%E6%8C%87%E5%AE%9Aif_else"><i class="fa fa-check"></i><b>4.4.3</b> 条件の指定：if_else()</a></li>
+<li class="chapter" data-level="4.4.4" data-path="09-interaction.html"><a href="#%E8%A4%87%E6%95%B0%E6%9D%A1%E4%BB%B6%E3%81%AE%E6%8C%87%E5%AE%9Acase_when"><i class="fa fa-check"></i><b>4.4.4</b> 複数条件の指定：case_when()</a></li>
+<li class="chapter" data-level="4.4.5" data-path="09-interaction.html"><a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%B8%E5%A4%89%E6%8F%9Bfactor"><i class="fa fa-check"></i><b>4.4.5</b> カテゴリ変数へ変換：factor()</a></li>
+<li class="chapter" data-level="4.4.6" data-path="09-interaction.html"><a href="#%E5%BF%85%E8%A6%81%E3%81%AA%E5%88%97%E3%81%AE%E3%81%BF%E6%8A%BD%E5%87%BAselect"><i class="fa fa-check"></i><b>4.4.6</b> 必要な列のみ抽出：select()</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="handling.html"><a href="handling.html#handling-tips"><i class="fa fa-check"></i><b>4.5</b> 変数の作成についてのtips</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="09-interaction.html"><a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%82%92%E3%81%BE%E3%81%A8%E3%82%81%E3%82%8B"><i class="fa fa-check"></i><b>4.5.1</b> カテゴリをまとめる</a></li>
+<li class="chapter" data-level="4.5.2" data-path="09-interaction.html"><a href="#%E8%A4%87%E6%95%B0%E3%81%AE%E5%A4%89%E6%95%B0%E3%82%92%E7%B5%84%E3%81%BF%E5%90%88%E3%82%8F%E3%81%9B%E3%81%9F%E5%A4%89%E6%95%B0%E3%82%92%E4%BD%9C%E3%82%8B"><i class="fa fa-check"></i><b>4.5.2</b> 複数の変数を組み合わせた変数を作る</a></li>
+<li class="chapter" data-level="4.5.3" data-path="09-interaction.html"><a href="#%E5%9D%87%E7%AD%89%E3%81%AA%E9%A0%86%E5%BA%8F%E3%82%92%E4%BB%AE%E5%AE%9A%E3%81%97%E3%81%A6%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%A8%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>4.5.3</b> 均等な順序を仮定して連続変数とする</a></li>
+<li class="chapter" data-level="4.5.4" data-path="09-interaction.html"><a href="#%E7%84%A1%E5%9B%9E%E7%AD%94%E9%9D%9E%E8%A9%B2%E5%BD%93%E3%82%8F%E3%81%8B%E3%82%89%E3%81%AA%E3%81%84%E3%81%AA%E3%81%A9%E3%82%92na%E3%81%AB"><i class="fa fa-check"></i><b>4.5.4</b> 無回答、非該当、「わからない」などをNAに</a></li>
+<li class="chapter" data-level="4.5.5" data-path="09-interaction.html"><a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%AE%E5%8C%BA%E9%96%93%E3%81%AE%E4%B8%AD%E7%82%B9%E3%82%92%E3%81%A8%E3%81%A3%E3%81%A6%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%A8%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>4.5.5</b> カテゴリ変数の区間の中点をとって連続変数とする</a></li>
+<li class="chapter" data-level="4.5.6" data-path="09-interaction.html"><a href="#%E3%82%92%E3%81%A4%E3%81%AA%E3%81%92%E3%81%A6%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%82%92%E3%81%BE%E3%81%A8%E3%82%81%E3%82%8B"><i class="fa fa-check"></i><b>4.5.6</b> %&gt;%をつなげてコマンドをまとめる</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="handling.html"><a href="handling.html#handling_sample"><i class="fa fa-check"></i><b>4.6</b> サンプルの限定</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="09-interaction.html"><a href="#%E8%A9%B2%E5%BD%93%E3%81%99%E3%82%8B%E3%82%B1%E3%83%BC%E3%82%B9%E3%81%A0%E3%81%91%E3%82%92%E6%AE%8B%E3%81%99filter"><i class="fa fa-check"></i><b>4.6.1</b> 該当するケースだけを残す：filter()</a></li>
+<li class="chapter" data-level="4.6.2" data-path="09-interaction.html"><a href="#%E6%AC%A0%E6%90%8D%E5%80%A4%E3%81%AE%E6%89%B1%E3%81%84"><i class="fa fa-check"></i><b>4.6.2</b> 欠損値の扱い</a></li>
+<li class="chapter" data-level="4.6.3" data-path="09-interaction.html"><a href="#%E5%A4%96%E3%82%8C%E5%80%A4%E3%81%AE%E6%89%B1%E3%81%84"><i class="fa fa-check"></i><b>4.6.3</b> 外れ値の扱い</a></li>
+<li class="chapter" data-level="4.6.4" data-path="09-interaction.html"><a href="#%E5%88%86%E6%9E%90%E7%94%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%A6%E3%81%8A%E3%81%8F"><i class="fa fa-check"></i><b>4.6.4</b> 分析用データを保存しておく</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="handling.html"><a href="handling.html#handling_bind_rows"><i class="fa fa-check"></i><b>4.7</b> 【発展】データの追加</a></li>
+<li class="chapter" data-level="4.8" data-path="handling.html"><a href="handling.html#handling_quiz"><i class="fa fa-check"></i><b>4.8</b> 演習問題</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="descriptives.html"><a href="descriptives.html"><i class="fa fa-check"></i><b>5</b> 1変数の集計</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="descriptives.html"><a href="descriptives.html#descriptives_summarize"><i class="fa fa-check"></i><b>5.1</b> 連続変数を集計する：要約統計量</a></li>
+<li class="chapter" data-level="5.2" data-path="descriptives.html"><a href="descriptives.html#descriptives_ggplot"><i class="fa fa-check"></i><b>5.2</b> 分布をみる</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="09-interaction.html"><a href="#%E3%83%92%E3%82%B9%E3%83%88%E3%82%B0%E3%83%A9%E3%83%A0%E3%81%A8ggplot%E3%81%AE%E5%B0%8E%E5%85%A5"><i class="fa fa-check"></i><b>5.2.1</b> ヒストグラムとggplotの導入</a></li>
+<li class="chapter" data-level="5.2.2" data-path="09-interaction.html"><a href="#ggplot%E3%81%AE%E8%A8%AD%E5%AE%9A%E6%97%A5%E6%9C%AC%E8%AA%9E%E9%96%A2%E4%BF%82"><i class="fa fa-check"></i><b>5.2.2</b> ggplotの設定（日本語関係）</a></li>
+<li class="chapter" data-level="5.2.3" data-path="09-interaction.html"><a href="#%E8%BB%B8%E3%81%AB%E5%90%8D%E5%89%8D%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B"><i class="fa fa-check"></i><b>5.2.3</b> 軸に名前をつける</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="descriptives.html"><a href="descriptives.html#descriptives_table"><i class="fa fa-check"></i><b>5.3</b> カテゴリ変数を集計する：度数分布</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="09-interaction.html"><a href="#%E5%BA%A6%E6%95%B0%E3%81%AE%E7%A2%BA%E8%AA%8D"><i class="fa fa-check"></i><b>5.3.1</b> 度数の確認</a></li>
+<li class="chapter" data-level="5.3.2" data-path="09-interaction.html"><a href="#%E5%88%86%E5%B8%83%E3%81%AE%E5%8F%AF%E8%A6%96%E5%8C%96%E6%A3%92%E3%82%B0%E3%83%A9%E3%83%95"><i class="fa fa-check"></i><b>5.3.2</b> 分布の可視化：棒グラフ</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="descriptives.html"><a href="descriptives.html#descriptives_gtsummary"><i class="fa fa-check"></i><b>5.4</b> 記述統計量の一覧表を作る</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="09-interaction.html"><a href="#%E8%A8%98%E8%BF%B0%E7%B5%B1%E8%A8%88%E9%87%8F%E3%81%AE%E4%B8%80%E8%A6%A7%E8%A1%A8"><i class="fa fa-check"></i><b>5.4.1</b> 記述統計量の一覧表</a></li>
+<li class="chapter" data-level="5.4.2" data-path="09-interaction.html"><a href="#%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%97%E5%88%A5%E3%81%AE%E8%A8%98%E8%BF%B0%E7%B5%B1%E8%A8%88%E9%87%8F%E3%81%AE%E4%B8%80%E8%A6%A7%E8%A1%A8"><i class="fa fa-check"></i><b>5.4.2</b> グループ別の記述統計量の一覧表</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="descriptives.html"><a href="descriptives.html#descriptive_export"><i class="fa fa-check"></i><b>5.5</b> 結果をファイルに書き出す</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="09-interaction.html"><a href="#%E7%B5%90%E6%9E%9C%E3%82%92%E5%85%A5%E3%82%8C%E3%82%8B%E3%81%9F%E3%82%81%E3%81%AE%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%82%92%E4%BD%9C%E3%82%8B"><i class="fa fa-check"></i><b>5.5.1</b> 結果を入れるためのフォルダを作る</a></li>
+<li class="chapter" data-level="5.5.2" data-path="descriptives.html"><a href="descriptives.html#descriptive_export_ggplot"><i class="fa fa-check"></i><b>5.5.2</b> ggplotで作成した図を書き出す</a></li>
+<li class="chapter" data-level="5.5.3" data-path="descriptives.html"><a href="descriptives.html#descriptive_export_tbl_summary"><i class="fa fa-check"></i><b>5.5.3</b> 記述統計量の一覧表を書き出す</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="descriptives.html"><a href="descriptives.html#descriptives_quiz"><i class="fa fa-check"></i><b>5.6</b> 練習問題</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="tabulate.html"><a href="tabulate.html"><i class="fa fa-check"></i><b>6</b> 2変数の集計</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="tabulate.html"><a href="tabulate.html#tabulate_summarize"><i class="fa fa-check"></i><b>6.1</b> 平均値の比較</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="09-interaction.html"><a href="#%E5%9F%BA%E6%9C%AC"><i class="fa fa-check"></i><b>6.1.1</b> 基本</a></li>
+<li class="chapter" data-level="6.1.2" data-path="09-interaction.html"><a href="#%E6%A3%92%E3%82%B0%E3%83%A9%E3%83%95%E3%81%AB%E3%82%88%E3%82%8B%E5%8F%AF%E8%A6%96%E5%8C%96"><i class="fa fa-check"></i><b>6.1.2</b> 棒グラフによる可視化</a></li>
+<li class="chapter" data-level="6.1.3" data-path="09-interaction.html"><a href="#%E8%A4%87%E6%95%B0%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%81%AE%E7%B5%84%E3%81%BF%E5%90%88%E3%82%8F%E3%81%9B"><i class="fa fa-check"></i><b>6.1.3</b> 複数カテゴリの組み合わせ</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="tabulate.html"><a href="tabulate.html#tabulate_distribution"><i class="fa fa-check"></i><b>6.2</b> 分布の比較</a></li>
+<li class="chapter" data-level="6.3" data-path="tabulate.html"><a href="tabulate.html#tabulate_crosstab"><i class="fa fa-check"></i><b>6.3</b> クロス表</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="09-interaction.html"><a href="#%E5%9F%BA%E6%9C%AC-1"><i class="fa fa-check"></i><b>6.3.1</b> 基本</a></li>
+<li class="chapter" data-level="6.3.2" data-path="09-interaction.html"><a href="#%E3%82%AB%E3%82%A42%E4%B9%97%E6%A4%9C%E5%AE%9A%E8%A3%9C%E8%B6%B3"><i class="fa fa-check"></i><b>6.3.2</b> カイ2乗検定（補足）</a></li>
+<li class="chapter" data-level="6.3.3" data-path="09-interaction.html"><a href="#%E3%81%8D%E3%82%8C%E3%81%84%E3%81%AA%E3%82%AF%E3%83%AD%E3%82%B9%E8%A1%A8%E3%82%92%E3%81%A4%E3%81%8F%E3%82%8B---gtsummarytbl_cross"><i class="fa fa-check"></i><b>6.3.3</b> きれいなクロス表をつくる - gtsummary::tbl_cross()</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="tabulate.html"><a href="tabulate.html#tabulate_crosstab_visualize"><i class="fa fa-check"></i><b>6.4</b> クロス表を図示する</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="09-interaction.html"><a href="#count%E3%82%92%E5%88%A9%E7%94%A8%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>6.4.1</b> count()を利用する</a></li>
+<li class="chapter" data-level="6.4.2" data-path="09-interaction.html"><a href="#count%E3%81%AE%E6%B3%A8%E6%84%8F%E7%82%B9"><i class="fa fa-check"></i><b>6.4.2</b> count()の注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="tabulate.html"><a href="tabulate.html#tabulate_scatterplot"><i class="fa fa-check"></i><b>6.5</b> 散布図</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="09-interaction.html"><a href="#%E6%95%A3%E5%B8%83%E5%9B%B3%E3%82%92%E3%81%BF%E3%82%8B"><i class="fa fa-check"></i><b>6.5.1</b> 散布図をみる</a></li>
+<li class="chapter" data-level="6.5.2" data-path="09-interaction.html"><a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%81%94%E3%81%A8%E3%81%AB%E6%95%A3%E5%B8%83%E5%9B%B3%E3%82%92%E5%88%86%E3%81%91%E3%82%8B"><i class="fa fa-check"></i><b>6.5.2</b> カテゴリごとに散布図を分ける</a></li>
+<li class="chapter" data-level="6.5.3" data-path="09-interaction.html"><a href="#%E7%9B%B8%E9%96%A2%E4%BF%82%E6%95%B0"><i class="fa fa-check"></i><b>6.5.3</b> 相関係数</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="tabulate.html"><a href="tabulate.html#tabulate_advanced"><i class="fa fa-check"></i><b>6.6</b> 2変数集計のときのくふう</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="09-interaction.html"><a href="#%E5%80%A4%E3%81%8C%E7%B2%97%E3%81%84%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%82%92%E6%89%B1%E3%81%86"><i class="fa fa-check"></i><b>6.6.1</b> 値が粗い連続変数を扱う</a></li>
+<li class="chapter" data-level="6.6.2" data-path="09-interaction.html"><a href="#%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%81%8C%E5%A4%9A%E3%81%84%E3%82%AF%E3%83%AD%E3%82%B9%E8%A1%A8%E3%82%92%E6%89%B1%E3%81%86"><i class="fa fa-check"></i><b>6.6.2</b> カテゴリが多いクロス表を扱う</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="tabulate.html"><a href="tabulate.html#tabulate_export"><i class="fa fa-check"></i><b>6.7</b> 結果をファイルに書き出す</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="09-interaction.html"><a href="#ggplot%E3%81%A7%E4%BD%9C%E6%88%90%E3%81%97%E3%81%9F%E5%9B%B3%E3%82%92%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99"><i class="fa fa-check"></i><b>6.7.1</b> ggplotで作成した図を書き出す</a></li>
+<li class="chapter" data-level="6.7.2" data-path="09-interaction.html"><a href="#%E3%82%AF%E3%83%AD%E3%82%B9%E8%A1%A8%E3%82%92word%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99"><i class="fa fa-check"></i><b>6.7.2</b> クロス表をwordファイルに書き出す</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="tabulate.html"><a href="tabulate.html#tabulate_quiz"><i class="fa fa-check"></i><b>6.8</b> 練習問題</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>7</b> 回帰分析の基礎</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="regression.html"><a href="regression.html#regression_basic"><i class="fa fa-check"></i><b>7.1</b> 回帰分析とは何か</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="09-interaction.html"><a href="#%E6%95%A3%E5%B8%83%E5%9B%B3%E3%82%92%E7%9C%BA%E3%82%81%E3%82%8B"><i class="fa fa-check"></i><b>7.1.1</b> 散布図を眺める</a></li>
+<li class="chapter" data-level="7.1.2" data-path="09-interaction.html"><a href="#%E5%9B%9E%E5%B8%B0%E5%BC%8F%E3%81%AE%E8%AA%AD%E3%81%BF%E6%96%B9"><i class="fa fa-check"></i><b>7.1.2</b> 回帰式の読み方</a></li>
+<li class="chapter" data-level="7.1.3" data-path="regression.html"><a href="regression.html#ordinaryleastsquare"><i class="fa fa-check"></i><b>7.1.3</b> 回帰式の決め方：最小二乗法</a></li>
+<li class="chapter" data-level="7.1.4" data-path="09-interaction.html"><a href="#%E6%AF%8D%E9%9B%86%E5%9B%A3%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E9%96%A2%E4%BF%82%E3%81%AE%E6%8E%A8%E6%B8%AC"><i class="fa fa-check"></i><b>7.1.4</b> 母集団における関係の推測</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="regression.html"><a href="regression.html#regression_dummy"><i class="fa fa-check"></i><b>7.2</b> 独立変数がカテゴリ変数の場合</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="09-interaction.html"><a href="#%E5%80%A4%E3%81%AE%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA"><i class="fa fa-check"></i><b>7.2.1</b> 2値のカテゴリ</a></li>
+<li class="chapter" data-level="7.2.2" data-path="09-interaction.html"><a href="#%E5%80%A4%E4%BB%A5%E4%B8%8A%E3%81%AE%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA"><i class="fa fa-check"></i><b>7.2.2</b> 3値以上のカテゴリ</a></li>
+<li class="chapter" data-level="7.2.3" data-path="09-interaction.html"><a href="#%E5%A4%89%E6%95%B0%E3%81%8Cfactor%E3%81%A7%E3%81%82%E3%82%8C%E3%81%B0%E8%87%AA%E5%8B%95%E3%81%A7%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%81%A8%E3%81%97%E3%81%A6%E6%8A%95%E5%85%A5%E3%81%95%E3%82%8C%E3%82%8B"><i class="fa fa-check"></i><b>7.2.3</b> 変数がfactorであれば自動でカテゴリとして投入される</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="regression.html"><a href="regression.html#regression_binary"><i class="fa fa-check"></i><b>7.3</b> 従属変数が2値のカテゴリ変数（0/1）の場合</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="09-interaction.html"><a href="#%E3%82%AF%E3%83%AD%E3%82%B9%E8%A1%A8%E3%81%A8%E6%AF%94%E8%BC%83%E3%81%97%E3%81%AA%E3%81%8C%E3%82%89%E7%B5%90%E6%9E%9C%E3%82%92%E3%81%BF%E3%82%8B"><i class="fa fa-check"></i><b>7.3.1</b> クロス表と比較しながら結果をみる</a></li>
+<li class="chapter" data-level="7.3.2" data-path="09-interaction.html"><a href="#%E6%95%A3%E5%B8%83%E5%9B%B3%E3%81%A8%E6%AF%94%E8%BC%83%E3%81%97%E3%81%AA%E3%81%8C%E3%82%89%E7%B5%90%E6%9E%9C%E3%82%92%E3%81%BF%E3%82%8B"><i class="fa fa-check"></i><b>7.3.2</b> 散布図と比較しながら結果をみる</a></li>
+<li class="chapter" data-level="7.3.3" data-path="09-interaction.html"><a href="#%E6%B3%A8%E6%84%8F%E7%82%B9"><i class="fa fa-check"></i><b>7.3.3</b> 注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="regression.html"><a href="regression.html#regression_log"><i class="fa fa-check"></i><b>7.4</b> 非線形の関連：対数変換</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="09-interaction.html"><a href="#%E5%AF%BE%E6%95%B0%E5%A4%89%E6%8F%9B%E3%81%A8%E3%81%AF"><i class="fa fa-check"></i><b>7.4.1</b> 対数変換とは</a></li>
+<li class="chapter" data-level="7.4.2" data-path="09-interaction.html"><a href="#%E8%87%AA%E7%84%B6%E5%AF%BE%E6%95%B0%E3%81%A8%E5%AF%BE%E6%95%B0%E9%96%A2%E6%95%B0%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6"><i class="fa fa-check"></i><b>7.4.2</b> 自然対数と対数関数について</a></li>
+<li class="chapter" data-level="7.4.3" data-path="09-interaction.html"><a href="#%E5%AF%BE%E6%95%B0%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F%E5%A0%B4%E5%90%88%E3%81%AE%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90"><i class="fa fa-check"></i><b>7.4.3</b> 対数を使った場合の回帰分析</a></li>
+<li class="chapter" data-level="7.4.4" data-path="09-interaction.html"><a href="#%E5%BE%93%E5%B1%9E%E5%A4%89%E6%95%B0%E3%81%AE%E5%AF%BE%E6%95%B0%E3%82%92%E5%8F%96%E3%81%A3%E3%81%9F%E3%81%A8%E3%81%8D%E3%81%AE%E7%B5%90%E6%9E%9C%E3%81%AE%E8%A7%A3%E9%87%88"><i class="fa fa-check"></i><b>7.4.4</b> 従属変数の対数を取ったときの結果の解釈</a></li>
+<li class="chapter" data-level="7.4.5" data-path="09-interaction.html"><a href="#%E5%BE%93%E5%B1%9E%E5%A4%89%E6%95%B0%E3%81%BE%E3%81%9F%E3%81%AF%E7%8B%AC%E7%AB%8B%E5%A4%89%E6%95%B0%E3%82%92%E5%AF%BE%E6%95%B0%E5%A4%89%E6%8F%9B%E3%81%97%E3%81%9F%E3%81%A8%E3%81%8D%E3%81%AE%E8%A7%A3%E9%87%88"><i class="fa fa-check"></i><b>7.4.5</b> 従属変数または独立変数を対数変換したときの解釈</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="regression.html"><a href="regression.html#regression_quadratic"><i class="fa fa-check"></i><b>7.5</b> 非線形の関連：二次曲線型</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="09-interaction.html"><a href="#%E4%BA%8C%E6%AC%A1%E6%9B%B2%E7%B7%9A%E3%81%A8%E3%81%AF"><i class="fa fa-check"></i><b>7.5.1</b> 二次曲線とは</a></li>
+<li class="chapter" data-level="7.5.2" data-path="09-interaction.html"><a href="#%E5%A4%89%E6%95%B0%E3%81%AE%E4%BD%9C%E6%88%90%E3%81%A8%E7%B5%90%E6%9E%9C%E3%81%AE%E8%A7%A3%E9%87%88"><i class="fa fa-check"></i><b>7.5.2</b> 変数の作成と結果の解釈</a></li>
+<li class="chapter" data-level="7.5.3" data-path="09-interaction.html"><a href="#%E3%83%A2%E3%83%87%E3%83%AB%E9%81%B8%E6%8A%9E%E3%81%A8f%E6%A4%9C%E5%AE%9A"><i class="fa fa-check"></i><b>7.5.3</b> モデル選択とF検定</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="regression.html"><a href="regression.html#regression_modelsummary"><i class="fa fa-check"></i><b>7.6</b> 回帰分析の結果をきれいに表示する</a></li>
+<li class="chapter" data-level="7.7" data-path="regression.html"><a href="regression.html#regression_export"><i class="fa fa-check"></i><b>7.7</b> 結果をファイルに書き出す</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="09-interaction.html"><a href="#word%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AB%E6%9B%B8%E3%81%8D%E5%87%BA%E3%81%99"><i class="fa fa-check"></i><b>7.7.1</b> Wordファイルに書き出す</a></li>
+<li class="chapter" data-level="7.7.2" data-path="regression.html"><a href="regression.html#regression_output_pptx"><i class="fa fa-check"></i><b>7.7.2</b> PowerPointファイルに書き出す</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="regression.html"><a href="regression.html#regression_quiz"><i class="fa fa-check"></i><b>7.8</b> 練習問題</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="regression_advanced.html"><a href="regression_advanced.html"><i class="fa fa-check"></i><b>8</b> 回帰分析の活用</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="regression_advanced.html"><a href="regression_advanced.html#regression_advanced_multiple"><i class="fa fa-check"></i><b>8.1</b> 重回帰分析</a></li>
+<li class="chapter" data-level="8.2" data-path="09-interaction.html"><a href="#%E4%BA%A4%E7%B5%A1%E8%A6%81%E5%9B%A0%E3%81%AE%E7%B5%B1%E5%88%B6"><i class="fa fa-check"></i><b>8.2</b> 交絡要因の統制</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="09-interaction.html"><a href="#%E4%BA%A4%E7%B5%A1%E3%81%A8%E3%81%AF%E4%BD%95%E3%81%8B"><i class="fa fa-check"></i><b>8.2.1</b> 交絡とは何か</a></li>
+<li class="chapter" data-level="8.2.2" data-path="09-interaction.html"><a href="#%E7%B5%90%E6%9E%9C%E3%81%AE%E6%AF%94%E8%BC%83%E3%81%A8%E8%A7%A3%E9%87%88"><i class="fa fa-check"></i><b>8.2.2</b> 結果の比較と解釈</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="regression_advanced.html"><a href="regression_advanced.html#regression_advanced_control"><i class="fa fa-check"></i><b>8.3</b> 統制変数には何を含めるべきか</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="09-interaction.html"><a href="#x%E3%81%A8y%E4%B8%A1%E6%96%B9%E3%81%AE%E5%8E%9F%E5%9B%A0%E3%81%A8%E3%81%AA%E3%82%8B%E5%A4%89%E6%95%B0%E4%BA%A4%E7%B5%A1%E8%A6%81%E5%9B%A0%E7%B5%B1%E5%88%B6%E3%81%99%E3%81%B9%E3%81%8D"><i class="fa fa-check"></i><b>8.3.1</b> XとY両方の原因となる変数（交絡要因）：統制すべき</a></li>
+<li class="chapter" data-level="8.3.2" data-path="09-interaction.html"><a href="#x%E3%81%AE%E7%B5%90%E6%9E%9C%E3%81%A7%E3%81%82%E3%82%8Ay%E3%81%AE%E5%8E%9F%E5%9B%A0%E3%81%A7%E3%81%82%E3%82%8B%E5%A4%89%E6%95%B0%E5%AA%92%E4%BB%8B%E8%A6%81%E5%9B%A0%E5%A0%B4%E5%90%88%E3%81%AB%E3%82%88%E3%82%8B"><i class="fa fa-check"></i><b>8.3.2</b> Xの結果であり、Yの原因である変数（媒介要因）：場合による</a></li>
+<li class="chapter" data-level="8.3.3" data-path="09-interaction.html"><a href="#x%E3%81%AE%E7%B5%90%E6%9E%9C%E3%81%A7%E3%81%82%E3%82%8Ay%E3%81%AE%E7%B5%90%E6%9E%9C%E3%81%A7%E3%81%82%E3%82%8B%E5%A4%89%E6%95%B0%E7%B5%B1%E5%88%B6%E3%81%99%E3%81%B9%E3%81%8D%E3%81%A7%E3%81%AA%E3%81%84"><i class="fa fa-check"></i><b>8.3.3</b> Xの結果であり、Yの結果である変数：統制すべきでない</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="regression_advanced.html"><a href="regression_advanced.html#regression_advanced_real"><i class="fa fa-check"></i><b>8.4</b> 回帰分析の実際</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="09-interaction.html"><a href="#%E4%BA%A4%E7%B5%A1%E3%81%A8%E5%AA%92%E4%BB%8B"><i class="fa fa-check"></i><b>8.4.1</b> 交絡と媒介</a></li>
+<li class="chapter" data-level="8.4.2" data-path="09-interaction.html"><a href="#%E5%BE%93%E5%B1%9E%E5%A4%89%E6%95%B0%E3%82%92%E5%AF%BE%E6%95%B0%E5%A4%89%E6%8F%9B%E3%81%97%E3%81%9F%E5%A0%B4%E5%90%88%E3%81%AE%E8%A7%A3%E9%87%88broom%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8%E3%81%AE%E6%B4%BB%E7%94%A8"><i class="fa fa-check"></i><b>8.4.2</b> 従属変数を対数変換した場合の解釈：broomパッケージの活用</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="regression_advanced.html"><a href="regression_advanced.html#regression_trouble"><i class="fa fa-check"></i><b>8.5</b> 回帰分析でありがちな困りごとへの対処</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="09-interaction.html"><a href="#%E5%8F%82%E7%85%A7%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E3%81%AE%E5%85%A5%E3%82%8C%E6%9B%BF%E3%81%88"><i class="fa fa-check"></i><b>8.5.1</b> 参照カテゴリの入れ替え</a></li>
+<li class="chapter" data-level="8.5.2" data-path="09-interaction.html"><a href="#%E5%8D%98%E4%BD%8D%E3%81%AE%E5%A4%89%E6%9B%B4"><i class="fa fa-check"></i><b>8.5.2</b> 単位の変更</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="regression_advanced.html"><a href="regression_advanced.html#regression_advanced_export"><i class="fa fa-check"></i><b>8.6</b> 結果をファイルに書き出す</a></li>
+<li class="chapter" data-level="8.7" data-path="regression_advanced.html"><a href="regression_advanced.html#regression_advanced_quiz"><i class="fa fa-check"></i><b>8.7</b> 練習問題</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="interaction.html"><a href="interaction.html"><i class="fa fa-check"></i><b>9</b> 交互作用</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="interaction.html"><a href="interaction.html#interaction_basic"><i class="fa fa-check"></i><b>9.1</b> 交互作用とはなにか</a></li>
+<li class="chapter" data-level="9.2" data-path="interaction.html"><a href="interaction.html#interaction_continuous_category"><i class="fa fa-check"></i><b>9.2</b> xが連続変数、zがカテゴリ変数（またはその逆）の場合</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="09-interaction.html"><a href="#%E5%AE%9F%E4%BE%8B%E6%95%B0%E7%9A%84%E6%80%9D%E8%80%83%E5%8A%9B%E3%81%8C%E8%B3%83%E9%87%91%E3%82%92%E9%AB%98%E3%82%81%E3%82%8B%E5%8A%B9%E6%9E%9C%E3%81%AF%E6%80%A7%E5%88%A5%E3%81%AB%E3%82%88%E3%81%A3%E3%81%A6%E7%95%B0%E3%81%AA%E3%82%8B%E3%81%8B"><i class="fa fa-check"></i><b>9.2.1</b> 実例：数的思考力が賃金を高める効果は性別によって異なるか？</a></li>
+<li class="chapter" data-level="9.2.2" data-path="09-interaction.html"><a href="#%E7%B5%90%E6%9E%9C%E3%82%92%E5%9B%B3%E7%A4%BA%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>9.2.2</b> 結果を図示する</a></li>
+<li class="chapter" data-level="9.2.3" data-path="09-interaction.html"><a href="#x%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0z%E3%81%8C%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88"><i class="fa fa-check"></i><b>9.2.3</b> xがカテゴリ変数、zが連続変数の場合</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="interaction.html"><a href="interaction.html#interaction_category_category"><i class="fa fa-check"></i><b>9.3</b> xがカテゴリ変数、zがカテゴリ変数の場合</a></li>
+<li class="chapter" data-level="9.4" data-path="interaction.html"><a href="interaction.html#interaction_continuous_continuous"><i class="fa fa-check"></i><b>9.4</b> xが連続変数、zが連続変数の場合（作成中）</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="logit.html"><a href="logit.html"><i class="fa fa-check"></i><b>10</b> ロジスティック回帰分析</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="09-interaction.html"><a href="#%E4%BA%8C%E5%80%A4%E5%A4%89%E6%95%B0%E3%82%92%E5%BE%93%E5%B1%9E%E5%A4%89%E6%95%B0%E3%81%AB%E3%81%99%E3%82%8B%E7%B7%9A%E5%BD%A2%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%81%AB%E3%82%88%E3%82%8B%E6%96%B9%E6%B3%95"><i class="fa fa-check"></i><b>10.1</b> 二値変数を従属変数にする：線形回帰分析による方法</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="09-interaction.html"><a href="#%E7%B7%9A%E5%BD%A2%E7%A2%BA%E7%8E%87%E3%83%A2%E3%83%87%E3%83%AB"><i class="fa fa-check"></i><b>10.1.1</b> 線形確率モデル</a></li>
+<li class="chapter" data-level="10.1.2" data-path="09-interaction.html"><a href="#%E3%83%AD%E3%83%90%E3%82%B9%E3%83%88%E6%A8%99%E6%BA%96%E8%AA%A4%E5%B7%AE%E6%AE%8B%E5%B7%AE%E3%81%8C%E6%AD%A3%E8%A6%8F%E5%88%86%E5%B8%83%E3%81%97%E3%81%AA%E3%81%84%E5%95%8F%E9%A1%8C%E3%81%B8%E3%81%AE%E5%AF%BE%E5%87%A6"><i class="fa fa-check"></i><b>10.1.2</b> ロバスト標準誤差：残差が正規分布しない問題への対処</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="09-interaction.html"><a href="#%E3%83%AD%E3%82%B8%E3%82%B9%E3%83%86%E3%82%A3%E3%83%83%E3%82%AF%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%81%A8%E3%81%AF"><i class="fa fa-check"></i><b>10.2</b> ロジスティック回帰分析とは</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="09-interaction.html"><a href="#%E7%B7%9A%E5%BD%A2%E7%A2%BA%E7%8E%87%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E5%95%8F%E9%A1%8C%E7%82%B9"><i class="fa fa-check"></i><b>10.2.1</b> 線形確率モデルの問題点</a></li>
+<li class="chapter" data-level="10.2.2" data-path="09-interaction.html"><a href="#%E5%AF%BE%E6%95%B0%E3%82%AA%E3%83%83%E3%82%BA%E6%AF%94%E5%8A%B9%E6%9E%9C%E3%82%92%E6%AF%94%E3%81%A7%E6%B8%AC%E5%AE%9A%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>10.2.2</b> （対数）オッズ比：効果を「比」で測定する</a></li>
+<li class="chapter" data-level="10.2.3" data-path="09-interaction.html"><a href="#%E3%83%AD%E3%82%B8%E3%82%B9%E3%83%86%E3%82%A3%E3%83%83%E3%82%AF%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90%E3%83%AD%E3%82%B8%E3%83%83%E3%83%88%E3%83%A2%E3%83%87%E3%83%AB"><i class="fa fa-check"></i><b>10.2.3</b> ロジスティック回帰分析（ロジットモデル）</a></li>
+<li class="chapter" data-level="10.2.4" data-path="09-interaction.html"><a href="#%E7%9B%B4%E7%B7%9A%E3%81%A8%E3%83%AD%E3%82%B8%E3%82%B9%E3%83%86%E3%82%A3%E3%83%83%E3%82%AF%E6%9B%B2%E7%B7%9A"><i class="fa fa-check"></i><b>10.2.4</b> 直線とロジスティック曲線</a></li>
+<li class="chapter" data-level="10.2.5" data-path="09-interaction.html"><a href="#%E6%8E%A8%E5%AE%9A"><i class="fa fa-check"></i><b>10.2.5</b> 推定</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="09-interaction.html"><a href="#%E6%9C%80%E5%B0%A4%E6%8E%A8%E5%AE%9A%E4%BD%9C%E6%88%90%E4%B8%AD"><i class="fa fa-check"></i><b>10.3</b> 最尤推定（作成中）</a></li>
+<li class="chapter" data-level="10.4" data-path="09-interaction.html"><a href="#%E8%A7%A3%E9%87%88%E3%82%92%E6%B7%B1%E3%82%81%E3%82%8B"><i class="fa fa-check"></i><b>10.4</b> 解釈を深める</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="09-interaction.html"><a href="#%E7%B7%9A%E5%BD%A2%E7%A2%BA%E7%8E%87%E3%83%A2%E3%83%87%E3%83%AB%E3%81%A8%E3%83%AD%E3%82%B8%E3%83%83%E3%83%88%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%AF%94%E8%BC%83"><i class="fa fa-check"></i><b>10.4.1</b> 線形確率モデルとロジットモデルの比較</a></li>
+<li class="chapter" data-level="10.4.2" data-path="09-interaction.html"><a href="#%E5%B9%B3%E5%9D%87%E9%99%90%E7%95%8C%E5%8A%B9%E6%9E%9C"><i class="fa fa-check"></i><b>10.4.2</b> 平均限界効果</a></li>
+<li class="chapter" data-level="10.4.3" data-path="09-interaction.html"><a href="#margins%E5%B9%B3%E5%9D%87%E9%99%90%E7%95%8C%E5%8A%B9%E6%9E%9C%E3%82%92%E8%A8%88%E7%AE%97%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>10.4.3</b> margins()：平均限界効果を計算する</a></li>
+<li class="chapter" data-level="10.4.4" data-path="09-interaction.html"><a href="#%E7%B7%9A%E5%BD%A2%E7%A2%BA%E7%8E%87%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E7%B5%90%E6%9E%9C%E3%81%A8%E3%81%AE%E6%AF%94%E8%BC%83"><i class="fa fa-check"></i><b>10.4.4</b> 線形確率モデルの結果との比較</a></li>
+<li class="chapter" data-level="10.4.5" data-path="09-interaction.html"><a href="#%E3%83%AD%E3%82%B8%E3%83%83%E3%83%88%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%B3%A8%E6%84%8F%E7%82%B9%E3%83%A2%E3%83%87%E3%83%AB%E9%96%93%E6%AF%94%E8%BC%83"><i class="fa fa-check"></i><b>10.4.5</b> ロジットモデルの注意点：モデル間比較</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="09-interaction.html"><a href="#%E3%81%BE%E3%81%A8%E3%82%81"><i class="fa fa-check"></i><b>10.5</b> まとめ</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="paneldata.html"><a href="paneldata.html"><i class="fa fa-check"></i><b>11</b> パネルデータ分析（作成中）</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="paneldata.html"><a href="paneldata.html#paneldata_basic"><i class="fa fa-check"></i><b>11.1</b> パネルデータの基本的特徴</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="09-interaction.html"><a href="#%E3%83%91%E3%83%8D%E3%83%AB%E3%83%87%E3%83%BC%E3%82%BF%E3%81%A8%E3%81%AF"><i class="fa fa-check"></i><b>11.1.1</b> パネルデータとは</a></li>
+<li class="chapter" data-level="11.1.2" data-path="09-interaction.html"><a href="#wide%E5%BD%A2%E5%BC%8F%E3%81%A8long%E5%BD%A2%E5%BC%8F"><i class="fa fa-check"></i><b>11.1.2</b> wide形式とlong形式</a></li>
+<li class="chapter" data-level="11.1.3" data-path="09-interaction.html"><a href="#%E6%99%82%E9%96%93%E5%8F%AF%E5%A4%89%E3%81%A8%E6%99%82%E9%96%93%E4%B8%8D%E5%A4%89"><i class="fa fa-check"></i><b>11.1.3</b> 時間可変と時間不変</a></li>
+<li class="chapter" data-level="11.1.4" data-path="paneldata.html"><a href="paneldata.html#within_between_variation"><i class="fa fa-check"></i><b>11.1.4</b> 個人内変動と個人間変動</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="paneldata.html"><a href="paneldata.html#paneldata_descriptive"><i class="fa fa-check"></i><b>11.2</b> パネルデータの特徴記述</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="09-interaction.html"><a href="#%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E3%83%87%E3%83%BC%E3%82%BF"><i class="fa fa-check"></i><b>11.2.1</b> サンプルデータ</a></li>
+<li class="chapter" data-level="11.2.2" data-path="09-interaction.html"><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E6%98%87%E9%A0%86%E3%81%BE%E3%81%9F%E3%81%AF%E9%99%8D%E9%A0%86%E3%81%AB%E4%B8%A6%E3%81%B9%E6%9B%BF%E3%81%88%E3%82%8Barrange"><i class="fa fa-check"></i><b>11.2.2</b> データを昇順または降順に並べ替える：<code>arrange()</code></a></li>
+<li class="chapter" data-level="11.2.3" data-path="09-interaction.html"><a href="#%E4%B8%8A%E3%81%AE%E8%A1%8C%E4%B8%8B%E3%81%AE%E8%A1%8C%E3%81%AE%E5%80%A4%E3%82%92%E3%82%B3%E3%83%94%E3%83%BC%E3%81%99%E3%82%8Blag-lead"><i class="fa fa-check"></i><b>11.2.3</b> 上の行、下の行の値をコピーする：<code>lag()</code> <code>lead()</code></a></li>
+<li class="chapter" data-level="11.2.4" data-path="09-interaction.html"><a href="#%E3%83%91%E3%83%8D%E3%83%AB%E3%83%87%E3%83%BC%E3%82%BF%E7%89%B9%E6%9C%89%E3%81%AE%E8%A8%98%E8%BF%B0%E7%B5%B1%E8%A8%88%E9%87%8Fxtsum"><i class="fa fa-check"></i><b>11.2.4</b> パネルデータ特有の記述統計量：<code>xtsum</code></a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="paneldata.html"><a href="paneldata.html#paneldata_pols"><i class="fa fa-check"></i><b>11.3</b> Pooled OLS</a></li>
+<li class="chapter" data-level="11.4" data-path="paneldata.html"><a href="paneldata.html#paneldata_fe"><i class="fa fa-check"></i><b>11.4</b> 固定効果モデル</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="09-interaction.html"><a href="#%E5%9B%BA%E5%AE%9A%E5%8A%B9%E6%9E%9C%E3%83%A2%E3%83%87%E3%83%AB%E3%81%A8%E3%81%AF"><i class="fa fa-check"></i><b>11.4.1</b> 固定効果モデルとは</a></li>
+<li class="chapter" data-level="11.4.2" data-path="09-interaction.html"><a href="#%E6%8E%A8%E5%AE%9A%E6%96%B9%E6%B3%95fixestfeols"><i class="fa fa-check"></i><b>11.4.2</b> 推定方法：<code>fixest::feols()</code></a></li>
+<li class="chapter" data-level="11.4.3" data-path="09-interaction.html"><a href="#%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%AD%E3%83%90%E3%82%B9%E3%83%88%E6%A8%99%E6%BA%96%E8%AA%A4%E5%B7%AE"><i class="fa fa-check"></i><b>11.4.3</b> クラスター・ロバスト標準誤差</a></li>
+<li class="chapter" data-level="11.4.4" data-path="09-interaction.html"><a href="#%E4%BA%8C%E6%96%B9%E5%90%91%E5%9B%BA%E5%AE%9A%E5%8A%B9%E6%9E%9C%E3%83%A2%E3%83%87%E3%83%AB"><i class="fa fa-check"></i><b>11.4.4</b> 二方向固定効果モデル</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="paneldata.html"><a href="paneldata.html#paneldata_pols_fe_compare"><i class="fa fa-check"></i><b>11.5</b> 両者の比較</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="09-interaction.html"><a href="#%E5%9B%9E%E3%81%97%E3%81%8B%E8%A6%B3%E5%AF%9F%E3%81%8C%E5%BE%97%E3%82%89%E3%82%8C%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84%E5%80%8B%E4%BA%BA%E3%82%92%E9%99%A4%E5%A4%96%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>11.5.1</b> 1回しか観察が得られていない個人を除外する</a></li>
+<li class="chapter" data-level="11.5.2" data-path="09-interaction.html"><a href="#pooled-ols%E3%81%A8%E5%9B%BA%E5%AE%9A%E5%8A%B9%E6%9E%9C%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%AF%94%E8%BC%83"><i class="fa fa-check"></i><b>11.5.2</b> Pooled OLSと固定効果モデルの比較</a></li>
+<li class="chapter" data-level="11.5.3" data-path="09-interaction.html"><a href="#%E5%80%8B%E4%BA%BA%E9%96%93%E5%8A%B9%E6%9E%9C%E3%81%A8%E5%80%8B%E4%BA%BA%E5%86%85%E5%8A%B9%E6%9E%9C"><i class="fa fa-check"></i><b>11.5.3</b> 個人間効果と個人内効果</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="paneldata.html"><a href="paneldata.html#paneldata_notes"><i class="fa fa-check"></i><b>11.6</b> 固定効果モデルの注意点</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="domain.html"><a href="domain.html"><i class="fa fa-check"></i><b>12</b> 社会学のデータ分析でよくある処理</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="domain.html"><a href="domain.html#domain_ssmocc"><i class="fa fa-check"></i><b>12.1</b> SSM職業小分類を大分類にまとめる</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="09-interaction.html"><a href="#jgss%E3%81%AE%E5%A0%B4%E5%90%88"><i class="fa fa-check"></i><b>12.1.1</b> JGSSの場合</a></li>
+<li class="chapter" data-level="12.1.2" data-path="09-interaction.html"><a href="#ssm%E3%81%AE%E5%A0%B4%E5%90%88"><i class="fa fa-check"></i><b>12.1.2</b> SSMの場合</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="domain.html"><a href="domain.html#domain_education"><i class="fa fa-check"></i><b>12.2</b> 旧制学歴と新制学歴の対応</a></li>
+<li class="chapter" data-level="12.3" data-path="domain.html"><a href="domain.html#domain_income"><i class="fa fa-check"></i><b>12.3</b> 年収カテゴリを連続変数にする</a>
+<ul>
+<li class="chapter" data-level="12.3.1" data-path="09-interaction.html"><a href="#%E5%B9%B4%E5%8F%8E%E3%82%92%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%AB%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>12.3.1</b> 年収を連続変数にする</a></li>
+<li class="chapter" data-level="12.3.2" data-path="09-interaction.html"><a href="#%E6%99%82%E9%96%93%E3%81%82%E3%81%9F%E3%82%8A%E8%B3%83%E9%87%91%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>12.3.2</b> 時間あたり賃金を作成する</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="domain.html"><a href="domain.html#domain_prefecture"><i class="fa fa-check"></i><b>12.4</b> 都道府県変数の加工</a>
+<ul>
+<li class="chapter" data-level="12.4.1" data-path="09-interaction.html"><a href="#%E9%83%BD%E9%81%93%E5%BA%9C%E7%9C%8C%E3%81%AB%E3%83%A9%E3%83%99%E3%83%AB%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B"><i class="fa fa-check"></i><b>12.4.1</b> 都道府県にラベルをつける</a></li>
+<li class="chapter" data-level="12.4.2" data-path="09-interaction.html"><a href="#%E9%83%BD%E9%81%93%E5%BA%9C%E7%9C%8C%E3%83%AC%E3%83%99%E3%83%AB%E3%81%AE%E6%8C%87%E6%A8%99%E3%82%92%E5%A4%96%E6%8C%BF%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>12.4.2</b> 都道府県レベルの指標を外挿する</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="domain.html"><a href="domain.html#domain_tenure"><i class="fa fa-check"></i><b>12.5</b> SSM職歴データから現職の勤続年数を作成する</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="writepaper.html"><a href="writepaper.html"><i class="fa fa-check"></i><b>13</b> 論文のまとめ方</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="writepaper.html"><a href="writepaper.html#writepaper_structure"><i class="fa fa-check"></i><b>13.1</b> 全体の構成</a></li>
+<li class="chapter" data-level="13.2" data-path="writepaper.html"><a href="writepaper.html#writepaper_title"><i class="fa fa-check"></i><b>13.2</b> タイトル</a></li>
+<li class="chapter" data-level="13.3" data-path="writepaper.html"><a href="writepaper.html#writepaper_summary"><i class="fa fa-check"></i><b>13.3</b> 要約</a></li>
+<li class="chapter" data-level="13.4" data-path="writepaper.html"><a href="writepaper.html#writepaper_introduction"><i class="fa fa-check"></i><b>13.4</b> 序論</a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="09-interaction.html"><a href="#%E5%95%8F%E9%A1%8C%E8%83%8C%E6%99%AF1%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>13.4.1</b> 問題背景（1段落）</a></li>
+<li class="chapter" data-level="13.4.2" data-path="09-interaction.html"><a href="#%E5%85%88%E8%A1%8C%E7%A0%94%E7%A9%B6%E3%81%AE%E6%A4%9C%E8%A8%8E12%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>13.4.2</b> 先行研究の検討（1–2段落）</a></li>
+<li class="chapter" data-level="13.4.3" data-path="09-interaction.html"><a href="#%E7%A0%94%E7%A9%B6%E7%9B%AE%E7%9A%84%E3%81%A8%E6%96%B9%E6%B3%9512%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>13.4.3</b> 研究目的と方法（1–2段落）</a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="writepaper.html"><a href="writepaper.html#writepaper_theory"><i class="fa fa-check"></i><b>13.5</b> 先行研究・理論枠組み・仮説</a></li>
+<li class="chapter" data-level="13.6" data-path="writepaper.html"><a href="writepaper.html#writepaper_method"><i class="fa fa-check"></i><b>13.6</b> 方法</a>
+<ul>
+<li class="chapter" data-level="13.6.1" data-path="09-interaction.html"><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%81%A8%E5%88%86%E6%9E%90%E5%AF%BE%E8%B1%A1"><i class="fa fa-check"></i><b>13.6.1</b> データと分析対象</a></li>
+<li class="chapter" data-level="13.6.2" data-path="09-interaction.html"><a href="#%E5%A4%89%E6%95%B0"><i class="fa fa-check"></i><b>13.6.2</b> 変数</a></li>
+<li class="chapter" data-level="13.6.3" data-path="09-interaction.html"><a href="#%E5%88%86%E6%9E%90%E6%89%8B%E6%B3%95"><i class="fa fa-check"></i><b>13.6.3</b> 分析手法</a></li>
+</ul></li>
+<li class="chapter" data-level="13.7" data-path="writepaper.html"><a href="writepaper.html#writepaper_results"><i class="fa fa-check"></i><b>13.7</b> 結果</a>
+<ul>
+<li class="chapter" data-level="13.7.1" data-path="09-interaction.html"><a href="#%E8%A8%98%E8%BF%B0%E7%9A%84%E5%88%86%E6%9E%90"><i class="fa fa-check"></i><b>13.7.1</b> 記述的分析</a></li>
+<li class="chapter" data-level="13.7.2" data-path="09-interaction.html"><a href="#%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90"><i class="fa fa-check"></i><b>13.7.2</b> 回帰分析</a></li>
+</ul></li>
+<li class="chapter" data-level="13.8" data-path="writepaper.html"><a href="writepaper.html#writepaper_conclusion"><i class="fa fa-check"></i><b>13.8</b> 結論</a>
+<ul>
+<li class="chapter" data-level="13.8.1" data-path="09-interaction.html"><a href="#%E8%83%8C%E6%99%AF%E3%81%A8%E7%9B%AE%E7%9A%84%E3%81%AE%E5%86%8D%E7%A2%BA%E8%AA%8D1%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>13.8.1</b> 背景と目的の再確認（1段落）</a></li>
+<li class="chapter" data-level="13.8.2" data-path="09-interaction.html"><a href="#%E5%88%86%E6%9E%90%E7%B5%90%E6%9E%9C%E3%81%AE%E8%A6%81%E7%B4%84%E3%81%A8%E8%A7%A3%E9%87%88%E8%AD%B0%E8%AB%9624%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>13.8.2</b> 分析結果の要約と解釈・議論（2–4段落）</a></li>
+<li class="chapter" data-level="13.8.3" data-path="09-interaction.html"><a href="#%E8%AA%B2%E9%A1%8C%E9%99%90%E7%95%8C1%E6%AE%B5%E8%90%BD"><i class="fa fa-check"></i><b>13.8.3</b> 課題・限界（1段落）</a></li>
+<li class="chapter" data-level="13.8.4" data-path="09-interaction.html"><a href="#%E3%81%BE%E3%81%A8%E3%82%811%E6%AE%B5%E8%90%BD%E4%BB%BB%E6%84%8F"><i class="fa fa-check"></i><b>13.8.4</b> まとめ（1段落、任意）</a></li>
+</ul></li>
+<li class="chapter" data-level="13.9" data-path="writepaper.html"><a href="writepaper.html#writepaper_acknowledgment"><i class="fa fa-check"></i><b>13.9</b> 謝辞</a></li>
+<li class="chapter" data-level="13.10" data-path="writepaper.html"><a href="writepaper.html#writepaper_reference"><i class="fa fa-check"></i><b>13.10</b> 参考文献</a>
+<ul>
+<li class="chapter" data-level="13.10.1" data-path="09-interaction.html"><a href="#%E6%9B%B8%E7%B1%8D%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>13.10.1</b> 書籍の場合の書き方</a></li>
+<li class="chapter" data-level="13.10.2" data-path="09-interaction.html"><a href="#%E7%B7%A8%E8%91%97%E6%9B%B8%E7%B1%8D%E4%B8%AD%E3%81%AE%E8%AB%96%E6%96%87%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>13.10.2</b> 編著書籍中の論文の場合の書き方</a></li>
+<li class="chapter" data-level="13.10.3" data-path="09-interaction.html"><a href="#%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%81%AE%E9%9B%91%E8%AA%8C%E8%AB%96%E6%96%87%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>13.10.3</b> 日本語の雑誌論文の場合の書き方</a></li>
+<li class="chapter" data-level="13.10.4" data-path="09-interaction.html"><a href="#%E8%8B%B1%E8%AA%9E%E3%81%AE%E9%9B%91%E8%AA%8C%E8%AB%96%E6%96%87%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>13.10.4</b> 英語の雑誌論文の場合の書き方</a></li>
+<li class="chapter" data-level="13.10.5" data-path="09-interaction.html"><a href="#%E8%8B%B1%E8%AA%9E%E3%81%AE%E6%9B%B8%E7%B1%8D%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>13.10.5</b> 英語の書籍の場合の書き方</a></li>
+<li class="chapter" data-level="13.10.6" data-path="09-interaction.html"><a href="#%E7%BF%BB%E8%A8%B3%E6%9B%B8%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>13.10.6</b> 翻訳書の場合の書き方</a></li>
+<li class="chapter" data-level="13.10.7" data-path="09-interaction.html"><a href="#%E3%82%A6%E3%82%A7%E3%83%96%E3%82%B5%E3%82%A4%E3%83%88%E3%81%AE%E5%A0%B4%E5%90%88%E3%81%AE%E6%9B%B8%E3%81%8D%E6%96%B9"><i class="fa fa-check"></i><b>13.10.7</b> ウェブサイトの場合の書き方</a></li>
+</ul></li>
+<li class="chapter" data-level="13.11" data-path="writepaper.html"><a href="writepaper.html#writepaper_style"><i class="fa fa-check"></i><b>13.11</b> そのほかの形式上の注意事項</a>
+<ul>
+<li class="chapter" data-level="13.11.1" data-path="09-interaction.html"><a href="#%E6%8E%A8%E5%A5%A8%E3%81%99%E3%82%8Bword%E3%81%AE%E8%A8%AD%E5%AE%9A"><i class="fa fa-check"></i><b>13.11.1</b> 推奨するWordの設定</a></li>
+<li class="chapter" data-level="13.11.2" data-path="09-interaction.html"><a href="#%E5%BC%95%E7%94%A8%E3%81%AE%E5%BD%A2%E5%BC%8F"><i class="fa fa-check"></i><b>13.11.2</b> 引用の形式</a></li>
+<li class="chapter" data-level="13.11.3" data-path="09-interaction.html"><a href="#%E5%9B%B3%E8%A1%A8%E3%81%AE%E5%BD%A2%E5%BC%8F"><i class="fa fa-check"></i><b>13.11.3</b> 図表の形式</a></li>
+<li class="chapter" data-level="13.11.4" data-path="09-interaction.html"><a href="#%E8%84%9A%E6%B3%A8"><i class="fa fa-check"></i><b>13.11.4</b> 脚注</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="presentation.html"><a href="presentation.html"><i class="fa fa-check"></i><b>14</b> 研究発表をする</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="presentation.html"><a href="presentation.html#presentation_outline"><i class="fa fa-check"></i><b>14.1</b> 発表の構成</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="09-interaction.html"><a href="#%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB"><i class="fa fa-check"></i><b>14.1.1</b> タイトル</a></li>
+<li class="chapter" data-level="14.1.2" data-path="09-interaction.html"><a href="#%E5%BA%8F%E8%AB%96"><i class="fa fa-check"></i><b>14.1.2</b> 序論</a></li>
+<li class="chapter" data-level="14.1.3" data-path="09-interaction.html"><a href="#%E6%96%B9%E6%B3%95"><i class="fa fa-check"></i><b>14.1.3</b> 方法</a></li>
+<li class="chapter" data-level="14.1.4" data-path="09-interaction.html"><a href="#%E5%88%86%E6%9E%90%E7%B5%90%E6%9E%9C"><i class="fa fa-check"></i><b>14.1.4</b> 分析結果</a></li>
+<li class="chapter" data-level="14.1.5" data-path="09-interaction.html"><a href="#%E7%B5%90%E8%AB%96"><i class="fa fa-check"></i><b>14.1.5</b> 結論</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="presentation.html"><a href="presentation.html#presentation_tips"><i class="fa fa-check"></i><b>14.2</b> その他発表に際して気をつけるとよいこと</a>
+<ul>
+<li class="chapter" data-level="14.2.1" data-path="09-interaction.html"><a href="#%E4%BA%8B%E5%89%8D%E3%81%AB%E7%99%BA%E8%A1%A8%E7%B7%B4%E7%BF%92%E3%82%92%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>14.2.1</b> 事前に発表練習をする</a></li>
+<li class="chapter" data-level="14.2.2" data-path="09-interaction.html"><a href="#%E6%96%87%E5%AD%97%E3%81%AF%E5%A4%A7%E3%81%8D%E3%81%8F%E5%B0%91%E3%81%AA%E3%81%8F"><i class="fa fa-check"></i><b>14.2.2</b> 文字は大きく少なく</a></li>
+<li class="chapter" data-level="14.2.3" data-path="09-interaction.html"><a href="#%E3%82%B9%E3%83%A9%E3%82%A4%E3%83%89%E3%81%AB%E3%81%AF%E3%83%9A%E3%83%BC%E3%82%B8%E6%95%B0%E3%82%92%E6%9B%B8%E3%81%8F"><i class="fa fa-check"></i><b>14.2.3</b> スライドにはページ数を書く</a></li>
+<li class="chapter" data-level="14.2.4" data-path="09-interaction.html"><a href="#%E3%82%B9%E3%83%A9%E3%82%A4%E3%83%89%E3%81%A4%E3%81%8F%E3%82%8A%E3%81%AE%E5%8F%82%E8%80%83%E8%B3%87%E6%96%99"><i class="fa fa-check"></i><b>14.2.4</b> スライドつくりの参考資料</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>15</b> さらなる学習のための参考文献等</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="reference.html"><a href="reference.html#reference_skill"><i class="fa fa-check"></i><b>15.1</b> 実証研究の基礎スキル</a></li>
+<li class="chapter" data-level="15.2" data-path="reference.html"><a href="reference.html#reference_r"><i class="fa fa-check"></i><b>15.2</b> Rの使い方</a></li>
+<li class="chapter" data-level="15.3" data-path="reference.html"><a href="reference.html#reference_ggplot"><i class="fa fa-check"></i><b>15.3</b> ggplotの解説</a></li>
+<li class="chapter" data-level="15.4" data-path="reference.html"><a href="reference.html#reference_statistics"><i class="fa fa-check"></i><b>15.4</b> 統計学・計量分析を学ぶ</a></li>
+<li class="chapter" data-level="15.5" data-path="reference.html"><a href="reference.html#reference_data"><i class="fa fa-check"></i><b>15.5</b> 簡単に利用できる個票データ</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Rによる社会調査データ分析の手引き</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="interaction" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> 交互作用<a href="interaction.html#interaction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>本章では、前章で学んだ回帰分析において、独立変数の効果が他の独立変数によって異なるかどうか（<strong>交互作用</strong>）を検証するための方法について説明する。</p>
+<p>内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project…」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。</p>
+<p>さらに、これまでの章で説明した以下のパッケージを読み込んだ上で、<a href="handling.html#handling">第4章</a>で作成したデータを読み込んで<code>piaac</code>というデータフレームに入れていることを前提とする。具体的には、以下のコードを実行しておく必要がある。</p>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="interaction.html#cb329-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb329-2"><a href="interaction.html#cb329-2" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb329-3"><a href="interaction.html#cb329-3" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb329-4"><a href="interaction.html#cb329-4" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb329-5"><a href="interaction.html#cb329-5" tabindex="-1"></a></span>
+<span id="cb329-6"><a href="interaction.html#cb329-6" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
+<p><a href="descriptives.html#descriptives_ggplot">第5章で確認したように</a>、ggplotの設定を変更しておくことで見やすいグラフを作ることができる。ここでは以下のコードを実行している。</p>
+<p>Macの場合：</p>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="interaction.html#cb330-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb330-2"><a href="interaction.html#cb330-2" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;HiraginoSans-W3&quot;</span>,</span>
+<span id="cb330-3"><a href="interaction.html#cb330-3" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb330-4"><a href="interaction.html#cb330-4" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb330-5"><a href="interaction.html#cb330-5" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb330-6"><a href="interaction.html#cb330-6" tabindex="-1"></a>))</span></code></pre></div>
+<p>Windowsの場合：</p>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="interaction.html#cb331-1" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>(</span>
+<span id="cb331-2"><a href="interaction.html#cb331-2" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">11</span>,</span>
+<span id="cb331-3"><a href="interaction.html#cb331-3" tabindex="-1"></a>  <span class="at">base_rect_size =</span> <span class="fl">0.2</span>,</span>
+<span id="cb331-4"><a href="interaction.html#cb331-4" tabindex="-1"></a>  <span class="at">base_line_size =</span> <span class="fl">0.2</span></span>
+<span id="cb331-5"><a href="interaction.html#cb331-5" tabindex="-1"></a>))</span></code></pre></div>
+<div id="interaction_basic" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> 交互作用とはなにか<a href="interaction.html#interaction_basic" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>ある独立変数が従属変数に与える効果が別の変数によって異なることを指して、<strong>交互作用（interaction）</strong>がある、または<strong>調整効果（moderation effect）</strong>があるという。例えば以下のような例がある。</p>
+<ul>
+<li>子どもを出産すると、女性の賃金は下がる一方で、男性の賃金は下がらないかむしろ上がる（出産が賃金に与える効果が性別によって異なる）<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a>。</li>
+<li>出身階層が高いほど高い学歴を得やすいという傾向は、近年の世代（コーホート）ほど弱い（出身階層が教育達成に与える効果がコーホートによって異なる）<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>。</li>
+<li>出身階層が到達階層に与える効果は、非大卒層よりも大卒層においてより大きい（出身階層が到達階層に与える効果が学歴によって異なる）<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>。</li>
+<li>州が公的支出を行うと、高所得層の子どもに対する支出額は変わらないが、低所得層の子どもに対する支出額は増加する（公的投資が子どもに対する支出に与える効果が親所得によって異なる）<a href="#fn26" class="footnote-ref" id="fnref26"><sup>26</sup></a>。</li>
+</ul>
+<p>いずれも、ある独立変数（xとする）の効果が、別の変数（zとする）の値によって異なるということである。これを図にして表すと、次のようになる。</p>
+<p><img src="images/interaction.png" /></p>
+<p>こうした交互作用効果は回帰分析の枠組みで検証することができる。具体的には、次のような回帰式を推定する。</p>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1x + \beta_2z + \beta_3xz
+\]</span></p>
+<p><span class="math inline">\(xz\)</span>のように変数同士を掛け算して作成した変数のことを<strong>交差項 interaction term</strong>という。<span class="math inline">\(\beta_3\)</span>が、<span class="math inline">\(z\)</span>の水準によって<span class="math inline">\(x\)</span>の効果がどの程度変化するのかを表す係数である。この式を次のように変形してみよう。</p>
+<p><span class="math display">\[
+y = \beta_0 + (\beta_1 + \beta_3z)x + \beta_2z
+\]</span></p>
+<p>このように書くと、zはその値に応じて<span class="math inline">\(x\)</span>の効果を強めたり弱めたりする「スイッチ」のような役割を果たす変数として考えることができる。</p>
+<p>それぞれ、<span class="math inline">\(\beta_1\)</span>の正負と<span class="math inline">\(\beta_3\)</span>の正負によって次のように解釈が変わる。</p>
+<table>
+<colgroup>
+<col width="27%" />
+<col width="36%" />
+<col width="36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><span class="math inline">\(\beta_3 &gt; 0\)</span>（zの係数が正）</th>
+<th><span class="math inline">\(\beta_3 &lt; 0\)</span>（zの係数が負）</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\beta_1 &gt; 0\)</span>（xの係数が正）</td>
+<td>zが大きいほど、xの正の効果は大きくなる</td>
+<td>zが大きいほど、xの正の効果は小さくなる</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\beta_1 &lt; 0\)</span>（xの係数が負）</td>
+<td>zが大きいほど、xの負の効果は小さくなる</td>
+<td>zが大きいほど、xの負の効果は大きくなる</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="interaction_continuous_category" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> xが連続変数、zがカテゴリ変数（またはその逆）の場合<a href="interaction.html#interaction_continuous_category" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>zがカテゴリ変数（0、1の2値をとるものとする）の場合について考えてみよう。交互作用を含めた場合の回帰式は以下のようになる。</p>
+<p><span class="math display">\[
+\begin{align}
+y
+&amp;= \beta_0 + \beta_1x + \beta_2z + \beta_3xz \\
+&amp;= \beta_0 + (\beta_1 + \beta_3z)x + \beta_2z
+\end{align}
+\]</span></p>
+<p><span class="math inline">\(z\)</span>が0か1かの値を取るカテゴリ変数の場合には、次のような解釈ができる。</p>
+<ul>
+<li><span class="math inline">\(z = 0\)</span>のとき：<span class="math inline">\(x\)</span>が1単位増えると、<span class="math inline">\(y\)</span>は<span class="math inline">\(\beta_1\)</span>高くなる。</li>
+<li><span class="math inline">\(z = 1\)</span>のとき：<span class="math inline">\(x\)</span>が1単位増えると、<span class="math inline">\(y\)</span>は<span class="math inline">\(\beta_1 + \beta_3\)</span>増える。</li>
+</ul>
+<p>例えば、<span class="math inline">\(\beta_1 &gt; 0\)</span>、<span class="math inline">\(\beta_3 &gt; 0\)</span>のときは、次のような図になる。<span class="math inline">\(z = 1\)</span>の場合には、<span class="math inline">\(\beta_3\)</span>分だけ、正の傾きがより大きくなることになる。</p>
+<p>交互作用を表す変数<span class="math inline">\(xz\)</span>を含めた場合には、<span class="math inline">\(\beta_1\)</span>および<span class="math inline">\(\beta_2\)</span>はそれだけでは解釈できない値になることに注意が必要である。<span class="math inline">\(\beta_1\)</span>は、<span class="math inline">\(z = 0\)</span>のときの<span class="math inline">\(x\)</span>の効果（<span class="math inline">\(x\)</span>が1単位増えると<span class="math inline">\(y\)</span>がどれだけ変化するか）を表し、<span class="math inline">\(\beta_2\)</span>は<span class="math inline">\(x = 0\)</span>のときの<span class="math inline">\(z\)</span>の効果（<span class="math inline">\(z\)</span>が1単位増えると<span class="math inline">\(y\)</span>がどれだけ変化するか）を表す。交互作用を含めた場合には、交互作用を表す係数<span class="math inline">\(\beta_3\)</span>のみに注目して結果を解釈するとよい。</p>
+<div id="実例数的思考力が賃金を高める効果は性別によって異なるか" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> 実例：数的思考力が賃金を高める効果は性別によって異なるか？<a href="#%E5%AE%9F%E4%BE%8B%E6%95%B0%E7%9A%84%E6%80%9D%E8%80%83%E5%8A%9B%E3%81%8C%E8%B3%83%E9%87%91%E3%82%92%E9%AB%98%E3%82%81%E3%82%8B%E5%8A%B9%E6%9E%9C%E3%81%AF%E6%80%A7%E5%88%A5%E3%81%AB%E3%82%88%E3%81%A3%E3%81%A6%E7%95%B0%E3%81%AA%E3%82%8B%E3%81%8B" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>男性は数学が得意だとより数学的な思考力を必要とする賃金の高い仕事に就く一方で、女性の場合には数学が得意だとしてもそうした傾向は見られないということがあるかもしれない。つまり、数的思考力が賃金を高める効果は、女性よりも男性においてより大きいかもしれない。これはまさに交互作用に関する仮説である。</p>
+<p>この仮説を検証するための式は次のように書くことができる。</p>
+<p><span class="math display">\[
+\begin{align}
+y
+&amp;= \beta_0 + \beta_1数的思考力 + \beta_2男性 + \beta_3数的思考力\times 男性
+\\
+&amp;= \beta_0 + (\beta_1 + \beta_3男性)数的思考力 + \beta_2男性
+\end{align}
+\]</span></p>
+<p>先の仮説が正しければ、数的思考力と性別の交互作用項の係数<span class="math inline">\(\beta_3\)</span>は正の値になるはずである。</p>
+<p>Rでは、交互作用を含めたい変数どうしを<code>*</code>でつなぐことで、かけ算をした項を独立変数に含める事ができる。例えば次のように。</p>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="interaction.html#cb332-1" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> numeracy <span class="sc">*</span> gender) <span class="co"># *で変数どうしのかけ算を表す</span></span>
+<span id="cb332-2"><a href="interaction.html#cb332-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = logwage ~ numeracy + gender + numeracy * gender, 
+##     data = piaac)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.2903 -0.3342 -0.0568  0.2948  1.9173 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)         6.1527849  0.0969034  63.494   &lt;2e-16 ***
+## numeracy            0.0032278  0.0003339   9.667   &lt;2e-16 ***
+## gender男性          0.2221950  0.1293254   1.718   0.0859 .  
+## numeracy:gender男性 0.0006563  0.0004366   1.503   0.1329    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.4759 on 2724 degrees of freedom
+## Multiple R-squared:  0.2546, Adjusted R-squared:  0.2538 
+## F-statistic: 310.1 on 3 and 2724 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p><code>numeracy:gender男性</code>と表示されている箇所が交互作用項<span class="math inline">\(xz\)</span>の係数である。確かに係数は正であり、男性であると、数的思考力が高くなると賃金が高くなるという傾向がより強いことがわかる（男性であると、数的思考力が1単位高い場合に、6.6^{-4}だけ女性よりも大きく賃金が上昇する）。しかしながら<code>Pr(&gt;|t|)</code>の列をみると0.05を上回っており、係数は統計的に有意であるとはいえない。したがって、先の仮説は成り立つとはいえない。</p>
+<p>先に述べた通り、交互作用項を含めた場合には<span class="math inline">\(x\)</span>と<span class="math inline">\(z\)</span>の係数そのものを解釈することはできなくなる。そこで、交互作用を検討したい場合には、まず交互作用を含まないモデルを提示し、そのあと交互作用を含むモデルを提示するとわかりやすいだろう。</p>
+<p>もちろん、これまでの重回帰分析に関する説明同様、統制変数を含めることもできる。統制変数を含めたモデルを推定して、結果を提示する場合の例は次のとおりである。</p>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="interaction.html#cb334-1" tabindex="-1"></a>reg_res1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> educ)</span>
+<span id="cb334-2"><a href="interaction.html#cb334-2" tabindex="-1"></a>reg_res2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> numeracy <span class="sc">*</span> gender <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> educ)</span>
+<span id="cb334-3"><a href="interaction.html#cb334-3" tabindex="-1"></a></span>
+<span id="cb334-4"><a href="interaction.html#cb334-4" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res1, reg_res2),</span>
+<span id="cb334-5"><a href="interaction.html#cb334-5" tabindex="-1"></a>         <span class="at">stars =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb334-6"><a href="interaction.html#cb334-6" tabindex="-1"></a>         <span class="at">fmt =</span> <span class="dv">4</span>,</span>
+<span id="cb334-7"><a href="interaction.html#cb334-7" tabindex="-1"></a>         <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;numeracy&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア&quot;</span>,</span>
+<span id="cb334-8"><a href="interaction.html#cb334-8" tabindex="-1"></a>                      <span class="st">&quot;gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;男性&quot;</span>,</span>
+<span id="cb334-9"><a href="interaction.html#cb334-9" tabindex="-1"></a>                      <span class="st">&quot;numeracy:gender男性&quot;</span> <span class="ot">=</span> <span class="st">&quot;数的思考力スコア x 男性&quot;</span>,</span>
+<span id="cb334-10"><a href="interaction.html#cb334-10" tabindex="-1"></a>                      <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb334-11"><a href="interaction.html#cb334-11" tabindex="-1"></a>                      <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
+<span id="cb334-12"><a href="interaction.html#cb334-12" tabindex="-1"></a>                      <span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（ref: 中学）&quot;</span>,</span>
+<span id="cb334-13"><a href="interaction.html#cb334-13" tabindex="-1"></a>                      <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（ref: 中学）&quot;</span>,</span>
+<span id="cb334-14"><a href="interaction.html#cb334-14" tabindex="-1"></a>                      <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（ref: 中学）&quot;</span>,</span>
+<span id="cb334-15"><a href="interaction.html#cb334-15" tabindex="-1"></a>                      <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>), </span>
+<span id="cb334-16"><a href="interaction.html#cb334-16" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
+<!-- preamble start -->
+
+    <script>
+
+      function styleCell_wcgffwoy9r03bn1xazdl(i, j, css_id) {
+          var table = document.getElementById("tinytable_wcgffwoy9r03bn1xazdl");
+          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
+          if (cell) {
+              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
+              cell.classList.add(css_id);
+          } else {
+              console.warn(`Cell at (${i}, ${j}) not found.`);
+          }
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_wcgffwoy9r03bn1xazdl');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_wcgffwoy9r03bn1xazdl(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_wcgffwoy9r03bn1xazdl");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: 20, j: 1 }, { i: 20, j: 2 },  ], css_id: 'tinytable_css_l46ldu53sd21jqnfrihz',}, 
+          { positions: [ { i: 18, j: 1 }, { i: 18, j: 2 },  ], css_id: 'tinytable_css_5rsxbn8b283bh3h1rxzo',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 4, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 16, j: 1 }, { i: 17, j: 1 }, { i: 10, j: 2 }, { i: 19, j: 1 }, { i: 12, j: 2 }, { i: 8, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 14, j: 2 }, { i: 11, j: 2 }, { i: 16, j: 2 }, { i: 13, j: 2 }, { i: 15, j: 2 }, { i: 17, j: 2 }, { i: 19, j: 2 },  ], css_id: 'tinytable_css_44erd7rd9fgtdjpp8gik',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_dj4gmg1o2gskf9ljeo79',}, 
+          { positions: [ { i: 20, j: 0 },  ], css_id: 'tinytable_css_k1k6xoo97efvr7783lzw',}, 
+          { positions: [ { i: 18, j: 0 },  ], css_id: 'tinytable_css_q6oworl1sumsgct5om0o',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 16, j: 0 }, { i: 17, j: 0 }, { i: 19, j: 0 },  ], css_id: 'tinytable_css_uvna3g0dglu7f5heq6f6',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_5v6ccc9jg8ve60q12xtl',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  styleCell_wcgffwoy9r03bn1xazdl(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <style>
+      /* tinytable css entries after */
+      .table td.tinytable_css_l46ldu53sd21jqnfrihz, .table th.tinytable_css_l46ldu53sd21jqnfrihz { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_5rsxbn8b283bh3h1rxzo, .table th.tinytable_css_5rsxbn8b283bh3h1rxzo { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_44erd7rd9fgtdjpp8gik, .table th.tinytable_css_44erd7rd9fgtdjpp8gik { text-align: center; }
+      .table td.tinytable_css_dj4gmg1o2gskf9ljeo79, .table th.tinytable_css_dj4gmg1o2gskf9ljeo79 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_k1k6xoo97efvr7783lzw, .table th.tinytable_css_k1k6xoo97efvr7783lzw { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_q6oworl1sumsgct5om0o, .table th.tinytable_css_q6oworl1sumsgct5om0o { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_uvna3g0dglu7f5heq6f6, .table th.tinytable_css_uvna3g0dglu7f5heq6f6 { text-align: left; }
+      .table td.tinytable_css_5v6ccc9jg8ve60q12xtl, .table th.tinytable_css_5v6ccc9jg8ve60q12xtl { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_wcgffwoy9r03bn1xazdl" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+        <thead>
+        
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">(1)</th>
+                <th scope="col">(2)</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan='3'>+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td>数的思考力スコア</td>
+                  <td>0.0025***</td>
+                  <td>0.0024***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.0002)</td>
+                  <td>(0.0003)</td>
+                </tr>
+                <tr>
+                  <td>男性</td>
+                  <td>0.3971***</td>
+                  <td>0.3544**</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.0182)</td>
+                  <td>(0.1229)</td>
+                </tr>
+                <tr>
+                  <td>数的思考力スコア x 男性</td>
+                  <td></td>
+                  <td>0.0001</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>(0.0004)</td>
+                </tr>
+                <tr>
+                  <td>年齢</td>
+                  <td>0.0712***</td>
+                  <td>0.0711***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.0069)</td>
+                  <td>(0.0069)</td>
+                </tr>
+                <tr>
+                  <td>年齢2乗</td>
+                  <td>-0.0007***</td>
+                  <td>-0.0007***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.0001)</td>
+                  <td>(0.0001)</td>
+                </tr>
+                <tr>
+                  <td>高校（ref: 中学）</td>
+                  <td>0.0518</td>
+                  <td>0.0515</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.0344)</td>
+                  <td>(0.0344)</td>
+                </tr>
+                <tr>
+                  <td>短大高専（ref: 中学）</td>
+                  <td>0.1392***</td>
+                  <td>0.1389***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.0367)</td>
+                  <td>(0.0367)</td>
+                </tr>
+                <tr>
+                  <td>大学大学院（ref: 中学）</td>
+                  <td>0.3213***</td>
+                  <td>0.3207***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.0375)</td>
+                  <td>(0.0376)</td>
+                </tr>
+                <tr>
+                  <td>切片</td>
+                  <td>4.5493***</td>
+                  <td>4.5755***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.1559)</td>
+                  <td>(0.1728)</td>
+                </tr>
+                <tr>
+                  <td>Num.Obs.</td>
+                  <td>2728</td>
+                  <td>2728</td>
+                </tr>
+                <tr>
+                  <td>R2</td>
+                  <td>0.333</td>
+                  <td>0.333</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+<p>この例のように、関心のある変数（今回の場合は交互作用項とそれに関係する変数）を上のほうに表示すると結果が見やすくてよい。</p>
+</div>
+<div id="結果を図示する" class="section level3 hasAnchor" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> 結果を図示する<a href="#%E7%B5%90%E6%9E%9C%E3%82%92%E5%9B%B3%E7%A4%BA%E3%81%99%E3%82%8B" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>たんに表の数式だけではなく、実際にどの程度の効果の大きさなのかを視覚的に調べることが重要である。このような用途の最適なのが、<code>ggeffects</code>パッケージ（→<a href="https://strengejacke.github.io/ggeffects/">説明</a>）である。また、<code>ggeffects</code>パッケージに含まれている関数の一つで別の<code>effects</code>というパッケージも必要となるので、併せてインストールしておく。まずはパッケージをインストールしよう。</p>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="interaction.html#cb335-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggeffects&quot;</span>)</span>
+<span id="cb335-2"><a href="interaction.html#cb335-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;effects&quot;</span>)</span></code></pre></div>
+<p><code>library()</code>で読み込んでおく。これは、<code>ggeffects</code>だけでよい。</p>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="interaction.html#cb336-1" tabindex="-1"></a><span class="fu">library</span>(ggeffects)</span></code></pre></div>
+<p>使い方はつぎのとおり。交互作用効果を図示したい回帰式を指定し、<code>ggpredict(結果が入った回帰式, c("xになる変数", "zになる変数"）</code>とすることで、予測値や95%信頼区間を求めることができる。このデータフレームを何らかの名前をつけたオブジェクトに入れる。保存したオブジェクトに対して<code>plot()</code>を実行することで、先に見たような交互作用の図を出力することができる。</p>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="interaction.html#cb337-1" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">ggeffect</span>(reg_res2, <span class="fu">c</span>(<span class="st">&quot;numeracy&quot;</span>, <span class="st">&quot;gender&quot;</span>)) <span class="co"># 予測値を求めて結果を保存</span></span>
+<span id="cb337-2"><a href="interaction.html#cb337-2" tabindex="-1"></a></span>
+<span id="cb337-3"><a href="interaction.html#cb337-3" tabindex="-1"></a>predicted <span class="sc">%&gt;%</span> <span class="fu">plot</span>() <span class="co"># 結果をプロット</span></span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-266-1.png" width="672" /></p>
+<p>また、<code>ggpredict()</code>で保存したデータフレームは<code>ggplot()</code>で図を作成するときと同じようにオプションを付けてより見やすい図を作ることもできる。編集の一例を以下に示す。</p>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="interaction.html#cb338-1" tabindex="-1"></a>predicted <span class="sc">%&gt;%</span> </span>
+<span id="cb338-2"><a href="interaction.html#cb338-2" tabindex="-1"></a>  <span class="fu">plot</span>() <span class="sc">+</span> </span>
+<span id="cb338-3"><a href="interaction.html#cb338-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;数的思考力スコア&quot;</span>, <span class="at">y =</span> <span class="st">&quot;対数賃金&quot;</span>, <span class="at">color =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb338-4"><a href="interaction.html#cb338-4" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span> </span>
+<span id="cb338-5"><a href="interaction.html#cb338-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>) <span class="co"># Macの場合はこれをつけないと文字化けするかもしれない</span></span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-267-1.png" width="672" /></p>
+</div>
+<div id="xがカテゴリ変数zが連続変数の場合" class="section level3 hasAnchor" number="9.2.3">
+<h3><span class="header-section-number">9.2.3</span> xがカテゴリ変数、zが連続変数の場合<a href="#x%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0z%E3%81%8C%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>先ほどは、「数的思考力スコア（x）が賃金を高める効果は女性よりも男性において（z）より大きい」という仮説を立てた。これのxとzを入れ替えて、「男性であることが賃金を高める効果は数的思考力スコアが高いほどより大きい」という仮説も立てることができる。</p>
+<p>この場合、先とまったく同じ回帰式を用いることができる。つまり、</p>
+<p><span class="math display">\[
+\begin{align}
+y
+&amp;= \beta_0 + \beta_1数的思考力 + \beta_2男性 + \beta_3数的思考力\times 男性
+\\
+&amp;= \beta_0 + (\beta_2 + \beta_3数的思考力)男性 + \beta_1数的思考力
+\end{align}
+\]</span></p>
+<p>数的思考力が1ポイント高いと、男性であることが賃金を高める効果は<span class="math inline">\(\beta_3\)</span>だけ大きくなるということを意味する。式がまったく同じなので、Rのコードもまったくおなじで構わない。</p>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="interaction.html#cb339-1" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy <span class="sc">+</span> gender <span class="sc">+</span> numeracy <span class="sc">*</span> gender) <span class="co"># *で変数どうしのかけ算を表す</span></span></code></pre></div>
+<p>結果は省略する。</p>
+</div>
+</div>
+<div id="interaction_category_category" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> xがカテゴリ変数、zがカテゴリ変数の場合<a href="interaction.html#interaction_category_category" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>次に、xもzもカテゴリ変数の場合を考えてみよう。学歴が高いほど賃金も高い傾向があるのは先にみたとおりだが、その効果は性別によって異なるかもしれない。たとえば、学歴が賃金を高める効果は、男性よりも女性のほうが大きいのではないか、という仮説を立てることができる。学歴（x）の効果が、性別（z）によって異なるのではないか？ということである。この場合の式は次のようになる。</p>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1学歴 + \beta_2女性 + \beta_3学歴\times 女性
+\]</span></p>
+<p>上式で、<span class="math inline">\(\beta_3 &gt; 0\)</span>となれば、仮説が支持されたといえる。今回は学歴を中学、高校、短大高専、大学大学院、という4カテゴリの変数で測定しているので、例えば中学を参照カテゴリとした場合には、次のような式となる。</p>
+<p><span class="math display">\[
+\begin{align}
+y =&amp; \beta_0 + \beta_{1,1}高校 + \beta_{1,2}高専短大 + \beta_{1,3}大学大学院 + \beta_2女性 + \\
+&amp;\beta_{3,1}高校\times 女性 + \beta_{3,2}高専短大\times 女性 + \beta_{3,3}大学大学院\times 女性 \\
+=&amp;\beta_0 + (\beta_{1,1} + \beta_{3,1}女性)高校 + (\beta_{1,2} + \beta_{3,2}女性)高専短大 + (\beta_{1,3} + \beta_{3,3}女性)大学大学院 + \beta_2女性
+\end{align}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\beta_{3,1}\)</span>は、男性が中学卒→高校卒になったときに上昇する賃金と比べて、女性が中卒→高卒となったときに上昇する賃金は<span class="math inline">\(\beta_{3,1}\)</span>だけ高いということを表す。</li>
+<li><span class="math inline">\(\beta_{3,2}\)</span>は、男性が中学卒→高専短大卒になったときに上昇する賃金と比べて、女性が中卒→高専短大卒となったときに上昇する賃金は<span class="math inline">\(\beta_{3,2}\)</span>だけ高いということを表す。</li>
+<li><span class="math inline">\(\beta_{3,3}\)</span>は、男性が中学卒→大学大学院卒になったときに上昇する賃金と比べて、女性が中卒→大学大学院卒となったときに上昇する賃金は<span class="math inline">\(\beta_{3,3}\)</span>だけ高いということを表す。</li>
+</ul>
+<p>交互作用を含める場合のコードは先ほどと同じである。</p>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="interaction.html#cb340-1" tabindex="-1"></a><span class="co"># 男性が先、女性が後の順になる変数を作成する</span></span>
+<span id="cb340-2"><a href="interaction.html#cb340-2" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb340-3"><a href="interaction.html#cb340-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender_rev =</span> <span class="fu">fct_relevel</span>(gender, <span class="st">&quot;男性&quot;</span>, <span class="st">&quot;女性&quot;</span>))</span>
+<span id="cb340-4"><a href="interaction.html#cb340-4" tabindex="-1"></a></span>
+<span id="cb340-5"><a href="interaction.html#cb340-5" tabindex="-1"></a>reg_res3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender_rev <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb340-6"><a href="interaction.html#cb340-6" tabindex="-1"></a>reg_res4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> educ <span class="sc">+</span> gender_rev <span class="sc">+</span> educ<span class="sc">*</span>gender_rev <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="interaction.html#cb341-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res3, reg_res4),</span>
+<span id="cb341-2"><a href="interaction.html#cb341-2" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb341-3"><a href="interaction.html#cb341-3" tabindex="-1"></a>             <span class="at">coef_map =</span> <span class="fu">c</span>(<span class="st">&quot;educ高校&quot;</span> <span class="ot">=</span> <span class="st">&quot;高校（ref: 中学）&quot;</span>,</span>
+<span id="cb341-4"><a href="interaction.html#cb341-4" tabindex="-1"></a>                          <span class="st">&quot;educ短大高専&quot;</span> <span class="ot">=</span> <span class="st">&quot;短大高専（ref: 中学）&quot;</span>,</span>
+<span id="cb341-5"><a href="interaction.html#cb341-5" tabindex="-1"></a>                          <span class="st">&quot;educ大学大学院&quot;</span> <span class="ot">=</span> <span class="st">&quot;大学大学院（ref: 中学）&quot;</span>,</span>
+<span id="cb341-6"><a href="interaction.html#cb341-6" tabindex="-1"></a>                          <span class="st">&quot;gender_rev女性&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性&quot;</span>,</span>
+<span id="cb341-7"><a href="interaction.html#cb341-7" tabindex="-1"></a>                          <span class="st">&quot;educ高校:gender_rev女性&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性 x 高校&quot;</span>,</span>
+<span id="cb341-8"><a href="interaction.html#cb341-8" tabindex="-1"></a>                          <span class="st">&quot;educ短大高専:gender_rev女性&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性 x 短大高専&quot;</span>,</span>
+<span id="cb341-9"><a href="interaction.html#cb341-9" tabindex="-1"></a>                          <span class="st">&quot;educ大学大学院:gender_rev女性&quot;</span> <span class="ot">=</span> <span class="st">&quot;女性 x 大学大学院&quot;</span>,</span>
+<span id="cb341-10"><a href="interaction.html#cb341-10" tabindex="-1"></a>                          <span class="st">&quot;age&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢&quot;</span>,</span>
+<span id="cb341-11"><a href="interaction.html#cb341-11" tabindex="-1"></a>                          <span class="st">&quot;I(age^2)&quot;</span> <span class="ot">=</span> <span class="st">&quot;年齢2乗&quot;</span>,</span>
+<span id="cb341-12"><a href="interaction.html#cb341-12" tabindex="-1"></a>                          <span class="st">&quot;(Intercept)&quot;</span> <span class="ot">=</span> <span class="st">&quot;切片&quot;</span>),</span>
+<span id="cb341-13"><a href="interaction.html#cb341-13" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
+<!-- preamble start -->
+
+    <script>
+
+      function styleCell_he9covq673tp2tkhcqwl(i, j, css_id) {
+          var table = document.getElementById("tinytable_he9covq673tp2tkhcqwl");
+          var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
+          if (cell) {
+              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
+              cell.classList.add(css_id);
+          } else {
+              console.warn(`Cell at (${i}, ${j}) not found.`);
+          }
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_he9covq673tp2tkhcqwl');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
+      }
+      function spanCell_he9covq673tp2tkhcqwl(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_he9covq673tp2tkhcqwl");
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
+        for (let r = 0; r < rowspan; r++) {
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
+            }
+          }
+        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
+      }
+      // tinytable span after
+      window.addEventListener('load', function () {
+          var cellsToStyle = [
+            // tinytable style arrays after
+          { positions: [ { i: 22, j: 1 }, { i: 22, j: 2 },  ], css_id: 'tinytable_css_2hq3ngf43eusy91w6vnd',}, 
+          { positions: [ { i: 20, j: 2 }, { i: 20, j: 1 },  ], css_id: 'tinytable_css_lbldur0v947x8olzc1yo',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 2, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 6, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 16, j: 1 }, { i: 17, j: 1 }, { i: 18, j: 1 }, { i: 19, j: 1 }, { i: 10, j: 2 }, { i: 21, j: 1 }, { i: 12, j: 2 }, { i: 10, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 14, j: 2 }, { i: 11, j: 2 }, { i: 16, j: 2 }, { i: 13, j: 2 }, { i: 18, j: 2 }, { i: 15, j: 2 }, { i: 17, j: 2 }, { i: 19, j: 2 }, { i: 21, j: 2 },  ], css_id: 'tinytable_css_xee4dqs6trqfjos1qwsu',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_2jney2p7jn1vvc0luprt',}, 
+          { positions: [ { i: 22, j: 0 },  ], css_id: 'tinytable_css_1f444xwoumcmrfb2btmp',}, 
+          { positions: [ { i: 20, j: 0 },  ], css_id: 'tinytable_css_7r7nkf3gg0h6ypbyw1oh',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 16, j: 0 }, { i: 17, j: 0 }, { i: 18, j: 0 }, { i: 19, j: 0 }, { i: 21, j: 0 },  ], css_id: 'tinytable_css_4lsocx2owmvjun9hzelu',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_lognjcunzldlgpn5oslk',}, 
+          ];
+
+          // Loop over the arrays to style the cells
+          cellsToStyle.forEach(function (group) {
+              group.positions.forEach(function (cell) {
+                  styleCell_he9covq673tp2tkhcqwl(cell.i, cell.j, group.css_id);
+              });
+          });
+      });
+    </script>
+
+    <style>
+      /* tinytable css entries after */
+      .table td.tinytable_css_2hq3ngf43eusy91w6vnd, .table th.tinytable_css_2hq3ngf43eusy91w6vnd { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_lbldur0v947x8olzc1yo, .table th.tinytable_css_lbldur0v947x8olzc1yo { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_xee4dqs6trqfjos1qwsu, .table th.tinytable_css_xee4dqs6trqfjos1qwsu { text-align: center; }
+      .table td.tinytable_css_2jney2p7jn1vvc0luprt, .table th.tinytable_css_2jney2p7jn1vvc0luprt { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_1f444xwoumcmrfb2btmp, .table th.tinytable_css_1f444xwoumcmrfb2btmp { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_7r7nkf3gg0h6ypbyw1oh, .table th.tinytable_css_7r7nkf3gg0h6ypbyw1oh { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_4lsocx2owmvjun9hzelu, .table th.tinytable_css_4lsocx2owmvjun9hzelu { text-align: left; }
+      .table td.tinytable_css_lognjcunzldlgpn5oslk, .table th.tinytable_css_lognjcunzldlgpn5oslk { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    </style>
+    <div class="container">
+      <table class="table table-borderless" id="tinytable_he9covq673tp2tkhcqwl" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+        <thead>
+        
+              <tr>
+                <th scope="col"> </th>
+                <th scope="col">(1)</th>
+                <th scope="col">(2)</th>
+              </tr>
+        </thead>
+        <tfoot><tr><td colspan='3'>+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001</td></tr></tfoot>
+        <tbody>
+                <tr>
+                  <td>高校（ref: 中学）</td>
+                  <td>0.116***</td>
+                  <td>0.125**</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.034)</td>
+                  <td>(0.045)</td>
+                </tr>
+                <tr>
+                  <td>短大高専（ref: 中学）</td>
+                  <td>0.221***</td>
+                  <td>0.158**</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.037)</td>
+                  <td>(0.051)</td>
+                </tr>
+                <tr>
+                  <td>大学大学院（ref: 中学）</td>
+                  <td>0.477***</td>
+                  <td>0.430***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.035)</td>
+                  <td>(0.044)</td>
+                </tr>
+                <tr>
+                  <td>女性</td>
+                  <td>-0.416***</td>
+                  <td>-0.484***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.018)</td>
+                  <td>(0.062)</td>
+                </tr>
+                <tr>
+                  <td>女性 x 高校</td>
+                  <td></td>
+                  <td>-0.005</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>(0.069)</td>
+                </tr>
+                <tr>
+                  <td>女性 x 短大高専</td>
+                  <td></td>
+                  <td>0.122+</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>(0.073)</td>
+                </tr>
+                <tr>
+                  <td>女性 x 大学大学院</td>
+                  <td></td>
+                  <td>0.138+</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>(0.071)</td>
+                </tr>
+                <tr>
+                  <td>年齢</td>
+                  <td>0.079***</td>
+                  <td>0.079***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.007)</td>
+                  <td>(0.007)</td>
+                </tr>
+                <tr>
+                  <td>年齢2乗</td>
+                  <td>-0.001***</td>
+                  <td>-0.001***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.000)</td>
+                  <td>(0.000)</td>
+                </tr>
+                <tr>
+                  <td>切片</td>
+                  <td>5.465***</td>
+                  <td>5.488***</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>(0.151)</td>
+                  <td>(0.154)</td>
+                </tr>
+                <tr>
+                  <td>Num.Obs.</td>
+                  <td>2728</td>
+                  <td>2728</td>
+                </tr>
+                <tr>
+                  <td>R2</td>
+                  <td>0.305</td>
+                  <td>0.309</td>
+                </tr>
+        </tbody>
+      </table>
+    </div>
+<!-- hack to avoid NA insertion in last line -->
+<p>女性×短大高専、女性×大学大学院の係数は正の値であり、10%水準ではあるものの、正の値である。すなわち、女性が高い学歴を持っている場合の賃金の上昇は、男性が高い学歴を持っている場合の賃金の上昇と比べて大きいといえる。</p>
+<p>視覚的にはどのように表現できるだろうか。先に用いた<code>ggeffects::ggeffect()</code>を使って結果を図示してみよう。</p>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="interaction.html#cb342-1" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">ggeffect</span>(reg_res4, <span class="at">terms =</span> <span class="fu">c</span>(<span class="st">&quot;educ&quot;</span>, <span class="st">&quot;gender_rev&quot;</span>)) <span class="co"># 予測値を求めて結果を保存</span></span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="interaction.html#cb343-1" tabindex="-1"></a><span class="co"># Windowsユーザーはこちらを実行</span></span>
+<span id="cb343-2"><a href="interaction.html#cb343-2" tabindex="-1"></a>predicted <span class="sc">%&gt;%</span> </span>
+<span id="cb343-3"><a href="interaction.html#cb343-3" tabindex="-1"></a>  <span class="fu">plot</span>() <span class="sc">+</span></span>
+<span id="cb343-4"><a href="interaction.html#cb343-4" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span>  </span>
+<span id="cb343-5"><a href="interaction.html#cb343-5" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span> </span>
+<span id="cb343-6"><a href="interaction.html#cb343-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;学歴&quot;</span>, <span class="at">y =</span> <span class="st">&quot;対数賃金&quot;</span>, <span class="at">color =</span> <span class="st">&quot;&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="interaction.html#cb344-1" tabindex="-1"></a><span class="co"># Macユーザーはこちらを実行（文字化け防止策あり）</span></span>
+<span id="cb344-2"><a href="interaction.html#cb344-2" tabindex="-1"></a>predicted <span class="sc">%&gt;%</span> </span>
+<span id="cb344-3"><a href="interaction.html#cb344-3" tabindex="-1"></a>  <span class="fu">plot</span>() <span class="sc">+</span></span>
+<span id="cb344-4"><a href="interaction.html#cb344-4" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb344-5"><a href="interaction.html#cb344-5" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span> </span>
+<span id="cb344-6"><a href="interaction.html#cb344-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;学歴&quot;</span>, <span class="at">y =</span> <span class="st">&quot;対数賃金&quot;</span>, <span class="at">color =</span> <span class="st">&quot;&quot;</span>) </span></code></pre></div>
+<pre><code>## Ignoring unknown labels:
+## • linetype : &quot;gender_rev&quot;
+## • shape : &quot;gender_rev&quot;</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-273-1.png" width="672" /></p>
+<p>学歴が高いと賃金が高くなる傾向は男女とも共通であるが、女性は男性と比べて学歴が高くなるとより大きく賃金が高くなることが視覚的にわかりやすい。</p>
+</div>
+<div id="interaction_continuous_continuous" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> xが連続変数、zが連続変数の場合（作成中）<a href="interaction.html#interaction_continuous_continuous" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="23">
+<li id="fn23"><p>出産すると女性の賃金が下がることは母親ペナルティと呼ばれ、他方男性の賃金は上がることは父親ペナルティと呼ばれそれぞれ研究がなされている。近年の研究としては例えば Yu, W.-H., &amp; Hara, Y. (2021). Motherhood Penalties and Fatherhood Premiums: Effects of Parenthood on Earnings Growth Within and Across Firms. <em>Demography</em>, <em>58</em>(1), 247–272. ただし父親ペナルティについては見せかけの関連（賃金が高くなりやすい男性ほど子どもを持ちやすい）なのではないかという指摘がある。たとえば Killewald, A., &amp; Lundberg, I. (2017). New Evidence Against a Causal Marriage Wage Premium. <em>Demography</em>, <em>54</em>, 1007–1028. など。<a href="interaction.html#fnref23" class="footnote-back">↩︎</a></p></li>
+<li id="fn24"><p>出身階層（親の階級や学歴）が高いほど子の教育達成が高いという傾向は20世紀の間で大きく変化していない（“persistent inequality”）を主張したShavit &amp; Blossfeld (1993)に対して、西ヨーロッパ8カ国の統合的なデータを使った比較研究を行ったBreenら（2009）は、出身階層（親の階級）が子どもの教育達成に与える影響は近年のコーホートほど弱まっている（“nonpersistent inequality”）と主張した。</p>
+<p>Shavit, Y., &amp; Blossfeld, H.-P. (1993). <em>Persistent inequality: Changing educational attainment in thirteen countries</em>. Westview Press.</p>
+<p>Breen, R., Luijkx, R., Müller, W., &amp; Pollak, R. (2009). Nonpersistent inequality in educational attainment : Evidence from eight European countries. <em>American Journal of Sociology</em>, <em>114</em>(5), 1475–1521.<a href="interaction.html#fnref24" class="footnote-back">↩︎</a></p></li>
+<li id="fn25"><p>Torche（2011）は階級、社会経済的地位指標、所得、賃金などさまざまな階層を表す指標を用いて親と子の相関を子どもの学歴別に検討した。その結果、いずれについても、子どもが大卒であると、そうでない場合と比較して親と子の階層指標の相関が弱くなることを発見した。ただしこれも近年の研究では必ずしも成り立たないのではないかと指摘されている（e.g. Zhou 2019）。</p>
+<p>Torche, F. (2011). Is a College Degree Still the Great Equalizer? Intergenerational Mobility across Levels of Schooling in the United States. <em>American Journal of Sociology</em>, <em>117</em>(3), 763–807.</p>
+<p>Zhou, X. (2019). Equalization or Selection? Reassessing the “Meritocratic Power” of a College Degree in Intergenerational Income Mobility. <em>American Sociological Review</em>, <em>84</em>(3), 459–485.<a href="interaction.html#fnref25" class="footnote-back">↩︎</a></p></li>
+<li id="fn26"><p>Jackson, M. I., &amp; Schneider, D. (2022). Public Investments and Class Gaps in Parents’ Developmental Expenditures. <em>American Sociological Review</em>, <em>87</em>(1), 105–142.<a href="interaction.html#fnref26" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="regression_advanced.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="logit.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": null,
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
