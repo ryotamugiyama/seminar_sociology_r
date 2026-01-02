@@ -437,12 +437,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.4.2" data-path="11-paneldata.html"><a href="#%E6%8E%A8%E5%AE%9A%E6%96%B9%E6%B3%95fixestfeols"><i class="fa fa-check"></i><b>11.4.2</b> 推定方法：<code>fixest::feols()</code></a></li>
 <li class="chapter" data-level="11.4.3" data-path="11-paneldata.html"><a href="#%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%AD%E3%83%90%E3%82%B9%E3%83%88%E6%A8%99%E6%BA%96%E8%AA%A4%E5%B7%AE"><i class="fa fa-check"></i><b>11.4.3</b> クラスター・ロバスト標準誤差</a></li>
 <li class="chapter" data-level="11.4.4" data-path="11-paneldata.html"><a href="#%E4%BA%8C%E6%96%B9%E5%90%91%E5%9B%BA%E5%AE%9A%E5%8A%B9%E6%9E%9C%E3%83%A2%E3%83%87%E3%83%AB"><i class="fa fa-check"></i><b>11.4.4</b> 二方向固定効果モデル</a></li>
+<li class="chapter" data-level="11.4.5" data-path="11-paneldata.html"><a href="#%E5%9B%9E%E3%81%97%E3%81%8B%E8%A6%B3%E5%AF%9F%E3%81%8C%E5%BE%97%E3%82%89%E3%82%8C%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84%E5%80%8B%E4%BA%BA%E3%82%92%E3%83%87%E3%83%BC%E3%82%BF%E3%81%8B%E3%82%89%E9%99%A4%E5%A4%96%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>11.4.5</b> 1回しか観察が得られていない個人をデータから除外する</a></li>
 </ul></li>
 <li class="chapter" data-level="11.5" data-path="paneldata.html"><a href="paneldata.html#paneldata_pols_fe_compare"><i class="fa fa-check"></i><b>11.5</b> 両者の比較</a>
 <ul>
-<li class="chapter" data-level="11.5.1" data-path="11-paneldata.html"><a href="#%E5%9B%9E%E3%81%97%E3%81%8B%E8%A6%B3%E5%AF%9F%E3%81%8C%E5%BE%97%E3%82%89%E3%82%8C%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84%E5%80%8B%E4%BA%BA%E3%82%92%E9%99%A4%E5%A4%96%E3%81%99%E3%82%8B"><i class="fa fa-check"></i><b>11.5.1</b> 1回しか観察が得られていない個人を除外する</a></li>
-<li class="chapter" data-level="11.5.2" data-path="11-paneldata.html"><a href="#pooled-ols%E3%81%A8%E5%9B%BA%E5%AE%9A%E5%8A%B9%E6%9E%9C%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%AF%94%E8%BC%83"><i class="fa fa-check"></i><b>11.5.2</b> Pooled OLSと固定効果モデルの比較</a></li>
-<li class="chapter" data-level="11.5.3" data-path="11-paneldata.html"><a href="#%E5%80%8B%E4%BA%BA%E9%96%93%E5%8A%B9%E6%9E%9C%E3%81%A8%E5%80%8B%E4%BA%BA%E5%86%85%E5%8A%B9%E6%9E%9C"><i class="fa fa-check"></i><b>11.5.3</b> 個人間効果と個人内効果</a></li>
+<li class="chapter" data-level="11.5.1" data-path="11-paneldata.html"><a href="#pooled-ols%E3%81%A8%E5%9B%BA%E5%AE%9A%E5%8A%B9%E6%9E%9C%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%AF%94%E8%BC%83"><i class="fa fa-check"></i><b>11.5.1</b> Pooled OLSと固定効果モデルの比較</a></li>
 </ul></li>
 <li class="chapter" data-level="11.6" data-path="paneldata.html"><a href="paneldata.html#paneldata_notes"><i class="fa fa-check"></i><b>11.6</b> 固定効果モデルの注意点</a></li>
 </ul></li>
@@ -803,7 +802,7 @@ Y_{it}
 ## $ ln_wage  &lt;dbl&gt; 1.451214, 1.028620, 1.589977, 1.780273, 1.777012, 1.778681, 2…</code></pre>
 <p>各変数が指す内容は以下のとおりである（Stataで開いて見たものをスクリーンショットを撮って載せたものである）：</p>
 <p><img src="images/NLSdata_stata.png" /></p>
-<p>このデータを使って、労働組合への加入は賃金を高める効果を持つのかについて分析する。下記の要領で分析用のデータを作成する。</p>
+<p>このデータを使って、労働組合への加入は賃金を高める効果を持つのかについて分析する。下記とおり分析用のデータを作成する。</p>
 <div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="paneldata.html#cb384-1" tabindex="-1"></a>nls_sample <span class="ot">&lt;-</span> nls <span class="sc">%&gt;%</span> </span>
 <span id="cb384-2"><a href="paneldata.html#cb384-2" tabindex="-1"></a>  <span class="fu">select</span>(</span>
 <span id="cb384-3"><a href="paneldata.html#cb384-3" tabindex="-1"></a>    <span class="at">id =</span> idcode,  <span class="co"># 個人を表すid。idcodeという名前をidという名前に変更</span></span>
@@ -825,9 +824,10 @@ Y_{it}
 </div>
 <div id="データを昇順または降順に並べ替えるarrange" class="section level3 hasAnchor" number="11.2.2">
 <h3><span class="header-section-number">11.2.2</span> データを昇順または降順に並べ替える：<code>arrange()</code><a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E6%98%87%E9%A0%86%E3%81%BE%E3%81%9F%E3%81%AF%E9%99%8D%E9%A0%86%E3%81%AB%E4%B8%A6%E3%81%B9%E6%9B%BF%E3%81%88%E3%82%8Barrange" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>arrange()</code>関数を使うと、指定した変数にもとづいてデータを昇順（値が小さいのものを先にする）または降順（値が大きいものを先にする）に並べ替えることができる。たとえば、<code>nls_sample</code>データを個人を表す<code>id</code>変数、時間を表す<code>year</code>変数で昇順に並べ替えるには、次のようにする。</p>
 <div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="paneldata.html#cb385-1" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> </span>
 <span id="cb385-2"><a href="paneldata.html#cb385-2" tabindex="-1"></a>  <span class="fu">arrange</span>(id, year) <span class="sc">%&gt;%</span> <span class="co"># id、yearで昇順に並べ替え</span></span>
-<span id="cb385-3"><a href="paneldata.html#cb385-3" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">20</span>)</span></code></pre></div>
+<span id="cb385-3"><a href="paneldata.html#cb385-3" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="co"># 先頭20行を表示</span></span></code></pre></div>
 <pre><code>## # A tibble: 20 × 10
 ##       id  year   age ln_wage race  collgrad occ_code ind_code union   msp
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -851,7 +851,8 @@ Y_{it}
 ## 18     3    72    26    1.61 Black        0        3        4     0     0
 ## 19     3    73    27    1.60 Black        0        3        4     0     0
 ## 20     3    77    31    1.62 Black        0        3        4     0     0</code></pre>
-<p>逆にすると、まずyearの昇順に並べ替え、同一year内でidの昇順に並べ替える。</p>
+<p>このようにデータを並べ替えておくと、各個人の値がどのように推移していくのかや、時間によって変化する変数を適切に作成できているかをチェックするのに役立つ。</p>
+<p><code>year</code>と<code>id</code>の順序を逆にすると、まずyearの昇順に並べ替え、同一year内でidの昇順に並べ替える。</p>
 <div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="paneldata.html#cb387-1" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> </span>
 <span id="cb387-2"><a href="paneldata.html#cb387-2" tabindex="-1"></a>  <span class="fu">arrange</span>(year, id) <span class="sc">%&gt;%</span> <span class="co">#year、idで昇順に並べ替え</span></span>
 <span id="cb387-3"><a href="paneldata.html#cb387-3" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code></pre></div>
@@ -868,6 +869,7 @@ Y_{it}
 ##  8    19    70    21    2.02 White        0        1       11     0     0
 ##  9    20    70    21    2.02 White        0        1       11     0     0
 ## 10    22    70    22    1.97 White        0        1       11     0     0</code></pre>
+<p>並べ替える変数の前に<code>-</code>をつけると、その変数で降順に並べ替えることができる。</p>
 <div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="paneldata.html#cb389-1" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> </span>
 <span id="cb389-2"><a href="paneldata.html#cb389-2" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>id, year) <span class="sc">%&gt;%</span> <span class="co">#-をつけると降順に並べ替え</span></span>
 <span id="cb389-3"><a href="paneldata.html#cb389-3" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code></pre></div>
@@ -887,34 +889,63 @@ Y_{it}
 </div>
 <div id="上の行下の行の値をコピーするlag-lead" class="section level3 hasAnchor" number="11.2.3">
 <h3><span class="header-section-number">11.2.3</span> 上の行、下の行の値をコピーする：<code>lag()</code> <code>lead()</code><a href="#%E4%B8%8A%E3%81%AE%E8%A1%8C%E4%B8%8B%E3%81%AE%E8%A1%8C%E3%81%AE%E5%80%A4%E3%82%92%E3%82%B3%E3%83%94%E3%83%BC%E3%81%99%E3%82%8Blag-lead" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>パネルデータ分析では、ある変数の1時点前の値や1時点後の値を変数として使用することがある。このような場合には、<code>lag()</code>関数や<code>lead()</code>関数を使う。</p>
+<ul>
+<li><code>lag()</code>関数は任意の行数上の値をコピーする（ラグ）。たとえばxという変数の1行上の値をコピーするには<code>lag(x, n = 1)</code>とする。</li>
+<li><code>lead()</code>関数は任意の行数下の値をコピーする（リード）。たとえばxという変数の1行下の値をコピーするには<code>lead(x, n = 1)</code>とする。</li>
+</ul>
+<p>パネルデータの場合、あらかじめ同一個人内で時点の昇順にデータを並べ替えておいた上で<code>lag()</code>関数や<code>lead()</code>関数を使う必要がある。そうでなければ、意図した値とは異なる値をコピーしてきてしまうからである。たとえば、対数賃金<code>ln_wage</code>の1時点前の値、1時点後の値をコピーした新たな変数を作りたいとする。この場合には次のようにする。</p>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="paneldata.html#cb391-1" tabindex="-1"></a>nls_sample <span class="ot">&lt;-</span> nls_sample <span class="sc">%&gt;%</span> </span>
+<span id="cb391-2"><a href="paneldata.html#cb391-2" tabindex="-1"></a>  <span class="fu">arrange</span>(id, year) <span class="sc">%&gt;%</span> </span>
+<span id="cb391-3"><a href="paneldata.html#cb391-3" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> <span class="co"># idごとにデータをグループ化</span></span>
+<span id="cb391-4"><a href="paneldata.html#cb391-4" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb391-5"><a href="paneldata.html#cb391-5" tabindex="-1"></a>    <span class="at">ln_wage_lag =</span> <span class="fu">lag</span>(ln_wage, <span class="at">n =</span> <span class="dv">1</span>), <span class="co"># 1時点前のln_wageをコピー</span></span>
+<span id="cb391-6"><a href="paneldata.html#cb391-6" tabindex="-1"></a>    <span class="at">ln_wage_lead =</span> <span class="fu">lead</span>(ln_wage, <span class="at">n =</span> <span class="dv">1</span>) <span class="co"># 1時点後のln_wageをコピー</span></span>
+<span id="cb391-7"><a href="paneldata.html#cb391-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb391-8"><a href="paneldata.html#cb391-8" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="co"># グループ化を解除</span></span>
+<span id="cb391-9"><a href="paneldata.html#cb391-9" tabindex="-1"></a></span>
+<span id="cb391-10"><a href="paneldata.html#cb391-10" tabindex="-1"></a><span class="do">## 作成した変数を確認</span></span>
+<span id="cb391-11"><a href="paneldata.html#cb391-11" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> </span>
+<span id="cb391-12"><a href="paneldata.html#cb391-12" tabindex="-1"></a>  <span class="fu">select</span>(id, year, ln_wage, ln_wage_lag, ln_wage_lead) <span class="sc">%&gt;%</span></span>
+<span id="cb391-13"><a href="paneldata.html#cb391-13" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">30</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 30 × 5
+##       id  year ln_wage ln_wage_lag ln_wage_lead
+##    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
+##  1     1    72    1.59       NA            1.78
+##  2     1    77    1.78        1.59         2.55
+##  3     1    80    2.55        1.78         2.42
+##  4     1    83    2.42        2.55         2.61
+##  5     1    85    2.61        2.42         2.54
+##  6     1    87    2.54        2.61         2.46
+##  7     1    88    2.46        2.54        NA   
+##  8     2    71    1.36       NA            1.73
+##  9     2    77    1.73        1.36         1.69
+## 10     2    78    1.69        1.73         1.73
+## # ℹ 20 more rows</code></pre>
+<p>なお、隣接するデータの間の時点がずれている場合には解釈が難しくなる点に注意したい。たとえば上記のid1の個人の回答は、72年、77年、80年、83年、85年、87年、88年……というふうに、時点が等間隔に並んでいない。このような場合、「1時点前」の指す時点が必ずしも同じではないという問題が生じる。ラグ変数やリード変数を作成する場合には、回答が等間隔に並んでいるかどうかを確認しておくのがよいだろう。</p>
 </div>
 <div id="パネルデータ特有の記述統計量xtsum" class="section level3 hasAnchor" number="11.2.4">
 <h3><span class="header-section-number">11.2.4</span> パネルデータ特有の記述統計量：<code>xtsum</code><a href="#%E3%83%91%E3%83%8D%E3%83%AB%E3%83%87%E3%83%BC%E3%82%BF%E7%89%B9%E6%9C%89%E3%81%AE%E8%A8%98%E8%BF%B0%E7%B5%B1%E8%A8%88%E9%87%8Fxtsum" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>ある変数<span class="math inline">\(Y_{it}\)</span>の全体平均からのばらつきは次のように個人間変動による部分と個人内変動による部分に分けることができる。</p>
 <p><span class="math display">\[
 \underbrace{Y_{it} - \overline{Y}}_{総変動} = \underbrace{\left(\overline{Y}_i - \overline{Y}\right)}_{個人間変動} + \underbrace{\left(Y_{it} - \overline{Y}_i \right)}_{個人内変動}
-\]</span>
-それぞれの要素について、次のとおり総分散、個人間変動、個人内変動を定義できる。</p>
-<p>総分散（overall variance）：
-<span class="math display">\[
+\]</span> それぞれの要素について、次のとおり総分散、個人間変動、個人内変動を定義できる。</p>
+<p>総分散（overall variance）： <span class="math display">\[
 s^2_{overall} = \frac{1}{NT - 1}\sum_i\sum_t(Y_{it} - \overline{Y})^2
-\]</span>
-個人間分散（between variance）
-<span class="math display">\[
+\]</span> 個人間分散（between variance） <span class="math display">\[
 s^2_{between} = \frac{1}{N - 1} \sum_i (\overline{Y}_i - \overline{Y})^2
 \]</span></p>
-<p>個人内分散（within variance）：
-<span class="math display">\[
+<p>個人内分散（within variance）： <span class="math display">\[
 s^2_{within} = \frac{1}{NT - 1}\sum_i\sum_t(x_{it} - \overline{x}_i)^2
 \]</span></p>
 <p>個人によって観察数が異なるアンバランスドデータでは、<span class="math inline">\(NT\)</span>と観察数の総数は一致しない。この場合には、<span class="math inline">\(NT\)</span>の代わりに実際の観察数の総数（<span class="math inline">\(\sum_iT_i\)</span>）を用いる必要がある。この場合は、<span class="math inline">\(s^2_{overall}\)</span>と<span class="math inline">\(s^2_{between} + s^2_{within}\)</span>は必ずしも同じ値とはならない。</p>
 <p>Rで各変数の総分散（標準偏差）、個人間分散（標準偏差）、個人内分散（標準偏差）をそれぞれ計算してくれるパッケージとして、Stataの<code>xtsum</code>関数を模して作られた<code>xtsum</code>パッケージがある。まずは<code>xtsum</code>パッケージをインストールする。</p>
-<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="paneldata.html#cb391-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;xtsum&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="paneldata.html#cb393-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;xtsum&quot;</span>)</span></code></pre></div>
 <p>次に、<code>xtsum</code>パッケージを読み込み、<code>xtsum()</code>関数を使って計算する。<code>id</code>引数で個人を表す変数、<code>t</code>引数で時間を表す変数を指定する。</p>
-<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="paneldata.html#cb392-1" tabindex="-1"></a><span class="fu">library</span>(xtsum)</span></code></pre></div>
-<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="paneldata.html#cb393-1" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> </span>
-<span id="cb393-2"><a href="paneldata.html#cb393-2" tabindex="-1"></a>  <span class="fu">select</span>(id, year, ln_wage, union, age, msp, collgrad, race) <span class="sc">%&gt;%</span>  <span class="co"># 分布をみたい変数を選択</span></span>
-<span id="cb393-3"><a href="paneldata.html#cb393-3" tabindex="-1"></a>  <span class="fu">xtsum</span>(<span class="at">id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">t =</span> <span class="st">&quot;year&quot;</span>) <span class="co"># 個人を表す変数（id）と時間を表す変数（t）を指定</span></span></code></pre></div>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="paneldata.html#cb394-1" tabindex="-1"></a><span class="fu">library</span>(xtsum)</span></code></pre></div>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="paneldata.html#cb395-1" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> </span>
+<span id="cb395-2"><a href="paneldata.html#cb395-2" tabindex="-1"></a>  <span class="fu">select</span>(id, year, ln_wage, union, age, msp, collgrad, race) <span class="sc">%&gt;%</span>  <span class="co"># 分布をみたい変数を選択</span></span>
+<span id="cb395-3"><a href="paneldata.html#cb395-3" tabindex="-1"></a>  <span class="fu">xtsum</span>(<span class="at">id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">t =</span> <span class="st">&quot;year&quot;</span>) <span class="co"># 個人を表す変数（id）と時間を表す変数（t）を指定</span></span></code></pre></div>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1384,14 +1415,14 @@ Y_{it} = \alpha + \underbrace{\beta_1 X_{1it} + \cdots + \beta_k X_{kit}}_{\text
 <li>時間可変の独立変数（X）：労働組合（union）、年齢（age）、年齢2乗（I(age^2)）、結婚有無（msp）</li>
 <li>時間不変の独立変数（Z）：人種（race）、大卒（collgrad）</li>
 </ul>
-<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="paneldata.html#cb394-1" tabindex="-1"></a>model_pols <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> nls_sample, ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> race <span class="sc">+</span> collgrad) <span class="co"># 推定</span></span>
-<span id="cb394-2"><a href="paneldata.html#cb394-2" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Pooled OLS&quot;</span> <span class="ot">=</span> model_pols), <span class="at">stars =</span> <span class="cn">TRUE</span>) <span class="co"># 結果を表示</span></span></code></pre></div>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="paneldata.html#cb396-1" tabindex="-1"></a>model_pols <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> nls_sample, ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> race <span class="sc">+</span> collgrad) <span class="co"># 推定</span></span>
+<span id="cb396-2"><a href="paneldata.html#cb396-2" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Pooled OLS&quot;</span> <span class="ot">=</span> model_pols), <span class="at">stars =</span> <span class="cn">TRUE</span>) <span class="co"># 結果を表示</span></span></code></pre></div>
 <!-- preamble start -->
 
     <script>
 
-      function styleCell_mlzsu91fvd9g2vy2i1y0(i, j, css_id) {
-          var table = document.getElementById("tinytable_mlzsu91fvd9g2vy2i1y0");
+      function styleCell_hm6h5xom69e40xlt0rue(i, j, css_id) {
+          var table = document.getElementById("tinytable_hm6h5xom69e40xlt0rue");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -1401,7 +1432,7 @@ Y_{it} = \alpha + \underbrace{\beta_1 X_{1it} + \cdots + \beta_k X_{kit}}_{\text
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_mlzsu91fvd9g2vy2i1y0');
+        var table = document.getElementById('tinytable_hm6h5xom69e40xlt0rue');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -1409,8 +1440,8 @@ Y_{it} = \alpha + \underbrace{\beta_1 X_{1it} + \cdots + \beta_k X_{kit}}_{\text
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_mlzsu91fvd9g2vy2i1y0(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_mlzsu91fvd9g2vy2i1y0");
+      function spanCell_hm6h5xom69e40xlt0rue(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_hm6h5xom69e40xlt0rue");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -1440,20 +1471,20 @@ Y_{it} = \alpha + \underbrace{\beta_1 X_{1it} + \cdots + \beta_k X_{kit}}_{\text
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 24, j: 1 },  ], css_id: 'tinytable_css_0ea5fppn4w00wnten0qz',}, 
-          { positions: [ { i: 16, j: 1 },  ], css_id: 'tinytable_css_y1h52mlpz27f0306ejyz',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 20, j: 1 }, { i: 17, j: 1 }, { i: 18, j: 1 }, { i: 19, j: 1 }, { i: 21, j: 1 }, { i: 22, j: 1 }, { i: 23, j: 1 },  ], css_id: 'tinytable_css_kdtoevst0ovd53ydrevw',}, 
-          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_6htsb2231iluumz7sx2y',}, 
-          { positions: [ { i: 24, j: 0 },  ], css_id: 'tinytable_css_pgk6ixbnej2rxin6ykkn',}, 
-          { positions: [ { i: 16, j: 0 },  ], css_id: 'tinytable_css_d12aexwdkbwcund4hqw4',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 20, j: 0 }, { i: 17, j: 0 }, { i: 18, j: 0 }, { i: 19, j: 0 }, { i: 21, j: 0 }, { i: 22, j: 0 }, { i: 23, j: 0 },  ], css_id: 'tinytable_css_926z4e9zk1fqzc04o3ra',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_so1g7nvrkrrarkaxh3be',}, 
+          { positions: [ { i: 24, j: 1 },  ], css_id: 'tinytable_css_y7z3pnjjt6hz70crul4d',}, 
+          { positions: [ { i: 16, j: 1 },  ], css_id: 'tinytable_css_pkouxfxvgj2m8fpvazze',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 20, j: 1 }, { i: 17, j: 1 }, { i: 18, j: 1 }, { i: 19, j: 1 }, { i: 21, j: 1 }, { i: 22, j: 1 }, { i: 23, j: 1 },  ], css_id: 'tinytable_css_2c4lwmxk38ebzhl400y1',}, 
+          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_n0dpjo2we6vg0uizotev',}, 
+          { positions: [ { i: 24, j: 0 },  ], css_id: 'tinytable_css_7qu0qwjir73j5ulpu4ny',}, 
+          { positions: [ { i: 16, j: 0 },  ], css_id: 'tinytable_css_kkowevny7jzea8retarn',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 20, j: 0 }, { i: 17, j: 0 }, { i: 18, j: 0 }, { i: 19, j: 0 }, { i: 21, j: 0 }, { i: 22, j: 0 }, { i: 23, j: 0 },  ], css_id: 'tinytable_css_869horjxdif8ntwavutm',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_tgph4aiu4xo9xxsfh7og',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_mlzsu91fvd9g2vy2i1y0(cell.i, cell.j, group.css_id);
+                  styleCell_hm6h5xom69e40xlt0rue(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -1461,17 +1492,17 @@ Y_{it} = \alpha + \underbrace{\beta_1 X_{1it} + \cdots + \beta_k X_{kit}}_{\text
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_0ea5fppn4w00wnten0qz, .table th.tinytable_css_0ea5fppn4w00wnten0qz { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_y1h52mlpz27f0306ejyz, .table th.tinytable_css_y1h52mlpz27f0306ejyz { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_kdtoevst0ovd53ydrevw, .table th.tinytable_css_kdtoevst0ovd53ydrevw { text-align: center; }
-      .table td.tinytable_css_6htsb2231iluumz7sx2y, .table th.tinytable_css_6htsb2231iluumz7sx2y { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_pgk6ixbnej2rxin6ykkn, .table th.tinytable_css_pgk6ixbnej2rxin6ykkn { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_d12aexwdkbwcund4hqw4, .table th.tinytable_css_d12aexwdkbwcund4hqw4 { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_926z4e9zk1fqzc04o3ra, .table th.tinytable_css_926z4e9zk1fqzc04o3ra { text-align: left; }
-      .table td.tinytable_css_so1g7nvrkrrarkaxh3be, .table th.tinytable_css_so1g7nvrkrrarkaxh3be { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_y7z3pnjjt6hz70crul4d, .table th.tinytable_css_y7z3pnjjt6hz70crul4d { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_pkouxfxvgj2m8fpvazze, .table th.tinytable_css_pkouxfxvgj2m8fpvazze { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_2c4lwmxk38ebzhl400y1, .table th.tinytable_css_2c4lwmxk38ebzhl400y1 { text-align: center; }
+      .table td.tinytable_css_n0dpjo2we6vg0uizotev, .table th.tinytable_css_n0dpjo2we6vg0uizotev { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_7qu0qwjir73j5ulpu4ny, .table th.tinytable_css_7qu0qwjir73j5ulpu4ny { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_kkowevny7jzea8retarn, .table th.tinytable_css_kkowevny7jzea8retarn { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_869horjxdif8ntwavutm, .table th.tinytable_css_869horjxdif8ntwavutm { text-align: left; }
+      .table td.tinytable_css_tgph4aiu4xo9xxsfh7og, .table th.tinytable_css_tgph4aiu4xo9xxsfh7og { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_mlzsu91fvd9g2vy2i1y0" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="table table-borderless" id="tinytable_hm6h5xom69e40xlt0rue" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         <thead>
         
               <tr>
@@ -1614,25 +1645,36 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
 \]</span></p>
 <p>このように書くことができる<a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a>。このように、個人特有の時間不変の要因を統制したうえで、個人内の変動と従属変数との関連を明らかにするモデルを、<strong>固定効果モデル（Fixed-effects model）</strong>とよぶ。</p>
 <p><span class="math inline">\(i\)</span>の単位が個人のときには、<span class="math inline">\(u_i\)</span>のことをを個人固定効果とよぶ。<span class="math inline">\(i\)</span>が学校ならば<span class="math inline">\(u_i\)</span>は学校固定効果、<span class="math inline">\(i\)</span>が都道府県ならば<span class="math inline">\(u_i\)</span>は都道府県固定効果、というふうによぶことになる。</p>
-<p>固定効果モデルの強みは、独立変数の個人内変動と従属変数との関連を明らかにすることができるという点にある。たとえば、「非正規雇用で働いていると、正規雇用で働いている場合とくらべて幸福度がが悪化するだろうか？」という問いに答えたいとする<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a>。もちろん、正規雇用で働いている人もいれば非正規雇用で働いている人もいる。正規雇用で働くか非正規雇用で働くかには、性別や学卒時の経済状況などといった比較的観察しやすい属性の他にも、出身家庭の豊かさ、出身大学の選抜度、パーソナリティなどといった観察しにくい属性も影響すると考えられる。固定効果モデルを用いると、仮に調査で聴取されていなかったとしても、こうした時間によって変わらない特徴をすべて統制することができる。これによって、因果効果に近づくことができるというのがメリットである。</p>
+<p>固定効果モデルの強みは、独立変数の個人内変動と従属変数との関連を明らかにすることができるという点にある。たとえば、「非正規雇用で働いていると、正規雇用で働いている場合とくらべて幸福度がが悪化するだろうか？」という問いに答えたいとする<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a>。もちろん、正規雇用で働いている人もいれば非正規雇用で働いている人もいる。正規雇用で働くか非正規雇用で働くかには、性別や学卒時の経済状況などといった比較的観察しやすい属性の他にも、出身家庭の豊かさ、出身大学の選抜度、パーソナリティなどといった観察しにくい属性も影響すると考えられる。固定効果モデルを用いると、仮に調査で聴取されていなかったとしても、こうした時間によって変わらない特徴をすべて統制することができる。これによって、因果効果に近づくことができる（だろう）というのが、固定効果モデルのメリットである。</p>
 <p>固定効果モデルでは、1回しか観察を得られていない個人を推定に用いることはできない。なぜなら、<a href="paneldata.html#within_between_variation">個人内変動と個人間変動</a>の項で説明したとおり、1回しか観察が得られていない個人については、個人内変動と個人間変動を区別することができないからである。言いかえると、個人固定効果<span class="math inline">\(u_i\)</span>が完全に従属変数を予測してしまう。したがって固定効果モデルでは、2回以上の観察が得られている個人のみを推定に用いることになる。</p>
 </div>
 <div id="推定方法fixestfeols" class="section level3 hasAnchor" number="11.4.2">
 <h3><span class="header-section-number">11.4.2</span> 推定方法：<code>fixest::feols()</code><a href="#%E6%8E%A8%E5%AE%9A%E6%96%B9%E6%B3%95fixestfeols" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>固定効果モデルの推定には、<code>fixest::feols()</code>関数を用いる。まずは以下のとおり<code>fixest</code>パッケージをあらかじめインストールしておこう。</p>
-<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="paneldata.html#cb395-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;fixest&quot;</span>) <span class="co"># 固定効果モデルを推定するためのパッケージ</span></span></code></pre></div>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="paneldata.html#cb397-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;fixest&quot;</span>) <span class="co"># 固定効果モデルを推定するためのパッケージ</span></span></code></pre></div>
 <p>インストールしたうえで、パッケージを読み込む。</p>
-<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="paneldata.html#cb396-1" tabindex="-1"></a><span class="fu">library</span>(fixest)</span></code></pre></div>
-<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="paneldata.html#cb397-1" tabindex="-1"></a><span class="co"># 固定効果モデルを推定</span></span>
-<span id="cb397-2"><a href="paneldata.html#cb397-2" tabindex="-1"></a>model_fe <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> race <span class="sc">+</span> collgrad <span class="sc">|</span> id)</span>
-<span id="cb397-3"><a href="paneldata.html#cb397-3" tabindex="-1"></a><span class="co"># 結果を表示</span></span>
-<span id="cb397-4"><a href="paneldata.html#cb397-4" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Fixed Effects&quot;</span> <span class="ot">=</span> model_fe), <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="paneldata.html#cb398-1" tabindex="-1"></a><span class="fu">library</span>(fixest)</span></code></pre></div>
+<p><code>fixest::feols()</code>関数が固定効果モデルを推定するための関数である。書き方は<code>lm()</code>関数と似ており、<code>feols(data = df, y ~ x1 + x2 | u)</code>とする。<code>df</code>には分析に用いるデータ、<code>u</code>には固定効果に指定する変数名を入れる。具体的には次のようなコードとなる。</p>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="paneldata.html#cb399-1" tabindex="-1"></a><span class="co"># 固定効果モデルを推定</span></span>
+<span id="cb399-2"><a href="paneldata.html#cb399-2" tabindex="-1"></a>model_fe <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> race <span class="sc">+</span> collgrad <span class="sc">|</span> id)</span></code></pre></div>
+<p><code>fixest::feols()</code>を実行した際、いくつかの注が表示される。まず、先に説明したとおり、1回しか観察を得られていない個人は推定に貢献しないため除外される。次のようなメッセージが表示される：</p>
+<blockquote>
+<p>664 fixed-effect singletons were removed (664 observations).</p>
+</blockquote>
+<p>これは、1回しか観察が得られていない個人（観察）664行分を分析から除外したということを意味する。全体のサンプルサイズ（Num.Obs.）についても、これら1回しか観察が得られていない行を除外した値が表示される。</p>
+<p>時間不変の変数は推定式から除外されるので、係数は推定されない。今回の場合であれば、raceとcollgradを独立変数に含めていたとしても、その係数は表示されない。<code>fixest::feols()</code>では、このような変数がある場合にはたとえば</p>
+<blockquote>
+<p>The variables ‘raceBlack’, ‘raceOther’ and ‘collgrad’ have been removed because of collinearity (see$collin.var).</p>
+</blockquote>
+<p>というふうにメッセージが表示される。これらの変数は共線性のために除外されたということである。</p>
+<p>では、係数の推定結果を見てみよう。</p>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="paneldata.html#cb400-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Fixed Effects&quot;</span> <span class="ot">=</span> model_fe), <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
 
-      function styleCell_ob2cw4ymnm37n2tyco26(i, j, css_id) {
-          var table = document.getElementById("tinytable_ob2cw4ymnm37n2tyco26");
+      function styleCell_rxuwq584dd9rzpssnpbd(i, j, css_id) {
+          var table = document.getElementById("tinytable_rxuwq584dd9rzpssnpbd");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -1642,7 +1684,7 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_ob2cw4ymnm37n2tyco26');
+        var table = document.getElementById('tinytable_rxuwq584dd9rzpssnpbd');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -1650,8 +1692,8 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_ob2cw4ymnm37n2tyco26(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_ob2cw4ymnm37n2tyco26");
+      function spanCell_rxuwq584dd9rzpssnpbd(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_rxuwq584dd9rzpssnpbd");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -1681,20 +1723,20 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 18, j: 1 },  ], css_id: 'tinytable_css_w2hvwfg3344n7gqevzye',}, 
-          { positions: [ { i: 8, j: 1 },  ], css_id: 'tinytable_css_ftnxow14788iqycqgq69',}, 
-          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 12, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 16, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 17, j: 1 },  ], css_id: 'tinytable_css_x4zely9v5sox4940h1mo',}, 
-          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_oi6unf04hnetkyzmj2vt',}, 
-          { positions: [ { i: 18, j: 0 },  ], css_id: 'tinytable_css_3enauc1qd7kw33f910fh',}, 
-          { positions: [ { i: 8, j: 0 },  ], css_id: 'tinytable_css_8mfhwe62g6cg96qsjwdr',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 12, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 16, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 17, j: 0 },  ], css_id: 'tinytable_css_k76iz0b3c0f6ftmibeb2',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_ji1y0ldantwcvf0fkna8',}, 
+          { positions: [ { i: 18, j: 1 },  ], css_id: 'tinytable_css_3fuboqy00np29f2ntrng',}, 
+          { positions: [ { i: 8, j: 1 },  ], css_id: 'tinytable_css_9qmtbh9ls9x19a6vyzeg',}, 
+          { positions: [ { i: 1, j: 1 }, { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 12, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 16, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 17, j: 1 },  ], css_id: 'tinytable_css_5xocz5igvxg5rc3e5akg',}, 
+          { positions: [ { i: 0, j: 1 },  ], css_id: 'tinytable_css_vrxqifwvirho99j2ho1c',}, 
+          { positions: [ { i: 18, j: 0 },  ], css_id: 'tinytable_css_w3d0qus1askn879kiw4d',}, 
+          { positions: [ { i: 8, j: 0 },  ], css_id: 'tinytable_css_unc5ub0d2febosihpcst',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 12, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 16, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 17, j: 0 },  ], css_id: 'tinytable_css_6sg693eurqozwze3mpkl',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_8ly0cuhjo0ay3pru1jhm',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_ob2cw4ymnm37n2tyco26(cell.i, cell.j, group.css_id);
+                  styleCell_rxuwq584dd9rzpssnpbd(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -1702,17 +1744,17 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_w2hvwfg3344n7gqevzye, .table th.tinytable_css_w2hvwfg3344n7gqevzye { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_ftnxow14788iqycqgq69, .table th.tinytable_css_ftnxow14788iqycqgq69 { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_x4zely9v5sox4940h1mo, .table th.tinytable_css_x4zely9v5sox4940h1mo { text-align: center; }
-      .table td.tinytable_css_oi6unf04hnetkyzmj2vt, .table th.tinytable_css_oi6unf04hnetkyzmj2vt { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_3enauc1qd7kw33f910fh, .table th.tinytable_css_3enauc1qd7kw33f910fh { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_8mfhwe62g6cg96qsjwdr, .table th.tinytable_css_8mfhwe62g6cg96qsjwdr { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_k76iz0b3c0f6ftmibeb2, .table th.tinytable_css_k76iz0b3c0f6ftmibeb2 { text-align: left; }
-      .table td.tinytable_css_ji1y0ldantwcvf0fkna8, .table th.tinytable_css_ji1y0ldantwcvf0fkna8 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_3fuboqy00np29f2ntrng, .table th.tinytable_css_3fuboqy00np29f2ntrng { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_9qmtbh9ls9x19a6vyzeg, .table th.tinytable_css_9qmtbh9ls9x19a6vyzeg { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_5xocz5igvxg5rc3e5akg, .table th.tinytable_css_5xocz5igvxg5rc3e5akg { text-align: center; }
+      .table td.tinytable_css_vrxqifwvirho99j2ho1c, .table th.tinytable_css_vrxqifwvirho99j2ho1c { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_w3d0qus1askn879kiw4d, .table th.tinytable_css_w3d0qus1askn879kiw4d { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_unc5ub0d2febosihpcst, .table th.tinytable_css_unc5ub0d2febosihpcst { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_6sg693eurqozwze3mpkl, .table th.tinytable_css_6sg693eurqozwze3mpkl { text-align: left; }
+      .table td.tinytable_css_8ly0cuhjo0ay3pru1jhm, .table th.tinytable_css_8ly0cuhjo0ay3pru1jhm { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_ob2cw4ymnm37n2tyco26" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="table table-borderless" id="tinytable_rxuwq584dd9rzpssnpbd" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         <thead>
         
               <tr>
@@ -1800,16 +1842,6 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
 <!-- hack to avoid NA insertion in last line -->
 <p>変数の係数は、同一個人内における当該変数の値が変動した場合にどの程度従属変数の値が高い（あるいは低い）かを表す。たとえばunionの係数は0.106である。つまり、同じ個人内で比べると、（年齢、年齢2乗、結婚有無を統制したうえで）労働組合に加入していると加入していない場合と比べて賃金が0.106ポイント高いということである。</p>
 <p><a href="paneldata.html#eq:fe">(11.4)</a>式に示したとおり、切片は省略される。</p>
-<p>先に説明したとおり、1回しか観察を得られていない個人は推定に貢献しないため除外される。<code>fixest::feols()</code>では、次のようなメッセージが表示される：</p>
-<blockquote>
-<p>664 fixed-effect singletons were removed (664 observations).</p>
-</blockquote>
-<p>これは、1回しか観察が得られていない個人（観察）664行分を分析から除外したということを意味する。全体のサンプルサイズ（Num.Obs.）についても、これら1回しか観察が得られていない行を除外した値が表示される。</p>
-<p>時間不変の変数は推定式から除外されるので、係数は推定されない。今回の場合であれば、raceとcollgradを独立変数に含めていたとしても、その係数は表示されない。<code>fixest::feols()</code>では、このような変数がある場合にはたとえば</p>
-<blockquote>
-<p>The variables ‘raceBlack’, ‘raceOther’ and ‘collgrad’ have been removed because of collinearity (see$collin.var).</p>
-</blockquote>
-<p>というふうにメッセージが表示される。これらの変数は共線性のために除外されたということである。</p>
 <p>係数以外の箇所のうち、比較的重要な箇所について説明する。</p>
 <ul>
 <li>R2は決定係数を表す。個人ダミーを人数分含めることになるので、説明される従属変数の分散はPooled OLSと比べると当然ながら大きく上昇する。</li>
@@ -1820,25 +1852,28 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
 </div>
 <div id="クラスターロバスト標準誤差" class="section level3 hasAnchor" number="11.4.3">
 <h3><span class="header-section-number">11.4.3</span> クラスター・ロバスト標準誤差<a href="#%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%AD%E3%83%90%E3%82%B9%E3%83%88%E6%A8%99%E6%BA%96%E8%AA%A4%E5%B7%AE" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>パネルデータの場合、個々の観察は互いに独立ではない。ある時点で調査された個人は次も調査対象となるからである。この場合、残差が独立に同一の分布に従うIID; Independent and identically distributed）の仮定が満たされない。を意味し、観察が互いに独立であり、かつ、同じ分布に従、通常クラスター・ロバスト標準誤差を用いる。Rでは、<code>fixest::feols()</code>関数の<code>vcov</code>引数で<code>"cluster"</code>を指定することによって、クラスター・ロバスト標準誤差を計算することができる。クラスター化の単位は、<code>panel.id</code>引数で指定した個人を表す変数となる。</p>
-<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="paneldata.html#cb398-1" tabindex="-1"></a><span class="co"># Pooled OLSでクラスター・ロバスト標準誤差を用いる場合</span></span>
-<span id="cb398-2"><a href="paneldata.html#cb398-2" tabindex="-1"></a>model_pols <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, </span>
-<span id="cb398-3"><a href="paneldata.html#cb398-3" tabindex="-1"></a>              ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> race <span class="sc">+</span> collgrad, </span>
-<span id="cb398-4"><a href="paneldata.html#cb398-4" tabindex="-1"></a>              <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
-<span id="cb398-5"><a href="paneldata.html#cb398-5" tabindex="-1"></a></span>
-<span id="cb398-6"><a href="paneldata.html#cb398-6" tabindex="-1"></a><span class="co"># 固定効果モデルでクラスター・ロバスト標準誤差を用いる場合</span></span>
-<span id="cb398-7"><a href="paneldata.html#cb398-7" tabindex="-1"></a>model_fe <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, </span>
-<span id="cb398-8"><a href="paneldata.html#cb398-8" tabindex="-1"></a>            ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">|</span> id,</span>
-<span id="cb398-9"><a href="paneldata.html#cb398-9" tabindex="-1"></a>            <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
-<span id="cb398-10"><a href="paneldata.html#cb398-10" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Pooled OLS&quot;</span> <span class="ot">=</span> model_pols, </span>
-<span id="cb398-11"><a href="paneldata.html#cb398-11" tabindex="-1"></a>                  <span class="st">&quot;Fixed effect&quot;</span> <span class="ot">=</span> model_fe), </span>
-<span id="cb398-12"><a href="paneldata.html#cb398-12" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>パネルデータの場合、個々の観察は互いに独立ではない。ある時点で調査された個人は次も調査対象となるからである。この場合、残差が独立に同一の分布に従うIID（Independent and Identically Distributed。観察が互いに独立であり、かつ、同一の分布に従うということを意味する）の仮定が満たされず、標準誤差は誤った値となる。</p>
+<p>このような場合には、同一個人内での誤差の相関を認めるクラスター・ロバスト標準誤差を用いる。Rでは、<code>fixest::feols()</code>関数の<code>vcov</code>引数で<code>vcov = "cluster"</code>を指定することによって、クラスター・ロバスト標準誤差を計算することができる。クラスター化の単位は、<code>panel.id</code>引数で指定した個人を表す変数となる。</p>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="paneldata.html#cb401-1" tabindex="-1"></a><span class="co"># Pooled OLSでクラスター・ロバスト標準誤差を用いる場合</span></span>
+<span id="cb401-2"><a href="paneldata.html#cb401-2" tabindex="-1"></a>model_pols <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, </span>
+<span id="cb401-3"><a href="paneldata.html#cb401-3" tabindex="-1"></a>              ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> race <span class="sc">+</span> collgrad, </span>
+<span id="cb401-4"><a href="paneldata.html#cb401-4" tabindex="-1"></a>              <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
+<span id="cb401-5"><a href="paneldata.html#cb401-5" tabindex="-1"></a></span>
+<span id="cb401-6"><a href="paneldata.html#cb401-6" tabindex="-1"></a><span class="co"># 固定効果モデルでクラスター・ロバスト標準誤差を用いる場合</span></span>
+<span id="cb401-7"><a href="paneldata.html#cb401-7" tabindex="-1"></a>model_fe <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, </span>
+<span id="cb401-8"><a href="paneldata.html#cb401-8" tabindex="-1"></a>            ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">|</span> id,</span>
+<span id="cb401-9"><a href="paneldata.html#cb401-9" tabindex="-1"></a>            <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
+<span id="cb401-10"><a href="paneldata.html#cb401-10" tabindex="-1"></a></span>
+<span id="cb401-11"><a href="paneldata.html#cb401-11" tabindex="-1"></a><span class="co"># 推定結果を表示</span></span>
+<span id="cb401-12"><a href="paneldata.html#cb401-12" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Pooled OLS&quot;</span> <span class="ot">=</span> model_pols, </span>
+<span id="cb401-13"><a href="paneldata.html#cb401-13" tabindex="-1"></a>                  <span class="st">&quot;Fixed effect&quot;</span> <span class="ot">=</span> model_fe), </span>
+<span id="cb401-14"><a href="paneldata.html#cb401-14" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
 
-      function styleCell_3gg6b9haa7u7l23vux4s(i, j, css_id) {
-          var table = document.getElementById("tinytable_3gg6b9haa7u7l23vux4s");
+      function styleCell_9mfa4m7yrxetbp6srchp(i, j, css_id) {
+          var table = document.getElementById("tinytable_9mfa4m7yrxetbp6srchp");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -1848,7 +1883,7 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_3gg6b9haa7u7l23vux4s');
+        var table = document.getElementById('tinytable_9mfa4m7yrxetbp6srchp');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -1856,8 +1891,8 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_3gg6b9haa7u7l23vux4s(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_3gg6b9haa7u7l23vux4s");
+      function spanCell_9mfa4m7yrxetbp6srchp(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_9mfa4m7yrxetbp6srchp");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -1887,20 +1922,20 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 26, j: 1 }, { i: 26, j: 2 },  ], css_id: 'tinytable_css_hlwump3qxslqw0mu9f8c',}, 
-          { positions: [ { i: 16, j: 1 }, { i: 16, j: 2 },  ], css_id: 'tinytable_css_bxte82gb7my3apig2a7j',}, 
-          { positions: [ { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 1, j: 1 }, { i: 15, j: 1 }, { i: 2, j: 2 }, { i: 17, j: 1 }, { i: 18, j: 1 }, { i: 19, j: 1 }, { i: 20, j: 1 }, { i: 21, j: 1 }, { i: 22, j: 1 }, { i: 23, j: 1 }, { i: 24, j: 1 }, { i: 25, j: 1 }, { i: 12, j: 2 }, { i: 14, j: 1 }, { i: 1, j: 2 }, { i: 15, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 10, j: 2 }, { i: 11, j: 2 }, { i: 25, j: 2 }, { i: 13, j: 2 }, { i: 14, j: 2 }, { i: 19, j: 2 }, { i: 20, j: 2 }, { i: 17, j: 2 }, { i: 18, j: 2 }, { i: 23, j: 2 }, { i: 24, j: 2 }, { i: 21, j: 2 }, { i: 22, j: 2 },  ], css_id: 'tinytable_css_da6w3m5m44rhw6jfm17y',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_4umyjfzl2znsqemuvjiy',}, 
-          { positions: [ { i: 26, j: 0 },  ], css_id: 'tinytable_css_bu2awd67jygt3tv53amd',}, 
-          { positions: [ { i: 16, j: 0 },  ], css_id: 'tinytable_css_zmbw6vebzhbz93qwr9pk',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 20, j: 0 }, { i: 17, j: 0 }, { i: 18, j: 0 }, { i: 19, j: 0 }, { i: 24, j: 0 }, { i: 21, j: 0 }, { i: 22, j: 0 }, { i: 23, j: 0 }, { i: 25, j: 0 },  ], css_id: 'tinytable_css_av3wramn5pavfeu68b1o',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_z4v03jpg4qu6eg9aryy1',}, 
+          { positions: [ { i: 26, j: 1 }, { i: 26, j: 2 },  ], css_id: 'tinytable_css_dnj4flzdya5g4v2gv8nz',}, 
+          { positions: [ { i: 16, j: 1 }, { i: 16, j: 2 },  ], css_id: 'tinytable_css_dunnl1duekzpqbx6zu2m',}, 
+          { positions: [ { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 1, j: 1 }, { i: 15, j: 1 }, { i: 2, j: 2 }, { i: 17, j: 1 }, { i: 18, j: 1 }, { i: 19, j: 1 }, { i: 20, j: 1 }, { i: 21, j: 1 }, { i: 22, j: 1 }, { i: 23, j: 1 }, { i: 24, j: 1 }, { i: 25, j: 1 }, { i: 12, j: 2 }, { i: 14, j: 1 }, { i: 1, j: 2 }, { i: 15, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 9, j: 2 }, { i: 10, j: 2 }, { i: 11, j: 2 }, { i: 25, j: 2 }, { i: 13, j: 2 }, { i: 14, j: 2 }, { i: 19, j: 2 }, { i: 20, j: 2 }, { i: 17, j: 2 }, { i: 18, j: 2 }, { i: 23, j: 2 }, { i: 24, j: 2 }, { i: 21, j: 2 }, { i: 22, j: 2 },  ], css_id: 'tinytable_css_zmz2ijralkrh271qfgvq',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_iner3irpfbiwlndi10dr',}, 
+          { positions: [ { i: 26, j: 0 },  ], css_id: 'tinytable_css_hms2pnfmshj2lbhu6vgc',}, 
+          { positions: [ { i: 16, j: 0 },  ], css_id: 'tinytable_css_8ftbsrwmxfpdhsdscp0n',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 20, j: 0 }, { i: 17, j: 0 }, { i: 18, j: 0 }, { i: 19, j: 0 }, { i: 24, j: 0 }, { i: 21, j: 0 }, { i: 22, j: 0 }, { i: 23, j: 0 }, { i: 25, j: 0 },  ], css_id: 'tinytable_css_zh6m2j9v83ndhiy9l6g9',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_c1rfnr3mer6oclq2lg31',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_3gg6b9haa7u7l23vux4s(cell.i, cell.j, group.css_id);
+                  styleCell_9mfa4m7yrxetbp6srchp(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -1908,17 +1943,17 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_hlwump3qxslqw0mu9f8c, .table th.tinytable_css_hlwump3qxslqw0mu9f8c { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_bxte82gb7my3apig2a7j, .table th.tinytable_css_bxte82gb7my3apig2a7j { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_da6w3m5m44rhw6jfm17y, .table th.tinytable_css_da6w3m5m44rhw6jfm17y { text-align: center; }
-      .table td.tinytable_css_4umyjfzl2znsqemuvjiy, .table th.tinytable_css_4umyjfzl2znsqemuvjiy { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_bu2awd67jygt3tv53amd, .table th.tinytable_css_bu2awd67jygt3tv53amd { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_zmbw6vebzhbz93qwr9pk, .table th.tinytable_css_zmbw6vebzhbz93qwr9pk { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_av3wramn5pavfeu68b1o, .table th.tinytable_css_av3wramn5pavfeu68b1o { text-align: left; }
-      .table td.tinytable_css_z4v03jpg4qu6eg9aryy1, .table th.tinytable_css_z4v03jpg4qu6eg9aryy1 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_dnj4flzdya5g4v2gv8nz, .table th.tinytable_css_dnj4flzdya5g4v2gv8nz { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_dunnl1duekzpqbx6zu2m, .table th.tinytable_css_dunnl1duekzpqbx6zu2m { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_zmz2ijralkrh271qfgvq, .table th.tinytable_css_zmz2ijralkrh271qfgvq { text-align: center; }
+      .table td.tinytable_css_iner3irpfbiwlndi10dr, .table th.tinytable_css_iner3irpfbiwlndi10dr { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_hms2pnfmshj2lbhu6vgc, .table th.tinytable_css_hms2pnfmshj2lbhu6vgc { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_8ftbsrwmxfpdhsdscp0n, .table th.tinytable_css_8ftbsrwmxfpdhsdscp0n { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_zh6m2j9v83ndhiy9l6g9, .table th.tinytable_css_zh6m2j9v83ndhiy9l6g9 { text-align: left; }
+      .table td.tinytable_css_c1rfnr3mer6oclq2lg31, .table th.tinytable_css_c1rfnr3mer6oclq2lg31 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_3gg6b9haa7u7l23vux4s" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="table table-borderless" id="tinytable_9mfa4m7yrxetbp6srchp" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         <thead>
         
               <tr>
@@ -2066,33 +2101,36 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
 </div>
 <div id="二方向固定効果モデル" class="section level3 hasAnchor" number="11.4.4">
 <h3><span class="header-section-number">11.4.4</span> 二方向固定効果モデル<a href="#%E4%BA%8C%E6%96%B9%E5%90%91%E5%9B%BA%E5%AE%9A%E5%8A%B9%E6%9E%9C%E3%83%A2%E3%83%87%E3%83%AB" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>先ほどまでは個人を表す変数のみを固定効果として指定したが、それ以外にも様々な固定効果を統制することができる。パネルデータの文脈で最もよく用いられるのは、時点固有の効果（時点固定効果）をさらに統制するモデルである。たとえば、<strong>誰にとっても共通に影響すると考えられるような時点に固有の要因</strong>（経済成長、景気の変化、調査方法の変化など）はありそうだ。このように時点に固有の要因をすべて統制したい場合には、個人固定効果のときと同様に、時点固定効果を統制することが有効である。</p>
 <p><span class="math display" id="eq:twfe">\[
 \begin{equation}
 Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon_{it}
 \tag{11.5}
 \end{equation}
 \]</span></p>
-<p><span class="math inline">\(\tau_t\)</span>のことを時点固定効果などという。</p>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="paneldata.html#cb399-1" tabindex="-1"></a><span class="co"># 年を時点固定効果として扱う場合（係数は表示されない）</span></span>
-<span id="cb399-2"><a href="paneldata.html#cb399-2" tabindex="-1"></a>model_twfe1 <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, </span>
-<span id="cb399-3"><a href="paneldata.html#cb399-3" tabindex="-1"></a>            ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> <span class="fu">factor</span>(year) <span class="sc">|</span> id <span class="sc">+</span> year,</span>
-<span id="cb399-4"><a href="paneldata.html#cb399-4" tabindex="-1"></a>            <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
-<span id="cb399-5"><a href="paneldata.html#cb399-5" tabindex="-1"></a></span>
-<span id="cb399-6"><a href="paneldata.html#cb399-6" tabindex="-1"></a><span class="co"># 年をダミー変数としてモデルに含める場合。その他の係数はまったく同じとなる。</span></span>
-<span id="cb399-7"><a href="paneldata.html#cb399-7" tabindex="-1"></a>model_twfe2 <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, </span>
-<span id="cb399-8"><a href="paneldata.html#cb399-8" tabindex="-1"></a>            ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> <span class="fu">factor</span>(year) <span class="sc">|</span> id,</span>
-<span id="cb399-9"><a href="paneldata.html#cb399-9" tabindex="-1"></a>            <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
-<span id="cb399-10"><a href="paneldata.html#cb399-10" tabindex="-1"></a></span>
-<span id="cb399-11"><a href="paneldata.html#cb399-11" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;時点固定効果&quot;</span> <span class="ot">=</span> model_twfe1, </span>
-<span id="cb399-12"><a href="paneldata.html#cb399-12" tabindex="-1"></a>                  <span class="st">&quot;年ダミー&quot;</span> <span class="ot">=</span> model_twfe2), </span>
-<span id="cb399-13"><a href="paneldata.html#cb399-13" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb399-14"><a href="paneldata.html#cb399-14" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>, <span class="st">&quot;FE: id&quot;</span>, <span class="st">&quot;FE: year&quot;</span>))</span></code></pre></div>
+<p><span class="math inline">\(\tau_t\)</span>が時点固定効果を指す。またこのように、個人固定効果と時点固定効果の両方を統制したモデルを<strong>二方向固定効果モデル（Two-way Fixed effects model）</strong> という。</p>
+<p>とくに強い理論的な根拠がない場合を除き、基本的に時点固定効果は統制したほうが良いと思われる。<code>fixest::feols(data = df, y ~ x1 + x2 | u + t)</code>のように、固定効果を記載する欄に<code>+</code>で続けて時点を表す変数を追加することで、時点固定効果を統制することができる。</p>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="paneldata.html#cb402-1" tabindex="-1"></a><span class="co"># 年を時点固定効果として扱う場合（係数は表示されない）</span></span>
+<span id="cb402-2"><a href="paneldata.html#cb402-2" tabindex="-1"></a>model_twfe1 <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, </span>
+<span id="cb402-3"><a href="paneldata.html#cb402-3" tabindex="-1"></a>            ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> <span class="fu">factor</span>(year) <span class="sc">|</span> id <span class="sc">+</span> year,</span>
+<span id="cb402-4"><a href="paneldata.html#cb402-4" tabindex="-1"></a>            <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
+<span id="cb402-5"><a href="paneldata.html#cb402-5" tabindex="-1"></a></span>
+<span id="cb402-6"><a href="paneldata.html#cb402-6" tabindex="-1"></a><span class="co"># 年をダミー変数としてモデルに含める場合。その他の係数はまったく同じとなる。</span></span>
+<span id="cb402-7"><a href="paneldata.html#cb402-7" tabindex="-1"></a>model_twfe2 <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, </span>
+<span id="cb402-8"><a href="paneldata.html#cb402-8" tabindex="-1"></a>            ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> <span class="fu">factor</span>(year) <span class="sc">|</span> id,</span>
+<span id="cb402-9"><a href="paneldata.html#cb402-9" tabindex="-1"></a>            <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
+<span id="cb402-10"><a href="paneldata.html#cb402-10" tabindex="-1"></a></span>
+<span id="cb402-11"><a href="paneldata.html#cb402-11" tabindex="-1"></a><span class="co"># 推定結果を表示</span></span>
+<span id="cb402-12"><a href="paneldata.html#cb402-12" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;時点固定効果&quot;</span> <span class="ot">=</span> model_twfe1, </span>
+<span id="cb402-13"><a href="paneldata.html#cb402-13" tabindex="-1"></a>                  <span class="st">&quot;年ダミー&quot;</span> <span class="ot">=</span> model_twfe2), </span>
+<span id="cb402-14"><a href="paneldata.html#cb402-14" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb402-15"><a href="paneldata.html#cb402-15" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>, <span class="st">&quot;FE: id&quot;</span>, <span class="st">&quot;FE: year&quot;</span>))</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
 
-      function styleCell_fh38wqxyz9pbubjqo99v(i, j, css_id) {
-          var table = document.getElementById("tinytable_fh38wqxyz9pbubjqo99v");
+      function styleCell_vwww7usjk3cycwj0a96t(i, j, css_id) {
+          var table = document.getElementById("tinytable_vwww7usjk3cycwj0a96t");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -2102,7 +2140,7 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_fh38wqxyz9pbubjqo99v');
+        var table = document.getElementById('tinytable_vwww7usjk3cycwj0a96t');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -2110,8 +2148,8 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_fh38wqxyz9pbubjqo99v(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_fh38wqxyz9pbubjqo99v");
+      function spanCell_vwww7usjk3cycwj0a96t(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_vwww7usjk3cycwj0a96t");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2141,20 +2179,20 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 34, j: 1 }, { i: 34, j: 2 },  ], css_id: 'tinytable_css_btqmzcxa9zfqmcvf4849',}, 
-          { positions: [ { i: 30, j: 1 }, { i: 30, j: 2 },  ], css_id: 'tinytable_css_k4eci5ud5ibfhvufck2k',}, 
-          { positions: [ { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 1, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 5, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 16, j: 1 }, { i: 17, j: 1 }, { i: 18, j: 1 }, { i: 19, j: 1 }, { i: 20, j: 1 }, { i: 21, j: 1 }, { i: 9, j: 1 }, { i: 23, j: 1 }, { i: 24, j: 1 }, { i: 25, j: 1 }, { i: 26, j: 1 }, { i: 27, j: 1 }, { i: 28, j: 1 }, { i: 29, j: 1 }, { i: 8, j: 2 }, { i: 31, j: 1 }, { i: 32, j: 1 }, { i: 33, j: 1 }, { i: 12, j: 2 }, { i: 22, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 21, j: 2 }, { i: 9, j: 2 }, { i: 10, j: 2 }, { i: 11, j: 2 }, { i: 25, j: 2 }, { i: 13, j: 2 }, { i: 14, j: 2 }, { i: 15, j: 2 }, { i: 16, j: 2 }, { i: 17, j: 2 }, { i: 18, j: 2 }, { i: 19, j: 2 }, { i: 20, j: 2 }, { i: 29, j: 2 }, { i: 22, j: 2 }, { i: 23, j: 2 }, { i: 24, j: 2 }, { i: 33, j: 2 }, { i: 26, j: 2 }, { i: 27, j: 2 }, { i: 28, j: 2 }, { i: 31, j: 2 }, { i: 32, j: 2 },  ], css_id: 'tinytable_css_bze4i1gvq9rwrzr9p13t',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_yya5000x2w1ste99jkwm',}, 
-          { positions: [ { i: 34, j: 0 },  ], css_id: 'tinytable_css_by9dkek7n2p5c3w3vahf',}, 
-          { positions: [ { i: 30, j: 0 },  ], css_id: 'tinytable_css_8s2gaw1ltbdmuliqbkvu',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 16, j: 0 }, { i: 17, j: 0 }, { i: 18, j: 0 }, { i: 19, j: 0 }, { i: 20, j: 0 }, { i: 21, j: 0 }, { i: 22, j: 0 }, { i: 23, j: 0 }, { i: 24, j: 0 }, { i: 25, j: 0 }, { i: 26, j: 0 }, { i: 27, j: 0 }, { i: 28, j: 0 }, { i: 29, j: 0 }, { i: 31, j: 0 }, { i: 32, j: 0 }, { i: 33, j: 0 },  ], css_id: 'tinytable_css_fnwlfak9o5y9bj7b34eh',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_ffhzvd1ndn1jy86kwz3m',}, 
+          { positions: [ { i: 34, j: 1 }, { i: 34, j: 2 },  ], css_id: 'tinytable_css_p1os51vdvhw21amisz0a',}, 
+          { positions: [ { i: 30, j: 1 }, { i: 30, j: 2 },  ], css_id: 'tinytable_css_38131g9ivadd85clbej4',}, 
+          { positions: [ { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 1, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 5, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 14, j: 1 }, { i: 15, j: 1 }, { i: 16, j: 1 }, { i: 17, j: 1 }, { i: 18, j: 1 }, { i: 19, j: 1 }, { i: 20, j: 1 }, { i: 21, j: 1 }, { i: 9, j: 1 }, { i: 23, j: 1 }, { i: 24, j: 1 }, { i: 25, j: 1 }, { i: 26, j: 1 }, { i: 27, j: 1 }, { i: 28, j: 1 }, { i: 29, j: 1 }, { i: 8, j: 2 }, { i: 31, j: 1 }, { i: 32, j: 1 }, { i: 33, j: 1 }, { i: 12, j: 2 }, { i: 22, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 21, j: 2 }, { i: 9, j: 2 }, { i: 10, j: 2 }, { i: 11, j: 2 }, { i: 25, j: 2 }, { i: 13, j: 2 }, { i: 14, j: 2 }, { i: 15, j: 2 }, { i: 16, j: 2 }, { i: 17, j: 2 }, { i: 18, j: 2 }, { i: 19, j: 2 }, { i: 20, j: 2 }, { i: 29, j: 2 }, { i: 22, j: 2 }, { i: 23, j: 2 }, { i: 24, j: 2 }, { i: 33, j: 2 }, { i: 26, j: 2 }, { i: 27, j: 2 }, { i: 28, j: 2 }, { i: 31, j: 2 }, { i: 32, j: 2 },  ], css_id: 'tinytable_css_l4zysabv3f23p03d8jl9',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_698li7n9e12hgb58rjjm',}, 
+          { positions: [ { i: 34, j: 0 },  ], css_id: 'tinytable_css_81zm3zjwjejso0hlrwal',}, 
+          { positions: [ { i: 30, j: 0 },  ], css_id: 'tinytable_css_81qwgd96zcduqek67udr',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 16, j: 0 }, { i: 17, j: 0 }, { i: 18, j: 0 }, { i: 19, j: 0 }, { i: 20, j: 0 }, { i: 21, j: 0 }, { i: 22, j: 0 }, { i: 23, j: 0 }, { i: 24, j: 0 }, { i: 25, j: 0 }, { i: 26, j: 0 }, { i: 27, j: 0 }, { i: 28, j: 0 }, { i: 29, j: 0 }, { i: 31, j: 0 }, { i: 32, j: 0 }, { i: 33, j: 0 },  ], css_id: 'tinytable_css_nnwvkkzrbpdmy1sw6wtb',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_4eq7reys0c9h1ighgrrw',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_fh38wqxyz9pbubjqo99v(cell.i, cell.j, group.css_id);
+                  styleCell_vwww7usjk3cycwj0a96t(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2162,17 +2200,17 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_btqmzcxa9zfqmcvf4849, .table th.tinytable_css_btqmzcxa9zfqmcvf4849 { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_k4eci5ud5ibfhvufck2k, .table th.tinytable_css_k4eci5ud5ibfhvufck2k { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_bze4i1gvq9rwrzr9p13t, .table th.tinytable_css_bze4i1gvq9rwrzr9p13t { text-align: center; }
-      .table td.tinytable_css_yya5000x2w1ste99jkwm, .table th.tinytable_css_yya5000x2w1ste99jkwm { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_by9dkek7n2p5c3w3vahf, .table th.tinytable_css_by9dkek7n2p5c3w3vahf { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_8s2gaw1ltbdmuliqbkvu, .table th.tinytable_css_8s2gaw1ltbdmuliqbkvu { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_fnwlfak9o5y9bj7b34eh, .table th.tinytable_css_fnwlfak9o5y9bj7b34eh { text-align: left; }
-      .table td.tinytable_css_ffhzvd1ndn1jy86kwz3m, .table th.tinytable_css_ffhzvd1ndn1jy86kwz3m { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_p1os51vdvhw21amisz0a, .table th.tinytable_css_p1os51vdvhw21amisz0a { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_38131g9ivadd85clbej4, .table th.tinytable_css_38131g9ivadd85clbej4 { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_l4zysabv3f23p03d8jl9, .table th.tinytable_css_l4zysabv3f23p03d8jl9 { text-align: center; }
+      .table td.tinytable_css_698li7n9e12hgb58rjjm, .table th.tinytable_css_698li7n9e12hgb58rjjm { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_81zm3zjwjejso0hlrwal, .table th.tinytable_css_81zm3zjwjejso0hlrwal { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_81qwgd96zcduqek67udr, .table th.tinytable_css_81qwgd96zcduqek67udr { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_nnwvkkzrbpdmy1sw6wtb, .table th.tinytable_css_nnwvkkzrbpdmy1sw6wtb { text-align: left; }
+      .table td.tinytable_css_4eq7reys0c9h1ighgrrw, .table th.tinytable_css_4eq7reys0c9h1ighgrrw { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_fh38wqxyz9pbubjqo99v" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="table table-borderless" id="tinytable_vwww7usjk3cycwj0a96t" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         <thead>
         
               <tr>
@@ -2357,52 +2395,50 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
       </table>
     </div>
 <!-- hack to avoid NA insertion in last line -->
+<p>時点の場合は個人と違って係数に実質的な意味があるので、固定効果とせずに、調査年ダミーとして投入してもよい。どちらにしても、その他の係数の推定結果はすべて同じとなる<a href="#fn33" class="footnote-ref" id="fnref33"><sup>33</sup></a>。</p>
+</div>
+<div id="回しか観察が得られていない個人をデータから除外する" class="section level3 hasAnchor" number="11.4.5">
+<h3><span class="header-section-number">11.4.5</span> 1回しか観察が得られていない個人をデータから除外する<a href="#%E5%9B%9E%E3%81%97%E3%81%8B%E8%A6%B3%E5%AF%9F%E3%81%8C%E5%BE%97%E3%82%89%E3%82%8C%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84%E5%80%8B%E4%BA%BA%E3%82%92%E3%83%87%E3%83%BC%E3%82%BF%E3%81%8B%E3%82%89%E9%99%A4%E5%A4%96%E3%81%99%E3%82%8B" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>固定効果モデルを用いる場合、分析に必要な変数に欠損があるものを除外したうえで、1回しか観察が得られていない個人をあらかじめデータから削除しておくことが望ましい。そうしないと、固定効果モデルで分析対象となるサンプルと、それ以外の記述統計量などで示されるサンプルとが一致しなくなるからである。</p>
+<p>たとえば次のようにして、2回以上観察を得られた個人のみを残したサンプルを作成することができる。</p>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="paneldata.html#cb403-1" tabindex="-1"></a>nls_sample2 <span class="ot">&lt;-</span> nls_sample <span class="sc">%&gt;%</span> </span>
+<span id="cb403-2"><a href="paneldata.html#cb403-2" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> </span>
+<span id="cb403-3"><a href="paneldata.html#cb403-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_obs =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> <span class="co"># idごとに数を数える</span></span>
+<span id="cb403-4"><a href="paneldata.html#cb403-4" tabindex="-1"></a>  <span class="fu">filter</span>(n_obs <span class="sc">!=</span> <span class="dv">1</span>) <span class="co"># 1回しか観察が得られていない個人を除外</span></span>
+<span id="cb403-5"><a href="paneldata.html#cb403-5" tabindex="-1"></a></span>
+<span id="cb403-6"><a href="paneldata.html#cb403-6" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> <span class="fu">nrow</span>() <span class="co"># 元々の行数</span></span></code></pre></div>
+<pre><code>## [1] 19077</code></pre>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="paneldata.html#cb405-1" tabindex="-1"></a>nls_sample2 <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()　<span class="co"># 1回しか観察が得られていない個人を除外した後の行数</span></span></code></pre></div>
+<pre><code>## [1] 18413</code></pre>
 </div>
 </div>
 <div id="paneldata_pols_fe_compare" class="section level2 hasAnchor" number="11.5">
 <h2><span class="header-section-number">11.5</span> 両者の比較<a href="paneldata.html#paneldata_pols_fe_compare" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="回しか観察が得られていない個人を除外する" class="section level3 hasAnchor" number="11.5.1">
-<h3><span class="header-section-number">11.5.1</span> 1回しか観察が得られていない個人を除外する<a href="#%E5%9B%9E%E3%81%97%E3%81%8B%E8%A6%B3%E5%AF%9F%E3%81%8C%E5%BE%97%E3%82%89%E3%82%8C%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84%E5%80%8B%E4%BA%BA%E3%82%92%E9%99%A4%E5%A4%96%E3%81%99%E3%82%8B" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>固定効果モデルを用いる場合、分析に必要な変数に欠損があるものを除外したうえで、1回しか観察が得られていない個人をあらかじめデータから削除しておくことが望ましい。そうしないと、固定効果モデルで分析対象となるサンプルと、それ以外の記述統計量などで示されるサンプルとが一致しなくなるからである。たとえば次のようにして、2回以上観察を得られた個人のみを残したサンプルを作成することができる。</p>
-<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="paneldata.html#cb400-1" tabindex="-1"></a>nls_sample2 <span class="ot">&lt;-</span> nls_sample <span class="sc">%&gt;%</span> </span>
-<span id="cb400-2"><a href="paneldata.html#cb400-2" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> </span>
-<span id="cb400-3"><a href="paneldata.html#cb400-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_obs =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> <span class="co"># idごとに数を数える</span></span>
-<span id="cb400-4"><a href="paneldata.html#cb400-4" tabindex="-1"></a>  <span class="fu">filter</span>(n_obs <span class="sc">!=</span> <span class="dv">1</span>) <span class="co"># 1回しか観察が得られていない個人を除外</span></span>
-<span id="cb400-5"><a href="paneldata.html#cb400-5" tabindex="-1"></a></span>
-<span id="cb400-6"><a href="paneldata.html#cb400-6" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> <span class="fu">nrow</span>() <span class="co"># 元々の行数</span></span></code></pre></div>
-<pre><code>## [1] 19077</code></pre>
-<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="paneldata.html#cb402-1" tabindex="-1"></a>nls_sample2 <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()　<span class="co"># 1回しか観察が得られていない個人を除外した後の行数</span></span></code></pre></div>
-<pre><code>## [1] 18413</code></pre>
-</div>
-<div id="pooled-olsと固定効果モデルの比較" class="section level3 hasAnchor" number="11.5.2">
-<h3><span class="header-section-number">11.5.2</span> Pooled OLSと固定効果モデルの比較<a href="#pooled-ols%E3%81%A8%E5%9B%BA%E5%AE%9A%E5%8A%B9%E6%9E%9C%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%AF%94%E8%BC%83" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="paneldata.html#cb404-1" tabindex="-1"></a><span class="co"># Pooled OLS - 時間不変の変数なし</span></span>
-<span id="cb404-2"><a href="paneldata.html#cb404-2" tabindex="-1"></a>model_pols1 <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample2, </span>
-<span id="cb404-3"><a href="paneldata.html#cb404-3" tabindex="-1"></a>              ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp, </span>
-<span id="cb404-4"><a href="paneldata.html#cb404-4" tabindex="-1"></a>              <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
-<span id="cb404-5"><a href="paneldata.html#cb404-5" tabindex="-1"></a></span>
-<span id="cb404-6"><a href="paneldata.html#cb404-6" tabindex="-1"></a><span class="co"># Pooled OLS - 時間不変の変数あり</span></span>
-<span id="cb404-7"><a href="paneldata.html#cb404-7" tabindex="-1"></a>model_pols2 <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample2, </span>
-<span id="cb404-8"><a href="paneldata.html#cb404-8" tabindex="-1"></a>              ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> race <span class="sc">+</span> collgrad, </span>
-<span id="cb404-9"><a href="paneldata.html#cb404-9" tabindex="-1"></a>              <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
-<span id="cb404-10"><a href="paneldata.html#cb404-10" tabindex="-1"></a></span>
-<span id="cb404-11"><a href="paneldata.html#cb404-11" tabindex="-1"></a><span class="co"># 固定効果モデル</span></span>
-<span id="cb404-12"><a href="paneldata.html#cb404-12" tabindex="-1"></a>model_fe <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample2, </span>
-<span id="cb404-13"><a href="paneldata.html#cb404-13" tabindex="-1"></a>            ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">|</span> id,</span>
-<span id="cb404-14"><a href="paneldata.html#cb404-14" tabindex="-1"></a>            <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
-<span id="cb404-15"><a href="paneldata.html#cb404-15" tabindex="-1"></a></span>
-<span id="cb404-16"><a href="paneldata.html#cb404-16" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(</span>
-<span id="cb404-17"><a href="paneldata.html#cb404-17" tabindex="-1"></a>  <span class="st">&quot;Pooled OLS (1)&quot;</span> <span class="ot">=</span> model_pols1, </span>
-<span id="cb404-18"><a href="paneldata.html#cb404-18" tabindex="-1"></a>  <span class="st">&quot;Pooled OLS (2)&quot;</span> <span class="ot">=</span> model_pols2, </span>
-<span id="cb404-19"><a href="paneldata.html#cb404-19" tabindex="-1"></a>  <span class="st">&quot;Fixed effect&quot;</span> <span class="ot">=</span> model_fe),</span>
-<span id="cb404-20"><a href="paneldata.html#cb404-20" tabindex="-1"></a>  <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb404-21"><a href="paneldata.html#cb404-21" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>, <span class="st">&quot;FE: id&quot;</span>))</span></code></pre></div>
+<div id="pooled-olsと固定効果モデルの比較" class="section level3 hasAnchor" number="11.5.1">
+<h3><span class="header-section-number">11.5.1</span> Pooled OLSと固定効果モデルの比較<a href="#pooled-ols%E3%81%A8%E5%9B%BA%E5%AE%9A%E5%8A%B9%E6%9E%9C%E3%83%A2%E3%83%87%E3%83%AB%E3%81%AE%E6%AF%94%E8%BC%83" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Pooled OLSと固定効果モデルを並べて表示してみよう。</p>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="paneldata.html#cb407-1" tabindex="-1"></a><span class="co"># Pooled OLS - 時間不変の変数なし</span></span>
+<span id="cb407-2"><a href="paneldata.html#cb407-2" tabindex="-1"></a>model_pols <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample2, </span>
+<span id="cb407-3"><a href="paneldata.html#cb407-3" tabindex="-1"></a>              ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp, </span>
+<span id="cb407-4"><a href="paneldata.html#cb407-4" tabindex="-1"></a>              <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
+<span id="cb407-5"><a href="paneldata.html#cb407-5" tabindex="-1"></a></span>
+<span id="cb407-6"><a href="paneldata.html#cb407-6" tabindex="-1"></a><span class="co"># 固定効果モデル</span></span>
+<span id="cb407-7"><a href="paneldata.html#cb407-7" tabindex="-1"></a>model_fe <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample2, </span>
+<span id="cb407-8"><a href="paneldata.html#cb407-8" tabindex="-1"></a>            ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">|</span> id,</span>
+<span id="cb407-9"><a href="paneldata.html#cb407-9" tabindex="-1"></a>            <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
+<span id="cb407-10"><a href="paneldata.html#cb407-10" tabindex="-1"></a></span>
+<span id="cb407-11"><a href="paneldata.html#cb407-11" tabindex="-1"></a><span class="co"># 上記2つのモデルを比較して表示</span></span>
+<span id="cb407-12"><a href="paneldata.html#cb407-12" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(</span>
+<span id="cb407-13"><a href="paneldata.html#cb407-13" tabindex="-1"></a>  <span class="st">&quot;Pooled OLS&quot;</span> <span class="ot">=</span> model_pols, </span>
+<span id="cb407-14"><a href="paneldata.html#cb407-14" tabindex="-1"></a>  <span class="st">&quot;Fixed effect&quot;</span> <span class="ot">=</span> model_fe),</span>
+<span id="cb407-15"><a href="paneldata.html#cb407-15" tabindex="-1"></a>  <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb407-16"><a href="paneldata.html#cb407-16" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>, <span class="st">&quot;FE: id&quot;</span>))</span></code></pre></div>
 <!-- preamble start -->
 
     <script>
 
-      function styleCell_kk71u1ju5auxd13jb9xv(i, j, css_id) {
-          var table = document.getElementById("tinytable_kk71u1ju5auxd13jb9xv");
+      function styleCell_8boc0cuxnplctqw9q0cl(i, j, css_id) {
+          var table = document.getElementById("tinytable_8boc0cuxnplctqw9q0cl");
           var cell = table.rows[i]?.cells[j];  // Safe navigation to avoid errors
           if (cell) {
               console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
@@ -2412,7 +2448,7 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
           }
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_kk71u1ju5auxd13jb9xv');
+        var table = document.getElementById('tinytable_8boc0cuxnplctqw9q0cl');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -2420,8 +2456,8 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_kk71u1ju5auxd13jb9xv(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_kk71u1ju5auxd13jb9xv");
+      function spanCell_8boc0cuxnplctqw9q0cl(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_8boc0cuxnplctqw9q0cl");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -2451,20 +2487,20 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: 19, j: 2 }, { i: 19, j: 1 }, { i: 19, j: 3 },  ], css_id: 'tinytable_css_r3njv13mlrpc8vv7jbdq',}, 
-          { positions: [ { i: 16, j: 3 }, { i: 16, j: 1 }, { i: 16, j: 2 },  ], css_id: 'tinytable_css_ywllywxbcr5r4v435wgt',}, 
-          { positions: [ { i: 2, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 3, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 10, j: 1 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 13, j: 1 }, { i: 1, j: 1 }, { i: 15, j: 1 }, { i: 9, j: 2 }, { i: 17, j: 1 }, { i: 18, j: 1 }, { i: 12, j: 2 }, { i: 7, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 14, j: 1 }, { i: 8, j: 2 }, { i: 2, j: 3 }, { i: 10, j: 2 }, { i: 11, j: 2 }, { i: 5, j: 3 }, { i: 13, j: 2 }, { i: 14, j: 2 }, { i: 15, j: 2 }, { i: 9, j: 3 }, { i: 17, j: 2 }, { i: 18, j: 2 }, { i: 12, j: 3 }, { i: 7, j: 2 }, { i: 1, j: 3 }, { i: 15, j: 3 }, { i: 3, j: 3 }, { i: 4, j: 3 }, { i: 18, j: 3 }, { i: 6, j: 3 }, { i: 7, j: 3 }, { i: 8, j: 3 }, { i: 13, j: 3 }, { i: 10, j: 3 }, { i: 11, j: 3 }, { i: 17, j: 3 }, { i: 14, j: 3 },  ], css_id: 'tinytable_css_0zr5lr7jtgoi26s50pco',}, 
-          { positions: [ { i: 0, j: 1 }, { i: 0, j: 3 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_j4bd5f4ydeyninyhcxp4',}, 
-          { positions: [ { i: 19, j: 0 },  ], css_id: 'tinytable_css_xfetkhd6cmontf2ju1fw',}, 
-          { positions: [ { i: 16, j: 0 },  ], css_id: 'tinytable_css_ixoylmz7s3cxay85iumk',}, 
-          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 10, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 }, { i: 13, j: 0 }, { i: 14, j: 0 }, { i: 15, j: 0 }, { i: 17, j: 0 }, { i: 18, j: 0 },  ], css_id: 'tinytable_css_i0wh10cco584r5ttcd9u',}, 
-          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_t4elpgy27xs5atjcqom0',}, 
+          { positions: [ { i: 13, j: 1 }, { i: 13, j: 2 },  ], css_id: 'tinytable_css_yp2gmbr9r27905px4tyq',}, 
+          { positions: [ { i: 10, j: 1 }, { i: 10, j: 2 },  ], css_id: 'tinytable_css_dzur4fq4tlycbpu7y6kz',}, 
+          { positions: [ { i: 2, j: 1 }, { i: 3, j: 1 }, { i: 4, j: 1 }, { i: 5, j: 1 }, { i: 6, j: 1 }, { i: 7, j: 1 }, { i: 8, j: 1 }, { i: 9, j: 1 }, { i: 9, j: 2 }, { i: 11, j: 1 }, { i: 12, j: 1 }, { i: 12, j: 2 }, { i: 1, j: 1 }, { i: 1, j: 2 }, { i: 2, j: 2 }, { i: 3, j: 2 }, { i: 4, j: 2 }, { i: 5, j: 2 }, { i: 6, j: 2 }, { i: 7, j: 2 }, { i: 8, j: 2 }, { i: 11, j: 2 },  ], css_id: 'tinytable_css_97xcr892ycred1o8sme1',}, 
+          { positions: [ { i: 0, j: 1 }, { i: 0, j: 2 },  ], css_id: 'tinytable_css_4wo71ag66h6cil9ym570',}, 
+          { positions: [ { i: 13, j: 0 },  ], css_id: 'tinytable_css_qg9h0kfwudqt8r6d1x4z',}, 
+          { positions: [ { i: 10, j: 0 },  ], css_id: 'tinytable_css_4eoxkajfi4x6ulvmysp2',}, 
+          { positions: [ { i: 1, j: 0 }, { i: 2, j: 0 }, { i: 3, j: 0 }, { i: 4, j: 0 }, { i: 5, j: 0 }, { i: 6, j: 0 }, { i: 7, j: 0 }, { i: 8, j: 0 }, { i: 9, j: 0 }, { i: 11, j: 0 }, { i: 12, j: 0 },  ], css_id: 'tinytable_css_m7ljng8wgj6bgx0sofh5',}, 
+          { positions: [ { i: 0, j: 0 },  ], css_id: 'tinytable_css_nlb2uaekkmvqk5pb8w03',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_kk71u1ju5auxd13jb9xv(cell.i, cell.j, group.css_id);
+                  styleCell_8boc0cuxnplctqw9q0cl(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2472,61 +2508,54 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
 
     <style>
       /* tinytable css entries after */
-      .table td.tinytable_css_r3njv13mlrpc8vv7jbdq, .table th.tinytable_css_r3njv13mlrpc8vv7jbdq { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_ywllywxbcr5r4v435wgt, .table th.tinytable_css_ywllywxbcr5r4v435wgt { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_0zr5lr7jtgoi26s50pco, .table th.tinytable_css_0zr5lr7jtgoi26s50pco { text-align: center; }
-      .table td.tinytable_css_j4bd5f4ydeyninyhcxp4, .table th.tinytable_css_j4bd5f4ydeyninyhcxp4 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_xfetkhd6cmontf2ju1fw, .table th.tinytable_css_xfetkhd6cmontf2ju1fw { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_ixoylmz7s3cxay85iumk, .table th.tinytable_css_ixoylmz7s3cxay85iumk { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_i0wh10cco584r5ttcd9u, .table th.tinytable_css_i0wh10cco584r5ttcd9u { text-align: left; }
-      .table td.tinytable_css_t4elpgy27xs5atjcqom0, .table th.tinytable_css_t4elpgy27xs5atjcqom0 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_yp2gmbr9r27905px4tyq, .table th.tinytable_css_yp2gmbr9r27905px4tyq { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_dzur4fq4tlycbpu7y6kz, .table th.tinytable_css_dzur4fq4tlycbpu7y6kz { text-align: center; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_97xcr892ycred1o8sme1, .table th.tinytable_css_97xcr892ycred1o8sme1 { text-align: center; }
+      .table td.tinytable_css_4wo71ag66h6cil9ym570, .table th.tinytable_css_4wo71ag66h6cil9ym570 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+      .table td.tinytable_css_qg9h0kfwudqt8r6d1x4z, .table th.tinytable_css_qg9h0kfwudqt8r6d1x4z { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
+      .table td.tinytable_css_4eoxkajfi4x6ulvmysp2, .table th.tinytable_css_4eoxkajfi4x6ulvmysp2 { text-align: left; border-bottom: solid black 0.05em; }
+      .table td.tinytable_css_m7ljng8wgj6bgx0sofh5, .table th.tinytable_css_m7ljng8wgj6bgx0sofh5 { text-align: left; }
+      .table td.tinytable_css_nlb2uaekkmvqk5pb8w03, .table th.tinytable_css_nlb2uaekkmvqk5pb8w03 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_kk71u1ju5auxd13jb9xv" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="table table-borderless" id="tinytable_8boc0cuxnplctqw9q0cl" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         <thead>
         
               <tr>
                 <th scope="col"> </th>
-                <th scope="col">Pooled OLS (1)</th>
-                <th scope="col">Pooled OLS (2)</th>
+                <th scope="col">Pooled OLS</th>
                 <th scope="col">Fixed effect</th>
               </tr>
         </thead>
-        <tfoot><tr><td colspan='4'>+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001</td></tr></tfoot>
+        <tfoot><tr><td colspan='3'>+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001</td></tr></tfoot>
         <tbody>
                 <tr>
                   <td>(Intercept)</td>
                   <td>0.715***</td>
-                  <td>0.925***</td>
                   <td></td>
                 </tr>
                 <tr>
                   <td></td>
                   <td>(0.091)</td>
-                  <td>(0.086)</td>
                   <td></td>
                 </tr>
                 <tr>
                   <td>union</td>
                   <td>0.215***</td>
-                  <td>0.209***</td>
                   <td>0.106***</td>
                 </tr>
                 <tr>
                   <td></td>
-                  <td>(0.013)</td>
                   <td>(0.013)</td>
                   <td>(0.010)</td>
                 </tr>
                 <tr>
                   <td>age</td>
                   <td>0.053***</td>
-                  <td>0.041***</td>
                   <td>0.035***</td>
                 </tr>
                 <tr>
                   <td></td>
-                  <td>(0.006)</td>
                   <td>(0.006)</td>
                   <td>(0.005)</td>
                 </tr>
@@ -2534,77 +2563,34 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
                   <td>I(I(age^2))</td>
                   <td>-0.001***</td>
                   <td>-0.000***</td>
-                  <td>-0.000***</td>
                 </tr>
                 <tr>
                   <td></td>
-                  <td>(0.000)</td>
                   <td>(0.000)</td>
                   <td>(0.000)</td>
                 </tr>
                 <tr>
                   <td>msp</td>
                   <td>-0.015</td>
-                  <td>-0.036**</td>
                   <td>-0.017*</td>
                 </tr>
                 <tr>
                   <td></td>
                   <td>(0.013)</td>
-                  <td>(0.012)</td>
                   <td>(0.008)</td>
                 </tr>
                 <tr>
-                  <td>raceBlack</td>
-                  <td></td>
-                  <td>-0.148***</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td>(0.014)</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>raceOther</td>
-                  <td></td>
-                  <td>0.068</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td>(0.070)</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>collgrad</td>
-                  <td></td>
-                  <td>0.367***</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td>(0.016)</td>
-                  <td></td>
-                </tr>
-                <tr>
                   <td>Num.Obs.</td>
-                  <td>18413</td>
                   <td>18413</td>
                   <td>18413</td>
                 </tr>
                 <tr>
                   <td>R2</td>
                   <td>0.071</td>
-                  <td>0.197</td>
                   <td>0.742</td>
                 </tr>
                 <tr>
                   <td>FE: id</td>
-                  <td></td>
                   <td></td>
                   <td>X</td>
                 </tr>
@@ -2612,22 +2598,20 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
       </table>
     </div>
 <!-- hack to avoid NA insertion in last line -->
-</div>
-<div id="個人間効果と個人内効果" class="section level3 hasAnchor" number="11.5.3">
-<h3><span class="header-section-number">11.5.3</span> 個人間効果と個人内効果<a href="#%E5%80%8B%E4%BA%BA%E9%96%93%E5%8A%B9%E6%9E%9C%E3%81%A8%E5%80%8B%E4%BA%BA%E5%86%85%E5%8A%B9%E6%9E%9C" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Pooled OLSで得られた<code>union</code>の係数は、以下の2つの異なる差を反映している<a href="#fn33" class="footnote-ref" id="fnref33"><sup>33</sup></a>。</p>
+<p>Pooled OLSで得られた<code>union</code>の係数は、以下の2つの異なる差を反映している<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a>。</p>
 <ol style="list-style-type: decimal">
 <li><strong>個人間効果（between effect）</strong>：他の変数（X，Z）を統制したうえで、労働組合に入っている観察数の割合が多い個人（たとえば10回の観察のうち3回は労働組合に入っていれば0.3、8回入っていれば0.8、といったように）は、労働組合に入っている観察数の割合が少ない個人と比べて平均的に賃金が高い。</li>
 <li><strong>個人内効果（within effect）</strong>：他の変数（X, Z）を統制したうえで、同一個人内において労働組合に入っている観察は、入っていない観察と比べて平均的に賃金が高い。</li>
 </ol>
+<p>個人内分散を使って推定を行う固定効果モデルは、前者の個人間効果を排除して、後者の個人内効果のみを析出するモデルと考えることができる。</p>
 </div>
 </div>
 <div id="paneldata_notes" class="section level2 hasAnchor" number="11.6">
 <h2><span class="header-section-number">11.6</span> 固定効果モデルの注意点<a href="paneldata.html#paneldata_notes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>固定効果モデルは因果効果の推定にとっての万能薬ではない<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a>。とくに最も重要なのは、推定に含まれていない時間可変の要因については何ら解決策を与えるものではないということである。従属変数をY、関心のある時間可変の独立変数をD、その他の時間可変の独立変数をX、時間不変の個人特性をuと表すことにする。このとき、固定効果モデルの想定をDAGにして表したのが次の図である。ここに含まれていない時間可変の要因が原因（D）と結果（Y）の両方の交絡要因となっていれば、Dの係数にはバイアスが生じることになる。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-328-1.png" width="672" /></p>
+<p>固定効果モデルは因果効果の推定にとっての万能薬ではない<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>。とくに最も重要なのは、推定に含まれていない時間可変の要因については何ら解決策を与えるものではないということである。従属変数をY、関心のある時間可変の独立変数をD、その他の時間可変の独立変数をX、時間不変の個人特性をuと表すことにする。このとき、固定効果モデルの想定をDAGにして表したのが次の図である。ここに含まれていない時間可変の要因が原因（D）と結果（Y）の両方の交絡要因となっていれば、Dの係数にはバイアスが生じることになる。</p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-330-1.png" width="672" /></p>
 <p>たとえば、雇用形態がメンタルヘルスに与える影響について考えよう。病気によって正規雇用から非正規雇用に転換することになり、同時に、メンタルヘルスが悪化した人がいたとする。この場合には、病気が雇用形態の変化とメンタルヘルスの悪化の両方をもたらしたのであって、雇用形態が変わることによってメンタルヘルスが悪化したわけではない。すなわち、病気という時間可変の交絡要因が存在するということである。もし適切な時間可変の要因を統制することができれば、問題を緩和することができる。</p>
-<p>さらに、時間不変の個人属性が独立変数や従属変数の変化に対して影響するという可能性もある。典型的な例が男性の結婚と賃金との関連である。男性は、結婚すると結婚していないときと比べて賃金が高い傾向がある<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>。これは、パネルデータと固定効果モデルを使った分析でも繰り返し確認されてきた<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>。しかしながら、賃金の伸び方は個人によって異なり、かつ、それが結婚するかどうかにも影響すると考えられる（たとえば、将来も賃金が高くなっていくと期待できる人と、将来もさほど高くならないと思われる人であれば、前者のほうがより結婚しやすそうである）。上記の固定効果モデルはこのような個人によって異なるトレンドを統制していないため、結婚と賃金の間に正の関連が見られたとしても、それは見かけ上の効果に過ぎないかもしれない<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a>。</p>
+<p>さらに、時間不変の個人属性が独立変数や従属変数の変化に対して影響するという可能性もある。典型的な例が男性の結婚と賃金との関連である。男性は、結婚すると結婚していないときと比べて賃金が高い傾向がある<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>。これは、パネルデータと固定効果モデルを使った分析でも繰り返し確認されてきた<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a>。しかしながら、賃金の伸び方は個人によって異なり、かつ、それが結婚するかどうかにも影響すると考えられる（たとえば、将来も賃金が高くなっていくと期待できる人と、将来もさほど高くならないと思われる人であれば、前者のほうがより結婚しやすそうである）。上記の固定効果モデルはこのような個人によって異なるトレンドを統制していないため、結婚と賃金の間に正の関連が見られたとしても、それは見かけ上の効果に過ぎないかもしれない<a href="#fn38" class="footnote-ref" id="fnref38"><sup>38</sup></a>。</p>
 <p>もう一つ補足的な論点としては、固定効果モデルの推定には、時間可変の変数の変動が必要だということである。パネルデータは個人×時点のデータなので一般的にサンプルサイズは大きくなりやすい。しかし、扱う変数の特性によって、どの程度の頻度で時間による変動が得られるかは異なる。用いるデータにおいて十分に時間による変動が観察されていない場合には、その変数の効果が検出しにくくなる。この場合には、より長期間、よりサンプルサイズの大きいデータを用いるか、もしくは、固定効果モデルによらない方法を検討するのが望ましい。</p>
 <p>固定効果モデルはパネルデータを活かした分析として最も基礎的かつ強力な方法なので活用すべきだが、あくまでも選択肢の一つであって万能薬ではない。この方法を使うことで何が言えて何が言えないのかを理解しておくことが重要といえる。</p>
 
@@ -2638,11 +2622,12 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
 <ol start="31">
 <li id="fn31"><p><a href="paneldata.html#eq:fe2">(11.3)</a>のように書くか、<a href="paneldata.html#eq:fe">(11.4)</a> のように書くかは分野によって異なるが、どちらも同じモデルを指す。どちらであっても係数<span class="math inline">\(\beta_1, \cdots, \beta_k\)</span>の値は同じとなる。<a href="paneldata.html#fnref31" class="footnote-back">↩︎</a></p></li>
 <li id="fn32"><p>Wang, Jia, and James M. Raymo. 2021. “Nonstandard Employment, Gender, and Subjective Well-Being in Japan.” <em>Journal of Marriage and Family</em> 83(3):845–64.<a href="paneldata.html#fnref32" class="footnote-back">↩︎</a></p></li>
-<li id="fn33"><p>正確には「効果」というよりは「差」といったほうがよいが、ここでは多くのテキストの単語にそろえて個人間効果、個人内効果という言い方を採用する。<a href="paneldata.html#fnref33" class="footnote-back">↩︎</a></p></li>
-<li id="fn34"><p>たとえば、大久保将貴，2021，「パネルデータ分析における固定効果モデルの取扱説明書」『社会科学研究』72(2): 55–68．<a href="paneldata.html#fnref34" class="footnote-back">↩︎</a></p></li>
-<li id="fn35"><p>Waite, Linda J. 1995. “Does Marriage Matter?” <em>Demography</em> 32(4):483–507.<a href="paneldata.html#fnref35" class="footnote-back">↩︎</a></p></li>
-<li id="fn36"><p>Killewald, Alexandra, and Margaret Gough. 2013. “Does Specialization Explain Marriage Penalties and Premiums?” <em>American Sociological Review</em> 78(3):477–502.<a href="paneldata.html#fnref36" class="footnote-back">↩︎</a></p></li>
-<li id="fn37"><p>この可能性を指摘した研究としてたとえばKillewald, Alexandra, and Ian Lundberg. 2017. “New Evidence Against a Causal Marriage Wage Premium.” <em>Demography</em> 54:1007–28.、Ludwig, Volker, and Josef Brüderl. 2018. “Is There a Male Marital Wage Premium? New Evidence from the United States.” <em>American Sociological Review</em> 83(4):744–70.など。<a href="paneldata.html#fnref37" class="footnote-back">↩︎</a></p></li>
+<li id="fn33"><p>個人固定効果を含めた場合には同一個人内で時間によって変化しない（時間不変の）変数は個人固定効果と完全な共線性が生じるためにモデルから省かれた。個人固定効果と時点固定効果を同時に含めた場合にはさらに、時点を表す変数と完全な共線性が生じる独立変数はモデルから除外される。典型的な例が年齢であり、毎年同じ時期に実施されるパネル調査の場合、年齢はどの個人も必ず毎年1歳増加していく変数となる。個人固定効果を統制した場合、年齢は時間固定効果と完全な共線性が生じる変数となるためモデルから除外され、係数は推定されない。<a href="paneldata.html#fnref33" class="footnote-back">↩︎</a></p></li>
+<li id="fn34"><p>正確には「効果」というよりは「差」といったほうがよいが、ここでは多くのテキストの単語にそろえて個人間効果、個人内効果という言い方を採用する。<a href="paneldata.html#fnref34" class="footnote-back">↩︎</a></p></li>
+<li id="fn35"><p>たとえば、大久保将貴，2021，「パネルデータ分析における固定効果モデルの取扱説明書」『社会科学研究』72(2): 55–68．<a href="paneldata.html#fnref35" class="footnote-back">↩︎</a></p></li>
+<li id="fn36"><p>Waite, Linda J. 1995. “Does Marriage Matter?” <em>Demography</em> 32(4):483–507.<a href="paneldata.html#fnref36" class="footnote-back">↩︎</a></p></li>
+<li id="fn37"><p>Killewald, Alexandra, and Margaret Gough. 2013. “Does Specialization Explain Marriage Penalties and Premiums?” <em>American Sociological Review</em> 78(3):477–502.<a href="paneldata.html#fnref37" class="footnote-back">↩︎</a></p></li>
+<li id="fn38"><p>この可能性を指摘した研究としてたとえばKillewald, Alexandra, and Ian Lundberg. 2017. “New Evidence Against a Causal Marriage Wage Premium.” <em>Demography</em> 54:1007–28.、Ludwig, Volker, and Josef Brüderl. 2018. “Is There a Male Marital Wage Premium? New Evidence from the United States.” <em>American Sociological Review</em> 83(4):744–70.など。<a href="paneldata.html#fnref38" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
