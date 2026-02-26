@@ -192,6 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5.2" data-path="preparation.html"><a href="preparation.html#%E3%82%B0%E3%83%A9%E3%83%95%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E%E8%A1%A8%E7%A4%BA"><i class="fa fa-check"></i><b>2.5.2</b> グラフの日本語表示</a></li>
 </ul></li>
 <li class="chapter" data-level="2.6" data-path="preparation.html"><a href="preparation.html#preparation_error"><i class="fa fa-check"></i><b>2.6</b> エラーが出たときに確認する箇所</a></li>
+<li class="chapter" data-level="2.7" data-path="preparation.html"><a href="preparation.html#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88"><i class="fa fa-check"></i><b>2.7</b> スクリプトファイルのテンプレート</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="import.html"><a href="import.html"><i class="fa fa-check"></i><b>3</b> データの読み込み</a>
 <ul>
@@ -575,7 +576,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>第2に、<a href="import.html#import">第3章</a>で確認したとおり、データを格納するためのフォルダがプロジェクトフォルダ内に準備されていることを確認しよう。作っていない場合には、<a href="import.html#import_dir">データを置く場所を作る</a>を確認し、作成しておこう。</p>
 <p>第3に、上記の準備をすませたうえで、以下のとおり<code>tidyverse</code>パッケージを読み込もう。</p>
 <p>なお、第5章以下、<code>library()</code>関数を使ってライブラリを読み込む際には、原則として冒頭に記載する。自分自身でコードを書く際にも、使用するライブラリはすべてコードの冒頭に書くようにすると、関数が見つからないなどのエラーを避けることができる。</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="handling.html#cb32-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="handling.html#cb33-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <div id="handling_data" class="section level2 hasAnchor" number="4.1">
 <h2><span class="header-section-number">4.1</span> 本資料で用いるデータ<a href="handling.html#handling_data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>本資料では基本的に、OECDが実施している国際成人力調査<a href="https://www.oecd.org/skills/piaac/">Programme for the International Assessment of Adult Competencies, PIAAC</a>の1st Cycle（2013年実施）の日本版データをサンプルデータとして使用する。</p>
@@ -589,9 +590,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>ダウンロードしたファイルを自分のPCの「data」のフォルダに入れる</li>
 </ol>
 <p>「data」のフォルダに入っていることを確認して、データを読み込む。このデータは少し特殊で、数値のほかに文字列などが入っている。そのため、すこしだけ特殊な処理をほどこしてデータを読み込むことにする。</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="handling.html#cb33-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/prgjpnp1.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-2"><a href="handling.html#cb33-2" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.character, as.numeric) <span class="sc">%&gt;%</span> <span class="co">#すべての文字列変数を小文字に変換</span></span>
-<span id="cb33-3"><a href="handling.html#cb33-3" tabindex="-1"></a>  <span class="fu">rename_all</span>(<span class="at">.funs =</span> tolower) <span class="co">#すべての大文字を小文字に変換</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="handling.html#cb34-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/prgjpnp1.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href="handling.html#cb34-2" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.character, as.numeric) <span class="sc">%&gt;%</span> <span class="co">#すべての文字列変数を小文字に変換</span></span>
+<span id="cb34-3"><a href="handling.html#cb34-3" tabindex="-1"></a>  <span class="fu">rename_all</span>(<span class="at">.funs =</span> tolower) <span class="co">#すべての大文字を小文字に変換</span></span></code></pre></div>
 <pre><code>## Rows: 5278 Columns: 1328
 ## ── Column specification ──────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -607,15 +608,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">4.2</span> パイプ演算子：%&gt;%または|&gt;<a href="handling.html#handling_pipe" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>本章以降は、<code>tidyverse</code>というパッケージに組み込まれたさまざまな関数を活用する。tidyverseの特徴の一つは、パイプ演算子（<code>%&gt;%</code>）を使って命令を書くという点である。</p>
 <p>たとえば、読み込んだデータ（piaacとする）の中身を確認する<code>view()</code>コマンドを実行したい場合であれば、次のように書く。</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="handling.html#cb35-1" tabindex="-1"></a><span class="fu">view</span>(piaac) <span class="co"># piaacデータの中身を確認する</span></span>
-<span id="cb35-2"><a href="handling.html#cb35-2" tabindex="-1"></a></span>
-<span id="cb35-3"><a href="handling.html#cb35-3" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">view</span>() <span class="co"># 上記と同じ意味</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="handling.html#cb36-1" tabindex="-1"></a><span class="fu">view</span>(piaac) <span class="co"># piaacデータの中身を確認する</span></span>
+<span id="cb36-2"><a href="handling.html#cb36-2" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="handling.html#cb36-3" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">view</span>() <span class="co"># 上記と同じ意味</span></span></code></pre></div>
 <p><code>%&gt;%</code> 演算子を改行して書いてもよい。</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="handling.html#cb36-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="co"># piaacデータフレームに対して、</span></span>
-<span id="cb36-2"><a href="handling.html#cb36-2" tabindex="-1"></a>  <span class="fu">view</span>() <span class="co"># viewを実行する</span></span></code></pre></div>
-<p>データの上からいくつかの行を見る<code>head()</code>コマンドであれば、次のように書くことができる：</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="handling.html#cb37-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="co"># piaacデータフレームに対して、</span></span>
-<span id="cb37-2"><a href="handling.html#cb37-2" tabindex="-1"></a>  <span class="fu">head</span>() <span class="co"># headを実行</span></span></code></pre></div>
+<span id="cb37-2"><a href="handling.html#cb37-2" tabindex="-1"></a>  <span class="fu">view</span>() <span class="co"># viewを実行する</span></span></code></pre></div>
+<p>データの上からいくつかの行を見る<code>head()</code>コマンドであれば、次のように書くことができる：</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="handling.html#cb38-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="co"># piaacデータフレームに対して、</span></span>
+<span id="cb38-2"><a href="handling.html#cb38-2" tabindex="-1"></a>  <span class="fu">head</span>() <span class="co"># headを実行</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 1,328
 ##   cntryid cntryid_e seqid age_r gender_r disp_cibq disp_main disp_mainwrc
 ##     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;lgl&gt;       
@@ -632,8 +633,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   b_q02a_t2 &lt;dbl&gt;, b_q02b &lt;dbl&gt;, b_q02b_c &lt;dbl&gt;, b_q02c &lt;dbl&gt;, b_q03a &lt;dbl&gt;,
 ## #   b_q03b &lt;dbl&gt;, b_q03b_c &lt;dbl&gt;, b_q03c1 &lt;dbl&gt;, b_q03c1_c &lt;dbl&gt;,
 ## #   b_q03c2 &lt;dbl&gt;, b_q03d &lt;dbl&gt;, b_d03d &lt;dbl&gt;, b_d03d_c &lt;dbl&gt;, b_q04a &lt;dbl&gt;, …</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="handling.html#cb39-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb39-2"><a href="handling.html#cb39-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="co"># 上から3行のみ表示</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="handling.html#cb40-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb40-2"><a href="handling.html#cb40-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>) <span class="co"># 上から3行のみ表示</span></span></code></pre></div>
 <pre><code>## # A tibble: 3 × 1,328
 ##   cntryid cntryid_e seqid age_r gender_r disp_cibq disp_main disp_mainwrc
 ##     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;lgl&gt;       
@@ -648,9 +649,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   b_q03b &lt;dbl&gt;, b_q03b_c &lt;dbl&gt;, b_q03c1 &lt;dbl&gt;, b_q03c1_c &lt;dbl&gt;,
 ## #   b_q03c2 &lt;dbl&gt;, b_q03d &lt;dbl&gt;, b_d03d &lt;dbl&gt;, b_d03d_c &lt;dbl&gt;, b_q04a &lt;dbl&gt;, …</code></pre>
 <p>ちなみに、Macであれば<code>Control + Shift + m</code>で、Windowsであれば<code>Ctrl + Shift + m</code>でパイプ演算子を出力することができる。パイプ演算子は多用するので、ショートカットキーは覚えておくとよい。</p>
-<p>ちなみに、最近RStudioを新しくインストールした場合だと、上記のショートカットキーを入力すると<code>|&gt;</code>というコマンドが出力されるかもしれない。ふつうに使う分だと、どちらを使ってもとくに支障は生じない。試しに以下の2種類を実行して、どちらも同じものが出力されることを確かめてみよう。</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="handling.html#cb41-1" tabindex="-1"></a>piaac <span class="sc">|&gt;</span> </span>
-<span id="cb41-2"><a href="handling.html#cb41-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p>最近RStudioを新しくインストールした場合だと、上記のショートカットキーを入力すると<code>|&gt;</code>というコマンドが出力されると思われる。最近はだんだん<code>|&gt;</code>のほうが主流になりつつある。ふつうに使う分だと、どちらを使ってもとくに支障は生じない。試しに以下の2種類を実行して、どちらも同じものが出力されることを確かめてみよう。</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="handling.html#cb42-1" tabindex="-1"></a>piaac <span class="sc">|&gt;</span> </span>
+<span id="cb42-2"><a href="handling.html#cb42-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 1,328
 ##   cntryid cntryid_e seqid age_r gender_r disp_cibq disp_main disp_mainwrc
 ##     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;lgl&gt;       
@@ -664,8 +665,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   b_q02a_t2 &lt;dbl&gt;, b_q02b &lt;dbl&gt;, b_q02b_c &lt;dbl&gt;, b_q02c &lt;dbl&gt;, b_q03a &lt;dbl&gt;,
 ## #   b_q03b &lt;dbl&gt;, b_q03b_c &lt;dbl&gt;, b_q03c1 &lt;dbl&gt;, b_q03c1_c &lt;dbl&gt;,
 ## #   b_q03c2 &lt;dbl&gt;, b_q03d &lt;dbl&gt;, b_d03d &lt;dbl&gt;, b_d03d_c &lt;dbl&gt;, b_q04a &lt;dbl&gt;, …</code></pre>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="handling.html#cb43-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb43-2"><a href="handling.html#cb43-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="handling.html#cb44-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb44-2"><a href="handling.html#cb44-2" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 1,328
 ##   cntryid cntryid_e seqid age_r gender_r disp_cibq disp_main disp_mainwrc
 ##     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;lgl&gt;       
@@ -758,23 +759,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="例1-もとの変数の内容をそのままコピーする" class="section level4 hasAnchor" number="4.4.2.1">
 <h4><span class="header-section-number">4.4.2.1</span> 例1: もとの変数の内容をそのままコピーする<a href="handling.html#%E4%BE%8B1-%E3%82%82%E3%81%A8%E3%81%AE%E5%A4%89%E6%95%B0%E3%81%AE%E5%86%85%E5%AE%B9%E3%82%92%E3%81%9D%E3%81%AE%E3%81%BE%E3%81%BE%E3%82%B3%E3%83%94%E3%83%BC%E3%81%99%E3%82%8B" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>PIAACには、ボーナスの額を含めて、対象者の給与を時給換算した<code>earnhrbonus</code>という変数が含まれている。この変数をそのままコピーして、時給換算した賃金を表す変数<code>wage</code>を作成する。</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="handling.html#cb48-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb48-2"><a href="handling.html#cb48-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage =</span> earnhrbonus)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="handling.html#cb49-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb49-2"><a href="handling.html#cb49-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage =</span> earnhrbonus)</span></code></pre></div>
 <p>このコードは、「<code>piaac</code>というデータフレームに<code>wage</code>という列を追加してね、ちなみにその列には（既存の列である）<code>earnhrbonus</code>の値を入れてね」という命令を表している。</p>
 <p>ただしこれだけだと新たに列を追加した結果だけが表示されて、データフレームそのものは更新されることはない。そこで、次のようにして、列を追加した結果を新たなデータフレームに格納してみる。</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="handling.html#cb49-1" tabindex="-1"></a>piaac_new <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb49-2"><a href="handling.html#cb49-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage =</span> earnhrbonus)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="handling.html#cb50-1" tabindex="-1"></a>piaac_new <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb50-2"><a href="handling.html#cb50-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage =</span> earnhrbonus)</span></code></pre></div>
 <p>すると、右側のEnvironmentのウインドウに新たに「piaac_new」というデータフレームが追加される。</p>
 <p><img src="images/Rstudio_environment.png" /></p>
 <p><code>piaac_new</code> というのが、新たに1つ列を追加したデータフレームである。</p>
 <p>もしくは、次のように同じデータフレームに格納してもよい。</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="handling.html#cb50-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb50-2"><a href="handling.html#cb50-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage =</span> earnhrbonus)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="handling.html#cb51-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb51-2"><a href="handling.html#cb51-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage =</span> earnhrbonus)</span></code></pre></div>
 <p>先ほど<code>piaac_new</code> というデータフレームに格納したのが「名前をつけて保存」に当たるとしたら、これは「上書き保存」に当たるようなイメージである。どちらでも、個人の好みに応じて使い分けるとよいだろう。</p>
 <p>さて、上記の処理を行った結果、<code>piaac</code>というデータフレームには、<code>earnhrbonus</code>とまったく同じ値が含まれる<code>wage</code>という列が作られたことがわかる。</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="handling.html#cb51-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb51-2"><a href="handling.html#cb51-2" tabindex="-1"></a>  <span class="fu">select</span>(earnhrbonus, wage) <span class="sc">%&gt;%</span> <span class="co"># select()についてはこのあと解説があります</span></span>
-<span id="cb51-3"><a href="handling.html#cb51-3" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="handling.html#cb52-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb52-2"><a href="handling.html#cb52-2" tabindex="-1"></a>  <span class="fu">select</span>(earnhrbonus, wage) <span class="sc">%&gt;%</span> <span class="co"># select()についてはこのあと解説があります</span></span>
+<span id="cb52-3"><a href="handling.html#cb52-3" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 2
 ##   earnhrbonus  wage
 ##         &lt;dbl&gt; &lt;dbl&gt;
@@ -789,12 +790,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="例2-もとの変数に何らかの計算を施す" class="section level4 hasAnchor" number="4.4.2.2">
 <h4><span class="header-section-number">4.4.2.2</span> 例2: もとの変数に何らかの計算を施す<a href="handling.html#%E4%BE%8B2-%E3%82%82%E3%81%A8%E3%81%AE%E5%A4%89%E6%95%B0%E3%81%AB%E4%BD%95%E3%82%89%E3%81%8B%E3%81%AE%E8%A8%88%E7%AE%97%E3%82%92%E6%96%BD%E3%81%99" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>たとえば、時間あたり賃金を尋ねた変数<code>earnhrbonus</code>を1000で割って、単位を円ではなく千円としたいとする。このような場合には次のように計算する。</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="handling.html#cb53-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb53-2"><a href="handling.html#cb53-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage1000 =</span> earnhrbonus <span class="sc">/</span> <span class="dv">1000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="handling.html#cb54-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb54-2"><a href="handling.html#cb54-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage1000 =</span> earnhrbonus <span class="sc">/</span> <span class="dv">1000</span>)</span></code></pre></div>
 <p>新しく作った列<code>workhour</code>は、たしかにもともとの変数を5で割った値になっていることがわかる。</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="handling.html#cb54-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb54-2"><a href="handling.html#cb54-2" tabindex="-1"></a>  <span class="fu">select</span>(earnhrbonus, wage1000) <span class="sc">%&gt;%</span> </span>
-<span id="cb54-3"><a href="handling.html#cb54-3" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="handling.html#cb55-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb55-2"><a href="handling.html#cb55-2" tabindex="-1"></a>  <span class="fu">select</span>(earnhrbonus, wage1000) <span class="sc">%&gt;%</span> </span>
+<span id="cb55-3"><a href="handling.html#cb55-3" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 2
 ##   earnhrbonus wage1000
 ##         &lt;dbl&gt;    &lt;dbl&gt;
@@ -805,12 +806,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5         NA    NA    
 ## 6       5192.    5.19</code></pre>
 <p>調査時点での就業状態（働いているか否か）を尋ねた項目<code>c_q01a</code>では、働いていれば1、そうでなければ2という値が入っている。これを変換して、働いていれば1、そうでなければ0となるような変数<code>work</code>を作ってみよう。</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="handling.html#cb56-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb56-2"><a href="handling.html#cb56-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">work =</span> <span class="dv">2</span> <span class="sc">-</span> c_q01a)</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="handling.html#cb57-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb57-2"><a href="handling.html#cb57-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">work =</span> <span class="dv">2</span> <span class="sc">-</span> c_q01a)</span></code></pre></div>
 <p>新しく作った列<code>work</code>は、確かにもともとの変数の値が1であれば1、2であれば0となっていることがわかる。</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="handling.html#cb57-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb57-2"><a href="handling.html#cb57-2" tabindex="-1"></a>  <span class="fu">select</span>(c_q01a, work) <span class="sc">%&gt;%</span> </span>
-<span id="cb57-3"><a href="handling.html#cb57-3" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="handling.html#cb58-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb58-2"><a href="handling.html#cb58-2" tabindex="-1"></a>  <span class="fu">select</span>(c_q01a, work) <span class="sc">%&gt;%</span> </span>
+<span id="cb58-3"><a href="handling.html#cb58-3" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 2
 ##   c_q01a  work
 ##    &lt;dbl&gt; &lt;dbl&gt;
@@ -824,12 +825,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="例3-もとの変数と関係なくまったく新しい変数を作成する" class="section level4 hasAnchor" number="4.4.2.3">
 <h4><span class="header-section-number">4.4.2.3</span> 例3: もとの変数と関係なく、まったく新しい変数を作成する<a href="handling.html#%E4%BE%8B3-%E3%82%82%E3%81%A8%E3%81%AE%E5%A4%89%E6%95%B0%E3%81%A8%E9%96%A2%E4%BF%82%E3%81%AA%E3%81%8F%E3%81%BE%E3%81%A3%E3%81%9F%E3%81%8F%E6%96%B0%E3%81%97%E3%81%84%E5%A4%89%E6%95%B0%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>たとえば、以下のように1ずつ増える変数を作成することもできる。この変数を分析に直接使用するということはないが、通し番号が振ってあると何かと便利なことが多い。</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="handling.html#cb59-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb59-2"><a href="handling.html#cb59-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="handling.html#cb60-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb60-2"><a href="handling.html#cb60-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>())</span></code></pre></div>
 <p><code>n()</code> はデータフレーム内の行数を返す関数。上記3つの例で作成した変数を並べてみよう：</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="handling.html#cb60-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb60-2"><a href="handling.html#cb60-2" tabindex="-1"></a>  <span class="fu">select</span>(id, wage, work) <span class="sc">%&gt;%</span> </span>
-<span id="cb60-3"><a href="handling.html#cb60-3" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="handling.html#cb61-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb61-2"><a href="handling.html#cb61-2" tabindex="-1"></a>  <span class="fu">select</span>(id, wage, work) <span class="sc">%&gt;%</span> </span>
+<span id="cb61-3"><a href="handling.html#cb61-3" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 3
 ##      id  wage  work
 ##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -847,12 +848,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="if_elseの説明" class="section level4 hasAnchor" number="4.4.3.1">
 <h4><span class="header-section-number">4.4.3.1</span> if_else()の説明<a href="handling.html#if_else%E3%81%AE%E8%AA%AC%E6%98%8E" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p><code>if_else()</code>は、条件を指定し、その条件に合う場合と合わない場合の値を返す関数。<code>if_else(条件, 条件に合う場合の値, 条件に合わない場合の値)</code>、というふうに使う。</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="handling.html#cb62-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb62-2"><a href="handling.html#cb62-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">if_else</span>(gender_r <span class="sc">==</span> <span class="dv">1</span>, <span class="st">&quot;男性&quot;</span>, <span class="st">&quot;女性&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="handling.html#cb63-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb63-2"><a href="handling.html#cb63-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">if_else</span>(gender_r <span class="sc">==</span> <span class="dv">1</span>, <span class="st">&quot;男性&quot;</span>, <span class="st">&quot;女性&quot;</span>))</span></code></pre></div>
 <p>上記は、<code>gender</code>という列に対して、<code>gender_r</code>の列の値が1ならば”男性”、そうでないならば”女性”という文字列を入れてね、という命令である。</p>
 <p>新しく変数を作ったときには、きちんとできているかどうかを逐一確認するのがよい。たとえば以下のように、古い変数と新しい変数の<a href="tabulate.html#tabulate">クロス集計表</a>を作ってみるのが良い方法だろう。</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="handling.html#cb63-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb63-2"><a href="handling.html#cb63-2" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(gender_r, gender))</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="handling.html#cb64-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb64-2"><a href="handling.html#cb64-2" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(gender_r, gender))</span></code></pre></div>
 <pre><code>##         gender
 ## gender_r 女性 男性
 ##        1    0 2517
@@ -861,12 +862,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="論理演算子の説明" class="section level4 hasAnchor" number="4.4.3.2">
 <h4><span class="header-section-number">4.4.3.2</span> 論理演算子の説明<a href="handling.html#%E8%AB%96%E7%90%86%E6%BC%94%E7%AE%97%E5%AD%90%E3%81%AE%E8%AA%AC%E6%98%8E" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>上記の例のように、条件を指定するときには論理演算子というのを使用する。よく使う論理演算子の意味は次の通り。</p>
-<table>
+<table style="width:100%;">
 <colgroup>
-<col width="22%" />
-<col width="22%" />
-<col width="22%" />
-<col width="33%" />
+<col width="23%" />
+<col width="23%" />
+<col width="23%" />
+<col width="30%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -933,16 +934,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="複数条件の指定case_when" class="section level3 hasAnchor" number="4.4.4">
 <h3><span class="header-section-number">4.4.4</span> 複数条件の指定：case_when()<a href="handling.html#%E8%A4%87%E6%95%B0%E6%9D%A1%E4%BB%B6%E3%81%AE%E6%8C%87%E5%AE%9Acase_when" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><code>if_else()</code>の場合は条件節は一つだが、複数の条件を指定して、それぞれの条件に対応するときに特定の値を入れたい、というような時がある。このときには、複数条件を指定して値を書き換えるコマンドである、<code>case_when()</code>をつかうとよい。</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="handling.html#cb65-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb65-2"><a href="handling.html#cb65-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">agegroup =</span> <span class="fu">case_when</span>(</span>
-<span id="cb65-3"><a href="handling.html#cb65-3" tabindex="-1"></a>    <span class="dv">25</span> <span class="sc">&lt;=</span> age_r <span class="sc">&amp;</span> age_r <span class="sc">&lt;=</span> <span class="dv">34</span> <span class="sc">~</span> <span class="st">&quot;25-34歳&quot;</span>,</span>
-<span id="cb65-4"><a href="handling.html#cb65-4" tabindex="-1"></a>    <span class="dv">35</span> <span class="sc">&lt;=</span> age_r <span class="sc">&amp;</span> age_r <span class="sc">&lt;=</span> <span class="dv">44</span> <span class="sc">~</span> <span class="st">&quot;35-44歳&quot;</span>,</span>
-<span id="cb65-5"><a href="handling.html#cb65-5" tabindex="-1"></a>    <span class="dv">45</span> <span class="sc">&lt;=</span> age_r <span class="sc">&amp;</span> age_r <span class="sc">&lt;=</span> <span class="dv">54</span> <span class="sc">~</span> <span class="st">&quot;45-54歳&quot;</span>,</span>
-<span id="cb65-6"><a href="handling.html#cb65-6" tabindex="-1"></a>    <span class="dv">55</span> <span class="sc">&lt;=</span> age_r <span class="sc">&amp;</span> age_r <span class="sc">&lt;=</span> <span class="dv">64</span> <span class="sc">~</span> <span class="st">&quot;55-64歳&quot;</span></span>
-<span id="cb65-7"><a href="handling.html#cb65-7" tabindex="-1"></a>    ))</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="handling.html#cb66-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb66-2"><a href="handling.html#cb66-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">agegroup =</span> <span class="fu">case_when</span>(</span>
+<span id="cb66-3"><a href="handling.html#cb66-3" tabindex="-1"></a>    <span class="dv">25</span> <span class="sc">&lt;=</span> age_r <span class="sc">&amp;</span> age_r <span class="sc">&lt;=</span> <span class="dv">34</span> <span class="sc">~</span> <span class="st">&quot;25-34歳&quot;</span>,</span>
+<span id="cb66-4"><a href="handling.html#cb66-4" tabindex="-1"></a>    <span class="dv">35</span> <span class="sc">&lt;=</span> age_r <span class="sc">&amp;</span> age_r <span class="sc">&lt;=</span> <span class="dv">44</span> <span class="sc">~</span> <span class="st">&quot;35-44歳&quot;</span>,</span>
+<span id="cb66-5"><a href="handling.html#cb66-5" tabindex="-1"></a>    <span class="dv">45</span> <span class="sc">&lt;=</span> age_r <span class="sc">&amp;</span> age_r <span class="sc">&lt;=</span> <span class="dv">54</span> <span class="sc">~</span> <span class="st">&quot;45-54歳&quot;</span>,</span>
+<span id="cb66-6"><a href="handling.html#cb66-6" tabindex="-1"></a>    <span class="dv">55</span> <span class="sc">&lt;=</span> age_r <span class="sc">&amp;</span> age_r <span class="sc">&lt;=</span> <span class="dv">64</span> <span class="sc">~</span> <span class="st">&quot;55-64歳&quot;</span></span>
+<span id="cb66-7"><a href="handling.html#cb66-7" tabindex="-1"></a>    ))</span></code></pre></div>
 <p>ちゃんとできたかを確認しよう。</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="handling.html#cb66-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb66-2"><a href="handling.html#cb66-2" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(age_r, agegroup))</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="handling.html#cb67-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb67-2"><a href="handling.html#cb67-2" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(age_r, agegroup))</span></code></pre></div>
 <pre><code>##      agegroup
 ## age_r 25-34歳 35-44歳 45-54歳 55-64歳
 ##    16       0       0       0       0
@@ -997,8 +998,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##    65       0       0       0       0</code></pre>
 <p>もともとのデータには年齢が16歳から65歳の人が含まれているが、先ほどのコードでは16歳から24歳、65歳の人が条件に含まれていなかったので、新しく作成した列である<code>agegroup</code>には該当するものがないという結果になっている。このようなケースには<code>NA</code>が与えられる。</p>
 <p>実際、<code>NA</code>が与えられているかどうかを確認してみよう。以下のように<code>with(table())</code>にオプション<code>useNA = "always"</code>を指定することで、<code>NA</code>についても集計することができる。</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="handling.html#cb68-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb68-2"><a href="handling.html#cb68-2" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(age_r, agegroup, <span class="at">useNA =</span> <span class="st">&quot;always&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="handling.html#cb69-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb69-2"><a href="handling.html#cb69-2" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">table</span>(age_r, agegroup, <span class="at">useNA =</span> <span class="st">&quot;always&quot;</span>))</span></code></pre></div>
 <pre><code>##       agegroup
 ## age_r  25-34歳 35-44歳 45-54歳 55-64歳 &lt;NA&gt;
 ##   16         0       0       0       0  114
@@ -1078,20 +1079,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="handling.html#cb70-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(j_q06b))</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="handling.html#cb71-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(j_q06b))</span></code></pre></div>
 <pre><code>## j_q06b
 ##    1    2    3 
 ## 1553 2303 1098</code></pre>
 <p>この数値だけでは、何番が何を指しているのかよくわからない。そこで、この変数の値にそれぞれ名前を付けてカテゴリ変数（factor型）へと変換した変数<code>mothereduc</code>を作成する。</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="handling.html#cb72-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb72-2"><a href="handling.html#cb72-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mothereduc =</span> <span class="fu">factor</span>(j_q06b,</span>
-<span id="cb72-3"><a href="handling.html#cb72-3" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb72-4"><a href="handling.html#cb72-4" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;初等教育&quot;</span>, <span class="st">&quot;中等教育&quot;</span>, <span class="st">&quot;高等教育&quot;</span>)))</span></code></pre></div>
-<p><code>levels =</code>の箇所は、変換前の変数が持っている数値を順番に指定する。<code>1:3</code>というふうにすると、「1, 2, 3」と指定したことになる。番号が飛び飛びの場合であれば、たとえば<code>c(1, 2, 3, 9)</code>といったように記載する。</p>
-<p><code>labels =</code>の箇所は、表示させたいラベル名を先に指定した順番に与える。ラベルの個数が<code>levels =</code>で指定した個数と一致していない場合には、エラーになる。</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="handling.html#cb73-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb73-2"><a href="handling.html#cb73-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mothereduc =</span> <span class="fu">factor</span>(j_q06b,</span>
+<span id="cb73-3"><a href="handling.html#cb73-3" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb73-4"><a href="handling.html#cb73-4" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;初等教育&quot;</span>, <span class="st">&quot;中等教育&quot;</span>, <span class="st">&quot;高等教育&quot;</span>)))</span></code></pre></div>
+<p><code>levels =</code>の箇所は、変換前の変数における数値を順番に指定する。<code>1:3</code>というふうにすると、「1, 2, 3」と指定したことになる。番号が飛び飛びの場合であれば、たとえば<code>c(1, 2, 3, 9)</code>といったように記載する。</p>
+<p><code>labels =</code>の箇所は、新しくつけたい名前を入れる。表示させたいラベル名を、先に<code>levels =</code>にて指定した順番に与える。ラベルの個数が<code>levels =</code>で指定した個数と一致していない場合には、エラーになる。</p>
 <p>なお、変換前の変数に含まれている数値があるにもかかわらず、<code>levels =</code>で指定しない値があった場合、その値は欠損（NA）として処理される。</p>
 <p>結果を確認：</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="handling.html#cb73-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(j_q06b, mothereduc))</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="handling.html#cb74-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(j_q06b, mothereduc))</span></code></pre></div>
 <pre><code>##       mothereduc
 ## j_q06b 初等教育 中等教育 高等教育
 ##      1     1553        0        0
@@ -1126,15 +1127,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p><code>case_when()</code> を使って作成すると、意図していた順序とは違ったバラバラの順番になってしまう。</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="handling.html#cb75-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb75-2"><a href="handling.html#cb75-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">case_when</span>(</span>
-<span id="cb75-3"><a href="handling.html#cb75-3" tabindex="-1"></a>    d_q10 <span class="sc">&lt;</span> <span class="dv">35</span> <span class="sc">~</span> <span class="st">&quot;35時間未満&quot;</span>,</span>
-<span id="cb75-4"><a href="handling.html#cb75-4" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">49</span> <span class="sc">~</span> <span class="st">&quot;35-49時間&quot;</span>,</span>
-<span id="cb75-5"><a href="handling.html#cb75-5" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">59</span> <span class="sc">~</span> <span class="st">&quot;50-59時間&quot;</span>,</span>
-<span id="cb75-6"><a href="handling.html#cb75-6" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">60</span> <span class="sc">~</span> <span class="st">&quot;60時間以上&quot;</span></span>
-<span id="cb75-7"><a href="handling.html#cb75-7" tabindex="-1"></a>  ))</span>
-<span id="cb75-8"><a href="handling.html#cb75-8" tabindex="-1"></a></span>
-<span id="cb75-9"><a href="handling.html#cb75-9" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(workhour_fct))</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="handling.html#cb76-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb76-2"><a href="handling.html#cb76-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">case_when</span>(</span>
+<span id="cb76-3"><a href="handling.html#cb76-3" tabindex="-1"></a>    d_q10 <span class="sc">&lt;</span> <span class="dv">35</span> <span class="sc">~</span> <span class="st">&quot;35時間未満&quot;</span>,</span>
+<span id="cb76-4"><a href="handling.html#cb76-4" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">49</span> <span class="sc">~</span> <span class="st">&quot;35-49時間&quot;</span>,</span>
+<span id="cb76-5"><a href="handling.html#cb76-5" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">59</span> <span class="sc">~</span> <span class="st">&quot;50-59時間&quot;</span>,</span>
+<span id="cb76-6"><a href="handling.html#cb76-6" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">60</span> <span class="sc">~</span> <span class="st">&quot;60時間以上&quot;</span></span>
+<span id="cb76-7"><a href="handling.html#cb76-7" tabindex="-1"></a>  ))</span>
+<span id="cb76-8"><a href="handling.html#cb76-8" tabindex="-1"></a></span>
+<span id="cb76-9"><a href="handling.html#cb76-9" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(workhour_fct))</span></code></pre></div>
 <pre><code>## workhour_fct
 ##  35-49時間 35時間未満  50-59時間 60時間以上 
 ##       1848        960        648        396</code></pre>
@@ -1142,19 +1143,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="一度数値変数に変換し数値変数をカテゴリ変数に変換" class="section level4 hasAnchor" number="4.4.5.1">
 <h4><span class="header-section-number">4.4.5.1</span> 一度数値変数に変換し、数値変数をカテゴリ変数に変換<a href="handling.html#%E4%B8%80%E5%BA%A6%E6%95%B0%E5%80%A4%E5%A4%89%E6%95%B0%E3%81%AB%E5%A4%89%E6%8F%9B%E3%81%97%E6%95%B0%E5%80%A4%E5%A4%89%E6%95%B0%E3%82%92%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%AB%E5%A4%89%E6%8F%9B" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>いったん数値の変数を挟んでから<code>factor()</code> を使って変数を作成することで、順番がばらばらになってしまうのを防ぐことができる。</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="handling.html#cb77-1" tabindex="-1"></a><span class="co"># 方法1</span></span>
-<span id="cb77-2"><a href="handling.html#cb77-2" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb77-3"><a href="handling.html#cb77-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">case_when</span>(</span>
-<span id="cb77-4"><a href="handling.html#cb77-4" tabindex="-1"></a>    d_q10 <span class="sc">&lt;</span> <span class="dv">35</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb77-5"><a href="handling.html#cb77-5" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">49</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
-<span id="cb77-6"><a href="handling.html#cb77-6" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">59</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
-<span id="cb77-7"><a href="handling.html#cb77-7" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">60</span> <span class="sc">~</span> <span class="dv">4</span></span>
-<span id="cb77-8"><a href="handling.html#cb77-8" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
-<span id="cb77-9"><a href="handling.html#cb77-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">factor</span>(workhour_fct,</span>
-<span id="cb77-10"><a href="handling.html#cb77-10" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
-<span id="cb77-11"><a href="handling.html#cb77-11" tabindex="-1"></a>                               <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;35時間未満&quot;</span>, <span class="st">&quot;35-49時間&quot;</span>, <span class="st">&quot;50-59時間&quot;</span>, <span class="st">&quot;60時間以上&quot;</span>)))</span>
-<span id="cb77-12"><a href="handling.html#cb77-12" tabindex="-1"></a></span>
-<span id="cb77-13"><a href="handling.html#cb77-13" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(workhour_fct)) <span class="co"># 確認</span></span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="handling.html#cb78-1" tabindex="-1"></a><span class="co"># 方法1</span></span>
+<span id="cb78-2"><a href="handling.html#cb78-2" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb78-3"><a href="handling.html#cb78-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">case_when</span>(</span>
+<span id="cb78-4"><a href="handling.html#cb78-4" tabindex="-1"></a>    d_q10 <span class="sc">&lt;</span> <span class="dv">35</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb78-5"><a href="handling.html#cb78-5" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">49</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb78-6"><a href="handling.html#cb78-6" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">59</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb78-7"><a href="handling.html#cb78-7" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">60</span> <span class="sc">~</span> <span class="dv">4</span></span>
+<span id="cb78-8"><a href="handling.html#cb78-8" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
+<span id="cb78-9"><a href="handling.html#cb78-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">factor</span>(workhour_fct,</span>
+<span id="cb78-10"><a href="handling.html#cb78-10" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb78-11"><a href="handling.html#cb78-11" tabindex="-1"></a>                               <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;35時間未満&quot;</span>, <span class="st">&quot;35-49時間&quot;</span>, <span class="st">&quot;50-59時間&quot;</span>, <span class="st">&quot;60時間以上&quot;</span>)))</span>
+<span id="cb78-12"><a href="handling.html#cb78-12" tabindex="-1"></a></span>
+<span id="cb78-13"><a href="handling.html#cb78-13" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(workhour_fct)) <span class="co"># 確認</span></span></code></pre></div>
 <pre><code>## workhour_fct
 ## 35時間未満  35-49時間  50-59時間 60時間以上 
 ##        960       1848        648        396</code></pre>
@@ -1162,25 +1163,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fct_relevel" class="section level4 hasAnchor" number="4.4.5.2">
 <h4><span class="header-section-number">4.4.5.2</span> fct_relevel()を使う<a href="handling.html#fct_relevel" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p><code>fct_relevel()</code>は、文字列変数の値の順序を任意の順序に並び替えるコマンドである。<code>fct_relevel(変数, "値", "値",...)</code>のようなコードとなる。</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="handling.html#cb79-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb79-2"><a href="handling.html#cb79-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">case_when</span>(</span>
-<span id="cb79-3"><a href="handling.html#cb79-3" tabindex="-1"></a>    d_q10 <span class="sc">&lt;</span> <span class="dv">35</span> <span class="sc">~</span> <span class="st">&quot;35時間未満&quot;</span>,</span>
-<span id="cb79-4"><a href="handling.html#cb79-4" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">49</span> <span class="sc">~</span> <span class="st">&quot;35-49時間&quot;</span>,</span>
-<span id="cb79-5"><a href="handling.html#cb79-5" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">59</span> <span class="sc">~</span> <span class="st">&quot;50-59時間&quot;</span>,</span>
-<span id="cb79-6"><a href="handling.html#cb79-6" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">60</span> <span class="sc">~</span> <span class="st">&quot;60時間以上&quot;</span></span>
-<span id="cb79-7"><a href="handling.html#cb79-7" tabindex="-1"></a>  ))</span>
-<span id="cb79-8"><a href="handling.html#cb79-8" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(workhour_fct)) <span class="co"># 意図した順番とは違い、「35-49時間」が前に来てしまっている。。</span></span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="handling.html#cb80-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb80-2"><a href="handling.html#cb80-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">case_when</span>(</span>
+<span id="cb80-3"><a href="handling.html#cb80-3" tabindex="-1"></a>    d_q10 <span class="sc">&lt;</span> <span class="dv">35</span> <span class="sc">~</span> <span class="st">&quot;35時間未満&quot;</span>,</span>
+<span id="cb80-4"><a href="handling.html#cb80-4" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">49</span> <span class="sc">~</span> <span class="st">&quot;35-49時間&quot;</span>,</span>
+<span id="cb80-5"><a href="handling.html#cb80-5" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">59</span> <span class="sc">~</span> <span class="st">&quot;50-59時間&quot;</span>,</span>
+<span id="cb80-6"><a href="handling.html#cb80-6" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">60</span> <span class="sc">~</span> <span class="st">&quot;60時間以上&quot;</span></span>
+<span id="cb80-7"><a href="handling.html#cb80-7" tabindex="-1"></a>  ))</span>
+<span id="cb80-8"><a href="handling.html#cb80-8" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(workhour_fct)) <span class="co"># 意図した順番とは違い、「35-49時間」が前に来てしまっている。。</span></span></code></pre></div>
 <pre><code>## workhour_fct
 ##  35-49時間 35時間未満  50-59時間 60時間以上 
 ##       1848        960        648        396</code></pre>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="handling.html#cb81-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb81-2"><a href="handling.html#cb81-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">fct_relevel</span>(workhour_fct,</span>
-<span id="cb81-3"><a href="handling.html#cb81-3" tabindex="-1"></a>                                    <span class="st">&quot;35時間未満&quot;</span>,</span>
-<span id="cb81-4"><a href="handling.html#cb81-4" tabindex="-1"></a>                                    <span class="st">&quot;35-49時間&quot;</span>,</span>
-<span id="cb81-5"><a href="handling.html#cb81-5" tabindex="-1"></a>                                    <span class="st">&quot;50-59時間&quot;</span>,</span>
-<span id="cb81-6"><a href="handling.html#cb81-6" tabindex="-1"></a>                                    <span class="st">&quot;60時間以上&quot;</span>))</span>
-<span id="cb81-7"><a href="handling.html#cb81-7" tabindex="-1"></a></span>
-<span id="cb81-8"><a href="handling.html#cb81-8" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(workhour_fct)) <span class="co"># 確認。確かに並びがかわっている。</span></span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="handling.html#cb82-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb82-2"><a href="handling.html#cb82-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">fct_relevel</span>(workhour_fct,</span>
+<span id="cb82-3"><a href="handling.html#cb82-3" tabindex="-1"></a>                                    <span class="st">&quot;35時間未満&quot;</span>,</span>
+<span id="cb82-4"><a href="handling.html#cb82-4" tabindex="-1"></a>                                    <span class="st">&quot;35-49時間&quot;</span>,</span>
+<span id="cb82-5"><a href="handling.html#cb82-5" tabindex="-1"></a>                                    <span class="st">&quot;50-59時間&quot;</span>,</span>
+<span id="cb82-6"><a href="handling.html#cb82-6" tabindex="-1"></a>                                    <span class="st">&quot;60時間以上&quot;</span>))</span>
+<span id="cb82-7"><a href="handling.html#cb82-7" tabindex="-1"></a></span>
+<span id="cb82-8"><a href="handling.html#cb82-8" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> <span class="fu">with</span>(<span class="fu">table</span>(workhour_fct)) <span class="co"># 確認。確かに並びがかわっている。</span></span></code></pre></div>
 <pre><code>## workhour_fct
 ## 35時間未満  35-49時間  50-59時間 60時間以上 
 ##        960       1848        648        396</code></pre>
@@ -1190,10 +1191,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">4.4.6</span> 必要な列のみ抽出：select()<a href="handling.html#%E5%BF%85%E8%A6%81%E3%81%AA%E5%88%97%E3%81%AE%E3%81%BF%E6%8A%BD%E5%87%BAselect" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>このコマンドは「変数の作成」の節で扱ったコマンドと比べるとやや特殊で、列を追加するのではなく、列を<strong>削除する</strong>という操作を行う。普通に分析をする限りは列を削除する必要はないが、一部の列だけを取り出してどのようになっているのかを確認したりしたいときなどに使う。</p>
 <p>このときに使うコマンドが<code>select()</code>である。</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="handling.html#cb83-1" tabindex="-1"></a>piaac_sub <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb83-2"><a href="handling.html#cb83-2" tabindex="-1"></a>  <span class="fu">select</span>(gender, wage) <span class="co">#gender, wageの列を抽出</span></span></code></pre></div>
 <div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="handling.html#cb84-1" tabindex="-1"></a>piaac_sub <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb84-2"><a href="handling.html#cb84-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>gender, <span class="sc">-</span>wage) <span class="co">#gender, wage「以外」の列を抽出</span></span></code></pre></div>
+<span id="cb84-2"><a href="handling.html#cb84-2" tabindex="-1"></a>  <span class="fu">select</span>(gender, wage) <span class="co">#gender, wageの列を抽出</span></span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="handling.html#cb85-1" tabindex="-1"></a>piaac_sub <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb85-2"><a href="handling.html#cb85-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>gender, <span class="sc">-</span>wage) <span class="co">#gender, wage「以外」の列を抽出</span></span></code></pre></div>
 </div>
 </div>
 <div id="handling-tips" class="section level2 hasAnchor" number="4.5">
@@ -1263,16 +1264,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>このようにやや複雑な変換に対しても<code>case_when()</code> が利用可能である。具体的には、以下のようにする。また、作成した変数にはやはり<code>factor()</code>をつかってカテゴリ変数（factor型）へ変換し、ラベルを付けておこう。</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="handling.html#cb85-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb85-2"><a href="handling.html#cb85-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parenteduc =</span> <span class="fu">case_when</span>(</span>
-<span id="cb85-3"><a href="handling.html#cb85-3" tabindex="-1"></a>    j_q07b <span class="sc">&gt;=</span> j_q06b <span class="sc">~</span> j_q07b,</span>
-<span id="cb85-4"><a href="handling.html#cb85-4" tabindex="-1"></a>    j_q07b <span class="sc">&lt;</span> j_q06b <span class="sc">~</span> j_q06b,</span>
-<span id="cb85-5"><a href="handling.html#cb85-5" tabindex="-1"></a>    <span class="fu">is.na</span>(j_q07b) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">&amp;</span> <span class="fu">is.na</span>(j_q06b) <span class="sc">==</span> <span class="cn">FALSE</span> <span class="sc">~</span> j_q06b,</span>
-<span id="cb85-6"><a href="handling.html#cb85-6" tabindex="-1"></a>    <span class="fu">is.na</span>(j_q06b) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">&amp;</span> <span class="fu">is.na</span>(j_q07b) <span class="sc">==</span> <span class="cn">FALSE</span> <span class="sc">~</span> j_q07b</span>
-<span id="cb85-7"><a href="handling.html#cb85-7" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
-<span id="cb85-8"><a href="handling.html#cb85-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parenteduc =</span> <span class="fu">factor</span>(parenteduc,</span>
-<span id="cb85-9"><a href="handling.html#cb85-9" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb85-10"><a href="handling.html#cb85-10" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;初等教育&quot;</span>, <span class="st">&quot;中等教育&quot;</span>, <span class="st">&quot;高等教育&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="handling.html#cb86-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb86-2"><a href="handling.html#cb86-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parenteduc =</span> <span class="fu">case_when</span>(</span>
+<span id="cb86-3"><a href="handling.html#cb86-3" tabindex="-1"></a>    j_q07b <span class="sc">&gt;=</span> j_q06b <span class="sc">~</span> j_q07b,</span>
+<span id="cb86-4"><a href="handling.html#cb86-4" tabindex="-1"></a>    j_q07b <span class="sc">&lt;</span> j_q06b <span class="sc">~</span> j_q06b,</span>
+<span id="cb86-5"><a href="handling.html#cb86-5" tabindex="-1"></a>    <span class="fu">is.na</span>(j_q07b) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">&amp;</span> <span class="fu">is.na</span>(j_q06b) <span class="sc">==</span> <span class="cn">FALSE</span> <span class="sc">~</span> j_q06b,</span>
+<span id="cb86-6"><a href="handling.html#cb86-6" tabindex="-1"></a>    <span class="fu">is.na</span>(j_q06b) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">&amp;</span> <span class="fu">is.na</span>(j_q07b) <span class="sc">==</span> <span class="cn">FALSE</span> <span class="sc">~</span> j_q07b</span>
+<span id="cb86-7"><a href="handling.html#cb86-7" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
+<span id="cb86-8"><a href="handling.html#cb86-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parenteduc =</span> <span class="fu">factor</span>(parenteduc,</span>
+<span id="cb86-9"><a href="handling.html#cb86-9" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb86-10"><a href="handling.html#cb86-10" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;初等教育&quot;</span>, <span class="st">&quot;中等教育&quot;</span>, <span class="st">&quot;高等教育&quot;</span>)))</span></code></pre></div>
 </div>
 <div id="均等な順序を仮定して連続変数とする" class="section level3 hasAnchor" number="4.5.3">
 <h3><span class="header-section-number">4.5.3</span> 均等な順序を仮定して連続変数とする<a href="handling.html#%E5%9D%87%E7%AD%89%E3%81%AA%E9%A0%86%E5%BA%8F%E3%82%92%E4%BB%AE%E5%AE%9A%E3%81%97%E3%81%A6%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%A8%E3%81%99%E3%82%8B" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1314,7 +1315,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>以下のように架空のデータがあるとする（例なので実行する必要はない）。</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="handling.html#cb86-1" tabindex="-1"></a>jgss <span class="co">#元のデータ（架空例）</span></span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="handling.html#cb87-1" tabindex="-1"></a>jgss <span class="co">#元のデータ（架空例）</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 1
 ##   ST5JOB
 ##    &lt;dbl&gt;
@@ -1325,10 +1326,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5      1
 ## 6      3</code></pre>
 <p>このデータの場合は、以下のようにして値を変えた変数を作成することができる（例なので実行する必要はない）。</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="handling.html#cb88-1" tabindex="-1"></a>jgss <span class="ot">&lt;-</span> jgss <span class="sc">%&gt;%</span> </span>
-<span id="cb88-2"><a href="handling.html#cb88-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">jobsatis =</span> <span class="dv">6</span> <span class="sc">-</span> ST5JOB)</span>
-<span id="cb88-3"><a href="handling.html#cb88-3" tabindex="-1"></a></span>
-<span id="cb88-4"><a href="handling.html#cb88-4" tabindex="-1"></a>jgss</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="handling.html#cb89-1" tabindex="-1"></a>jgss <span class="ot">&lt;-</span> jgss <span class="sc">%&gt;%</span> </span>
+<span id="cb89-2"><a href="handling.html#cb89-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">jobsatis =</span> <span class="dv">6</span> <span class="sc">-</span> ST5JOB)</span>
+<span id="cb89-3"><a href="handling.html#cb89-3" tabindex="-1"></a></span>
+<span id="cb89-4"><a href="handling.html#cb89-4" tabindex="-1"></a>jgss</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 2
 ##   ST5JOB jobsatis
 ##    &lt;dbl&gt;    &lt;dbl&gt;
@@ -1345,7 +1346,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>JGSSでは「夫は外で働き、妻は家庭を守るべきだ」という意見に対して賛成か反対かを4つの選択肢を設けて尋ねている。ただし、この質問に（何らかの理由で）回答していない者もおり、そのような場合には9という値が便宜的に振られている。</p>
 <p>この質問に対する回答を連続値とみなして集計したりしたいとする。このような場合、無回答の9という値は計算から除外したいので、9という値ではなくNAとしたい。</p>
 <p>以下のように架空のデータがあるとする（例なので実行する必要はない）。</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="handling.html#cb90-1" tabindex="-1"></a>jgss <span class="co">#元のデータ（架空例）</span></span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="handling.html#cb91-1" tabindex="-1"></a>jgss <span class="co">#元のデータ（架空例）</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 1
 ##   Q4WWHHX
 ##     &lt;dbl&gt;
@@ -1356,10 +1357,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5       2
 ## 6       1</code></pre>
 <p>以下のようにして9をNAに置き換えた変数を作成することができる（例なので実行する必要はない）。</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="handling.html#cb92-1" tabindex="-1"></a>jgss <span class="ot">&lt;-</span> jgss <span class="sc">%&gt;%</span> </span>
-<span id="cb92-2"><a href="handling.html#cb92-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">genderrole =</span> <span class="fu">if_else</span>(Q4WWHHX <span class="sc">==</span> <span class="dv">9</span>, <span class="cn">NA</span>, Q4WWHHX))  <span class="co"># 9をNAに置換</span></span>
-<span id="cb92-3"><a href="handling.html#cb92-3" tabindex="-1"></a></span>
-<span id="cb92-4"><a href="handling.html#cb92-4" tabindex="-1"></a>jgss <span class="co">#変換後のデータ</span></span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="handling.html#cb93-1" tabindex="-1"></a>jgss <span class="ot">&lt;-</span> jgss <span class="sc">%&gt;%</span> </span>
+<span id="cb93-2"><a href="handling.html#cb93-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">genderrole =</span> <span class="fu">if_else</span>(Q4WWHHX <span class="sc">==</span> <span class="dv">9</span>, <span class="cn">NA</span>, Q4WWHHX))  <span class="co"># 9をNAに置換</span></span>
+<span id="cb93-3"><a href="handling.html#cb93-3" tabindex="-1"></a></span>
+<span id="cb93-4"><a href="handling.html#cb93-4" tabindex="-1"></a>jgss <span class="co">#変換後のデータ</span></span></code></pre></div>
 <pre><code>## # A tibble: 6 × 2
 ##   Q4WWHHX genderrole
 ##     &lt;dbl&gt;      &lt;dbl&gt;
@@ -1419,84 +1420,84 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">4.5.6</span> %&gt;%をつなげてコマンドをまとめる<a href="handling.html#%E3%82%92%E3%81%A4%E3%81%AA%E3%81%92%E3%81%A6%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%82%92%E3%81%BE%E3%81%A8%E3%82%81%E3%82%8B" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>変数を作成する過程では、正しく変数を作れているかどうかを一つひとつ確認しながら進めていくことが必須である。しかし、正しく作成できたことが確認できたら、<code>with(table())</code>などを使って確認するコードは必ずしもスクリプトに残しておく必要はない。分析に使う変数が固まってきたら、変数を作成するためのコードを（ある程度）まとめておくと、コードがシンプルになってよいだろう。このようなときに、パイプ演算子を使った記法は有用である。</p>
 <p>上記で作成した変数も含めて、本資料で使う変数をまとめて作成するためのコードを以下に記した。</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="handling.html#cb94-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb94-2"><a href="handling.html#cb94-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-3"><a href="handling.html#cb94-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage =</span> earnhrbonus) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-4"><a href="handling.html#cb94-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logwage =</span> <span class="fu">log</span>(wage)) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-5"><a href="handling.html#cb94-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">factor</span>(gender_r, <span class="at">level =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">1</span>, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;女性&quot;</span>,<span class="st">&quot;男性&quot;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-6"><a href="handling.html#cb94-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age =</span> age_r) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-7"><a href="handling.html#cb94-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">work =</span> <span class="dv">2</span> <span class="sc">-</span> c_q01a) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-8"><a href="handling.html#cb94-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour =</span> d_q10) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-9"><a href="handling.html#cb94-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">case_when</span>(</span>
-<span id="cb94-10"><a href="handling.html#cb94-10" tabindex="-1"></a>    d_q10 <span class="sc">&lt;</span> <span class="dv">35</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb94-11"><a href="handling.html#cb94-11" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">49</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
-<span id="cb94-12"><a href="handling.html#cb94-12" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">59</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
-<span id="cb94-13"><a href="handling.html#cb94-13" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">60</span> <span class="sc">~</span> <span class="dv">4</span></span>
-<span id="cb94-14"><a href="handling.html#cb94-14" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-15"><a href="handling.html#cb94-15" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">factor</span>(workhour_fct,</span>
-<span id="cb94-16"><a href="handling.html#cb94-16" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
-<span id="cb94-17"><a href="handling.html#cb94-17" tabindex="-1"></a>                               <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;35時間未満&quot;</span>, <span class="st">&quot;35-49時間&quot;</span>, <span class="st">&quot;50-59時間&quot;</span>, <span class="st">&quot;60時間以上&quot;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-18"><a href="handling.html#cb94-18" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ =</span> <span class="fu">case_when</span>(</span>
-<span id="cb94-19"><a href="handling.html#cb94-19" tabindex="-1"></a>    edcat8 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> edcat8 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb94-20"><a href="handling.html#cb94-20" tabindex="-1"></a>    edcat8 <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
-<span id="cb94-21"><a href="handling.html#cb94-21" tabindex="-1"></a>    edcat8 <span class="sc">==</span> <span class="dv">4</span> <span class="sc">|</span> edcat8 <span class="sc">==</span> <span class="dv">5</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
-<span id="cb94-22"><a href="handling.html#cb94-22" tabindex="-1"></a>    edcat8 <span class="sc">==</span> <span class="dv">6</span> <span class="sc">|</span> edcat8 <span class="sc">==</span> <span class="dv">7</span> <span class="sc">|</span> edcat8 <span class="sc">==</span> <span class="dv">8</span> <span class="sc">~</span> <span class="dv">4</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-23"><a href="handling.html#cb94-23" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ =</span> <span class="fu">factor</span>(educ, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
-<span id="cb94-24"><a href="handling.html#cb94-24" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;中学&quot;</span>, <span class="st">&quot;高校&quot;</span>, <span class="st">&quot;短大高専&quot;</span>, <span class="st">&quot;大学大学院&quot;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-25"><a href="handling.html#cb94-25" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mothereduc =</span> <span class="fu">factor</span>(j_q06b,</span>
-<span id="cb94-26"><a href="handling.html#cb94-26" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb94-27"><a href="handling.html#cb94-27" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;初等教育&quot;</span>, <span class="st">&quot;中等教育&quot;</span>, <span class="st">&quot;高等教育&quot;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-28"><a href="handling.html#cb94-28" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fathereduc =</span> <span class="fu">factor</span>(j_q07b,</span>
-<span id="cb94-29"><a href="handling.html#cb94-29" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb94-30"><a href="handling.html#cb94-30" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;初等教育&quot;</span>, <span class="st">&quot;中等教育&quot;</span>, <span class="st">&quot;高等教育&quot;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-31"><a href="handling.html#cb94-31" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parenteduc =</span> <span class="fu">case_when</span>(</span>
-<span id="cb94-32"><a href="handling.html#cb94-32" tabindex="-1"></a>    j_q07b <span class="sc">&gt;=</span> j_q06b <span class="sc">~</span> j_q07b,</span>
-<span id="cb94-33"><a href="handling.html#cb94-33" tabindex="-1"></a>    j_q07b <span class="sc">&lt;</span> j_q06b <span class="sc">~</span> j_q06b,</span>
-<span id="cb94-34"><a href="handling.html#cb94-34" tabindex="-1"></a>    <span class="fu">is.na</span>(j_q07b) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">&amp;</span> <span class="fu">is.na</span>(j_q06b) <span class="sc">==</span> <span class="cn">FALSE</span> <span class="sc">~</span> j_q06b,</span>
-<span id="cb94-35"><a href="handling.html#cb94-35" tabindex="-1"></a>    <span class="fu">is.na</span>(j_q06b) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">&amp;</span> <span class="fu">is.na</span>(j_q07b) <span class="sc">==</span> <span class="cn">FALSE</span> <span class="sc">~</span> j_q07b</span>
-<span id="cb94-36"><a href="handling.html#cb94-36" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-37"><a href="handling.html#cb94-37" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parenteduc =</span> <span class="fu">factor</span>(parenteduc,</span>
-<span id="cb94-38"><a href="handling.html#cb94-38" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb94-39"><a href="handling.html#cb94-39" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;初等教育&quot;</span>, <span class="st">&quot;中等教育&quot;</span>, <span class="st">&quot;高等教育&quot;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-40"><a href="handling.html#cb94-40" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">occupation =</span> <span class="fu">factor</span>(isco1c,</span>
-<span id="cb94-41"><a href="handling.html#cb94-41" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>,</span>
-<span id="cb94-42"><a href="handling.html#cb94-42" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;管理職&quot;</span>,<span class="st">&quot;専門職&quot;</span>,<span class="st">&quot;技術職・准専門職&quot;</span>,<span class="st">&quot;事務補助&quot;</span>,<span class="st">&quot;サービス・販売&quot;</span>,<span class="st">&quot;農林漁業&quot;</span>,<span class="st">&quot;技能工&quot;</span>,<span class="st">&quot;設備・機械運転・組立&quot;</span>,<span class="st">&quot;単純作業&quot;</span>)</span>
-<span id="cb94-43"><a href="handling.html#cb94-43" tabindex="-1"></a>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-44"><a href="handling.html#cb94-44" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">numeracy =</span> pvnum1) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-45"><a href="handling.html#cb94-45" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ojt =</span> <span class="dv">2</span> <span class="sc">-</span> b_q12c) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-46"><a href="handling.html#cb94-46" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">health =</span> <span class="dv">6</span> <span class="sc">-</span> i_q08) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-47"><a href="handling.html#cb94-47" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">learning =</span> i_q04d) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-48"><a href="handling.html#cb94-48" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">readwork =</span> readwork) <span class="sc">%&gt;%</span> </span>
-<span id="cb94-49"><a href="handling.html#cb94-49" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">numwork =</span> numwork)</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="handling.html#cb95-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb95-2"><a href="handling.html#cb95-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-3"><a href="handling.html#cb95-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage =</span> earnhrbonus) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-4"><a href="handling.html#cb95-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">logwage =</span> <span class="fu">log</span>(wage)) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-5"><a href="handling.html#cb95-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gender =</span> <span class="fu">factor</span>(gender_r, <span class="at">level =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">1</span>, <span class="at">label =</span> <span class="fu">c</span>(<span class="st">&quot;女性&quot;</span>,<span class="st">&quot;男性&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-6"><a href="handling.html#cb95-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age =</span> age_r) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-7"><a href="handling.html#cb95-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">work =</span> <span class="dv">2</span> <span class="sc">-</span> c_q01a) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-8"><a href="handling.html#cb95-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour =</span> d_q10) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-9"><a href="handling.html#cb95-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">case_when</span>(</span>
+<span id="cb95-10"><a href="handling.html#cb95-10" tabindex="-1"></a>    d_q10 <span class="sc">&lt;</span> <span class="dv">35</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb95-11"><a href="handling.html#cb95-11" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">35</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">49</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb95-12"><a href="handling.html#cb95-12" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">50</span> <span class="sc">&amp;</span> d_q10 <span class="sc">&lt;=</span> <span class="dv">59</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb95-13"><a href="handling.html#cb95-13" tabindex="-1"></a>    d_q10 <span class="sc">&gt;=</span> <span class="dv">60</span> <span class="sc">~</span> <span class="dv">4</span></span>
+<span id="cb95-14"><a href="handling.html#cb95-14" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-15"><a href="handling.html#cb95-15" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">workhour_fct =</span> <span class="fu">factor</span>(workhour_fct,</span>
+<span id="cb95-16"><a href="handling.html#cb95-16" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb95-17"><a href="handling.html#cb95-17" tabindex="-1"></a>                               <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;35時間未満&quot;</span>, <span class="st">&quot;35-49時間&quot;</span>, <span class="st">&quot;50-59時間&quot;</span>, <span class="st">&quot;60時間以上&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-18"><a href="handling.html#cb95-18" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ =</span> <span class="fu">case_when</span>(</span>
+<span id="cb95-19"><a href="handling.html#cb95-19" tabindex="-1"></a>    edcat8 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> edcat8 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb95-20"><a href="handling.html#cb95-20" tabindex="-1"></a>    edcat8 <span class="sc">==</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb95-21"><a href="handling.html#cb95-21" tabindex="-1"></a>    edcat8 <span class="sc">==</span> <span class="dv">4</span> <span class="sc">|</span> edcat8 <span class="sc">==</span> <span class="dv">5</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb95-22"><a href="handling.html#cb95-22" tabindex="-1"></a>    edcat8 <span class="sc">==</span> <span class="dv">6</span> <span class="sc">|</span> edcat8 <span class="sc">==</span> <span class="dv">7</span> <span class="sc">|</span> edcat8 <span class="sc">==</span> <span class="dv">8</span> <span class="sc">~</span> <span class="dv">4</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-23"><a href="handling.html#cb95-23" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ =</span> <span class="fu">factor</span>(educ, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb95-24"><a href="handling.html#cb95-24" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;中学&quot;</span>, <span class="st">&quot;高校&quot;</span>, <span class="st">&quot;短大高専&quot;</span>, <span class="st">&quot;大学大学院&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-25"><a href="handling.html#cb95-25" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mothereduc =</span> <span class="fu">factor</span>(j_q06b,</span>
+<span id="cb95-26"><a href="handling.html#cb95-26" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb95-27"><a href="handling.html#cb95-27" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;初等教育&quot;</span>, <span class="st">&quot;中等教育&quot;</span>, <span class="st">&quot;高等教育&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-28"><a href="handling.html#cb95-28" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fathereduc =</span> <span class="fu">factor</span>(j_q07b,</span>
+<span id="cb95-29"><a href="handling.html#cb95-29" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb95-30"><a href="handling.html#cb95-30" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;初等教育&quot;</span>, <span class="st">&quot;中等教育&quot;</span>, <span class="st">&quot;高等教育&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-31"><a href="handling.html#cb95-31" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parenteduc =</span> <span class="fu">case_when</span>(</span>
+<span id="cb95-32"><a href="handling.html#cb95-32" tabindex="-1"></a>    j_q07b <span class="sc">&gt;=</span> j_q06b <span class="sc">~</span> j_q07b,</span>
+<span id="cb95-33"><a href="handling.html#cb95-33" tabindex="-1"></a>    j_q07b <span class="sc">&lt;</span> j_q06b <span class="sc">~</span> j_q06b,</span>
+<span id="cb95-34"><a href="handling.html#cb95-34" tabindex="-1"></a>    <span class="fu">is.na</span>(j_q07b) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">&amp;</span> <span class="fu">is.na</span>(j_q06b) <span class="sc">==</span> <span class="cn">FALSE</span> <span class="sc">~</span> j_q06b,</span>
+<span id="cb95-35"><a href="handling.html#cb95-35" tabindex="-1"></a>    <span class="fu">is.na</span>(j_q06b) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">&amp;</span> <span class="fu">is.na</span>(j_q07b) <span class="sc">==</span> <span class="cn">FALSE</span> <span class="sc">~</span> j_q07b</span>
+<span id="cb95-36"><a href="handling.html#cb95-36" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-37"><a href="handling.html#cb95-37" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parenteduc =</span> <span class="fu">factor</span>(parenteduc,</span>
+<span id="cb95-38"><a href="handling.html#cb95-38" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb95-39"><a href="handling.html#cb95-39" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;初等教育&quot;</span>, <span class="st">&quot;中等教育&quot;</span>, <span class="st">&quot;高等教育&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-40"><a href="handling.html#cb95-40" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">occupation =</span> <span class="fu">factor</span>(isco1c,</span>
+<span id="cb95-41"><a href="handling.html#cb95-41" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>,</span>
+<span id="cb95-42"><a href="handling.html#cb95-42" tabindex="-1"></a>                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;管理職&quot;</span>,<span class="st">&quot;専門職&quot;</span>,<span class="st">&quot;技術職・准専門職&quot;</span>,<span class="st">&quot;事務補助&quot;</span>,<span class="st">&quot;サービス・販売&quot;</span>,<span class="st">&quot;農林漁業&quot;</span>,<span class="st">&quot;技能工&quot;</span>,<span class="st">&quot;設備・機械運転・組立&quot;</span>,<span class="st">&quot;単純作業&quot;</span>)</span>
+<span id="cb95-43"><a href="handling.html#cb95-43" tabindex="-1"></a>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-44"><a href="handling.html#cb95-44" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">numeracy =</span> pvnum1) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-45"><a href="handling.html#cb95-45" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ojt =</span> <span class="dv">2</span> <span class="sc">-</span> b_q12c) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-46"><a href="handling.html#cb95-46" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">health =</span> <span class="dv">6</span> <span class="sc">-</span> i_q08) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-47"><a href="handling.html#cb95-47" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">learning =</span> i_q04d) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-48"><a href="handling.html#cb95-48" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">readwork =</span> readwork) <span class="sc">%&gt;%</span> </span>
+<span id="cb95-49"><a href="handling.html#cb95-49" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">numwork =</span> numwork)</span></code></pre></div>
 </div>
 </div>
 <div id="handling_sample" class="section level2 hasAnchor" number="4.6">
 <h2><span class="header-section-number">4.6</span> サンプルの限定<a href="handling.html#handling_sample" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>上記のようにして作成した変数のみを残したデータに、<code>piaac_variable</code>という名前をつけて、別途データフレームとして残しておこう。</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="handling.html#cb95-1" tabindex="-1"></a>piaac_variable <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
-<span id="cb95-2"><a href="handling.html#cb95-2" tabindex="-1"></a>  <span class="fu">select</span>(id, wage, logwage, gender, age, work, workhour, workhour_fct, educ, mothereduc, fathereduc, parenteduc, occupation, numeracy, ojt, health, learning, readwork, numwork)</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="handling.html#cb96-1" tabindex="-1"></a>piaac_variable <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
+<span id="cb96-2"><a href="handling.html#cb96-2" tabindex="-1"></a>  <span class="fu">select</span>(id, wage, logwage, gender, age, work, workhour, workhour_fct, educ, mothereduc, fathereduc, parenteduc, occupation, numeracy, ojt, health, learning, readwork, numwork)</span></code></pre></div>
 <p>社会調査データを分析する場合、調査対象者をすべて分析対象に含めるわけではなく、年齢を限定したり、働いている人だけに限定したりといったふうに、分析対象を一部に限定することが多い。このときに使うコードや注意点について記す。</p>
 <div id="該当するケースだけを残すfilter" class="section level3 hasAnchor" number="4.6.1">
 <h3><span class="header-section-number">4.6.1</span> 該当するケースだけを残す：filter()<a href="handling.html#%E8%A9%B2%E5%BD%93%E3%81%99%E3%82%8B%E3%82%B1%E3%83%BC%E3%82%B9%E3%81%A0%E3%81%91%E3%82%92%E6%AE%8B%E3%81%99filter" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>関心によっては、若年の人だけ分析したいとか、高齢の人だけ分析したいとか、女性（男性）だけ分析したいというときがある。それ以外にも、使う変数にNAが含まれているケースをあらかじめ除外するということはふつうにある。このようなときには、<code>filter()</code>を使う。</p>
 <p>性別（<code>gender</code>）が男性のケースのみを抽出し、抽出したデータに新しい名前（<code>piaac_male</code>）をつける場合には次のようにする。</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="handling.html#cb96-1" tabindex="-1"></a>piaac_male <span class="ot">&lt;-</span> piaac_variable <span class="sc">%&gt;%</span> </span>
-<span id="cb96-2"><a href="handling.html#cb96-2" tabindex="-1"></a>  <span class="fu">filter</span>(gender <span class="sc">==</span> <span class="st">&quot;男性&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="handling.html#cb97-1" tabindex="-1"></a>piaac_male <span class="ot">&lt;-</span> piaac_variable <span class="sc">%&gt;%</span> </span>
+<span id="cb97-2"><a href="handling.html#cb97-2" tabindex="-1"></a>  <span class="fu">filter</span>(gender <span class="sc">==</span> <span class="st">&quot;男性&quot;</span>)</span></code></pre></div>
 <p>年齢が25歳以上34歳以下のケースのみを抽出し、抽出したデータに新しい名前（<code>piaac_young</code>）をつける。</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="handling.html#cb97-1" tabindex="-1"></a>piaac_young <span class="ot">&lt;-</span> piaac_variable <span class="sc">%&gt;%</span> </span>
-<span id="cb97-2"><a href="handling.html#cb97-2" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> age <span class="sc">&lt;=</span> <span class="dv">34</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="handling.html#cb98-1" tabindex="-1"></a>piaac_young <span class="ot">&lt;-</span> piaac_variable <span class="sc">%&gt;%</span> </span>
+<span id="cb98-2"><a href="handling.html#cb98-2" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> age <span class="sc">&lt;=</span> <span class="dv">34</span>)</span></code></pre></div>
 <p>今回の資料では、「25歳以上64歳以下の有業者」に対象を限定する。そのため、次のように条件を指定する。作成したデータフレームは別途<code>piaac_sample</code>という名前をつけて保存しておくことにしよう。</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="handling.html#cb98-1" tabindex="-1"></a>piaac_sample <span class="ot">&lt;-</span> piaac_variable <span class="sc">%&gt;%</span> </span>
-<span id="cb98-2"><a href="handling.html#cb98-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="dv">25</span> <span class="sc">&lt;=</span> age <span class="sc">&amp;</span> age <span class="sc">&lt;=</span> <span class="dv">64</span>) <span class="sc">%&gt;%</span> <span class="co"># 25歳以上64歳以下の個人を抽出</span></span>
-<span id="cb98-3"><a href="handling.html#cb98-3" tabindex="-1"></a>  <span class="fu">filter</span>(work <span class="sc">==</span> <span class="dv">1</span>) <span class="co"># 働いている人をチュ出</span></span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="handling.html#cb99-1" tabindex="-1"></a>piaac_sample <span class="ot">&lt;-</span> piaac_variable <span class="sc">%&gt;%</span> </span>
+<span id="cb99-2"><a href="handling.html#cb99-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="dv">25</span> <span class="sc">&lt;=</span> age <span class="sc">&amp;</span> age <span class="sc">&lt;=</span> <span class="dv">64</span>) <span class="sc">%&gt;%</span> <span class="co"># 25歳以上64歳以下の個人を抽出</span></span>
+<span id="cb99-3"><a href="handling.html#cb99-3" tabindex="-1"></a>  <span class="fu">filter</span>(work <span class="sc">==</span> <span class="dv">1</span>) <span class="co"># 働いている人をチュ出</span></span></code></pre></div>
 </div>
 <div id="欠損値の扱い" class="section level3 hasAnchor" number="4.6.2">
 <h3><span class="header-section-number">4.6.2</span> 欠損値の扱い<a href="handling.html#%E6%AC%A0%E6%90%8D%E5%80%A4%E3%81%AE%E6%89%B1%E3%81%84" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>さて、上記のように分析対象を限定した。このデータに含まれる人数を確認してみる。<code>nrow()</code>を使うと、データフレーム（あるいはベクトル）の長さを調べることができる。</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="handling.html#cb99-1" tabindex="-1"></a>piaac_sample <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="handling.html#cb100-1" tabindex="-1"></a>piaac_sample <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()</span></code></pre></div>
 <pre><code>## [1] 3330</code></pre>
 <p>このように、3330行からなるデータであることがわかる。しかしながら、回答者がすべての質問について回答しているわけではなく、回答を拒否したり、当該質問項目の対象者に当てはまらない（非該当）ために、値が入っていない（NAとなっている）場合がある。今回の資料で用いる変数について、<code>NA</code>となっている回答がどの程度あるかをみてみよう。</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="handling.html#cb101-1" tabindex="-1"></a>piaac_sample <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="handling.html#cb102-1" tabindex="-1"></a>piaac_sample <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
 <pre><code>##        id            wage              logwage        gender    
 ##  Min.   :   1   Min.   :5.800e-02   Min.   :-2.851   女性:1508  
 ##  1st Qu.:1310   1st Qu.:9.375e+02   1st Qu.: 6.843   男性:1822  
@@ -1539,15 +1540,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  NA&#39;s   :1       NA&#39;s   :174       NA&#39;s   :420</code></pre>
 <p><code>NA's</code>と書かれているのが、各変数でNAとなっている行の数である。項目によってはNAがない変数もあるし、たくさんNAがある変数もある。</p>
 <p>NAが含まれている変数は分析の際に集計が面倒だったりして、色々と取り扱いが難しい。そこで、分析に使う変数にNAが含まれている行はサンプルから除外しておくと集計が楽になる。<code>filter()</code>を使って、educ, parenteduc, occupation, wageの4つの変数についてNAが含まれている行を除外したデータフレームを作成しよう。</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="handling.html#cb103-1" tabindex="-1"></a>piaac_sample_nona <span class="ot">&lt;-</span> piaac_sample <span class="sc">%&gt;%</span> </span>
-<span id="cb103-2"><a href="handling.html#cb103-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(educ) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="co"># educがNAではないケースだけを残す</span></span>
-<span id="cb103-3"><a href="handling.html#cb103-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(parenteduc) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span>  <span class="co"># parenteducがNAではないケースだけを残す</span></span>
-<span id="cb103-4"><a href="handling.html#cb103-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(occupation) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span>  <span class="co"># occupationがNAではないケースだけを残す</span></span>
-<span id="cb103-5"><a href="handling.html#cb103-5" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(wage) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="co"># wageがNAではないケースだけを残す</span></span></code></pre></div>
-<p><code>is.na()</code>は値がNAであれば<code>TRUE</code>、NAでなければ<code>FALSE</code>を返す関数である。<code>filter(is.na(educ) == FALSE)</code>とすると、educがNA<strong>ではない</strong>ケースだけを残してね、という命令になる。上記のコードを実行したあとの回答を再度チェックしてみよう：</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="handling.html#cb104-1" tabindex="-1"></a>piaac_sample_nona <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="handling.html#cb104-1" tabindex="-1"></a>piaac_sample_nona <span class="ot">&lt;-</span> piaac_sample <span class="sc">%&gt;%</span> </span>
+<span id="cb104-2"><a href="handling.html#cb104-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(educ) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> <span class="co"># educがNAではないケースだけを残す</span></span>
+<span id="cb104-3"><a href="handling.html#cb104-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(parenteduc) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span>  <span class="co"># parenteducがNAではないケースだけを残す</span></span>
+<span id="cb104-4"><a href="handling.html#cb104-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(occupation) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span>  <span class="co"># occupationがNAではないケースだけを残す</span></span>
+<span id="cb104-5"><a href="handling.html#cb104-5" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(wage) <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="co"># wageがNAではないケースだけを残す</span></span></code></pre></div>
+<p><code>is.na()</code>は値がNAであれば<code>TRUE</code>、NAでなければ<code>FALSE</code>を返す関数である。<code>filter(is.na(educ) == FALSE)</code>とすると、educがNA<strong>ではない</strong>ケースだけを残す、という命令になる。また、同じ意味だが少し簡潔な書き方として、<code>filter(!is.na(educ))</code>、というふうな書き方もある。</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="handling.html#cb105-1" tabindex="-1"></a>piaac_sample_nona <span class="ot">&lt;-</span> piaac_sample <span class="sc">%&gt;%</span> </span>
+<span id="cb105-2"><a href="handling.html#cb105-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(educ)) <span class="sc">%&gt;%</span> <span class="co"># educがNAではないケースだけを残す</span></span>
+<span id="cb105-3"><a href="handling.html#cb105-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(parenteduc)) <span class="sc">%&gt;%</span>  <span class="co"># parenteducがNAではないケースだけを残す</span></span>
+<span id="cb105-4"><a href="handling.html#cb105-4" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(occupation)) <span class="sc">%&gt;%</span>  <span class="co"># occupationがNAではないケースだけを残す</span></span>
+<span id="cb105-5"><a href="handling.html#cb105-5" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(wage)) <span class="co"># wageがNAではないケースだけを残す</span></span></code></pre></div>
+<p>このように、変数にNAが含まれる行を削除する処理を行う関数として、<code>drop_na()</code>という関数もある。これを使うと、さらにコードを短くすることができる。</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="handling.html#cb106-1" tabindex="-1"></a>piaac_sample_nona <span class="ot">&lt;-</span> piaac_sample <span class="sc">%&gt;%</span> </span>
+<span id="cb106-2"><a href="handling.html#cb106-2" tabindex="-1"></a>  <span class="fu">drop_na</span>(educ, parenteduc, occupation, wage) <span class="co"># educ, parenteduc, occupation, wageのいずれかがNAである行を削除</span></span></code></pre></div>
+<p>上記のコードを実行したあとの回答を再度チェックしてみよう：</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="handling.html#cb107-1" tabindex="-1"></a>piaac_sample_nona <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()</span></code></pre></div>
 <pre><code>## [1] 2783</code></pre>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="handling.html#cb106-1" tabindex="-1"></a>piaac_sample_nona <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="handling.html#cb109-1" tabindex="-1"></a>piaac_sample_nona <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
 <pre><code>##        id            wage              logwage        gender    
 ##  Min.   :   1   Min.   :5.800e-02   Min.   :-2.851   女性:1309  
 ##  1st Qu.:1306   1st Qu.:9.400e+02   1st Qu.: 6.846   男性:1474  
@@ -1595,45 +1605,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="外れ値の扱い" class="section level3 hasAnchor" number="4.6.3">
 <h3><span class="header-section-number">4.6.3</span> 外れ値の扱い<a href="handling.html#%E5%A4%96%E3%82%8C%E5%80%A4%E3%81%AE%E6%89%B1%E3%81%84" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>上記のように欠損値を除いたサンプルを作成したあと、さらに考慮すべきは、外れ値の問題である。連続変数を分析に用いる場合、このような外れ値が結果に大きな影響をおよぼす場合がある。その一例として、時給換算した賃金について考えてみよう。この変数の分布をみると、常識的には理解しがたい高い値、あるいは低い値をとっているケースが存在することがわかる（ggplotの使い方については第5章で解説する）。たとえば以下のように、時間あたり賃金が極端に低かったり（300円未満など）、逆に極端に高かったり（20000円以上など）するケースが存在している。</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="handling.html#cb108-1" tabindex="-1"></a>piaac_sample_nona <span class="sc">%&gt;%</span> </span>
-<span id="cb108-2"><a href="handling.html#cb108-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span></span>
-<span id="cb108-3"><a href="handling.html#cb108-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span> </span>
-<span id="cb108-4"><a href="handling.html#cb108-4" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">800</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-73-1.png" alt="" width="672" /></p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="handling.html#cb109-1" tabindex="-1"></a>piaac_sample_nona <span class="sc">%&gt;%</span> </span>
-<span id="cb109-2"><a href="handling.html#cb109-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span></span>
-<span id="cb109-3"><a href="handling.html#cb109-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span> </span>
-<span id="cb109-4"><a href="handling.html#cb109-4" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">5000</span>, <span class="dv">100000</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-74-1.png" alt="" width="672" /></p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="handling.html#cb111-1" tabindex="-1"></a>piaac_sample_nona <span class="sc">%&gt;%</span> </span>
+<span id="cb111-2"><a href="handling.html#cb111-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span></span>
+<span id="cb111-3"><a href="handling.html#cb111-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span> </span>
+<span id="cb111-4"><a href="handling.html#cb111-4" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">800</span>)</span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-75-1.png" alt="" width="672" /></p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="handling.html#cb112-1" tabindex="-1"></a>piaac_sample_nona <span class="sc">%&gt;%</span> </span>
+<span id="cb112-2"><a href="handling.html#cb112-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span></span>
+<span id="cb112-3"><a href="handling.html#cb112-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span> </span>
+<span id="cb112-4"><a href="handling.html#cb112-4" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">5000</span>, <span class="dv">100000</span>)</span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-76-1.png" alt="" width="672" /></p>
 <p>このようなケースが発生する理由はいくつかあるのだが、分析上は、たとえば平均値を計算したりする場合に、これらの外れ値があることによって結果がこうした極端に高い・低い人によって大きく左右されるという問題がある。そこで、こうした極端に高いあるいは低いケースを除外することはしばしば有効になる。時給換算した賃金の場合にはたとえば、上位1%、下位1%のサンプルを除外するという処理を行うことが多い。このように上位1%、下位1%のサンプルを除外するときの方法について記す。</p>
 <p>まず、<code>ntile()</code>関数を使って、賃金の分位数を表す変数を作成する。</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="handling.html#cb110-1" tabindex="-1"></a>piaac_sample_nona <span class="ot">&lt;-</span> piaac_sample_nona <span class="sc">%&gt;%</span> </span>
-<span id="cb110-2"><a href="handling.html#cb110-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage_tile =</span> <span class="fu">ntile</span>(wage, <span class="dv">100</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="handling.html#cb113-1" tabindex="-1"></a>piaac_sample_nona <span class="ot">&lt;-</span> piaac_sample_nona <span class="sc">%&gt;%</span> </span>
+<span id="cb113-2"><a href="handling.html#cb113-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wage_tile =</span> <span class="fu">ntile</span>(wage, <span class="dv">100</span>))</span></code></pre></div>
 <p>下位1%と上位1%のケースにはどこからどこまでの値が含まれているのかチェックしてみよう：</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="handling.html#cb111-1" tabindex="-1"></a>piaac_sample_nona <span class="sc">%&gt;%</span> </span>
-<span id="cb111-2"><a href="handling.html#cb111-2" tabindex="-1"></a>  <span class="fu">filter</span>(wage_tile <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> wage_tile <span class="sc">==</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb111-3"><a href="handling.html#cb111-3" tabindex="-1"></a>  <span class="fu">group_by</span>(wage_tile) <span class="sc">%&gt;%</span> </span>
-<span id="cb111-4"><a href="handling.html#cb111-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">min =</span> <span class="fu">min</span>(wage), </span>
-<span id="cb111-5"><a href="handling.html#cb111-5" tabindex="-1"></a>            <span class="at">max =</span> <span class="fu">max</span>(wage))</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="handling.html#cb114-1" tabindex="-1"></a>piaac_sample_nona <span class="sc">%&gt;%</span> </span>
+<span id="cb114-2"><a href="handling.html#cb114-2" tabindex="-1"></a>  <span class="fu">filter</span>(wage_tile <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> wage_tile <span class="sc">==</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb114-3"><a href="handling.html#cb114-3" tabindex="-1"></a>  <span class="fu">group_by</span>(wage_tile) <span class="sc">%&gt;%</span> </span>
+<span id="cb114-4"><a href="handling.html#cb114-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">min =</span> <span class="fu">min</span>(wage), </span>
+<span id="cb114-5"><a href="handling.html#cb114-5" tabindex="-1"></a>            <span class="at">max =</span> <span class="fu">max</span>(wage))</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 3
 ##   wage_tile       min     max
 ##       &lt;int&gt;     &lt;dbl&gt;   &lt;dbl&gt;
 ## 1         1    0.0578    462.
 ## 2       100 9760.     266667.</code></pre>
 <p>このように、下位1%には462円以下のケースが含まれ、上位1%には9760円以上のケースが含まれていることがわかる。これらのケースを除外して、分析に使用するためのサンプルを作ろう。</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="handling.html#cb113-1" tabindex="-1"></a>piaac_sample_analytic <span class="ot">&lt;-</span> piaac_sample_nona <span class="sc">%&gt;%</span> </span>
-<span id="cb113-2"><a href="handling.html#cb113-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="dv">2</span> <span class="sc">&lt;=</span> wage_tile <span class="sc">&amp;</span> wage_tile <span class="sc">&lt;=</span> <span class="dv">99</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="handling.html#cb116-1" tabindex="-1"></a>piaac_sample_analytic <span class="ot">&lt;-</span> piaac_sample_nona <span class="sc">%&gt;%</span> </span>
+<span id="cb116-2"><a href="handling.html#cb116-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="dv">2</span> <span class="sc">&lt;=</span> wage_tile <span class="sc">&amp;</span> wage_tile <span class="sc">&lt;=</span> <span class="dv">99</span>)</span></code></pre></div>
 <p>このように極端に低いケースと極端に高いケースを除外することで、外れ値の影響を除いた賃金の分布を得ることができる。</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="handling.html#cb114-1" tabindex="-1"></a>piaac_sample_analytic <span class="sc">%&gt;%</span> </span>
-<span id="cb114-2"><a href="handling.html#cb114-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span></span>
-<span id="cb114-3"><a href="handling.html#cb114-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-79-1.png" alt="" width="672" /></p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="handling.html#cb117-1" tabindex="-1"></a>piaac_sample_analytic <span class="sc">%&gt;%</span> </span>
+<span id="cb117-2"><a href="handling.html#cb117-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span></span>
+<span id="cb117-3"><a href="handling.html#cb117-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>)</span></code></pre></div>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-81-1.png" alt="" width="672" /></p>
 <p>このように、分析に連続変数を用いる場合には、外れ値がないかどうか、外れ値を含むことで結果が大きく変わってしまわないかをチェックしておく必要がある。</p>
 </div>
 <div id="分析用データを保存しておく" class="section level3 hasAnchor" number="4.6.4">
 <h3><span class="header-section-number">4.6.4</span> 分析用データを保存しておく<a href="handling.html#%E5%88%86%E6%9E%90%E7%94%A8%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E4%BF%9D%E5%AD%98%E3%81%97%E3%81%A6%E3%81%8A%E3%81%8F" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>上記のような手順を経て、ようやく分析することのできるデータを準備することができた。準備できたデータを、新しいデータとして保存しておこう。<code>readr::write_rds()</code>を使うと、データフレームを<a href="import.html#import_rds">rds形式</a>で書き出すことができる。</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="handling.html#cb115-1" tabindex="-1"></a><span class="fu">write_rds</span>(piaac_sample_analytic, <span class="at">file =</span> <span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="handling.html#cb118-1" tabindex="-1"></a><span class="fu">write_rds</span>(piaac_sample_analytic, <span class="at">file =</span> <span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
 <p>このように、元々のデータから種々のデータ加工を行い、分析のために使用することにしたデータは、元々のデータとは別に保存しておくことで、データの加工のプロセスとデータの分析のプロセスを明示的に分けることにつながり、エラーを減らすことができる。</p>
 <p>以降では、このデータを使って分析を行っていく。</p>
 </div>
@@ -1642,7 +1652,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">4.7</span> 【発展】データの追加<a href="handling.html#handling_bind_rows" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>たとえば複数の社会調査データを合併したり、複数時点のデータを合併して時系列比較、あるいはパネルデータとして分析をしたいといったことがあるかもしれない。このような場合の処理について記しておく。</p>
 <p>以下のような2つのデータがあるとする。</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="handling.html#cb116-1" tabindex="-1"></a>df1</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="handling.html#cb119-1" tabindex="-1"></a>df1</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 4
 ##      id    x1    x2 data  
 ##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; 
@@ -1652,7 +1662,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4     4     0     2 data 1
 ## 5     5     6     2 data 1
 ## 6     6     1     2 data 1</code></pre>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="handling.html#cb118-1" tabindex="-1"></a>df2</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="handling.html#cb121-1" tabindex="-1"></a>df2</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 4
 ##      id    x1    x2 data  
 ##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; 
@@ -1661,10 +1671,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 3     9     0     2 data 2
 ## 4    10     2     1 data 2</code></pre>
 <p>この2つのデータを合併したいときには、<code>dplyr::bind_rows()</code>を使う。</p>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="handling.html#cb120-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> </span>
-<span id="cb120-2"><a href="handling.html#cb120-2" tabindex="-1"></a>  <span class="fu">bind_rows</span>(df2) <span class="co"># df2を縦方向に結合</span></span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="handling.html#cb123-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> </span>
+<span id="cb123-2"><a href="handling.html#cb123-2" tabindex="-1"></a>  <span class="fu">bind_rows</span>(df2) <span class="co"># df2を縦方向に結合</span></span></code></pre></div>
 <p>これで、以下のように2つのデータを合併して行が増えたデータが得られる。</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="handling.html#cb121-1" tabindex="-1"></a>df</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="handling.html#cb124-1" tabindex="-1"></a>df</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 4
 ##       id    x1    x2 data  
 ##    &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; 
@@ -1682,8 +1692,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="handling_quiz" class="section level2 hasAnchor" number="4.8">
 <h2><span class="header-section-number">4.8</span> 演習問題<a href="handling.html#handling_quiz" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>上記コードをすべて実行して、<code>piaac_sample_analytic.rds</code>ファイルを作成したものとする。一度RStudioを閉じたうえで再度開き、以下のコードを実行してデータを読み込んで下さい。</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="handling.html#cb123-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb123-2"><a href="handling.html#cb123-2" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="handling.html#cb126-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb126-2"><a href="handling.html#cb126-2" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">&quot;data/piaac_sample_analytic.rds&quot;</span>)</span></code></pre></div>
 <p>そのうえで、以下の問題に答えてください。</p>
 <ol style="list-style-type: decimal">
 <li>一週間の労働時間（<code>workhour</code>）に50をかけて、1年間の労働時間を表す変数（<code>yearlyworkhour</code>という名前をつけてください）を作成してください。</li>

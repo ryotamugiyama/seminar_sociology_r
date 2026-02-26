@@ -192,6 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5.2" data-path="preparation.html"><a href="preparation.html#%E3%82%B0%E3%83%A9%E3%83%95%E3%81%AE%E6%97%A5%E6%9C%AC%E8%AA%9E%E8%A1%A8%E7%A4%BA"><i class="fa fa-check"></i><b>2.5.2</b> グラフの日本語表示</a></li>
 </ul></li>
 <li class="chapter" data-level="2.6" data-path="preparation.html"><a href="preparation.html#preparation_error"><i class="fa fa-check"></i><b>2.6</b> エラーが出たときに確認する箇所</a></li>
+<li class="chapter" data-level="2.7" data-path="preparation.html"><a href="preparation.html#%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88"><i class="fa fa-check"></i><b>2.7</b> スクリプトファイルのテンプレート</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="import.html"><a href="import.html"><i class="fa fa-check"></i><b>3</b> データの読み込み</a>
 <ul>
@@ -573,10 +574,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>本章では、パネルデータ分析の基礎について説明する。</p>
 <p>内容に入る前に、右上のプロジェクトのボックスの横が、前章で作成したプロジェクトの名前（たとえば、seminar_sociology_r）になっているかどうかを確認しておこう。なっていない場合は、右上のボックスをクリックして、「Open Project…」を選択し、前章で作成したRprojファイル（たとえば、seminar_sociology_r.Rprojといったような名前になっている）を選んで、プロジェクトを切り替えよう。</p>
 <p>この章では以下のパッケージを使用する。そのほか使用するパッケージについては後ほど紹介する。</p>
-<div class="sourceCode" id="cb385"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb385-1"><a href="paneldata.html#cb385-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb385-2"><a href="paneldata.html#cb385-2" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
-<span id="cb385-3"><a href="paneldata.html#cb385-3" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb385-4"><a href="paneldata.html#cb385-4" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span></code></pre></div>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="paneldata.html#cb388-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb388-2"><a href="paneldata.html#cb388-2" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb388-3"><a href="paneldata.html#cb388-3" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb388-4"><a href="paneldata.html#cb388-4" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span></code></pre></div>
 <div id="paneldata_basic" class="section level2 hasAnchor" number="11.1">
 <h2><span class="header-section-number">11.1</span> パネルデータの基本的特徴<a href="paneldata.html#paneldata_basic" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="パネルデータとは" class="section level3 hasAnchor" number="11.1.1">
@@ -751,7 +752,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">11.1.4</span> 個人内変動と個人間変動<a href="paneldata.html#within_between_variation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>個人<span class="math inline">\(i\)</span>の時点<span class="math inline">\(t\)</span>におけるある変数<span class="math inline">\(Y\)</span>の値を<span class="math inline">\(Y_{it}\)</span>と書くこととする。上記の賃金の例であれば、ID = 1のtime = 1における賃金の値は<span class="math inline">\(Y_{1, 1} = 1200\)</span>というふうに表すことができる。</p>
 <p>時間可変の変数の場合、その変動（variation）を<strong>個人内変動（within-individual variation）</strong>と<strong>個人間変動（between-individual variation）</strong>に分けることができる。たとえば、4時点の調査を行い、各個人について計4回分の<span class="math inline">\(Y_{it}\)</span>の値を得られたとしよう。このとき、2人の個人（1, 2）について得られた値（値は架空のもの）をプロットしたのが次の図である。縦軸が<span class="math inline">\(Y\)</span>の値、横軸が時点<span class="math inline">\(t\)</span>を表す。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-312-1.png" alt="" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-314-1.png" alt="" width="672" /></p>
 <p>ここで<span class="math inline">\(Y_{it}\)</span>は、図中に示した全体平均（灰色の点線。この値を<span class="math inline">\(\overline{Y}\)</span>とする）と、そこからの残差（青色または黄色の値の実線。この値を<span class="math inline">\(e_{it}\)</span>とする）の和として表すことができる。</p>
 <p><span class="math display">\[
 Y_{it} = \overline{Y} + e_{it}
@@ -767,12 +768,12 @@ Y_{it}
 \end{align}
 \]</span></p>
 <p>個人間変動は次の図のように、全体平均からの個人内平均のずれに対応する。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-313-1.png" alt="" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-315-1.png" alt="" width="672" /></p>
 <p>個人内変動は次の図のように、個人内平均からの各観察の値のずれに対応する。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-314-1.png" alt="" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-316-1.png" alt="" width="672" /></p>
 <p>パネルデータがあれば、2時点以上の観察を得られている個人について、その時間可変の変数の値のばらつきを個人間変動によるものと個人内変動によるものとに分割することができる。とりわけ、個人内変動に着目することによって、同じ個人の変数の値が高くなったり低くなったりするのはどのような要因によるのかを分析することができる。</p>
 <p>1時点の観察しか得られていない場合、仮に理論上は時間可変の変数であったとしても、変数のばらつきが個人間変動によるものなのか、個人内変動によるものなのかを区別することはできない。この場合の図は次のようになり、各観察の値と個人内平均は完全に一致してしまう（<span class="math inline">\(Y_{it} = \overline{Y}_i\)</span>）。そのため、個人間変動と個人内変動を分けることができない。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-315-1.png" alt="" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-317-1.png" alt="" width="672" /></p>
 <p>時間不変の変数については個人内変動が0となるため、やはり個人内変動と個人間変動を分けることはできない。</p>
 </div>
 </div>
@@ -781,9 +782,9 @@ Y_{it}
 <div id="サンプルデータ" class="section level3 hasAnchor" number="11.2.1">
 <h3><span class="header-section-number">11.2.1</span> サンプルデータ<a href="paneldata.html#%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E3%83%87%E3%83%BC%E3%82%BF" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>これ以降は、アメリカ労働統計局が実施しているNational Longitudinal Survey of Youth（NLSY）のデモデータ（統計ソフトStataのサンプルデータとしてよく使われる）を利用する。このデータには、1969年時点で14歳から26歳の女性が含まれている。</p>
-<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="paneldata.html#cb386-1" tabindex="-1"></a>nls <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">&quot;https://www.stata-press.com/data/r9/nlswork.dta&quot;</span>)</span>
-<span id="cb386-2"><a href="paneldata.html#cb386-2" tabindex="-1"></a></span>
-<span id="cb386-3"><a href="paneldata.html#cb386-3" tabindex="-1"></a>nls <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>() <span class="co"># 変数一覧を表示</span></span></code></pre></div>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="paneldata.html#cb389-1" tabindex="-1"></a>nls <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">&quot;https://www.stata-press.com/data/r9/nlswork.dta&quot;</span>)</span>
+<span id="cb389-2"><a href="paneldata.html#cb389-2" tabindex="-1"></a></span>
+<span id="cb389-3"><a href="paneldata.html#cb389-3" tabindex="-1"></a>nls <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>() <span class="co"># 変数一覧を表示</span></span></code></pre></div>
 <pre><code>## Rows: 28,534
 ## Columns: 21
 ## $ idcode   &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2…
@@ -810,31 +811,31 @@ Y_{it}
 <p>各変数が指す内容は以下のとおりである（Stataで開いて見たものをスクリーンショットを撮って載せたものである）：</p>
 <p><img src="images/NLSdata_stata.png" /></p>
 <p>このデータを使って、労働組合への加入は賃金を高める効果を持つのかについて分析する。下記とおり分析用のデータを作成する。</p>
-<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="paneldata.html#cb388-1" tabindex="-1"></a>nls_sample <span class="ot">&lt;-</span> nls <span class="sc">%&gt;%</span> </span>
-<span id="cb388-2"><a href="paneldata.html#cb388-2" tabindex="-1"></a>  <span class="fu">select</span>(</span>
-<span id="cb388-3"><a href="paneldata.html#cb388-3" tabindex="-1"></a>    <span class="at">id =</span> idcode,  <span class="co"># 個人を表すid。idcodeという名前をidという名前に変更</span></span>
-<span id="cb388-4"><a href="paneldata.html#cb388-4" tabindex="-1"></a>    year, <span class="co"># 調査年</span></span>
-<span id="cb388-5"><a href="paneldata.html#cb388-5" tabindex="-1"></a>    age, <span class="co"># 年齢</span></span>
-<span id="cb388-6"><a href="paneldata.html#cb388-6" tabindex="-1"></a>    ln_wage, <span class="co"># 対数賃金</span></span>
-<span id="cb388-7"><a href="paneldata.html#cb388-7" tabindex="-1"></a>    race, <span class="co"># 人種。1はWhite, 2はBlack, 3はOther</span></span>
-<span id="cb388-8"><a href="paneldata.html#cb388-8" tabindex="-1"></a>    collgrad, <span class="co"># 大学卒であれば1、それ以外であれば0を取る変数</span></span>
-<span id="cb388-9"><a href="paneldata.html#cb388-9" tabindex="-1"></a>    occ_code, <span class="co"># 就いている職業を表す数値</span></span>
-<span id="cb388-10"><a href="paneldata.html#cb388-10" tabindex="-1"></a>    ind_code, <span class="co"># 就いている産業を表す数値 </span></span>
-<span id="cb388-11"><a href="paneldata.html#cb388-11" tabindex="-1"></a>    union, <span class="co"># 労働組合に加入していれば1、それ以外であれば0を取る変数</span></span>
-<span id="cb388-12"><a href="paneldata.html#cb388-12" tabindex="-1"></a>    msp <span class="co"># 結婚していれば1, それ以外であれば0を取る変数</span></span>
-<span id="cb388-13"><a href="paneldata.html#cb388-13" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
-<span id="cb388-14"><a href="paneldata.html#cb388-14" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">race =</span> <span class="fu">factor</span>(race,</span>
-<span id="cb388-15"><a href="paneldata.html#cb388-15" tabindex="-1"></a>                       <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb388-16"><a href="paneldata.html#cb388-16" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;White&quot;</span>, <span class="st">&quot;Black&quot;</span>, <span class="st">&quot;Other&quot;</span>))) <span class="sc">%&gt;%</span> <span class="co"># raceにラベルを付与</span></span>
-<span id="cb388-17"><a href="paneldata.html#cb388-17" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="co"># 用いる変数に欠損があるデータを除外</span></span></code></pre></div>
+<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="paneldata.html#cb391-1" tabindex="-1"></a>nls_sample <span class="ot">&lt;-</span> nls <span class="sc">%&gt;%</span> </span>
+<span id="cb391-2"><a href="paneldata.html#cb391-2" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb391-3"><a href="paneldata.html#cb391-3" tabindex="-1"></a>    <span class="at">id =</span> idcode,  <span class="co"># 個人を表すid。idcodeという名前をidという名前に変更</span></span>
+<span id="cb391-4"><a href="paneldata.html#cb391-4" tabindex="-1"></a>    year, <span class="co"># 調査年</span></span>
+<span id="cb391-5"><a href="paneldata.html#cb391-5" tabindex="-1"></a>    age, <span class="co"># 年齢</span></span>
+<span id="cb391-6"><a href="paneldata.html#cb391-6" tabindex="-1"></a>    ln_wage, <span class="co"># 対数賃金</span></span>
+<span id="cb391-7"><a href="paneldata.html#cb391-7" tabindex="-1"></a>    race, <span class="co"># 人種。1はWhite, 2はBlack, 3はOther</span></span>
+<span id="cb391-8"><a href="paneldata.html#cb391-8" tabindex="-1"></a>    collgrad, <span class="co"># 大学卒であれば1、それ以外であれば0を取る変数</span></span>
+<span id="cb391-9"><a href="paneldata.html#cb391-9" tabindex="-1"></a>    occ_code, <span class="co"># 就いている職業を表す数値</span></span>
+<span id="cb391-10"><a href="paneldata.html#cb391-10" tabindex="-1"></a>    ind_code, <span class="co"># 就いている産業を表す数値 </span></span>
+<span id="cb391-11"><a href="paneldata.html#cb391-11" tabindex="-1"></a>    union, <span class="co"># 労働組合に加入していれば1、それ以外であれば0を取る変数</span></span>
+<span id="cb391-12"><a href="paneldata.html#cb391-12" tabindex="-1"></a>    msp <span class="co"># 結婚していれば1, それ以外であれば0を取る変数</span></span>
+<span id="cb391-13"><a href="paneldata.html#cb391-13" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb391-14"><a href="paneldata.html#cb391-14" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">race =</span> <span class="fu">factor</span>(race,</span>
+<span id="cb391-15"><a href="paneldata.html#cb391-15" tabindex="-1"></a>                       <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb391-16"><a href="paneldata.html#cb391-16" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;White&quot;</span>, <span class="st">&quot;Black&quot;</span>, <span class="st">&quot;Other&quot;</span>))) <span class="sc">%&gt;%</span> <span class="co"># raceにラベルを付与</span></span>
+<span id="cb391-17"><a href="paneldata.html#cb391-17" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="co"># 用いる変数に欠損があるデータを除外</span></span></code></pre></div>
 <p>パネルデータを分析したり特徴を記述したりする場合に便利なコードをいくつか紹介する。</p>
 </div>
 <div id="データを昇順または降順に並べ替えるarrange" class="section level3 hasAnchor" number="11.2.2">
 <h3><span class="header-section-number">11.2.2</span> データを昇順または降順に並べ替える：<code>arrange()</code><a href="paneldata.html#%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E6%98%87%E9%A0%86%E3%81%BE%E3%81%9F%E3%81%AF%E9%99%8D%E9%A0%86%E3%81%AB%E4%B8%A6%E3%81%B9%E6%9B%BF%E3%81%88%E3%82%8Barrange" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><code>arrange()</code>関数を使うと、指定した変数にもとづいてデータを昇順（値が小さいのものを先にする）または降順（値が大きいものを先にする）に並べ替えることができる。たとえば、<code>nls_sample</code>データを個人を表す<code>id</code>変数、時間を表す<code>year</code>変数で昇順に並べ替えるには、次のようにする。</p>
-<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="paneldata.html#cb389-1" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> </span>
-<span id="cb389-2"><a href="paneldata.html#cb389-2" tabindex="-1"></a>  <span class="fu">arrange</span>(id, year) <span class="sc">%&gt;%</span> <span class="co"># id、yearで昇順に並べ替え</span></span>
-<span id="cb389-3"><a href="paneldata.html#cb389-3" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="co"># 先頭20行を表示</span></span></code></pre></div>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="paneldata.html#cb392-1" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> </span>
+<span id="cb392-2"><a href="paneldata.html#cb392-2" tabindex="-1"></a>  <span class="fu">arrange</span>(id, year) <span class="sc">%&gt;%</span> <span class="co"># id、yearで昇順に並べ替え</span></span>
+<span id="cb392-3"><a href="paneldata.html#cb392-3" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">20</span>) <span class="co"># 先頭20行を表示</span></span></code></pre></div>
 <pre><code>## # A tibble: 20 × 10
 ##       id  year   age ln_wage race  collgrad occ_code ind_code union   msp
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -860,9 +861,9 @@ Y_{it}
 ## 20     3    77    31    1.62 Black        0        3        4     0     0</code></pre>
 <p>このようにデータを並べ替えておくと、各個人の値がどのように推移していくのかや、時間によって変化する変数を適切に作成できているかをチェックするのに役立つ。</p>
 <p><code>year</code>と<code>id</code>の順序を逆にすると、まずyearの昇順に並べ替え、同一year内でidの昇順に並べ替える。</p>
-<div class="sourceCode" id="cb391"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb391-1"><a href="paneldata.html#cb391-1" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> </span>
-<span id="cb391-2"><a href="paneldata.html#cb391-2" tabindex="-1"></a>  <span class="fu">arrange</span>(year, id) <span class="sc">%&gt;%</span> <span class="co">#year、idで昇順に並べ替え</span></span>
-<span id="cb391-3"><a href="paneldata.html#cb391-3" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="paneldata.html#cb394-1" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> </span>
+<span id="cb394-2"><a href="paneldata.html#cb394-2" tabindex="-1"></a>  <span class="fu">arrange</span>(year, id) <span class="sc">%&gt;%</span> <span class="co">#year、idで昇順に並べ替え</span></span>
+<span id="cb394-3"><a href="paneldata.html#cb394-3" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 10
 ##       id  year   age ln_wage race  collgrad occ_code ind_code union   msp
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -877,9 +878,9 @@ Y_{it}
 ##  9    20    70    21    2.02 White        0        1       11     0     0
 ## 10    22    70    22    1.97 White        0        1       11     0     0</code></pre>
 <p>並べ替える変数の前に<code>-</code>をつけると、その変数で降順に並べ替えることができる。</p>
-<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="paneldata.html#cb393-1" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> </span>
-<span id="cb393-2"><a href="paneldata.html#cb393-2" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>id, year) <span class="sc">%&gt;%</span> <span class="co">#-をつけると降順に並べ替え</span></span>
-<span id="cb393-3"><a href="paneldata.html#cb393-3" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="paneldata.html#cb396-1" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> </span>
+<span id="cb396-2"><a href="paneldata.html#cb396-2" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="sc">-</span>id, year) <span class="sc">%&gt;%</span> <span class="co">#-をつけると降順に並べ替え</span></span>
+<span id="cb396-3"><a href="paneldata.html#cb396-3" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 10
 ##       id  year   age ln_wage race  collgrad occ_code ind_code union   msp
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -902,19 +903,19 @@ Y_{it}
 <li><code>dplyr::lead()</code>関数は任意の行数下の値をコピーする（リード）。たとえばxという変数の1行下の値をコピーするには<code>dplyr::lead(x, n = 1)</code>とする。</li>
 </ul>
 <p>パネルデータの場合、あらかじめ同一個人内で時点の昇順にデータを並べ替えておいた上で<code>dplyr::lag()</code>関数や<code>dplyr::lead()</code>関数を使う必要がある。そうでなければ、意図した値とは異なる値をコピーしてきてしまうからである。たとえば、対数賃金<code>ln_wage</code>の1時点前の値、1時点後の値をコピーした新たな変数を作りたいとする。この場合には次のようにする。</p>
-<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="paneldata.html#cb395-1" tabindex="-1"></a>nls_sample <span class="ot">&lt;-</span> nls_sample <span class="sc">%&gt;%</span> </span>
-<span id="cb395-2"><a href="paneldata.html#cb395-2" tabindex="-1"></a>  <span class="fu">arrange</span>(id, year) <span class="sc">%&gt;%</span> </span>
-<span id="cb395-3"><a href="paneldata.html#cb395-3" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> <span class="co"># idごとにデータをグループ化</span></span>
-<span id="cb395-4"><a href="paneldata.html#cb395-4" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb395-5"><a href="paneldata.html#cb395-5" tabindex="-1"></a>    <span class="at">ln_wage_lag =</span> dplyr<span class="sc">::</span><span class="fu">lag</span>(ln_wage, <span class="at">n =</span> <span class="dv">1</span>), <span class="co"># 1時点前のln_wageをコピー</span></span>
-<span id="cb395-6"><a href="paneldata.html#cb395-6" tabindex="-1"></a>    <span class="at">ln_wage_lead =</span> dplyr<span class="sc">::</span><span class="fu">lead</span>(ln_wage, <span class="at">n =</span> <span class="dv">1</span>) <span class="co"># 1時点後のln_wageをコピー</span></span>
-<span id="cb395-7"><a href="paneldata.html#cb395-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb395-8"><a href="paneldata.html#cb395-8" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="co"># グループ化を解除</span></span>
-<span id="cb395-9"><a href="paneldata.html#cb395-9" tabindex="-1"></a></span>
-<span id="cb395-10"><a href="paneldata.html#cb395-10" tabindex="-1"></a><span class="do">## 作成した変数を確認</span></span>
-<span id="cb395-11"><a href="paneldata.html#cb395-11" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> </span>
-<span id="cb395-12"><a href="paneldata.html#cb395-12" tabindex="-1"></a>  <span class="fu">select</span>(id, year, ln_wage, ln_wage_lag, ln_wage_lead) <span class="sc">%&gt;%</span></span>
-<span id="cb395-13"><a href="paneldata.html#cb395-13" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">30</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="paneldata.html#cb398-1" tabindex="-1"></a>nls_sample <span class="ot">&lt;-</span> nls_sample <span class="sc">%&gt;%</span> </span>
+<span id="cb398-2"><a href="paneldata.html#cb398-2" tabindex="-1"></a>  <span class="fu">arrange</span>(id, year) <span class="sc">%&gt;%</span> </span>
+<span id="cb398-3"><a href="paneldata.html#cb398-3" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> <span class="co"># idごとにデータをグループ化</span></span>
+<span id="cb398-4"><a href="paneldata.html#cb398-4" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb398-5"><a href="paneldata.html#cb398-5" tabindex="-1"></a>    <span class="at">ln_wage_lag =</span> dplyr<span class="sc">::</span><span class="fu">lag</span>(ln_wage, <span class="at">n =</span> <span class="dv">1</span>), <span class="co"># 1時点前のln_wageをコピー</span></span>
+<span id="cb398-6"><a href="paneldata.html#cb398-6" tabindex="-1"></a>    <span class="at">ln_wage_lead =</span> dplyr<span class="sc">::</span><span class="fu">lead</span>(ln_wage, <span class="at">n =</span> <span class="dv">1</span>) <span class="co"># 1時点後のln_wageをコピー</span></span>
+<span id="cb398-7"><a href="paneldata.html#cb398-7" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb398-8"><a href="paneldata.html#cb398-8" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="co"># グループ化を解除</span></span>
+<span id="cb398-9"><a href="paneldata.html#cb398-9" tabindex="-1"></a></span>
+<span id="cb398-10"><a href="paneldata.html#cb398-10" tabindex="-1"></a><span class="do">## 作成した変数を確認</span></span>
+<span id="cb398-11"><a href="paneldata.html#cb398-11" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> </span>
+<span id="cb398-12"><a href="paneldata.html#cb398-12" tabindex="-1"></a>  <span class="fu">select</span>(id, year, ln_wage, ln_wage_lag, ln_wage_lead) <span class="sc">%&gt;%</span></span>
+<span id="cb398-13"><a href="paneldata.html#cb398-13" tabindex="-1"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">30</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 30 × 5
 ##       id  year ln_wage ln_wage_lag ln_wage_lead
 ##    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
@@ -947,12 +948,12 @@ s^2_{within} = \frac{1}{NT - 1}\sum_i\sum_t(x_{it} - \overline{x}_i)^2
 \]</span></p>
 <p>個人によって観察数が異なるアンバランスドデータでは、<span class="math inline">\(NT\)</span>と観察数の総数は一致しない。この場合には、<span class="math inline">\(NT\)</span>の代わりに実際の観察数の総数（<span class="math inline">\(\sum_iT_i\)</span>）を用いる必要がある。この場合は、<span class="math inline">\(s^2_{overall}\)</span>と<span class="math inline">\(s^2_{between} + s^2_{within}\)</span>は必ずしも同じ値とはならない。</p>
 <p>Rで各変数の総分散（標準偏差）、個人間分散（標準偏差）、個人内分散（標準偏差）をそれぞれ計算してくれるパッケージとして、Stataの<code>xtsum</code>関数を模して作られた<code>xtsum</code>パッケージがある。まずは<code>xtsum</code>パッケージをインストールする。</p>
-<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="paneldata.html#cb397-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;xtsum&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="paneldata.html#cb400-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;xtsum&quot;</span>)</span></code></pre></div>
 <p>次に、<code>xtsum</code>パッケージを読み込み、<code>xtsum()</code>関数を使って計算する。<code>id</code>引数で個人を表す変数、<code>t</code>引数で時間を表す変数を指定する。</p>
-<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="paneldata.html#cb398-1" tabindex="-1"></a><span class="fu">library</span>(xtsum)</span></code></pre></div>
-<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="paneldata.html#cb399-1" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> </span>
-<span id="cb399-2"><a href="paneldata.html#cb399-2" tabindex="-1"></a>  <span class="fu">select</span>(id, year, ln_wage, union, age, msp, collgrad, race) <span class="sc">%&gt;%</span>  <span class="co"># 分布をみたい変数を選択</span></span>
-<span id="cb399-3"><a href="paneldata.html#cb399-3" tabindex="-1"></a>  <span class="fu">xtsum</span>(<span class="at">id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">t =</span> <span class="st">&quot;year&quot;</span>) <span class="co"># 個人を表す変数（id）と時間を表す変数（t）を指定</span></span></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="paneldata.html#cb401-1" tabindex="-1"></a><span class="fu">library</span>(xtsum)</span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="paneldata.html#cb402-1" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> </span>
+<span id="cb402-2"><a href="paneldata.html#cb402-2" tabindex="-1"></a>  <span class="fu">select</span>(id, year, ln_wage, union, age, msp, collgrad, race) <span class="sc">%&gt;%</span>  <span class="co"># 分布をみたい変数を選択</span></span>
+<span id="cb402-3"><a href="paneldata.html#cb402-3" tabindex="-1"></a>  <span class="fu">xtsum</span>(<span class="at">id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">t =</span> <span class="st">&quot;year&quot;</span>) <span class="co"># 個人を表す変数（id）と時間を表す変数（t）を指定</span></span></code></pre></div>
 <table class=" lightable-classic" style="font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1422,33 +1423,33 @@ Y_{it} = \alpha + \underbrace{\beta_1 X_{1it} + \cdots + \beta_k X_{kit}}_{\text
 <li>時間可変の独立変数（X）：労働組合（union）、年齢（age）、年齢2乗（I(age^2)）、結婚有無（msp）</li>
 <li>時間不変の独立変数（Z）：人種（race）、大卒（collgrad）</li>
 </ul>
-<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="paneldata.html#cb400-1" tabindex="-1"></a>model_pols <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> nls_sample, ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> race <span class="sc">+</span> collgrad) <span class="co"># 推定</span></span>
-<span id="cb400-2"><a href="paneldata.html#cb400-2" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Pooled OLS&quot;</span> <span class="ot">=</span> model_pols), <span class="at">stars =</span> <span class="cn">TRUE</span>) <span class="co"># 結果を表示</span></span></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="paneldata.html#cb403-1" tabindex="-1"></a>model_pols <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> nls_sample, ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> race <span class="sc">+</span> collgrad) <span class="co"># 推定</span></span>
+<span id="cb403-2"><a href="paneldata.html#cb403-2" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Pooled OLS&quot;</span> <span class="ot">=</span> model_pols), <span class="at">stars =</span> <span class="cn">TRUE</span>) <span class="co"># 結果を表示</span></span></code></pre></div>
 <!-- preamble start -->
 
     <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_d3t56bqddn4df9kn7x52 = TinyTable.createTableFunctions("tinytable_d3t56bqddn4df9kn7x52");
+      const tableFns_t3n2dkn5qq1wn4z480r3 = TinyTable.createTableFunctions("tinytable_t3n2dkn5qq1wn4z480r3");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '24', j: 2 } ], css_id: 'tinytable_css_v16s42knsgkne7bq53qx',}, 
-          { positions: [ { i: '16', j: 2 } ], css_id: 'tinytable_css_hxzfday1s4h9tk20xl4s',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '22', j: 2 }, { i: '23', j: 2 } ], css_id: 'tinytable_css_k0octkkj5sp71dsamwyu',}, 
-          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_0jypkel3mly96pxy0siq',}, 
-          { positions: [ { i: '24', j: 1 } ], css_id: 'tinytable_css_d8v3tgqfjyu7jgvkncxw',}, 
-          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_lt4fgn35q318306yd0wr',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '22', j: 1 }, { i: '23', j: 1 } ], css_id: 'tinytable_css_xoo4u19mzhobhpi7nmym',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_iozstb8mnp2sep92lq4o',}, 
+          { positions: [ { i: '24', j: 2 } ], css_id: 'tinytable_css_njyjq998p68z3oak1tg9',}, 
+          { positions: [ { i: '16', j: 2 } ], css_id: 'tinytable_css_mshtaschv94pdd0dwqw2',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '22', j: 2 }, { i: '23', j: 2 } ], css_id: 'tinytable_css_zp625s397ladp3w3f7a9',}, 
+          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_27dx7l4aduufpyrqoymt',}, 
+          { positions: [ { i: '24', j: 1 } ], css_id: 'tinytable_css_8gym5d9y57judzvo19xf',}, 
+          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_47k7jnqxus5tr8ubkmxg',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '22', j: 1 }, { i: '23', j: 1 } ], css_id: 'tinytable_css_mwiolxcvpk1luxn10js4',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_gk4hmojkzinnqqd0f6e2',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_d3t56bqddn4df9kn7x52.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_t3n2dkn5qq1wn4z480r3.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -1457,17 +1458,17 @@ Y_{it} = \alpha + \underbrace{\beta_1 X_{1it} + \cdots + \beta_k X_{kit}}_{\text
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_d3t56bqddn4df9kn7x52 td.tinytable_css_v16s42knsgkne7bq53qx, #tinytable_d3t56bqddn4df9kn7x52 th.tinytable_css_v16s42knsgkne7bq53qx {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_d3t56bqddn4df9kn7x52 td.tinytable_css_hxzfday1s4h9tk20xl4s, #tinytable_d3t56bqddn4df9kn7x52 th.tinytable_css_hxzfday1s4h9tk20xl4s {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_d3t56bqddn4df9kn7x52 td.tinytable_css_k0octkkj5sp71dsamwyu, #tinytable_d3t56bqddn4df9kn7x52 th.tinytable_css_k0octkkj5sp71dsamwyu { text-align: center }
-    #tinytable_d3t56bqddn4df9kn7x52 td.tinytable_css_0jypkel3mly96pxy0siq, #tinytable_d3t56bqddn4df9kn7x52 th.tinytable_css_0jypkel3mly96pxy0siq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_d3t56bqddn4df9kn7x52 td.tinytable_css_d8v3tgqfjyu7jgvkncxw, #tinytable_d3t56bqddn4df9kn7x52 th.tinytable_css_d8v3tgqfjyu7jgvkncxw {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_d3t56bqddn4df9kn7x52 td.tinytable_css_lt4fgn35q318306yd0wr, #tinytable_d3t56bqddn4df9kn7x52 th.tinytable_css_lt4fgn35q318306yd0wr {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_d3t56bqddn4df9kn7x52 td.tinytable_css_xoo4u19mzhobhpi7nmym, #tinytable_d3t56bqddn4df9kn7x52 th.tinytable_css_xoo4u19mzhobhpi7nmym { text-align: left }
-    #tinytable_d3t56bqddn4df9kn7x52 td.tinytable_css_iozstb8mnp2sep92lq4o, #tinytable_d3t56bqddn4df9kn7x52 th.tinytable_css_iozstb8mnp2sep92lq4o {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_t3n2dkn5qq1wn4z480r3 td.tinytable_css_njyjq998p68z3oak1tg9, #tinytable_t3n2dkn5qq1wn4z480r3 th.tinytable_css_njyjq998p68z3oak1tg9 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_t3n2dkn5qq1wn4z480r3 td.tinytable_css_mshtaschv94pdd0dwqw2, #tinytable_t3n2dkn5qq1wn4z480r3 th.tinytable_css_mshtaschv94pdd0dwqw2 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_t3n2dkn5qq1wn4z480r3 td.tinytable_css_zp625s397ladp3w3f7a9, #tinytable_t3n2dkn5qq1wn4z480r3 th.tinytable_css_zp625s397ladp3w3f7a9 { text-align: center }
+    #tinytable_t3n2dkn5qq1wn4z480r3 td.tinytable_css_27dx7l4aduufpyrqoymt, #tinytable_t3n2dkn5qq1wn4z480r3 th.tinytable_css_27dx7l4aduufpyrqoymt {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_t3n2dkn5qq1wn4z480r3 td.tinytable_css_8gym5d9y57judzvo19xf, #tinytable_t3n2dkn5qq1wn4z480r3 th.tinytable_css_8gym5d9y57judzvo19xf {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_t3n2dkn5qq1wn4z480r3 td.tinytable_css_47k7jnqxus5tr8ubkmxg, #tinytable_t3n2dkn5qq1wn4z480r3 th.tinytable_css_47k7jnqxus5tr8ubkmxg {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_t3n2dkn5qq1wn4z480r3 td.tinytable_css_mwiolxcvpk1luxn10js4, #tinytable_t3n2dkn5qq1wn4z480r3 th.tinytable_css_mwiolxcvpk1luxn10js4 { text-align: left }
+    #tinytable_t3n2dkn5qq1wn4z480r3 td.tinytable_css_gk4hmojkzinnqqd0f6e2, #tinytable_t3n2dkn5qq1wn4z480r3 th.tinytable_css_gk4hmojkzinnqqd0f6e2 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_d3t56bqddn4df9kn7x52" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="tinytable" id="tinytable_t3n2dkn5qq1wn4z480r3" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         
         <thead>
               <tr>
@@ -1616,12 +1617,12 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
 <div id="推定方法fixestfeols" class="section level3 hasAnchor" number="11.4.2">
 <h3><span class="header-section-number">11.4.2</span> 推定方法：<code>fixest::feols()</code><a href="paneldata.html#%E6%8E%A8%E5%AE%9A%E6%96%B9%E6%B3%95fixestfeols" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>固定効果モデルの推定には、<code>fixest::feols()</code>関数を用いる。まずは以下のとおり<code>fixest</code>パッケージをあらかじめインストールしておこう。</p>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="paneldata.html#cb401-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;fixest&quot;</span>) <span class="co"># 固定効果モデルを推定するためのパッケージ</span></span></code></pre></div>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="paneldata.html#cb404-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;fixest&quot;</span>) <span class="co"># 固定効果モデルを推定するためのパッケージ</span></span></code></pre></div>
 <p>インストールしたうえで、パッケージを読み込む。</p>
-<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="paneldata.html#cb402-1" tabindex="-1"></a><span class="fu">library</span>(fixest)</span></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="paneldata.html#cb405-1" tabindex="-1"></a><span class="fu">library</span>(fixest)</span></code></pre></div>
 <p><code>fixest::feols()</code>関数が固定効果モデルを推定するための関数である。書き方は<code>lm()</code>関数と似ており、<code>feols(data = df, y ~ x1 + x2 | u)</code>とする。<code>df</code>には分析に用いるデータ、<code>u</code>には固定効果に指定する変数名を入れる。具体的には次のようなコードとなる。</p>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="paneldata.html#cb403-1" tabindex="-1"></a><span class="co"># 固定効果モデルを推定</span></span>
-<span id="cb403-2"><a href="paneldata.html#cb403-2" tabindex="-1"></a>model_fe <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> race <span class="sc">+</span> collgrad <span class="sc">|</span> id)</span></code></pre></div>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="paneldata.html#cb406-1" tabindex="-1"></a><span class="co"># 固定効果モデルを推定</span></span>
+<span id="cb406-2"><a href="paneldata.html#cb406-2" tabindex="-1"></a>model_fe <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> race <span class="sc">+</span> collgrad <span class="sc">|</span> id)</span></code></pre></div>
 <p><code>fixest::feols()</code>を実行した際、いくつかの注が表示される。まず、先に説明したとおり、1回しか観察を得られていない個人は推定に貢献しないため除外される。次のようなメッセージが表示される：</p>
 <blockquote>
 <p>664 fixed-effect singletons were removed (664 observations).</p>
@@ -1633,32 +1634,32 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
 </blockquote>
 <p>というふうにメッセージが表示される。これらの変数は共線性のために除外されたということである。</p>
 <p>では、係数の推定結果を見てみよう。</p>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="paneldata.html#cb404-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Fixed Effects&quot;</span> <span class="ot">=</span> model_fe), <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="paneldata.html#cb407-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Fixed Effects&quot;</span> <span class="ot">=</span> model_fe), <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <!-- preamble start -->
 
     <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_olp4qurixkkxl3cbwx81 = TinyTable.createTableFunctions("tinytable_olp4qurixkkxl3cbwx81");
+      const tableFns_v9m9u3f54hftansqpo0v = TinyTable.createTableFunctions("tinytable_v9m9u3f54hftansqpo0v");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '18', j: 2 } ], css_id: 'tinytable_css_sitfg6kc7vrdhpslz71z',}, 
-          { positions: [ { i: '8', j: 2 } ], css_id: 'tinytable_css_2skbr75ezoxeu6ysv1tx',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 } ], css_id: 'tinytable_css_hkzgbrhrwwqmh19rllkq',}, 
-          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_9q4dswct0d4f8nyannsz',}, 
-          { positions: [ { i: '18', j: 1 } ], css_id: 'tinytable_css_xbtshzkyqwshpn5rfsau',}, 
-          { positions: [ { i: '8', j: 1 } ], css_id: 'tinytable_css_4afoccjn0iengm0qmjeh',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 } ], css_id: 'tinytable_css_vm86buf3i01w6sc6fovb',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_xpkawcn4x6vaue3iob3g',}, 
+          { positions: [ { i: '18', j: 2 } ], css_id: 'tinytable_css_xjsxs2jejccaolsfbb88',}, 
+          { positions: [ { i: '8', j: 2 } ], css_id: 'tinytable_css_ohdb02kiiwg0vkjk7v6q',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 } ], css_id: 'tinytable_css_zkwub7xogvvaafkkot5m',}, 
+          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_cqryo1hhzhzsv28a8ksz',}, 
+          { positions: [ { i: '18', j: 1 } ], css_id: 'tinytable_css_6enjke4ki7i82kuh4lsg',}, 
+          { positions: [ { i: '8', j: 1 } ], css_id: 'tinytable_css_fxlkuxifd2bdlb6rkywq',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 } ], css_id: 'tinytable_css_tyuy760ppq83e8p09h7c',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_wb53n3z246fmmb0u0nw9',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_olp4qurixkkxl3cbwx81.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_v9m9u3f54hftansqpo0v.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -1667,17 +1668,17 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_olp4qurixkkxl3cbwx81 td.tinytable_css_sitfg6kc7vrdhpslz71z, #tinytable_olp4qurixkkxl3cbwx81 th.tinytable_css_sitfg6kc7vrdhpslz71z {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_olp4qurixkkxl3cbwx81 td.tinytable_css_2skbr75ezoxeu6ysv1tx, #tinytable_olp4qurixkkxl3cbwx81 th.tinytable_css_2skbr75ezoxeu6ysv1tx {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_olp4qurixkkxl3cbwx81 td.tinytable_css_hkzgbrhrwwqmh19rllkq, #tinytable_olp4qurixkkxl3cbwx81 th.tinytable_css_hkzgbrhrwwqmh19rllkq { text-align: center }
-    #tinytable_olp4qurixkkxl3cbwx81 td.tinytable_css_9q4dswct0d4f8nyannsz, #tinytable_olp4qurixkkxl3cbwx81 th.tinytable_css_9q4dswct0d4f8nyannsz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_olp4qurixkkxl3cbwx81 td.tinytable_css_xbtshzkyqwshpn5rfsau, #tinytable_olp4qurixkkxl3cbwx81 th.tinytable_css_xbtshzkyqwshpn5rfsau {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_olp4qurixkkxl3cbwx81 td.tinytable_css_4afoccjn0iengm0qmjeh, #tinytable_olp4qurixkkxl3cbwx81 th.tinytable_css_4afoccjn0iengm0qmjeh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_olp4qurixkkxl3cbwx81 td.tinytable_css_vm86buf3i01w6sc6fovb, #tinytable_olp4qurixkkxl3cbwx81 th.tinytable_css_vm86buf3i01w6sc6fovb { text-align: left }
-    #tinytable_olp4qurixkkxl3cbwx81 td.tinytable_css_xpkawcn4x6vaue3iob3g, #tinytable_olp4qurixkkxl3cbwx81 th.tinytable_css_xpkawcn4x6vaue3iob3g {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_v9m9u3f54hftansqpo0v td.tinytable_css_xjsxs2jejccaolsfbb88, #tinytable_v9m9u3f54hftansqpo0v th.tinytable_css_xjsxs2jejccaolsfbb88 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_v9m9u3f54hftansqpo0v td.tinytable_css_ohdb02kiiwg0vkjk7v6q, #tinytable_v9m9u3f54hftansqpo0v th.tinytable_css_ohdb02kiiwg0vkjk7v6q {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_v9m9u3f54hftansqpo0v td.tinytable_css_zkwub7xogvvaafkkot5m, #tinytable_v9m9u3f54hftansqpo0v th.tinytable_css_zkwub7xogvvaafkkot5m { text-align: center }
+    #tinytable_v9m9u3f54hftansqpo0v td.tinytable_css_cqryo1hhzhzsv28a8ksz, #tinytable_v9m9u3f54hftansqpo0v th.tinytable_css_cqryo1hhzhzsv28a8ksz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_v9m9u3f54hftansqpo0v td.tinytable_css_6enjke4ki7i82kuh4lsg, #tinytable_v9m9u3f54hftansqpo0v th.tinytable_css_6enjke4ki7i82kuh4lsg {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_v9m9u3f54hftansqpo0v td.tinytable_css_fxlkuxifd2bdlb6rkywq, #tinytable_v9m9u3f54hftansqpo0v th.tinytable_css_fxlkuxifd2bdlb6rkywq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_v9m9u3f54hftansqpo0v td.tinytable_css_tyuy760ppq83e8p09h7c, #tinytable_v9m9u3f54hftansqpo0v th.tinytable_css_tyuy760ppq83e8p09h7c { text-align: left }
+    #tinytable_v9m9u3f54hftansqpo0v td.tinytable_css_wb53n3z246fmmb0u0nw9, #tinytable_v9m9u3f54hftansqpo0v th.tinytable_css_wb53n3z246fmmb0u0nw9 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_olp4qurixkkxl3cbwx81" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="tinytable" id="tinytable_v9m9u3f54hftansqpo0v" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         
         <thead>
               <tr>
@@ -1777,45 +1778,45 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
 <h3><span class="header-section-number">11.4.3</span> クラスター・ロバスト標準誤差<a href="paneldata.html#%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%AD%E3%83%90%E3%82%B9%E3%83%88%E6%A8%99%E6%BA%96%E8%AA%A4%E5%B7%AE" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>パネルデータの場合、個々の観察は互いに独立ではない。ある時点で調査された個人は次も調査対象となるからである。この場合、残差が独立に同一の分布に従うIID（Independent and Identically Distributed。観察が互いに独立であり、かつ、同一の分布に従うということを意味する）の仮定が満たされず、標準誤差は誤った値となる。</p>
 <p>このような場合には、同一個人内での誤差の相関を認めるクラスター・ロバスト標準誤差を用いる。Rでは、<code>fixest::feols()</code>関数の<code>vcov</code>引数で<code>vcov = "cluster"</code>を指定することによって、クラスター・ロバスト標準誤差を計算することができる。クラスター化の単位は、<code>panel.id</code>引数で指定した個人を表す変数となる。</p>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="paneldata.html#cb405-1" tabindex="-1"></a><span class="co"># Pooled OLSでクラスター・ロバスト標準誤差を用いる場合</span></span>
-<span id="cb405-2"><a href="paneldata.html#cb405-2" tabindex="-1"></a>model_pols <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, </span>
-<span id="cb405-3"><a href="paneldata.html#cb405-3" tabindex="-1"></a>              ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> race <span class="sc">+</span> collgrad, </span>
-<span id="cb405-4"><a href="paneldata.html#cb405-4" tabindex="-1"></a>              <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
-<span id="cb405-5"><a href="paneldata.html#cb405-5" tabindex="-1"></a></span>
-<span id="cb405-6"><a href="paneldata.html#cb405-6" tabindex="-1"></a><span class="co"># 固定効果モデルでクラスター・ロバスト標準誤差を用いる場合</span></span>
-<span id="cb405-7"><a href="paneldata.html#cb405-7" tabindex="-1"></a>model_fe <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, </span>
-<span id="cb405-8"><a href="paneldata.html#cb405-8" tabindex="-1"></a>            ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">|</span> id,</span>
-<span id="cb405-9"><a href="paneldata.html#cb405-9" tabindex="-1"></a>            <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
-<span id="cb405-10"><a href="paneldata.html#cb405-10" tabindex="-1"></a></span>
-<span id="cb405-11"><a href="paneldata.html#cb405-11" tabindex="-1"></a><span class="co"># 推定結果を表示</span></span>
-<span id="cb405-12"><a href="paneldata.html#cb405-12" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Pooled OLS&quot;</span> <span class="ot">=</span> model_pols, </span>
-<span id="cb405-13"><a href="paneldata.html#cb405-13" tabindex="-1"></a>                  <span class="st">&quot;Fixed effect&quot;</span> <span class="ot">=</span> model_fe), </span>
-<span id="cb405-14"><a href="paneldata.html#cb405-14" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="paneldata.html#cb408-1" tabindex="-1"></a><span class="co"># Pooled OLSでクラスター・ロバスト標準誤差を用いる場合</span></span>
+<span id="cb408-2"><a href="paneldata.html#cb408-2" tabindex="-1"></a>model_pols <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, </span>
+<span id="cb408-3"><a href="paneldata.html#cb408-3" tabindex="-1"></a>              ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> race <span class="sc">+</span> collgrad, </span>
+<span id="cb408-4"><a href="paneldata.html#cb408-4" tabindex="-1"></a>              <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
+<span id="cb408-5"><a href="paneldata.html#cb408-5" tabindex="-1"></a></span>
+<span id="cb408-6"><a href="paneldata.html#cb408-6" tabindex="-1"></a><span class="co"># 固定効果モデルでクラスター・ロバスト標準誤差を用いる場合</span></span>
+<span id="cb408-7"><a href="paneldata.html#cb408-7" tabindex="-1"></a>model_fe <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, </span>
+<span id="cb408-8"><a href="paneldata.html#cb408-8" tabindex="-1"></a>            ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">|</span> id,</span>
+<span id="cb408-9"><a href="paneldata.html#cb408-9" tabindex="-1"></a>            <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
+<span id="cb408-10"><a href="paneldata.html#cb408-10" tabindex="-1"></a></span>
+<span id="cb408-11"><a href="paneldata.html#cb408-11" tabindex="-1"></a><span class="co"># 推定結果を表示</span></span>
+<span id="cb408-12"><a href="paneldata.html#cb408-12" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Pooled OLS&quot;</span> <span class="ot">=</span> model_pols, </span>
+<span id="cb408-13"><a href="paneldata.html#cb408-13" tabindex="-1"></a>                  <span class="st">&quot;Fixed effect&quot;</span> <span class="ot">=</span> model_fe), </span>
+<span id="cb408-14"><a href="paneldata.html#cb408-14" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <!-- preamble start -->
 
     <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_7obkt7fyhet3zovcypky = TinyTable.createTableFunctions("tinytable_7obkt7fyhet3zovcypky");
+      const tableFns_bi3jhn7i020a8fet9hdj = TinyTable.createTableFunctions("tinytable_bi3jhn7i020a8fet9hdj");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '26', j: 2 }, { i: '26', j: 3 } ], css_id: 'tinytable_css_zl0l5vmzfo98dxt7qjgd',}, 
-          { positions: [ { i: '16', j: 2 }, { i: '16', j: 3 } ], css_id: 'tinytable_css_dxle80f9ea5uk36a9ijb',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '22', j: 2 }, { i: '23', j: 2 }, { i: '24', j: 2 }, { i: '25', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 }, { i: '20', j: 3 }, { i: '21', j: 3 }, { i: '22', j: 3 }, { i: '23', j: 3 }, { i: '24', j: 3 }, { i: '25', j: 3 } ], css_id: 'tinytable_css_prcgc48w0nkbltzwy1qt',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_7dimcx6yhw8xgdvryedj',}, 
-          { positions: [ { i: '26', j: 1 } ], css_id: 'tinytable_css_fh9llx7snuoanx2yn9x2',}, 
-          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_72p1o5djp5e5gby1kc89',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '22', j: 1 }, { i: '23', j: 1 }, { i: '24', j: 1 }, { i: '25', j: 1 } ], css_id: 'tinytable_css_dsfz2xs1v128xbxpbyyr',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_vc2e3nl9u2mznjgb9n9u',}, 
+          { positions: [ { i: '26', j: 2 }, { i: '26', j: 3 } ], css_id: 'tinytable_css_hqi7ktau7yg8z7xrdd0n',}, 
+          { positions: [ { i: '16', j: 2 }, { i: '16', j: 3 } ], css_id: 'tinytable_css_i57v79s4i92dmsdkj4lx',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '22', j: 2 }, { i: '23', j: 2 }, { i: '24', j: 2 }, { i: '25', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 }, { i: '20', j: 3 }, { i: '21', j: 3 }, { i: '22', j: 3 }, { i: '23', j: 3 }, { i: '24', j: 3 }, { i: '25', j: 3 } ], css_id: 'tinytable_css_eort0jrj8lsx0icdlbe3',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_i9tmcbtitnisdfv8yf5v',}, 
+          { positions: [ { i: '26', j: 1 } ], css_id: 'tinytable_css_s5lnnxnbodjlrowndkd4',}, 
+          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_qmfrlfxf9gn45blcpgu6',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '22', j: 1 }, { i: '23', j: 1 }, { i: '24', j: 1 }, { i: '25', j: 1 } ], css_id: 'tinytable_css_xaknskl324wr5j650bzi',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_uf3ibifqch5rt0wgjqxp',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_7obkt7fyhet3zovcypky.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_bi3jhn7i020a8fet9hdj.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -1824,17 +1825,17 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_7obkt7fyhet3zovcypky td.tinytable_css_zl0l5vmzfo98dxt7qjgd, #tinytable_7obkt7fyhet3zovcypky th.tinytable_css_zl0l5vmzfo98dxt7qjgd {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_7obkt7fyhet3zovcypky td.tinytable_css_dxle80f9ea5uk36a9ijb, #tinytable_7obkt7fyhet3zovcypky th.tinytable_css_dxle80f9ea5uk36a9ijb {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_7obkt7fyhet3zovcypky td.tinytable_css_prcgc48w0nkbltzwy1qt, #tinytable_7obkt7fyhet3zovcypky th.tinytable_css_prcgc48w0nkbltzwy1qt { text-align: center }
-    #tinytable_7obkt7fyhet3zovcypky td.tinytable_css_7dimcx6yhw8xgdvryedj, #tinytable_7obkt7fyhet3zovcypky th.tinytable_css_7dimcx6yhw8xgdvryedj {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_7obkt7fyhet3zovcypky td.tinytable_css_fh9llx7snuoanx2yn9x2, #tinytable_7obkt7fyhet3zovcypky th.tinytable_css_fh9llx7snuoanx2yn9x2 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_7obkt7fyhet3zovcypky td.tinytable_css_72p1o5djp5e5gby1kc89, #tinytable_7obkt7fyhet3zovcypky th.tinytable_css_72p1o5djp5e5gby1kc89 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_7obkt7fyhet3zovcypky td.tinytable_css_dsfz2xs1v128xbxpbyyr, #tinytable_7obkt7fyhet3zovcypky th.tinytable_css_dsfz2xs1v128xbxpbyyr { text-align: left }
-    #tinytable_7obkt7fyhet3zovcypky td.tinytable_css_vc2e3nl9u2mznjgb9n9u, #tinytable_7obkt7fyhet3zovcypky th.tinytable_css_vc2e3nl9u2mznjgb9n9u {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_bi3jhn7i020a8fet9hdj td.tinytable_css_hqi7ktau7yg8z7xrdd0n, #tinytable_bi3jhn7i020a8fet9hdj th.tinytable_css_hqi7ktau7yg8z7xrdd0n {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_bi3jhn7i020a8fet9hdj td.tinytable_css_i57v79s4i92dmsdkj4lx, #tinytable_bi3jhn7i020a8fet9hdj th.tinytable_css_i57v79s4i92dmsdkj4lx {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_bi3jhn7i020a8fet9hdj td.tinytable_css_eort0jrj8lsx0icdlbe3, #tinytable_bi3jhn7i020a8fet9hdj th.tinytable_css_eort0jrj8lsx0icdlbe3 { text-align: center }
+    #tinytable_bi3jhn7i020a8fet9hdj td.tinytable_css_i9tmcbtitnisdfv8yf5v, #tinytable_bi3jhn7i020a8fet9hdj th.tinytable_css_i9tmcbtitnisdfv8yf5v {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_bi3jhn7i020a8fet9hdj td.tinytable_css_s5lnnxnbodjlrowndkd4, #tinytable_bi3jhn7i020a8fet9hdj th.tinytable_css_s5lnnxnbodjlrowndkd4 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_bi3jhn7i020a8fet9hdj td.tinytable_css_qmfrlfxf9gn45blcpgu6, #tinytable_bi3jhn7i020a8fet9hdj th.tinytable_css_qmfrlfxf9gn45blcpgu6 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_bi3jhn7i020a8fet9hdj td.tinytable_css_xaknskl324wr5j650bzi, #tinytable_bi3jhn7i020a8fet9hdj th.tinytable_css_xaknskl324wr5j650bzi { text-align: left }
+    #tinytable_bi3jhn7i020a8fet9hdj td.tinytable_css_uf3ibifqch5rt0wgjqxp, #tinytable_bi3jhn7i020a8fet9hdj th.tinytable_css_uf3ibifqch5rt0wgjqxp {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_7obkt7fyhet3zovcypky" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="tinytable" id="tinytable_bi3jhn7i020a8fet9hdj" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         
         <thead>
               <tr>
@@ -1991,46 +1992,46 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
 \]</span></p>
 <p><span class="math inline">\(\tau_t\)</span>が時点固定効果を指す。またこのように、個人固定効果と時点固定効果の両方を統制したモデルを<strong>二方向固定効果モデル（Two-way Fixed effects model）</strong> という。</p>
 <p>とくに強い理論的な根拠がない場合を除き、基本的に時点固定効果は統制したほうが良いと思われる。<code>fixest::feols(data = df, y ~ x1 + x2 | u + t)</code>のように、固定効果を記載する欄に<code>+</code>で続けて時点を表す変数を追加することで、時点固定効果を統制することができる。</p>
-<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="paneldata.html#cb406-1" tabindex="-1"></a><span class="co"># 年を時点固定効果として扱う場合（係数は表示されない）</span></span>
-<span id="cb406-2"><a href="paneldata.html#cb406-2" tabindex="-1"></a>model_twfe1 <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, </span>
-<span id="cb406-3"><a href="paneldata.html#cb406-3" tabindex="-1"></a>            ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> <span class="fu">factor</span>(year) <span class="sc">|</span> id <span class="sc">+</span> year,</span>
-<span id="cb406-4"><a href="paneldata.html#cb406-4" tabindex="-1"></a>            <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
-<span id="cb406-5"><a href="paneldata.html#cb406-5" tabindex="-1"></a></span>
-<span id="cb406-6"><a href="paneldata.html#cb406-6" tabindex="-1"></a><span class="co"># 年をダミー変数としてモデルに含める場合。その他の係数はまったく同じとなる。</span></span>
-<span id="cb406-7"><a href="paneldata.html#cb406-7" tabindex="-1"></a>model_twfe2 <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, </span>
-<span id="cb406-8"><a href="paneldata.html#cb406-8" tabindex="-1"></a>            ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> <span class="fu">factor</span>(year) <span class="sc">|</span> id,</span>
-<span id="cb406-9"><a href="paneldata.html#cb406-9" tabindex="-1"></a>            <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
-<span id="cb406-10"><a href="paneldata.html#cb406-10" tabindex="-1"></a></span>
-<span id="cb406-11"><a href="paneldata.html#cb406-11" tabindex="-1"></a><span class="co"># 推定結果を表示</span></span>
-<span id="cb406-12"><a href="paneldata.html#cb406-12" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;時点固定効果&quot;</span> <span class="ot">=</span> model_twfe1, </span>
-<span id="cb406-13"><a href="paneldata.html#cb406-13" tabindex="-1"></a>                  <span class="st">&quot;年ダミー&quot;</span> <span class="ot">=</span> model_twfe2), </span>
-<span id="cb406-14"><a href="paneldata.html#cb406-14" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb406-15"><a href="paneldata.html#cb406-15" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>, <span class="st">&quot;FE: id&quot;</span>, <span class="st">&quot;FE: year&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="paneldata.html#cb409-1" tabindex="-1"></a><span class="co"># 年を時点固定効果として扱う場合（係数は表示されない）</span></span>
+<span id="cb409-2"><a href="paneldata.html#cb409-2" tabindex="-1"></a>model_twfe1 <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, </span>
+<span id="cb409-3"><a href="paneldata.html#cb409-3" tabindex="-1"></a>            ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> <span class="fu">factor</span>(year) <span class="sc">|</span> id <span class="sc">+</span> year,</span>
+<span id="cb409-4"><a href="paneldata.html#cb409-4" tabindex="-1"></a>            <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
+<span id="cb409-5"><a href="paneldata.html#cb409-5" tabindex="-1"></a></span>
+<span id="cb409-6"><a href="paneldata.html#cb409-6" tabindex="-1"></a><span class="co"># 年をダミー変数としてモデルに含める場合。その他の係数はまったく同じとなる。</span></span>
+<span id="cb409-7"><a href="paneldata.html#cb409-7" tabindex="-1"></a>model_twfe2 <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample, </span>
+<span id="cb409-8"><a href="paneldata.html#cb409-8" tabindex="-1"></a>            ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">+</span> <span class="fu">factor</span>(year) <span class="sc">|</span> id,</span>
+<span id="cb409-9"><a href="paneldata.html#cb409-9" tabindex="-1"></a>            <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
+<span id="cb409-10"><a href="paneldata.html#cb409-10" tabindex="-1"></a></span>
+<span id="cb409-11"><a href="paneldata.html#cb409-11" tabindex="-1"></a><span class="co"># 推定結果を表示</span></span>
+<span id="cb409-12"><a href="paneldata.html#cb409-12" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;時点固定効果&quot;</span> <span class="ot">=</span> model_twfe1, </span>
+<span id="cb409-13"><a href="paneldata.html#cb409-13" tabindex="-1"></a>                  <span class="st">&quot;年ダミー&quot;</span> <span class="ot">=</span> model_twfe2), </span>
+<span id="cb409-14"><a href="paneldata.html#cb409-14" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb409-15"><a href="paneldata.html#cb409-15" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>, <span class="st">&quot;FE: id&quot;</span>, <span class="st">&quot;FE: year&quot;</span>))</span></code></pre></div>
 <!-- preamble start -->
 
     <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_bzteh6ydnnewc6vw7n1n = TinyTable.createTableFunctions("tinytable_bzteh6ydnnewc6vw7n1n");
+      const tableFns_9vsacwiulw14vmqdr9ez = TinyTable.createTableFunctions("tinytable_9vsacwiulw14vmqdr9ez");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '34', j: 2 }, { i: '34', j: 3 } ], css_id: 'tinytable_css_ug1roij9pj1vpanvu09m',}, 
-          { positions: [ { i: '30', j: 2 }, { i: '30', j: 3 } ], css_id: 'tinytable_css_8f46zxm0flyua2w30nvx',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '22', j: 2 }, { i: '23', j: 2 }, { i: '24', j: 2 }, { i: '25', j: 2 }, { i: '26', j: 2 }, { i: '27', j: 2 }, { i: '28', j: 2 }, { i: '29', j: 2 }, { i: '31', j: 2 }, { i: '32', j: 2 }, { i: '33', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 }, { i: '20', j: 3 }, { i: '21', j: 3 }, { i: '22', j: 3 }, { i: '23', j: 3 }, { i: '24', j: 3 }, { i: '25', j: 3 }, { i: '26', j: 3 }, { i: '27', j: 3 }, { i: '28', j: 3 }, { i: '29', j: 3 }, { i: '31', j: 3 }, { i: '32', j: 3 }, { i: '33', j: 3 } ], css_id: 'tinytable_css_s287d4mh5u8f8mmigysx',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_zfr8gn8elqpmw16ln5yg',}, 
-          { positions: [ { i: '34', j: 1 } ], css_id: 'tinytable_css_txljbh5zmyj50rl8idnb',}, 
-          { positions: [ { i: '30', j: 1 } ], css_id: 'tinytable_css_62irv48yeu8zbpjwuu01',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '22', j: 1 }, { i: '23', j: 1 }, { i: '24', j: 1 }, { i: '25', j: 1 }, { i: '26', j: 1 }, { i: '27', j: 1 }, { i: '28', j: 1 }, { i: '29', j: 1 }, { i: '31', j: 1 }, { i: '32', j: 1 }, { i: '33', j: 1 } ], css_id: 'tinytable_css_o1cghr1oatby34j7sowz',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_g0wfueyajf2hqodgkdxa',}, 
+          { positions: [ { i: '34', j: 2 }, { i: '34', j: 3 } ], css_id: 'tinytable_css_tcg3rbpr42uwhtv6s9e8',}, 
+          { positions: [ { i: '30', j: 2 }, { i: '30', j: 3 } ], css_id: 'tinytable_css_2k2jnphjqawyr1fs9hwb',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '22', j: 2 }, { i: '23', j: 2 }, { i: '24', j: 2 }, { i: '25', j: 2 }, { i: '26', j: 2 }, { i: '27', j: 2 }, { i: '28', j: 2 }, { i: '29', j: 2 }, { i: '31', j: 2 }, { i: '32', j: 2 }, { i: '33', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 }, { i: '20', j: 3 }, { i: '21', j: 3 }, { i: '22', j: 3 }, { i: '23', j: 3 }, { i: '24', j: 3 }, { i: '25', j: 3 }, { i: '26', j: 3 }, { i: '27', j: 3 }, { i: '28', j: 3 }, { i: '29', j: 3 }, { i: '31', j: 3 }, { i: '32', j: 3 }, { i: '33', j: 3 } ], css_id: 'tinytable_css_ecg2pgsp1b0bwckzi0hs',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_1ghhy9xb5g4yboswqkuo',}, 
+          { positions: [ { i: '34', j: 1 } ], css_id: 'tinytable_css_6d08mmg78yvka4g3cdcn',}, 
+          { positions: [ { i: '30', j: 1 } ], css_id: 'tinytable_css_ld3cyc7kbf5xmovmfrb9',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '22', j: 1 }, { i: '23', j: 1 }, { i: '24', j: 1 }, { i: '25', j: 1 }, { i: '26', j: 1 }, { i: '27', j: 1 }, { i: '28', j: 1 }, { i: '29', j: 1 }, { i: '31', j: 1 }, { i: '32', j: 1 }, { i: '33', j: 1 } ], css_id: 'tinytable_css_5pe7eqfqv9xl113jmdgn',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_p4vur2zmnbsoijky6qld',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_bzteh6ydnnewc6vw7n1n.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_9vsacwiulw14vmqdr9ez.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2039,17 +2040,17 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_bzteh6ydnnewc6vw7n1n td.tinytable_css_ug1roij9pj1vpanvu09m, #tinytable_bzteh6ydnnewc6vw7n1n th.tinytable_css_ug1roij9pj1vpanvu09m {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_bzteh6ydnnewc6vw7n1n td.tinytable_css_8f46zxm0flyua2w30nvx, #tinytable_bzteh6ydnnewc6vw7n1n th.tinytable_css_8f46zxm0flyua2w30nvx {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_bzteh6ydnnewc6vw7n1n td.tinytable_css_s287d4mh5u8f8mmigysx, #tinytable_bzteh6ydnnewc6vw7n1n th.tinytable_css_s287d4mh5u8f8mmigysx { text-align: center }
-    #tinytable_bzteh6ydnnewc6vw7n1n td.tinytable_css_zfr8gn8elqpmw16ln5yg, #tinytable_bzteh6ydnnewc6vw7n1n th.tinytable_css_zfr8gn8elqpmw16ln5yg {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_bzteh6ydnnewc6vw7n1n td.tinytable_css_txljbh5zmyj50rl8idnb, #tinytable_bzteh6ydnnewc6vw7n1n th.tinytable_css_txljbh5zmyj50rl8idnb {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_bzteh6ydnnewc6vw7n1n td.tinytable_css_62irv48yeu8zbpjwuu01, #tinytable_bzteh6ydnnewc6vw7n1n th.tinytable_css_62irv48yeu8zbpjwuu01 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_bzteh6ydnnewc6vw7n1n td.tinytable_css_o1cghr1oatby34j7sowz, #tinytable_bzteh6ydnnewc6vw7n1n th.tinytable_css_o1cghr1oatby34j7sowz { text-align: left }
-    #tinytable_bzteh6ydnnewc6vw7n1n td.tinytable_css_g0wfueyajf2hqodgkdxa, #tinytable_bzteh6ydnnewc6vw7n1n th.tinytable_css_g0wfueyajf2hqodgkdxa {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_9vsacwiulw14vmqdr9ez td.tinytable_css_tcg3rbpr42uwhtv6s9e8, #tinytable_9vsacwiulw14vmqdr9ez th.tinytable_css_tcg3rbpr42uwhtv6s9e8 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_9vsacwiulw14vmqdr9ez td.tinytable_css_2k2jnphjqawyr1fs9hwb, #tinytable_9vsacwiulw14vmqdr9ez th.tinytable_css_2k2jnphjqawyr1fs9hwb {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_9vsacwiulw14vmqdr9ez td.tinytable_css_ecg2pgsp1b0bwckzi0hs, #tinytable_9vsacwiulw14vmqdr9ez th.tinytable_css_ecg2pgsp1b0bwckzi0hs { text-align: center }
+    #tinytable_9vsacwiulw14vmqdr9ez td.tinytable_css_1ghhy9xb5g4yboswqkuo, #tinytable_9vsacwiulw14vmqdr9ez th.tinytable_css_1ghhy9xb5g4yboswqkuo {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_9vsacwiulw14vmqdr9ez td.tinytable_css_6d08mmg78yvka4g3cdcn, #tinytable_9vsacwiulw14vmqdr9ez th.tinytable_css_6d08mmg78yvka4g3cdcn {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_9vsacwiulw14vmqdr9ez td.tinytable_css_ld3cyc7kbf5xmovmfrb9, #tinytable_9vsacwiulw14vmqdr9ez th.tinytable_css_ld3cyc7kbf5xmovmfrb9 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_9vsacwiulw14vmqdr9ez td.tinytable_css_5pe7eqfqv9xl113jmdgn, #tinytable_9vsacwiulw14vmqdr9ez th.tinytable_css_5pe7eqfqv9xl113jmdgn { text-align: left }
+    #tinytable_9vsacwiulw14vmqdr9ez td.tinytable_css_p4vur2zmnbsoijky6qld, #tinytable_9vsacwiulw14vmqdr9ez th.tinytable_css_p4vur2zmnbsoijky6qld {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_bzteh6ydnnewc6vw7n1n" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="tinytable" id="tinytable_9vsacwiulw14vmqdr9ez" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         
         <thead>
               <tr>
@@ -2240,14 +2241,14 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
 <h3><span class="header-section-number">11.4.5</span> 1回しか観察が得られていない個人をデータから除外する<a href="paneldata.html#%E5%9B%9E%E3%81%97%E3%81%8B%E8%A6%B3%E5%AF%9F%E3%81%8C%E5%BE%97%E3%82%89%E3%82%8C%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84%E5%80%8B%E4%BA%BA%E3%82%92%E3%83%87%E3%83%BC%E3%82%BF%E3%81%8B%E3%82%89%E9%99%A4%E5%A4%96%E3%81%99%E3%82%8B" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>固定効果モデルを用いる場合、分析に必要な変数に欠損があるものを除外したうえで、1回しか観察が得られていない個人をあらかじめデータから削除しておくことが望ましい。そうしないと、固定効果モデルで分析対象となるサンプルと、それ以外の記述統計量などで示されるサンプルとが一致しなくなるからである。</p>
 <p>たとえば次のようにして、2回以上観察を得られた個人のみを残したサンプルを作成することができる。</p>
-<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="paneldata.html#cb407-1" tabindex="-1"></a>nls_sample2 <span class="ot">&lt;-</span> nls_sample <span class="sc">%&gt;%</span> </span>
-<span id="cb407-2"><a href="paneldata.html#cb407-2" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> </span>
-<span id="cb407-3"><a href="paneldata.html#cb407-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_obs =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> <span class="co"># idごとに数を数える</span></span>
-<span id="cb407-4"><a href="paneldata.html#cb407-4" tabindex="-1"></a>  <span class="fu">filter</span>(n_obs <span class="sc">!=</span> <span class="dv">1</span>) <span class="co"># 1回しか観察が得られていない個人を除外</span></span>
-<span id="cb407-5"><a href="paneldata.html#cb407-5" tabindex="-1"></a></span>
-<span id="cb407-6"><a href="paneldata.html#cb407-6" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> <span class="fu">nrow</span>() <span class="co"># 元々の行数</span></span></code></pre></div>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="paneldata.html#cb410-1" tabindex="-1"></a>nls_sample2 <span class="ot">&lt;-</span> nls_sample <span class="sc">%&gt;%</span> </span>
+<span id="cb410-2"><a href="paneldata.html#cb410-2" tabindex="-1"></a>  <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> </span>
+<span id="cb410-3"><a href="paneldata.html#cb410-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_obs =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> <span class="co"># idごとに数を数える</span></span>
+<span id="cb410-4"><a href="paneldata.html#cb410-4" tabindex="-1"></a>  <span class="fu">filter</span>(n_obs <span class="sc">!=</span> <span class="dv">1</span>) <span class="co"># 1回しか観察が得られていない個人を除外</span></span>
+<span id="cb410-5"><a href="paneldata.html#cb410-5" tabindex="-1"></a></span>
+<span id="cb410-6"><a href="paneldata.html#cb410-6" tabindex="-1"></a>nls_sample <span class="sc">%&gt;%</span> <span class="fu">nrow</span>() <span class="co"># 元々の行数</span></span></code></pre></div>
 <pre><code>## [1] 19077</code></pre>
-<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="paneldata.html#cb409-1" tabindex="-1"></a>nls_sample2 <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()　<span class="co"># 1回しか観察が得られていない個人を除外した後の行数</span></span></code></pre></div>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="paneldata.html#cb412-1" tabindex="-1"></a>nls_sample2 <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()　<span class="co"># 1回しか観察が得られていない個人を除外した後の行数</span></span></code></pre></div>
 <pre><code>## [1] 18413</code></pre>
 </div>
 </div>
@@ -2256,47 +2257,47 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
 <div id="paneldata_pols_fe_compare" class="section level3 hasAnchor" number="11.5.1">
 <h3><span class="header-section-number">11.5.1</span> Pooled OLSと固定効果モデルの比較<a href="paneldata.html#paneldata_pols_fe_compare" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Pooled OLSと固定効果モデルを並べて表示してみよう。</p>
-<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="paneldata.html#cb411-1" tabindex="-1"></a><span class="co"># Pooled OLS - 時間不変の変数なし</span></span>
-<span id="cb411-2"><a href="paneldata.html#cb411-2" tabindex="-1"></a>model_pols <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample2, </span>
-<span id="cb411-3"><a href="paneldata.html#cb411-3" tabindex="-1"></a>              ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp, </span>
-<span id="cb411-4"><a href="paneldata.html#cb411-4" tabindex="-1"></a>              <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
-<span id="cb411-5"><a href="paneldata.html#cb411-5" tabindex="-1"></a></span>
-<span id="cb411-6"><a href="paneldata.html#cb411-6" tabindex="-1"></a><span class="co"># 固定効果モデル</span></span>
-<span id="cb411-7"><a href="paneldata.html#cb411-7" tabindex="-1"></a>model_fe <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample2, </span>
-<span id="cb411-8"><a href="paneldata.html#cb411-8" tabindex="-1"></a>            ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">|</span> id,</span>
-<span id="cb411-9"><a href="paneldata.html#cb411-9" tabindex="-1"></a>            <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
-<span id="cb411-10"><a href="paneldata.html#cb411-10" tabindex="-1"></a></span>
-<span id="cb411-11"><a href="paneldata.html#cb411-11" tabindex="-1"></a><span class="co"># 上記2つのモデルを比較して表示</span></span>
-<span id="cb411-12"><a href="paneldata.html#cb411-12" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(</span>
-<span id="cb411-13"><a href="paneldata.html#cb411-13" tabindex="-1"></a>  <span class="st">&quot;Pooled OLS&quot;</span> <span class="ot">=</span> model_pols, </span>
-<span id="cb411-14"><a href="paneldata.html#cb411-14" tabindex="-1"></a>  <span class="st">&quot;Fixed effect&quot;</span> <span class="ot">=</span> model_fe),</span>
-<span id="cb411-15"><a href="paneldata.html#cb411-15" tabindex="-1"></a>  <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb411-16"><a href="paneldata.html#cb411-16" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>, <span class="st">&quot;FE: id&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="paneldata.html#cb414-1" tabindex="-1"></a><span class="co"># Pooled OLS - 時間不変の変数なし</span></span>
+<span id="cb414-2"><a href="paneldata.html#cb414-2" tabindex="-1"></a>model_pols <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample2, </span>
+<span id="cb414-3"><a href="paneldata.html#cb414-3" tabindex="-1"></a>              ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp, </span>
+<span id="cb414-4"><a href="paneldata.html#cb414-4" tabindex="-1"></a>              <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
+<span id="cb414-5"><a href="paneldata.html#cb414-5" tabindex="-1"></a></span>
+<span id="cb414-6"><a href="paneldata.html#cb414-6" tabindex="-1"></a><span class="co"># 固定効果モデル</span></span>
+<span id="cb414-7"><a href="paneldata.html#cb414-7" tabindex="-1"></a>model_fe <span class="ot">&lt;-</span> <span class="fu">feols</span>(<span class="at">data =</span> nls_sample2, </span>
+<span id="cb414-8"><a href="paneldata.html#cb414-8" tabindex="-1"></a>            ln_wage <span class="sc">~</span> union <span class="sc">+</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> msp <span class="sc">|</span> id,</span>
+<span id="cb414-9"><a href="paneldata.html#cb414-9" tabindex="-1"></a>            <span class="at">panel.id =</span> <span class="st">&quot;id&quot;</span>, <span class="at">vcov =</span> <span class="st">&quot;cluster&quot;</span>)</span>
+<span id="cb414-10"><a href="paneldata.html#cb414-10" tabindex="-1"></a></span>
+<span id="cb414-11"><a href="paneldata.html#cb414-11" tabindex="-1"></a><span class="co"># 上記2つのモデルを比較して表示</span></span>
+<span id="cb414-12"><a href="paneldata.html#cb414-12" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(</span>
+<span id="cb414-13"><a href="paneldata.html#cb414-13" tabindex="-1"></a>  <span class="st">&quot;Pooled OLS&quot;</span> <span class="ot">=</span> model_pols, </span>
+<span id="cb414-14"><a href="paneldata.html#cb414-14" tabindex="-1"></a>  <span class="st">&quot;Fixed effect&quot;</span> <span class="ot">=</span> model_fe),</span>
+<span id="cb414-15"><a href="paneldata.html#cb414-15" tabindex="-1"></a>  <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb414-16"><a href="paneldata.html#cb414-16" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>, <span class="st">&quot;FE: id&quot;</span>))</span></code></pre></div>
 <!-- preamble start -->
 
     <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
 
     <script>
       // Create table-specific functions using external factory
-      const tableFns_odha9x0akg7vtluswabm = TinyTable.createTableFunctions("tinytable_odha9x0akg7vtluswabm");
+      const tableFns_sdxd73qhwhipe4xo45va = TinyTable.createTableFunctions("tinytable_sdxd73qhwhipe4xo45va");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '13', j: 2 }, { i: '13', j: 3 } ], css_id: 'tinytable_css_fflek6bc2c6ihwx4i1ot',}, 
-          { positions: [ { i: '10', j: 2 }, { i: '10', j: 3 } ], css_id: 'tinytable_css_d51trgdkper0vzt0hzok',}, 
-          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 } ], css_id: 'tinytable_css_vfr7ybtn95pxb3rscwf4',}, 
-          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_r2vrm329y3yn4me192b8',}, 
-          { positions: [ { i: '13', j: 1 } ], css_id: 'tinytable_css_w56hl450x5qrlx5pa8hp',}, 
-          { positions: [ { i: '10', j: 1 } ], css_id: 'tinytable_css_lm80qqt4py4f82f81r8x',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 } ], css_id: 'tinytable_css_mfv01tse4zxpdvq30ft7',}, 
-          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_gwccj0huzwsm0rmcc635',}, 
+          { positions: [ { i: '13', j: 2 }, { i: '13', j: 3 } ], css_id: 'tinytable_css_etu7uas4e265gwsbfx0h',}, 
+          { positions: [ { i: '10', j: 2 }, { i: '10', j: 3 } ], css_id: 'tinytable_css_qq5ixuhzb0gpksko2by9',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 } ], css_id: 'tinytable_css_lvkfhuvrig7o9zejyfhj',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_8h4ldtlqz75gqe77uw2p',}, 
+          { positions: [ { i: '13', j: 1 } ], css_id: 'tinytable_css_kvttsp952oqdzr2dsg2v',}, 
+          { positions: [ { i: '10', j: 1 } ], css_id: 'tinytable_css_jssohfb6foe20hz89e4r',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 } ], css_id: 'tinytable_css_ser5odx7r54wbgj2fsaw',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_sppxwpsvj308ej4tpmaw',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  tableFns_odha9x0akg7vtluswabm.styleCell(cell.i, cell.j, group.css_id);
+                  tableFns_sdxd73qhwhipe4xo45va.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
@@ -2305,17 +2306,17 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
     /* tinytable css entries after */
-    #tinytable_odha9x0akg7vtluswabm td.tinytable_css_fflek6bc2c6ihwx4i1ot, #tinytable_odha9x0akg7vtluswabm th.tinytable_css_fflek6bc2c6ihwx4i1ot {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_odha9x0akg7vtluswabm td.tinytable_css_d51trgdkper0vzt0hzok, #tinytable_odha9x0akg7vtluswabm th.tinytable_css_d51trgdkper0vzt0hzok {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_odha9x0akg7vtluswabm td.tinytable_css_vfr7ybtn95pxb3rscwf4, #tinytable_odha9x0akg7vtluswabm th.tinytable_css_vfr7ybtn95pxb3rscwf4 { text-align: center }
-    #tinytable_odha9x0akg7vtluswabm td.tinytable_css_r2vrm329y3yn4me192b8, #tinytable_odha9x0akg7vtluswabm th.tinytable_css_r2vrm329y3yn4me192b8 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
-    #tinytable_odha9x0akg7vtluswabm td.tinytable_css_w56hl450x5qrlx5pa8hp, #tinytable_odha9x0akg7vtluswabm th.tinytable_css_w56hl450x5qrlx5pa8hp {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_odha9x0akg7vtluswabm td.tinytable_css_lm80qqt4py4f82f81r8x, #tinytable_odha9x0akg7vtluswabm th.tinytable_css_lm80qqt4py4f82f81r8x {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
-    #tinytable_odha9x0akg7vtluswabm td.tinytable_css_mfv01tse4zxpdvq30ft7, #tinytable_odha9x0akg7vtluswabm th.tinytable_css_mfv01tse4zxpdvq30ft7 { text-align: left }
-    #tinytable_odha9x0akg7vtluswabm td.tinytable_css_gwccj0huzwsm0rmcc635, #tinytable_odha9x0akg7vtluswabm th.tinytable_css_gwccj0huzwsm0rmcc635 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_sdxd73qhwhipe4xo45va td.tinytable_css_etu7uas4e265gwsbfx0h, #tinytable_sdxd73qhwhipe4xo45va th.tinytable_css_etu7uas4e265gwsbfx0h {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_sdxd73qhwhipe4xo45va td.tinytable_css_qq5ixuhzb0gpksko2by9, #tinytable_sdxd73qhwhipe4xo45va th.tinytable_css_qq5ixuhzb0gpksko2by9 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_sdxd73qhwhipe4xo45va td.tinytable_css_lvkfhuvrig7o9zejyfhj, #tinytable_sdxd73qhwhipe4xo45va th.tinytable_css_lvkfhuvrig7o9zejyfhj { text-align: center }
+    #tinytable_sdxd73qhwhipe4xo45va td.tinytable_css_8h4ldtlqz75gqe77uw2p, #tinytable_sdxd73qhwhipe4xo45va th.tinytable_css_8h4ldtlqz75gqe77uw2p {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_sdxd73qhwhipe4xo45va td.tinytable_css_kvttsp952oqdzr2dsg2v, #tinytable_sdxd73qhwhipe4xo45va th.tinytable_css_kvttsp952oqdzr2dsg2v {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_sdxd73qhwhipe4xo45va td.tinytable_css_jssohfb6foe20hz89e4r, #tinytable_sdxd73qhwhipe4xo45va th.tinytable_css_jssohfb6foe20hz89e4r {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_sdxd73qhwhipe4xo45va td.tinytable_css_ser5odx7r54wbgj2fsaw, #tinytable_sdxd73qhwhipe4xo45va th.tinytable_css_ser5odx7r54wbgj2fsaw { text-align: left }
+    #tinytable_sdxd73qhwhipe4xo45va td.tinytable_css_sppxwpsvj308ej4tpmaw, #tinytable_sdxd73qhwhipe4xo45va th.tinytable_css_sppxwpsvj308ej4tpmaw {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="tinytable" id="tinytable_odha9x0akg7vtluswabm" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
+      <table class="tinytable" id="tinytable_sdxd73qhwhipe4xo45va" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         
         <thead>
               <tr>
@@ -2405,7 +2406,7 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
 <div id="paneldata_notes" class="section level3 hasAnchor" number="11.5.2">
 <h3><span class="header-section-number">11.5.2</span> 固定効果モデルの注意点<a href="paneldata.html#paneldata_notes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>固定効果モデルは因果効果の推定にとっての万能薬ではない<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a>。とくに最も重要なのは、推定に含まれていない時間可変の要因については何ら解決策を与えるものではないということである。従属変数をY、関心のある時間可変の独立変数をD、その他の時間可変の独立変数をX、時間不変の個人特性をuと表すことにする。このとき、固定効果モデルの想定をDAGにして表したのが次の図である。ここに含まれていない時間可変の要因が原因（D）と結果（Y）の両方の交絡要因となっていれば、Dの係数にはバイアスが生じることになる。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-334-1.png" alt="" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-336-1.png" alt="" width="672" /></p>
 <p>たとえば、雇用形態がメンタルヘルスに与える影響について考えよう。病気によって正規雇用から非正規雇用に転換することになり、同時に、メンタルヘルスが悪化した人がいたとする。この場合には、病気が雇用形態の変化とメンタルヘルスの悪化の両方をもたらしたのであって、雇用形態が変わることによってメンタルヘルスが悪化したわけではない。すなわち、病気という時間可変の交絡要因が存在するということである。もし適切な時間可変の要因を統制することができれば、問題を緩和することができる。</p>
 <p>さらに、時間不変の個人属性が独立変数や従属変数の変化に対して影響するという可能性もある。典型的な例が男性の結婚と賃金との関連である。男性は、結婚すると結婚していないときと比べて賃金が高い傾向がある<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>。これは、パネルデータと固定効果モデルを使った分析でも繰り返し確認されてきた<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>。しかしながら、賃金の伸び方は個人によって異なり、かつ、それが結婚するかどうかにも影響すると考えられる（たとえば、将来も賃金が高くなっていくと期待できる人と、将来もさほど高くならないと思われる人であれば、前者のほうがより結婚しやすそうである）。上記の固定効果モデルはこのような個人によって異なるトレンドを統制していないため、結婚と賃金の間に正の関連が見られたとしても、それは見かけ上の効果に過ぎないかもしれない<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a>。</p>
 <p>もう一つ補足的な論点としては、固定効果モデルの推定には、時間可変の変数の変動が必要だということである。パネルデータは個人×時点のデータなので一般的にサンプルサイズは大きくなりやすい。しかし、扱う変数の特性によって、どの程度の頻度で時間による変動が得られるかは異なる。用いるデータにおいて十分に時間による変動が観察されていない場合には、その変数の効果が検出しにくくなる。この場合には、より長期間、よりサンプルサイズの大きいデータを用いるか、もしくは、固定効果モデルによらない方法を検討するのが望ましい。</p>
