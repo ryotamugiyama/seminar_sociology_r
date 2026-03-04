@@ -410,6 +410,8 @@ modelsummary(list(reg_res4), stars = TRUE,
 
 ## 結果をファイルに書き出す {#regression_advanced_export}
 
+### 回帰分析表をwordファイルに書き出す
+
 前章の[結果をファイルに書き出す](#regression_export)を参照。念のため再確認しておくと、 `flextable`パッケージを読みこんでおいた状態で（本章冒頭を参照）、上記の`modelsummary()`のコードに`output = "flextable"`というようなオプションをつけて、` %>% save_as_docx()`を実行することで、wordファイルに結果を書き出すことができる。
 
 ```{r}
@@ -467,6 +469,42 @@ modelsummary(list("Model 1" = reg_res1,
 
 [Excelに結果を書き出したり](#regression_output_excel)、[PowerPointに結果を書き出す](#regression_output_pptx)こともできる。いずれも前章の末尾を参照のこと。
 
+### 回帰分析の係数を図にして書き出す
+
+近年では、回帰分析の係数を表ではなく図にして提示することも増えている。`modelsummary::modelplot()`関数を使うと、簡単に結果を図で表すことができる。`modelsummary()`のときとコードは似ており、もっとも単純な例は次のとおりである。
+
+```{r}
+modelplot(list("Model 1" = reg_res1, "Model 2" = reg_res2)) 
+```
+
+ただしこのように回帰分析の結果を図にして表示する場合には、すべての係数を表示するとかえって結果が見づらくなる。今回の場合であれば、次のように改善の余地がある。
+
+1. 切片（Intercept）には興味がないので、削除したほうがよい。
+2. スケールが異なる変数が含まれている場合には、係数の大きさを比較することにはあまり意味がない。たとえば年齢は25--64までの値を取りうる連続変数である一方、性別の場合は、女性（=0）と比べて男性（=1）、という0/1の値である。したがって両者を同じふうに提示すると、性別の効果が年齢の効果よりも非常に大きく見えてしまうおそれがある。
+
+このように回帰分析の結果を図にして結果を表記するのがもっとも効果を発揮するのは、**限られたいくつかの変数の係数のみに関心があり、それ以外の係数についてはあまり関心がない場合**である。ここでの関心が性別の係数のみにあるとして、次のように図を修正してみよう。`coef_map`で、結果のうちいくつかの係数のみを取り出して、名前をつけることができる。
+
+```{r}
+modelplot(list("Model 1" = reg_res1, "Model 2" = reg_res2),
+          coef_map = c("gender男性" = "男性（vs. 女性）"))
+```
+
+プロットされた点が係数の値、横線が95%信頼区間を表す。なお、`modelplot()`では、`ggplot()`のときのように後ろに`+`を連ねていくことで、図の見た目を変更することができる。たとえば次のように見た目を整えてみよう。
+
+```{r}
+modelplot(list("Model 1（年齢・学歴を統制）" = reg_res1, "Model 2（年齢・学歴・職業を統制）" = reg_res2),
+          coef_map = c("gender男性" = "男性（vs. 女性）")) + 
+  xlim(0, 0.5) + # x軸の範囲を0から0.5に
+  geom_vline(xintercept = 0, linetype = "dashed", color = "gray20") + # x=0の位置に点線を追加
+  labs(x = "", color = "") + # x軸のラベルと凡例のタイトルを空にする
+  theme(legend.position = "bottom") # 凡例を下に配置
+```
+
+結果をファイルに保存する場合には、[第5章](#descriptives)などで説明したとおり、`ggsave()`を使うことができる。
+
+```{r}
+ggsave(filename = "results/regression_plot.png", width = 6, height = 4) # pngで保存する場合
+```
 
 ## 練習問題 {#regression_advanced_quiz}
 
