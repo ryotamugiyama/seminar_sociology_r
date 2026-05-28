@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 データの加工 | Rによる社会調査データ分析の手引き</title>
   <meta name="description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
-  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 データの加工 | Rによる社会調査データ分析の手引き" />
   <meta property="og:type" content="book" />
@@ -595,7 +595,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb34-2"><a href="handling.html#cb34-2" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.character, as.numeric) <span class="sc">%&gt;%</span> <span class="co">#すべての文字列変数を小文字に変換</span></span>
 <span id="cb34-3"><a href="handling.html#cb34-3" tabindex="-1"></a>  <span class="fu">rename_all</span>(<span class="at">.funs =</span> tolower) <span class="co">#すべての大文字を小文字に変換</span></span></code></pre></div>
 <pre><code>## Rows: 5278 Columns: 1328
-## ── Column specification ─────────────────────────────────────────────────────────────────────────────────────
+## ── Column specification ──────────────────────
 ## Delimiter: &quot;,&quot;
 ## chr (470): DISP_MAIN, B_Q01a3, B_Q01a3_C, B_Q01b, B_Q01c1, B_Q01c1_C, B_Q01c...
 ## dbl (656): CNTRYID, CNTRYID_E, SEQID, AGE_R, GENDER_R, DISP_CIBQ, A_N01_T, B...
@@ -681,7 +681,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   b_q02a_t2 &lt;dbl&gt;, b_q02b &lt;dbl&gt;, b_q02b_c &lt;dbl&gt;, b_q02c &lt;dbl&gt;, b_q03a &lt;dbl&gt;,
 ## #   b_q03b &lt;dbl&gt;, b_q03b_c &lt;dbl&gt;, b_q03c1 &lt;dbl&gt;, b_q03c1_c &lt;dbl&gt;,
 ## #   b_q03c2 &lt;dbl&gt;, b_q03d &lt;dbl&gt;, b_d03d &lt;dbl&gt;, b_d03d_c &lt;dbl&gt;, b_q04a &lt;dbl&gt;, …</code></pre>
-<p>どちらを使うかは（ほぼ）好みの問題である<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>。本資料では、たんに麦山が慣れているというきわめて個人的な理由で、<code>%&gt;%</code>を使うことにする。</p>
+<p>どちらを使うかは（ほぼ）好みの問題である<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>。本資料では、たんに麦山が慣れているというきわめて個人的な理由で、<code>%&gt;%</code>を使うことにする。</p>
 <p>デフォルトでショートカットキーで入力したときに<code>%&gt;%</code>と<code>|&gt;</code>のどちらが表示されるかは設定で変更することができる。具体的には次のようにする：Edit→Preferences…（ない場合は、Tools→Global options…）を選択する。以下の画面が開いたら、Codeを選択して、以下の「Use native pipe operator, |&gt; (requires R 4.1+)」のチェックを外すと、上記ショートカットキーを入力したときに<code>%&gt;%</code>が表示されるようになる。</p>
 <p><img src="images/pipe.jpg" /></p>
 </div>
@@ -727,7 +727,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>データを読み込んだとしても、調査で尋ねられた回答（列）をそのまま使えることはまれで、無回答を示す番号（9など）が含まれていたり、数値が意図しているならびと逆向きになっていたりと、そのままでは使えないことが多い。このような場合には、回答を記録した列を加工して、自分で意図した変数へと変換していく必要がある。社会調査データの分析を行う場合、かなり多くの作業がこの「変数の作成」に使われることになる。</p>
 <div id="変数の型カテゴリ変数と連続変数" class="section level3 hasAnchor" number="4.4.1">
 <h3><span class="header-section-number">4.4.1</span> 変数の型（カテゴリ変数と連続変数）<a href="handling.html#%E5%A4%89%E6%95%B0%E3%81%AE%E5%9E%8B%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0%E3%81%A8%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>変数は、その種類によって（大きく）<strong>カテゴリ変数（categorical variable）</strong>と<strong>連続変数（continuous variable）</strong>に分けることができる<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>。</p>
+<p>変数は、その種類によって（大きく）<strong>カテゴリ変数（categorical variable）</strong>と<strong>連続変数（continuous variable）</strong>に分けることができる<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>。</p>
 <table>
 <thead>
 <tr class="header">
@@ -1371,7 +1371,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4       3          3
 ## 5       2          2
 ## 6       1          1</code></pre>
-<p>調査によってはこのように無回答やあるいは「わからない」という選択肢に対して便宜的に99という数字が振られていたり、非該当（たとえば結婚している人に対してのみ尋ねる質問の場合、結婚していない人はその質問に回答しない。このような場合には、回答対象ではないという意味で、非該当とされる）のケースに対して便宜的に8888や9999といったような数字が振られていることがある。このような場合にも同じようにNAに変換する。この作業を忘れて平均値などを計算するととんでもない間違いを犯してしまうことになるため、忘れないようにしっかりチェックしておきたい<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>。</p>
+<p>調査によってはこのように無回答やあるいは「わからない」という選択肢に対して便宜的に99という数字が振られていたり、非該当（たとえば結婚している人に対してのみ尋ねる質問の場合、結婚していない人はその質問に回答しない。このような場合には、回答対象ではないという意味で、非該当とされる）のケースに対して便宜的に8888や9999といったような数字が振られていることがある。このような場合にも同じようにNAに変換する。この作業を忘れて平均値などを計算するととんでもない間違いを犯してしまうことになるため、忘れないようにしっかりチェックしておきたい<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>。</p>
 <p>それぞれの値がそれぞれどのような意味に対応しているかは、社会調査データを取得した際に合わせて配布される対応表（コードブック、値ラベルなどともいう）を参照する。分析に用いる変数については平均値だけではなく、分布や実際の値、調査票の文言などをきちんとチェックしておき、ミスが起こらないようにしたい。</p>
 </div>
 <div id="カテゴリ変数の区間の中点をとって連続変数とする" class="section level3 hasAnchor" number="4.5.5">
@@ -1610,12 +1610,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb111-2"><a href="handling.html#cb111-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span></span>
 <span id="cb111-3"><a href="handling.html#cb111-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span> </span>
 <span id="cb111-4"><a href="handling.html#cb111-4" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">800</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-75-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-75-1.png" alt="" width="672" /></p>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="handling.html#cb112-1" tabindex="-1"></a>piaac_sample_nona <span class="sc">%&gt;%</span> </span>
 <span id="cb112-2"><a href="handling.html#cb112-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span></span>
 <span id="cb112-3"><a href="handling.html#cb112-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span> </span>
 <span id="cb112-4"><a href="handling.html#cb112-4" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">5000</span>, <span class="dv">100000</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-76-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-76-1.png" alt="" width="672" /></p>
 <p>このようなケースが発生する理由はいくつかあるのだが、分析上は、たとえば平均値を計算したりする場合に、これらの外れ値があることによって結果がこうした極端に高い・低い人によって大きく左右されるという問題がある。そこで、こうした極端に高いあるいは低いケースを除外することはしばしば有効になる。時給換算した賃金の場合にはたとえば、上位1%、下位1%のサンプルを除外するという処理を行うことが多い。このように上位1%、下位1%のサンプルを除外するときの方法について記す。</p>
 <p>まず、<code>ntile()</code>関数を使って、賃金の分位数を表す変数を作成する。</p>
 <div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="handling.html#cb113-1" tabindex="-1"></a>piaac_sample_nona <span class="ot">&lt;-</span> piaac_sample_nona <span class="sc">%&gt;%</span> </span>
@@ -1638,7 +1638,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="handling.html#cb117-1" tabindex="-1"></a>piaac_sample_analytic <span class="sc">%&gt;%</span> </span>
 <span id="cb117-2"><a href="handling.html#cb117-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span></span>
 <span id="cb117-3"><a href="handling.html#cb117-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-81-1.png" alt="" width="672" /></p>
 <p>このように、分析に連続変数を用いる場合には、外れ値がないかどうか、外れ値を含むことで結果が大きく変わってしまわないかをチェックしておく必要がある。</p>
 </div>
 <div id="分析用データを保存しておく" class="section level3 hasAnchor" number="4.6.4">
@@ -1707,10 +1707,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div class="footnotes">
 <hr />
-<ol start="10">
-<li id="fn10"><p>実際にはわずかに違いがあるようである。参考）「<a href="https://speakerdeck.com/s_uryu/r-native-pipe?slide=15">R 4.1.0で導入された パイプ演算子 (|&gt;)の紹介 / r_native_pipe</a>」<a href="handling.html#fnref10" class="footnote-back">↩︎</a></p></li>
-<li id="fn11"><p>テキストによっては前者を「質的変数」、後者を「量的変数」と表記しているものもある。しかしこの呼び方は「質的研究」「量的研究」などと混同しやすいうえ、その数を数えられるという意味では「質的変数」を「量的」に扱えるというよくわからない事態が生じる。そこでここでは一貫して「カテゴリ変数」「連続変数」と表記する。また、尺度水準（比例尺度、間隔尺度、順序尺度、名義尺度）について紹介しているテキストもあるが、これらを区別しても分析上あまり意味はないのでここでは扱わない。<a href="handling.html#fnref11" class="footnote-back">↩︎</a></p></li>
-<li id="fn12"><p>実際、ある査読付き雑誌に掲載された論文が、売上高がわからないケースに対して付されていた88,888,888,888という値をNAにすることなく分析していたのではないか（実際、それをNAにすると分析の結果はまったく違うものになる）という<a href="https://doi.org/10.1177/0003122417714422">指摘</a>がなされたことがある。院生のころは「先行研究で言われていないような意外な結果が出たら、たいていはプログラムが間違っているものだ（だからちゃんとチェックしなさい）」とよく言われたものだった。<a href="handling.html#fnref12" class="footnote-back">↩︎</a></p></li>
+<ol start="9">
+<li id="fn9"><p>実際にはわずかに違いがあるようである。参考）「<a href="https://speakerdeck.com/s_uryu/r-native-pipe?slide=15">R 4.1.0で導入された パイプ演算子 (|&gt;)の紹介 / r_native_pipe</a>」<a href="handling.html#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>テキストによっては前者を「質的変数」、後者を「量的変数」と表記しているものもある。しかしこの呼び方は「質的研究」「量的研究」などと混同しやすいうえ、その数を数えられるという意味では「質的変数」を「量的」に扱えるというよくわからない事態が生じる。そこでここでは一貫して「カテゴリ変数」「連続変数」と表記する。また、尺度水準（比例尺度、間隔尺度、順序尺度、名義尺度）について紹介しているテキストもあるが、これらを区別しても分析上あまり意味はないのでここでは扱わない。<a href="handling.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>実際、ある査読付き雑誌に掲載された論文が、売上高がわからないケースに対して付されていた88,888,888,888という値をNAにすることなく分析していたのではないか（実際、それをNAにすると分析の結果はまったく違うものになる）という<a href="https://doi.org/10.1177/0003122417714422">指摘</a>がなされたことがある。院生のころは「先行研究で言われていないような意外な結果が出たら、たいていはプログラムが間違っているものだ（だからちゃんとチェックしなさい）」とよく言われたものだった。<a href="handling.html#fnref11" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 交互作用 | Rによる社会調査データ分析の手引き</title>
   <meta name="description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
-  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 交互作用 | Rによる社会調査データ分析の手引き" />
   <meta property="og:type" content="book" />
@@ -598,10 +598,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">9.1</span> 交互作用とはなにか<a href="interaction.html#interaction_basic" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>ある独立変数が従属変数に与える効果が別の変数によって異なることを指して、<strong>交互作用（interaction）</strong>がある、または<strong>調整効果（moderation effect）</strong>があるという。例えば以下のような例がある。</p>
 <ul>
-<li>子どもを出産すると、女性の賃金は下がる一方で、男性の賃金は下がらないかむしろ上がる（出産が賃金に与える効果が性別によって異なる）<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>。</li>
-<li>出身階層が高いほど高い学歴を得やすいという傾向は、近年の世代（コーホート）ほど弱い（出身階層が教育達成に与える効果がコーホートによって異なる）<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a>。</li>
-<li>出身階層が到達階層に与える効果は、非大卒層よりも大卒層においてより大きい（出身階層が到達階層に与える効果が学歴によって異なる）<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>。</li>
-<li>州が公的支出を行うと、高所得層の子どもに対する支出額は変わらないが、低所得層の子どもに対する支出額は増加する（公的投資が子どもに対する支出に与える効果が親所得によって異なる）<a href="#fn25" class="footnote-ref" id="fnref25"><sup>25</sup></a>。</li>
+<li>子どもを出産すると、女性の賃金は下がる一方で、男性の賃金は下がらないかむしろ上がる（出産が賃金に与える効果が性別によって異なる）<a href="#fn21" class="footnote-ref" id="fnref21"><sup>21</sup></a>。</li>
+<li>出身階層が高いほど高い学歴を得やすいという傾向は、近年の世代（コーホート）ほど弱い（出身階層が教育達成に与える効果がコーホートによって異なる）<a href="#fn22" class="footnote-ref" id="fnref22"><sup>22</sup></a>。</li>
+<li>出身階層が到達階層に与える効果は、非大卒層よりも大卒層においてより大きい（出身階層が到達階層に与える効果が学歴によって異なる）<a href="#fn23" class="footnote-ref" id="fnref23"><sup>23</sup></a>。</li>
+<li>州が公的支出を行うと、高所得層の子どもに対する支出額は変わらないが、低所得層の子どもに対する支出額は増加する（公的投資が子どもに対する支出に与える効果が親所得によって異なる）<a href="#fn24" class="footnote-ref" id="fnref24"><sup>24</sup></a>。</li>
 </ul>
 <p>いずれも、ある独立変数（xとする）の効果が、別の変数（zとする）の値によって異なるということである。これを図にして表すと、次のようになる。</p>
 <p><img src="images/interaction.png" /></p>
@@ -717,191 +717,157 @@ y
 <span id="cb341-16"><a href="interaction.html#cb341-16" tabindex="-1"></a>         <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
 <!-- preamble start -->
 
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
     <script>
-
-      function styleCell_q6a9wv12xa3vx8wcxq5z(i, j, css_id) {
-          var table = document.getElementById("tinytable_q6a9wv12xa3vx8wcxq5z");
-          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
-      }
-      function spanCell_q6a9wv12xa3vx8wcxq5z(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_q6a9wv12xa3vx8wcxq5z");
-        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-        if (!targetCell) {
-          console.warn(`Cell at (${i}, ${j}) not found.`);
-        }
-
-        // Get all cells that need to be removed
-        const cellsToRemove = [];
-        for (let r = 0; r < rowspan; r++) {
-          for (let c = 0; c < colspan; c++) {
-            if (r === 0 && c === 0) continue; // Skip the target cell
-            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
-            if (cell) {
-              cellsToRemove.push(cell);
-            }
-          }
-        }
-
-        // Remove all cells
-        cellsToRemove.forEach(cell => cell.remove());
-
-        // Set rowspan and colspan of the target cell if it exists
-        if (targetCell) {
-          targetCell.rowSpan = rowspan;
-          targetCell.colSpan = colspan;
-        }
-      }
+      // Create table-specific functions using external factory
+      const tableFns_w85lp33pd2je6uvsjc8i = TinyTable.createTableFunctions("tinytable_w85lp33pd2je6uvsjc8i");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '20', j: 1 }, { i: '20', j: 2 },  ], css_id: 'tinytable_css_qt1kk1293cty3llyictw',}, 
-          { positions: [ { i: '18', j: 1 }, { i: '18', j: 2 },  ], css_id: 'tinytable_css_gknnfixly1dajvqleqy4',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '4', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '10', j: 2 }, { i: '19', j: 1 }, { i: '12', j: 2 }, { i: '8', j: 1 }, { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '14', j: 2 }, { i: '11', j: 2 }, { i: '16', j: 2 }, { i: '13', j: 2 }, { i: '15', j: 2 }, { i: '17', j: 2 }, { i: '19', j: 2 },  ], css_id: 'tinytable_css_s1192b2dqt7gqon73iz9',}, 
-          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 },  ], css_id: 'tinytable_css_lgo5kfdqr7yunwcm6ket',}, 
-          { positions: [ { i: '20', j: 0 },  ], css_id: 'tinytable_css_8svoeb8tnchoaiq2cbon',}, 
-          { positions: [ { i: '18', j: 0 },  ], css_id: 'tinytable_css_m7b5ynnvyl4jfhseu5c1',}, 
-          { positions: [ { i: '1', j: 0 }, { i: '2', j: 0 }, { i: '3', j: 0 }, { i: '4', j: 0 }, { i: '5', j: 0 }, { i: '6', j: 0 }, { i: '7', j: 0 }, { i: '8', j: 0 }, { i: '9', j: 0 }, { i: '10', j: 0 }, { i: '11', j: 0 }, { i: '12', j: 0 }, { i: '13', j: 0 }, { i: '14', j: 0 }, { i: '15', j: 0 }, { i: '16', j: 0 }, { i: '17', j: 0 }, { i: '19', j: 0 },  ], css_id: 'tinytable_css_6tw5d9sxzuzs92rnqc27',}, 
-          { positions: [ { i: '0', j: 0 },  ], css_id: 'tinytable_css_sm8f176ny3ldmmzm0vic',}, 
+          { positions: [ { i: '20', j: 2 }, { i: '20', j: 3 } ], css_id: 'tinytable_css_lzh4jhd41sqvow2w9j8h',}, 
+          { positions: [ { i: '18', j: 2 }, { i: '18', j: 3 } ], css_id: 'tinytable_css_j2ifllycmz821ho3bptl',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '19', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '19', j: 3 } ], css_id: 'tinytable_css_vi6ti02e1u7jgy2iia1g',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_iqpijdbkrvyexj0shpkz',}, 
+          { positions: [ { i: '20', j: 1 } ], css_id: 'tinytable_css_23bpu8pwysyq2nce2fv6',}, 
+          { positions: [ { i: '18', j: 1 } ], css_id: 'tinytable_css_y4dkv1g64yg35duw7bba',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '19', j: 1 } ], css_id: 'tinytable_css_s1avy4hevjm9fdvix81v',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_mtw2ry78mtfm7cit1ws4',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_q6a9wv12xa3vx8wcxq5z(cell.i, cell.j, group.css_id);
+                  tableFns_w85lp33pd2je6uvsjc8i.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_qt1kk1293cty3llyictw, .table th.tinytable_css_qt1kk1293cty3llyictw { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_gknnfixly1dajvqleqy4, .table th.tinytable_css_gknnfixly1dajvqleqy4 { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_s1192b2dqt7gqon73iz9, .table th.tinytable_css_s1192b2dqt7gqon73iz9 { text-align: center; }
-      .table td.tinytable_css_lgo5kfdqr7yunwcm6ket, .table th.tinytable_css_lgo5kfdqr7yunwcm6ket { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_8svoeb8tnchoaiq2cbon, .table th.tinytable_css_8svoeb8tnchoaiq2cbon { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_m7b5ynnvyl4jfhseu5c1, .table th.tinytable_css_m7b5ynnvyl4jfhseu5c1 { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_6tw5d9sxzuzs92rnqc27, .table th.tinytable_css_6tw5d9sxzuzs92rnqc27 { text-align: left; }
-      .table td.tinytable_css_sm8f176ny3ldmmzm0vic, .table th.tinytable_css_sm8f176ny3ldmmzm0vic { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    /* tinytable css entries after */
+    #tinytable_w85lp33pd2je6uvsjc8i td.tinytable_css_lzh4jhd41sqvow2w9j8h, #tinytable_w85lp33pd2je6uvsjc8i th.tinytable_css_lzh4jhd41sqvow2w9j8h {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_w85lp33pd2je6uvsjc8i td.tinytable_css_j2ifllycmz821ho3bptl, #tinytable_w85lp33pd2je6uvsjc8i th.tinytable_css_j2ifllycmz821ho3bptl {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_w85lp33pd2je6uvsjc8i td.tinytable_css_vi6ti02e1u7jgy2iia1g, #tinytable_w85lp33pd2je6uvsjc8i th.tinytable_css_vi6ti02e1u7jgy2iia1g { text-align: center }
+    #tinytable_w85lp33pd2je6uvsjc8i td.tinytable_css_iqpijdbkrvyexj0shpkz, #tinytable_w85lp33pd2je6uvsjc8i th.tinytable_css_iqpijdbkrvyexj0shpkz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_w85lp33pd2je6uvsjc8i td.tinytable_css_23bpu8pwysyq2nce2fv6, #tinytable_w85lp33pd2je6uvsjc8i th.tinytable_css_23bpu8pwysyq2nce2fv6 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_w85lp33pd2je6uvsjc8i td.tinytable_css_y4dkv1g64yg35duw7bba, #tinytable_w85lp33pd2je6uvsjc8i th.tinytable_css_y4dkv1g64yg35duw7bba {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_w85lp33pd2je6uvsjc8i td.tinytable_css_s1avy4hevjm9fdvix81v, #tinytable_w85lp33pd2je6uvsjc8i th.tinytable_css_s1avy4hevjm9fdvix81v { text-align: left }
+    #tinytable_w85lp33pd2je6uvsjc8i td.tinytable_css_mtw2ry78mtfm7cit1ws4, #tinytable_w85lp33pd2je6uvsjc8i th.tinytable_css_mtw2ry78mtfm7cit1ws4 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_q6a9wv12xa3vx8wcxq5z" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
-        <thead>
+      <table class="tinytable" id="tinytable_w85lp33pd2je6uvsjc8i" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         
+        <thead>
               <tr>
-                <th scope="col" data-row="0" data-col="0"> </th>
-                <th scope="col" data-row="0" data-col="1">(1)</th>
-                <th scope="col" data-row="0" data-col="2">(2)</th>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">(1)</th>
+                <th scope="col" data-row="0" data-col="3">(2)</th>
               </tr>
         </thead>
         <tfoot><tr><td colspan='3'>+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001</td></tr></tfoot>
         <tbody>
                 <tr>
-                  <td data-row="1" data-col="0">数的思考力スコア</td>
-                  <td data-row="1" data-col="1">0.0025***</td>
-                  <td data-row="1" data-col="2">0.0024***</td>
+                  <td data-row="1" data-col="1">数的思考力スコア</td>
+                  <td data-row="1" data-col="2">0.0025***</td>
+                  <td data-row="1" data-col="3">0.0024***</td>
                 </tr>
                 <tr>
-                  <td data-row="2" data-col="0"></td>
-                  <td data-row="2" data-col="1">(0.0002)</td>
-                  <td data-row="2" data-col="2">(0.0003)</td>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.0002)</td>
+                  <td data-row="2" data-col="3">(0.0003)</td>
                 </tr>
                 <tr>
-                  <td data-row="3" data-col="0">男性</td>
-                  <td data-row="3" data-col="1">0.3971***</td>
-                  <td data-row="3" data-col="2">0.3544**</td>
+                  <td data-row="3" data-col="1">男性</td>
+                  <td data-row="3" data-col="2">0.3971***</td>
+                  <td data-row="3" data-col="3">0.3544**</td>
                 </tr>
                 <tr>
-                  <td data-row="4" data-col="0"></td>
-                  <td data-row="4" data-col="1">(0.0182)</td>
-                  <td data-row="4" data-col="2">(0.1229)</td>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.0182)</td>
+                  <td data-row="4" data-col="3">(0.1229)</td>
                 </tr>
                 <tr>
-                  <td data-row="5" data-col="0">数的思考力スコア x 男性</td>
-                  <td data-row="5" data-col="1"></td>
-                  <td data-row="5" data-col="2">0.0001</td>
+                  <td data-row="5" data-col="1">数的思考力スコア x 男性</td>
+                  <td data-row="5" data-col="2"></td>
+                  <td data-row="5" data-col="3">0.0001</td>
                 </tr>
                 <tr>
-                  <td data-row="6" data-col="0"></td>
                   <td data-row="6" data-col="1"></td>
-                  <td data-row="6" data-col="2">(0.0004)</td>
+                  <td data-row="6" data-col="2"></td>
+                  <td data-row="6" data-col="3">(0.0004)</td>
                 </tr>
                 <tr>
-                  <td data-row="7" data-col="0">年齢</td>
-                  <td data-row="7" data-col="1">0.0712***</td>
-                  <td data-row="7" data-col="2">0.0711***</td>
+                  <td data-row="7" data-col="1">年齢</td>
+                  <td data-row="7" data-col="2">0.0712***</td>
+                  <td data-row="7" data-col="3">0.0711***</td>
                 </tr>
                 <tr>
-                  <td data-row="8" data-col="0"></td>
-                  <td data-row="8" data-col="1">(0.0069)</td>
+                  <td data-row="8" data-col="1"></td>
                   <td data-row="8" data-col="2">(0.0069)</td>
+                  <td data-row="8" data-col="3">(0.0069)</td>
                 </tr>
                 <tr>
-                  <td data-row="9" data-col="0">年齢2乗</td>
-                  <td data-row="9" data-col="1">-0.0007***</td>
+                  <td data-row="9" data-col="1">年齢2乗</td>
                   <td data-row="9" data-col="2">-0.0007***</td>
+                  <td data-row="9" data-col="3">-0.0007***</td>
                 </tr>
                 <tr>
-                  <td data-row="10" data-col="0"></td>
-                  <td data-row="10" data-col="1">(0.0001)</td>
+                  <td data-row="10" data-col="1"></td>
                   <td data-row="10" data-col="2">(0.0001)</td>
+                  <td data-row="10" data-col="3">(0.0001)</td>
                 </tr>
                 <tr>
-                  <td data-row="11" data-col="0">高校（ref: 中学）</td>
-                  <td data-row="11" data-col="1">0.0518</td>
-                  <td data-row="11" data-col="2">0.0515</td>
+                  <td data-row="11" data-col="1">高校（ref: 中学）</td>
+                  <td data-row="11" data-col="2">0.0518</td>
+                  <td data-row="11" data-col="3">0.0515</td>
                 </tr>
                 <tr>
-                  <td data-row="12" data-col="0"></td>
-                  <td data-row="12" data-col="1">(0.0344)</td>
+                  <td data-row="12" data-col="1"></td>
                   <td data-row="12" data-col="2">(0.0344)</td>
+                  <td data-row="12" data-col="3">(0.0344)</td>
                 </tr>
                 <tr>
-                  <td data-row="13" data-col="0">短大高専（ref: 中学）</td>
-                  <td data-row="13" data-col="1">0.1392***</td>
-                  <td data-row="13" data-col="2">0.1389***</td>
+                  <td data-row="13" data-col="1">短大高専（ref: 中学）</td>
+                  <td data-row="13" data-col="2">0.1392***</td>
+                  <td data-row="13" data-col="3">0.1389***</td>
                 </tr>
                 <tr>
-                  <td data-row="14" data-col="0"></td>
-                  <td data-row="14" data-col="1">(0.0367)</td>
+                  <td data-row="14" data-col="1"></td>
                   <td data-row="14" data-col="2">(0.0367)</td>
+                  <td data-row="14" data-col="3">(0.0367)</td>
                 </tr>
                 <tr>
-                  <td data-row="15" data-col="0">大学大学院（ref: 中学）</td>
-                  <td data-row="15" data-col="1">0.3213***</td>
-                  <td data-row="15" data-col="2">0.3207***</td>
+                  <td data-row="15" data-col="1">大学大学院（ref: 中学）</td>
+                  <td data-row="15" data-col="2">0.3213***</td>
+                  <td data-row="15" data-col="3">0.3207***</td>
                 </tr>
                 <tr>
-                  <td data-row="16" data-col="0"></td>
-                  <td data-row="16" data-col="1">(0.0375)</td>
-                  <td data-row="16" data-col="2">(0.0376)</td>
+                  <td data-row="16" data-col="1"></td>
+                  <td data-row="16" data-col="2">(0.0375)</td>
+                  <td data-row="16" data-col="3">(0.0376)</td>
                 </tr>
                 <tr>
-                  <td data-row="17" data-col="0">切片</td>
-                  <td data-row="17" data-col="1">4.5493***</td>
-                  <td data-row="17" data-col="2">4.5755***</td>
+                  <td data-row="17" data-col="1">切片</td>
+                  <td data-row="17" data-col="2">4.5493***</td>
+                  <td data-row="17" data-col="3">4.5755***</td>
                 </tr>
                 <tr>
-                  <td data-row="18" data-col="0"></td>
-                  <td data-row="18" data-col="1">(0.1559)</td>
-                  <td data-row="18" data-col="2">(0.1728)</td>
+                  <td data-row="18" data-col="1"></td>
+                  <td data-row="18" data-col="2">(0.1559)</td>
+                  <td data-row="18" data-col="3">(0.1728)</td>
                 </tr>
                 <tr>
-                  <td data-row="19" data-col="0">Num.Obs.</td>
-                  <td data-row="19" data-col="1">2728</td>
+                  <td data-row="19" data-col="1">Num.Obs.</td>
                   <td data-row="19" data-col="2">2728</td>
+                  <td data-row="19" data-col="3">2728</td>
                 </tr>
                 <tr>
-                  <td data-row="20" data-col="0">R2</td>
-                  <td data-row="20" data-col="1">0.333</td>
+                  <td data-row="20" data-col="1">R2</td>
                   <td data-row="20" data-col="2">0.333</td>
+                  <td data-row="20" data-col="3">0.333</td>
                 </tr>
         </tbody>
       </table>
@@ -920,14 +886,14 @@ y
 <div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="interaction.html#cb344-1" tabindex="-1"></a>predicted <span class="ot">&lt;-</span> <span class="fu">ggeffect</span>(reg_res2, <span class="fu">c</span>(<span class="st">&quot;numeracy&quot;</span>, <span class="st">&quot;gender&quot;</span>)) <span class="co"># 予測値を求めて結果を保存</span></span>
 <span id="cb344-2"><a href="interaction.html#cb344-2" tabindex="-1"></a></span>
 <span id="cb344-3"><a href="interaction.html#cb344-3" tabindex="-1"></a>predicted <span class="sc">%&gt;%</span> <span class="fu">plot</span>() <span class="co"># 結果をプロット</span></span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-272-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-272-1.png" alt="" width="672" /></p>
 <p>また、<code>ggpredict()</code>で保存したデータフレームは<code>ggplot()</code>で図を作成するときと同じようにオプションを付けてより見やすい図を作ることもできる。編集の一例を以下に示す。</p>
 <div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="interaction.html#cb345-1" tabindex="-1"></a>predicted <span class="sc">%&gt;%</span> </span>
 <span id="cb345-2"><a href="interaction.html#cb345-2" tabindex="-1"></a>  <span class="fu">plot</span>() <span class="sc">+</span> </span>
 <span id="cb345-3"><a href="interaction.html#cb345-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;数的思考力スコア&quot;</span>, <span class="at">y =</span> <span class="st">&quot;対数賃金&quot;</span>, <span class="at">color =</span> <span class="st">&quot;&quot;</span>, <span class="at">title =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
 <span id="cb345-4"><a href="interaction.html#cb345-4" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span> </span>
 <span id="cb345-5"><a href="interaction.html#cb345-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_family =</span> <span class="st">&quot;HiraKakuProN-W3&quot;</span>) <span class="co"># Macの場合はこれをつけないと文字化けするかもしれない</span></span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-273-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-273-1.png" alt="" width="672" /></p>
 </div>
 <div id="xがカテゴリ変数zが連続変数の場合" class="section level3 hasAnchor" number="9.2.3">
 <h3><span class="header-section-number">9.2.3</span> xがカテゴリ変数、zが連続変数の場合<a href="interaction.html#x%E3%81%8C%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E5%A4%89%E6%95%B0z%E3%81%8C%E9%80%A3%E7%B6%9A%E5%A4%89%E6%95%B0%E3%81%AE%E5%A0%B4%E5%90%88" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -987,201 +953,167 @@ y =&amp; \beta_0 + \beta_{1,1}高校 + \beta_{1,2}高専短大 + \beta_{1,3}大�
 <span id="cb348-13"><a href="interaction.html#cb348-13" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>))</span></code></pre></div>
 <!-- preamble start -->
 
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
     <script>
-
-      function styleCell_vfkbcr96gg6f6qbytulm(i, j, css_id) {
-          var table = document.getElementById("tinytable_vfkbcr96gg6f6qbytulm");
-          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
-      }
-      function spanCell_vfkbcr96gg6f6qbytulm(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_vfkbcr96gg6f6qbytulm");
-        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-        if (!targetCell) {
-          console.warn(`Cell at (${i}, ${j}) not found.`);
-        }
-
-        // Get all cells that need to be removed
-        const cellsToRemove = [];
-        for (let r = 0; r < rowspan; r++) {
-          for (let c = 0; c < colspan; c++) {
-            if (r === 0 && c === 0) continue; // Skip the target cell
-            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
-            if (cell) {
-              cellsToRemove.push(cell);
-            }
-          }
-        }
-
-        // Remove all cells
-        cellsToRemove.forEach(cell => cell.remove());
-
-        // Set rowspan and colspan of the target cell if it exists
-        if (targetCell) {
-          targetCell.rowSpan = rowspan;
-          targetCell.colSpan = colspan;
-        }
-      }
+      // Create table-specific functions using external factory
+      const tableFns_lgxvztcw35e1q5nkjanz = TinyTable.createTableFunctions("tinytable_lgxvztcw35e1q5nkjanz");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '22', j: 1 }, { i: '22', j: 2 },  ], css_id: 'tinytable_css_xo7oxiwjevh4wzkyrd7t',}, 
-          { positions: [ { i: '20', j: 2 }, { i: '20', j: 1 },  ], css_id: 'tinytable_css_yqq2s5re8tarvue61999',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '2', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '6', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '10', j: 2 }, { i: '21', j: 1 }, { i: '12', j: 2 }, { i: '10', j: 1 }, { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '14', j: 2 }, { i: '11', j: 2 }, { i: '16', j: 2 }, { i: '13', j: 2 }, { i: '18', j: 2 }, { i: '15', j: 2 }, { i: '17', j: 2 }, { i: '19', j: 2 }, { i: '21', j: 2 },  ], css_id: 'tinytable_css_733cgg7968vrapvhctp4',}, 
-          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 },  ], css_id: 'tinytable_css_3bl8fq7tuf65m0oxiquu',}, 
-          { positions: [ { i: '22', j: 0 },  ], css_id: 'tinytable_css_yf52notrj8hyrjrwwltm',}, 
-          { positions: [ { i: '20', j: 0 },  ], css_id: 'tinytable_css_fwir1gcb10mz4zuwb4oe',}, 
-          { positions: [ { i: '1', j: 0 }, { i: '2', j: 0 }, { i: '3', j: 0 }, { i: '4', j: 0 }, { i: '5', j: 0 }, { i: '6', j: 0 }, { i: '7', j: 0 }, { i: '8', j: 0 }, { i: '9', j: 0 }, { i: '10', j: 0 }, { i: '11', j: 0 }, { i: '12', j: 0 }, { i: '13', j: 0 }, { i: '14', j: 0 }, { i: '15', j: 0 }, { i: '16', j: 0 }, { i: '17', j: 0 }, { i: '18', j: 0 }, { i: '19', j: 0 }, { i: '21', j: 0 },  ], css_id: 'tinytable_css_n3swo5ar88yej8f2uyk1',}, 
-          { positions: [ { i: '0', j: 0 },  ], css_id: 'tinytable_css_nz4g7c3x9ns3dmuljrls',}, 
+          { positions: [ { i: '22', j: 2 }, { i: '22', j: 3 } ], css_id: 'tinytable_css_a08lvptqc33eqljx51k5',}, 
+          { positions: [ { i: '20', j: 2 }, { i: '20', j: 3 } ], css_id: 'tinytable_css_0a8zy5wncq9l35bcv2ng',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '21', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 }, { i: '21', j: 3 } ], css_id: 'tinytable_css_0m50p7fk0n6z5vq6ada0',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_9h1b24x4vvx9efsu99nh',}, 
+          { positions: [ { i: '22', j: 1 } ], css_id: 'tinytable_css_83zf1yrtk18hu8otzt9i',}, 
+          { positions: [ { i: '20', j: 1 } ], css_id: 'tinytable_css_gdwto012v49lf72lulgz',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '21', j: 1 } ], css_id: 'tinytable_css_aeszfg4ninmetk18l1ht',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_3y4x0384qyctdg7zybp3',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_vfkbcr96gg6f6qbytulm(cell.i, cell.j, group.css_id);
+                  tableFns_lgxvztcw35e1q5nkjanz.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_xo7oxiwjevh4wzkyrd7t, .table th.tinytable_css_xo7oxiwjevh4wzkyrd7t { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_yqq2s5re8tarvue61999, .table th.tinytable_css_yqq2s5re8tarvue61999 { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_733cgg7968vrapvhctp4, .table th.tinytable_css_733cgg7968vrapvhctp4 { text-align: center; }
-      .table td.tinytable_css_3bl8fq7tuf65m0oxiquu, .table th.tinytable_css_3bl8fq7tuf65m0oxiquu { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_yf52notrj8hyrjrwwltm, .table th.tinytable_css_yf52notrj8hyrjrwwltm { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_fwir1gcb10mz4zuwb4oe, .table th.tinytable_css_fwir1gcb10mz4zuwb4oe { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_n3swo5ar88yej8f2uyk1, .table th.tinytable_css_n3swo5ar88yej8f2uyk1 { text-align: left; }
-      .table td.tinytable_css_nz4g7c3x9ns3dmuljrls, .table th.tinytable_css_nz4g7c3x9ns3dmuljrls { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    /* tinytable css entries after */
+    #tinytable_lgxvztcw35e1q5nkjanz td.tinytable_css_a08lvptqc33eqljx51k5, #tinytable_lgxvztcw35e1q5nkjanz th.tinytable_css_a08lvptqc33eqljx51k5 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_lgxvztcw35e1q5nkjanz td.tinytable_css_0a8zy5wncq9l35bcv2ng, #tinytable_lgxvztcw35e1q5nkjanz th.tinytable_css_0a8zy5wncq9l35bcv2ng {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_lgxvztcw35e1q5nkjanz td.tinytable_css_0m50p7fk0n6z5vq6ada0, #tinytable_lgxvztcw35e1q5nkjanz th.tinytable_css_0m50p7fk0n6z5vq6ada0 { text-align: center }
+    #tinytable_lgxvztcw35e1q5nkjanz td.tinytable_css_9h1b24x4vvx9efsu99nh, #tinytable_lgxvztcw35e1q5nkjanz th.tinytable_css_9h1b24x4vvx9efsu99nh {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_lgxvztcw35e1q5nkjanz td.tinytable_css_83zf1yrtk18hu8otzt9i, #tinytable_lgxvztcw35e1q5nkjanz th.tinytable_css_83zf1yrtk18hu8otzt9i {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_lgxvztcw35e1q5nkjanz td.tinytable_css_gdwto012v49lf72lulgz, #tinytable_lgxvztcw35e1q5nkjanz th.tinytable_css_gdwto012v49lf72lulgz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_lgxvztcw35e1q5nkjanz td.tinytable_css_aeszfg4ninmetk18l1ht, #tinytable_lgxvztcw35e1q5nkjanz th.tinytable_css_aeszfg4ninmetk18l1ht { text-align: left }
+    #tinytable_lgxvztcw35e1q5nkjanz td.tinytable_css_3y4x0384qyctdg7zybp3, #tinytable_lgxvztcw35e1q5nkjanz th.tinytable_css_3y4x0384qyctdg7zybp3 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_vfkbcr96gg6f6qbytulm" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
-        <thead>
+      <table class="tinytable" id="tinytable_lgxvztcw35e1q5nkjanz" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         
+        <thead>
               <tr>
-                <th scope="col" data-row="0" data-col="0"> </th>
-                <th scope="col" data-row="0" data-col="1">(1)</th>
-                <th scope="col" data-row="0" data-col="2">(2)</th>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">(1)</th>
+                <th scope="col" data-row="0" data-col="3">(2)</th>
               </tr>
         </thead>
         <tfoot><tr><td colspan='3'>+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001</td></tr></tfoot>
         <tbody>
                 <tr>
-                  <td data-row="1" data-col="0">高校（ref: 中学）</td>
-                  <td data-row="1" data-col="1">0.116***</td>
-                  <td data-row="1" data-col="2">0.125**</td>
+                  <td data-row="1" data-col="1">高校（ref: 中学）</td>
+                  <td data-row="1" data-col="2">0.116***</td>
+                  <td data-row="1" data-col="3">0.125**</td>
                 </tr>
                 <tr>
-                  <td data-row="2" data-col="0"></td>
-                  <td data-row="2" data-col="1">(0.034)</td>
-                  <td data-row="2" data-col="2">(0.045)</td>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.034)</td>
+                  <td data-row="2" data-col="3">(0.045)</td>
                 </tr>
                 <tr>
-                  <td data-row="3" data-col="0">短大高専（ref: 中学）</td>
-                  <td data-row="3" data-col="1">0.221***</td>
-                  <td data-row="3" data-col="2">0.158**</td>
+                  <td data-row="3" data-col="1">短大高専（ref: 中学）</td>
+                  <td data-row="3" data-col="2">0.221***</td>
+                  <td data-row="3" data-col="3">0.158**</td>
                 </tr>
                 <tr>
-                  <td data-row="4" data-col="0"></td>
-                  <td data-row="4" data-col="1">(0.037)</td>
-                  <td data-row="4" data-col="2">(0.051)</td>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.037)</td>
+                  <td data-row="4" data-col="3">(0.051)</td>
                 </tr>
                 <tr>
-                  <td data-row="5" data-col="0">大学大学院（ref: 中学）</td>
-                  <td data-row="5" data-col="1">0.477***</td>
-                  <td data-row="5" data-col="2">0.430***</td>
+                  <td data-row="5" data-col="1">大学大学院（ref: 中学）</td>
+                  <td data-row="5" data-col="2">0.477***</td>
+                  <td data-row="5" data-col="3">0.430***</td>
                 </tr>
                 <tr>
-                  <td data-row="6" data-col="0"></td>
-                  <td data-row="6" data-col="1">(0.035)</td>
-                  <td data-row="6" data-col="2">(0.044)</td>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">(0.035)</td>
+                  <td data-row="6" data-col="3">(0.044)</td>
                 </tr>
                 <tr>
-                  <td data-row="7" data-col="0">女性</td>
-                  <td data-row="7" data-col="1">-0.416***</td>
-                  <td data-row="7" data-col="2">-0.484***</td>
+                  <td data-row="7" data-col="1">女性</td>
+                  <td data-row="7" data-col="2">-0.416***</td>
+                  <td data-row="7" data-col="3">-0.484***</td>
                 </tr>
                 <tr>
-                  <td data-row="8" data-col="0"></td>
-                  <td data-row="8" data-col="1">(0.018)</td>
-                  <td data-row="8" data-col="2">(0.062)</td>
+                  <td data-row="8" data-col="1"></td>
+                  <td data-row="8" data-col="2">(0.018)</td>
+                  <td data-row="8" data-col="3">(0.062)</td>
                 </tr>
                 <tr>
-                  <td data-row="9" data-col="0">女性 x 高校</td>
-                  <td data-row="9" data-col="1"></td>
-                  <td data-row="9" data-col="2">-0.005</td>
+                  <td data-row="9" data-col="1">女性 x 高校</td>
+                  <td data-row="9" data-col="2"></td>
+                  <td data-row="9" data-col="3">-0.005</td>
                 </tr>
                 <tr>
-                  <td data-row="10" data-col="0"></td>
                   <td data-row="10" data-col="1"></td>
-                  <td data-row="10" data-col="2">(0.069)</td>
+                  <td data-row="10" data-col="2"></td>
+                  <td data-row="10" data-col="3">(0.069)</td>
                 </tr>
                 <tr>
-                  <td data-row="11" data-col="0">女性 x 短大高専</td>
-                  <td data-row="11" data-col="1"></td>
-                  <td data-row="11" data-col="2">0.122+</td>
+                  <td data-row="11" data-col="1">女性 x 短大高専</td>
+                  <td data-row="11" data-col="2"></td>
+                  <td data-row="11" data-col="3">0.122+</td>
                 </tr>
                 <tr>
-                  <td data-row="12" data-col="0"></td>
                   <td data-row="12" data-col="1"></td>
-                  <td data-row="12" data-col="2">(0.073)</td>
+                  <td data-row="12" data-col="2"></td>
+                  <td data-row="12" data-col="3">(0.073)</td>
                 </tr>
                 <tr>
-                  <td data-row="13" data-col="0">女性 x 大学大学院</td>
-                  <td data-row="13" data-col="1"></td>
-                  <td data-row="13" data-col="2">0.138+</td>
+                  <td data-row="13" data-col="1">女性 x 大学大学院</td>
+                  <td data-row="13" data-col="2"></td>
+                  <td data-row="13" data-col="3">0.138+</td>
                 </tr>
                 <tr>
-                  <td data-row="14" data-col="0"></td>
                   <td data-row="14" data-col="1"></td>
-                  <td data-row="14" data-col="2">(0.071)</td>
+                  <td data-row="14" data-col="2"></td>
+                  <td data-row="14" data-col="3">(0.071)</td>
                 </tr>
                 <tr>
-                  <td data-row="15" data-col="0">年齢</td>
-                  <td data-row="15" data-col="1">0.079***</td>
+                  <td data-row="15" data-col="1">年齢</td>
                   <td data-row="15" data-col="2">0.079***</td>
+                  <td data-row="15" data-col="3">0.079***</td>
                 </tr>
                 <tr>
-                  <td data-row="16" data-col="0"></td>
-                  <td data-row="16" data-col="1">(0.007)</td>
+                  <td data-row="16" data-col="1"></td>
                   <td data-row="16" data-col="2">(0.007)</td>
+                  <td data-row="16" data-col="3">(0.007)</td>
                 </tr>
                 <tr>
-                  <td data-row="17" data-col="0">年齢2乗</td>
-                  <td data-row="17" data-col="1">-0.001***</td>
+                  <td data-row="17" data-col="1">年齢2乗</td>
                   <td data-row="17" data-col="2">-0.001***</td>
+                  <td data-row="17" data-col="3">-0.001***</td>
                 </tr>
                 <tr>
-                  <td data-row="18" data-col="0"></td>
-                  <td data-row="18" data-col="1">(0.000)</td>
+                  <td data-row="18" data-col="1"></td>
                   <td data-row="18" data-col="2">(0.000)</td>
+                  <td data-row="18" data-col="3">(0.000)</td>
                 </tr>
                 <tr>
-                  <td data-row="19" data-col="0">切片</td>
-                  <td data-row="19" data-col="1">5.465***</td>
-                  <td data-row="19" data-col="2">5.488***</td>
+                  <td data-row="19" data-col="1">切片</td>
+                  <td data-row="19" data-col="2">5.465***</td>
+                  <td data-row="19" data-col="3">5.488***</td>
                 </tr>
                 <tr>
-                  <td data-row="20" data-col="0"></td>
-                  <td data-row="20" data-col="1">(0.151)</td>
-                  <td data-row="20" data-col="2">(0.154)</td>
+                  <td data-row="20" data-col="1"></td>
+                  <td data-row="20" data-col="2">(0.151)</td>
+                  <td data-row="20" data-col="3">(0.154)</td>
                 </tr>
                 <tr>
-                  <td data-row="21" data-col="0">Num.Obs.</td>
-                  <td data-row="21" data-col="1">2728</td>
+                  <td data-row="21" data-col="1">Num.Obs.</td>
                   <td data-row="21" data-col="2">2728</td>
+                  <td data-row="21" data-col="3">2728</td>
                 </tr>
                 <tr>
-                  <td data-row="22" data-col="0">R2</td>
-                  <td data-row="22" data-col="1">0.305</td>
-                  <td data-row="22" data-col="2">0.309</td>
+                  <td data-row="22" data-col="1">R2</td>
+                  <td data-row="22" data-col="2">0.305</td>
+                  <td data-row="22" data-col="3">0.309</td>
                 </tr>
         </tbody>
       </table>
@@ -1205,7 +1137,7 @@ y =&amp; \beta_0 + \beta_{1,1}高校 + \beta_{1,2}高専短大 + \beta_{1,3}大�
 <pre><code>## Ignoring unknown labels:
 ## • linetype : &quot;gender_rev&quot;
 ## • shape : &quot;gender_rev&quot;</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-279-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-279-1.png" alt="" width="672" /></p>
 <p>学歴が高いと賃金が高くなる傾向は男女とも共通であるが、女性は男性と比べて学歴が高くなるとより大きく賃金が高くなることが視覚的にわかりやすい。</p>
 </div>
 <div id="interaction_continuous_continuous" class="section level2 hasAnchor" number="9.4">
@@ -1215,15 +1147,15 @@ y =&amp; \beta_0 + \beta_{1,1}高校 + \beta_{1,2}高専短大 + \beta_{1,3}大�
 </div>
 <div class="footnotes">
 <hr />
-<ol start="22">
-<li id="fn22"><p>出産すると女性の賃金が下がることは母親ペナルティと呼ばれ、他方男性の賃金は上がることは父親ペナルティと呼ばれそれぞれ研究がなされている。近年の研究としては例えば Yu, W.-H., &amp; Hara, Y. (2021). Motherhood Penalties and Fatherhood Premiums: Effects of Parenthood on Earnings Growth Within and Across Firms. <em>Demography</em>, <em>58</em>(1), 247–272. ただし父親ペナルティについては見せかけの関連（賃金が高くなりやすい男性ほど子どもを持ちやすい）なのではないかという指摘がある。たとえば Killewald, A., &amp; Lundberg, I. (2017). New Evidence Against a Causal Marriage Wage Premium. <em>Demography</em>, <em>54</em>, 1007–1028. など。<a href="interaction.html#fnref22" class="footnote-back">↩︎</a></p></li>
-<li id="fn23"><p>出身階層（親の階級や学歴）が高いほど子の教育達成が高いという傾向は20世紀の間で大きく変化していない（“persistent inequality”）を主張したShavit &amp; Blossfeld (1993)に対して、西ヨーロッパ8カ国の統合的なデータを使った比較研究を行ったBreenら（2009）は、出身階層（親の階級）が子どもの教育達成に与える影響は近年のコーホートほど弱まっている（“nonpersistent inequality”）と主張した。</p>
+<ol start="21">
+<li id="fn21"><p>出産すると女性の賃金が下がることは母親ペナルティと呼ばれ、他方男性の賃金は上がることは父親ペナルティと呼ばれそれぞれ研究がなされている。近年の研究としては例えば Yu, W.-H., &amp; Hara, Y. (2021). Motherhood Penalties and Fatherhood Premiums: Effects of Parenthood on Earnings Growth Within and Across Firms. <em>Demography</em>, <em>58</em>(1), 247–272. ただし父親ペナルティについては見せかけの関連（賃金が高くなりやすい男性ほど子どもを持ちやすい）なのではないかという指摘がある。たとえば Killewald, A., &amp; Lundberg, I. (2017). New Evidence Against a Causal Marriage Wage Premium. <em>Demography</em>, <em>54</em>, 1007–1028. など。<a href="interaction.html#fnref21" class="footnote-back">↩︎</a></p></li>
+<li id="fn22"><p>出身階層（親の階級や学歴）が高いほど子の教育達成が高いという傾向は20世紀の間で大きく変化していない（“persistent inequality”）を主張したShavit &amp; Blossfeld (1993)に対して、西ヨーロッパ8カ国の統合的なデータを使った比較研究を行ったBreenら（2009）は、出身階層（親の階級）が子どもの教育達成に与える影響は近年のコーホートほど弱まっている（“nonpersistent inequality”）と主張した。</p>
 <p>Shavit, Y., &amp; Blossfeld, H.-P. (1993). <em>Persistent inequality: Changing educational attainment in thirteen countries</em>. Westview Press.</p>
-<p>Breen, R., Luijkx, R., Müller, W., &amp; Pollak, R. (2009). Nonpersistent inequality in educational attainment : Evidence from eight European countries. <em>American Journal of Sociology</em>, <em>114</em>(5), 1475–1521.<a href="interaction.html#fnref23" class="footnote-back">↩︎</a></p></li>
-<li id="fn24"><p>Torche（2011）は階級、社会経済的地位指標、所得、賃金などさまざまな階層を表す指標を用いて親と子の相関を子どもの学歴別に検討した。その結果、いずれについても、子どもが大卒であると、そうでない場合と比較して親と子の階層指標の相関が弱くなることを発見した。ただしこれも近年の研究では必ずしも成り立たないのではないかと指摘されている（e.g. Zhou 2019）。</p>
+<p>Breen, R., Luijkx, R., Müller, W., &amp; Pollak, R. (2009). Nonpersistent inequality in educational attainment : Evidence from eight European countries. <em>American Journal of Sociology</em>, <em>114</em>(5), 1475–1521.<a href="interaction.html#fnref22" class="footnote-back">↩︎</a></p></li>
+<li id="fn23"><p>Torche（2011）は階級、社会経済的地位指標、所得、賃金などさまざまな階層を表す指標を用いて親と子の相関を子どもの学歴別に検討した。その結果、いずれについても、子どもが大卒であると、そうでない場合と比較して親と子の階層指標の相関が弱くなることを発見した。ただしこれも近年の研究では必ずしも成り立たないのではないかと指摘されている（e.g. Zhou 2019）。</p>
 <p>Torche, F. (2011). Is a College Degree Still the Great Equalizer? Intergenerational Mobility across Levels of Schooling in the United States. <em>American Journal of Sociology</em>, <em>117</em>(3), 763–807.</p>
-<p>Zhou, X. (2019). Equalization or Selection? Reassessing the “Meritocratic Power” of a College Degree in Intergenerational Income Mobility. <em>American Sociological Review</em>, <em>84</em>(3), 459–485.<a href="interaction.html#fnref24" class="footnote-back">↩︎</a></p></li>
-<li id="fn25"><p>Jackson, M. I., &amp; Schneider, D. (2022). Public Investments and Class Gaps in Parents’ Developmental Expenditures. <em>American Sociological Review</em>, <em>87</em>(1), 105–142.<a href="interaction.html#fnref25" class="footnote-back">↩︎</a></p></li>
+<p>Zhou, X. (2019). Equalization or Selection? Reassessing the “Meritocratic Power” of a College Degree in Intergenerational Income Mobility. <em>American Sociological Review</em>, <em>84</em>(3), 459–485.<a href="interaction.html#fnref23" class="footnote-back">↩︎</a></p></li>
+<li id="fn24"><p>Jackson, M. I., &amp; Schneider, D. (2022). Public Investments and Class Gaps in Parents’ Developmental Expenditures. <em>American Sociological Review</em>, <em>87</em>(1), 105–142.<a href="interaction.html#fnref24" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

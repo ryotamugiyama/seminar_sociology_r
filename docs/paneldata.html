@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 11 パネルデータ分析 | Rによる社会調査データ分析の手引き</title>
   <meta name="description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
-  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 11 パネルデータ分析 | Rによる社会調査データ分析の手引き" />
   <meta property="og:type" content="book" />
@@ -752,7 +752,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">11.1.4</span> 個人内変動と個人間変動<a href="paneldata.html#within_between_variation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>個人<span class="math inline">\(i\)</span>の時点<span class="math inline">\(t\)</span>におけるある変数<span class="math inline">\(Y\)</span>の値を<span class="math inline">\(Y_{it}\)</span>と書くこととする。上記の賃金の例であれば、ID = 1のtime = 1における賃金の値は<span class="math inline">\(Y_{1, 1} = 1200\)</span>というふうに表すことができる。</p>
 <p>時間可変の変数の場合、その変動（variation）を<strong>個人内変動（within-individual variation）</strong>と<strong>個人間変動（between-individual variation）</strong>に分けることができる。たとえば、4時点の調査を行い、各個人について計4回分の<span class="math inline">\(Y_{it}\)</span>の値を得られたとしよう。このとき、2人の個人（1, 2）について得られた値（値は架空のもの）をプロットしたのが次の図である。縦軸が<span class="math inline">\(Y\)</span>の値、横軸が時点<span class="math inline">\(t\)</span>を表す。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-314-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-314-1.png" alt="" width="672" /></p>
 <p>ここで<span class="math inline">\(Y_{it}\)</span>は、図中に示した全体平均（灰色の点線。この値を<span class="math inline">\(\overline{Y}\)</span>とする）と、そこからの残差（青色または黄色の値の実線。この値を<span class="math inline">\(e_{it}\)</span>とする）の和として表すことができる。</p>
 <p><span class="math display">\[
 Y_{it} = \overline{Y} + e_{it}
@@ -768,12 +768,12 @@ Y_{it}
 \end{align}
 \]</span></p>
 <p>個人間変動は次の図のように、全体平均からの個人内平均のずれに対応する。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-315-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-315-1.png" alt="" width="672" /></p>
 <p>個人内変動は次の図のように、個人内平均からの各観察の値のずれに対応する。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-316-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-316-1.png" alt="" width="672" /></p>
 <p>パネルデータがあれば、2時点以上の観察を得られている個人について、その時間可変の変数の値のばらつきを個人間変動によるものと個人内変動によるものとに分割することができる。とりわけ、個人内変動に着目することによって、同じ個人の変数の値が高くなったり低くなったりするのはどのような要因によるのかを分析することができる。</p>
 <p>1時点の観察しか得られていない場合、仮に理論上は時間可変の変数であったとしても、変数のばらつきが個人間変動によるものなのか、個人内変動によるものなのかを区別することはできない。この場合の図は次のようになり、各観察の値と個人内平均は完全に一致してしまう（<span class="math inline">\(Y_{it} = \overline{Y}_i\)</span>）。そのため、個人間変動と個人内変動を分けることができない。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-317-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-317-1.png" alt="" width="672" /></p>
 <p>時間不変の変数については個人内変動が0となるため、やはり個人内変動と個人間変動を分けることはできない。</p>
 </div>
 </div>
@@ -1441,186 +1441,152 @@ Y_{it} = \alpha + \underbrace{\beta_1 X_{1it} + \cdots + \beta_k X_{kit}}_{\text
 <span id="cb407-2"><a href="paneldata.html#cb407-2" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Pooled OLS&quot;</span> <span class="ot">=</span> model_pols), <span class="at">stars =</span> <span class="cn">TRUE</span>) <span class="co"># 結果を表示</span></span></code></pre></div>
 <!-- preamble start -->
 
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
     <script>
-
-      function styleCell_jvoua9kew5liyhv74xdn(i, j, css_id) {
-          var table = document.getElementById("tinytable_jvoua9kew5liyhv74xdn");
-          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
-      }
-      function spanCell_jvoua9kew5liyhv74xdn(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_jvoua9kew5liyhv74xdn");
-        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-        if (!targetCell) {
-          console.warn(`Cell at (${i}, ${j}) not found.`);
-        }
-
-        // Get all cells that need to be removed
-        const cellsToRemove = [];
-        for (let r = 0; r < rowspan; r++) {
-          for (let c = 0; c < colspan; c++) {
-            if (r === 0 && c === 0) continue; // Skip the target cell
-            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
-            if (cell) {
-              cellsToRemove.push(cell);
-            }
-          }
-        }
-
-        // Remove all cells
-        cellsToRemove.forEach(cell => cell.remove());
-
-        // Set rowspan and colspan of the target cell if it exists
-        if (targetCell) {
-          targetCell.rowSpan = rowspan;
-          targetCell.colSpan = colspan;
-        }
-      }
+      // Create table-specific functions using external factory
+      const tableFns_gjnwj3180blflhgmqwee = TinyTable.createTableFunctions("tinytable_gjnwj3180blflhgmqwee");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '24', j: 1 },  ], css_id: 'tinytable_css_d1xj9qvsmwo83iiwx9uu',}, 
-          { positions: [ { i: '16', j: 1 },  ], css_id: 'tinytable_css_zh4y600nghkbodq2eysx',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '20', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '21', j: 1 }, { i: '22', j: 1 }, { i: '23', j: 1 },  ], css_id: 'tinytable_css_m5ctk6rvl12qtzj1w7f7',}, 
-          { positions: [ { i: '0', j: 1 },  ], css_id: 'tinytable_css_n5louf8s69lo1f6t2un3',}, 
-          { positions: [ { i: '24', j: 0 },  ], css_id: 'tinytable_css_7uzwx4u8k0dwnrcnt4yp',}, 
-          { positions: [ { i: '16', j: 0 },  ], css_id: 'tinytable_css_dlyxgomgl86ih1ldxb8i',}, 
-          { positions: [ { i: '1', j: 0 }, { i: '2', j: 0 }, { i: '3', j: 0 }, { i: '4', j: 0 }, { i: '5', j: 0 }, { i: '6', j: 0 }, { i: '7', j: 0 }, { i: '8', j: 0 }, { i: '9', j: 0 }, { i: '10', j: 0 }, { i: '11', j: 0 }, { i: '12', j: 0 }, { i: '13', j: 0 }, { i: '14', j: 0 }, { i: '15', j: 0 }, { i: '20', j: 0 }, { i: '17', j: 0 }, { i: '18', j: 0 }, { i: '19', j: 0 }, { i: '21', j: 0 }, { i: '22', j: 0 }, { i: '23', j: 0 },  ], css_id: 'tinytable_css_owpb1f5ikuyu40snuxvg',}, 
-          { positions: [ { i: '0', j: 0 },  ], css_id: 'tinytable_css_o25czzcf9wc9nmifgd24',}, 
+          { positions: [ { i: '24', j: 2 } ], css_id: 'tinytable_css_jr9ubx9tlvh5gr1tchl8',}, 
+          { positions: [ { i: '16', j: 2 } ], css_id: 'tinytable_css_w8l9iq2uynjriitq7yr5',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '22', j: 2 }, { i: '23', j: 2 } ], css_id: 'tinytable_css_lzd9qnb78v7kb0n4vh7o',}, 
+          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_2a13m47033283zd26iih',}, 
+          { positions: [ { i: '24', j: 1 } ], css_id: 'tinytable_css_y71c7py2281kk3aaig9v',}, 
+          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_lf60xfto6vwzds36vmgj',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '22', j: 1 }, { i: '23', j: 1 } ], css_id: 'tinytable_css_1kz964dkiw25cogm33cs',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_8q5q0ziw12w6f5peb1fy',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_jvoua9kew5liyhv74xdn(cell.i, cell.j, group.css_id);
+                  tableFns_gjnwj3180blflhgmqwee.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_d1xj9qvsmwo83iiwx9uu, .table th.tinytable_css_d1xj9qvsmwo83iiwx9uu { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_zh4y600nghkbodq2eysx, .table th.tinytable_css_zh4y600nghkbodq2eysx { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_m5ctk6rvl12qtzj1w7f7, .table th.tinytable_css_m5ctk6rvl12qtzj1w7f7 { text-align: center; }
-      .table td.tinytable_css_n5louf8s69lo1f6t2un3, .table th.tinytable_css_n5louf8s69lo1f6t2un3 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_7uzwx4u8k0dwnrcnt4yp, .table th.tinytable_css_7uzwx4u8k0dwnrcnt4yp { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_dlyxgomgl86ih1ldxb8i, .table th.tinytable_css_dlyxgomgl86ih1ldxb8i { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_owpb1f5ikuyu40snuxvg, .table th.tinytable_css_owpb1f5ikuyu40snuxvg { text-align: left; }
-      .table td.tinytable_css_o25czzcf9wc9nmifgd24, .table th.tinytable_css_o25czzcf9wc9nmifgd24 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    /* tinytable css entries after */
+    #tinytable_gjnwj3180blflhgmqwee td.tinytable_css_jr9ubx9tlvh5gr1tchl8, #tinytable_gjnwj3180blflhgmqwee th.tinytable_css_jr9ubx9tlvh5gr1tchl8 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_gjnwj3180blflhgmqwee td.tinytable_css_w8l9iq2uynjriitq7yr5, #tinytable_gjnwj3180blflhgmqwee th.tinytable_css_w8l9iq2uynjriitq7yr5 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_gjnwj3180blflhgmqwee td.tinytable_css_lzd9qnb78v7kb0n4vh7o, #tinytable_gjnwj3180blflhgmqwee th.tinytable_css_lzd9qnb78v7kb0n4vh7o { text-align: center }
+    #tinytable_gjnwj3180blflhgmqwee td.tinytable_css_2a13m47033283zd26iih, #tinytable_gjnwj3180blflhgmqwee th.tinytable_css_2a13m47033283zd26iih {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_gjnwj3180blflhgmqwee td.tinytable_css_y71c7py2281kk3aaig9v, #tinytable_gjnwj3180blflhgmqwee th.tinytable_css_y71c7py2281kk3aaig9v {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_gjnwj3180blflhgmqwee td.tinytable_css_lf60xfto6vwzds36vmgj, #tinytable_gjnwj3180blflhgmqwee th.tinytable_css_lf60xfto6vwzds36vmgj {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_gjnwj3180blflhgmqwee td.tinytable_css_1kz964dkiw25cogm33cs, #tinytable_gjnwj3180blflhgmqwee th.tinytable_css_1kz964dkiw25cogm33cs { text-align: left }
+    #tinytable_gjnwj3180blflhgmqwee td.tinytable_css_8q5q0ziw12w6f5peb1fy, #tinytable_gjnwj3180blflhgmqwee th.tinytable_css_8q5q0ziw12w6f5peb1fy {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_jvoua9kew5liyhv74xdn" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
-        <thead>
+      <table class="tinytable" id="tinytable_gjnwj3180blflhgmqwee" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         
+        <thead>
               <tr>
-                <th scope="col" data-row="0" data-col="0"> </th>
-                <th scope="col" data-row="0" data-col="1">Pooled OLS</th>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">Pooled OLS</th>
               </tr>
         </thead>
         <tfoot><tr><td colspan='2'>+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001</td></tr></tfoot>
         <tbody>
                 <tr>
-                  <td data-row="1" data-col="0">(Intercept)</td>
-                  <td data-row="1" data-col="1">0.915***</td>
+                  <td data-row="1" data-col="1">(Intercept)</td>
+                  <td data-row="1" data-col="2">0.915***</td>
                 </tr>
                 <tr>
-                  <td data-row="2" data-col="0"></td>
-                  <td data-row="2" data-col="1">(0.069)</td>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.069)</td>
                 </tr>
                 <tr>
-                  <td data-row="3" data-col="0">union</td>
-                  <td data-row="3" data-col="1">0.212***</td>
+                  <td data-row="3" data-col="1">union</td>
+                  <td data-row="3" data-col="2">0.212***</td>
                 </tr>
                 <tr>
-                  <td data-row="4" data-col="0"></td>
-                  <td data-row="4" data-col="1">(0.007)</td>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.007)</td>
                 </tr>
                 <tr>
-                  <td data-row="5" data-col="0">age</td>
-                  <td data-row="5" data-col="1">0.041***</td>
+                  <td data-row="5" data-col="1">age</td>
+                  <td data-row="5" data-col="2">0.041***</td>
                 </tr>
                 <tr>
-                  <td data-row="6" data-col="0"></td>
-                  <td data-row="6" data-col="1">(0.005)</td>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">(0.005)</td>
                 </tr>
                 <tr>
-                  <td data-row="7" data-col="0">I(age^2)</td>
-                  <td data-row="7" data-col="1">-0.001***</td>
+                  <td data-row="7" data-col="1">I(age^2)</td>
+                  <td data-row="7" data-col="2">-0.001***</td>
                 </tr>
                 <tr>
-                  <td data-row="8" data-col="0"></td>
-                  <td data-row="8" data-col="1">(0.000)</td>
+                  <td data-row="8" data-col="1"></td>
+                  <td data-row="8" data-col="2">(0.000)</td>
                 </tr>
                 <tr>
-                  <td data-row="9" data-col="0">msp</td>
-                  <td data-row="9" data-col="1">-0.037***</td>
+                  <td data-row="9" data-col="1">msp</td>
+                  <td data-row="9" data-col="2">-0.037***</td>
                 </tr>
                 <tr>
-                  <td data-row="10" data-col="0"></td>
-                  <td data-row="10" data-col="1">(0.006)</td>
+                  <td data-row="10" data-col="1"></td>
+                  <td data-row="10" data-col="2">(0.006)</td>
                 </tr>
                 <tr>
-                  <td data-row="11" data-col="0">raceBlack</td>
-                  <td data-row="11" data-col="1">-0.146***</td>
+                  <td data-row="11" data-col="1">raceBlack</td>
+                  <td data-row="11" data-col="2">-0.146***</td>
                 </tr>
                 <tr>
-                  <td data-row="12" data-col="0"></td>
-                  <td data-row="12" data-col="1">(0.007)</td>
+                  <td data-row="12" data-col="1"></td>
+                  <td data-row="12" data-col="2">(0.007)</td>
                 </tr>
                 <tr>
-                  <td data-row="13" data-col="0">raceOther</td>
-                  <td data-row="13" data-col="1">0.056+</td>
+                  <td data-row="13" data-col="1">raceOther</td>
+                  <td data-row="13" data-col="2">0.056+</td>
                 </tr>
                 <tr>
-                  <td data-row="14" data-col="0"></td>
-                  <td data-row="14" data-col="1">(0.029)</td>
+                  <td data-row="14" data-col="1"></td>
+                  <td data-row="14" data-col="2">(0.029)</td>
                 </tr>
                 <tr>
-                  <td data-row="15" data-col="0">collgrad</td>
-                  <td data-row="15" data-col="1">0.367***</td>
+                  <td data-row="15" data-col="1">collgrad</td>
+                  <td data-row="15" data-col="2">0.367***</td>
                 </tr>
                 <tr>
-                  <td data-row="16" data-col="0"></td>
-                  <td data-row="16" data-col="1">(0.008)</td>
+                  <td data-row="16" data-col="1"></td>
+                  <td data-row="16" data-col="2">(0.008)</td>
                 </tr>
                 <tr>
-                  <td data-row="17" data-col="0">Num.Obs.</td>
-                  <td data-row="17" data-col="1">19077</td>
+                  <td data-row="17" data-col="1">Num.Obs.</td>
+                  <td data-row="17" data-col="2">19077</td>
                 </tr>
                 <tr>
-                  <td data-row="18" data-col="0">R2</td>
-                  <td data-row="18" data-col="1">0.196</td>
+                  <td data-row="18" data-col="1">R2</td>
+                  <td data-row="18" data-col="2">0.196</td>
                 </tr>
                 <tr>
-                  <td data-row="19" data-col="0">R2 Adj.</td>
-                  <td data-row="19" data-col="1">0.196</td>
+                  <td data-row="19" data-col="1">R2 Adj.</td>
+                  <td data-row="19" data-col="2">0.196</td>
                 </tr>
                 <tr>
-                  <td data-row="20" data-col="0">AIC</td>
-                  <td data-row="20" data-col="1">20992.1</td>
+                  <td data-row="20" data-col="1">AIC</td>
+                  <td data-row="20" data-col="2">20992.1</td>
                 </tr>
                 <tr>
-                  <td data-row="21" data-col="0">BIC</td>
-                  <td data-row="21" data-col="1">21062.8</td>
+                  <td data-row="21" data-col="1">BIC</td>
+                  <td data-row="21" data-col="2">21062.8</td>
                 </tr>
                 <tr>
-                  <td data-row="22" data-col="0">Log.Lik.</td>
-                  <td data-row="22" data-col="1">-10487.056</td>
+                  <td data-row="22" data-col="1">Log.Lik.</td>
+                  <td data-row="22" data-col="2">-10487.056</td>
                 </tr>
                 <tr>
-                  <td data-row="23" data-col="0">F</td>
-                  <td data-row="23" data-col="1">664.685</td>
+                  <td data-row="23" data-col="1">F</td>
+                  <td data-row="23" data-col="2">664.685</td>
                 </tr>
                 <tr>
-                  <td data-row="24" data-col="0">RMSE</td>
-                  <td data-row="24" data-col="1">0.42</td>
+                  <td data-row="24" data-col="1">RMSE</td>
+                  <td data-row="24" data-col="2">0.42</td>
                 </tr>
         </tbody>
       </table>
@@ -1657,9 +1623,9 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
 \tag{11.4}
 \end{equation}
 \]</span></p>
-<p>このように書くことができる<a href="#fn30" class="footnote-ref" id="fnref30"><sup>30</sup></a>。このように、個人特有の時間不変の要因を統制したうえで、個人内の変動と従属変数との関連を明らかにするモデルを、<strong>固定効果モデル（Fixed-effects model）</strong>とよぶ。</p>
+<p>このように書くことができる<a href="#fn29" class="footnote-ref" id="fnref29"><sup>29</sup></a>。このように、個人特有の時間不変の要因を統制したうえで、個人内の変動と従属変数との関連を明らかにするモデルを、<strong>固定効果モデル（Fixed-effects model）</strong>とよぶ。</p>
 <p><span class="math inline">\(i\)</span>の単位が個人のときには、<span class="math inline">\(u_i\)</span>のことをを個人固定効果とよぶ。<span class="math inline">\(i\)</span>が学校ならば<span class="math inline">\(u_i\)</span>は学校固定効果、<span class="math inline">\(i\)</span>が都道府県ならば<span class="math inline">\(u_i\)</span>は都道府県固定効果、というふうによぶことになる。</p>
-<p>固定効果モデルの強みは、独立変数の個人内変動と従属変数との関連を明らかにすることができるという点にある。たとえば、「非正規雇用で働いていると、正規雇用で働いている場合とくらべて幸福度が悪化するだろうか？」という問いに答えたいとする<a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a>。もちろん、正規雇用で働いている人もいれば非正規雇用で働いている人もいる。正規雇用で働くか非正規雇用で働くかには、性別や学卒時の経済状況などといった比較的観察しやすい属性の他にも、出身家庭の豊かさ、出身大学の選抜度、パーソナリティなどといった観察しにくい属性も影響すると考えられる。固定効果モデルを用いると、仮に調査で聴取されていなかったとしても、こうした時間によって変わらない特徴をすべて統制することができる。これによって、因果効果に近づくことができる（だろう）というのが、固定効果モデルのメリットである。</p>
+<p>固定効果モデルの強みは、独立変数の個人内変動と従属変数との関連を明らかにすることができるという点にある。たとえば、「非正規雇用で働いていると、正規雇用で働いている場合とくらべて幸福度が悪化するだろうか？」という問いに答えたいとする<a href="#fn30" class="footnote-ref" id="fnref30"><sup>30</sup></a>。もちろん、正規雇用で働いている人もいれば非正規雇用で働いている人もいる。正規雇用で働くか非正規雇用で働くかには、性別や学卒時の経済状況などといった比較的観察しやすい属性の他にも、出身家庭の豊かさ、出身大学の選抜度、パーソナリティなどといった観察しにくい属性も影響すると考えられる。固定効果モデルを用いると、仮に調査で聴取されていなかったとしても、こうした時間によって変わらない特徴をすべて統制することができる。これによって、因果効果に近づくことができる（だろう）というのが、固定効果モデルのメリットである。</p>
 <p>固定効果モデルでは、1回しか観察を得られていない個人を推定に用いることはできない。なぜなら、<a href="paneldata.html#within_between_variation">個人内変動と個人間変動</a>の項で説明したとおり、1回しか観察が得られていない個人については、個人内変動と個人間変動を区別することができないからである。言いかえると、個人固定効果<span class="math inline">\(u_i\)</span>が完全に従属変数を予測してしまう。したがって固定効果モデルでは、2回以上の観察が得られている個人のみを推定に用いることになる。</p>
 </div>
 <div id="推定方法fixestfeols" class="section level3 hasAnchor" number="11.4.2">
@@ -1685,162 +1651,128 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
 <div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="paneldata.html#cb411-1" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;Fixed Effects&quot;</span> <span class="ot">=</span> model_fe), <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <!-- preamble start -->
 
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
     <script>
-
-      function styleCell_ykj1wca4qyhigauiwrmw(i, j, css_id) {
-          var table = document.getElementById("tinytable_ykj1wca4qyhigauiwrmw");
-          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
-      }
-      function spanCell_ykj1wca4qyhigauiwrmw(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_ykj1wca4qyhigauiwrmw");
-        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-        if (!targetCell) {
-          console.warn(`Cell at (${i}, ${j}) not found.`);
-        }
-
-        // Get all cells that need to be removed
-        const cellsToRemove = [];
-        for (let r = 0; r < rowspan; r++) {
-          for (let c = 0; c < colspan; c++) {
-            if (r === 0 && c === 0) continue; // Skip the target cell
-            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
-            if (cell) {
-              cellsToRemove.push(cell);
-            }
-          }
-        }
-
-        // Remove all cells
-        cellsToRemove.forEach(cell => cell.remove());
-
-        // Set rowspan and colspan of the target cell if it exists
-        if (targetCell) {
-          targetCell.rowSpan = rowspan;
-          targetCell.colSpan = colspan;
-        }
-      }
+      // Create table-specific functions using external factory
+      const tableFns_h11mmznm0ninvvedyh7t = TinyTable.createTableFunctions("tinytable_h11mmznm0ninvvedyh7t");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '18', j: 1 },  ], css_id: 'tinytable_css_jqn1x3n5h3o15atk7lq4',}, 
-          { positions: [ { i: '8', j: 1 },  ], css_id: 'tinytable_css_2j88sgwgkhtgcgejt8a6',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '12', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '16', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '17', j: 1 },  ], css_id: 'tinytable_css_2m4md7mm7vsgak0ezdw5',}, 
-          { positions: [ { i: '0', j: 1 },  ], css_id: 'tinytable_css_hwaq0jdw8wh48qtgg354',}, 
-          { positions: [ { i: '18', j: 0 },  ], css_id: 'tinytable_css_9rz8jlsczetk41jp0ech',}, 
-          { positions: [ { i: '8', j: 0 },  ], css_id: 'tinytable_css_nyefi69swejoc9v7hq25',}, 
-          { positions: [ { i: '1', j: 0 }, { i: '2', j: 0 }, { i: '3', j: 0 }, { i: '4', j: 0 }, { i: '5', j: 0 }, { i: '6', j: 0 }, { i: '7', j: 0 }, { i: '12', j: 0 }, { i: '9', j: 0 }, { i: '10', j: 0 }, { i: '11', j: 0 }, { i: '16', j: 0 }, { i: '13', j: 0 }, { i: '14', j: 0 }, { i: '15', j: 0 }, { i: '17', j: 0 },  ], css_id: 'tinytable_css_kskghuy0yin5rowhqs6l',}, 
-          { positions: [ { i: '0', j: 0 },  ], css_id: 'tinytable_css_0ddhjfknq0sa4engn710',}, 
+          { positions: [ { i: '18', j: 2 } ], css_id: 'tinytable_css_vrtbo7najoc925zp8ffw',}, 
+          { positions: [ { i: '8', j: 2 } ], css_id: 'tinytable_css_33zvccp04p06x1ixhify',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 } ], css_id: 'tinytable_css_alaf557neff683ljm18s',}, 
+          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_859141gjw97a6ugc3pue',}, 
+          { positions: [ { i: '18', j: 1 } ], css_id: 'tinytable_css_j65wl4o2kdztbdcgwis6',}, 
+          { positions: [ { i: '8', j: 1 } ], css_id: 'tinytable_css_yuuco21k5wu0lpm18wvi',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 } ], css_id: 'tinytable_css_hisnogfxfhcf577w8atj',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_eogiv3jk1ujmvmjexcz0',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_ykj1wca4qyhigauiwrmw(cell.i, cell.j, group.css_id);
+                  tableFns_h11mmznm0ninvvedyh7t.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_jqn1x3n5h3o15atk7lq4, .table th.tinytable_css_jqn1x3n5h3o15atk7lq4 { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_2j88sgwgkhtgcgejt8a6, .table th.tinytable_css_2j88sgwgkhtgcgejt8a6 { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_2m4md7mm7vsgak0ezdw5, .table th.tinytable_css_2m4md7mm7vsgak0ezdw5 { text-align: center; }
-      .table td.tinytable_css_hwaq0jdw8wh48qtgg354, .table th.tinytable_css_hwaq0jdw8wh48qtgg354 { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_9rz8jlsczetk41jp0ech, .table th.tinytable_css_9rz8jlsczetk41jp0ech { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_nyefi69swejoc9v7hq25, .table th.tinytable_css_nyefi69swejoc9v7hq25 { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_kskghuy0yin5rowhqs6l, .table th.tinytable_css_kskghuy0yin5rowhqs6l { text-align: left; }
-      .table td.tinytable_css_0ddhjfknq0sa4engn710, .table th.tinytable_css_0ddhjfknq0sa4engn710 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    /* tinytable css entries after */
+    #tinytable_h11mmznm0ninvvedyh7t td.tinytable_css_vrtbo7najoc925zp8ffw, #tinytable_h11mmznm0ninvvedyh7t th.tinytable_css_vrtbo7najoc925zp8ffw {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_h11mmznm0ninvvedyh7t td.tinytable_css_33zvccp04p06x1ixhify, #tinytable_h11mmznm0ninvvedyh7t th.tinytable_css_33zvccp04p06x1ixhify {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_h11mmznm0ninvvedyh7t td.tinytable_css_alaf557neff683ljm18s, #tinytable_h11mmznm0ninvvedyh7t th.tinytable_css_alaf557neff683ljm18s { text-align: center }
+    #tinytable_h11mmznm0ninvvedyh7t td.tinytable_css_859141gjw97a6ugc3pue, #tinytable_h11mmznm0ninvvedyh7t th.tinytable_css_859141gjw97a6ugc3pue {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_h11mmznm0ninvvedyh7t td.tinytable_css_j65wl4o2kdztbdcgwis6, #tinytable_h11mmznm0ninvvedyh7t th.tinytable_css_j65wl4o2kdztbdcgwis6 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_h11mmznm0ninvvedyh7t td.tinytable_css_yuuco21k5wu0lpm18wvi, #tinytable_h11mmznm0ninvvedyh7t th.tinytable_css_yuuco21k5wu0lpm18wvi {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_h11mmznm0ninvvedyh7t td.tinytable_css_hisnogfxfhcf577w8atj, #tinytable_h11mmznm0ninvvedyh7t th.tinytable_css_hisnogfxfhcf577w8atj { text-align: left }
+    #tinytable_h11mmznm0ninvvedyh7t td.tinytable_css_eogiv3jk1ujmvmjexcz0, #tinytable_h11mmznm0ninvvedyh7t th.tinytable_css_eogiv3jk1ujmvmjexcz0 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_ykj1wca4qyhigauiwrmw" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
-        <thead>
+      <table class="tinytable" id="tinytable_h11mmznm0ninvvedyh7t" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         
+        <thead>
               <tr>
-                <th scope="col" data-row="0" data-col="0"> </th>
-                <th scope="col" data-row="0" data-col="1">Fixed Effects</th>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">Fixed Effects</th>
               </tr>
         </thead>
         <tfoot><tr><td colspan='2'>+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001</td></tr></tfoot>
         <tbody>
                 <tr>
-                  <td data-row="1" data-col="0">union</td>
-                  <td data-row="1" data-col="1">0.106***</td>
+                  <td data-row="1" data-col="1">union</td>
+                  <td data-row="1" data-col="2">0.106***</td>
                 </tr>
                 <tr>
-                  <td data-row="2" data-col="0"></td>
-                  <td data-row="2" data-col="1">(0.007)</td>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.007)</td>
                 </tr>
                 <tr>
-                  <td data-row="3" data-col="0">age</td>
-                  <td data-row="3" data-col="1">0.035***</td>
+                  <td data-row="3" data-col="1">age</td>
+                  <td data-row="3" data-col="2">0.035***</td>
                 </tr>
                 <tr>
-                  <td data-row="4" data-col="0"></td>
-                  <td data-row="4" data-col="1">(0.004)</td>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.004)</td>
                 </tr>
                 <tr>
-                  <td data-row="5" data-col="0">I(I(age^2))</td>
-                  <td data-row="5" data-col="1">-0.000***</td>
+                  <td data-row="5" data-col="1">I(I(age^2))</td>
+                  <td data-row="5" data-col="2">-0.000***</td>
                 </tr>
                 <tr>
-                  <td data-row="6" data-col="0"></td>
-                  <td data-row="6" data-col="1">(0.000)</td>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">(0.000)</td>
                 </tr>
                 <tr>
-                  <td data-row="7" data-col="0">msp</td>
-                  <td data-row="7" data-col="1">-0.017*</td>
+                  <td data-row="7" data-col="1">msp</td>
+                  <td data-row="7" data-col="2">-0.017*</td>
                 </tr>
                 <tr>
-                  <td data-row="8" data-col="0"></td>
-                  <td data-row="8" data-col="1">(0.007)</td>
+                  <td data-row="8" data-col="1"></td>
+                  <td data-row="8" data-col="2">(0.007)</td>
                 </tr>
                 <tr>
-                  <td data-row="9" data-col="0">Num.Obs.</td>
-                  <td data-row="9" data-col="1">18413</td>
+                  <td data-row="9" data-col="1">Num.Obs.</td>
+                  <td data-row="9" data-col="2">18413</td>
                 </tr>
                 <tr>
-                  <td data-row="10" data-col="0">R2</td>
-                  <td data-row="10" data-col="1">0.742</td>
+                  <td data-row="10" data-col="1">R2</td>
+                  <td data-row="10" data-col="2">0.742</td>
                 </tr>
                 <tr>
-                  <td data-row="11" data-col="0">R2 Adj.</td>
-                  <td data-row="11" data-col="1">0.682</td>
+                  <td data-row="11" data-col="1">R2 Adj.</td>
+                  <td data-row="11" data-col="2">0.682</td>
                 </tr>
                 <tr>
-                  <td data-row="12" data-col="0">R2 Within</td>
-                  <td data-row="12" data-col="1">0.098</td>
+                  <td data-row="12" data-col="1">R2 Within</td>
+                  <td data-row="12" data-col="2">0.098</td>
                 </tr>
                 <tr>
-                  <td data-row="13" data-col="0">R2 Within Adj.</td>
-                  <td data-row="13" data-col="1">0.098</td>
+                  <td data-row="13" data-col="1">R2 Within Adj.</td>
+                  <td data-row="13" data-col="2">0.098</td>
                 </tr>
                 <tr>
-                  <td data-row="14" data-col="0">AIC</td>
-                  <td data-row="14" data-col="1">6008.5</td>
+                  <td data-row="14" data-col="1">AIC</td>
+                  <td data-row="14" data-col="2">6008.5</td>
                 </tr>
                 <tr>
-                  <td data-row="15" data-col="0">BIC</td>
-                  <td data-row="15" data-col="1">33178.0</td>
+                  <td data-row="15" data-col="1">BIC</td>
+                  <td data-row="15" data-col="2">33178.0</td>
                 </tr>
                 <tr>
-                  <td data-row="16" data-col="0">RMSE</td>
-                  <td data-row="16" data-col="1">0.24</td>
+                  <td data-row="16" data-col="1">RMSE</td>
+                  <td data-row="16" data-col="2">0.24</td>
                 </tr>
                 <tr>
-                  <td data-row="17" data-col="0">Std.Errors</td>
-                  <td data-row="17" data-col="1">IID</td>
+                  <td data-row="17" data-col="1">Std.Errors</td>
+                  <td data-row="17" data-col="2">IID</td>
                 </tr>
                 <tr>
-                  <td data-row="18" data-col="0">FE: id</td>
-                  <td data-row="18" data-col="1">X</td>
+                  <td data-row="18" data-col="1">FE: id</td>
+                  <td data-row="18" data-col="2">X</td>
                 </tr>
         </tbody>
       </table>
@@ -1876,221 +1808,187 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \varepsilon_{it}
 <span id="cb412-14"><a href="paneldata.html#cb412-14" tabindex="-1"></a>             <span class="at">stars =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <!-- preamble start -->
 
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
     <script>
-
-      function styleCell_p5eyslqcx18u152bjqi5(i, j, css_id) {
-          var table = document.getElementById("tinytable_p5eyslqcx18u152bjqi5");
-          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
-      }
-      function spanCell_p5eyslqcx18u152bjqi5(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_p5eyslqcx18u152bjqi5");
-        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-        if (!targetCell) {
-          console.warn(`Cell at (${i}, ${j}) not found.`);
-        }
-
-        // Get all cells that need to be removed
-        const cellsToRemove = [];
-        for (let r = 0; r < rowspan; r++) {
-          for (let c = 0; c < colspan; c++) {
-            if (r === 0 && c === 0) continue; // Skip the target cell
-            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
-            if (cell) {
-              cellsToRemove.push(cell);
-            }
-          }
-        }
-
-        // Remove all cells
-        cellsToRemove.forEach(cell => cell.remove());
-
-        // Set rowspan and colspan of the target cell if it exists
-        if (targetCell) {
-          targetCell.rowSpan = rowspan;
-          targetCell.colSpan = colspan;
-        }
-      }
+      // Create table-specific functions using external factory
+      const tableFns_todz2irbn4buxknq1dql = TinyTable.createTableFunctions("tinytable_todz2irbn4buxknq1dql");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '26', j: 1 }, { i: '26', j: 2 },  ], css_id: 'tinytable_css_ynd4cgblcv7gstrcc8v6',}, 
-          { positions: [ { i: '16', j: 1 }, { i: '16', j: 2 },  ], css_id: 'tinytable_css_7ugbqalh30oeytx8mij1',}, 
-          { positions: [ { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '1', j: 1 }, { i: '15', j: 1 }, { i: '2', j: 2 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '22', j: 1 }, { i: '23', j: 1 }, { i: '24', j: 1 }, { i: '25', j: 1 }, { i: '12', j: 2 }, { i: '14', j: 1 }, { i: '1', j: 2 }, { i: '15', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '25', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '23', j: 2 }, { i: '24', j: 2 }, { i: '21', j: 2 }, { i: '22', j: 2 },  ], css_id: 'tinytable_css_ntf5jsg4gh4xi7u3jigz',}, 
-          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 },  ], css_id: 'tinytable_css_x3dbtyvdg29ypa8ms7rt',}, 
-          { positions: [ { i: '26', j: 0 },  ], css_id: 'tinytable_css_a2mz49nrqq8f5d1foiqu',}, 
-          { positions: [ { i: '16', j: 0 },  ], css_id: 'tinytable_css_ljr7l4c46saylf0eosru',}, 
-          { positions: [ { i: '1', j: 0 }, { i: '2', j: 0 }, { i: '3', j: 0 }, { i: '4', j: 0 }, { i: '5', j: 0 }, { i: '6', j: 0 }, { i: '7', j: 0 }, { i: '8', j: 0 }, { i: '9', j: 0 }, { i: '10', j: 0 }, { i: '11', j: 0 }, { i: '12', j: 0 }, { i: '13', j: 0 }, { i: '14', j: 0 }, { i: '15', j: 0 }, { i: '20', j: 0 }, { i: '17', j: 0 }, { i: '18', j: 0 }, { i: '19', j: 0 }, { i: '24', j: 0 }, { i: '21', j: 0 }, { i: '22', j: 0 }, { i: '23', j: 0 }, { i: '25', j: 0 },  ], css_id: 'tinytable_css_rewbkjjbo0jx9j1lflz3',}, 
-          { positions: [ { i: '0', j: 0 },  ], css_id: 'tinytable_css_v70oiatk7e8sznxsrycn',}, 
+          { positions: [ { i: '26', j: 2 }, { i: '26', j: 3 } ], css_id: 'tinytable_css_eun0ye5lltzp7mnyrn1t',}, 
+          { positions: [ { i: '16', j: 2 }, { i: '16', j: 3 } ], css_id: 'tinytable_css_vrg4z1xtld0eo3cxpgp7',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '22', j: 2 }, { i: '23', j: 2 }, { i: '24', j: 2 }, { i: '25', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 }, { i: '20', j: 3 }, { i: '21', j: 3 }, { i: '22', j: 3 }, { i: '23', j: 3 }, { i: '24', j: 3 }, { i: '25', j: 3 } ], css_id: 'tinytable_css_yi5rzbi3xtwpbwfql3md',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_px6akff10jemf17sqie3',}, 
+          { positions: [ { i: '26', j: 1 } ], css_id: 'tinytable_css_mwtd6gktamrmm1otnuk7',}, 
+          { positions: [ { i: '16', j: 1 } ], css_id: 'tinytable_css_rsdmg1g9hfb1xh1iixoj',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '22', j: 1 }, { i: '23', j: 1 }, { i: '24', j: 1 }, { i: '25', j: 1 } ], css_id: 'tinytable_css_91ya6b3nfvjalc9c9j96',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_e0awsmj3ujufolyyc8d7',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_p5eyslqcx18u152bjqi5(cell.i, cell.j, group.css_id);
+                  tableFns_todz2irbn4buxknq1dql.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_ynd4cgblcv7gstrcc8v6, .table th.tinytable_css_ynd4cgblcv7gstrcc8v6 { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_7ugbqalh30oeytx8mij1, .table th.tinytable_css_7ugbqalh30oeytx8mij1 { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_ntf5jsg4gh4xi7u3jigz, .table th.tinytable_css_ntf5jsg4gh4xi7u3jigz { text-align: center; }
-      .table td.tinytable_css_x3dbtyvdg29ypa8ms7rt, .table th.tinytable_css_x3dbtyvdg29ypa8ms7rt { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_a2mz49nrqq8f5d1foiqu, .table th.tinytable_css_a2mz49nrqq8f5d1foiqu { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_ljr7l4c46saylf0eosru, .table th.tinytable_css_ljr7l4c46saylf0eosru { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_rewbkjjbo0jx9j1lflz3, .table th.tinytable_css_rewbkjjbo0jx9j1lflz3 { text-align: left; }
-      .table td.tinytable_css_v70oiatk7e8sznxsrycn, .table th.tinytable_css_v70oiatk7e8sznxsrycn { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    /* tinytable css entries after */
+    #tinytable_todz2irbn4buxknq1dql td.tinytable_css_eun0ye5lltzp7mnyrn1t, #tinytable_todz2irbn4buxknq1dql th.tinytable_css_eun0ye5lltzp7mnyrn1t {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_todz2irbn4buxknq1dql td.tinytable_css_vrg4z1xtld0eo3cxpgp7, #tinytable_todz2irbn4buxknq1dql th.tinytable_css_vrg4z1xtld0eo3cxpgp7 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_todz2irbn4buxknq1dql td.tinytable_css_yi5rzbi3xtwpbwfql3md, #tinytable_todz2irbn4buxknq1dql th.tinytable_css_yi5rzbi3xtwpbwfql3md { text-align: center }
+    #tinytable_todz2irbn4buxknq1dql td.tinytable_css_px6akff10jemf17sqie3, #tinytable_todz2irbn4buxknq1dql th.tinytable_css_px6akff10jemf17sqie3 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_todz2irbn4buxknq1dql td.tinytable_css_mwtd6gktamrmm1otnuk7, #tinytable_todz2irbn4buxknq1dql th.tinytable_css_mwtd6gktamrmm1otnuk7 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_todz2irbn4buxknq1dql td.tinytable_css_rsdmg1g9hfb1xh1iixoj, #tinytable_todz2irbn4buxknq1dql th.tinytable_css_rsdmg1g9hfb1xh1iixoj {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_todz2irbn4buxknq1dql td.tinytable_css_91ya6b3nfvjalc9c9j96, #tinytable_todz2irbn4buxknq1dql th.tinytable_css_91ya6b3nfvjalc9c9j96 { text-align: left }
+    #tinytable_todz2irbn4buxknq1dql td.tinytable_css_e0awsmj3ujufolyyc8d7, #tinytable_todz2irbn4buxknq1dql th.tinytable_css_e0awsmj3ujufolyyc8d7 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_p5eyslqcx18u152bjqi5" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
-        <thead>
+      <table class="tinytable" id="tinytable_todz2irbn4buxknq1dql" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         
+        <thead>
               <tr>
-                <th scope="col" data-row="0" data-col="0"> </th>
-                <th scope="col" data-row="0" data-col="1">Pooled OLS</th>
-                <th scope="col" data-row="0" data-col="2">Fixed effect</th>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">Pooled OLS</th>
+                <th scope="col" data-row="0" data-col="3">Fixed effect</th>
               </tr>
         </thead>
         <tfoot><tr><td colspan='3'>+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001</td></tr></tfoot>
         <tbody>
                 <tr>
-                  <td data-row="1" data-col="0">(Intercept)</td>
-                  <td data-row="1" data-col="1">0.915***</td>
-                  <td data-row="1" data-col="2"></td>
+                  <td data-row="1" data-col="1">(Intercept)</td>
+                  <td data-row="1" data-col="2">0.915***</td>
+                  <td data-row="1" data-col="3"></td>
                 </tr>
                 <tr>
-                  <td data-row="2" data-col="0"></td>
-                  <td data-row="2" data-col="1">(0.084)</td>
-                  <td data-row="2" data-col="2"></td>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.084)</td>
+                  <td data-row="2" data-col="3"></td>
                 </tr>
                 <tr>
-                  <td data-row="3" data-col="0">union</td>
-                  <td data-row="3" data-col="1">0.212***</td>
-                  <td data-row="3" data-col="2">0.106***</td>
+                  <td data-row="3" data-col="1">union</td>
+                  <td data-row="3" data-col="2">0.212***</td>
+                  <td data-row="3" data-col="3">0.106***</td>
                 </tr>
                 <tr>
-                  <td data-row="4" data-col="0"></td>
-                  <td data-row="4" data-col="1">(0.013)</td>
-                  <td data-row="4" data-col="2">(0.010)</td>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.013)</td>
+                  <td data-row="4" data-col="3">(0.010)</td>
                 </tr>
                 <tr>
-                  <td data-row="5" data-col="0">age</td>
-                  <td data-row="5" data-col="1">0.041***</td>
-                  <td data-row="5" data-col="2">0.035***</td>
+                  <td data-row="5" data-col="1">age</td>
+                  <td data-row="5" data-col="2">0.041***</td>
+                  <td data-row="5" data-col="3">0.035***</td>
                 </tr>
                 <tr>
-                  <td data-row="6" data-col="0"></td>
-                  <td data-row="6" data-col="1">(0.006)</td>
-                  <td data-row="6" data-col="2">(0.005)</td>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">(0.006)</td>
+                  <td data-row="6" data-col="3">(0.005)</td>
                 </tr>
                 <tr>
-                  <td data-row="7" data-col="0">I(I(age^2))</td>
-                  <td data-row="7" data-col="1">-0.001***</td>
-                  <td data-row="7" data-col="2">-0.000***</td>
+                  <td data-row="7" data-col="1">I(I(age^2))</td>
+                  <td data-row="7" data-col="2">-0.001***</td>
+                  <td data-row="7" data-col="3">-0.000***</td>
                 </tr>
                 <tr>
-                  <td data-row="8" data-col="0"></td>
-                  <td data-row="8" data-col="1">(0.000)</td>
+                  <td data-row="8" data-col="1"></td>
                   <td data-row="8" data-col="2">(0.000)</td>
+                  <td data-row="8" data-col="3">(0.000)</td>
                 </tr>
                 <tr>
-                  <td data-row="9" data-col="0">msp</td>
-                  <td data-row="9" data-col="1">-0.037**</td>
-                  <td data-row="9" data-col="2">-0.017*</td>
+                  <td data-row="9" data-col="1">msp</td>
+                  <td data-row="9" data-col="2">-0.037**</td>
+                  <td data-row="9" data-col="3">-0.017*</td>
                 </tr>
                 <tr>
-                  <td data-row="10" data-col="0"></td>
-                  <td data-row="10" data-col="1">(0.011)</td>
-                  <td data-row="10" data-col="2">(0.008)</td>
+                  <td data-row="10" data-col="1"></td>
+                  <td data-row="10" data-col="2">(0.011)</td>
+                  <td data-row="10" data-col="3">(0.008)</td>
                 </tr>
                 <tr>
-                  <td data-row="11" data-col="0">raceBlack</td>
-                  <td data-row="11" data-col="1">-0.146***</td>
-                  <td data-row="11" data-col="2"></td>
+                  <td data-row="11" data-col="1">raceBlack</td>
+                  <td data-row="11" data-col="2">-0.146***</td>
+                  <td data-row="11" data-col="3"></td>
                 </tr>
                 <tr>
-                  <td data-row="12" data-col="0"></td>
-                  <td data-row="12" data-col="1">(0.014)</td>
-                  <td data-row="12" data-col="2"></td>
+                  <td data-row="12" data-col="1"></td>
+                  <td data-row="12" data-col="2">(0.014)</td>
+                  <td data-row="12" data-col="3"></td>
                 </tr>
                 <tr>
-                  <td data-row="13" data-col="0">raceOther</td>
-                  <td data-row="13" data-col="1">0.056</td>
-                  <td data-row="13" data-col="2"></td>
+                  <td data-row="13" data-col="1">raceOther</td>
+                  <td data-row="13" data-col="2">0.056</td>
+                  <td data-row="13" data-col="3"></td>
                 </tr>
                 <tr>
-                  <td data-row="14" data-col="0"></td>
-                  <td data-row="14" data-col="1">(0.067)</td>
-                  <td data-row="14" data-col="2"></td>
+                  <td data-row="14" data-col="1"></td>
+                  <td data-row="14" data-col="2">(0.067)</td>
+                  <td data-row="14" data-col="3"></td>
                 </tr>
                 <tr>
-                  <td data-row="15" data-col="0">collgrad</td>
-                  <td data-row="15" data-col="1">0.367***</td>
-                  <td data-row="15" data-col="2"></td>
+                  <td data-row="15" data-col="1">collgrad</td>
+                  <td data-row="15" data-col="2">0.367***</td>
+                  <td data-row="15" data-col="3"></td>
                 </tr>
                 <tr>
-                  <td data-row="16" data-col="0"></td>
-                  <td data-row="16" data-col="1">(0.015)</td>
-                  <td data-row="16" data-col="2"></td>
+                  <td data-row="16" data-col="1"></td>
+                  <td data-row="16" data-col="2">(0.015)</td>
+                  <td data-row="16" data-col="3"></td>
                 </tr>
                 <tr>
-                  <td data-row="17" data-col="0">Num.Obs.</td>
-                  <td data-row="17" data-col="1">19077</td>
-                  <td data-row="17" data-col="2">18413</td>
+                  <td data-row="17" data-col="1">Num.Obs.</td>
+                  <td data-row="17" data-col="2">19077</td>
+                  <td data-row="17" data-col="3">18413</td>
                 </tr>
                 <tr>
-                  <td data-row="18" data-col="0">R2</td>
-                  <td data-row="18" data-col="1">0.196</td>
-                  <td data-row="18" data-col="2">0.742</td>
+                  <td data-row="18" data-col="1">R2</td>
+                  <td data-row="18" data-col="2">0.196</td>
+                  <td data-row="18" data-col="3">0.742</td>
                 </tr>
                 <tr>
-                  <td data-row="19" data-col="0">R2 Adj.</td>
-                  <td data-row="19" data-col="1">0.196</td>
-                  <td data-row="19" data-col="2">0.682</td>
+                  <td data-row="19" data-col="1">R2 Adj.</td>
+                  <td data-row="19" data-col="2">0.196</td>
+                  <td data-row="19" data-col="3">0.682</td>
                 </tr>
                 <tr>
-                  <td data-row="20" data-col="0">R2 Within</td>
-                  <td data-row="20" data-col="1"></td>
-                  <td data-row="20" data-col="2">0.098</td>
+                  <td data-row="20" data-col="1">R2 Within</td>
+                  <td data-row="20" data-col="2"></td>
+                  <td data-row="20" data-col="3">0.098</td>
                 </tr>
                 <tr>
-                  <td data-row="21" data-col="0">R2 Within Adj.</td>
-                  <td data-row="21" data-col="1"></td>
-                  <td data-row="21" data-col="2">0.098</td>
+                  <td data-row="21" data-col="1">R2 Within Adj.</td>
+                  <td data-row="21" data-col="2"></td>
+                  <td data-row="21" data-col="3">0.098</td>
                 </tr>
                 <tr>
-                  <td data-row="22" data-col="0">AIC</td>
-                  <td data-row="22" data-col="1">20990.1</td>
-                  <td data-row="22" data-col="2">6008.5</td>
+                  <td data-row="22" data-col="1">AIC</td>
+                  <td data-row="22" data-col="2">20990.1</td>
+                  <td data-row="22" data-col="3">6008.5</td>
                 </tr>
                 <tr>
-                  <td data-row="23" data-col="0">BIC</td>
-                  <td data-row="23" data-col="1">21053.0</td>
-                  <td data-row="23" data-col="2">33178.0</td>
+                  <td data-row="23" data-col="1">BIC</td>
+                  <td data-row="23" data-col="2">21053.0</td>
+                  <td data-row="23" data-col="3">33178.0</td>
                 </tr>
                 <tr>
-                  <td data-row="24" data-col="0">RMSE</td>
-                  <td data-row="24" data-col="1">0.42</td>
-                  <td data-row="24" data-col="2">0.24</td>
+                  <td data-row="24" data-col="1">RMSE</td>
+                  <td data-row="24" data-col="2">0.42</td>
+                  <td data-row="24" data-col="3">0.24</td>
                 </tr>
                 <tr>
-                  <td data-row="25" data-col="0">Std.Errors</td>
-                  <td data-row="25" data-col="1">by: id</td>
+                  <td data-row="25" data-col="1">Std.Errors</td>
                   <td data-row="25" data-col="2">by: id</td>
+                  <td data-row="25" data-col="3">by: id</td>
                 </tr>
                 <tr>
-                  <td data-row="26" data-col="0">FE: id</td>
-                  <td data-row="26" data-col="1"></td>
-                  <td data-row="26" data-col="2">X</td>
+                  <td data-row="26" data-col="1">FE: id</td>
+                  <td data-row="26" data-col="2"></td>
+                  <td data-row="26" data-col="3">X</td>
                 </tr>
         </tbody>
       </table>
@@ -2125,267 +2023,233 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
 <span id="cb413-15"><a href="paneldata.html#cb413-15" tabindex="-1"></a>             <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>, <span class="st">&quot;FE: id&quot;</span>, <span class="st">&quot;FE: year&quot;</span>))</span></code></pre></div>
 <!-- preamble start -->
 
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
     <script>
-
-      function styleCell_a771bzz84vkepe2bhd9w(i, j, css_id) {
-          var table = document.getElementById("tinytable_a771bzz84vkepe2bhd9w");
-          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
-      }
-      function spanCell_a771bzz84vkepe2bhd9w(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_a771bzz84vkepe2bhd9w");
-        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-        if (!targetCell) {
-          console.warn(`Cell at (${i}, ${j}) not found.`);
-        }
-
-        // Get all cells that need to be removed
-        const cellsToRemove = [];
-        for (let r = 0; r < rowspan; r++) {
-          for (let c = 0; c < colspan; c++) {
-            if (r === 0 && c === 0) continue; // Skip the target cell
-            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
-            if (cell) {
-              cellsToRemove.push(cell);
-            }
-          }
-        }
-
-        // Remove all cells
-        cellsToRemove.forEach(cell => cell.remove());
-
-        // Set rowspan and colspan of the target cell if it exists
-        if (targetCell) {
-          targetCell.rowSpan = rowspan;
-          targetCell.colSpan = colspan;
-        }
-      }
+      // Create table-specific functions using external factory
+      const tableFns_o8v50rdis9yx4w2s6wk1 = TinyTable.createTableFunctions("tinytable_o8v50rdis9yx4w2s6wk1");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '34', j: 1 }, { i: '34', j: 2 },  ], css_id: 'tinytable_css_pa6tkq1e6iysjo1gg22a',}, 
-          { positions: [ { i: '30', j: 1 }, { i: '30', j: 2 },  ], css_id: 'tinytable_css_jnvxpiausyy0rmosf6ms',}, 
-          { positions: [ { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '1', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '5', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '9', j: 1 }, { i: '23', j: 1 }, { i: '24', j: 1 }, { i: '25', j: 1 }, { i: '26', j: 1 }, { i: '27', j: 1 }, { i: '28', j: 1 }, { i: '29', j: 1 }, { i: '8', j: 2 }, { i: '31', j: 1 }, { i: '32', j: 1 }, { i: '33', j: 1 }, { i: '12', j: 2 }, { i: '22', j: 1 }, { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '21', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '25', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '29', j: 2 }, { i: '22', j: 2 }, { i: '23', j: 2 }, { i: '24', j: 2 }, { i: '33', j: 2 }, { i: '26', j: 2 }, { i: '27', j: 2 }, { i: '28', j: 2 }, { i: '31', j: 2 }, { i: '32', j: 2 },  ], css_id: 'tinytable_css_tsky1awx6zpf5hqynrqn',}, 
-          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 },  ], css_id: 'tinytable_css_5a1xr0z03gq8c8q3advj',}, 
-          { positions: [ { i: '34', j: 0 },  ], css_id: 'tinytable_css_5ziuckj74528fofag81c',}, 
-          { positions: [ { i: '30', j: 0 },  ], css_id: 'tinytable_css_oalwji6zv5qvlzcc75xs',}, 
-          { positions: [ { i: '1', j: 0 }, { i: '2', j: 0 }, { i: '3', j: 0 }, { i: '4', j: 0 }, { i: '5', j: 0 }, { i: '6', j: 0 }, { i: '7', j: 0 }, { i: '8', j: 0 }, { i: '9', j: 0 }, { i: '10', j: 0 }, { i: '11', j: 0 }, { i: '12', j: 0 }, { i: '13', j: 0 }, { i: '14', j: 0 }, { i: '15', j: 0 }, { i: '16', j: 0 }, { i: '17', j: 0 }, { i: '18', j: 0 }, { i: '19', j: 0 }, { i: '20', j: 0 }, { i: '21', j: 0 }, { i: '22', j: 0 }, { i: '23', j: 0 }, { i: '24', j: 0 }, { i: '25', j: 0 }, { i: '26', j: 0 }, { i: '27', j: 0 }, { i: '28', j: 0 }, { i: '29', j: 0 }, { i: '31', j: 0 }, { i: '32', j: 0 }, { i: '33', j: 0 },  ], css_id: 'tinytable_css_1i06v852xley8re9kda3',}, 
-          { positions: [ { i: '0', j: 0 },  ], css_id: 'tinytable_css_2i3n0jo55gyd3rivt9zt',}, 
+          { positions: [ { i: '34', j: 2 }, { i: '34', j: 3 } ], css_id: 'tinytable_css_rbuke82jyaxy5zkz0tnc',}, 
+          { positions: [ { i: '30', j: 2 }, { i: '30', j: 3 } ], css_id: 'tinytable_css_qyce8aqkn1mlspuwoiwt',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '13', j: 2 }, { i: '14', j: 2 }, { i: '15', j: 2 }, { i: '16', j: 2 }, { i: '17', j: 2 }, { i: '18', j: 2 }, { i: '19', j: 2 }, { i: '20', j: 2 }, { i: '21', j: 2 }, { i: '22', j: 2 }, { i: '23', j: 2 }, { i: '24', j: 2 }, { i: '25', j: 2 }, { i: '26', j: 2 }, { i: '27', j: 2 }, { i: '28', j: 2 }, { i: '29', j: 2 }, { i: '31', j: 2 }, { i: '32', j: 2 }, { i: '33', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '10', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 }, { i: '13', j: 3 }, { i: '14', j: 3 }, { i: '15', j: 3 }, { i: '16', j: 3 }, { i: '17', j: 3 }, { i: '18', j: 3 }, { i: '19', j: 3 }, { i: '20', j: 3 }, { i: '21', j: 3 }, { i: '22', j: 3 }, { i: '23', j: 3 }, { i: '24', j: 3 }, { i: '25', j: 3 }, { i: '26', j: 3 }, { i: '27', j: 3 }, { i: '28', j: 3 }, { i: '29', j: 3 }, { i: '31', j: 3 }, { i: '32', j: 3 }, { i: '33', j: 3 } ], css_id: 'tinytable_css_qrxu0hfbhe3xldkq7sga',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_ie6v5gihhy9ri80lxxta',}, 
+          { positions: [ { i: '34', j: 1 } ], css_id: 'tinytable_css_0pe8kscmz44bi00g1kbc',}, 
+          { positions: [ { i: '30', j: 1 } ], css_id: 'tinytable_css_ujfab7hxn0jdubeqbfnz',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '13', j: 1 }, { i: '14', j: 1 }, { i: '15', j: 1 }, { i: '16', j: 1 }, { i: '17', j: 1 }, { i: '18', j: 1 }, { i: '19', j: 1 }, { i: '20', j: 1 }, { i: '21', j: 1 }, { i: '22', j: 1 }, { i: '23', j: 1 }, { i: '24', j: 1 }, { i: '25', j: 1 }, { i: '26', j: 1 }, { i: '27', j: 1 }, { i: '28', j: 1 }, { i: '29', j: 1 }, { i: '31', j: 1 }, { i: '32', j: 1 }, { i: '33', j: 1 } ], css_id: 'tinytable_css_6recor6istsrxusvxnv5',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_2ceuhyy6ch5bcvsnvwoq',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_a771bzz84vkepe2bhd9w(cell.i, cell.j, group.css_id);
+                  tableFns_o8v50rdis9yx4w2s6wk1.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_pa6tkq1e6iysjo1gg22a, .table th.tinytable_css_pa6tkq1e6iysjo1gg22a { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_jnvxpiausyy0rmosf6ms, .table th.tinytable_css_jnvxpiausyy0rmosf6ms { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_tsky1awx6zpf5hqynrqn, .table th.tinytable_css_tsky1awx6zpf5hqynrqn { text-align: center; }
-      .table td.tinytable_css_5a1xr0z03gq8c8q3advj, .table th.tinytable_css_5a1xr0z03gq8c8q3advj { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_5ziuckj74528fofag81c, .table th.tinytable_css_5ziuckj74528fofag81c { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_oalwji6zv5qvlzcc75xs, .table th.tinytable_css_oalwji6zv5qvlzcc75xs { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_1i06v852xley8re9kda3, .table th.tinytable_css_1i06v852xley8re9kda3 { text-align: left; }
-      .table td.tinytable_css_2i3n0jo55gyd3rivt9zt, .table th.tinytable_css_2i3n0jo55gyd3rivt9zt { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    /* tinytable css entries after */
+    #tinytable_o8v50rdis9yx4w2s6wk1 td.tinytable_css_rbuke82jyaxy5zkz0tnc, #tinytable_o8v50rdis9yx4w2s6wk1 th.tinytable_css_rbuke82jyaxy5zkz0tnc {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_o8v50rdis9yx4w2s6wk1 td.tinytable_css_qyce8aqkn1mlspuwoiwt, #tinytable_o8v50rdis9yx4w2s6wk1 th.tinytable_css_qyce8aqkn1mlspuwoiwt {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_o8v50rdis9yx4w2s6wk1 td.tinytable_css_qrxu0hfbhe3xldkq7sga, #tinytable_o8v50rdis9yx4w2s6wk1 th.tinytable_css_qrxu0hfbhe3xldkq7sga { text-align: center }
+    #tinytable_o8v50rdis9yx4w2s6wk1 td.tinytable_css_ie6v5gihhy9ri80lxxta, #tinytable_o8v50rdis9yx4w2s6wk1 th.tinytable_css_ie6v5gihhy9ri80lxxta {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_o8v50rdis9yx4w2s6wk1 td.tinytable_css_0pe8kscmz44bi00g1kbc, #tinytable_o8v50rdis9yx4w2s6wk1 th.tinytable_css_0pe8kscmz44bi00g1kbc {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_o8v50rdis9yx4w2s6wk1 td.tinytable_css_ujfab7hxn0jdubeqbfnz, #tinytable_o8v50rdis9yx4w2s6wk1 th.tinytable_css_ujfab7hxn0jdubeqbfnz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_o8v50rdis9yx4w2s6wk1 td.tinytable_css_6recor6istsrxusvxnv5, #tinytable_o8v50rdis9yx4w2s6wk1 th.tinytable_css_6recor6istsrxusvxnv5 { text-align: left }
+    #tinytable_o8v50rdis9yx4w2s6wk1 td.tinytable_css_2ceuhyy6ch5bcvsnvwoq, #tinytable_o8v50rdis9yx4w2s6wk1 th.tinytable_css_2ceuhyy6ch5bcvsnvwoq {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_a771bzz84vkepe2bhd9w" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
-        <thead>
+      <table class="tinytable" id="tinytable_o8v50rdis9yx4w2s6wk1" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         
+        <thead>
               <tr>
-                <th scope="col" data-row="0" data-col="0"> </th>
-                <th scope="col" data-row="0" data-col="1">時点固定効果</th>
-                <th scope="col" data-row="0" data-col="2">年ダミー</th>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">時点固定効果</th>
+                <th scope="col" data-row="0" data-col="3">年ダミー</th>
               </tr>
         </thead>
         <tfoot><tr><td colspan='3'>+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001</td></tr></tfoot>
         <tbody>
                 <tr>
-                  <td data-row="1" data-col="0">union</td>
-                  <td data-row="1" data-col="1">0.108***</td>
+                  <td data-row="1" data-col="1">union</td>
                   <td data-row="1" data-col="2">0.108***</td>
+                  <td data-row="1" data-col="3">0.108***</td>
                 </tr>
                 <tr>
-                  <td data-row="2" data-col="0"></td>
-                  <td data-row="2" data-col="1">(0.010)</td>
+                  <td data-row="2" data-col="1"></td>
                   <td data-row="2" data-col="2">(0.010)</td>
+                  <td data-row="2" data-col="3">(0.010)</td>
                 </tr>
                 <tr>
-                  <td data-row="3" data-col="0">age</td>
-                  <td data-row="3" data-col="1">0.082***</td>
+                  <td data-row="3" data-col="1">age</td>
                   <td data-row="3" data-col="2">0.082***</td>
+                  <td data-row="3" data-col="3">0.082***</td>
                 </tr>
                 <tr>
-                  <td data-row="4" data-col="0"></td>
-                  <td data-row="4" data-col="1">(0.014)</td>
+                  <td data-row="4" data-col="1"></td>
                   <td data-row="4" data-col="2">(0.014)</td>
+                  <td data-row="4" data-col="3">(0.014)</td>
                 </tr>
                 <tr>
-                  <td data-row="5" data-col="0">I(I(age^2))</td>
-                  <td data-row="5" data-col="1">-0.001***</td>
+                  <td data-row="5" data-col="1">I(I(age^2))</td>
                   <td data-row="5" data-col="2">-0.001***</td>
+                  <td data-row="5" data-col="3">-0.001***</td>
                 </tr>
                 <tr>
-                  <td data-row="6" data-col="0"></td>
-                  <td data-row="6" data-col="1">(0.000)</td>
+                  <td data-row="6" data-col="1"></td>
                   <td data-row="6" data-col="2">(0.000)</td>
+                  <td data-row="6" data-col="3">(0.000)</td>
                 </tr>
                 <tr>
-                  <td data-row="7" data-col="0">msp</td>
-                  <td data-row="7" data-col="1">-0.021*</td>
+                  <td data-row="7" data-col="1">msp</td>
                   <td data-row="7" data-col="2">-0.021*</td>
+                  <td data-row="7" data-col="3">-0.021*</td>
                 </tr>
                 <tr>
-                  <td data-row="8" data-col="0"></td>
-                  <td data-row="8" data-col="1">(0.008)</td>
+                  <td data-row="8" data-col="1"></td>
                   <td data-row="8" data-col="2">(0.008)</td>
+                  <td data-row="8" data-col="3">(0.008)</td>
                 </tr>
                 <tr>
-                  <td data-row="9" data-col="0">factor(year)71</td>
-                  <td data-row="9" data-col="1"></td>
-                  <td data-row="9" data-col="2">-0.001</td>
+                  <td data-row="9" data-col="1">factor(year)71</td>
+                  <td data-row="9" data-col="2"></td>
+                  <td data-row="9" data-col="3">-0.001</td>
                 </tr>
                 <tr>
-                  <td data-row="10" data-col="0"></td>
                   <td data-row="10" data-col="1"></td>
-                  <td data-row="10" data-col="2">(0.016)</td>
+                  <td data-row="10" data-col="2"></td>
+                  <td data-row="10" data-col="3">(0.016)</td>
                 </tr>
                 <tr>
-                  <td data-row="11" data-col="0">factor(year)72</td>
-                  <td data-row="11" data-col="1"></td>
-                  <td data-row="11" data-col="2">-0.025</td>
+                  <td data-row="11" data-col="1">factor(year)72</td>
+                  <td data-row="11" data-col="2"></td>
+                  <td data-row="11" data-col="3">-0.025</td>
                 </tr>
                 <tr>
-                  <td data-row="12" data-col="0"></td>
                   <td data-row="12" data-col="1"></td>
-                  <td data-row="12" data-col="2">(0.026)</td>
+                  <td data-row="12" data-col="2"></td>
+                  <td data-row="12" data-col="3">(0.026)</td>
                 </tr>
                 <tr>
-                  <td data-row="13" data-col="0">factor(year)73</td>
-                  <td data-row="13" data-col="1"></td>
-                  <td data-row="13" data-col="2">-0.062+</td>
+                  <td data-row="13" data-col="1">factor(year)73</td>
+                  <td data-row="13" data-col="2"></td>
+                  <td data-row="13" data-col="3">-0.062+</td>
                 </tr>
                 <tr>
-                  <td data-row="14" data-col="0"></td>
                   <td data-row="14" data-col="1"></td>
-                  <td data-row="14" data-col="2">(0.037)</td>
+                  <td data-row="14" data-col="2"></td>
+                  <td data-row="14" data-col="3">(0.037)</td>
                 </tr>
                 <tr>
-                  <td data-row="15" data-col="0">factor(year)77</td>
-                  <td data-row="15" data-col="1"></td>
-                  <td data-row="15" data-col="2">-0.154+</td>
+                  <td data-row="15" data-col="1">factor(year)77</td>
+                  <td data-row="15" data-col="2"></td>
+                  <td data-row="15" data-col="3">-0.154+</td>
                 </tr>
                 <tr>
-                  <td data-row="16" data-col="0"></td>
                   <td data-row="16" data-col="1"></td>
-                  <td data-row="16" data-col="2">(0.082)</td>
+                  <td data-row="16" data-col="2"></td>
+                  <td data-row="16" data-col="3">(0.082)</td>
                 </tr>
                 <tr>
-                  <td data-row="17" data-col="0">factor(year)78</td>
-                  <td data-row="17" data-col="1"></td>
-                  <td data-row="17" data-col="2">-0.146</td>
+                  <td data-row="17" data-col="1">factor(year)78</td>
+                  <td data-row="17" data-col="2"></td>
+                  <td data-row="17" data-col="3">-0.146</td>
                 </tr>
                 <tr>
-                  <td data-row="18" data-col="0"></td>
                   <td data-row="18" data-col="1"></td>
-                  <td data-row="18" data-col="2">(0.094)</td>
+                  <td data-row="18" data-col="2"></td>
+                  <td data-row="18" data-col="3">(0.094)</td>
                 </tr>
                 <tr>
-                  <td data-row="19" data-col="0">factor(year)80</td>
-                  <td data-row="19" data-col="1"></td>
-                  <td data-row="19" data-col="2">-0.221+</td>
+                  <td data-row="19" data-col="1">factor(year)80</td>
+                  <td data-row="19" data-col="2"></td>
+                  <td data-row="19" data-col="3">-0.221+</td>
                 </tr>
                 <tr>
-                  <td data-row="20" data-col="0"></td>
                   <td data-row="20" data-col="1"></td>
-                  <td data-row="20" data-col="2">(0.117)</td>
+                  <td data-row="20" data-col="2"></td>
+                  <td data-row="20" data-col="3">(0.117)</td>
                 </tr>
                 <tr>
-                  <td data-row="21" data-col="0">factor(year)82</td>
-                  <td data-row="21" data-col="1"></td>
-                  <td data-row="21" data-col="2">-0.247+</td>
+                  <td data-row="21" data-col="1">factor(year)82</td>
+                  <td data-row="21" data-col="2"></td>
+                  <td data-row="21" data-col="3">-0.247+</td>
                 </tr>
                 <tr>
-                  <td data-row="22" data-col="0"></td>
                   <td data-row="22" data-col="1"></td>
-                  <td data-row="22" data-col="2">(0.140)</td>
+                  <td data-row="22" data-col="2"></td>
+                  <td data-row="22" data-col="3">(0.140)</td>
                 </tr>
                 <tr>
-                  <td data-row="23" data-col="0">factor(year)83</td>
-                  <td data-row="23" data-col="1"></td>
-                  <td data-row="23" data-col="2">-0.238</td>
+                  <td data-row="23" data-col="1">factor(year)83</td>
+                  <td data-row="23" data-col="2"></td>
+                  <td data-row="23" data-col="3">-0.238</td>
                 </tr>
                 <tr>
-                  <td data-row="24" data-col="0"></td>
                   <td data-row="24" data-col="1"></td>
-                  <td data-row="24" data-col="2">(0.151)</td>
+                  <td data-row="24" data-col="2"></td>
+                  <td data-row="24" data-col="3">(0.151)</td>
                 </tr>
                 <tr>
-                  <td data-row="25" data-col="0">factor(year)85</td>
-                  <td data-row="25" data-col="1"></td>
-                  <td data-row="25" data-col="2">-0.240</td>
+                  <td data-row="25" data-col="1">factor(year)85</td>
+                  <td data-row="25" data-col="2"></td>
+                  <td data-row="25" data-col="3">-0.240</td>
                 </tr>
                 <tr>
-                  <td data-row="26" data-col="0"></td>
                   <td data-row="26" data-col="1"></td>
-                  <td data-row="26" data-col="2">(0.174)</td>
+                  <td data-row="26" data-col="2"></td>
+                  <td data-row="26" data-col="3">(0.174)</td>
                 </tr>
                 <tr>
-                  <td data-row="27" data-col="0">factor(year)87</td>
-                  <td data-row="27" data-col="1"></td>
-                  <td data-row="27" data-col="2">-0.251</td>
+                  <td data-row="27" data-col="1">factor(year)87</td>
+                  <td data-row="27" data-col="2"></td>
+                  <td data-row="27" data-col="3">-0.251</td>
                 </tr>
                 <tr>
-                  <td data-row="28" data-col="0"></td>
                   <td data-row="28" data-col="1"></td>
-                  <td data-row="28" data-col="2">(0.197)</td>
+                  <td data-row="28" data-col="2"></td>
+                  <td data-row="28" data-col="3">(0.197)</td>
                 </tr>
                 <tr>
-                  <td data-row="29" data-col="0">factor(year)88</td>
-                  <td data-row="29" data-col="1"></td>
-                  <td data-row="29" data-col="2">-0.229</td>
+                  <td data-row="29" data-col="1">factor(year)88</td>
+                  <td data-row="29" data-col="2"></td>
+                  <td data-row="29" data-col="3">-0.229</td>
                 </tr>
                 <tr>
-                  <td data-row="30" data-col="0"></td>
                   <td data-row="30" data-col="1"></td>
-                  <td data-row="30" data-col="2">(0.212)</td>
+                  <td data-row="30" data-col="2"></td>
+                  <td data-row="30" data-col="3">(0.212)</td>
                 </tr>
                 <tr>
-                  <td data-row="31" data-col="0">Num.Obs.</td>
-                  <td data-row="31" data-col="1">18413</td>
+                  <td data-row="31" data-col="1">Num.Obs.</td>
                   <td data-row="31" data-col="2">18413</td>
+                  <td data-row="31" data-col="3">18413</td>
                 </tr>
                 <tr>
-                  <td data-row="32" data-col="0">R2</td>
-                  <td data-row="32" data-col="1">0.745</td>
+                  <td data-row="32" data-col="1">R2</td>
                   <td data-row="32" data-col="2">0.745</td>
+                  <td data-row="32" data-col="3">0.745</td>
                 </tr>
                 <tr>
-                  <td data-row="33" data-col="0">FE: id</td>
-                  <td data-row="33" data-col="1">X</td>
+                  <td data-row="33" data-col="1">FE: id</td>
                   <td data-row="33" data-col="2">X</td>
+                  <td data-row="33" data-col="3">X</td>
                 </tr>
                 <tr>
-                  <td data-row="34" data-col="0">FE: year</td>
-                  <td data-row="34" data-col="1">X</td>
-                  <td data-row="34" data-col="2"></td>
+                  <td data-row="34" data-col="1">FE: year</td>
+                  <td data-row="34" data-col="2">X</td>
+                  <td data-row="34" data-col="3"></td>
                 </tr>
         </tbody>
       </table>
     </div>
 <!-- hack to avoid NA insertion in last line -->
-<p>時点の場合は個人と違って係数に実質的な意味があるので、固定効果とせずに、調査年ダミーとして投入してもよい。どちらにしても、その他の係数の推定結果はすべて同じとなる<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a>。</p>
+<p>時点の場合は個人と違って係数に実質的な意味があるので、固定効果とせずに、調査年ダミーとして投入してもよい。どちらにしても、その他の係数の推定結果はすべて同じとなる<a href="#fn31" class="footnote-ref" id="fnref31"><sup>31</sup></a>。</p>
 </div>
 <div id="回しか観察が得られていない個人をデータから除外する" class="section level3 hasAnchor" number="11.4.5">
 <h3><span class="header-section-number">11.4.5</span> 1回しか観察が得られていない個人をデータから除外する<a href="paneldata.html#%E5%9B%9E%E3%81%97%E3%81%8B%E8%A6%B3%E5%AF%9F%E3%81%8C%E5%BE%97%E3%82%89%E3%82%8C%E3%81%A6%E3%81%84%E3%81%AA%E3%81%84%E5%80%8B%E4%BA%BA%E3%82%92%E3%83%87%E3%83%BC%E3%82%BF%E3%81%8B%E3%82%89%E9%99%A4%E5%A4%96%E3%81%99%E3%82%8B" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -2425,162 +2289,128 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
 <span id="cb418-16"><a href="paneldata.html#cb418-16" tabindex="-1"></a>  <span class="at">gof_map =</span> <span class="fu">c</span>(<span class="st">&quot;nobs&quot;</span>, <span class="st">&quot;r.squared&quot;</span>, <span class="st">&quot;FE: id&quot;</span>))</span></code></pre></div>
 <!-- preamble start -->
 
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
     <script>
-
-      function styleCell_qrxj2nlxpru0pkfmnz2x(i, j, css_id) {
-          var table = document.getElementById("tinytable_qrxj2nlxpru0pkfmnz2x");
-          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
-      }
-      function spanCell_qrxj2nlxpru0pkfmnz2x(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_qrxj2nlxpru0pkfmnz2x");
-        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-        if (!targetCell) {
-          console.warn(`Cell at (${i}, ${j}) not found.`);
-        }
-
-        // Get all cells that need to be removed
-        const cellsToRemove = [];
-        for (let r = 0; r < rowspan; r++) {
-          for (let c = 0; c < colspan; c++) {
-            if (r === 0 && c === 0) continue; // Skip the target cell
-            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
-            if (cell) {
-              cellsToRemove.push(cell);
-            }
-          }
-        }
-
-        // Remove all cells
-        cellsToRemove.forEach(cell => cell.remove());
-
-        // Set rowspan and colspan of the target cell if it exists
-        if (targetCell) {
-          targetCell.rowSpan = rowspan;
-          targetCell.colSpan = colspan;
-        }
-      }
+      // Create table-specific functions using external factory
+      const tableFns_fhr3bhyi294q4hfl0l48 = TinyTable.createTableFunctions("tinytable_fhr3bhyi294q4hfl0l48");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '13', j: 1 }, { i: '13', j: 2 },  ], css_id: 'tinytable_css_bj7kbtwsp30ewt9dz5gb',}, 
-          { positions: [ { i: '10', j: 1 }, { i: '10', j: 2 },  ], css_id: 'tinytable_css_t9pxfwsnkcvdodc2wszx',}, 
-          { positions: [ { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '9', j: 2 }, { i: '11', j: 1 }, { i: '12', j: 1 }, { i: '12', j: 2 }, { i: '1', j: 1 }, { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '11', j: 2 },  ], css_id: 'tinytable_css_qe703upsha9m6kfzu7vr',}, 
-          { positions: [ { i: '0', j: 1 }, { i: '0', j: 2 },  ], css_id: 'tinytable_css_m057s705bosou3jb2wbq',}, 
-          { positions: [ { i: '13', j: 0 },  ], css_id: 'tinytable_css_6hgca9b1tdqni4l6amii',}, 
-          { positions: [ { i: '10', j: 0 },  ], css_id: 'tinytable_css_honem9ciaf28yxyu8xp8',}, 
-          { positions: [ { i: '1', j: 0 }, { i: '2', j: 0 }, { i: '3', j: 0 }, { i: '4', j: 0 }, { i: '5', j: 0 }, { i: '6', j: 0 }, { i: '7', j: 0 }, { i: '8', j: 0 }, { i: '9', j: 0 }, { i: '11', j: 0 }, { i: '12', j: 0 },  ], css_id: 'tinytable_css_x3lp1pznrm8a7or0mrci',}, 
-          { positions: [ { i: '0', j: 0 },  ], css_id: 'tinytable_css_79gtaq2grlf0h25j7hcr',}, 
+          { positions: [ { i: '13', j: 2 }, { i: '13', j: 3 } ], css_id: 'tinytable_css_tpwj0u1czso19rsvnkjx',}, 
+          { positions: [ { i: '10', j: 2 }, { i: '10', j: 3 } ], css_id: 'tinytable_css_qva3mmcgzb4148f010va',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '4', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '11', j: 2 }, { i: '12', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '3', j: 3 }, { i: '4', j: 3 }, { i: '5', j: 3 }, { i: '6', j: 3 }, { i: '7', j: 3 }, { i: '8', j: 3 }, { i: '9', j: 3 }, { i: '11', j: 3 }, { i: '12', j: 3 } ], css_id: 'tinytable_css_z77rwjp5ekk39iulxgjb',}, 
+          { positions: [ { i: '0', j: 2 }, { i: '0', j: 3 } ], css_id: 'tinytable_css_jabmg05700ga9d59cgel',}, 
+          { positions: [ { i: '13', j: 1 } ], css_id: 'tinytable_css_lpnp7jsk9lxyyn1z1tj5',}, 
+          { positions: [ { i: '10', j: 1 } ], css_id: 'tinytable_css_wbgvtp4z8yyq4xef1mfk',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '4', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '11', j: 1 }, { i: '12', j: 1 } ], css_id: 'tinytable_css_cicitjyvo34118bc8sod',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_qbr7lbkf23bdpgdwu58u',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_qrxj2nlxpru0pkfmnz2x(cell.i, cell.j, group.css_id);
+                  tableFns_fhr3bhyi294q4hfl0l48.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_bj7kbtwsp30ewt9dz5gb, .table th.tinytable_css_bj7kbtwsp30ewt9dz5gb { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_t9pxfwsnkcvdodc2wszx, .table th.tinytable_css_t9pxfwsnkcvdodc2wszx { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_qe703upsha9m6kfzu7vr, .table th.tinytable_css_qe703upsha9m6kfzu7vr { text-align: center; }
-      .table td.tinytable_css_m057s705bosou3jb2wbq, .table th.tinytable_css_m057s705bosou3jb2wbq { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_6hgca9b1tdqni4l6amii, .table th.tinytable_css_6hgca9b1tdqni4l6amii { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_honem9ciaf28yxyu8xp8, .table th.tinytable_css_honem9ciaf28yxyu8xp8 { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_x3lp1pznrm8a7or0mrci, .table th.tinytable_css_x3lp1pznrm8a7or0mrci { text-align: left; }
-      .table td.tinytable_css_79gtaq2grlf0h25j7hcr, .table th.tinytable_css_79gtaq2grlf0h25j7hcr { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    /* tinytable css entries after */
+    #tinytable_fhr3bhyi294q4hfl0l48 td.tinytable_css_tpwj0u1czso19rsvnkjx, #tinytable_fhr3bhyi294q4hfl0l48 th.tinytable_css_tpwj0u1czso19rsvnkjx {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_fhr3bhyi294q4hfl0l48 td.tinytable_css_qva3mmcgzb4148f010va, #tinytable_fhr3bhyi294q4hfl0l48 th.tinytable_css_qva3mmcgzb4148f010va {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_fhr3bhyi294q4hfl0l48 td.tinytable_css_z77rwjp5ekk39iulxgjb, #tinytable_fhr3bhyi294q4hfl0l48 th.tinytable_css_z77rwjp5ekk39iulxgjb { text-align: center }
+    #tinytable_fhr3bhyi294q4hfl0l48 td.tinytable_css_jabmg05700ga9d59cgel, #tinytable_fhr3bhyi294q4hfl0l48 th.tinytable_css_jabmg05700ga9d59cgel {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_fhr3bhyi294q4hfl0l48 td.tinytable_css_lpnp7jsk9lxyyn1z1tj5, #tinytable_fhr3bhyi294q4hfl0l48 th.tinytable_css_lpnp7jsk9lxyyn1z1tj5 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_fhr3bhyi294q4hfl0l48 td.tinytable_css_wbgvtp4z8yyq4xef1mfk, #tinytable_fhr3bhyi294q4hfl0l48 th.tinytable_css_wbgvtp4z8yyq4xef1mfk {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_fhr3bhyi294q4hfl0l48 td.tinytable_css_cicitjyvo34118bc8sod, #tinytable_fhr3bhyi294q4hfl0l48 th.tinytable_css_cicitjyvo34118bc8sod { text-align: left }
+    #tinytable_fhr3bhyi294q4hfl0l48 td.tinytable_css_qbr7lbkf23bdpgdwu58u, #tinytable_fhr3bhyi294q4hfl0l48 th.tinytable_css_qbr7lbkf23bdpgdwu58u {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_qrxj2nlxpru0pkfmnz2x" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
-        <thead>
+      <table class="tinytable" id="tinytable_fhr3bhyi294q4hfl0l48" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         
+        <thead>
               <tr>
-                <th scope="col" data-row="0" data-col="0"> </th>
-                <th scope="col" data-row="0" data-col="1">Pooled OLS</th>
-                <th scope="col" data-row="0" data-col="2">Fixed effect</th>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">Pooled OLS</th>
+                <th scope="col" data-row="0" data-col="3">Fixed effect</th>
               </tr>
         </thead>
         <tfoot><tr><td colspan='3'>+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001</td></tr></tfoot>
         <tbody>
                 <tr>
-                  <td data-row="1" data-col="0">(Intercept)</td>
-                  <td data-row="1" data-col="1">0.715***</td>
-                  <td data-row="1" data-col="2"></td>
+                  <td data-row="1" data-col="1">(Intercept)</td>
+                  <td data-row="1" data-col="2">0.715***</td>
+                  <td data-row="1" data-col="3"></td>
                 </tr>
                 <tr>
-                  <td data-row="2" data-col="0"></td>
-                  <td data-row="2" data-col="1">(0.091)</td>
-                  <td data-row="2" data-col="2"></td>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.091)</td>
+                  <td data-row="2" data-col="3"></td>
                 </tr>
                 <tr>
-                  <td data-row="3" data-col="0">union</td>
-                  <td data-row="3" data-col="1">0.215***</td>
-                  <td data-row="3" data-col="2">0.106***</td>
+                  <td data-row="3" data-col="1">union</td>
+                  <td data-row="3" data-col="2">0.215***</td>
+                  <td data-row="3" data-col="3">0.106***</td>
                 </tr>
                 <tr>
-                  <td data-row="4" data-col="0"></td>
-                  <td data-row="4" data-col="1">(0.013)</td>
-                  <td data-row="4" data-col="2">(0.010)</td>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.013)</td>
+                  <td data-row="4" data-col="3">(0.010)</td>
                 </tr>
                 <tr>
-                  <td data-row="5" data-col="0">age</td>
-                  <td data-row="5" data-col="1">0.053***</td>
-                  <td data-row="5" data-col="2">0.035***</td>
+                  <td data-row="5" data-col="1">age</td>
+                  <td data-row="5" data-col="2">0.053***</td>
+                  <td data-row="5" data-col="3">0.035***</td>
                 </tr>
                 <tr>
-                  <td data-row="6" data-col="0"></td>
-                  <td data-row="6" data-col="1">(0.006)</td>
-                  <td data-row="6" data-col="2">(0.005)</td>
+                  <td data-row="6" data-col="1"></td>
+                  <td data-row="6" data-col="2">(0.006)</td>
+                  <td data-row="6" data-col="3">(0.005)</td>
                 </tr>
                 <tr>
-                  <td data-row="7" data-col="0">I(I(age^2))</td>
-                  <td data-row="7" data-col="1">-0.001***</td>
-                  <td data-row="7" data-col="2">-0.000***</td>
+                  <td data-row="7" data-col="1">I(I(age^2))</td>
+                  <td data-row="7" data-col="2">-0.001***</td>
+                  <td data-row="7" data-col="3">-0.000***</td>
                 </tr>
                 <tr>
-                  <td data-row="8" data-col="0"></td>
-                  <td data-row="8" data-col="1">(0.000)</td>
+                  <td data-row="8" data-col="1"></td>
                   <td data-row="8" data-col="2">(0.000)</td>
+                  <td data-row="8" data-col="3">(0.000)</td>
                 </tr>
                 <tr>
-                  <td data-row="9" data-col="0">msp</td>
-                  <td data-row="9" data-col="1">-0.015</td>
-                  <td data-row="9" data-col="2">-0.017*</td>
+                  <td data-row="9" data-col="1">msp</td>
+                  <td data-row="9" data-col="2">-0.015</td>
+                  <td data-row="9" data-col="3">-0.017*</td>
                 </tr>
                 <tr>
-                  <td data-row="10" data-col="0"></td>
-                  <td data-row="10" data-col="1">(0.013)</td>
-                  <td data-row="10" data-col="2">(0.008)</td>
+                  <td data-row="10" data-col="1"></td>
+                  <td data-row="10" data-col="2">(0.013)</td>
+                  <td data-row="10" data-col="3">(0.008)</td>
                 </tr>
                 <tr>
-                  <td data-row="11" data-col="0">Num.Obs.</td>
-                  <td data-row="11" data-col="1">18413</td>
+                  <td data-row="11" data-col="1">Num.Obs.</td>
                   <td data-row="11" data-col="2">18413</td>
+                  <td data-row="11" data-col="3">18413</td>
                 </tr>
                 <tr>
-                  <td data-row="12" data-col="0">R2</td>
-                  <td data-row="12" data-col="1">0.071</td>
-                  <td data-row="12" data-col="2">0.742</td>
+                  <td data-row="12" data-col="1">R2</td>
+                  <td data-row="12" data-col="2">0.071</td>
+                  <td data-row="12" data-col="3">0.742</td>
                 </tr>
                 <tr>
-                  <td data-row="13" data-col="0">FE: id</td>
-                  <td data-row="13" data-col="1"></td>
-                  <td data-row="13" data-col="2">X</td>
+                  <td data-row="13" data-col="1">FE: id</td>
+                  <td data-row="13" data-col="2"></td>
+                  <td data-row="13" data-col="3">X</td>
                 </tr>
         </tbody>
       </table>
     </div>
 <!-- hack to avoid NA insertion in last line -->
-<p>Pooled OLSで得られた<code>union</code>の係数は、以下の2つの異なる差を反映している<a href="#fn33" class="footnote-ref" id="fnref33"><sup>33</sup></a>。</p>
+<p>Pooled OLSで得られた<code>union</code>の係数は、以下の2つの異なる差を反映している<a href="#fn32" class="footnote-ref" id="fnref32"><sup>32</sup></a>。</p>
 <ol style="list-style-type: decimal">
 <li><strong>個人間効果（between effect）</strong>：他の変数（X，Z）を統制したうえで、労働組合に入っている観察数の割合が多い個人（たとえば10回の観察のうち3回は労働組合に入っていれば0.3、8回入っていれば0.8、といったように）は、労働組合に入っている観察数の割合が少ない個人と比べて平均的に賃金が高い。</li>
 <li><strong>個人内効果（within effect）</strong>：他の変数（X, Z）を統制したうえで、同一個人内において労働組合に入っている観察は、入っていない観察と比べて平均的に賃金が高い。</li>
@@ -2589,10 +2419,10 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
 </div>
 <div id="paneldata_notes" class="section level3 hasAnchor" number="11.5.2">
 <h3><span class="header-section-number">11.5.2</span> 固定効果モデルの注意点<a href="paneldata.html#paneldata_notes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>固定効果モデルは因果効果の推定にとっての万能薬ではない<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a>。とくに最も重要なのは、推定に含まれていない時間可変の要因については何ら解決策を与えるものではないということである。従属変数をY、関心のある時間可変の独立変数をD、その他の時間可変の独立変数をX、時間不変の個人特性をuと表すことにする。このとき、固定効果モデルの想定をDAGにして表したのが次の図である。ここに含まれていない時間可変の要因が原因（D）と結果（Y）の両方の交絡要因となっていれば、Dの係数にはバイアスが生じることになる。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-338-1.png" width="672" /></p>
+<p>固定効果モデルは因果効果の推定にとっての万能薬ではない<a href="#fn33" class="footnote-ref" id="fnref33"><sup>33</sup></a>。とくに最も重要なのは、推定に含まれていない時間可変の要因については何ら解決策を与えるものではないということである。従属変数をY、関心のある時間可変の独立変数をD、その他の時間可変の独立変数をX、時間不変の個人特性をuと表すことにする。このとき、固定効果モデルの想定をDAGにして表したのが次の図である。ここに含まれていない時間可変の要因が原因（D）と結果（Y）の両方の交絡要因となっていれば、Dの係数にはバイアスが生じることになる。</p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-338-1.png" alt="" width="672" /></p>
 <p>たとえば、雇用形態がメンタルヘルスに与える影響について考えよう。病気によって正規雇用から非正規雇用に転換することになり、同時に、メンタルヘルスが悪化した人がいたとする。この場合には、病気が雇用形態の変化とメンタルヘルスの悪化の両方をもたらしたのであって、雇用形態が変わることによってメンタルヘルスが悪化したわけではない。すなわち、病気という時間可変の交絡要因が存在するということである。もし適切な時間可変の要因を統制することができれば、問題を緩和することができる。</p>
-<p>さらに、時間不変の個人属性が独立変数や従属変数の変化に対して影響するという可能性もある。典型的な例が男性の結婚と賃金との関連である。男性は、結婚すると結婚していないときと比べて賃金が高い傾向がある<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>。これは、パネルデータと固定効果モデルを使った分析でも繰り返し確認されてきた<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>。しかしながら、賃金の伸び方は個人によって異なり、かつ、それが結婚するかどうかにも影響すると考えられる（たとえば、将来も賃金が高くなっていくと期待できる人と、将来もさほど高くならないと思われる人であれば、前者のほうがより結婚しやすそうである）。上記の固定効果モデルはこのような個人によって異なるトレンドを統制していないため、結婚と賃金の間に正の関連が見られたとしても、それは見かけ上の効果に過ぎないかもしれない<a href="#fn37" class="footnote-ref" id="fnref37"><sup>37</sup></a>。</p>
+<p>さらに、時間不変の個人属性が独立変数や従属変数の変化に対して影響するという可能性もある。典型的な例が男性の結婚と賃金との関連である。男性は、結婚すると結婚していないときと比べて賃金が高い傾向がある<a href="#fn34" class="footnote-ref" id="fnref34"><sup>34</sup></a>。これは、パネルデータと固定効果モデルを使った分析でも繰り返し確認されてきた<a href="#fn35" class="footnote-ref" id="fnref35"><sup>35</sup></a>。しかしながら、賃金の伸び方は個人によって異なり、かつ、それが結婚するかどうかにも影響すると考えられる（たとえば、将来も賃金が高くなっていくと期待できる人と、将来もさほど高くならないと思われる人であれば、前者のほうがより結婚しやすそうである）。上記の固定効果モデルはこのような個人によって異なるトレンドを統制していないため、結婚と賃金の間に正の関連が見られたとしても、それは見かけ上の効果に過ぎないかもしれない<a href="#fn36" class="footnote-ref" id="fnref36"><sup>36</sup></a>。</p>
 <p>もう一つ補足的な論点としては、固定効果モデルの推定には、時間可変の変数の変動が必要だということである。パネルデータは個人×時点のデータなので一般的にサンプルサイズは大きくなりやすい。しかし、扱う変数の特性によって、どの程度の頻度で時間による変動が得られるかは異なる。用いるデータにおいて十分に時間による変動が観察されていない場合には、その変数の効果が検出しにくくなる。この場合には、より長期間、よりサンプルサイズの大きいデータを用いるか、もしくは、固定効果モデルによらない方法を検討するのが望ましい。</p>
 <p>固定効果モデルはパネルデータを活かした分析として最も基礎的かつ強力な方法なので活用すべきだが、あくまでも選択肢の一つであって万能薬ではない。この方法を使うことで何が言えて何が言えないのかを理解しておくことが重要といえる。</p>
 
@@ -2601,15 +2431,15 @@ Y_{it} = \beta_1 X_{1it} + \cdots + \beta_k X_{kit} + u_i + \tau_t + \varepsilon
 </div>
 <div class="footnotes">
 <hr />
-<ol start="30">
-<li id="fn30"><p><a href="paneldata.html#eq:fe2">(11.3)</a>のように書くか、<a href="paneldata.html#eq:fe">(11.4)</a> のように書くかは分野によって異なるが、どちらも同じモデルを指す。どちらであっても係数<span class="math inline">\(\beta_1, \cdots, \beta_k\)</span>の値は同じとなる。<a href="paneldata.html#fnref30" class="footnote-back">↩︎</a></p></li>
-<li id="fn31"><p>Wang, Jia, and James M. Raymo. 2021. “Nonstandard Employment, Gender, and Subjective Well-Being in Japan.” <em>Journal of Marriage and Family</em> 83(3):845–64.<a href="paneldata.html#fnref31" class="footnote-back">↩︎</a></p></li>
-<li id="fn32"><p>個人固定効果を含めた場合には同一個人内で時間によって変化しない（時間不変の）変数は個人固定効果と完全な共線性が生じるためにモデルから省かれた。個人固定効果と時点固定効果を同時に含めた場合にはさらに、時点を表す変数と完全な共線性が生じる独立変数はモデルから除外される。典型的な例が年齢であり、毎年同じ時期に実施されるパネル調査の場合、年齢はどの個人も必ず毎年1歳増加していく変数となる。個人固定効果を統制した場合、年齢は時間固定効果と完全な共線性が生じる変数となるためモデルから除外され、係数は推定されない。<a href="paneldata.html#fnref32" class="footnote-back">↩︎</a></p></li>
-<li id="fn33"><p>正確には「効果」というよりは「差」といったほうがよいが、ここでは多くのテキストの単語にそろえて個人間効果、個人内効果という言い方を採用する。<a href="paneldata.html#fnref33" class="footnote-back">↩︎</a></p></li>
-<li id="fn34"><p>たとえば、大久保将貴，2021，「パネルデータ分析における固定効果モデルの取扱説明書」『社会科学研究』72(2): 55–68．<a href="paneldata.html#fnref34" class="footnote-back">↩︎</a></p></li>
-<li id="fn35"><p>Waite, Linda J. 1995. “Does Marriage Matter?” <em>Demography</em> 32(4):483–507.<a href="paneldata.html#fnref35" class="footnote-back">↩︎</a></p></li>
-<li id="fn36"><p>Killewald, Alexandra, and Margaret Gough. 2013. “Does Specialization Explain Marriage Penalties and Premiums?” <em>American Sociological Review</em> 78(3):477–502.<a href="paneldata.html#fnref36" class="footnote-back">↩︎</a></p></li>
-<li id="fn37"><p>この可能性を指摘した研究としてたとえばKillewald, Alexandra, and Ian Lundberg. 2017. “New Evidence Against a Causal Marriage Wage Premium.” <em>Demography</em> 54:1007–28.、Ludwig, Volker, and Josef Brüderl. 2018. “Is There a Male Marital Wage Premium? New Evidence from the United States.” <em>American Sociological Review</em> 83(4):744–70.など。<a href="paneldata.html#fnref37" class="footnote-back">↩︎</a></p></li>
+<ol start="29">
+<li id="fn29"><p><a href="paneldata.html#eq:fe2">(11.3)</a>のように書くか、<a href="paneldata.html#eq:fe">(11.4)</a> のように書くかは分野によって異なるが、どちらも同じモデルを指す。どちらであっても係数<span class="math inline">\(\beta_1, \cdots, \beta_k\)</span>の値は同じとなる。<a href="paneldata.html#fnref29" class="footnote-back">↩︎</a></p></li>
+<li id="fn30"><p>Wang, Jia, and James M. Raymo. 2021. “Nonstandard Employment, Gender, and Subjective Well-Being in Japan.” <em>Journal of Marriage and Family</em> 83(3):845–64.<a href="paneldata.html#fnref30" class="footnote-back">↩︎</a></p></li>
+<li id="fn31"><p>個人固定効果を含めた場合には同一個人内で時間によって変化しない（時間不変の）変数は個人固定効果と完全な共線性が生じるためにモデルから省かれた。個人固定効果と時点固定効果を同時に含めた場合にはさらに、時点を表す変数と完全な共線性が生じる独立変数はモデルから除外される。典型的な例が年齢であり、毎年同じ時期に実施されるパネル調査の場合、年齢はどの個人も必ず毎年1歳増加していく変数となる。個人固定効果を統制した場合、年齢は時間固定効果と完全な共線性が生じる変数となるためモデルから除外され、係数は推定されない。<a href="paneldata.html#fnref31" class="footnote-back">↩︎</a></p></li>
+<li id="fn32"><p>正確には「効果」というよりは「差」といったほうがよいが、ここでは多くのテキストの単語にそろえて個人間効果、個人内効果という言い方を採用する。<a href="paneldata.html#fnref32" class="footnote-back">↩︎</a></p></li>
+<li id="fn33"><p>たとえば、大久保将貴，2021，「パネルデータ分析における固定効果モデルの取扱説明書」『社会科学研究』72(2): 55–68．<a href="paneldata.html#fnref33" class="footnote-back">↩︎</a></p></li>
+<li id="fn34"><p>Waite, Linda J. 1995. “Does Marriage Matter?” <em>Demography</em> 32(4):483–507.<a href="paneldata.html#fnref34" class="footnote-back">↩︎</a></p></li>
+<li id="fn35"><p>Killewald, Alexandra, and Margaret Gough. 2013. “Does Specialization Explain Marriage Penalties and Premiums?” <em>American Sociological Review</em> 78(3):477–502.<a href="paneldata.html#fnref35" class="footnote-back">↩︎</a></p></li>
+<li id="fn36"><p>この可能性を指摘した研究としてたとえばKillewald, Alexandra, and Ian Lundberg. 2017. “New Evidence Against a Causal Marriage Wage Premium.” <em>Demography</em> 54:1007–28.、Ludwig, Volker, and Josef Brüderl. 2018. “Is There a Male Marital Wage Premium? New Evidence from the United States.” <em>American Sociological Review</em> 83(4):744–70.など。<a href="paneldata.html#fnref36" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

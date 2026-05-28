@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 回帰分析の基礎 | Rによる社会調査データ分析の手引き</title>
   <meta name="description" content="This is the document for the class Seminar in Sociology held in Department of Political Studies, Gakushuin University. Anyone can freely use this as reference." />
-  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 回帰分析の基礎 | Rによる社会調査データ分析の手引き" />
   <meta property="og:type" content="book" />
@@ -601,25 +601,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="regression.html#cb256-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb256-2"><a href="regression.html#cb256-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> numeracy, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
 <span id="cb256-3"><a href="regression.html#cb256-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-181-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-181-1.png" alt="" width="672" /></p>
 <p>なんとなく、数的思考力スコアが高いほど賃金が高い傾向があるようにみえる。この関係を1つの直線で要約するとしたらどのようになるだろう？この直線を示したのが次の図になる。</p>
 <div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="regression.html#cb257-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb257-2"><a href="regression.html#cb257-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> numeracy, <span class="at">y =</span> wage)) <span class="sc">+</span> </span>
 <span id="cb257-3"><a href="regression.html#cb257-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb257-4"><a href="regression.html#cb257-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-182-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-182-1.png" alt="" width="672" /></p>
 </div>
 <div id="回帰式の読み方" class="section level3 hasAnchor" number="7.1.2">
 <h3><span class="header-section-number">7.1.2</span> 回帰式の読み方<a href="regression.html#%E5%9B%9E%E5%B8%B0%E5%BC%8F%E3%81%AE%E8%AA%AD%E3%81%BF%E6%96%B9" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>このように、2つの変数の関係を<span class="math inline">\(y = f(x)\)</span>というような関数で表現する分析方法を指して、<strong>回帰分析 regression analysis/regression model</strong> という。とくに、今y軸に置かれている変数 （賃金）は、数的思考力スコアによって説明される変数であるという意味で、<strong>被説明変数 explained variable</strong>または<strong>従属変数 dependent variable</strong>、x軸に置かれている変数（数的思考力スコア）は、賃金を説明する変数であるという意味で、<strong>説明変数 explanatory variable</strong>または<strong>独立変数 independent variable</strong>という。</p>
-<p>今回の式は、次のようなかたちになる<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a>。</p>
+<p>今回の式は、次のようなかたちになる<a href="#fn15" class="footnote-ref" id="fnref15"><sup>15</sup></a>。</p>
 <p><span class="math display">\[
 y = \beta_0 + \beta_1x
 \]</span></p>
 <p>今の例の場合は、<span class="math inline">\(y\)</span>は賃金、<span class="math inline">\(x\)</span>は年齢である。<span class="math inline">\(\beta_k\)</span>のことを<strong>係数 coefficient</strong> といい、なかでもとくに<span class="math inline">\(\beta_0\)</span>のことを<strong>切片 intercept</strong>、<span class="math inline">\(\beta_1\)</span>のことを<strong>傾き slope</strong> という。傾きは、<span class="math inline">\(x\)</span>が1単位増えると（<span class="math inline">\(\Delta x = 1\)</span>）に<span class="math inline">\(y\)</span>がどれだけ変化するかを表す。</p>
 <p>ここで関心があるのは傾きの係数の値である。これが正であれば、<span class="math inline">\(x\)</span>が高いほど<span class="math inline">\(y\)</span>は高いという正の関係を表すし、負であれば、<span class="math inline">\(x\)</span>が高いほど<span class="math inline">\(y\)</span>は低いという負の関係を表す。絶対値が大きいほど、$x$1単位の変化に対して <span class="math inline">\(y\)</span>がより大きく変わるということを表すので、たんに正か負かというだけでなく、その値も重要である。</p>
-<p>今回の場合は係数はどうなるだろうか？線形回帰分析を推定するときのコマンドが<code>lm()</code>である<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a>。<code>lm(data = xx, formula = )</code>という書き方になる。<code>formula =</code>の部分は省略しても大丈夫。</p>
+<p>今回の場合は係数はどうなるだろうか？線形回帰分析を推定するときのコマンドが<code>lm()</code>である<a href="#fn16" class="footnote-ref" id="fnref16"><sup>16</sup></a>。<code>lm(data = xx, formula = )</code>という書き方になる。<code>formula =</code>の部分は省略しても大丈夫。</p>
 <div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="regression.html#cb259-1" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> piaac, <span class="at">formula =</span> wage <span class="sc">~</span> numeracy)</span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -637,13 +637,13 @@ y = -521.1 + 7.8x
 <h3><span class="header-section-number">7.1.3</span> 【補足】最小二乗法<a href="regression.html#ordinaryleastsquare" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>もちろん、上記の回帰式は散布図をみて直観でえいやっと式の値を決めたのではなく、全体の傾向をもっともよく要約するような係数を推定している。その係数の推定方法を<strong>最小二乗法 ordinary least square, OLS</strong>という。</p>
 <p>最小二乗法の意味は図にするとわかりやすい。例えば、次のような散布図と、そこに引いた直線を考えよう。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-185-1.png" alt="" width="672" /></p>
 <p>このとき、散布図の各点の座標を<span class="math inline">\((x_i, y_i)\)</span>と表すことにしよう。すると、各点のy座標の位置<span class="math inline">\(y_i\)</span>は、（1）回帰直線の式に<span class="math inline">\(x_i\)</span>を当てはめた値と、（2）そこからのずれ（<span class="math inline">\(e_i\)</span>とする）の和として表すことができる。すなわち：</p>
 <p><span class="math display">\[
 y_i = \beta_0 + \beta_1x_{i} + e_i
 \]</span></p>
 <p>この<span class="math inline">\(e_i\)</span>というのは、散布図の点からx軸に垂線を下ろしたときの、回帰直線との交点までの距離を表している。図で考えると次のようになる。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-186-1.png" alt="" width="672" /></p>
 <p>ずれ<span class="math inline">\(e_i\)</span>のことを、<strong>残差（residuals）</strong>、または<strong>誤差項（error term）</strong>という。散布図に直線を引く方法はたくさんあるのだが、最小二乗法では、上記の残差の二乗和を最も小さくするような直線が散布図全体の傾向をもっともよく反映する直線だとみなして、切片と傾きのパラメータを推定する。式で書くとつぎのようになる。</p>
 <p><span class="math display">\[
 \sum_{i = 1}^N e_i^2 = \sum_{i = 1}^N(y_i - (\beta_0 + \beta_1x_{i}))^2
@@ -685,7 +685,7 @@ y_i = \beta_0 + \beta_1x_{i} + e_i
 ## Multiple R-squared:   0.08,  Adjusted R-squared:  0.07966 
 ## F-statistic:   237 on 1 and 2726 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>1列目のEstimateの列には、先ほどみたように係数の値が表示される。</p>
-<p>2列目のStd. Errorの列が<strong>標準誤差 standard error</strong>を表し、得られた係数のばらつき（標準偏差）を示している。標準誤差は、次に述べるp値の計算に使われている<a href="#fn18" class="footnote-ref" id="fnref18"><sup>18</sup></a>。</p>
+<p>2列目のStd. Errorの列が<strong>標準誤差 standard error</strong>を表し、得られた係数のばらつき（標準偏差）を示している。標準誤差は、次に述べるp値の計算に使われている<a href="#fn17" class="footnote-ref" id="fnref17"><sup>17</sup></a>。</p>
 <p>4列めのPr(&gt;|t|)の列が<strong>p値 p-value</strong>を表している。p値は「母集団において係数が0であると仮定したときに、今回のような係数の値となる確率」を表している。この値が十分に低いのならば、「母集団において係数が0である」という仮定（統計学ではこのことを帰無仮説という）を棄却して、母集団においても係数は0でなさそうだ（正あるいは負だ）、ということを自信をもって主張できるということになる。</p>
 <p>この確率がどれくらい低ければ自信をもって関係があるといえるのか？慣習的には、0.05という基準が最もよく使われている。Rでは、p値に応じて次のように印がつく。</p>
 <ul>
@@ -703,9 +703,9 @@ y_i = \beta_0 + \beta_1x_{i} + e_i
 <div id="値のカテゴリ" class="section level3 hasAnchor" number="7.2.1">
 <h3><span class="header-section-number">7.2.1</span> 2値のカテゴリ<a href="regression.html#%E5%80%A4%E3%81%AE%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>線形回帰分析では、連続変数だけではなく、カテゴリ変数も扱うことができる。その例としてまず、性別によって賃金がどの程度異なるのかを知りたいとする。このとき、（無理やり）散布図を書くと、次のようになる。分布がわかりやすいように点は水平方向に少し散らして表示している。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-189-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-189-1.png" alt="" width="672" /></p>
 <p>ここで得られた男性の平均値と女性の平均値をそれぞれ散布図に書き入れてみたのが次の図である。実線が男性の平均値、点線が女性の平均値を表している。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-191-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-191-1.png" alt="" width="672" /></p>
 <p>いま、男性であれば1、女性であれば0をとる変数<span class="math inline">\(x\)</span>を考えよう。このように、カテゴリ変数のカテゴリを区別するために便宜的に0/1の値を振った変数のことを、<strong>ダミー変数 dummy variable</strong>という。このとき、性別による賃金の違いを表す回帰式は次のようになる：</p>
 <p><span class="math display">\[
 y = \beta_0 + \beta_1x
@@ -746,7 +746,7 @@ y = 1339 + 856x
 <div id="値以上のカテゴリ" class="section level3 hasAnchor" number="7.2.2">
 <h3><span class="header-section-number">7.2.2</span> 3値以上のカテゴリ<a href="regression.html#%E5%80%A4%E4%BB%A5%E4%B8%8A%E3%81%AE%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>カテゴリが3値以上の場合はどうだろう？これも、基本的には同じふうに考えることができる。たとえば、最終学歴が中学、高校、短大高専、大学大学院の4つのグループにおいて、賃金の平均がどの程度異なるのかを知りたいとする。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-195-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-195-1.png" alt="" width="672" /></p>
 <p>中学卒を基準として、高校卒（高校卒 - 中学卒）、短大高専卒（短大高専卒 - 中学卒）、大学大学院卒（大学大学院卒 - 中学卒）だとどれくらい賃金が高いのかを推定することになる。</p>
 <div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="regression.html#cb267-1" tabindex="-1"></a>piaac <span class="ot">&lt;-</span> piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb267-2"><a href="regression.html#cb267-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ_d2 =</span> <span class="fu">if_else</span>(educ <span class="sc">==</span> <span class="st">&quot;高校&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
@@ -908,7 +908,7 @@ y = 1339 + 856x
 <span id="cb278-6"><a href="regression.html#cb278-6" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(mean_ojt, <span class="at">digit =</span> <span class="dv">3</span>)), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb278-7"><a href="regression.html#cb278-7" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb278-8"><a href="regression.html#cb278-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-203-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-203-1.png" alt="" width="672" /></p>
 <p>棒グラフの高さが異なることから分かる通り、男性は女性とくらべてOJTを受けた割合が0.082（8.2%ポイント）高い。</p>
 <p>なお、%どうしの差を指すときには「%ポイント」または「ポイント」という表現を使う。たとえば、2020年1月の日本における完全失業率は2.4%であったが、同年12月には3.0%に上昇した。このときには「完全失業率が0.6%上昇した」というのではなく「完全失業率が<strong>0.6%ポイント</strong>上昇した」または「完全失業率が<strong>0.6ポイント</strong>上昇した」という。なぜなら、「0.6%上昇した」というと、<span class="math inline">\(2.4\times 1.006 = 2.4144\)</span>%になったということなのか、$2.4 + 0.6 = 3.0 $%になったということなのかがわかりにくいので、両者を区別する必要があるからである。</p>
 <p>では、ojtを従属変数、性別を独立変数とする回帰式を推定してみよう。</p>
@@ -946,9 +946,17 @@ y = 1339 + 856x
 <span id="cb281-6"><a href="regression.html#cb281-6" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">10</span>)) <span class="sc">+</span> </span>
 <span id="cb281-7"><a href="regression.html#cb281-7" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">weight =</span> n), <span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
 <span id="cb281-8"><a href="regression.html#cb281-8" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<pre><code>## `summarise()` has grouped output by &#39;age&#39;. You can override using the `.groups` argument.
-## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-206-1.png" width="672" /></p>
+<pre><code>## `summarise()` has regrouped the output.
+## `geom_smooth()` using formula = &#39;y ~ x&#39;
+## ℹ Summaries were computed grouped by age and
+##   ojt.
+## ℹ Output is grouped by age.
+## ℹ Use `summarise(.groups = &quot;drop_last&quot;)` to
+##   silence this message.
+## ℹ Use `summarise(.by = c(age, ojt))` for
+##   per-operation grouping (`?dplyr::dplyr_by`)
+##   instead.</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-206-1.png" alt="" width="672" /></p>
 <p>縦軸のOJTは0または1しかとらないので、点はy = 1またはy = 0の位置のどちらかに描かれる。推定される回帰式は、この散布図全体の傾向を要約するような線として表される。実際に、回帰式を推定してみよう。</p>
 <div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="regression.html#cb283-1" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, ojt <span class="sc">~</span> age)</span>
 <span id="cb283-2"><a href="regression.html#cb283-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
@@ -994,13 +1002,15 @@ y = 1339 + 856x
 <div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="regression.html#cb286-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb286-2"><a href="regression.html#cb286-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> wage)) <span class="sc">+</span> </span>
 <span id="cb286-3"><a href="regression.html#cb286-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-210-1.png" width="672" /></p>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better
+## value `binwidth`.</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-210-1.png" alt="" width="672" /></p>
 <div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="regression.html#cb288-1" tabindex="-1"></a>piaac <span class="sc">%&gt;%</span> </span>
 <span id="cb288-2"><a href="regression.html#cb288-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> logwage)) <span class="sc">+</span> </span>
 <span id="cb288-3"><a href="regression.html#cb288-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-210-2.png" width="672" /></p>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better
+## value `binwidth`.</code></pre>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-210-2.png" alt="" width="672" /></p>
 <p>対数変換した後の変数は、対数変換する前の変数よりも正規分布に近づいていることがわかる。</p>
 </div>
 <div id="補足自然対数と対数関数について" class="section level3 hasAnchor" number="7.4.2">
@@ -1022,7 +1032,7 @@ a^y = x \leftrightarrow y = \log_a x
 <span id="cb290-3"><a href="regression.html#cb290-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb290-4"><a href="regression.html#cb290-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-211-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-211-1.png" alt="" width="672" /></p>
 <p>対数変換した後の賃金を従属変数として、回帰分析を推定してみよう。</p>
 <div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="regression.html#cb292-1" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> numeracy)</span>
 <span id="cb292-2"><a href="regression.html#cb292-2" tabindex="-1"></a><span class="fu">summary</span>(reg_res)</span></code></pre></div>
@@ -1088,7 +1098,7 @@ y + \Delta y &amp;= \exp(\beta_1)y
 \]</span></p>
 <p><span class="math inline">\(\exp(\beta_1)\)</span>が1単位増えたときに<span class="math inline">\(y\)</span>が<span class="math inline">\(\exp(\beta_1)\)</span>倍になる、ということを表す。すなわち、<span class="math inline">\(\beta_1\)</span>の値が小さい場合には、対数変換した従属変数の係数は、独立変数が1単位増えたときに従属変数が何倍になるかを表す。</p>
 <p>なお、<span class="math inline">\(\beta_1\)</span>の値がある程度小さい場合には、<span class="math inline">\(\beta_1\)</span>と<span class="math inline">\(\exp(\beta_1) - 1\)</span>（または、<span class="math inline">\(\beta_1 + 1\)</span>と<span class="math inline">\(\exp(\beta_1)\)</span>）はかなり近い値になる。ただし、<span class="math inline">\(\beta_1\)</span>が大きくなるほど両者のずれは大きくなる。これを図示したのが以下の図である。</p>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-215-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-215-1.png" alt="" width="672" /></p>
 <p>横軸は<span class="math inline">\(\beta\)</span>の値を、縦軸にはそれぞれ<span class="math inline">\(y = \beta\)</span>または<span class="math inline">\(y = \exp(\beta) - 1\)</span>のときの<span class="math inline">\(y\)</span>の値をそれぞれ示している。この図からもわかるように、<span class="math inline">\(\beta\)</span>の絶対値が小さい（たとえば、-0.1〜+0.1）場合には、この2つの線はほとんど重なっている。一方で、<span class="math inline">\(\beta\)</span>の値が大きくなっていくと、両者の<span class="math inline">\(y\)</span>の値は徐々に隔たっていくことがわかる。たとえば<span class="math inline">\(\beta = 0.4\)</span>のときには、<span class="math inline">\(y = \exp(0.4) - 1 = 0.49\)</span>である。また、<span class="math inline">\(\beta = -0.4\)</span>のときには、<span class="math inline">\(y = \exp(-0.4) - 1 = -0.33\)</span>である。したがって、対数変換した変数を従属変数とした回帰分析を用いる場合には、値の指数を計算するのが望ましい。</p>
 <p>実例を確認しよう。例えば次のように対数賃金を従属変数、性別を独立変数とする回帰分析を推定する。</p>
 <div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="regression.html#cb295-1" tabindex="-1"></a>reg_res <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data =</span> piaac, logwage <span class="sc">~</span> gender)</span>
@@ -1228,7 +1238,7 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
 <span id="cb302-2"><a href="regression.html#cb302-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> logwage)) <span class="sc">+</span> </span>
 <span id="cb302-3"><a href="regression.html#cb302-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
 <span id="cb302-4"><a href="regression.html#cb302-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x, <span class="dv">2</span>), <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="co"># 2次曲線を描く場合にはformula = y ~ poly(x, 2)というオプションを追加。</span></span></code></pre></div>
-<p><img src="seminar_doc_files/figure-html/unnamed-chunk-221-1.png" width="672" /></p>
+<p><img src="seminar_doc_files/figure-html/unnamed-chunk-221-1.png" alt="" width="672" /></p>
 <p>このように、若いときには年齢による賃金の上昇は大きいけれども、その上昇幅は年齢が高くなるほど小さくなり、高い年齢ではむしろ負に転ずることがわかる。年齢についてはこのように二次曲線をつかうことはしばしば有効である。</p>
 <p>なお2乗した変数を別に作らなくても、回帰分析のコード中で2乗した変数を作成することができる。（結果は省略）次のように<code>I()</code>という表記を用いて、<code>()</code>内で行いたい計算方法を指定する。</p>
 <div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="regression.html#cb303-1" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">data =</span> piaac, <span class="fu">log</span>(wage) <span class="sc">~</span> age <span class="sc">+</span> <span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>))</span></code></pre></div>
@@ -1267,138 +1277,104 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
 <span id="cb307-3"><a href="regression.html#cb307-3" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(reg_res)) </span></code></pre></div>
 <!-- preamble start -->
 
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
     <script>
-
-      function styleCell_52nro05dghajc8nacuxt(i, j, css_id) {
-          var table = document.getElementById("tinytable_52nro05dghajc8nacuxt");
-          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
-      }
-      function spanCell_52nro05dghajc8nacuxt(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_52nro05dghajc8nacuxt");
-        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-        if (!targetCell) {
-          console.warn(`Cell at (${i}, ${j}) not found.`);
-        }
-
-        // Get all cells that need to be removed
-        const cellsToRemove = [];
-        for (let r = 0; r < rowspan; r++) {
-          for (let c = 0; c < colspan; c++) {
-            if (r === 0 && c === 0) continue; // Skip the target cell
-            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
-            if (cell) {
-              cellsToRemove.push(cell);
-            }
-          }
-        }
-
-        // Remove all cells
-        cellsToRemove.forEach(cell => cell.remove());
-
-        // Set rowspan and colspan of the target cell if it exists
-        if (targetCell) {
-          targetCell.rowSpan = rowspan;
-          targetCell.colSpan = colspan;
-        }
-      }
+      // Create table-specific functions using external factory
+      const tableFns_q4zrks3y2rvpdgwb6zib = TinyTable.createTableFunctions("tinytable_q4zrks3y2rvpdgwb6zib");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '12', j: 1 },  ], css_id: 'tinytable_css_1lbx3khdxgd5221b4gq7',}, 
-          { positions: [ { i: '4', j: 1 },  ], css_id: 'tinytable_css_cf93qeswsasxzfboqm2s',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '8', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 },  ], css_id: 'tinytable_css_do5ba55gpgpoyz2bc1bg',}, 
-          { positions: [ { i: '0', j: 1 },  ], css_id: 'tinytable_css_idjrnxfeirrtf57hvhiq',}, 
-          { positions: [ { i: '12', j: 0 },  ], css_id: 'tinytable_css_egk3bqfvwxxqy02zf975',}, 
-          { positions: [ { i: '4', j: 0 },  ], css_id: 'tinytable_css_hd4fmoh0jqdcf7akqujt',}, 
-          { positions: [ { i: '1', j: 0 }, { i: '2', j: 0 }, { i: '3', j: 0 }, { i: '8', j: 0 }, { i: '5', j: 0 }, { i: '6', j: 0 }, { i: '7', j: 0 }, { i: '9', j: 0 }, { i: '10', j: 0 }, { i: '11', j: 0 },  ], css_id: 'tinytable_css_vovjrzf8ghv1cx6dvwjm',}, 
-          { positions: [ { i: '0', j: 0 },  ], css_id: 'tinytable_css_1lm1522bmr2kfrlh0vm1',}, 
+          { positions: [ { i: '12', j: 2 } ], css_id: 'tinytable_css_973udao4gwyqgtqyqfme',}, 
+          { positions: [ { i: '4', j: 2 } ], css_id: 'tinytable_css_mkiid2pdnihs7w54uh1x',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '5', j: 2 }, { i: '6', j: 2 }, { i: '7', j: 2 }, { i: '8', j: 2 }, { i: '9', j: 2 }, { i: '10', j: 2 }, { i: '11', j: 2 } ], css_id: 'tinytable_css_e4080sy9vzmutwgmaxlx',}, 
+          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_1merqjgnf89q7pfrixoo',}, 
+          { positions: [ { i: '12', j: 1 } ], css_id: 'tinytable_css_1uu2h2kjmpdaxnkx2ocl',}, 
+          { positions: [ { i: '4', j: 1 } ], css_id: 'tinytable_css_z37fvsub8sfh6d3iud14',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '5', j: 1 }, { i: '6', j: 1 }, { i: '7', j: 1 }, { i: '8', j: 1 }, { i: '9', j: 1 }, { i: '10', j: 1 }, { i: '11', j: 1 } ], css_id: 'tinytable_css_ulm10o5ooyshbg9zwwvb',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_pt0e767vm9g32nii30m1',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_52nro05dghajc8nacuxt(cell.i, cell.j, group.css_id);
+                  tableFns_q4zrks3y2rvpdgwb6zib.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_1lbx3khdxgd5221b4gq7, .table th.tinytable_css_1lbx3khdxgd5221b4gq7 { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_cf93qeswsasxzfboqm2s, .table th.tinytable_css_cf93qeswsasxzfboqm2s { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_do5ba55gpgpoyz2bc1bg, .table th.tinytable_css_do5ba55gpgpoyz2bc1bg { text-align: center; }
-      .table td.tinytable_css_idjrnxfeirrtf57hvhiq, .table th.tinytable_css_idjrnxfeirrtf57hvhiq { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_egk3bqfvwxxqy02zf975, .table th.tinytable_css_egk3bqfvwxxqy02zf975 { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_hd4fmoh0jqdcf7akqujt, .table th.tinytable_css_hd4fmoh0jqdcf7akqujt { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_vovjrzf8ghv1cx6dvwjm, .table th.tinytable_css_vovjrzf8ghv1cx6dvwjm { text-align: left; }
-      .table td.tinytable_css_1lm1522bmr2kfrlh0vm1, .table th.tinytable_css_1lm1522bmr2kfrlh0vm1 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    /* tinytable css entries after */
+    #tinytable_q4zrks3y2rvpdgwb6zib td.tinytable_css_973udao4gwyqgtqyqfme, #tinytable_q4zrks3y2rvpdgwb6zib th.tinytable_css_973udao4gwyqgtqyqfme {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_q4zrks3y2rvpdgwb6zib td.tinytable_css_mkiid2pdnihs7w54uh1x, #tinytable_q4zrks3y2rvpdgwb6zib th.tinytable_css_mkiid2pdnihs7w54uh1x {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_q4zrks3y2rvpdgwb6zib td.tinytable_css_e4080sy9vzmutwgmaxlx, #tinytable_q4zrks3y2rvpdgwb6zib th.tinytable_css_e4080sy9vzmutwgmaxlx { text-align: center }
+    #tinytable_q4zrks3y2rvpdgwb6zib td.tinytable_css_1merqjgnf89q7pfrixoo, #tinytable_q4zrks3y2rvpdgwb6zib th.tinytable_css_1merqjgnf89q7pfrixoo {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_q4zrks3y2rvpdgwb6zib td.tinytable_css_1uu2h2kjmpdaxnkx2ocl, #tinytable_q4zrks3y2rvpdgwb6zib th.tinytable_css_1uu2h2kjmpdaxnkx2ocl {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_q4zrks3y2rvpdgwb6zib td.tinytable_css_z37fvsub8sfh6d3iud14, #tinytable_q4zrks3y2rvpdgwb6zib th.tinytable_css_z37fvsub8sfh6d3iud14 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_q4zrks3y2rvpdgwb6zib td.tinytable_css_ulm10o5ooyshbg9zwwvb, #tinytable_q4zrks3y2rvpdgwb6zib th.tinytable_css_ulm10o5ooyshbg9zwwvb { text-align: left }
+    #tinytable_q4zrks3y2rvpdgwb6zib td.tinytable_css_pt0e767vm9g32nii30m1, #tinytable_q4zrks3y2rvpdgwb6zib th.tinytable_css_pt0e767vm9g32nii30m1 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_52nro05dghajc8nacuxt" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
-        <thead>
+      <table class="tinytable" id="tinytable_q4zrks3y2rvpdgwb6zib" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         
+        <thead>
               <tr>
-                <th scope="col" data-row="0" data-col="0"> </th>
-                <th scope="col" data-row="0" data-col="1">(1)</th>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">(1)</th>
               </tr>
         </thead>
         
         <tbody>
                 <tr>
-                  <td data-row="1" data-col="0">(Intercept)</td>
-                  <td data-row="1" data-col="1">7.136</td>
+                  <td data-row="1" data-col="1">(Intercept)</td>
+                  <td data-row="1" data-col="2">7.136</td>
                 </tr>
                 <tr>
-                  <td data-row="2" data-col="0"></td>
-                  <td data-row="2" data-col="1">(0.044)</td>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.044)</td>
                 </tr>
                 <tr>
-                  <td data-row="3" data-col="0">age</td>
-                  <td data-row="3" data-col="1">0.004</td>
+                  <td data-row="3" data-col="1">age</td>
+                  <td data-row="3" data-col="2">0.004</td>
                 </tr>
                 <tr>
-                  <td data-row="4" data-col="0"></td>
-                  <td data-row="4" data-col="1">(0.001)</td>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.001)</td>
                 </tr>
                 <tr>
-                  <td data-row="5" data-col="0">Num.Obs.</td>
-                  <td data-row="5" data-col="1">2728</td>
+                  <td data-row="5" data-col="1">Num.Obs.</td>
+                  <td data-row="5" data-col="2">2728</td>
                 </tr>
                 <tr>
-                  <td data-row="6" data-col="0">R2</td>
-                  <td data-row="6" data-col="1">0.007</td>
+                  <td data-row="6" data-col="1">R2</td>
+                  <td data-row="6" data-col="2">0.007</td>
                 </tr>
                 <tr>
-                  <td data-row="7" data-col="0">R2 Adj.</td>
-                  <td data-row="7" data-col="1">0.007</td>
+                  <td data-row="7" data-col="1">R2 Adj.</td>
+                  <td data-row="7" data-col="2">0.007</td>
                 </tr>
                 <tr>
-                  <td data-row="8" data-col="0">AIC</td>
-                  <td data-row="8" data-col="1">44447.2</td>
+                  <td data-row="8" data-col="1">AIC</td>
+                  <td data-row="8" data-col="2">44447.2</td>
                 </tr>
                 <tr>
-                  <td data-row="9" data-col="0">BIC</td>
-                  <td data-row="9" data-col="1">44464.9</td>
+                  <td data-row="9" data-col="1">BIC</td>
+                  <td data-row="9" data-col="2">44464.9</td>
                 </tr>
                 <tr>
-                  <td data-row="10" data-col="0">Log.Lik.</td>
-                  <td data-row="10" data-col="1">-2234.183</td>
+                  <td data-row="10" data-col="1">Log.Lik.</td>
+                  <td data-row="10" data-col="2">-2234.183</td>
                 </tr>
                 <tr>
-                  <td data-row="11" data-col="0">F</td>
-                  <td data-row="11" data-col="1">20.156</td>
+                  <td data-row="11" data-col="1">F</td>
+                  <td data-row="11" data-col="2">20.156</td>
                 </tr>
                 <tr>
-                  <td data-row="12" data-col="0">RMSE</td>
-                  <td data-row="12" data-col="1">0.55</td>
+                  <td data-row="12" data-col="1">RMSE</td>
+                  <td data-row="12" data-col="2">0.55</td>
                 </tr>
         </tbody>
       </table>
@@ -1413,114 +1389,80 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
 <span id="cb308-6"><a href="regression.html#cb308-6" tabindex="-1"></a>)</span></code></pre></div>
 <!-- preamble start -->
 
+    <script src="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.js"></script>
+
     <script>
-
-      function styleCell_cg5vdthenpk7lr3p9bsh(i, j, css_id) {
-          var table = document.getElementById("tinytable_cg5vdthenpk7lr3p9bsh");
-          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
-      }
-      function spanCell_cg5vdthenpk7lr3p9bsh(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_cg5vdthenpk7lr3p9bsh");
-        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-        if (!targetCell) {
-          console.warn(`Cell at (${i}, ${j}) not found.`);
-        }
-
-        // Get all cells that need to be removed
-        const cellsToRemove = [];
-        for (let r = 0; r < rowspan; r++) {
-          for (let c = 0; c < colspan; c++) {
-            if (r === 0 && c === 0) continue; // Skip the target cell
-            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
-            if (cell) {
-              cellsToRemove.push(cell);
-            }
-          }
-        }
-
-        // Remove all cells
-        cellsToRemove.forEach(cell => cell.remove());
-
-        // Set rowspan and colspan of the target cell if it exists
-        if (targetCell) {
-          targetCell.rowSpan = rowspan;
-          targetCell.colSpan = colspan;
-        }
-      }
+      // Create table-specific functions using external factory
+      const tableFns_gx2x48ekesz2lcq2ff1x = TinyTable.createTableFunctions("tinytable_gx2x48ekesz2lcq2ff1x");
       // tinytable span after
       window.addEventListener('load', function () {
           var cellsToStyle = [
             // tinytable style arrays after
-          { positions: [ { i: '6', j: 1 },  ], css_id: 'tinytable_css_1ffqkxntw7ldebfnv5o0',}, 
-          { positions: [ { i: '4', j: 1 },  ], css_id: 'tinytable_css_y3tpvvl18aulcjbz44to',}, 
-          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '5', j: 1 },  ], css_id: 'tinytable_css_i9jiwbeqn16k60y4owzk',}, 
-          { positions: [ { i: '0', j: 1 },  ], css_id: 'tinytable_css_h5yp6egqz3zvuzzvj84z',}, 
-          { positions: [ { i: '6', j: 0 },  ], css_id: 'tinytable_css_8llqm477mytyzude958s',}, 
-          { positions: [ { i: '4', j: 0 },  ], css_id: 'tinytable_css_18rppqoumeiauvx11rba',}, 
-          { positions: [ { i: '1', j: 0 }, { i: '2', j: 0 }, { i: '3', j: 0 }, { i: '5', j: 0 },  ], css_id: 'tinytable_css_bv2nt3uds0yfo8elqyac',}, 
-          { positions: [ { i: '0', j: 0 },  ], css_id: 'tinytable_css_1wv1ckchr7ygpvybq9p5',}, 
+          { positions: [ { i: '6', j: 2 } ], css_id: 'tinytable_css_61bnvyakurw4st0jrsbf',}, 
+          { positions: [ { i: '4', j: 2 } ], css_id: 'tinytable_css_8sh7rfynyr25xd7x4yuz',}, 
+          { positions: [ { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '3', j: 2 }, { i: '5', j: 2 } ], css_id: 'tinytable_css_6t474fcjpjmskygnpnaq',}, 
+          { positions: [ { i: '0', j: 2 } ], css_id: 'tinytable_css_u93guazlzthp99y1nvqa',}, 
+          { positions: [ { i: '6', j: 1 } ], css_id: 'tinytable_css_njbioc0pe0ddsulkm3c6',}, 
+          { positions: [ { i: '4', j: 1 } ], css_id: 'tinytable_css_aj86nfqstjiinfipzbwg',}, 
+          { positions: [ { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '3', j: 1 }, { i: '5', j: 1 } ], css_id: 'tinytable_css_ysi5c29c0obxn30swkyz',}, 
+          { positions: [ { i: '0', j: 1 } ], css_id: 'tinytable_css_o8xasjcfayd7egegcu6w',}, 
           ];
 
           // Loop over the arrays to style the cells
           cellsToStyle.forEach(function (group) {
               group.positions.forEach(function (cell) {
-                  styleCell_cg5vdthenpk7lr3p9bsh(cell.i, cell.j, group.css_id);
+                  tableFns_gx2x48ekesz2lcq2ff1x.styleCell(cell.i, cell.j, group.css_id);
               });
           });
       });
     </script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vincentarelbundock/tinytable@main/inst/tinytable.css">
     <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_1ffqkxntw7ldebfnv5o0, .table th.tinytable_css_1ffqkxntw7ldebfnv5o0 { text-align: center; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_y3tpvvl18aulcjbz44to, .table th.tinytable_css_y3tpvvl18aulcjbz44to { text-align: center; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_i9jiwbeqn16k60y4owzk, .table th.tinytable_css_i9jiwbeqn16k60y4owzk { text-align: center; }
-      .table td.tinytable_css_h5yp6egqz3zvuzzvj84z, .table th.tinytable_css_h5yp6egqz3zvuzzvj84z { text-align: center; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
-      .table td.tinytable_css_8llqm477mytyzude958s, .table th.tinytable_css_8llqm477mytyzude958s { text-align: left; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_18rppqoumeiauvx11rba, .table th.tinytable_css_18rppqoumeiauvx11rba { text-align: left; border-bottom: solid black 0.05em; }
-      .table td.tinytable_css_bv2nt3uds0yfo8elqyac, .table th.tinytable_css_bv2nt3uds0yfo8elqyac { text-align: left; }
-      .table td.tinytable_css_1wv1ckchr7ygpvybq9p5, .table th.tinytable_css_1wv1ckchr7ygpvybq9p5 { text-align: left; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    /* tinytable css entries after */
+    #tinytable_gx2x48ekesz2lcq2ff1x td.tinytable_css_61bnvyakurw4st0jrsbf, #tinytable_gx2x48ekesz2lcq2ff1x th.tinytable_css_61bnvyakurw4st0jrsbf {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_gx2x48ekesz2lcq2ff1x td.tinytable_css_8sh7rfynyr25xd7x4yuz, #tinytable_gx2x48ekesz2lcq2ff1x th.tinytable_css_8sh7rfynyr25xd7x4yuz {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_gx2x48ekesz2lcq2ff1x td.tinytable_css_6t474fcjpjmskygnpnaq, #tinytable_gx2x48ekesz2lcq2ff1x th.tinytable_css_6t474fcjpjmskygnpnaq { text-align: center }
+    #tinytable_gx2x48ekesz2lcq2ff1x td.tinytable_css_u93guazlzthp99y1nvqa, #tinytable_gx2x48ekesz2lcq2ff1x th.tinytable_css_u93guazlzthp99y1nvqa {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: center }
+    #tinytable_gx2x48ekesz2lcq2ff1x td.tinytable_css_njbioc0pe0ddsulkm3c6, #tinytable_gx2x48ekesz2lcq2ff1x th.tinytable_css_njbioc0pe0ddsulkm3c6 {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.08em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_gx2x48ekesz2lcq2ff1x td.tinytable_css_aj86nfqstjiinfipzbwg, #tinytable_gx2x48ekesz2lcq2ff1x th.tinytable_css_aj86nfqstjiinfipzbwg {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 0; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.1em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
+    #tinytable_gx2x48ekesz2lcq2ff1x td.tinytable_css_ysi5c29c0obxn30swkyz, #tinytable_gx2x48ekesz2lcq2ff1x th.tinytable_css_ysi5c29c0obxn30swkyz { text-align: left }
+    #tinytable_gx2x48ekesz2lcq2ff1x td.tinytable_css_o8xasjcfayd7egegcu6w, #tinytable_gx2x48ekesz2lcq2ff1x th.tinytable_css_o8xasjcfayd7egegcu6w {  position: relative; --border-bottom: 1; --border-left: 0; --border-right: 0; --border-top: 1; --line-color-bottom: var(--tt-line-color); --line-color-left: var(--tt-line-color); --line-color-right: var(--tt-line-color); --line-color-top: var(--tt-line-color); --line-width-bottom: 0.05em; --line-width-left: 0.1em; --line-width-right: 0.1em; --line-width-top: 0.08em; --trim-bottom-left: 0%; --trim-bottom-right: 0%; --trim-left-bottom: 0%; --trim-left-top: 0%; --trim-right-bottom: 0%; --trim-right-top: 0%; --trim-top-left: 0%; --trim-top-right: 0%; ; text-align: left }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_cg5vdthenpk7lr3p9bsh" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
-        <thead>
+      <table class="tinytable" id="tinytable_gx2x48ekesz2lcq2ff1x" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing='true'>
         
+        <thead>
               <tr>
-                <th scope="col" data-row="0" data-col="0"> </th>
-                <th scope="col" data-row="0" data-col="1">(1)</th>
+                <th scope="col" data-row="0" data-col="1"> </th>
+                <th scope="col" data-row="0" data-col="2">(1)</th>
               </tr>
         </thead>
         <tfoot><tr><td colspan='2'>+ p < 0.1, * p < 0.05, ** p < 0.01, *** p < 0.001</td></tr></tfoot>
         <tbody>
                 <tr>
-                  <td data-row="1" data-col="0">切片</td>
-                  <td data-row="1" data-col="1">7.136***</td>
+                  <td data-row="1" data-col="1">切片</td>
+                  <td data-row="1" data-col="2">7.136***</td>
                 </tr>
                 <tr>
-                  <td data-row="2" data-col="0"></td>
-                  <td data-row="2" data-col="1">(0.044)</td>
+                  <td data-row="2" data-col="1"></td>
+                  <td data-row="2" data-col="2">(0.044)</td>
                 </tr>
                 <tr>
-                  <td data-row="3" data-col="0">年齢</td>
-                  <td data-row="3" data-col="1">0.004***</td>
+                  <td data-row="3" data-col="1">年齢</td>
+                  <td data-row="3" data-col="2">0.004***</td>
                 </tr>
                 <tr>
-                  <td data-row="4" data-col="0"></td>
-                  <td data-row="4" data-col="1">(0.001)</td>
+                  <td data-row="4" data-col="1"></td>
+                  <td data-row="4" data-col="2">(0.001)</td>
                 </tr>
                 <tr>
-                  <td data-row="5" data-col="0">Num.Obs.</td>
-                  <td data-row="5" data-col="1">2728</td>
+                  <td data-row="5" data-col="1">Num.Obs.</td>
+                  <td data-row="5" data-col="2">2728</td>
                 </tr>
                 <tr>
-                  <td data-row="6" data-col="0">R2</td>
-                  <td data-row="6" data-col="1">0.007</td>
+                  <td data-row="6" data-col="1">R2</td>
+                  <td data-row="6" data-col="2">0.007</td>
                 </tr>
         </tbody>
       </table>
@@ -1571,10 +1513,10 @@ y + \Delta y &amp;= \beta_0 + \beta_1(x + 1) + \beta_2 (x + 1)^2 \\
 </div>
 <div class="footnotes">
 <hr />
-<ol start="16">
-<li id="fn16"><p>今回のような場合を線形回帰分析 Linear regressionということもある。<a href="regression.html#fnref16" class="footnote-back">↩︎</a></p></li>
-<li id="fn17"><p>lmというのはlinear modelの頭文字を取ったものである。<a href="regression.html#fnref17" class="footnote-back">↩︎</a></p></li>
-<li id="fn18"><p>正確には、係数 - 0を標準誤差で割ることでt値を求める。自由度df（N - 推定した係数の個数）のt分布のもとで、t値の絶対値が得られたt値よりも極端な値になる確率を計算したものがここで表示されているp値である。<a href="regression.html#fnref18" class="footnote-back">↩︎</a></p></li>
+<ol start="15">
+<li id="fn15"><p>今回のような場合を線形回帰分析 Linear regressionということもある。<a href="regression.html#fnref15" class="footnote-back">↩︎</a></p></li>
+<li id="fn16"><p>lmというのはlinear modelの頭文字を取ったものである。<a href="regression.html#fnref16" class="footnote-back">↩︎</a></p></li>
+<li id="fn17"><p>正確には、係数 - 0を標準誤差で割ることでt値を求める。自由度df（N - 推定した係数の個数）のt分布のもとで、t値の絶対値が得られたt値よりも極端な値になる確率を計算したものがここで表示されているp値である。<a href="regression.html#fnref17" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
